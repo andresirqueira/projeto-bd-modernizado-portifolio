@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Equipamentos da Sala</title>
+    <link rel="stylesheet" href="css/estilo-base.css">
+    <link rel="stylesheet" href="css/estilo-detalhes-equipamentos-sala.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container" style="position:relative;">
+        <div id="empresa-logada" style="position:absolute;top:16px;right:24px;color:#4a90e2;font-weight:bold;z-index:2;"></div>
+        <div class="voltar-container">
+            <button class="card-btn voltar" onclick="window.history.back()" title="Voltar">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        <div class="equip-sala" id="equipSalaTopo"></div>
+        <div id="equipamentosSalaContainer"></div>
+    </div>
+    <script>
+    async function carregarEquipamentosSala() {
+        const params = new URLSearchParams(window.location.search);
+        const salaId = params.get('id');
+        if (!salaId) return;
+        // Busca dados da sala
+        let salaNome = '';
+        const respSala = await fetch(`/salas/${salaId}`);
+        if (respSala.ok) {
+            const sala = await respSala.json();
+            salaNome = sala.nome;
+        }
+        document.getElementById('equipSalaTopo').innerText = salaNome || 'Sala';
+        // Busca equipamentos da sala
+        const respEq = await fetch(`/equipamentos?sala_id=${salaId}`);
+        const equipamentos = await respEq.json();
+        // Busca conexões ativas
+        const respCon = await fetch('/conexoes');
+        const conexoes = await respCon.json();
+        const container = document.getElementById('equipamentosSalaContainer');
+        if (equipamentos.length === 0) {
+            container.innerHTML = '<em style="color:#ccc;">Nenhum equipamento vinculado a esta sala.</em>';
+            return;
+        }
+        container.innerHTML = '<div class="equip-grid"></div>';
+        const grid = container.querySelector('.equip-grid');
+        equipamentos.forEach(eq => {
+            let iconesHtml = '';
+            if (eq.modelo) iconesHtml += `<div class='equip-icone'><i class='fas fa-cube'></i><span>${eq.modelo}</span></div>`;
+            if (eq.dados && eq.dados.serie) iconesHtml += `<div class='equip-icone'><i class='fas fa-barcode'></i><span>${eq.dados.serie}</span></div>`;
+            if (eq.dados && eq.dados.firmware) iconesHtml += `<div class='equip-icone'><i class='fas fa-microchip'></i><span>${eq.dados.firmware}</span></div>`;
+            if (eq.dados && eq.dados.partnumber) iconesHtml += `<div class='equip-icone'><i class='fas fa-hashtag'></i><span>${eq.dados.partnumber}</span></div>`;
+            if (eq.dados && eq.dados.tamanho) iconesHtml += `<div class='equip-icone'><i class='fas fa-ruler-combined'></i><span>${eq.dados.tamanho}</span></div>`;
+            if (eq.dados && eq.dados.ip1) iconesHtml += `<div class='equip-icone'><i class='fas fa-network-wired'></i><span>${eq.dados.ip1 || '-'}</span></div>`;
+            if (eq.dados && eq.dados.mac1) iconesHtml += `<div class='equip-icone'><i class='fas fa-ethernet'></i><span class='mac'>${eq.dados.mac1 || '-'}</span></div>`;
+            if (eq.dados && eq.dados.ip2) iconesHtml += `<div class='equip-icone'><i class='fas fa-network-wired'></i><span>${eq.dados.ip2 || '-'}</span></div>`;
+            if (eq.dados && eq.dados.mac2) iconesHtml += `<div class='equip-icone'><i class='fas fa-ethernet'></i><span class='mac'>${eq.dados.mac2 || '-'}</span></div>`;
+            if (eq.icone) iconesHtml += `<div class='equip-icone'><img src='${eq.icone.startsWith('img/') ? 'static/' + eq.icone : eq.icone}' alt='Ícone'></div>`;
+            // Busca conexão deste equipamento
+            const conexao = conexoes.find(c => c.equipamento === eq.nome && c.status === 'ativa');
+            let redeHtml = '';
+            if (conexao && conexao.switch && conexao.porta) {
+                redeHtml = `<div class='equip-switch-info equip-rede'><i class='fas fa-network-wired'></i> <b>Switch:</b> ${conexao.switch} <b>Porta:</b> ${conexao.porta}</div>`;
+            }
+            // Adiciona ícone de rede se tiver ip ou mac
+            const temRede = (eq.dados && (eq.dados.ip1 || eq.dados.ip2 || eq.dados.mac1 || eq.dados.mac2));
+            grid.innerHTML += `
+                <div class='equip-block'>
+                    ${temRede ? `<i class='fa-solid fa-network-wired icon-rede' title='Necessita de rede'></i>` : ''}
+                    ${(eq.marca ? `<div class='marca-icone'><img src='static/img/${eq.marca.toLowerCase()}.png' onerror="this.style.display='none'" alt='${eq.marca}' title='${eq.marca}'></div>` : '')}
+                    <div class='equip-titulo'>${eq.nome || 'Equipamento'}</div>
+                    <div class='equip-foto'>${eq.foto ? `<img src='${eq.foto.startsWith('img/') ? 'static/' + eq.foto : eq.foto}' alt='${eq.nome}'>` : ''}</div>
+                    <div class='equip-dados-principais'>
+                        <div><b>Tipo:</b> ${eq.tipo || '-'}</div>
+                        <div><b>Série:</b> ${(eq.dados && eq.dados.serie) ? eq.dados.serie : '-'}</div>
+                    </div>
+                    <div class='equip-icones'>${iconesHtml}</div>
+                    ${redeHtml}
+                </div>
+            `;
+        });
+    }
+    carregarEquipamentosSala();
+
+    window.addEventListener('DOMContentLoaded', function() {
+        fetch('/empresa_atual')
+            .then(resp => resp.json())
+            .then(data => {
+                if (data.logo) {
+                    document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                } else if (data.nome) {
+                    document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
+                }
+            });
+    });
+    </script>
+</body>
+</html>

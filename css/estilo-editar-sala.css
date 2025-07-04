@@ -1,0 +1,339 @@
+body {
+    display: block !important;
+    align-items: initial !important;
+    justify-content: initial !important;
+    height: auto !important;
+    min-height: 100vh;
+    overflow-y: auto;
+    margin: 0;
+    background: rgb(18, 33, 55);
+}
+
+body, html {
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    /* Removido display: flex, align-items e justify-content para evitar corte do topo */
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* align-items: center; */
+    /* justify-content: center; */
+}
+
+.admin-container {
+    max-width: 1200px;
+    margin: 48px auto;
+    background: #34495e;
+    padding: 32px 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: relative;
+}
+
+#empresa-logada {
+    position: absolute;
+    top: 16px;
+    right: 24px;
+    color: #4a90e2;
+    font-weight: bold;
+    margin-bottom: 0;
+    text-align: right;
+    z-index: 2;
+}
+
+.voltar-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    width: 100%;
+    /* Remover max-width e margens automáticas para alinhar totalmente à esquerda */
+    /* max-width: 1000px; */
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+}
+
+h1 {
+    text-align: left;
+    margin-bottom: 24px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+label {
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #888;
+    margin-bottom: 14px;
+    background: #2c3e50;
+    color: #eee;
+    font-size: 1em;
+}
+
+.card-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 140px;
+    height: 140px;
+    background: #2d7be5;
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, transform 0.2s, filter 0.2s;
+}
+
+.card-btn.cadastrar {
+    background: #1abc9c;
+    color: #fff;
+    width: auto;
+    height: auto;
+    padding: 8px 16px;
+    font-size: 1em;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.card-btn.voltar {
+    background: #3498db;
+    color: #fff;
+    width: 44px;
+    height: 44px;
+    font-size: 1em;
+    border-radius: 8px;
+    box-shadow: none;
+    padding: 0;
+    min-width: unset;
+    min-height: unset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-btn.voltar i {
+    font-size: 1.2em;
+    margin-bottom: 0;
+}
+
+.card-btn.voltar span {
+    display: none;
+}
+
+#equipamentos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+.form-equipamento {
+    width: 100%;
+    max-width: 420px;
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.form-equipamento .form-group {
+    width: 100%;
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.form-equipamento label {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+.form-equipamento input.input-estilizado,
+.form-equipamento select.input-estilizado {
+    width: 100%;
+    max-width: 350px;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #888;
+    background: #2c3e50;
+    color: #eee;
+    font-size: 1em;
+    margin: 0 auto;
+}
+.form-equipamento button.card-btn.cadastrar {
+    width: auto;
+    max-width: 350px;
+    margin-top: 10px;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.msg {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 1.1em;
+}
+
+.card-form {
+    background: #2c3e50;
+    border-radius: 8px;
+    padding: 16px 12px;
+    margin: 24px auto 0 auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 700px) {
+    .admin-container {
+        padding: 8px 2vw;
+        max-width: 98vw;
+    }
+    .form-equipamento {
+        min-width: 90vw;
+        max-width: 98vw;
+    }
+}
+
+/* Estilos migrados e padronizados para editar sala */
+
+.input-estilizado, select.input-estilizado {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #888;
+    margin-bottom: 10px;
+    background: #223;
+    color: #eee;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.form-sala label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.form-sala input, .form-sala textarea {
+    width: 95%;
+    margin-bottom: 12px;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #888;
+    background: #223;
+    color: #eee;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.tabela-salas th, .tabela-salas td {
+    border: 1px solid #444;
+    padding: 6px 8px;
+    text-align: left;
+    vertical-align: middle;
+    font-size: 0.97em;
+    white-space: nowrap;
+}
+
+.tabela-salas th {
+    background: #223;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.tabela-salas tr:nth-child(even) {
+    background: #263445;
+}
+
+.equip-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #223;
+    border: 1px solid #888;
+    border-radius: 4px;
+    padding: 7px 12px;
+    margin-bottom: 8px;
+    color: #eee;
+    font-size: 1em;
+    cursor: pointer;
+    transition: border 0.2s, background 0.2s;
+}
+
+.equip-checkbox-label input[type="checkbox"] {
+    accent-color: #2d7be5;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+}
+
+#equipamentos-lista, .tabela-equipamentos, .tabela-salas {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+    box-sizing: border-box;
+}
+
+.tabela-equipamentos, .tabela-salas {
+    min-width: 900px;
+    width: 100%;
+    border-collapse: collapse;
+    background: #2c3e50;
+    color: #eee;
+    margin-bottom: 16px;
+}
+
+@media (max-width: 1200px) {
+    .tabela-equipamentos, .tabela-salas {
+        min-width: 700px;
+    }
+}
+
+@media (max-width: 900px) {
+    .tabela-equipamentos, .tabela-salas {
+        min-width: 500px;
+    }
+}
+
+@media (max-width: 700px) {
+    .tabela-equipamentos, .tabela-salas {
+        min-width: 350px;
+    }
+    #equipamentos-lista, .tabela-equipamentos, .tabela-salas {
+        overflow-x: auto;
+        display: block;
+    }
+} 

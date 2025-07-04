@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizar Logs do Sistema</title>
+    <link rel="stylesheet" href="css/estilo-base.css">
+    <link rel="stylesheet" href="css/estilo-visualizar-logs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <div class="voltar-container">
+            <button class="card-btn voltar" onclick="window.location.href='config-admin.html'" title="Voltar">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        
+        <div class="logs-header">
+            <h1>Logs do Sistema</h1>
+            <div>
+                <button class="btn-atualizar" onclick="carregarLogs()">
+                    <i class="fas fa-sync-alt"></i> Atualizar
+                </button>
+                <button class="btn-limpar" onclick="limparLogs()">
+                    <i class="fas fa-trash"></i> Limpar Logs
+                </button>
+            </div>
+        </div>
+
+        <div class="logs-info">
+            <h3>Informações dos Logs</h3>
+            <p><strong>Total de Logs:</strong> <span id="totalLogs">0</span></p>
+            <p><strong>Última Atualização:</strong> <span id="ultimaAtualizacao">-</span></p>
+        </div>
+
+        <div class="filtros">
+            <label>Filtrar por Ação:</label>
+            <select id="filtroAcao" class="filtro-select" onchange="filtrarLogs()">
+                <option value="">Todas as ações</option>
+                <option value="CRIAR_SWITCH">Criar Switch</option>
+                <option value="ATUALIZAR_SWITCH">Atualizar Switch</option>
+                <option value="CRIAR_CONEXAO">Criar Conexão</option>
+                <option value="REMOVER_CONEXAO">Remover Conexão</option>
+                <option value="ATUALIZAR_SALA">Atualizar Sala</option>
+            </select>
+            
+            <label>Filtrar por Status:</label>
+            <select id="filtroStatus" class="filtro-select" onchange="filtrarLogs()">
+                <option value="">Todos os status</option>
+                <option value="sucesso">Sucesso</option>
+                <option value="erro">Erro</option>
+            </select>
+        </div>
+
+        <div class="logs-container" id="logsContainer">
+            <div class="sem-logs">Carregando logs...</div>
+        </div>
+
+        <div id="empresa-logada"></div>
+    </div>
+
+    <script>
+        let todosLogs = [];
+
+        // Carregar logs
+        async function carregarLogs() {
+            try {
+                console.log('DEBUG: Iniciando carregamento de logs...'); // Debug
+                
+                const resp = await fetch('/logs');
+                console.log('DEBUG: Resposta do servidor:', resp.status, resp.statusText); // Debug
+                
+                const dados = await resp.json();
+                console.log('DEBUG: Dados recebidos do servidor:', dados); // Debug
+                
+                if (dados.status === 'ok') {
+                    todosLogs = dados.logs;
+                    document.getElementById('totalLogs').textContent = dados.total_logs;
+                    document.getElementById('ultimaAtualizacao').textContent = new Date().toLocaleString('pt-BR');
+                    
+                    console.log('DEBUG: Total de logs:', dados.total_logs); // Debug
+                    console.log('DEBUG: Logs para exibir:', todosLogs); // Debug
+                    
+                    exibirLogs(todosLogs);
+                } else {
+                    console.error('DEBUG: Erro retornado pelo servidor:', dados.mensagem); // Debug
+                    mostrarMensagem('Erro ao carregar logs: ' + dados.mensagem, 'error');
+                }
+            } catch (error) {
+                console.error('DEBUG: Erro ao carregar logs:', error); // Debug
+                mostrarMensagem('Erro ao carregar logs', 'error');
+            }
+        }
+
+        // Exibir logs
+        function exibirLogs(logs) {
+            const container = document.getElementById('logsContainer');
+            
+            console.log('DEBUG: Logs recebidos:', logs); // Debug
+            
+            if (logs.length === 0) {
+                container.innerHTML = '<div class="sem-logs">Nenhum log encontrado</div>';
+                return;
+            }
+
+            let html = '';
+            let logsProcessados = 0;
+            
+            logs.forEach((log, index) => {
+                log = log.trim(); // Remove espaços e quebras de linha extras
+                console.log(`DEBUG: Processando log ${index}:`, log); // Debug
+                
+                // Regex mais robusto que aceita espaços extras e fim de linha
+                const partes = log.match(/\[(.*?)\]\s*Usuario:\s*(.*?)\s*\|\s*Acao:\s*(.*?)\s*\|\s*Detalhes:\s*(.*?)\s*\|\s*Status:\s*(.*?)\s*$/);
+                
+                if (partes) {
+                    const [, timestamp, usuario, acao, detalhes, status] = partes;
+                    const statusClass = status.trim() === 'erro' ? 'erro' : 'sucesso';
+                    
+                    console.log(`DEBUG: Log processado com sucesso:`, { timestamp, usuario, acao, detalhes, status }); // Debug
+                    
+                    html += `
+                        <div class="log-entry ${statusClass}">
+                            <div>
+                                <span class="log-timestamp">[${timestamp}]</span>
+                                <span class="log-usuario">Usuário: ${usuario}</span>
+                                <span class="log-acao">| Ação: ${acao}</span>
+                                <span class="log-status ${statusClass}">| Status: ${status}</span>
+                            </div>
+                            <div class="log-detalhes">${detalhes}</div>
+                        </div>
+                    `;
+                    logsProcessados++;
+                } else {
+                    console.log(`DEBUG: Log não processado (regex não bateu):`, log); // Debug
+                }
+            });
+            
+            console.log(`DEBUG: Total de logs processados: ${logsProcessados}`); // Debug
+            
+            if (logsProcessados === 0) {
+                container.innerHTML = '<div class="sem-logs">Nenhum log válido encontrado</div>';
+            } else {
+                container.innerHTML = html;
+            }
+        }
+
+        // Filtrar logs
+        function filtrarLogs() {
+            const filtroAcao = document.getElementById('filtroAcao').value;
+            const filtroStatus = document.getElementById('filtroStatus').value;
+            
+            let logsFiltrados = todosLogs;
+            
+            if (filtroAcao) {
+                logsFiltrados = logsFiltrados.filter(log => log.includes(`Acao: ${filtroAcao}`));
+            }
+            
+            if (filtroStatus) {
+                logsFiltrados = logsFiltrados.filter(log => log.includes(`Status: ${filtroStatus}`));
+            }
+            
+            exibirLogs(logsFiltrados);
+        }
+
+        // Limpar logs
+        async function limparLogs() {
+            if (!confirm('Tem certeza que deseja limpar todos os logs? Esta ação não pode ser desfeita.')) {
+                return;
+            }
+
+            try {
+                const resp = await fetch('/logs', {
+                    method: 'DELETE'
+                });
+                
+                if (resp.ok) {
+                    mostrarMensagem('Logs limpos com sucesso!', 'success');
+                    carregarLogs();
+                } else {
+                    mostrarMensagem('Erro ao limpar logs', 'error');
+                }
+            } catch (error) {
+                console.error('Erro ao limpar logs:', error);
+                mostrarMensagem('Erro ao limpar logs', 'error');
+            }
+        }
+
+        // Mostrar mensagem
+        function mostrarMensagem(texto, tipo) {
+            alert(texto); // Simplificado para este exemplo
+        }
+
+        // Carregar logs ao iniciar a página
+        carregarLogs();
+
+        // Atualizar logs automaticamente a cada 30 segundos
+        setInterval(carregarLogs, 30000);
+
+        window.addEventListener('DOMContentLoaded', function() {
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    if (data.logo) {
+                        document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                    } else if (data.nome) {
+                        document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
+                    }
+                });
+        });
+    </script>
+</body>
+
+</html> 

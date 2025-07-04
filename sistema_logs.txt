@@ -1,0 +1,84 @@
+[2025-06-28 19:20:12] Usuario: desconhecido | Acao: ATUALIZAR_SWITCH | Detalhes: Switch atualizado: ID=2, Nome=Switch 02, Marca=Cisco, Modelo=Outro | Status: sucesso
+[2025-06-28 19:22:20] Usuario: teste | Acao: TESTE_LOG | Detalhes: Teste de funcionamento do sistema de logs | Status: sucesso
+[2025-06-28 19:24:10] Usuario: desconhecido | Acao: ATUALIZAR_SWITCH | Detalhes: Switch atualizado: ID=2, Nome=Switch 02 Térreo, Marca=Cisco, Modelo=Outro | Status: sucesso
+[2025-06-28 19:35:12] Usuario: desconhecido | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=1, Nome=Sala 01, Equipamentos desatrelados=0, Equipamentos vinculados=6 | Status: sucesso
+[2025-06-28 19:38:42] Usuario: admin | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=1, Nome=Sala 01, Equipamentos desatrelados=0, Equipamentos vinculados=6 | Status: sucesso
+[2025-06-28 19:44:09] Usuario: admin | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=13, Nome=Teste 1245, Tipo=AVIO, Marca=Dante, Modelo=2CH USB I/O Adapter | Status: sucesso
+[2025-06-28 19:44:33] Usuario: admin | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=13, Nome=Teste 1245, Tipo=AVIO, Marca=Dante, Modelo=2CH USB I/O Adapter | Status: sucesso
+[2025-06-28 19:45:06] Usuario: admin | Acao: EXCLUIR_EQUIPAMENTO | Detalhes: Equipamento excluído: ID=13, Nome=Teste 1245, Tipo=AVIO, Marca=Dante, Modelo=2CH USB I/O Adapter | Status: sucesso
+[2025-06-28 19:47:35] Usuario: admin | Acao: EXCLUIR_SALA | Detalhes: Sala excluída: ID=4, Nome=Sala Teste 1245 | Status: sucesso
+[2025-06-28 19:47:56] Usuario: admin | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=5, Nome=tessssss (via formulário) | Status: sucesso
+[2025-06-28 19:48:30] Usuario: admin | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=5, Nome=tessssss, Equipamentos desatrelados=0, Equipamentos vinculados=0 | Status: sucesso
+[2025-06-28 19:49:50] Usuario: admin | Acao: CRIAR_SWITCH | Detalhes: Switch criado: ID=3, Nome=sw teste, Marca=Cisco, Modelo=Outro | Status: sucesso
+[2025-06-28 19:50:08] Usuario: admin | Acao: ATUALIZAR_SWITCH | Detalhes: Switch atualizado: ID=3, Nome=sw teste, Marca=Cisco, Modelo=Nexus 9000 | Status: sucesso
+[2025-06-28 19:56:09] Usuario: admin | Acao: EXCLUIR_SWITCH | Detalhes: Switch excluído: ID=3, Nome=sw teste, Marca=Cisco, Modelo=Nexus 9000 (todas as conexões liberadas) | Status: sucesso
+[2025-06-28 19:56:29] Usuario: admin | Acao: EXCLUIR_SWITCH | Detalhes: Switch excluído: ID=1, Nome=Switch 01 - Térreo, Marca=Cisco, Modelo=Catalyst 3850 (todas as conexões liberadas) | Status: sucesso
+[2025-06-28 20:22:21] Usuario: admin | Acao: CRIAR_SWITCH | Detalhes: Switch criado: ID=1, Nome=Switch 01, Marca=Cisco, Modelo=Outro | Status: sucesso
+[2025-06-28 20:28:33] Usuario: admin | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=1, Porta ID=1, Equipamento ID=4 | Status: sucesso
+[2025-06-30 07:01:00] Usuario: admin | Acao: CRIAR_SWITCH | Detalhes: Switch criado: ID=2, Nome=switch teste, Marca=Cisco, Modelo=Catalyst 3850 | Status: sucesso
+[2025-06-30 07:01:53] Usuario: admin | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=2, Porta ID=2, Equipamento ID=5 | Status: sucesso
+[2025-06-30 07:04:53] Usuario: admin | Acao: EXCLUIR_SWITCH | Detalhes: Switch excluído: ID=2, Nome=switch teste, Marca=Cisco, Modelo=Catalyst 3850 (todas as conexões liberadas) | Status: sucesso
+[2025-06-30 08:08:16] Usuario: admin | Acao: EXCLUIR_EQUIPAMENTO | Detalhes: Equipamento excluído: ID=1, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-06-30 09:53:16] Usuario: admin | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=3, Nome=Sala Teste 11, Equipamentos desatrelados=0, Equipamentos vinculados=1 | Status: sucesso
+[2025-06-30 09:55:21] Usuario: admin | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=1, Nome=Sala 01, Equipamentos desatrelados=0, Equipamentos vinculados=5 | Status: sucesso
+[2025-06-30 12:00:47] Usuario: admin | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=1, Nome=Sala 01, Equipamentos desatrelados=0, Equipamentos vinculados=5 | Status: sucesso
+[2025-06-30 14:03:16] Usuario: admin | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=3, Nome=Sala Teste 11, Equipamentos desatrelados=0, Equipamentos vinculados=1 | Status: sucesso
+[2025-06-30 15:36:16] Usuario: admin | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=13, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-06-30 15:40:35] Usuario: admin | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=4, Nome=Sala 02 (via formulário) | Status: sucesso
+[2025-06-30 15:40:56] Usuario: admin | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=4, Nome=Sala 02, Equipamentos desatrelados=0, Equipamentos vinculados=0 | Status: sucesso
+[2025-06-30 15:42:12] Usuario: admin | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=14, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-06-30 15:44:09] Usuario: admin | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=15, Nome=Meetup, Tipo=Meetup, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-06-30 15:46:41] Usuario: admin | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=16, Nome=TV, Tipo=TV, Marca=LG, Modelo=55UP751C0SF | Status: sucesso
+[2025-06-30 15:48:48] Usuario: admin | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=17, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-06-30 15:49:45] Usuario: admin | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=18, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-06-30 15:51:19] Usuario: admin | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=19, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-06-30 15:53:14] Usuario: admin | Acao: EXCLUIR_SALA | Detalhes: Sala excluída: ID=3, Nome=Sala Teste 11 | Status: sucesso
+[2025-06-30 15:53:21] Usuario: admin | Acao: EXCLUIR_EQUIPAMENTO | Detalhes: Equipamento excluído: ID=12, Nome=teste, Tipo=TV, Marca=LG, Modelo=32LM621CBSB | Status: sucesso
+[2025-06-30 15:54:15] Usuario: admin | Acao: ATUALIZAR_SWITCH | Detalhes: Switch atualizado: ID=1, Nome=Switch 01 - Térreo, Marca=Cisco, Modelo=Outro | Status: sucesso
+[2025-06-30 15:56:01] Usuario: admin | Acao: CRIAR_SWITCH | Detalhes: Switch criado: ID=3, Nome=Switch 02 - Térreo, Marca=Cisco, Modelo=Outro | Status: sucesso
+[2025-06-30 15:56:13] Usuario: admin | Acao: CRIAR_SWITCH | Detalhes: Switch criado: ID=4, Nome=Switch 03 - Térreo, Marca=Cisco, Modelo=Outro | Status: sucesso
+[2025-06-30 15:56:48] Usuario: admin | Acao: REMOVER_CONEXAO | Detalhes: Conexão removida: ID=1, Porta ID=1, Equipamento ID=4 | Status: sucesso
+[2025-06-30 15:58:21] Usuario: admin | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=3, Porta ID=3, Equipamento ID=7 | Status: sucesso
+[2025-06-30 15:58:37] Usuario: admin | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=4, Porta ID=4, Equipamento ID=5 | Status: sucesso
+[2025-06-30 15:59:02] Usuario: admin | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=5, Porta ID=5, Equipamento ID=4 | Status: sucesso
+[2025-06-30 16:00:42] Usuario: admin | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=6, Porta ID=6, Equipamento ID=19 | Status: sucesso
+[2025-06-30 16:00:51] Usuario: admin | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=7, Porta ID=7, Equipamento ID=17 | Status: sucesso
+[2025-06-30 16:00:56] Usuario: admin | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=8, Porta ID=8, Equipamento ID=18 | Status: sucesso
+[2025-06-30 16:02:50] Usuario: admin | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=20, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-06-30 16:03:12] Usuario: admin | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=5, Nome=Sala 03 (via formulário) | Status: sucesso
+[2025-06-30 16:03:41] Usuario: admin | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=5, Nome=Sala 03, Equipamentos desatrelados=0, Equipamentos vinculados=1 | Status: sucesso
+[2025-06-30 16:06:02] Usuario: admin | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=5, Nome=Sala 03, Equipamentos desatrelados=0, Equipamentos vinculados=1 | Status: sucesso
+[2025-06-30 16:08:14] Usuario: admin | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=21, Nome=Câmera, Tipo=Camera, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-06-30 16:08:54] Usuario: admin | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=22, Nome=Microfone, Tipo=Microfone, Marca=Logitech, Modelo=Rally Mic Pod | Status: sucesso
+[2025-06-30 16:10:35] Usuario: admin | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=23, Nome=Speaker, Tipo=Speaker, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-06-30 16:11:35] Usuario: admin | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=24, Nome=TV, Tipo=TV, Marca=LG, Modelo=75UP801C0SB | Status: sucesso
+[2025-06-30 16:15:43] Usuario: admin | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=25, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-W-S | Status: sucesso
+[2025-06-30 16:16:47] Usuario: admin | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=26, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-06-30 16:17:44] Usuario: admin | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=27, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-06-30 16:18:25] Usuario: admin | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=28, Nome=Display Hub, Tipo=Hub, Marca=Logitech, Modelo=Display | Status: sucesso
+[2025-06-30 16:19:02] Usuario: admin | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=29, Nome=Table Hub, Tipo=Hub, Marca=Logitech, Modelo=Table | Status: sucesso
+[2025-06-30 16:24:32] Usuario: admin | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=9, Porta ID=9, Equipamento ID=27 | Status: sucesso
+[2025-06-30 16:24:44] Usuario: admin | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=10, Porta ID=10, Equipamento ID=26 | Status: sucesso
+[2025-06-30 16:24:50] Usuario: admin | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=11, Porta ID=11, Equipamento ID=25 | Status: sucesso
+[2025-06-30 16:38:42] Usuario: admin | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=4, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-06-30 16:39:14] Usuario: admin | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=13, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-06-30 16:39:25] Usuario: admin | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=14, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-06-30 16:39:33] Usuario: admin | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=20, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-06-30 16:40:16] Usuario: admin | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=3, Nome=TV, Tipo=TV, Marca=LG, Modelo=50UP751C0SF | Status: sucesso
+[2025-07-01 11:20:48] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=1, Nome=Sala 01, Equipamentos desatrelados=0, Equipamentos vinculados=6 | Status: sucesso
+[2025-07-01 11:21:10] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=1, Nome=Sala 01, Equipamentos desatrelados=0, Equipamentos vinculados=6 | Status: sucesso
+[2025-07-01 11:53:52] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=1, Nome=Sala 01, Equipamentos desatrelados=0, Equipamentos vinculados=6 | Status: sucesso
+[2025-07-01 12:20:27] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=4, Nome=Sala 02, Equipamentos desatrelados=0, Equipamentos vinculados=6 | Status: sucesso
+[2025-07-01 12:20:44] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=5, Nome=Sala 03, Equipamentos desatrelados=0, Equipamentos vinculados=10 | Status: sucesso
+[2025-07-01 14:43:50] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=30, Nome=Table Hub, Tipo=Hub, Marca=Logitech, Modelo=Table | Status: sucesso
+[2025-07-01 14:45:37] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=30, Nome=Table Hub, Tipo=Hub, Marca=Logitech, Modelo=Table | Status: sucesso
+[2025-07-01 15:45:49] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=6, Nome=Sala 04 (via formulário) | Status: sucesso
+[2025-07-01 15:46:25] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=6, Nome=Sala 04, Equipamentos desatrelados=0, Equipamentos vinculados=0 | Status: sucesso
+[2025-07-01 15:51:00] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=7, Nome=Sala 05 (via formulário) | Status: sucesso
+[2025-07-01 15:52:29] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=8, Nome=Sala 06 (via formulário) | Status: sucesso
+[2025-07-01 15:54:59] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=9, Nome=Sala 07 (via formulário) | Status: sucesso
+[2025-07-01 15:55:19] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=7, Nome=Sala 05, Equipamentos desatrelados=0, Equipamentos vinculados=0 | Status: sucesso
+[2025-07-01 15:55:28] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=8, Nome=Sala 06, Equipamentos desatrelados=0, Equipamentos vinculados=0 | Status: sucesso
+[2025-07-03 15:44:44] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=4 | Status: sucesso
+[2025-07-04 11:20:27] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=9 | Status: sucesso
+[2025-07-04 11:39:47] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=9 | Status: sucesso

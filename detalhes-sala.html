@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes da Sala</title>
+    <link rel="stylesheet" href="css/estilo-base.css">
+    <link rel="stylesheet" href="css/estilo-detalhes-sala.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container" style="position:relative;">
+        <div id="empresa-logada" style="position:absolute;top:16px;right:24px;color:#4a90e2;font-weight:bold;z-index:2;"></div>
+        <div class="voltar-container">
+            <button class="card-btn voltar" onclick="window.history.back()" title="Voltar">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        <div class="sala-titulo" id="salaTitulo">Sala</div>
+        <div class="sala-foto" id="salaFoto"></div>
+        <div class="sala-desc" id="salaDesc"></div>
+        <div class="sala-acoes">
+            <div class="acao" onclick="window.location.href='detalhes-equipamentos-sala.html?id=' + getIdFromUrl()"><i class="fas fa-list"></i>Equipamentos</div>
+            <div class="acao" onclick="window.location.href='visualizar-layout-sala.html?sala_id=' + getIdFromUrl()"><i class="fas fa-random"></i>Conexões</div>
+            <div class="acao"><i class="fas fa-map-marker-alt"></i>Localização</div>
+            <div class="acao" id="acao-switch"><i class="fas fa-server"></i>Switch</div>
+            <div class="acao"><i class="fas fa-undo"></i>Histórico</div>
+        </div>
+    </div>
+    <script>
+    function getIdFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('id');
+    }
+    async function carregarSala() {
+        const id = getIdFromUrl();
+        if (!id) return;
+        const resp = await fetch(`/salas/${id}`);
+        if (!resp.ok) return;
+        const sala = await resp.json();
+        document.getElementById('salaTitulo').innerText = sala.nome || 'Sala';
+        // Foto
+        const fotoDiv = document.getElementById('salaFoto');
+        fotoDiv.innerHTML = sala.foto ? `<img src='${sala.foto.startsWith('img/') ? 'static/' + sala.foto : sala.foto}' alt='${sala.nome}'>` : '';
+        // Descrição
+        document.getElementById('salaDesc').innerText = sala.descricao || '';
+    }
+    carregarSala();
+
+    window.addEventListener('DOMContentLoaded', function() {
+        fetch('/empresa_atual')
+            .then(resp => resp.json())
+            .then(data => {
+                if (data.logo) {
+                    document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                } else if (data.nome) {
+                    document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
+                }
+            });
+        // Adiciona evento ao botão Switch
+        const btnSwitch = document.getElementById('acao-switch');
+        if (btnSwitch) {
+            btnSwitch.onclick = function() {
+                window.location.href = 'visualizar-switch-sala.html?sala_id=' + getIdFromUrl();
+            };
+        }
+    });
+    </script>
+</body>
+</html> 

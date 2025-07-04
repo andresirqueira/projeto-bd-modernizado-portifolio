@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Excluir Sala</title>
+    <link rel="stylesheet" href="css/estilo-base.css">
+    <link rel="stylesheet" href="css/estilo-excluir-sala.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container" style="margin-top: 40px;">
+        <div class="voltar-container">
+            <button class="card-btn voltar" onclick="window.location.href='config-admin.html'" title="Voltar">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        <h1>Excluir Sala</h1>
+        <div style="text-align:center;margin-bottom:18px;">
+            <input id="filtroSala" type="text" class="input-filtro-sala" placeholder="Filtrar por nome da sala...">
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;" id="cardsSalasContainer"></div>
+        <div class="msg" id="msg"></div>
+        <div id="empresa-logada"></div>
+    </div>
+    <script>
+    let todasSalas = [];
+    async function carregarSalas() {
+        const resp = await fetch('/salas');
+        const salas = await resp.json();
+        todasSalas = salas;
+        renderizarCards(salas);
+    }
+    function renderizarCards(salas) {
+        const container = document.getElementById('cardsSalasContainer');
+        let html = '';
+        for (const sala of salas) {
+            html += `<div class='card-sala-excluir'>`;
+            if (sala.foto) {
+                html += `<div class='sala-foto'><img src='${sala.foto.startsWith('img/') ? 'static/' + sala.foto : sala.foto}' alt='${sala.nome || ''}'></div>`;
+            }
+            html += `<div class='nome'>${sala.nome}</div>`;
+            html += `<div class='acoes'>`;
+            html += `<button class="excluir-btn" onclick="excluirSala(${sala.id}, this)"><i class="fas fa-trash-alt"></i> Excluir</button>`;
+            html += `</div>`;
+            html += `</div>`;
+        }
+        container.innerHTML = html;
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        const filtro = document.getElementById('filtroSala');
+        filtro.addEventListener('input', function() {
+            const termo = filtro.value.trim().toLowerCase();
+            const filtradas = termo ? todasSalas.filter(s => (s.nome||'').toLowerCase().includes(termo)) : todasSalas;
+            renderizarCards(filtradas);
+        });
+        fetch('/empresa_atual')
+            .then(resp => resp.json())
+            .then(data => {
+                if (data.logo) {
+                    document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                } else if (data.nome) {
+                    document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
+                }
+            });
+    });
+
+    async function excluirSala(id, btn) {
+        // Buscar equipamentos vinculados
+        const respEq = await fetch(`/equipamentos?sala_id=${id}`);
+        const equipamentos = await respEq.json();
+        let msg = '';
+        if (equipamentos.length > 0) {
+            msg = `Atenção! Os seguintes equipamentos estão vinculados a esta sala e serão desvinculados:\n\n`;
+            msg += equipamentos.map(eq => `- ${eq.nome}${eq.modelo ? ' (' + eq.modelo + ')' : ''}`).join('\n');
+            msg += `\n\nEles ficarão disponíveis para vincular a outras salas.`;
+        } else {
+            msg = 'Tem certeza que deseja excluir esta sala?';
+        }
+        if (!confirm(msg)) return;
+        const resp = await fetch(`/salas/${id}`, { method: 'DELETE' });
+        const json = await resp.json();
+        if (json.status === 'ok') {
+            btn.closest('.card-sala-excluir').remove();
+            document.getElementById('msg').innerText = 'Sala excluída com sucesso!';
+        } else {
+            document.getElementById('msg').innerText = 'Erro ao excluir sala!';
+        }
+    }
+
+    carregarSalas();
+    </script>
+</body>
+</html> 

@@ -1,0 +1,169 @@
+/* Estilo específico para Visualizar Salas */
+
+body {
+    background: rgb(18, 33, 55);
+}
+
+.admin-container {
+    background: #34495e;
+    padding: 32px 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    max-width: 1100px;
+    margin: 40px auto;
+    position: relative;
+}
+
+#empresa-logada {
+    position: absolute;
+    top: 16px;
+    right: 24px;
+    color: #4a90e2;
+    font-weight: bold;
+    margin-bottom: 0;
+    text-align: right;
+    z-index: 2;
+}
+
+.voltar-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 12px;
+}
+
+h1 {
+    text-align: left;
+    margin-bottom: 24px;
+}
+
+.input-filtro-sala {
+    width: 100%;
+    max-width: 400px;
+    background: #2c3e50;
+    color: #eee;
+    border: 1px solid #888;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 1em;
+    margin: 0 auto 18px auto;
+    box-sizing: border-box;
+    display: block;
+}
+.input-filtro-sala::placeholder {
+    color: #b2bec3;
+}
+
+#cardsSalasContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+.card-sala {
+    background: #2c3e50;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    padding: 18px 22px;
+    margin: 18px 12px;
+    min-width: 320px;
+    max-width: 380px;
+    color: #eee;
+    position: relative;
+    border: 2px solid #444;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.card-sala .nome {
+    font-size: 1.25em;
+    font-weight: bold;
+    color: #f1c40f;
+    margin-bottom: 16px;
+    text-align: center;
+}
+.card-sala .acoes {
+    margin-bottom: 10px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+.card-sala button {
+    font-size: 0.97em;
+    padding: 6px 14px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background: #2980b9;
+    color: #fff;
+    transition: background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.card-sala button:hover {
+    background: #f1c40f;
+    color: #223;
+}
+.equip-lista {
+    color: #ccc;
+    margin-top: 8px;
+}
+.equip-item {
+    background: #223;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.equip-item img {
+    max-width: 32px;
+    max-height: 32px;
+    border-radius: 4px;
+}
+.equip-item b {
+    color: #fff;
+}
+.equip-item span {
+    font-size: 0.97em;
+    padding: 2px 10px;
+    border-radius: 5px;
+}
+.equip-item .defeito {
+    background: #a94442;
+    color: #fff;
+}
+.equip-item .ok {
+    background: #2ecc40;
+    color: #223;
+}
+.sala-foto {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+    width: 100%;
+}
+.sala-foto img {
+    max-width: 180px;
+    max-height: 120px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    object-fit: cover;
+}
+@media (max-width: 700px) {
+    .admin-container {
+        padding: 8px 2vw;
+        max-width: 98vw;
+    }
+    .card-sala {
+        min-width: 90vw;
+        max-width: 98vw;
+    }
+    .input-filtro-sala {
+        max-width: 98vw;
+    }
+} 

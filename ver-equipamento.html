@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizar Equipamento</title>
+    <link rel="stylesheet" href="css/estilo-base.css">
+    <link rel="stylesheet" href="css/estilo-ver-equipamento.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="voltar-container">
+            <button class="card-btn voltar" onclick="voltarPainelConfig()" title="Voltar">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        <h1>Visualizar Equipamentos</h1>
+        <div id="empresa-logada"></div>
+        <div style="text-align:center;margin-bottom:18px;">
+            <input id="filtroEquipamento" type="text" class="input-filtro-equipamento" placeholder="Filtrar por nome do equipamento...">
+        </div>
+        <div id="resumoEquipamentos" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:18px;"></div>
+        <div style="overflow-x:auto;"><div id="tabelaEquipamentosContainer"></div></div>
+    </div>
+    <script>
+    function voltarPainelConfig() {
+        fetch('/perfil').then(resp => resp.json()).then(perfil => {
+            if (perfil.nivel === 'admin') {
+                window.location.href = 'config-admin.html';
+            } else if (perfil.nivel === 'tecnico') {
+                window.location.href = 'config-tecnico.html';
+            } else {
+                window.location.href = 'config-usuario.html';
+            }
+        });
+    }
+    // Busca todas as salas para mapear id -> nome
+    let salasMap = {};
+    fetch('/salas')
+        .then(resp => resp.json())
+        .then(salas => {
+            salas.forEach(sala => {
+                salasMap[sala.id] = sala.nome;
+            });
+            console.log('SALAS MAP:', salasMap);
+            carregarEquipamentos();
+        });
+    let todosEquipamentos = [];
+    function carregarEquipamentos() {
+        fetch('/equipamentos')
+            .then(resp => resp.json())
+            .then(equipamentos => {
+                todosEquipamentos = equipamentos;
+                renderizarEquipamentos(equipamentos);
+            });
+    }
+    function renderizarResumo(equipamentos) {
+        const resumoDiv = document.getElementById('resumoEquipamentos');
+        if (!equipamentos.length) {
+            resumoDiv.innerHTML = "<span style='color:#ccc;'>Nenhum equipamento encontrado.</span>";
+            return;
+        }
+        // Conta por tipo
+        const tipos = {};
+        equipamentos.forEach(eq => {
+            if (!tipos[eq.tipo]) tipos[eq.tipo] = 0;
+            tipos[eq.tipo]++;
+        });
+        let html = `
+            <div style="background:#223;padding:8px 18px;border-radius:8px;color:#eee;display:flex;align-items:center;gap:6px;">
+                <i class="fas fa-boxes"></i> Total: <b>${equipamentos.length}</b>
+            </div>
+        `;
+        Object.entries(tipos).forEach(([tipo, qtd]) => {
+            html += `
+                <div style="background:#223;padding:8px 18px;border-radius:8px;color:#eee;display:flex;align-items:center;gap:6px;">
+                    <i class="fas fa-tag"></i> ${tipo || 'Sem tipo'}: <b>${qtd}</b>
+                </div>
+            `;
+        });
+        resumoDiv.innerHTML = html;
+    }
+    function renderizarEquipamentos(equipamentos) {
+        const container = document.getElementById('tabelaEquipamentosContainer');
+        let html = `<div id='cardsEquipamentosContainer' style='display:flex;flex-wrap:wrap;gap:12px;justify-content:center;'>`;
+        equipamentos.forEach(eq => {
+            const salaIdStr = eq.sala_id !== undefined && eq.sala_id !== null ? String(eq.sala_id) : null;
+            html += `<div class='card-equipamento'>`;
+            if (eq.foto) {
+                html += `<div class='equip-foto'><img src='${eq.foto.startsWith("img/") ? "static/" + eq.foto : eq.foto}' alt='${eq.nome || ''}'></div>`;
+            }
+            html += `<div class='equip-nome'>${eq.nome || ''}</div>`;
+            html += `<div class='equip-info'>`;
+            html += `<div class='equip-info-linha'><b>Sala:</b> ${salaIdStr && salasMap[salaIdStr] ? salasMap[salaIdStr] : (eq.sala_id ? eq.sala_id : 'Sem sala')}</div>`;
+            html += `<div class='equip-info-linha'><b>Status:</b> ${eq.defeito === 1 || eq.defeito === true || eq.status === 'defeito' ? 'Defeito' : 'Funcionando'}</div>`;
+            html += `<div class='equip-info-linha'><b>Tipo:</b> ${eq.tipo || ''}</div>`;
+            html += `<div class='equip-info-linha'><b>Marca:</b> ${eq.marca || ''}</div>`;
+            html += `<div class='equip-info-linha'><b>Série:</b> ${eq.dados?.serie || ''}</div>`;
+            html += `<div class='equip-info-linha'><b>Descrição:</b> ${eq.descricao || ''}</div>`;
+            html += `</div>`;
+            html += `</div>`;
+        });
+        html += `</div>`;
+        container.innerHTML = html;
+        renderizarResumo(equipamentos);
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        const filtro = document.getElementById('filtroEquipamento');
+        filtro.addEventListener('input', function() {
+            const termo = filtro.value.trim().toLowerCase();
+            const filtrados = termo ? todosEquipamentos.filter(eq => (eq.nome||'').toLowerCase().includes(termo) || (eq.tipo||'').toLowerCase().includes(termo)) : todosEquipamentos;
+            renderizarEquipamentos(filtrados);
+        });
+        fetch('/empresa_atual')
+            .then(resp => resp.json())
+            .then(data => {
+                if (data.logo) {
+                    document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                } else if (data.nome) {
+                    document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
+                }
+            });
+    });
+    </script>
+</body>
+</html> 

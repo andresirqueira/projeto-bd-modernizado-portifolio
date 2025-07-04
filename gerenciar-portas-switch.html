@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Portas de Switch</title>
+    <link rel="stylesheet" href="css/estilo-base.css">
+    <link rel="stylesheet" href="css/estilo-gerenciar-portas-switch.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <div class="voltar-container">
+            <button class="card-btn voltar" onclick="voltarPainelConfig()" title="Voltar">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        <h1>Gerenciar Portas de Switch</h1>
+        
+        <div class="switch-selector">
+            <label for="switchSelect">Selecione o Switch:</label><br>
+            <select id="switchSelect" onchange="carregarPortas()">
+                <option value="">Selecione um switch...</option>
+            </select>
+            <button id="btnAdicionarPorta" onclick="abrirModalPorta()" style="display:none;">
+                <i class="fas fa-plus"></i> ADICIONAR PORTA
+            </button>
+            <button id="btnAdicionarTodasPortas" style="display:none;">
+                <i class="fas fa-layer-group"></i> ADICIONAR TODAS AS PORTAS
+            </button>
+        </div>
+
+        <div class="portas-grid" id="portasGrid">
+            <!-- Portas serão carregadas aqui -->
+        </div>
+
+        <div class="msg" id="msg"></div>
+        <div id="empresa-logada"></div>
+    </div>
+
+    <!-- Modal para conectar equipamento -->
+    <div id="modalConectar" class="modal">
+        <div class="modal-content">
+            <h2>Conectar Equipamento</h2>
+            <form id="formConectar">
+                <div class="form-group">
+                    <label>Porta:</label>
+                    <input type="text" id="portaNumero" readonly style="background: #222a33; color: #ecf0f1; cursor: not-allowed;">
+                </div>
+                <div class="form-group">
+                    <label>Equipamento:</label>
+                    <select id="equipamentoSelect" required>
+                        <option value="">Selecione um equipamento...</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-cancelar" onclick="fecharModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-salvar">Conectar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para adicionar porta -->
+    <div id="modalPorta" class="modal">
+        <div class="modal-content">
+            <h2>Adicionar Porta</h2>
+            <form id="formPorta">
+                <div class="form-group">
+                    <label>Número da Porta:</label>
+                    <select id="numeroPorta" required>
+                        <option value="">Selecione...</option>
+                        <!-- opções de 1 a 48 -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Descrição:</label>
+                    <input type="text" id="descricaoPorta" placeholder="Ex: Porta para sala de reunião">
+                </div>
+                <div class="modal-actions" style="display: flex !important; gap: 12px; justify-content: flex-end; margin-top: 24px;">
+                    <button type="button" class="btn btn-cancelar" onclick="fecharModal()" style="background: #95a5a6; color: white; padding: 10px 20px; border-radius: 6px; border: none; display: inline-block !important; font-size: 1em !important;">Cancelar</button>
+                    <button type="submit" class="btn btn-salvar" style="background: #27ae60; color: white; padding: 10px 20px; border-radius: 6px; border: none; display: inline-block !important; font-size: 1em !important;">Adicionar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let switchAtual = null;
+        let portaSelecionada = null;
+
+        // Carregar switches
+        async function carregarSwitches() {
+            try {
+                const resp = await fetch('/switches');
+                const switches = await resp.json();
+                const select = document.getElementById('switchSelect');
+                select.innerHTML = '<option value="">Selecione um switch...</option>';
+                switches.forEach(switch_ => {
+                    const opt = document.createElement('option');
+                    opt.value = switch_.id;
+                    opt.textContent = `${switch_.nome} (${switch_.marca} ${switch_.modelo})`;
+                    select.appendChild(opt);
+                });
+                // Sempre volta para a opção vazia ao recarregar a lista
+                select.value = "";
+                carregarPortas(); // Para garantir que o botão suma ao recarregar
+            } catch (error) {
+                console.error('Erro ao carregar switches:', error);
+            }
+        }
+
+        // Carregar portas do switch selecionado
+        async function carregarPortas() {
+            const switchId = document.getElementById('switchSelect').value;
+            const btnAdicionar = document.getElementById('btnAdicionarPorta');
+            const btnAdicionarTodas = document.getElementById('btnAdicionarTodasPortas');
+            if (switchId) {
+                btnAdicionar.style.display = 'block';
+                btnAdicionarTodas.style.display = 'block';
+            } else {
+                btnAdicionar.style.display = 'none';
+                btnAdicionarTodas.style.display = 'none';
+            }
+            console.log('Switch selecionado:', switchId);
+            
+            if (!switchId) {
+                console.log('Nenhum switch selecionado');
+                document.getElementById('portasGrid').innerHTML = '<div style="text-align: center; padding: 40px; color: #bdc3c7;">Selecione um switch para ver suas portas</div>';
+                return;
+            }
+
+            try {
+                console.log('Carregando portas para switch ID:', switchId);
+                const resp = await fetch(`/switch-portas/${switchId}`);
+                console.log('Resposta das portas:', resp);
+                
+                if (!resp.ok) {
+                    console.error('Erro ao carregar portas:', resp.status, resp.statusText);
+                    document.getElementById('portasGrid').innerHTML = '<div style="text-align: center; padding: 40px; color: #e74c3c;">Erro ao carregar portas</div>';
+                    return;
+                }
+                
+                const portas = await resp.json();
+                console.log('Portas carregadas:', portas);
+                switchAtual = switchId;
+                
+                const grid = document.getElementById('portasGrid');
+                grid.innerHTML = '';
+                
+                if (portas.length === 0) {
+                    console.log('Nenhuma porta encontrada');
+                    grid.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #bdc3c7; background: #2c3e50; border-radius: 8px; border: 2px dashed #555;">
+                            <p style="margin-bottom: 20px; font-size: 1.1em;">Nenhuma porta configurada para este switch.</p>
+                            <p style="color: #95a5a6; font-size: 0.9em;">Use o botão "ADICIONAR PORTA" acima para criar a primeira porta.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                portas.forEach(porta => {
+                    const card = criarCardPorta(porta);
+                    grid.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error('Erro ao carregar portas:', error);
+                document.getElementById('portasGrid').innerHTML = '<div style="text-align: center; padding: 40px; color: #e74c3c;">Erro ao carregar portas</div>';
+            }
+        }
+
+        // Criar card de porta
+        function criarCardPorta(porta) {
+            const card = document.createElement('div');
+            card.className = `porta-card ${porta.status}`;
+            
+            const equipamentoInfo = porta.equipamento_conectado ? `
+                <div class="equipamento-info">
+                    <h4>Equipamento Conectado:</h4>
+                    <p><strong>${porta.equipamento_conectado.nome}</strong></p>
+                    <p>Tipo: ${porta.equipamento_conectado.tipo}</p>
+                    <p>Sala: ${porta.equipamento_conectado.sala_nome || 'Sem sala'}</p>
+                    <p>IP 1: ${porta.equipamento_conectado.ip1 || '-'}</p>
+                    <p>MAC 1: ${porta.equipamento_conectado.mac1 || '-'}</p>
+                    <p>IP 2: ${porta.equipamento_conectado.ip2 || '-'}</p>
+                    <p>MAC 2: ${porta.equipamento_conectado.mac2 || '-'}</p>
+                </div>
+            ` : '';
+
+            const actions = porta.status === 'livre' ? `
+                <button class="btn btn-conectar" onclick="conectarEquipamento(${porta.id}, ${porta.numero_porta})">
+                    <i class="fas fa-plug"></i> Conectar
+                </button>
+            ` : `
+                <button class="btn btn-desconectar" onclick="desconectarEquipamento(${porta.id})">
+                    <i class="fas fa-unlink"></i> Desconectar
+                </button>
+            `;
+
+            card.innerHTML = `
+                <div class="porta-header">
+                    <span class="porta-numero">Porta ${porta.numero_porta}</span>
+                    <span class="porta-status ${porta.status}">${porta.status.toUpperCase()}</span>
+                </div>
+                <div class="porta-descricao">${porta.descricao || 'Sem descrição'}</div>
+                ${equipamentoInfo}
+                <div class="porta-actions">
+                    ${actions}
+                </div>
+            `;
+            
+            // Adiciona evento de clique para portas ocupadas
+            if (porta.status === 'ocupada') {
+                card.style.cursor = 'pointer';
+                card.title = 'Clique para desconectar o equipamento';
+                card.addEventListener('click', function(e) {
+                    // Evita disparar o clique se clicou em um botão
+                    if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                        return;
+                    }
+                    desconectarEquipamento(porta.id);
+                });
+            }
+            
+            return card;
+        }
+
+        // Conectar equipamento
+        async function conectarEquipamento(portaId, numeroPorta) {
+            portaSelecionada = portaId;
+            document.getElementById('portaNumero').value = `Porta ${numeroPorta}`;
+            
+            // Carregar equipamentos disponíveis
+            try {
+                const resp = await fetch('/equipamentos?conectaveis=1');
+                const equipamentos = await resp.json();
+                const select = document.getElementById('equipamentoSelect');
+                
+                select.innerHTML = '<option value="">Selecione um equipamento...</option>';
+                equipamentos.forEach(eq => {
+                    const opt = document.createElement('option');
+                    opt.value = eq.id;
+                    opt.textContent = `${eq.nome} (${eq.tipo}) - Sala: ${eq.sala_nome}`;
+                    select.appendChild(opt);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar equipamentos:', error);
+            }
+            
+            document.getElementById('modalConectar').style.display = 'block';
+        }
+
+        // Desconectar equipamento
+        async function desconectarEquipamento(portaId) {
+            if (!confirm('Tem certeza que deseja desconectar este equipamento?')) {
+                return;
+            }
+
+            try {
+                // Primeiro, buscar a conexão
+                const resp = await fetch('/conexoes');
+                const conexoes = await resp.json();
+                const conexao = conexoes.find(c => c.porta === portaId);
+                
+                if (conexao) {
+                    const deleteResp = await fetch(`/conexoes/${conexao.id}`, {
+                        method: 'DELETE'
+                    });
+                    
+                    if (deleteResp.ok) {
+                        mostrarMensagem('Equipamento desconectado com sucesso!', 'success');
+                        carregarPortas();
+                    } else {
+                        mostrarMensagem('Erro ao desconectar equipamento', 'error');
+                    }
+                }
+            } catch (error) {
+                console.error('Erro ao desconectar:', error);
+                mostrarMensagem('Erro ao desconectar equipamento', 'error');
+            }
+        }
+
+        // Abrir modal para adicionar porta
+        async function abrirModalPorta() {
+            // Buscar portas já cadastradas para o switch atual
+            const select = document.getElementById('numeroPorta');
+            // Limpa o select
+            select.innerHTML = '<option value="">Selecione...</option>';
+            if (!switchAtual) {
+                alert('Selecione um switch primeiro!');
+                return;
+            }
+            try {
+                const resp = await fetch(`/switch-portas/${switchAtual}`);
+                const portas = await resp.json();
+                const ocupadas = portas.map(p => Number(p.numero_porta));
+                for (let i = 1; i <= 48; i++) {
+                    if (!ocupadas.includes(i)) {
+                        const opt = document.createElement('option');
+                        opt.value = i;
+                        opt.textContent = i;
+                        select.appendChild(opt);
+                    }
+                }
+            } catch (error) {
+                console.error('Erro ao buscar portas existentes:', error);
+            }
+            document.getElementById('modalPorta').style.display = 'block';
+        }
+
+        // Fechar modais
+        function fecharModal() {
+            document.getElementById('modalConectar').style.display = 'none';
+            document.getElementById('modalPorta').style.display = 'none';
+        }
+
+        // Mostrar mensagem
+        function mostrarMensagem(texto, tipo) {
+            const msg = document.getElementById('msg');
+            msg.innerText = texto;
+            msg.className = `msg ${tipo}`;
+            setTimeout(() => {
+                msg.innerText = '';
+                msg.className = 'msg';
+            }, 3000);
+        }
+
+        // Event listeners
+        document.getElementById('formConectar').onsubmit = async function(e) {
+            e.preventDefault();
+            
+            const equipamentoId = document.getElementById('equipamentoSelect').value;
+            if (!equipamentoId) {
+                mostrarMensagem('Selecione um equipamento', 'error');
+                return;
+            }
+
+            try {
+                const resp = await fetch('/conexoes', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        porta_id: portaSelecionada,
+                        equipamento_id: equipamentoId
+                    })
+                });
+
+                const json = await resp.json();
+                
+                if (json.status === 'ok') {
+                    mostrarMensagem('Equipamento conectado com sucesso!', 'success');
+                    fecharModal();
+                    carregarPortas();
+                } else {
+                    mostrarMensagem(json.mensagem || 'Erro ao conectar equipamento', 'error');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                mostrarMensagem('Erro ao conectar equipamento', 'error');
+            }
+        };
+
+        document.getElementById('formPorta').onsubmit = async function(e) {
+            e.preventDefault();
+            
+            const numeroPorta = document.getElementById('numeroPorta').value;
+            const descricao = document.getElementById('descricaoPorta').value;
+
+            try {
+                const resp = await fetch('/switch-portas', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        switch_id: switchAtual,
+                        numero_porta: parseInt(numeroPorta),
+                        descricao: descricao
+                    })
+                });
+
+                const json = await resp.json();
+                
+                if (json.status === 'ok') {
+                    mostrarMensagem('Porta adicionada com sucesso!', 'success');
+                    fecharModal();
+                    carregarPortas();
+                    document.getElementById('formPorta').reset();
+                } else {
+                    mostrarMensagem(json.mensagem || 'Erro ao adicionar porta', 'error');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                mostrarMensagem('Erro ao adicionar porta', 'error');
+            }
+        };
+
+        // Fechar modal ao clicar fora
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        };
+
+        // Inicializar
+        carregarSwitches();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('btnAdicionarPorta');
+            const select = document.getElementById('switchSelect');
+            btn.style.display = 'none';
+            select.addEventListener('change', function() {
+                if (this.value) {
+                    btn.style.display = 'block';
+                } else {
+                    btn.style.display = 'none';
+                }
+            });
+        });
+
+        function voltarPainelConfig() {
+            fetch('/perfil').then(resp => resp.json()).then(perfil => {
+                if (perfil.nivel === 'admin') {
+                    window.location.href = 'config-admin.html';
+                } else if (perfil.nivel === 'tecnico') {
+                    window.location.href = 'config-tecnico.html';
+                } else {
+                    window.location.href = 'config-usuario.html';
+                }
+            });
+        }
+
+        // Mostrar/ocultar botões ao selecionar switch
+        async function atualizarBotoesAdicionar() {
+            const switchId = document.getElementById('switchSelect').value;
+            const btnAdicionar = document.getElementById('btnAdicionarPorta');
+            const btnAdicionarTodas = document.getElementById('btnAdicionarTodasPortas');
+            if (switchId) {
+                btnAdicionar.style.display = 'block';
+                btnAdicionarTodas.style.display = 'block';
+                // Checar se todas as portas já foram adicionadas
+                let numPortasPadrao = 48;
+                try {
+                    const resp = await fetch(`/switch-portas/${switchId}`);
+                    const portas = await resp.json();
+                    if (portas.length >= numPortasPadrao) {
+                        btnAdicionarTodas.disabled = true;
+                        btnAdicionarTodas.title = 'Todas as portas já foram adicionadas para este switch.';
+                    } else {
+                        btnAdicionarTodas.disabled = false;
+                        btnAdicionarTodas.title = '';
+                    }
+                } catch (e) {
+                    btnAdicionarTodas.disabled = false;
+                    btnAdicionarTodas.title = '';
+                }
+            } else {
+                btnAdicionar.style.display = 'none';
+                btnAdicionarTodas.style.display = 'none';
+            }
+        }
+        document.getElementById('switchSelect').addEventListener('change', atualizarBotoesAdicionar);
+        // Chamar ao carregar também
+        atualizarBotoesAdicionar();
+
+        // Adicionar todas as portas
+        document.getElementById('btnAdicionarTodasPortas').onclick = async function() {
+            if (this.disabled) return;
+            if (!switchAtual) {
+                alert('Selecione um switch primeiro!');
+                return;
+            }
+            let numPortas = prompt('Quantas portas deseja criar para este switch? (Ex: 24 ou 48)', '48');
+            numPortas = parseInt(numPortas);
+            if (!numPortas || numPortas < 1 || numPortas > 96) {
+                alert('Número de portas inválido. Informe um valor entre 1 e 96.');
+                return;
+            }
+            try {
+                const resp = await fetch(`/switch-portas/${switchAtual}`);
+                const portas = await resp.json();
+                const ocupadas = portas.map(p => Number(p.numero_porta));
+                if (portas.length >= numPortas) {
+                    mostrarMensagem('Todas as portas já foram adicionadas para este switch.', 'error');
+                    return;
+                }
+                let criadas = 0;
+                for (let i = 1; i <= numPortas; i++) {
+                    if (!ocupadas.includes(i)) {
+                        const respAdd = await fetch('/switch-portas', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                switch_id: switchAtual,
+                                numero_porta: i,
+                                descricao: ''
+                            })
+                        });
+                        const json = await respAdd.json();
+                        if (json.status === 'ok') criadas++;
+                    }
+                }
+                mostrarMensagem(`${criadas} porta(s) adicionada(s) com sucesso!`, 'success');
+                carregarPortas();
+                atualizarBotoesAdicionar();
+            } catch (error) {
+                console.error('Erro ao adicionar portas em massa:', error);
+                mostrarMensagem('Erro ao adicionar portas em massa', 'error');
+            }
+        };
+
+        window.addEventListener('DOMContentLoaded', function() {
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    if (data.logo) {
+                        document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                    } else if (data.nome) {
+                        document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
+                    }
+                });
+        });
+    </script>
+</body>
+
+</html> 

@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Conexões de Equipamentos</title>
+  <link rel="stylesheet" href="css/estilo-adicionar-equipamento.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+
+    .sidebar {
+      width: 220px;
+      background: #222;
+      color: #fff;
+      padding: 10px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .sidebar h2 {
+      font-size: 1.1em;
+      margin-bottom: 10px;
+      color: #ffd700;
+    }
+
+    .equip-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      width: 100%;
+      align-items: center;
+    }
+
+    .equip-list img {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid #444;
+      cursor: grab;
+      transition: box-shadow 0.2s;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .equip-list img:active {
+      cursor: grabbing;
+      box-shadow: 0 0 8px #ffd700;
+    }
+
+    .main-canvas {
+      flex: 1;
+      position: relative;
+      background: #fff url('static/img/blue-print.png') center center / cover no-repeat;
+      overflow: auto;
+    }
+
+    #svg-connections {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .equip-instance {
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      cursor: move;
+      z-index: 2;
+      user-select: none;
+      box-sizing: border-box;
+    }
+
+    .equip-instance img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      display: block;
+      pointer-events: none;
+    }
+
+    .equip-instance.selected {
+      outline: 2px solid #007bff;
+      z-index: 3;
+    }
+
+    .resize-handle {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 14px;
+      height: 14px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 2px;
+      border: 1.5px solid #007bff;
+      cursor: se-resize;
+      z-index: 4;
+      display: none;
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+
+    .resize-handle:after {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      border-right: 2px solid #007bff;
+      border-bottom: 2px solid #007bff;
+      margin: 2px;
+    }
+
+    .equip-instance.selected .resize-handle {
+      display: flex;
+    }
+
+    @keyframes highlightPulse {
+      0% {
+        box-shadow: 0 0 0 0 #007bff55;
+      }
+
+      50% {
+        box-shadow: 0 0 0 6px #007bff33;
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 #007bff55;
+      }
+    }
+
+    .connect-highlight {
+      outline: 3px solid #007bff;
+      animation: highlightPulse 1s infinite;
+      z-index: 10 !important;
+    }
+
+    .resize-handle.resize-highlight {
+      box-shadow: 0 0 0 4px #27ae60, 0 0 8px 4px #27ae6066;
+      animation: highlightPulseResize 1.2s;
+    }
+
+    @keyframes highlightPulseResize {
+      0% {
+        box-shadow: 0 0 0 0 #27ae60, 0 0 8px 4px #27ae6066;
+      }
+
+      50% {
+        box-shadow: 0 0 0 8px #27ae6033, 0 0 8px 4px #27ae6066;
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 #27ae60, 0 0 8px 4px #27ae6066;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <h2>Equipamentos</h2>
+      <button id="addTextBtn"
+        style="margin-bottom: 16px; width: 90%; padding: 8px; background: #007bff; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 1em;">Adicionar
+        Texto</button>
+      <input type="color" id="textColorPicker"
+        style="display:none; margin-bottom: 8px; width: 90%; height: 32px; cursor: pointer;" title="Cor do texto" />
+      <input type="number" id="fontSizePicker" min="8" max="96" value="18"
+        style="display:none; margin-bottom: 16px; width: 90%; height: 32px; font-size: 1em; padding: 2px 8px; border-radius: 6px; border: 1px solid #ccc;"
+        title="Tamanho da fonte (px)" />
+      <button id="removeEquipBtn"
+        style="display:none; margin-bottom: 16px; width: 90%; background: #e74c3c; color: #fff; border: none; border-radius: 6px; height: 32px; font-size: 1em; cursor: pointer;">Excluir
+        Selecionado</button>
+      <div id="lineEditPanel"
+        style="display:none; margin-bottom: 16px; width: 90%; background: #f8f8f8; border-radius: 6px; border: 1px solid #ccc; padding: 10px;">
+        <label style="font-size:0.95em; color:#333;">Cor da linha:</label>
+        <input type="color" id="lineColorPicker"
+          style="width: 100%; height: 32px; margin-bottom: 8px; cursor: pointer;">
+        <label style="font-size:0.95em; color:#333;">Nome da conexão:</label>
+        <input type="text" id="lineNameInput"
+          style="width: 100%; height: 28px; font-size: 1em; padding: 2px 8px; border-radius: 4px; border: 1px solid #bbb;">
+        <label style="font-size:0.95em; color:#333; margin-top:8px;">Tamanho do texto:</label>
+        <input type="number" id="lineFontSizeInput" min="8" max="48" value="15"
+          style="width: 100%; height: 28px; font-size: 1em; padding: 2px 8px; border-radius: 4px; border: 1px solid #bbb; margin-bottom: 4px;">
+        <button id="removeLineBtn"
+          style="margin-top: 10px; width: 100%; background: #e74c3c; color: #fff; border: none; border-radius: 4px; height: 32px; font-size: 1em; cursor: pointer;">Remover
+          Linha</button>
+      </div>
+      <div class="equip-list" id="equipList">
+        <!-- Imagens de equipamentos serão inseridas aqui via JS -->
+      </div>
+    </aside>
+    <main class="main-canvas" id="mainCanvas">
+      <svg id="svg-connections"></svg>
+      <!-- Instâncias dos equipamentos serão inseridas aqui via JS -->
+    </main>
+  </div>
+  <div id="equipMenu" style="display:none; position:absolute; z-index:1000;"></div>
+  <div id="salaModal"
+    style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); z-index:4000; align-items:center; justify-content:center;">
+    <div
+      style="background:#fff; padding:32px 24px; border-radius:12px; min-width:320px; max-width:90vw; box-shadow:0 4px 24px #0003; display:flex; flex-direction:column; align-items:center;">
+      <h3 style="margin-top:0; color:#222;">Salvar layout para sala</h3>
+      <select id="salaSelect" style="width:100%;padding:8px 12px;font-size:1.1em;margin-bottom:18px;"></select>
+      <div style="display:flex;gap:16px;justify-content:center;width:100%;">
+        <button id="btnCancelarSala"
+          style="padding:8px 24px;font-size:1em;background:#aaa;color:#fff;border:none;border-radius:6px;">Cancelar</button>
+        <button id="btnConfirmarSala"
+          style="padding:8px 24px;font-size:1em;background:#27ae60;color:#fff;border:none;border-radius:6px;font-weight:bold;">Salvar</button>
+      </div>
+    </div>
+  </div>
+  <div id="modalInicio"
+    style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); z-index:5000; align-items:center; justify-content:center;">
+    <div
+      style="background:#fff; padding:32px 24px; border-radius:12px; min-width:320px; max-width:90vw; box-shadow:0 4px 24px #0003; display:flex; flex-direction:column; align-items:center;">
+      <h3 style="margin-top:0; color:#222;">Conexões de Equipamentos</h3>
+      <div id="botoesInicio" style="display:flex;gap:24px;margin:24px 0;">
+        <button id="btnNovoLayout"
+          style="padding:16px 32px;font-size:1.1em;background:#27ae60;color:#fff;border:none;border-radius:8px;font-weight:bold;">Novo</button>
+        <button id="btnAbrirLayout"
+          style="padding:16px 32px;font-size:1.1em;background:#2980b9;color:#fff;border:none;border-radius:8px;font-weight:bold;">Abrir</button>
+      </div>
+      <div id="abrirSalasBox" style="display:none;flex-direction:column;align-items:center;width:100%;">
+        <div style="margin-bottom:10px;font-weight:bold;">Escolha uma sala para editar o layout:</div>
+        <select id="salasComLayout" style="width:100%;padding:8px 12px;font-size:1.1em;margin-bottom:18px;"></select>
+        <button id="btnAbrirSalaLayout"
+          style="padding:8px 24px;font-size:1em;background:#27ae60;color:#fff;border:none;border-radius:6px;font-weight:bold;">Abrir
+          Layout</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Gera a barra lateral com as imagens dinamicamente
+    const equipList = document.getElementById('equipList');
+    fetch('/api/equipamentos-imagens')
+      .then(resp => resp.json())
+      .then(equipamentos => {
+        equipamentos.forEach((src, idx) => {
+          const img = document.createElement('img');
+          img.src = src;
+          img.draggable = true;
+          img.title = src.split('/').pop().replace(/\.[a-z]+$/i, '');
+          img.dataset.equipType = src;
+          img.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('equipType', src);
+          });
+          equipList.appendChild(img);
+        });
+      });
+
+    // Canvas principal
+    const mainCanvas = document.getElementById('mainCanvas');
+    const svg = document.getElementById('svg-connections');
+    let equipCounter = 0;
+    let draggingEquip = null;
+    let offsetX = 0, offsetY = 0;
+    let selectedEquip = null;
+    let connectionStart = null;
+    let connections = [];
+
+    // Color picker para texto
+    const textColorPicker = document.getElementById('textColorPicker');
+    let currentTextInstance = null;
+    const fontSizePicker = document.getElementById('fontSizePicker');
+
+    // Painel de edição de linha
+    const lineEditPanel = document.getElementById('lineEditPanel');
+    const lineColorPicker = document.getElementById('lineColorPicker');
+    const lineNameInput = document.getElementById('lineNameInput');
+    const lineFontSizeInput = document.getElementById('lineFontSizeInput');
+    let selectedLineIndex = null;
+
+    // Remover linha selecionada
+    const removeLineBtn = document.getElementById('removeLineBtn');
+
+    // Remover equipamento/texto selecionado
+    const removeEquipBtn = document.getElementById('removeEquipBtn');
+    let selectedEquipInstance = null;
+
+    // Paleta de cores para múltiplas conexões
+    const connectionColors = ['#007bff', '#e67e22', '#27ae60', '#e74c3c', '#8e44ad', '#16a085', '#f39c12', '#2c3e50'];
+
+    // Menu flutuante para equipamento/texto selecionado
+    const equipMenu = document.getElementById('equipMenu');
+    let menuHideTimeout = null;
+    let resizeMode = false;
+
+    // Variável global para sala atual
+    let salaIdAtual = null;
+
+    // Cores básicas para seleção rápida
+    const basicColors = ['#fff', '#222', '#007bff', '#e74c3c', '#27ae60', '#e67e22', '#8e44ad', '#888'];
+
+    // Adicionar fileira de botões de cor rápida no painel de edição de linha
+    const lineColorQuickRow = document.createElement('div');
+    lineColorQuickRow.style.display = 'flex';
+    lineColorQuickRow.style.gap = '8px';
+    lineColorQuickRow.style.margin = '8px 0 4px 0';
+    basicColors.forEach(color => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.style.width = '22px';
+      btn.style.height = '22px';
+      btn.style.borderRadius = '50%';
+      btn.style.border = '2px solid #fff';
+      btn.style.background = color;
+      btn.style.cursor = 'pointer';
+      btn.style.boxShadow = '0 1px 4px #0002';
+      btn.title = color;
+      btn.onclick = function () {
+        lineColorPicker.value = color;
+        lineColorPicker.dispatchEvent(new Event('input'));
+      };
+      lineColorQuickRow.appendChild(btn);
+    });
+    lineEditPanel.insertBefore(lineColorQuickRow, lineColorPicker.nextSibling);
+
+    function showEquipMenu(targetDiv) {
+      const rect = targetDiv.getBoundingClientRect();
+      const canvasRect = mainCanvas.getBoundingClientRect();
+      if (targetDiv.classList.contains('text-instance')) {
+        equipMenu.innerHTML = `
+          <div style=\"display: flex; flex-direction: row; gap: 10px; align-items: center;\">
+            <button id=\"equipMenuDuplicate\" title=\"Duplicar\" style=\"background: #f39c12; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px #0002; cursor: pointer;\">\n              <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\"/><rect x=\"3\" y=\"3\" width=\"13\" height=\"13\" rx=\"2\"/></svg>\n            </button>
+            <button id=\"equipMenuColor\" title=\"Mudar cor\" style=\"background: #222; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px #0002; cursor: pointer;\">\n              <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 16v-4\"/><path d=\"M12 8h.01\"/></svg>\n            </button>
+            <button id=\"equipMenuFontSize\" title=\"Tamanho da fonte\" style=\"background: #007bff; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px #0002; cursor: pointer; font-size:1.1em; color:#fff; font-weight:bold;\">A</button>
+            <button id=\"equipMenuResize\" title=\"Redimensionar\" style=\"background: #27ae60; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px #0002; cursor: pointer;\">\n              <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"16 8 16 16 8 16\"/><line x1=\"16\" y1=\"16\" x2=\"8\" y2=\"8\"/></svg>\n            </button>
+            <button id=\"equipMenuDelete\" title=\"Excluir\" style=\"background: #e74c3c; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px #0002; cursor: pointer;\">\n              <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"3 6 5 6 21 6\"/><path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2\"/><line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"/><line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"/></svg>\n            </button>
+          </div>
+          <div id=\"equipMenuColorPickerBox\" style=\"display:none; position:absolute; top:40px; left:0; background:#fff; border-radius:8px; box-shadow:0 2px 8px #0002; padding:10px 12px; z-index:2001; flex-direction:column; align-items:center; gap:8px;\"></div>
+          <div id=\"equipMenuFontSizeBox\" style=\"display:none; position:absolute; top:40px; left:40px; background:#fff; border-radius:8px; box-shadow:0 2px 8px #0002; padding:10px 12px; z-index:2001; flex-direction:column; align-items:center; gap:8px;\"></div>
+        `;
+      } else {
+        equipMenu.innerHTML = `
+          <div style=\"display: flex; flex-direction: row; gap: 10px; align-items: center;\">
+            <button id=\"equipMenuDuplicate\" title=\"Duplicar\" style=\"background: #f39c12; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px #0002; cursor: pointer;\">\n              <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\"/><rect x=\"3\" y=\"3\" width=\"13\" height=\"13\" rx=\"2\"/></svg>\n            </button>
+            <button id=\"equipMenuConnect\" title=\"Conectar\" style=\"background: #007bff; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px #0002; cursor: pointer;\">\n              <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4.93 19.07a10 10 0 0 1 0-14.14\"/><path d=\"M7.76 16.24a6 6 0 0 1 0-8.48\"/><line x1=\"12\" y1=\"20\" x2=\"12\" y2=\"4\"/><polyline points=\"16 8 12 4 8 8\"/></svg>\n            </button>
+            <button id=\"equipMenuResize\" title=\"Redimensionar\" style=\"background: #27ae60; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px #0002; cursor: pointer;\">\n              <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"16 8 16 16 8 16\"/><line x1=\"16\" y1=\"16\" x2=\"8\" y2=\"8\"/></svg>\n            </button>
+            <button id=\"equipMenuDelete\" title=\"Excluir\" style=\"background: #e74c3c; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px #0002; cursor: pointer;\">\n              <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"3 6 5 6 21 6\"/><path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2\"/><line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"/><line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"/></svg>\n            </button>
+          </div>
+        `;
+      }
+      equipMenu.style.display = 'block';
+      // Centralizar dentro do item, sobrepondo a parte superior, corrigindo para posição relativa ao mainCanvas
+      requestAnimationFrame(() => {
+        const menuWidth = equipMenu.offsetWidth;
+        const menuHeight = equipMenu.offsetHeight;
+        const elemRect = targetDiv.getBoundingClientRect();
+        const canvasRect = mainCanvas.getBoundingClientRect();
+        let left = elemRect.left - canvasRect.left + (targetDiv.offsetWidth - menuWidth) / 2 + 150;
+        let top;
+        if (targetDiv.classList.contains('text-instance')) {
+          // Centralizar verticalmente no texto
+          top = elemRect.top - canvasRect.top + (targetDiv.offsetHeight - menuHeight) / 2 - 50;
+        } else {
+          // Para imagens/equipamentos, mantém o cálculo atual
+          top = elemRect.top - canvasRect.top + 80;
+        }
+        // Garantir que o menu não fique fora do canvas
+        left = Math.max(2, Math.min(left, mainCanvas.offsetWidth - menuWidth - 2));
+        top = Math.max(2, Math.min(top, mainCanvas.offsetHeight - menuHeight - 2));
+        equipMenu.style.left = `${left}px`;
+        equipMenu.style.top = `${top}px`;
+      });
+      // Evento de clique
+      const connectBtn = document.getElementById('equipMenuConnect');
+      if (connectBtn) {
+        connectBtn.onclick = function (e) {
+          e.stopPropagation();
+          clearSelections();
+          targetDiv.classList.add('selected');
+          connectionStart = targetDiv;
+          hideEquipMenu();
+          highlightConnectableEquipments(targetDiv);
+        };
+      }
+      const resizeBtn = document.getElementById('equipMenuResize');
+      if (resizeBtn) {
+        resizeBtn.onclick = function (e) {
+          e.stopPropagation();
+          // Seleciona o equipamento/texto e remove seleção dos outros
+          document.querySelectorAll('.equip-instance.selected').forEach(div => div.classList.remove('selected'));
+          targetDiv.classList.add('selected');
+          // Destaca o handle de resize piscando
+          const handle = targetDiv.querySelector('.resize-handle');
+          if (handle) {
+            handle.classList.add('resize-highlight');
+            setTimeout(() => handle.classList.remove('resize-highlight'), 1200);
+          }
+          // Posiciona e mostra o botão OK
+          const rect = targetDiv.getBoundingClientRect();
+          const canvasRect = mainCanvas.getBoundingClientRect();
+          resizeOkBtn.style.left = (rect.right - canvasRect.left + 8) + 'px';
+          resizeOkBtn.style.top = (rect.bottom - canvasRect.top - 32) + 'px';
+          resizeOkBtn.style.display = 'flex';
+          hideEquipMenu();
+          // Salva referência para reabrir menu após OK
+          resizeOkBtn._targetDiv = targetDiv;
+          resizeMode = true;
+        };
+      }
+      const deleteBtn = document.getElementById('equipMenuDelete');
+      if (deleteBtn) {
+        deleteBtn.onclick = function (e) {
+          e.stopPropagation();
+          // Remove conexões relacionadas
+          connections = connections.filter(conn => conn.from !== targetDiv && conn.to !== targetDiv);
+          targetDiv.remove();
+          clearSelections();
+          updateConnections();
+          equipMenu.style.display = 'none';
+        };
+      }
+      const colorBtn = document.getElementById('equipMenuColor');
+      if (colorBtn) {
+        colorBtn.onclick = function (e) {
+          e.stopPropagation();
+          // Mostra o color picker e as cores rápidas
+          let colorBox = document.getElementById('equipMenuColorPickerBox');
+          if (!colorBox) return;
+          colorBox.innerHTML = '';
+          colorBox.style.display = 'flex';
+          // Color picker
+          const picker = document.createElement('input');
+          picker.type = 'color';
+          const span = targetDiv.querySelector('span');
+          picker.value = rgbToHex(span.style.color);
+          picker.style.width = '40px';
+          picker.style.height = '40px';
+          picker.style.border = 'none';
+          picker.style.background = 'none';
+          picker.style.cursor = 'pointer';
+          picker.oninput = function () {
+            span.style.color = picker.value;
+          };
+          colorBox.appendChild(picker);
+          // Cores rápidas
+          const quickRow = document.createElement('div');
+          quickRow.style.display = 'flex';
+          quickRow.style.gap = '8px';
+          basicColors.forEach(color => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.style.width = '22px';
+            btn.style.height = '22px';
+            btn.style.borderRadius = '50%';
+            btn.style.border = '2px solid #fff';
+            btn.style.background = color;
+            btn.style.cursor = 'pointer';
+            btn.style.boxShadow = '0 1px 4px #0002';
+            btn.title = color;
+            btn.onclick = function () {
+              span.style.color = color;
+              picker.value = color;
+            };
+            quickRow.appendChild(btn);
+          });
+          colorBox.appendChild(quickRow);
+          // Fechar ao clicar fora
+          setTimeout(() => {
+            function closeColorBox(ev) {
+              if (!colorBox.contains(ev.target) && ev.target !== colorBtn) {
+                colorBox.style.display = 'none';
+                document.removeEventListener('mousedown', closeColorBox);
+              }
+            }
+            document.addEventListener('mousedown', closeColorBox);
+          }, 100);
+        };
+      }
+      const fontSizeBtn = document.getElementById('equipMenuFontSize');
+      if (fontSizeBtn) {
+        fontSizeBtn.onclick = function (e) {
+          e.stopPropagation();
+          let fontBox = document.getElementById('equipMenuFontSizeBox');
+          if (!fontBox) return;
+          fontBox.innerHTML = '';
+          fontBox.style.display = 'flex';
+          const span = targetDiv.querySelector('span');
+          const input = document.createElement('input');
+          input.type = 'number';
+          input.min = 8;
+          input.max = 96;
+          input.value = parseInt(span.style.fontSize) || 18;
+          input.style.width = '60px';
+          input.style.fontSize = '1.1em';
+          input.style.padding = '2px 8px';
+          input.style.borderRadius = '6px';
+          input.style.border = '1px solid #ccc';
+          input.oninput = function () {
+            span.style.fontSize = input.value + 'px';
+          };
+          fontBox.appendChild(input);
+          // Fechar ao clicar fora
+          setTimeout(() => {
+            function closeFontBox(ev) {
+              if (!fontBox.contains(ev.target) && ev.target !== fontSizeBtn) {
+                fontBox.style.display = 'none';
+                document.removeEventListener('mousedown', closeFontBox);
+              }
+            }
+            document.addEventListener('mousedown', closeFontBox);
+          }, 100);
+        };
+      }
+      // Evento de clique para duplicar
+      const duplicateBtn = document.getElementById('equipMenuDuplicate');
+      if (duplicateBtn) {
+        duplicateBtn.onclick = function (e) {
+          e.stopPropagation();
+          duplicarItem(targetDiv);
+          hideEquipMenu();
+        };
+      }
+    }
+    function hideEquipMenu() {
+      equipMenu.style.display = 'none';
+    }
+
+    // Permite soltar equipamentos no canvas
+    mainCanvas.addEventListener('dragover', e => {
+      e.preventDefault();
+    });
+    mainCanvas.addEventListener('drop', e => {
+      e.preventDefault();
+      const equipType = e.dataTransfer.getData('equipType');
+      if (equipType) {
+        addEquipInstance(equipType, e.offsetX, e.offsetY);
+      }
+    });
+
+    function inicializarEquipInstance(div) {
+      const handle = div.querySelector('.resize-handle');
+      // Drag interno
+      div.addEventListener('mousedown', (e) => {
+        if (e.button !== 0) return;
+        if (e.target.classList.contains('resize-handle')) return;
+        draggingEquip = div;
+        offsetX = e.offsetX;
+        offsetY = e.offsetY;
+      });
+      div.addEventListener('mouseup', (e) => {
+        draggingEquip = null;
+        div.classList.remove('selected');
+        setTimeout(() => {
+          if (!div.classList.contains('selected')) {
+            textColorPicker.style.display = 'none';
+            fontSizePicker.style.display = 'none';
+            currentTextInstance = null;
+            removeEquipBtn.style.display = 'none';
+            selectedEquipInstance = null;
+            hideEquipMenu();
+          }
+        }, 100);
+      });
+      div.addEventListener('click', (e) => {
+        if (resizeMode) return;
+        showEquipMenu(div);
+        if (div.classList.contains('text-instance')) {
+          // Remove seleção de outros
+          document.querySelectorAll('.equip-instance.selected').forEach(d => d.classList.remove('selected'));
+          div.classList.add('selected');
+          selectedEquipInstance = div;
+          currentTextInstance = div;
+          // Mostra controles de edição de texto
+          textColorPicker.style.display = 'block';
+          fontSizePicker.style.display = 'block';
+          removeEquipBtn.style.display = 'block';
+          // Atualiza valores dos controles
+          const span = div.querySelector('span');
+          textColorPicker.value = rgbToHex(span.style.color);
+          fontSizePicker.value = parseInt(span.style.fontSize) || 18;
+        } else {
+          // Seleção normal de equipamento
+          document.querySelectorAll('.equip-instance.selected').forEach(d => d.classList.remove('selected'));
+          div.classList.add('selected');
+          selectedEquipInstance = div;
+          currentTextInstance = null;
+          textColorPicker.style.display = 'none';
+          fontSizePicker.style.display = 'none';
+          removeEquipBtn.style.display = 'block';
+        }
+        if (connectionStart && connectionStart !== div) {
+          // Só conecta se ambos NÃO forem textos
+          if (!connectionStart.classList.contains('text-instance') && !div.classList.contains('text-instance')) {
+            const key = [connectionStart.dataset.id, div.dataset.id].sort().join('-');
+            const siblings = connections.filter(conn => {
+              return [conn.from.dataset.id, conn.to.dataset.id].sort().join('-') === key;
+            });
+            if (siblings.length >= 2) {
+              alert('Já existem duas conexões entre estes equipamentos. Não é possível criar mais.');
+            } else {
+              const alreadyConnected = siblings.length > 0;
+              if (alreadyConnected) {
+                if (window.confirm('Estes equipamentos já estão conectados. Deseja criar uma segunda conexão mesmo assim?')) {
+                  addConnection(connectionStart, div);
+                }
+              } else {
+                if (window.confirm('Deseja realmente conectar estes dois equipamentos?')) {
+                  addConnection(connectionStart, div);
+                }
+              }
+            }
+          }
+          connectionStart.classList.remove('selected');
+          clearConnectHighlights();
+          connectionStart = null;
+        }
+      });
+      // Resize logic
+      let resizing = false;
+      let startX, startY, startW, startH;
+      handle.addEventListener('mousedown', function (e) {
+        e.stopPropagation();
+        resizing = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        startW = parseInt(document.defaultView.getComputedStyle(div).width, 10);
+        startH = parseInt(document.defaultView.getComputedStyle(div).height, 10);
+        document.body.style.cursor = 'se-resize';
+      });
+      document.addEventListener('mousemove', function (e) {
+        if (!resizing) return;
+        let dx = e.clientX - startX;
+        let dy = e.clientY - startY;
+        if (div.classList.contains('text-instance')) {
+          let newW = Math.max(32, startW + dx);
+          let newH = Math.max(24, startH + dy);
+          div.style.width = newW + 'px';
+          div.style.height = newH + 'px';
+        } else {
+          let size = Math.max(32, Math.round(Math.max(startW + dx, startH + dy)));
+          div.style.width = size + 'px';
+          div.style.height = size + 'px';
+        }
+        updateConnections();
+      });
+      document.addEventListener('mouseup', function (e) {
+        if (resizing) {
+          resizing = false;
+          document.body.style.cursor = '';
+        }
+      });
+      // Mostrar menu ao passar o mouse
+      div.addEventListener('mouseenter', () => {
+        if (resizeMode) return;
+        if (menuHideTimeout) clearTimeout(menuHideTimeout);
+        showEquipMenu(div);
+      });
+      div.addEventListener('mouseleave', () => {
+        if (resizeMode) return;
+        menuHideTimeout = setTimeout(() => {
+          hideEquipMenu();
+        }, 350);
+      });
+      // Editar texto ao duplo clique (apenas para textos)
+      if (div.classList.contains('text-instance')) {
+        const span = div.querySelector('span');
+        span.addEventListener('dblclick', function (e) {
+          e.stopPropagation();
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.value = span.textContent;
+          input.style.width = '90%';
+          input.style.height = '100%';
+          input.style.fontSize = '1.1em';
+          input.style.fontWeight = 'bold';
+          input.style.textAlign = 'center';
+          input.style.boxSizing = 'border-box';
+          div.replaceChild(input, span);
+          input.focus();
+          input.select();
+          input.addEventListener('blur', function () {
+            span.textContent = input.value || 'Novo texto';
+            div.replaceChild(span, input);
+          });
+          input.addEventListener('keydown', function (ev) {
+            if (ev.key === 'Enter') {
+              input.blur();
+            }
+          });
+        });
+      }
+    }
+
+    function addEquipInstance(src, x, y) {
+      const div = document.createElement('div');
+      div.className = 'equip-instance';
+      div.style.left = (x - 32) + 'px';
+      div.style.top = (y - 32) + 'px';
+      div.style.width = '64px';
+      div.style.height = '64px';
+      div.dataset.id = 'equip-' + (++equipCounter);
+      div.dataset.equipType = src;
+      div.tabIndex = 0;
+      const img = document.createElement('img');
+      img.src = src;
+      div.appendChild(img);
+      // Adiciona handle de resize
+      const handle = document.createElement('div');
+      handle.className = 'resize-handle';
+      div.appendChild(handle);
+      mainCanvas.appendChild(div);
+      inicializarEquipInstance(div);
+      updateConnections();
+    }
+
+    function addTextInstance(text = 'Novo texto', x = 200, y = 200) {
+      const div = document.createElement('div');
+      div.className = 'equip-instance text-instance';
+      div.style.left = (x - 32) + 'px';
+      div.style.top = (y - 16) + 'px';
+      div.style.width = '128px';
+      div.style.height = '32px';
+      div.style.minWidth = '32px';
+      div.style.minHeight = '24px';
+      div.tabIndex = 0;
+      div.dataset.id = 'text-' + (++equipCounter);
+      div.dataset.type = 'text';
+      const span = document.createElement('span');
+      span.textContent = text;
+      span.style.display = 'block';
+      span.style.width = '100%';
+      span.style.height = '100%';
+      span.style.fontSize = '1.1em';
+      span.style.color = '#222';
+      span.style.fontWeight = 'bold';
+      span.style.textAlign = 'center';
+      span.style.lineHeight = '32px';
+      span.style.cursor = 'text';
+      span.style.userSelect = 'none';
+      div.appendChild(span);
+      // Handle de resize
+      const handle = document.createElement('div');
+      handle.className = 'resize-handle';
+      div.appendChild(handle);
+      mainCanvas.appendChild(div);
+      inicializarEquipInstance(div);
+      updateConnections();
+    }
+
+    // Drag dos equipamentos no canvas
+    document.addEventListener('mousemove', (e) => {
+      if (draggingEquip) {
+        const rect = mainCanvas.getBoundingClientRect();
+        let x = e.clientX - rect.left - offsetX;
+        let y = e.clientY - rect.top - offsetY;
+        draggingEquip.style.left = x + 'px';
+        draggingEquip.style.top = y + 'px';
+        updateConnections();
+      }
+    });
+    document.addEventListener('mouseup', () => {
+      if (draggingEquip) draggingEquip.classList.remove('selected');
+      draggingEquip = null;
+    });
+
+    // Desmarcar seleção ao clicar fora
+    mainCanvas.addEventListener('click', () => {
+      if (!resizeMode) {
+        clearSelections();
+        updateConnections();
+        hideEquipMenu();
+        clearConnectHighlights();
+      }
+    });
+
+    // Conexões SVG
+    function addConnection(fromDiv, toDiv) {
+      // Descobrir quantas conexões já existem entre esses dois
+      const key = [fromDiv.dataset.id, toDiv.dataset.id].sort().join('-');
+      const siblings = connections.filter(conn => {
+        return [conn.from.dataset.id, conn.to.dataset.id].sort().join('-') === key;
+      });
+      const color = connectionColors[siblings.length % connectionColors.length];
+      connections.push({ from: fromDiv, to: toDiv, color: color, name: '', fontSize: 15 });
+      updateConnections();
+    }
+    function updateConnections() {
+      const svg = document.getElementById('svg-connections');
+      svg.innerHTML = '';
+      // Agrupa conexões por par de equipamentos
+      const pairMap = {};
+      connections.forEach((conn, idx) => {
+        const key = [conn.from.dataset.id, conn.to.dataset.id].sort().join('-');
+        if (!pairMap[key]) pairMap[key] = [];
+        pairMap[key].push(idx);
+      });
+      connections.forEach((conn, idx) => {
+        const x1 = conn.from.offsetLeft + conn.from.offsetWidth / 2;
+        const y1 = conn.from.offsetTop + conn.from.offsetHeight / 2;
+        const x2 = conn.to.offsetLeft + conn.to.offsetWidth / 2;
+        const y2 = conn.to.offsetTop + conn.to.offsetHeight / 2;
+        // Offset para múltiplas conexões
+        const key = [conn.from.dataset.id, conn.to.dataset.id].sort().join('-');
+        const siblings = pairMap[key];
+        const myIndex = siblings.indexOf(idx);
+        let offset = 0;
+        if (siblings.length > 1) {
+          const base = 20;
+          offset = (myIndex - (siblings.length - 1) / 2) * base;
+        }
+        // Curva de Bézier suave com offset
+        const dx = Math.abs(x2 - x1) * 0.4;
+        const dy = Math.abs(y2 - y1) * 0.4;
+        const angle = Math.atan2(y2 - y1, x2 - x1) - Math.PI / 2;
+        const ox = Math.cos(angle) * offset;
+        const oy = Math.sin(angle) * offset;
+        const c1x = x1 + (x2 > x1 ? dx : -dx) + ox;
+        const c1y = y1 + oy;
+        const c2x = x2 - (x2 > x1 ? dx : -dx) + ox;
+        const c2y = y2 + oy;
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', `M${x1},${y1} C${c1x},${c1y} ${c2x},${c2y} ${x2},${y2}`);
+        path.setAttribute('stroke', conn.color || '#007bff');
+        path.setAttribute('stroke-width', conn.strokeWidth || 3);
+        path.setAttribute('fill', 'none');
+        path.style.cursor = 'pointer';
+        path.setAttribute('pointer-events', 'stroke');
+        svg.appendChild(path);
+        // Texto do nome da conexão
+        if (conn.name && conn.name.trim() !== '') {
+          const t = 0.5;
+          function bezier(t, p0, p1, p2, p3) {
+            const mt = 1 - t;
+            return mt * mt * mt * p0 + 3 * mt * mt * t * p1 + 3 * mt * t * t * p2 + t * t * t * p3;
+          }
+          const textX = bezier(t, x1, c1x, c2x, x2);
+          const textY = bezier(t, y1, c1y, c2y, y2) - 20;
+          const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          text.setAttribute('x', textX);
+          text.setAttribute('y', textY);
+          text.setAttribute('text-anchor', 'middle');
+          text.setAttribute('font-size', (conn.fontSize || 15) + 'px');
+          text.setAttribute('font-family', 'Arial, sans-serif');
+          text.setAttribute('fill', conn.color || '#007bff');
+          text.setAttribute('pointer-events', 'none');
+          text.textContent = conn.name;
+          svg.appendChild(text);
+        }
+      });
+      addLineMenuEvents();
+    }
+
+    // Botão para adicionar texto
+    document.getElementById('addTextBtn').addEventListener('click', function () {
+      addTextInstance();
+    });
+
+    // Utilitário para converter rgb para hex
+    function rgbToHex(rgb) {
+      if (!rgb) return '#222222';
+      if (rgb.startsWith('#')) return rgb;
+      const result = rgb.match(/\d+/g);
+      if (!result) return '#222222';
+      return '#' + result.slice(0, 3).map(x => (+x).toString(16).padStart(2, '0')).join('');
+    }
+
+    // Evento do color picker
+    textColorPicker.addEventListener('input', function () {
+      if (currentTextInstance) {
+        const span = currentTextInstance.querySelector('span');
+        span.style.color = textColorPicker.value;
+      }
+    });
+
+    // Evento do font size picker
+    fontSizePicker.addEventListener('input', function () {
+      if (currentTextInstance) {
+        const span = currentTextInstance.querySelector('span');
+        span.style.fontSize = fontSizePicker.value + 'px';
+      }
+    });
+
+    // Painel de edição de linha
+    function showLineEditPanel(conn) {
+      lineEditPanel.style.display = 'block';
+      lineColorPicker.value = conn.color || '#007bff';
+      lineNameInput.value = conn.name || '';
+      lineFontSizeInput.value = conn.fontSize || 15;
+    }
+
+    // Atualizar cor da linha
+    lineColorPicker.addEventListener('input', function () {
+      if (selectedLineIndex !== null && connections[selectedLineIndex]) {
+        connections[selectedLineIndex].color = lineColorPicker.value;
+        updateConnections();
+      }
+    });
+
+    // Atualizar nome da linha
+    lineNameInput.addEventListener('input', function () {
+      if (selectedLineIndex !== null && connections[selectedLineIndex]) {
+        connections[selectedLineIndex].name = lineNameInput.value;
+        updateConnections();
+      }
+    });
+
+    // Atualizar tamanho do texto da linha
+    lineFontSizeInput.addEventListener('input', function () {
+      if (selectedLineIndex !== null && connections[selectedLineIndex]) {
+        connections[selectedLineIndex].fontSize = parseInt(lineFontSizeInput.value) || 15;
+        updateConnections();
+      }
+    });
+
+    // Remover linha selecionada
+    removeLineBtn.addEventListener('click', function () {
+      if (selectedLineIndex !== null && connections[selectedLineIndex]) {
+        connections.splice(selectedLineIndex, 1);
+        selectedLineIndex = null;
+        lineEditPanel.style.display = 'none';
+        updateConnections();
+      }
+    });
+
+    // Excluir equipamento/texto selecionado
+    removeEquipBtn.addEventListener('click', function () {
+      if (selectedEquipInstance) {
+        // Remove conexões relacionadas
+        connections = connections.filter(conn => conn.from !== selectedEquipInstance && conn.to !== selectedEquipInstance);
+        // Remove do DOM
+        selectedEquipInstance.remove();
+        clearSelections();
+        updateConnections();
+      }
+    });
+
+    // Excluir com tecla Delete
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Delete') {
+        if (selectedEquipInstance) {
+          // Remove conexões relacionadas
+          connections = connections.filter(conn => conn.from !== selectedEquipInstance && conn.to !== selectedEquipInstance);
+          // Remove do DOM
+          selectedEquipInstance.remove();
+          clearSelections();
+          updateConnections();
+        } else if (selectedLineIndex !== null && connections[selectedLineIndex]) {
+          connections.splice(selectedLineIndex, 1);
+          selectedLineIndex = null;
+          lineEditPanel.style.display = 'none';
+          updateConnections();
+        }
+      }
+    });
+
+    function clearSelections() {
+      if (selectedEquipInstance) {
+        selectedEquipInstance.classList.remove('selected');
+        selectedEquipInstance = null;
+      }
+      if (currentTextInstance) {
+        currentTextInstance = null;
+      }
+      if (connectionStart) {
+        connectionStart.classList.remove('selected');
+        connectionStart = null;
+      }
+      removeEquipBtn.style.display = 'none';
+      textColorPicker.style.display = 'none';
+      fontSizePicker.style.display = 'none';
+      lineEditPanel.style.display = 'none';
+      selectedLineIndex = null;
+      resizeOkBtn.style.display = 'none';
+      resizeMode = false;
+    }
+
+    function highlightConnectableEquipments(originDiv) {
+      // Destaca todos os equipamentos (não textos, não o próprio)
+      document.querySelectorAll('.equip-instance').forEach(div => {
+        if (!div.classList.contains('text-instance') && div !== originDiv) {
+          div.classList.add('connect-highlight');
+        }
+      });
+    }
+    function clearConnectHighlights() {
+      document.querySelectorAll('.connect-highlight').forEach(div => div.classList.remove('connect-highlight'));
+    }
+
+    // Se mouse entrar no menu, não esconder
+    equipMenu.addEventListener('mouseenter', () => {
+      if (resizeMode) return;
+      if (menuHideTimeout) clearTimeout(menuHideTimeout);
+    });
+    equipMenu.addEventListener('mouseleave', () => {
+      if (resizeMode) return;
+      menuHideTimeout = setTimeout(() => {
+        hideEquipMenu();
+      }, 350);
+    });
+
+    // Botão OK para finalizar redimensionamento
+    const resizeOkBtn = document.createElement('button');
+    resizeOkBtn.id = 'resizeOkBtn';
+    resizeOkBtn.title = 'Finalizar redimensionamento';
+    resizeOkBtn.style.display = 'none';
+    resizeOkBtn.style.position = 'absolute';
+    resizeOkBtn.style.zIndex = '2000';
+    resizeOkBtn.style.background = '#27ae60';
+    resizeOkBtn.style.border = 'none';
+    resizeOkBtn.style.borderRadius = '50%';
+    resizeOkBtn.style.width = '32px';
+    resizeOkBtn.style.height = '32px';
+    resizeOkBtn.style.alignItems = 'center';
+    resizeOkBtn.style.justifyContent = 'center';
+    resizeOkBtn.style.boxShadow = '0 2px 8px #0002';
+    resizeOkBtn.style.cursor = 'pointer';
+    resizeOkBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    document.body.appendChild(resizeOkBtn);
+    resizeOkBtn.onclick = function () {
+      document.querySelectorAll('.equip-instance.selected').forEach(div => div.classList.remove('selected'));
+      resizeOkBtn.style.display = 'none';
+      resizeMode = false;
+      // Reabrir menu se necessário
+      if (resizeOkBtn._targetDiv) {
+        showEquipMenu(resizeOkBtn._targetDiv);
+        resizeOkBtn._targetDiv = null;
+      }
+    };
+
+    // Adiciona botões Salvar, Salvar Como e Fechar no topo direito
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = 'Fechar';
+    closeBtn.style.position = 'fixed';
+    closeBtn.style.top = '18px';
+    closeBtn.style.right = '32px';
+    closeBtn.style.zIndex = '3000';
+    closeBtn.style.background = '#e74c3c';
+    closeBtn.style.color = 'white';
+    closeBtn.style.fontWeight = 'bold';
+    closeBtn.style.fontSize = '0.95em';
+    closeBtn.style.padding = '7px 18px';
+    closeBtn.style.border = 'none';
+    closeBtn.style.borderRadius = '8px';
+    closeBtn.style.boxShadow = '0 2px 8px #0002';
+    closeBtn.style.cursor = 'pointer';
+    closeBtn.style.minWidth = '90px';
+    document.body.appendChild(closeBtn);
+
+    const saveAsBtn = document.createElement('button');
+    saveAsBtn.textContent = 'Salvar como';
+    saveAsBtn.style.position = 'fixed';
+    saveAsBtn.style.top = '18px';
+    saveAsBtn.style.right = '152px';
+    saveAsBtn.style.zIndex = '3000';
+    saveAsBtn.style.background = '#2980b9';
+    saveAsBtn.style.color = 'white';
+    saveAsBtn.style.fontWeight = 'bold';
+    saveAsBtn.style.fontSize = '0.95em';
+    saveAsBtn.style.padding = '7px 18px';
+    saveAsBtn.style.border = 'none';
+    saveAsBtn.style.borderRadius = '8px';
+    saveAsBtn.style.boxShadow = '0 2px 8px #0002';
+    saveAsBtn.style.cursor = 'pointer';
+    saveAsBtn.style.minWidth = '90px';
+    document.body.appendChild(saveAsBtn);
+
+    const saveBtn = document.createElement('button');
+    saveBtn.textContent = 'Salvar';
+    saveBtn.style.position = 'fixed';
+    saveBtn.style.top = '18px';
+    saveBtn.style.right = '300px';
+    saveBtn.style.zIndex = '3000';
+    saveBtn.style.background = '#27ae60';
+    saveBtn.style.color = 'white';
+    saveBtn.style.fontWeight = 'bold';
+    saveBtn.style.fontSize = '0.95em';
+    saveBtn.style.padding = '7px 18px';
+    saveBtn.style.border = 'none';
+    saveBtn.style.borderRadius = '8px';
+    saveBtn.style.boxShadow = '0 2px 8px #0002';
+    saveBtn.style.cursor = 'pointer';
+    saveBtn.style.minWidth = '90px';
+    document.body.appendChild(saveBtn);
+
+    closeBtn.onclick = function () {
+      window.location.href = 'config-admin.html';
+    };
+
+    // Função para obter sala_id da URL
+    function getSalaIdFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('sala_id');
+    }
+
+    // Serializa o layout atual
+    function serializeLayout() {
+      // Equipamentos e textos
+      const items = [];
+      document.querySelectorAll('.equip-instance').forEach(div => {
+        // Usar left/top absolutos do estilo
+        const x = parseFloat(div.style.left) || 0;
+        const y = parseFloat(div.style.top) || 0;
+        const w = parseFloat(div.style.width) || div.offsetWidth;
+        const h = parseFloat(div.style.height) || div.offsetHeight;
+        if (div.classList.contains('text-instance')) {
+          const span = div.querySelector('span');
+          items.push({
+            type: 'text',
+            id: div.dataset.id, // garantir id único
+            x, y, w, h,
+            text: span.textContent,
+            color: span.style.color,
+            fontSize: span.style.fontSize
+          });
+        } else {
+          items.push({
+            type: 'equip',
+            id: div.dataset.id, // garantir id único
+            x, y, w, h,
+            img: div.querySelector('img').getAttribute('data-src') || div.querySelector('img').src
+          });
+        }
+      });
+      // Conexões
+      const conns = connections.map(conn => ({
+        fromId: conn.from.dataset.id,
+        toId: conn.to.dataset.id,
+        color: conn.color,
+        name: conn.name || conn.label || '',
+        fontSize: conn.fontSize,
+        strokeWidth: conn.strokeWidth
+      }));
+      return { items, conns };
+    }
+
+    // Modal de seleção de sala
+    const salaModal = document.getElementById('salaModal');
+    async function abrirSalaModal() {
+      salaModal.style.display = 'flex';
+      const salaSelect = document.getElementById('salaSelect');
+      salaSelect.innerHTML = '<option>Carregando salas...</option>';
+      try {
+        const resp = await fetch('/api/salas');
+        const salas = await resp.json();
+        salaSelect.innerHTML = '';
+        salas.forEach(sala => {
+          const opt = document.createElement('option');
+          opt.value = sala.id;
+          opt.textContent = sala.nome || ('Sala ' + sala.id);
+          salaSelect.appendChild(opt);
+        });
+      } catch (e) {
+        salaSelect.innerHTML = '<option>Erro ao carregar salas</option>';
+      }
+    }
+
+    document.getElementById('btnCancelarSala').onclick = () => {
+      salaModal.style.display = 'none';
+    };
+    document.getElementById('btnConfirmarSala').onclick = async () => {
+      const sala_id = document.getElementById('salaSelect').value;
+      if (!sala_id) {
+        alert('Selecione uma sala!');
+        return;
+      }
+      const layout = serializeLayout();
+      try {
+        const resp = await fetch('/api/salas/' + sala_id + '/layout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(layout)
+        });
+        if (resp.ok) {
+          alert('Layout salvo com sucesso!');
+          salaModal.style.display = 'none';
+        } else {
+          alert('Erro ao salvar layout.');
+        }
+      } catch (e) {
+        alert('Erro ao salvar layout: ' + e.message);
+      }
+    };
+
+    // Salvar na sala atual
+    saveBtn.onclick = async function () {
+      if (!salaIdAtual) {
+        alert('Nenhuma sala selecionada para salvar!');
+        return;
+      }
+      const layout = serializeLayout();
+      try {
+        const resp = await fetch('/api/salas/' + salaIdAtual + '/layout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(layout)
+        });
+        if (resp.ok) {
+          alert('Layout salvo com sucesso!');
+        } else {
+          alert('Erro ao salvar layout.');
+        }
+      } catch (e) {
+        alert('Erro ao salvar layout: ' + e.message);
+      }
+    };
+
+    // Salvar como (abre modal de seleção de sala)
+    saveAsBtn.onclick = abrirSalaModal;
+
+    // Ao abrir um layout existente, armazena salaIdAtual
+    document.addEventListener('DOMContentLoaded', function () {
+      const params = new URLSearchParams(window.location.search);
+      const sala_id = params.get('sala_id');
+      if (sala_id) {
+        salaIdAtual = sala_id;
+      }
+    });
+
+    // Ao criar novo layout, salaIdAtual = null
+    // (pode ser ajustado conforme fluxo de novo layout)
+
+    // Função para renderizar layout salvo (visualização)
+    async function renderizarLayoutVisualizacao(sala_id) {
+      // Esconde botão salvar
+      if (saveBtn) saveBtn.style.display = 'none';
+      // Remove menus, disables
+      document.getElementById('sidebar').style.pointerEvents = 'none';
+      document.getElementById('sidebar').style.opacity = '0.5';
+      // Remove eventos de drag, resize, menus
+      mainCanvas.style.pointerEvents = 'none';
+      // Limpa canvas
+      mainCanvas.innerHTML = '';
+      // Limpa conexões
+      if (window.connections) window.connections = [];
+      // Busca layout
+      try {
+        const resp = await fetch(`/api/salas/${sala_id}/layout`);
+        if (!resp.ok) throw new Error('Nenhum layout salvo para esta sala.');
+        const layout = await resp.json();
+        // Renderiza equipamentos/textos
+        layout.items.forEach(item => {
+          if (item.type === 'equip') {
+            const div = document.createElement('div');
+            div.className = 'equip-instance';
+            div.style.position = 'absolute';
+            div.style.left = item.x + 'px';
+            div.style.top = item.y + 'px';
+            div.style.width = item.w + 'px';
+            div.style.height = item.h + 'px';
+            div.style.pointerEvents = 'none';
+            const img = document.createElement('img');
+            img.src = item.img;
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'contain';
+            div.appendChild(img);
+            mainCanvas.appendChild(div);
+          } else if (item.type === 'text') {
+            const div = document.createElement('div');
+            div.className = 'equip-instance text-instance';
+            div.style.position = 'absolute';
+            div.style.left = item.x + 'px';
+            div.style.top = item.y + 'px';
+            div.style.width = item.w + 'px';
+            div.style.height = item.h + 'px';
+            div.style.pointerEvents = 'none';
+            const span = document.createElement('span');
+            span.textContent = item.text;
+            span.style.color = item.color;
+            span.style.fontSize = item.fontSize;
+            div.appendChild(span);
+            mainCanvas.appendChild(div);
+          }
+        });
+        // Renderiza conexões
+        if (layout.conns && layout.conns.length > 0) {
+          layout.conns.forEach(conn => {
+            const from = mainCanvas.children[conn.fromIndex];
+            const to = mainCanvas.children[conn.toIndex];
+            if (from && to) {
+              // Desenha SVG
+              const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+              svg.style.position = 'absolute';
+              svg.style.left = '0';
+              svg.style.top = '0';
+              svg.style.width = '100%';
+              svg.style.height = '100%';
+              svg.style.pointerEvents = 'none';
+              svg.style.zIndex = '0';
+              const fromRect = from.getBoundingClientRect();
+              const toRect = to.getBoundingClientRect();
+              const canvasRect = mainCanvas.getBoundingClientRect();
+              const x1 = fromRect.left + fromRect.width / 2 - canvasRect.left;
+              const y1 = fromRect.top + fromRect.height / 2 - canvasRect.top;
+              const x2 = toRect.left + toRect.width / 2 - canvasRect.left;
+              const y2 = toRect.top + toRect.height / 2 - canvasRect.top;
+              const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+              const dx = Math.abs(x2 - x1) * 0.4;
+              path.setAttribute('d', `M${x1},${y1} C${x1 + dx},${y1} ${x2 - dx},${y2} ${x2},${y2}`);
+              path.setAttribute('stroke', conn.color || '#e74c3c');
+              path.setAttribute('stroke-width', '3');
+              path.setAttribute('fill', 'none');
+              svg.appendChild(path);
+              // Label
+              if (conn.label) {
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', (x1 + x2) / 2);
+                text.setAttribute('y', (y1 + y2) / 2 - 8);
+                text.setAttribute('fill', conn.color || '#e74c3c');
+                text.setAttribute('font-size', conn.fontSize || 16);
+                text.setAttribute('font-family', 'inherit');
+                text.setAttribute('text-anchor', 'middle');
+                text.textContent = conn.label;
+                svg.appendChild(text);
+              }
+              mainCanvas.appendChild(svg);
+            }
+          });
+        }
+      } catch (e) {
+        mainCanvas.innerHTML = `<div style='color:#e74c3c;font-size:1.3em;text-align:center;margin-top:80px;'>${e.message || 'Erro ao carregar layout.'}</div>`;
+      }
+      // Dentro da função renderizarLayoutVisualizacao, garantir que a sidebar tenha width: 220px
+      // Procure por: document.getElementById('sidebar')
+      // Se não existir, crie um seletor para a sidebar e defina: style.width = '220px';
+      const sidebar = document.querySelector('.sidebar') || document.getElementById('sidebar');
+      if (sidebar) sidebar.style.width = '220px';
+    }
+
+    // Detecta modo visualização
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('view') === '1' && params.get('sala_id')) {
+        renderizarLayoutVisualizacao(params.get('sala_id'));
+      }
+    })();
+
+    // Função para carregar layout salvo no editor
+    async function carregarLayoutEditor(sala_id) {
+      try {
+        const resp = await fetch(`/api/salas/${sala_id}/layout`);
+        if (!resp.ok) return; // Não há layout salvo
+        const layout = await resp.json();
+        // Limpa canvas e conexões
+        mainCanvas.innerHTML = '';
+        // Adiciona novamente o SVG de conexões
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('id', 'svg-connections');
+        svg.style.position = 'absolute';
+        svg.style.top = '0';
+        svg.style.left = '0';
+        svg.style.width = '100%';
+        svg.style.height = '100%';
+        svg.style.pointerEvents = 'none';
+        svg.style.zIndex = '1';
+        mainCanvas.appendChild(svg);
+        connections = [];
+        // Renderiza equipamentos/textos e cria mapa de id
+        const idToDiv = {};
+        layout.items.forEach(item => {
+          let div;
+          if (item.type === 'equip') {
+            div = document.createElement('div');
+            div.className = 'equip-instance';
+            div.style.position = 'absolute';
+            div.style.left = item.x + 'px';
+            div.style.top = item.y + 'px';
+            div.style.width = item.w + 'px';
+            div.style.height = item.h + 'px';
+            div.dataset.id = item.id; // garantir id único
+            const img = document.createElement('img');
+            img.src = item.img;
+            img.setAttribute('data-src', item.img);
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'contain';
+            div.appendChild(img);
+            // Adiciona handle de resize
+            const handle = document.createElement('div');
+            handle.className = 'resize-handle';
+            div.appendChild(handle);
+            mainCanvas.appendChild(div);
+            inicializarEquipInstance(div);
+          } else if (item.type === 'text') {
+            div = document.createElement('div');
+            div.className = 'equip-instance text-instance';
+            div.style.position = 'absolute';
+            div.style.left = item.x + 'px';
+            div.style.top = item.y + 'px';
+            div.style.width = item.w + 'px';
+            div.style.height = item.h + 'px';
+            div.dataset.id = item.id; // garantir id único
+            const span = document.createElement('span');
+            span.textContent = item.text;
+            span.style.color = item.color;
+            span.style.fontSize = item.fontSize;
+            div.appendChild(span);
+            // Adiciona handle de resize
+            const handle = document.createElement('div');
+            handle.className = 'resize-handle';
+            div.appendChild(handle);
+            mainCanvas.appendChild(div);
+            inicializarEquipInstance(div);
+          }
+          idToDiv[item.id] = div;
+        });
+        // Renderiza conexões
+        connections = [];
+        if (layout.conns && layout.conns.length > 0) {
+          layout.conns.forEach(conn => {
+            const from = idToDiv[conn.fromId];
+            const to = idToDiv[conn.toId];
+            if (from && to) {
+              connections.push({
+                from,
+                to,
+                color: conn.color,
+                name: conn.name,
+                fontSize: conn.fontSize,
+                strokeWidth: conn.strokeWidth
+              });
+            }
+            // Se não existir from ou to, ignora a conexão
+          });
+        }
+        // Limpa SVG de conexões antes de redesenhar
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+        updateConnections();
+      } catch (e) {
+        // Não faz nada se não houver layout
+      }
+    }
+
+    // Detecta sala_id na URL e carrega layout salvo no editor
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const sala_id = params.get('sala_id');
+      if (sala_id && !params.get('view')) {
+        carregarLayoutEditor(sala_id);
+      }
+    })();
+
+    // Modal inicial: Novo ou Abrir
+    (function () {
+      // Cria o modal e adiciona ao DOM
+      const modalInicio = document.createElement('div');
+      modalInicio.style.display = 'none';
+      modalInicio.style.position = 'fixed';
+      modalInicio.style.top = '0';
+      modalInicio.style.left = '0';
+      modalInicio.style.width = '100vw';
+      modalInicio.style.height = '100vh';
+      modalInicio.style.background = 'rgba(0,0,0,0.35)';
+      modalInicio.style.zIndex = '5000';
+      modalInicio.style.alignItems = 'center';
+      modalInicio.style.justifyContent = 'center';
+      modalInicio.innerHTML = `
+        <div style="background:#fff; padding:32px 24px; border-radius:12px; min-width:320px; max-width:90vw; box-shadow:0 4px 24px #0003; display:flex; flex-direction:column; align-items:center; position:relative;">
+          <button id="btnFecharModalInicio" style="position:absolute; top:10px; right:10px; background:transparent; color:#e74c3c; border:none; border-radius:50%; width:36px; height:36px; font-size:1.7em; font-weight:bold; cursor:pointer; line-height:1; display:flex; align-items:center; justify-content:center;">&times;</button>
+          <h3 style="margin-top:0; color:#222;">Conexões de Equipamentos</h3>
+          <div id="botoesInicio" style="display:flex;gap:24px;margin:24px 0;">
+            <button id="btnNovoLayout" style="padding:16px 32px;font-size:1.1em;background:#27ae60;color:#fff;border:none;border-radius:8px;font-weight:bold;">Novo</button>
+            <button id="btnAbrirLayout" style="padding:16px 32px;font-size:1.1em;background:#2980b9;color:#fff;border:none;border-radius:8px;font-weight:bold;">Abrir</button>
+          </div>
+          <div id="abrirSalasBox" style="display:none;flex-direction:column;align-items:center;width:100%;">
+            <div style="margin-bottom:10px;font-weight:bold;">Escolha uma sala para editar o layout:</div>
+            <select id="salasComLayout" style="width:100%;padding:8px 12px;font-size:1.1em;margin-bottom:18px;"></select>
+            <button id="btnAbrirSalaLayout" style="padding:8px 24px;font-size:1em;background:#27ae60;color:#fff;border:none;border-radius:6px;font-weight:bold;">Abrir Layout</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modalInicio);
+
+      // Busca elementos após adicionar ao DOM
+      const btnNovoLayout = modalInicio.querySelector('#btnNovoLayout');
+      const btnAbrirLayout = modalInicio.querySelector('#btnAbrirLayout');
+      const botoesInicio = modalInicio.querySelector('#botoesInicio');
+      const abrirSalasBox = modalInicio.querySelector('#abrirSalasBox');
+      const select = modalInicio.querySelector('#salasComLayout');
+      const btnAbrirSalaLayout = modalInicio.querySelector('#btnAbrirSalaLayout');
+
+      function abrirModalInicio() {
+        modalInicio.style.display = 'flex';
+        botoesInicio.style.display = 'flex';
+        abrirSalasBox.style.display = 'none';
+      }
+
+      btnNovoLayout.onclick = () => {
+        modalInicio.style.display = 'none';
+      };
+
+      btnAbrirLayout.onclick = async () => {
+        botoesInicio.style.display = 'none';
+        abrirSalasBox.style.display = 'flex';
+        select.innerHTML = '<option>Carregando...</option>';
+        btnAbrirSalaLayout.disabled = true;
+        try {
+          const resp = await fetch('/api/salas-com-layout');
+          const salasComLayout = await resp.json();
+          console.log('Salas com layout:', salasComLayout);
+          select.innerHTML = '';
+          if (!salasComLayout.length) {
+            select.innerHTML = '<option>Nenhuma sala com layout salvo</option>';
+            btnAbrirSalaLayout.disabled = true;
+          } else {
+            salasComLayout.forEach(sala => {
+              const opt = document.createElement('option');
+              opt.value = sala.id;
+              opt.textContent = sala.nome || ('Sala ' + sala.id);
+              select.appendChild(opt);
+            });
+            btnAbrirSalaLayout.disabled = false;
+          }
+        } catch (e) {
+          select.innerHTML = '<option>Erro ao buscar salas</option>';
+          btnAbrirSalaLayout.disabled = true;
+          console.error('Erro ao buscar salas com layout:', e);
+        }
+      };
+
+      btnAbrirSalaLayout.onclick = () => {
+        const sala_id = select.value;
+        if (sala_id && !isNaN(Number(sala_id))) {
+          window.location.search = '?sala_id=' + sala_id;
+        }
+      };
+
+      // Exibe modal se não houver sala_id nem view na URL
+      const params = new URLSearchParams(window.location.search);
+      if (!params.get('sala_id') && !params.get('view')) {
+        abrirModalInicio();
+      }
+
+      // Botão fechar do modal de início
+      modalInicio.querySelector('#btnFecharModalInicio').onclick = function () {
+        window.location.href = 'config-admin.html';
+      };
+    })();
+
+    // Adicionar botão Fechar no modal de seleção de sala
+    let btnFecharSalaModal = document.getElementById('btnFecharSalaModal');
+    if (!btnFecharSalaModal) {
+      btnFecharSalaModal = document.createElement('button');
+      btnFecharSalaModal.id = 'btnFecharSalaModal';
+      btnFecharSalaModal.textContent = 'Fechar';
+      btnFecharSalaModal.style.position = 'absolute';
+      btnFecharSalaModal.style.top = '12px';
+      btnFecharSalaModal.style.right = '12px';
+      btnFecharSalaModal.style.background = '#e74c3c';
+      btnFecharSalaModal.style.color = '#fff';
+      btnFecharSalaModal.style.border = 'none';
+      btnFecharSalaModal.style.borderRadius = '6px';
+      btnFecharSalaModal.style.padding = '6px 18px';
+      btnFecharSalaModal.style.fontSize = '1em';
+      btnFecharSalaModal.style.fontWeight = 'bold';
+      btnFecharSalaModal.style.cursor = 'pointer';
+      salaModal.firstElementChild.appendChild(btnFecharSalaModal);
+    }
+    btnFecharSalaModal.onclick = function () {
+      window.location.href = 'config-admin.html';
+    };
+
+    // Função para duplicar item (texto ou imagem)
+    function duplicarItem(div) {
+      const desloc = 32; // deslocamento visual
+      const elemRect = div.getBoundingClientRect();
+      const canvasRect = mainCanvas.getBoundingClientRect();
+      const x = elemRect.left - canvasRect.left + desloc;
+      const y = elemRect.top - canvasRect.top + desloc;
+      if (div.classList.contains('text-instance')) {
+        const span = div.querySelector('span');
+        addTextInstance(span.textContent, x, y);
+        // Copia cor e tamanho
+        const newDiv = mainCanvas.lastElementChild;
+        const newSpan = newDiv.querySelector('span');
+        newSpan.style.color = span.style.color;
+        newSpan.style.fontSize = span.style.fontSize;
+      } else {
+        const img = div.querySelector('img');
+        addEquipInstance(img.getAttribute('data-src') || img.src, x, y);
+        // Copia tamanho
+        const newDiv = mainCanvas.lastElementChild;
+        newDiv.style.width = div.style.width;
+        newDiv.style.height = div.style.height;
+      }
+    }
+
+    // Suporte a Ctrl+C/Ctrl+V para duplicar item selecionado
+    let clipboardItem = null;
+    document.addEventListener('keydown', function (e) {
+      // Ctrl+C para copiar
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
+        if (selectedEquipInstance) {
+          clipboardItem = selectedEquipInstance;
+        }
+      }
+      // Ctrl+V para colar
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'v') {
+        if (clipboardItem) {
+          duplicarItem(clipboardItem);
+        }
+      }
+    });
+
+    // Remover painel lateral de edição de linha
+    lineEditPanel.parentNode.removeChild(lineEditPanel);
+
+    // Criar menu flutuante para edição de conexões
+    const lineMenu = document.createElement('div');
+    lineMenu.id = 'lineMenu';
+    lineMenu.style.position = 'absolute';
+    lineMenu.style.display = 'none';
+    lineMenu.style.zIndex = '4000';
+    lineMenu.style.background = '#fff';
+    lineMenu.style.border = '1px solid #ccc';
+    lineMenu.style.borderRadius = '8px';
+    lineMenu.style.boxShadow = '0 2px 12px #0002';
+    lineMenu.style.padding = '14px 16px 10px 16px';
+    lineMenu.style.minWidth = '220px';
+    lineMenu.style.fontFamily = 'Arial, sans-serif';
+    document.body.appendChild(lineMenu);
+
+    let lineMenuConnIdx = null;
+
+    function showLineMenu(connIdx, mouseX, mouseY) {
+      const conn = connections[connIdx];
+      if (!conn) return;
+      lineMenuConnIdx = connIdx;
+      // Gera as bolinhas de cor rápida
+      let quickColorsHtml = '<div style="display:flex;gap:8px;margin:8px 0 0 0;">';
+      basicColors.forEach(color => {
+        quickColorsHtml += `<button type='button' data-color='${color}' style='width:22px;height:22px;border-radius:50%;border:2px solid #fff;background:${color};cursor:pointer;box-shadow:0 1px 4px #0002;' title='${color}'></button>`;
+      });
+      quickColorsHtml += '</div>';
+      lineMenu.innerHTML = `
+        <div style=\"display:flex;align-items:center;gap:8px;margin-bottom:8px;\">
+          <label style=\"font-size:0.95em;min-width:60px;\">Cor:</label>
+          <input type=\"color\" id=\"lineMenuColor\" value=\"${conn.color || '#007bff'}\" style=\"width:32px;height:32px;cursor:pointer;\">
+        </div>
+        ${quickColorsHtml}
+        <div style=\"display:flex;align-items:center;gap:8px;margin-bottom:8px;\">
+          <label style=\"font-size:0.95em;min-width:60px;\">Nome:</label>
+          <input type=\"text\" id=\"lineMenuName\" value=\"${conn.name || ''}\" style=\"flex:1;height:28px;font-size:1em;padding:2px 8px;border-radius:4px;border:1px solid #bbb;\">
+        </div>
+        <div style=\"display:flex;align-items:center;gap:8px;margin-bottom:8px;\">
+          <label style=\"font-size:0.95em;min-width:60px;\">Tamanho:</label>
+          <input type=\"number\" id=\"lineMenuFontSize\" min=\"8\" max=\"48\" value=\"${conn.fontSize || 15}\" style=\"width:60px;height:28px;font-size:1em;padding:2px 8px;border-radius:4px;border:1px solid #bbb;\">
+        </div>
+        <div style=\"display:flex;align-items:center;gap:8px;margin-bottom:8px;\">
+          <label style=\"font-size:0.95em;min-width:60px;\">Espessura:</label>
+          <input type=\"number\" id=\"lineMenuStroke\" min=\"1\" max=\"12\" value=\"${conn.strokeWidth || 3}\" style=\"width:60px;height:28px;font-size:1em;padding:2px 8px;border-radius:4px;border:1px solid #bbb;\">
+        </div>
+        <button id=\"lineMenuRemove\" style=\"margin-top:6px;width:100%;background:#e74c3c;color:#fff;border:none;border-radius:4px;height:32px;font-size:1em;cursor:pointer;\">Remover Linha</button>
+      `;
+      // Posicionar menu próximo ao mouse
+      lineMenu.style.left = (mouseX + 12) + 'px';
+      lineMenu.style.top = (mouseY + 12) + 'px';
+      lineMenu.style.display = 'block';
+      // Eventos
+      document.getElementById('lineMenuColor').oninput = function () {
+        conn.color = this.value;
+        updateConnections();
+      };
+      // Evento para as bolinhas de cor rápida
+      Array.from(lineMenu.querySelectorAll('button[data-color]')).forEach(btn => {
+        btn.onclick = function () {
+          conn.color = btn.getAttribute('data-color');
+          document.getElementById('lineMenuColor').value = conn.color;
+          updateConnections();
+        };
+      });
+      document.getElementById('lineMenuName').oninput = function () {
+        conn.name = this.value;
+        updateConnections();
+      };
+      document.getElementById('lineMenuFontSize').oninput = function () {
+        conn.fontSize = parseInt(this.value) || 15;
+        updateConnections();
+      };
+      document.getElementById('lineMenuStroke').oninput = function () {
+        conn.strokeWidth = parseInt(this.value) || 3;
+        updateConnections();
+      };
+      document.getElementById('lineMenuRemove').onclick = function () {
+        connections.splice(connIdx, 1);
+        lineMenu.style.display = 'none';
+        updateConnections();
+      };
+    }
+
+    function hideLineMenu() {
+      lineMenu.style.display = 'none';
+      lineMenuConnIdx = null;
+    }
+
+    // Adicionar eventos de hover nas linhas SVG
+    function addLineMenuEvents() {
+      const svg = document.getElementById('svg-connections');
+      Array.from(svg.querySelectorAll('path')).forEach((path, idx) => {
+        path.addEventListener('click', function (e) {
+          e.stopPropagation();
+          showLineMenu(idx, e.clientX, e.clientY);
+        });
+        // Remover mouseleave
+      });
+    }
+
+    // Esconde menu ao clicar fora
+    window.addEventListener('mousedown', function (e) {
+      if (lineMenu.style.display === 'block' && !lineMenu.contains(e.target)) {
+        hideLineMenu();
+      }
+    });
+
+    // Chamar addLineMenuEvents sempre que atualizar conexões
+    // No final de updateConnections():
+    addLineMenuEvents();
+
+    // Adiciona botão Limpar Projeto no topo direito
+    const clearBtn = document.createElement('button');
+    clearBtn.textContent = 'Limpar Projeto';
+    clearBtn.style.position = 'fixed';
+    clearBtn.style.top = '18px';
+    clearBtn.style.right = '440px';
+    clearBtn.style.zIndex = '3000';
+    clearBtn.style.background = '#f39c12';
+    clearBtn.style.color = 'white';
+    clearBtn.style.fontWeight = 'bold';
+    clearBtn.style.fontSize = '0.95em';
+    clearBtn.style.padding = '7px 18px';
+    clearBtn.style.border = 'none';
+    clearBtn.style.borderRadius = '8px';
+    clearBtn.style.boxShadow = '0 2px 8px #0002';
+    clearBtn.style.cursor = 'pointer';
+    clearBtn.style.minWidth = '120px';
+    document.body.appendChild(clearBtn);
+
+    clearBtn.onclick = function () {
+      if (confirm('Tem certeza que deseja limpar todo o projeto? Isso apagará todos os textos, conexões e imagens do canvas.')) {
+        // Remove todos os elementos do canvas exceto o SVG de conexões
+        document.querySelectorAll('.equip-instance').forEach(div => div.remove());
+        // Limpa conexões
+        connections = [];
+        updateConnections();
+      }
+    };
+
+    // Exibir nome da sala ou 'Novo layout' no topo da sidebar
+    (function () {
+      const sidebar = document.querySelector('.sidebar');
+      if (!sidebar) return;
+      const infoDiv = document.createElement('div');
+      infoDiv.id = 'sidebarSalaInfo';
+      infoDiv.style.width = '100%';
+      infoDiv.style.textAlign = 'center';
+      infoDiv.style.fontWeight = 'bold';
+      infoDiv.style.fontSize = '1.08em';
+      infoDiv.style.margin = '10px 0 14px 0';
+      infoDiv.style.color = '#ffd700';
+      sidebar.insertBefore(infoDiv, sidebar.firstChild);
+      const params = new URLSearchParams(window.location.search);
+      const sala_id = params.get('sala_id');
+      if (sala_id) {
+        // Buscar nome da sala via API
+        fetch('/api/salas/' + sala_id)
+          .then(resp => resp.json())
+          .then(sala => {
+            infoDiv.textContent = sala.nome ? `Editando: ${sala.nome}` : `Editando: Sala ${sala_id}`;
+          })
+          .catch(() => {
+            infoDiv.textContent = `Editando: Sala ${sala_id}`;
+          });
+      } else {
+        infoDiv.textContent = 'Novo layout';
+      }
+    })();
+  </script>
+</body>
+
+</html>

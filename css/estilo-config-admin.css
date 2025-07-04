@@ -1,0 +1,136 @@
+.admin-container, .admin-container[style], .admin-container[style*="margin-top"] {
+    position: relative;
+}
+
+#empresa-logada {
+    position: absolute;
+    top: 16px;
+    right: 24px;
+    color: #4a90e2;
+    font-weight: bold;
+    margin-bottom: 0;
+    text-align: right;
+    z-index: 2;
+}
+
+.top-cards {
+    display: block !important;
+    margin-bottom: 30px;
+}
+
+.card-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    background: #2d7be5;
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    font-size: 1.0em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.card-btn i {
+    font-size: 2.2em;
+    margin-bottom: 10px;
+}
+
+.card-btn.adicionar {
+    background: #2ecc71;
+    color: #fff;
+}
+
+.card-btn.atualizar {
+    background: #f1c40f;
+    color: #fff;
+}
+
+.card-btn.excluir {
+    background: #e67e22;
+    color: #fff;
+}
+
+.card-btn.ver {
+    background: #1abc9c;
+    color: #fff;
+}
+
+.card-btn.voltar {
+    background: #34495e;
+    color: #fff;
+}
+
+.card-btn.sair {
+    background: #e74c3c;
+    color: #fff;
+}
+
+.card-btn.azul {
+    background: #2980d9;
+    color: #fff;
+}
+
+.card-btn.azul:hover {
+    background: #2063a6;
+}
+
+.card-btn.roxo {
+    background: #8e44ad;
+    color: #fff;
+}
+
+.card-btn.roxo:hover {
+    background: #6c3483;
+}
+
+.card-btn:hover {
+    transform: translateY(-4px) scale(1.04);
+    filter: brightness(1.08);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.card-btn.voltar {
+    background: #222;
+    color: #fff;
+    width: 60px;
+    height: 60px;
+    font-size: 0.9em;
+    border-radius: 50%;
+    box-shadow: none;
+    padding: 0;
+    min-width: unset;
+    min-height: unset;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.card-btn.voltar i {
+    font-size: 1.4em;
+    margin-bottom: 0;
+}
+
+.card-btn.voltar span {
+    display: none;
+}
+
+.voltar-container {
+    display: flex;
+    justify-content: flex-start;   /* Alinha à esquerda */
+    align-items: flex-start;
+    margin-top: 24px;
+    margin-bottom: -16px;
+    width: 100%;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}

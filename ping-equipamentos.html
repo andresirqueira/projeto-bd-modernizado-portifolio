@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ping de Equipamentos</title>
+    <link rel="stylesheet" href="css/estilo-base.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/estilo-ping-equipamentos.css">
+</head>
+
+<body>
+    <div class="painel-ping admin-container">
+        <div class="voltar-container">
+            <button class="card-btn voltar" onclick="voltarPainelConfig()" title="Voltar">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        <h1>Teste de Ping dos Equipamentos</h1>
+        <div class="ping-aviso" style="color:#e1b300; background:rgba(52,73,94,0.18); padding:8px 14px; border-radius:8px; margin-bottom:18px; text-align:center; font-size:1.01em;">
+            <i class="fas fa-info-circle"></i> O teste de ping só será realizado se o servidor estiver na mesma rede local dos equipamentos.
+        </div>
+        <div id="empresa-logada"></div>
+        <div class="botoes-ping">
+            <button class="btn-ping" onclick="testarTodos()"><i class="fas fa-wifi"></i> Testar Todos</button>
+            <button class="btn-ping btn-ping-limpar" onclick="limparTestes()"><i class="fas fa-trash"></i> Limpar Testes</button>
+        </div>
+        <div class="msg" id="msgPing"></div>
+        <table id="tabelaPing">
+            <thead>
+                <tr>
+                    <th>Data/Hora</th>
+                    <th>Equipamento</th>
+                    <th>Sala</th>
+                    <th>IP</th>
+                    <th>MAC</th>
+                    <th>Switch</th>
+                    <th>Porta</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <script>
+        async function testarTodos() {
+            const msg = document.getElementById('msgPing');
+            msg.textContent = 'Testando todos os equipamentos... Aguarde.';
+            const resp = await fetch('/ping-equipamentos', { method: 'POST' });
+            const json = await resp.json();
+            if (json.status === 'ok') {
+                msg.textContent = 'Teste concluído!';
+                carregarLogs();
+            } else {
+                msg.textContent = 'Erro ao testar: ' + (json.mensagem || '');
+            }
+        }
+        async function carregarLogs() {
+            const resp = await fetch('/ping-logs');
+            const logs = await resp.json();
+            const tbody = document.querySelector('#tabelaPing tbody');
+            tbody.innerHTML = '';
+            logs.forEach(log => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                <td>${formatarDataHora(log.timestamp)}</td>
+                <td>${log.nome}</td>
+                <td>${log.sala}</td>
+                <td>${log.ip}</td>
+                <td><span class='mac'>${log.mac || ''}</span></td>
+                <td>${log.switch || ''}</td>
+                <td>${log.porta || ''}</td>
+                <td class="${log.sucesso ? 'status-online' : 'status-offline'}">${log.sucesso ? 'Online' : 'Offline'}</td>
+            `;
+                tbody.appendChild(tr);
+            });
+        }
+        function formatarDataHora(utcString) {
+            if (!utcString) return '';
+            const d = new Date(utcString + 'Z');
+            return d.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+        }
+        async function limparTestes() {
+            if (!confirm('Tem certeza que deseja apagar todos os testes?')) return;
+            const resp = await fetch('/ping-logs', { method: 'DELETE' });
+            const json = await resp.json();
+            if (json.status === 'ok') {
+                document.getElementById('msgPing').textContent = 'Testes apagados!';
+                carregarLogs();
+            } else {
+                document.getElementById('msgPing').textContent = 'Erro ao apagar testes!';
+            }
+        }
+        function voltarPainelConfig() {
+            fetch('/perfil').then(resp => resp.json()).then(perfil => {
+                if (perfil.nivel === 'admin') {
+                    window.location.href = 'config-admin.html';
+                } else if (perfil.nivel === 'tecnico') {
+                    window.location.href = 'config-tecnico.html';
+                } else {
+                    window.location.href = 'config-usuario.html';
+                }
+            });
+        }
+        carregarLogs();
+        window.addEventListener('DOMContentLoaded', function () {
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    if (data.logo) {
+                        document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                    } else if (data.nome) {
+                        document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
+                    }
+                });
+        });
+    </script>
+</body>
+
+</html>

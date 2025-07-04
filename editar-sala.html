@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Sala</title>
+    <link rel="stylesheet" href="css/estilo-base.css">
+    <link rel="stylesheet" href="css/estilo-editar-sala.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <div class="voltar-container">
+            <button class="card-btn voltar" onclick="voltarPainelConfig()" title="Voltar">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        <h1>Editar Sala</h1>
+        <div id="empresa-logada"></div>
+        <div style="text-align:center;margin-bottom:18px;">
+            <input id="filtroSala" type="text" class="input-filtro-sala" placeholder="Filtrar por nome da sala...">
+        </div>
+        <div id="salas-cards-container" style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:24px;"></div>
+        <form id="formEditarSala" class="form-sala">
+            <input type="hidden" id="salaIdSelecionada" name="salaIdSelecionada">
+            <label for="nomeSala">Nome:</label>
+            <input type="text" id="nomeSala" name="nomeSala" class="input-estilizado" required>
+            <label for="tipo">Tipo:</label>
+            <input type="text" id="tipo" name="tipo">
+            <label for="descricao">Descrição:</label>
+            <textarea id="descricao" name="descricao"></textarea>
+            <div id="foto-preview-container" style="margin-bottom:10px;"></div>
+            <label for="fotoExistente">Escolher imagem já enviada:</label>
+            <select id="fotoExistente" class="input-estilizado" style="margin-bottom:10px;"></select>
+            <label for="andar_id">Andar ID:</label>
+            <select id="andar_id" name="andar_id" class="input-estilizado" required>
+                <option value="">Selecione...</option>
+                <script>
+                    for (let i = 0; i < 200; i++) {
+                        document.write(`<option value='${i}'>${i}</option>`);
+                    }
+                </script>
+            </select>
+            <label for="equipamentos">Equipamentos vinculados:</label>
+            <div style="margin-bottom:12px;">
+                <button type="button" id="btnVincularEquip" class="card-btn cadastrar" style="width:auto;height:auto;padding:6px 14px;font-size:0.97em;display:inline-flex;align-items:center;gap:6px;">
+                    <i class="fas fa-plus"></i> Vincular novo equipamento
+                </button>
+            </div>
+            <div style="overflow-x:auto;"><div id="equipamentos-lista" style="margin-bottom:16px;"></div></div>
+            <div id="modalEquipamentos" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;">
+                <div style="background:#34495e;padding:32px 24px;border-radius:12px;min-width:320px;max-width:90vw;max-height:80vh;overflow:auto;">
+                    <h3 style="margin-top:0;color:#f1c40f;">Equipamentos disponíveis</h3>
+                    <div id="equipamentos-disponiveis-lista"></div>
+                    <div style="margin-top:18px;display:flex;align-items:center;gap:12px;">
+                        <button id="btnFecharModal" type="button" class="card-btn voltar" style="padding:6px 18px;font-size:1em;"><i class='fas fa-arrow-left'></i> </button>
+                        <div style="flex:1;text-align:center;">
+                            <button id="btnConfirmarVinculo" type="button" class="card-btn cadastrar" style="padding:6px 18px;font-size:1em; height:auto;">Vincular selecionados</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: center; margin-top: 36px;">
+                <button type="submit" class="card-btn cadastrar" style="width:auto;height:auto;padding:8px 16px;font-size:1em;display:inline-flex;align-items:center;gap:6px;">
+                    <i class="fas fa-save"></i> Salvar Alterações
+                </button>
+            </div>
+        </form>
+        <div class="msg" id="msg"></div>
+    </div>
+    <script>
+        // Pega o ID da sala da URL
+        const params = new URLSearchParams(window.location.search);
+        const salaId = params.get('id');
+        console.log('salaId:', salaId);
+
+        // Carrega todas as salas para o select (apenas uma vez)
+        let todasSalas = [];
+        async function carregarSalasCombo() {
+            const resp = await fetch('/salas');
+            todasSalas = await resp.json();
+            renderizarCardsSalas(todasSalas);
+        }
+        // Lista local de IDs dos equipamentos vinculados (atualizada dinamicamente)
+        let equipamentosVinculadosIds = [];
+        // Busca e exibe apenas os equipamentos já vinculados à sala
+        async function carregarEquipamentosVinculados(salaIdAtual) {
+            const resp = await fetch('/equipamentos');
+            const equipamentos = await resp.json();
+            // Atualiza lista local de vinculados se ainda não estiver preenchida
+            if (equipamentosVinculadosIds.length === 0) {
+                equipamentosVinculadosIds = equipamentos.filter(eq => eq.sala_id == salaIdAtual).map(eq => String(eq.id));
+            }
+            const listaDiv = document.getElementById('equipamentos-lista');
+            listaDiv.innerHTML = '';
+            const filtrados = equipamentos.filter(eq => equipamentosVinculadosIds.includes(String(eq.id)));
+            if (filtrados.length === 0) {
+                listaDiv.innerHTML = '<em>Nenhum equipamento vinculado a esta sala.</em>';
+                return;
+            }
+            let html = `<table class=\"tabela-equipamentos tabela-salas\" style=\"min-width:1200px;width:100%;border-collapse:collapse;background:#2c3e50;color:#eee;\">\n
+                <thead>\n                    <tr>\n                        <th style=\"width:40px;\"></th>\n                        <th>Status</th>\n                        <th>Foto</th>\n                        <th>Nome</th>\n                        <th>Tipo</th>\n                        <th>Marca</th>\n                        <th>Modelo</th>\n                        <th>Série</th>\n                        <th>Part Number</th>\n                        <th>Tamanho</th>\n                        <th>Firmware</th>\n                        <th>IP 1</th>\n                        <th>MAC 1</th>\n                        <th>IP 2</th>\n                        <th>MAC 2</th>\n                        <th>Descrição</th>\n                        <th>Ícone</th>\n                    </tr>\n                </thead>\n                <tbody>`;
+            filtrados.forEach(eq => {
+                const checked = 'checked';
+                const serie = (eq.dados && eq.dados.serie) ? eq.dados.serie : '';
+                const partnumber = (eq.dados && eq.dados.partnumber) ? eq.dados.partnumber : '';
+                const tamanho = (eq.dados && eq.dados.tamanho) ? eq.dados.tamanho : '';
+                const firmware = (eq.dados && eq.dados.firmware) ? eq.dados.firmware : '';
+                const ip1 = (eq.dados && eq.dados.ip1) ? eq.dados.ip1 : '';
+                const mac1 = (eq.dados && eq.dados.mac1) ? eq.dados.mac1 : '';
+                const ip2 = (eq.dados && eq.dados.ip2) ? eq.dados.ip2 : '';
+                const mac2 = (eq.dados && eq.dados.mac2) ? eq.dados.mac2 : '';
+                html += `<tr>\n                    <td style=\"text-align:center;\"><input type='checkbox' value='${eq.id}' id='eq_${eq.id}' ${checked}></td>\n                    <td>Vinculado</td>\n                    <td>${eq.foto ? `<img src='${eq.foto.startsWith("img/") ? "static/" + eq.foto : eq.foto}' style='max-width:80px;max-height:60px;'>` : ''}</td>\n                    <td><label for='eq_${eq.id}' style='cursor:pointer;'>${eq.nome} (${eq.tipo || ''} ${eq.marca || ''})</label></td>\n                    <td>${eq.tipo || ''}</td>\n                    <td>${eq.marca || ''}</td>\n                    <td>${eq.modelo || ''}</td>\n                    <td>${serie}</td>\n                    <td>${partnumber}</td>\n                    <td>${tamanho}</td>\n                    <td>${firmware}</td>\n                    <td>${ip1}</td>\n                    <td>${mac1}</td>\n                    <td>${ip2}</td>\n                    <td>${mac2}</td>\n                    <td>${eq.descricao || ''}</td>\n                    <td>${eq.icone ? `<img src='${eq.icone.startsWith("img/") ? "static/" + eq.icone : eq.icone}' style='max-width:32px;max-height:32px;'>` : ''}</td>\n                </tr>`;
+            });
+            html += '</tbody></table>';
+            listaDiv.innerHTML = html;
+        }
+        // Atualiza campos e equipamentos ao selecionar sala
+        function preencherCamposSala(sala) {
+            console.log('Sala selecionada:', sala);
+            document.getElementById('tipo').value = sala.tipo || '';
+            document.getElementById('descricao').value = sala.descricao || '';
+            document.getElementById('foto').value = sala.foto || '';
+            document.getElementById('fotos').value = sala.fotos || '';
+            document.getElementById('andar_id').value = sala.andar_id !== null && sala.andar_id !== undefined ? String(sala.andar_id) : '';
+            equipamentosVinculadosIds = [];
+            carregarEquipamentosVinculados(sala.id);
+        }
+        // Modal de vinculação de novos equipamentos
+        document.getElementById('btnVincularEquip').onclick = async function() {
+            const resp = await fetch('/equipamentos');
+            const equipamentos = await resp.json();
+            const salaIdAtual = document.getElementById('salaIdSelecionada').value;
+            const disponiveis = equipamentos.filter(eq => eq.sala_id == null && !equipamentosVinculadosIds.includes(String(eq.id)) && eq.defeito !== 1 && eq.defeito !== '1' && eq.defeito !== true);
+            const listaDiv = document.getElementById('equipamentos-disponiveis-lista');
+            if (disponiveis.length === 0) {
+                listaDiv.innerHTML = '<em>Nenhum equipamento disponível para vincular.</em>';
+            } else {
+                let html = `<table class=\"tabela-salas\" style=\"width:100%;border-collapse:collapse;background:#2c3e50;color:#eee;\">\n<thead>\n<tr>\n<th></th>\n<th>Nome</th>\n<th>Tipo</th>\n<th>Marca</th>\n<th>Modelo</th>\n<th>Série</th>\n</tr>\n</thead>\n<tbody>`;
+                disponiveis.forEach(eq => {
+                    const serie = (eq.dados && eq.dados.serie) ? eq.dados.serie : '';
+                    html += `<tr>\n<td><input type='checkbox' value='${eq.id}' id='modal_eq_${eq.id}'></td>\n<td><label for='modal_eq_${eq.id}' style='cursor:pointer;'>${eq.nome}</label></td>\n<td>${eq.tipo || ''}</td>\n<td>${eq.marca || ''}</td>\n<td>${eq.modelo || ''}</td>\n<td>${serie}</td>\n</tr>`;
+                });
+                html += '</tbody></table>';
+                listaDiv.innerHTML = html;
+            }
+            document.getElementById('modalEquipamentos').style.display = 'flex';
+        };
+        document.getElementById('btnFecharModal').onclick = function() {
+            document.getElementById('modalEquipamentos').style.display = 'none';
+        };
+        document.getElementById('btnConfirmarVinculo').onclick = function() {
+            // Adiciona os equipamentos selecionados à lista local e recarrega a tabela principal
+            const selecionados = Array.from(document.querySelectorAll('#equipamentos-disponiveis-lista input[type=checkbox]:checked')).map(cb => cb.value);
+            if (selecionados.length === 0) {
+                document.getElementById('modalEquipamentos').style.display = 'none';
+                return;
+            }
+            // Adiciona à lista local
+            equipamentosVinculadosIds = equipamentosVinculadosIds.concat(selecionados.filter(id => !equipamentosVinculadosIds.includes(id)));
+            document.getElementById('modalEquipamentos').style.display = 'none';
+            carregarEquipamentosVinculados(document.getElementById('salaIdSelecionada').value);
+        };
+        // Carregar imagens já enviadas para o select
+        async function carregarFotosExistentes() {
+            const resp = await fetch('/fotos-salas');
+            const data = await resp.json();
+            const select = document.getElementById('fotoExistente');
+            select.innerHTML = '<option value="">Nenhuma</option>';
+            data.imagens.forEach(url => {
+                const nome = url.split('/').pop();
+                select.innerHTML += `<option value="${url}">${nome}</option>`;
+            });
+        }
+        carregarFotosExistentes();
+        // Atualizar preview ao escolher imagem existente
+        document.getElementById('fotoExistente').addEventListener('change', function() {
+            const url = this.value;
+            const preview = document.getElementById('foto-preview-container');
+            if (url) {
+                preview.innerHTML = `<img src='${url}' alt='Foto da sala' style='max-width:180px;max-height:90px;object-fit:cover;border-radius:6px;'>`;
+            } else {
+                preview.innerHTML = "<span style='color:#aaa;'>Sem foto cadastrada</span>";
+            }
+        });
+        // Ao selecionar sala, marcar a imagem existente se for de fotos-salas
+        function selecionarSalaCard(sala) {
+            document.getElementById('salaIdSelecionada').value = sala.id;
+            document.getElementById('nomeSala').value = sala.nome || '';
+            document.getElementById('tipo').value = sala.tipo || '';
+            document.getElementById('descricao').value = sala.descricao || '';
+            // Preview e select
+            const preview = document.getElementById('foto-preview-container');
+            const select = document.getElementById('fotoExistente');
+            let fotoBanco = sala.foto || '';
+            let fotoSelectValue = '';
+            // Normaliza o valor para comparar com as opções do select
+            if (fotoBanco.startsWith('static/')) {
+                fotoSelectValue = '/' + fotoBanco;
+            } else if (fotoBanco.startsWith('/static/')) {
+                fotoSelectValue = fotoBanco;
+            } else if (fotoBanco.startsWith('/img/fotos-salas/')) {
+                fotoSelectValue = fotoBanco;
+            } else if (fotoBanco.startsWith('img/fotos-salas/')) {
+                fotoSelectValue = '/static/' + fotoBanco;
+            } else {
+                fotoSelectValue = fotoBanco;
+            }
+            // Tenta marcar a opção correta no select
+            let found = false;
+            for (let i = 0; i < select.options.length; i++) {
+                if (select.options[i].value === fotoSelectValue) {
+                    select.selectedIndex = i;
+                    found = true;
+                    break;
+                }
+            }
+            if (found && fotoSelectValue) {
+                preview.innerHTML = `<img src='${fotoSelectValue}' alt='Foto da sala' style='max-width:180px;max-height:90px;object-fit:cover;border-radius:6px;'>`;
+            } else if (sala.foto) {
+                preview.innerHTML = `<img src='${sala.foto.startsWith('img/') ? 'static/' + sala.foto : sala.foto}' alt='Foto da sala' style='max-width:180px;max-height:90px;object-fit:cover;border-radius:6px;'>`;
+                select.value = '';
+            } else {
+                preview.innerHTML = "<span style='color:#aaa;'>Sem foto cadastrada</span>";
+                select.value = '';
+            }
+            document.getElementById('andar_id').value = sala.andar_id !== null && sala.andar_id !== undefined ? String(sala.andar_id) : '';
+            equipamentosVinculadosIds = [];
+            carregarEquipamentosVinculados(sala.id);
+            // Destacar card selecionado
+            document.querySelectorAll('.card-sala-editar').forEach(card => {
+                card.style.boxShadow = '0 2px 8px #0002';
+                card.style.border = 'none';
+            });
+            const cardAtivo = document.querySelector(`.card-sala-editar[data-id='${sala.id}']`);
+            if (cardAtivo) {
+                cardAtivo.style.boxShadow = '0 0 0 3px #4a90e2';
+                cardAtivo.style.border = '2px solid #4a90e2';
+            }
+        }
+        // No envio do formulário, priorizar upload se houver, senão usar o valor do select
+        document.getElementById('formEditarSala').onsubmit = async function (e) {
+            e.preventDefault();
+            equipamentosVinculadosIds = Array.from(document.querySelectorAll('#equipamentos-lista input[type=checkbox]:checked')).map(cb => cb.value);
+            let fotoFinal = document.getElementById('fotoExistente').value;
+            const dados = {
+                nome: document.getElementById('nomeSala').value,
+                tipo: document.getElementById('tipo').value,
+                descricao: document.getElementById('descricao').value,
+                foto: fotoFinal,
+                andar_id: document.getElementById('andar_id').value,
+                equipamentos_ids: equipamentosVinculadosIds
+            };
+            const id = document.getElementById('salaIdSelecionada').value;
+            if (!id) {
+                document.getElementById('msg').innerText = 'Selecione uma sala para editar!';
+                return;
+            }
+            const resp = await fetch(`/salas/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+            const json = await resp.json();
+            if (json.status === 'ok') {
+                document.getElementById('msg').innerText = 'Sala atualizada com sucesso!';
+                setTimeout(() => { window.history.back(); }, 1000);
+            } else {
+                document.getElementById('msg').innerText = 'Erro ao atualizar sala!';
+            }
+        };
+        // --- NOVO: Renderizar cards de salas ---
+        function renderizarCardsSalas(salas) {
+            const container = document.getElementById('salas-cards-container');
+            container.innerHTML = '';
+            salas.forEach(sala => {
+                const card = document.createElement('div');
+                card.className = 'card-sala-editar';
+                card.style = 'background:#2c3e50;color:#eee;padding:18px 24px;border-radius:10px;min-width:220px;max-width:260px;box-shadow:0 2px 8px #0002;cursor:pointer;transition:box-shadow 0.2s;display:flex;flex-direction:column;align-items:flex-start;gap:8px;';
+                card.innerHTML = `
+                    ${sala.foto ? `<img src='${sala.foto.startsWith('img/') ? 'static/' + sala.foto : sala.foto}' alt='${sala.nome}' style='width:100%;max-width:180px;max-height:90px;object-fit:cover;border-radius:6px;margin-bottom:8px;'>` : ''}
+                    <b>${sala.nome}</b>
+                    <span style='font-size:0.95em;'>Tipo: ${sala.tipo || '-'}</span>
+                    <span style='font-size:0.95em;'>Andar: ${sala.andar_id ?? '-'}</span>
+                `;
+                card.onclick = function() {
+                    selecionarSalaCard(sala);
+                };
+                card.setAttribute('data-id', sala.id);
+                container.appendChild(card);
+            });
+        }
+        // --- NOVO: Selecionar sala pelo card ---
+        function selecionarSalaCard(sala) {
+            document.getElementById('salaIdSelecionada').value = sala.id;
+            document.getElementById('nomeSala').value = sala.nome || '';
+            document.getElementById('tipo').value = sala.tipo || '';
+            document.getElementById('descricao').value = sala.descricao || '';
+            // Preview e select
+            const preview = document.getElementById('foto-preview-container');
+            const select = document.getElementById('fotoExistente');
+            let fotoBanco = sala.foto || '';
+            let fotoSelectValue = '';
+            // Normaliza o valor para comparar com as opções do select
+            if (fotoBanco.startsWith('static/')) {
+                fotoSelectValue = '/' + fotoBanco;
+            } else if (fotoBanco.startsWith('/static/')) {
+                fotoSelectValue = fotoBanco;
+            } else if (fotoBanco.startsWith('/img/fotos-salas/')) {
+                fotoSelectValue = fotoBanco;
+            } else if (fotoBanco.startsWith('img/fotos-salas/')) {
+                fotoSelectValue = '/static/' + fotoBanco;
+            } else {
+                fotoSelectValue = fotoBanco;
+            }
+            // Tenta marcar a opção correta no select
+            let found = false;
+            for (let i = 0; i < select.options.length; i++) {
+                if (select.options[i].value === fotoSelectValue) {
+                    select.selectedIndex = i;
+                    found = true;
+                    break;
+                }
+            }
+            if (found && fotoSelectValue) {
+                preview.innerHTML = `<img src='${fotoSelectValue}' alt='Foto da sala' style='max-width:180px;max-height:90px;object-fit:cover;border-radius:6px;'>`;
+            } else if (sala.foto) {
+                preview.innerHTML = `<img src='${sala.foto.startsWith('img/') ? 'static/' + sala.foto : sala.foto}' alt='Foto da sala' style='max-width:180px;max-height:90px;object-fit:cover;border-radius:6px;'>`;
+                select.value = '';
+            } else {
+                preview.innerHTML = "<span style='color:#aaa;'>Sem foto cadastrada</span>";
+                select.value = '';
+            }
+            document.getElementById('andar_id').value = sala.andar_id !== null && sala.andar_id !== undefined ? String(sala.andar_id) : '';
+            equipamentosVinculadosIds = [];
+            carregarEquipamentosVinculados(sala.id);
+            // Destacar card selecionado
+            document.querySelectorAll('.card-sala-editar').forEach(card => {
+                card.style.boxShadow = '0 2px 8px #0002';
+                card.style.border = 'none';
+            });
+            const cardAtivo = document.querySelector(`.card-sala-editar[data-id='${sala.id}']`);
+            if (cardAtivo) {
+                cardAtivo.style.boxShadow = '0 0 0 3px #4a90e2';
+                cardAtivo.style.border = '2px solid #4a90e2';
+            }
+        }
+        // --- Substituir chamada inicial ---
+        carregarSalasCombo();
+        function voltarPainelConfig() {
+            fetch('/perfil').then(resp => resp.json()).then(perfil => {
+                if (perfil.nivel === 'admin') {
+                    window.location.href = 'config-admin.html';
+                } else if (perfil.nivel === 'tecnico') {
+                    window.location.href = 'config-tecnico.html';
+                } else {
+                    window.location.href = 'config-usuario.html';
+                }
+            });
+        }
+        window.addEventListener('DOMContentLoaded', function() {
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    if (data.logo) {
+                        document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                    } else if (data.nome) {
+                        document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
+                    }
+                });
+        });
+        // Filtro de salas por nome
+        document.getElementById('filtroSala').addEventListener('input', function() {
+            const termo = this.value.trim().toLowerCase();
+            const filtradas = termo ? todasSalas.filter(s => (s.nome||'').toLowerCase().includes(termo)) : todasSalas;
+            renderizarCardsSalas(filtradas);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilo-device.css">
+    <link rel="stylesheet" href="css/estilo-index.css">
+    <script src="js/script.js" defer></script>
+    <title>Device</title>
+</head>
+
+<body onload="carregarUsuario()">
+    <header class="header">
+        <img src="img/logo-whirlpool.png" alt="Logo da Empresa Esquerda">
+        <div class="user-info">
+            <span id="welcome-message">Bem-vindo ao Inventory</span>
+            <button class="logout-button" onclick="logout()">Sair</button>
+        </div>
+        <img src="img/logo-convergint.png" alt="Logo da Empresa Direita">
+    </header>
+    <main class="content">
+        <div class="sala-content">
+            <h2 id="sala-nome" data-sala="">Nome da Sala</h2>
+            <p id="device-descricao"></p>
+            <!-- Foto da sala -->
+            <div class="sala-foto">
+                <img id="device-foto" src="" alt="Foto do Device">
+            </div>
+            <!-- Equipamentos -->
+            <div id="device-container" class="device-icones">
+                <!-- Os dados dos equipamentos serão carregados dinamicamente aqui -->
+            </div>
+        </div>
+        <div class="tooltip" id="tooltip">tool</div>
+        <button class="botao-voltar" onclick="window.history.back()">Voltar</button>
+    </main>
+    <footer class="footer">
+        <img src="img/footer-logo.png" alt="Logo do Rodapé">
+    </footer>
+    <script>
+        // Chama a função carregarDadosDevice() ao carregar a página device.html
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const deviceNome = urlParams.get('device');
+
+            if (deviceNome) {
+                carregarDadosDevice(deviceNome,localStorage.getItem("salaAtual")); // Passa o nome da sala armazenado no localStorage
+            } else {
+                console.error('Nenhum dispositivo especificado na URL.');
+            }
+        });
+
+    </script>
+</body>
+
+</html>

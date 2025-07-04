@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Equipamentos</title>
+    <link rel="stylesheet" href="css/estilo-base.css">
+    <link rel="stylesheet" href="css/estilo-gerenciar-equipamentos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="voltar-container">
+            <button class="card-btn voltar" onclick="voltarPainelConfig()" title="Voltar">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        <h1>Gerenciar Equipamentos</h1>
+        <div style="text-align:center;margin-bottom:18px;">
+            <input id="filtroEquipamento" type="text" class="input-filtro-equipamento" placeholder="Filtrar por tipo do equipamento...">
+        </div>
+        <div id="resumoEquipamentos" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:18px;"></div>
+        <div style="overflow-x:auto;"><div id="cardsEquipamentosContainer"></div></div>
+        <div id="empresa-logada"></div>
+    </div>
+    <script>
+    let equipamentos = [];
+    let salasMap = {};
+    fetch('/salas')
+        .then(resp => resp.json())
+        .then(salas => {
+            salas.forEach(sala => {
+                salasMap[sala.id] = sala.nome;
+            });
+            carregarEquipamentos();
+        });
+    function carregarEquipamentos() {
+        fetch('/equipamentos')
+            .then(resp => resp.json())
+            .then(data => {
+                equipamentos = data;
+                renderizarEquipamentos(data);
+            });
+    }
+    function renderizarResumo(equipamentos) {
+        const resumoDiv = document.getElementById('resumoEquipamentos');
+        if (!equipamentos.length) {
+            resumoDiv.innerHTML = "<span style='color:#ccc;'>Nenhum equipamento encontrado.</span>";
+            return;
+        }
+        // Conta por tipo e status
+        const tipos = {};
+        let funcionando = 0;
+        let defeito = 0;
+        equipamentos.forEach(eq => {
+            if (!tipos[eq.tipo]) tipos[eq.tipo] = 0;
+            tipos[eq.tipo]++;
+            if (eq.defeito === 1 || eq.defeito === true || eq.defeito === '1') {
+                defeito++;
+            } else {
+                funcionando++;
+            }
+        });
+        let html = `
+            <div style=\"background:#223;padding:8px 18px;border-radius:8px;color:#eee;display:flex;align-items:center;gap:6px;\">
+                <i class=\"fas fa-boxes\"></i> Total: <b>${equipamentos.length}</b>
+            </div>
+            <div style=\"background:#223;padding:8px 18px;border-radius:8px;color:#2ecc40;display:flex;align-items:center;gap:6px;\">
+                <i class=\"fas fa-check-circle\"></i> Funcionando: <b>${funcionando}</b>
+            </div>
+            <div style=\"background:#223;padding:8px 18px;border-radius:8px;color:#e74c3c;display:flex;align-items:center;gap:6px;\">
+                <i class=\"fas fa-times-circle\"></i> Defeito: <b>${defeito}</b>
+            </div>
+        `;
+        Object.entries(tipos).forEach(([tipo, qtd]) => {
+            html += `
+                <div style=\"background:#223;padding:8px 18px;border-radius:8px;color:#eee;display:flex;align-items:center;gap:6px;\">
+                    <i class=\"fas fa-tag\"></i> ${tipo || 'Sem tipo'}: <b>${qtd}</b>
+                </div>
+            `;
+        });
+        resumoDiv.innerHTML = html;
+    }
+    function renderizarEquipamentos(equipamentosFiltrados) {
+        const container = document.getElementById('cardsEquipamentosContainer');
+        let html = '';
+        equipamentosFiltrados.forEach(eq => {
+            const salaIdStr = eq.sala_id !== undefined && eq.sala_id !== null ? String(eq.sala_id) : null;
+            const isDefeito = eq.defeito === 1 || eq.defeito === "1" || eq.defeito === true;
+            const cardStatusClass = isDefeito ? 'card-defeito' : 'card-funcionando';
+            html += `<div class='card-equipamento'>`;
+            html += `<div class='status-indicador custom-status ${isDefeito ? 'defeito' : 'funcionando'}' title='${isDefeito ? 'Defeito' : 'Funcionando'}'>`;
+            html += `<i class='fas ${isDefeito ? 'fa-times' : 'fa-check'}'></i>`;
+            html += `</div>`;
+            if (eq.marca) {
+                html += `<div class='marca-icone'><img src='static/img/${eq.marca.toLowerCase()}.png' onerror=\"this.style.display='none'\" alt='${eq.marca}' title='${eq.marca}'></div>`;
+            }
+            if (eq.foto) {
+                html += `<div class='equip-foto'><img src='${eq.foto.startsWith("img/") ? "static/" + eq.foto : eq.foto}' alt='${eq.nome || ''}'></div>`;
+            }
+            html += `<div class='equip-nome'>${eq.nome || ''}</div>`;
+            html += `<div class='equip-info'>`;
+            html += `<div class='equip-info-linha'><b>Sala:</b> ${salaIdStr && salasMap[salaIdStr] ? salasMap[salaIdStr] : (eq.sala_id ? eq.sala_id : 'Sem sala')}</div>`;
+            html += `<div class='equip-info-linha'><b>Status:</b> <span>${isDefeito ? 'Defeito' : 'Funcionando'}</span></div>`;
+            html += `<div class='equip-info-linha'><b>Tipo:</b> ${eq.tipo || ''}</div>`;
+            html += `<div class='equip-info-linha'><b>Marca:</b> ${eq.marca || ''}</div>`;
+            html += `<div class='equip-info-linha'><b>Série:</b> ${eq.dados?.serie || ''}</div>`;
+            html += `<div class='equip-info-linha'><b>Descrição:</b> ${eq.descricao || ''}</div>`;
+            html += `</div>`;
+            if (eq.icone) {
+                html += `<div class='equip-icone'><img src='${eq.icone.startsWith("img/") ? "static/" + eq.icone : eq.icone}' alt='ícone'></div>`;
+            }
+            html += `<button class='defeito-btn' data-id='${eq.id}' data-defeito='${isDefeito ? 1 : 0}'><i class='fas fa-exchange-alt'></i> Mudar status</button>`;
+            html += `</div>`;
+        });
+        container.innerHTML = html;
+        renderizarResumo(equipamentosFiltrados);
+        document.querySelectorAll('.defeito-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const defeitoAtual = this.getAttribute('data-defeito') === '1';
+                const novoStatus = !defeitoAtual;
+                const pergunta = defeitoAtual
+                    ? 'Deseja marcar este equipamento como FUNCIONANDO?'
+                    : 'Deseja marcar este equipamento como DEFEITO?';
+                if (confirm(pergunta)) {
+                    fetch(`/equipamento-defeito/${id}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ defeito: novoStatus })
+                    }).then(() => carregarEquipamentos());
+                }
+            });
+        });
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        const filtro = document.getElementById('filtroEquipamento');
+        filtro.addEventListener('input', function() {
+            const termo = filtro.value.trim().toLowerCase();
+            const filtrados = termo ? equipamentos.filter(eq => (eq.nome||'').toLowerCase().includes(termo) || (eq.tipo||'').toLowerCase().includes(termo)) : equipamentos;
+            renderizarEquipamentos(filtrados);
+        });
+        // Renderiza resumo inicial
+        renderizarResumo(equipamentos);
+        fetch('/empresa_atual')
+            .then(resp => resp.json())
+            .then(data => {
+                if (data.logo) {
+                    document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                } else if (data.nome) {
+                    document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
+                }
+            });
+    });
+    function voltarPainelConfig() {
+        fetch('/perfil').then(resp => resp.json()).then(perfil => {
+            if (perfil.nivel === 'admin') {
+                window.location.href = 'config-admin.html';
+            } else if (perfil.nivel === 'tecnico') {
+                window.location.href = 'config-tecnico.html';
+            } else {
+                window.location.href = 'config-usuario.html';
+            }
+        });
+    }
+    </script>
+</body>
+</html>

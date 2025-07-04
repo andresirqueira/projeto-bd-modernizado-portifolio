@@ -1,0 +1,129 @@
+/* Estilos exclusivos da tela visualizar-logs */
+.admin-container {
+    max-width: 1200px;
+    margin: 48px auto;
+    background: #34495e;
+    padding: 32px 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    position: relative;
+}
+
+#empresa-logada {
+    position: absolute;
+    top: 16px;
+    right: 24px;
+    color: #4a90e2;
+    font-weight: bold;
+    margin-bottom: 0;
+    text-align: right;
+    z-index: 2;
+}
+
+.logs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+.logs-info {
+    background: #2c3e50;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    border-left: 4px solid #3498db;
+}
+.logs-container {
+    background: #2c3e50;
+    border-radius: 8px;
+    padding: 16px;
+    max-height: 600px;
+    overflow-y: auto;
+}
+.log-entry {
+    background: #34495e;
+    border-left: 4px solid #27ae60;
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+.log-entry.erro {
+    border-left-color: #e74c3c;
+    background: #2c3e50;
+}
+.log-entry.sucesso {
+    border-left-color: #27ae60;
+}
+.log-timestamp {
+    color: #3498db;
+    font-weight: bold;
+}
+.log-usuario {
+    color: #f39c12;
+    font-weight: bold;
+}
+.log-acao {
+    color: #e74c3c;
+    font-weight: bold;
+}
+.log-detalhes {
+    color: #ecf0f1;
+    margin-top: 4px;
+}
+.log-status {
+    color: #27ae60;
+    font-weight: bold;
+}
+.log-status.erro {
+    color: #e74c3c;
+}
+.btn-atualizar {
+    background: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.2s;
+}
+.btn-atualizar:hover {
+    background: #2980b9;
+}
+.btn-limpar {
+    background: #e74c3c;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-left: 10px;
+    transition: background 0.2s;
+}
+.btn-limpar:hover {
+    background: #c0392b;
+}
+.sem-logs {
+    text-align: center;
+    color: #bdc3c7;
+    font-style: italic;
+    padding: 40px;
+}
+.filtros {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+.filtro-select {
+    padding: 8px 12px;
+    border: 1px solid #555;
+    border-radius: 6px;
+    background: #223;
+    color: #ecf0f1;
+    font-size: 0.9em;
+} 

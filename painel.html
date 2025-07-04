@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Painel do Sistema</title>
+    <link rel="stylesheet" href="css/estilo-base.css">
+    <link rel="stylesheet" href="css/estilo-painel.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="painel-container">
+        <h1 id="tituloPainel">Painel</h1>
+        <p id="boasVindas"></p>
+        <div id="empresa-logada" style="text-align:right; color:#4a90e2; font-weight:bold; margin-bottom:10px;"></div>
+
+        <div class="top-cards">
+            <button id="btnAdmin" class="card-btn config-adm oculto" onclick="window.location.href='config-admin.html'">
+                <i class="fas fa-user-shield"></i>Configurações de Admin
+            </button>
+            <button id="btnTecnico" class="card-btn config-tecnico oculto" onclick="window.location.href='config-tecnico.html'">
+                <i class="fas fa-tools"></i>Ferramentas Técnicas
+            </button>
+            <button id="btnUsuario" class="card-btn config-usuario oculto" onclick="window.location.href='config-usuario.html'">
+                <i class="fas fa-user"></i>Acesso Usuário
+            </button>
+            <button class="card-btn sair" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </div>
+    </div>
+    <script>
+        async function carregarPerfil() {
+            const resp = await fetch('/perfil');
+            const perfil = await resp.json();
+            if (!perfil.nivel) {
+                window.location.href = '/login.html';
+                return;
+            }
+            document.getElementById('boasVindas').innerText = `Bem-vindo, ${perfil.nivel}!`;
+            // Personalização dos botões conforme o nível
+            if (perfil.nivel === 'admin') {
+                document.getElementById('btnAdmin').classList.remove('oculto');
+                document.getElementById('tituloPainel').innerText = 'Painel do Administrador';
+            } else if (perfil.nivel === 'tecnico') {
+                document.getElementById('btnTecnico').classList.remove('oculto');
+                document.getElementById('tituloPainel').innerText = 'Painel do Técnico';
+            } else {
+                document.getElementById('btnUsuario').classList.remove('oculto');
+                document.getElementById('tituloPainel').innerText = 'Painel do Usuário';
+            }
+        }
+        function logout() {
+            fetch('/logout').then(() => window.location.href = '/login.html');
+        }
+        carregarPerfil();
+
+        window.addEventListener('DOMContentLoaded', function() {
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    if (data.logo) {
+                        document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                    } else if (data.nome) {
+                        document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
+                    }
+                });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizar Layout da Sala</title>
+    <link rel="stylesheet" href="css/estilo-base.css">
+    <link rel="stylesheet" href="css/estilo-adicionar-equipamento.css">
+    <link rel="stylesheet" href="css/estilo-detalhes-sala.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: #183c6b; margin: 0; }
+        #mainCanvas {
+            position: absolute;
+            left: 180px; top: 0; right: 0; bottom: 0;
+            width: calc(100vw - 180px);
+            height: 100vh;
+            background: url('static/img/blue-print.png') center/cover, #183c6b;
+            overflow: hidden;
+        }
+        .equip-instance {
+            position: absolute;
+            box-shadow: none;
+            border-radius: 8px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .equip-instance img {
+            width: 100%; height: 100%; object-fit: contain;
+            pointer-events: none;
+        }
+        .text-instance span {
+            font-weight: bold;
+            font-family: inherit;
+            pointer-events: none;
+        }
+        #sidebar {
+            position: fixed;
+            left: 0; top: 0; bottom: 0;
+            width: 180px;
+            background: #222a33;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+            box-shadow: 2px 0 8px #0002;
+        }
+        #sidebar h2 {
+            margin-top: 32px;
+            font-size: 1.3em;
+            color: #f1c40f;
+        }
+        #salaTitulo {
+            margin-top: 32px;
+            font-size: 1.2em;
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <button class="card-btn voltar" id="btnVoltarVisualizar" title="Voltar" style="position:fixed; top:24px; left:200px; z-index:10000;"><i class="fas fa-arrow-left"></i></button>
+    <div id="sidebar">
+        <h2>Layout da Sala</h2>
+        <div id="salaTitulo">Sala</div>
+    </div>
+    <div id="mainCanvas" style="position:relative; min-height:600px; min-width:800px;">
+        <svg id="svg-connections" style="position:absolute; left:0; top:0; width:100%; height:100%; pointer-events:none; z-index:0;"></svg>
+    </div>
+    <script>
+    function getSalaIdFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('sala_id');
+    }
+    async function carregarSalaInfo(sala_id) {
+        const resp = await fetch(`/salas/${sala_id}`);
+        if (!resp.ok) return;
+        const sala = await resp.json();
+        document.getElementById('salaTitulo').innerText = sala.nome || 'Sala';
+    }
+    async function renderizarLayoutVisualizacao(sala_id) {
+        const mainCanvas = document.getElementById('mainCanvas');
+        const svgEl = document.getElementById('svg-connections');
+        // Remove todos os elementos .equip-instance
+        Array.from(mainCanvas.querySelectorAll('.equip-instance')).forEach(e => e.remove());
+        // Limpa SVG
+        while (svgEl.firstChild) svgEl.removeChild(svgEl.firstChild);
+        try {
+            const resp = await fetch(`/api/salas/${sala_id}/layout`);
+            if (!resp.ok) throw new Error('Nenhum layout salvo para esta sala.');
+            const layout = await resp.json();
+            // Renderiza equipamentos/textos e cria mapa de id
+            const idToDiv = {};
+            layout.items.forEach(item => {
+                let div;
+                if (item.type === 'equip') {
+                    div = document.createElement('div');
+                    div.className = 'equip-instance';
+                    div.style.position = 'absolute';
+                    div.style.left = item.x + 'px';
+                    div.style.top = item.y + 'px';
+                    div.style.width = item.w + 'px';
+                    div.style.height = item.h + 'px';
+                    div.dataset.id = item.id;
+                    const img = document.createElement('img');
+                    img.src = item.img;
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.objectFit = 'contain';
+                    div.appendChild(img);
+                    mainCanvas.appendChild(div);
+                } else if (item.type === 'text') {
+                    div = document.createElement('div');
+                    div.className = 'equip-instance text-instance';
+                    div.style.position = 'absolute';
+                    div.style.left = item.x + 'px';
+                    div.style.top = item.y + 'px';
+                    div.style.width = item.w + 'px';
+                    div.style.height = item.h + 'px';
+                    div.dataset.id = item.id;
+                    const span = document.createElement('span');
+                    span.textContent = item.text;
+                    span.style.color = item.color;
+                    span.style.fontSize = item.fontSize;
+                    div.appendChild(span);
+                    mainCanvas.appendChild(div);
+                }
+                idToDiv[item.id] = div;
+            });
+            // Renderiza conexões no SVG global
+            if (layout.conns && layout.conns.length > 0) {
+                layout.conns.forEach(conn => {
+                    const from = idToDiv[conn.fromId];
+                    const to = idToDiv[conn.toId];
+                    if (from && to) {
+                        const x1 = from.offsetLeft + from.offsetWidth/2;
+                        const y1 = from.offsetTop + from.offsetHeight/2;
+                        const x2 = to.offsetLeft + to.offsetWidth/2;
+                        const y2 = to.offsetTop + to.offsetHeight/2;
+                        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                        const dx = Math.abs(x2 - x1) * 0.4;
+                        path.setAttribute('d', `M${x1},${y1} C${x1+dx},${y1} ${x2-dx},${y2} ${x2},${y2}`);
+                        path.setAttribute('stroke', conn.color || '#e74c3c');
+                        path.setAttribute('stroke-width', '3');
+                        path.setAttribute('fill', 'none');
+                        svgEl.appendChild(path);
+                        if (conn.name || conn.label) {
+                            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                            text.setAttribute('x', (x1+x2)/2);
+                            text.setAttribute('y', (y1+y2)/2 - 8);
+                            text.setAttribute('fill', conn.color || '#e74c3c');
+                            text.setAttribute('font-size', conn.fontSize || 16);
+                            text.setAttribute('font-family', 'inherit');
+                            text.setAttribute('text-anchor', 'middle');
+                            text.textContent = conn.name || conn.label;
+                            svgEl.appendChild(text);
+                        }
+                    }
+                });
+            }
+        } catch (e) {
+            mainCanvas.innerHTML = `<div style='color:#e74c3c;font-size:1.3em;text-align:center;margin-top:80px;'>${e.message || 'Erro ao carregar layout.'}</div>`;
+        }
+    }
+    (function(){
+        const sala_id = getSalaIdFromUrl();
+        if (sala_id) {
+            carregarSalaInfo(sala_id);
+            renderizarLayoutVisualizacao(sala_id);
+        } else {
+            document.getElementById('mainCanvas').innerHTML = '<div style="color:#e74c3c;font-size:1.3em;text-align:center;margin-top:80px;">Sala não informada na URL.</div>';
+        }
+    })();
+    document.getElementById('btnVoltarVisualizar').onclick = function() {
+        window.history.back();
+    };
+    </script>
+</body>
+</html> 

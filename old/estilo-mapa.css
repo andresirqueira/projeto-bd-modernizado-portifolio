@@ -1,0 +1,181 @@
+.mapa-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  /* Ajuste conforme necessário */
+  width: 100%;
+  /* Ajuste conforme necessário */
+}
+
+
+@keyframes pulse {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.4);
+    opacity: 0.4;
+  }
+}
+
+@keyframes blink-livre {
+  0%, 100% {
+    fill: limegreen;
+  }
+  60% {
+    fill: green;
+  }
+}
+
+@keyframes blink-ocupada {
+  0%, 100% {
+    fill: red;
+  }
+  60% {
+    fill: darkred;
+  }
+}
+
+@keyframes blink-indefinido {
+  0%, 100% {
+    fill: orange;
+  }
+  60% {
+    fill: darkorange;
+  }
+}
+
+.piscar-livre {
+  animation: blink-livre 1s infinite;
+}
+
+.piscar-ocupada {
+  animation: blink-ocupada 1s infinite;
+}
+
+.piscar-indefinido {
+  animation: blink-indefinido 1s infinite;
+}
+
+
+.normal {
+  font: bold 11px sans-serif;
+  fill: white;
+}
+
+.menor {
+  font: bold 9px sans-serif;
+  fill: white;
+}
+
+.micro {
+  font: bold 7px sans-serif;
+  fill: white;
+}
+
+.mini-sala {
+  font: bold 5px sans-serif;
+  fill: white;
+}
+
+.banheiros {
+  fill: rgb(11, 47, 159);
+  stroke: rgb(199, 255, 216);
+  stroke-width: 2px;
+}
+
+.salas {
+  fill: rgb(22, 29, 111);
+  stroke: rgb(199, 255, 216);
+  stroke-width: 2px;
+}
+
+.semAV {
+  fill: gray;
+  stroke: rgb(199, 255, 216);
+  stroke-width: 2px;
+}
+
+.cafe {
+  fill: burlywood;
+  stroke: white;
+  stroke-width: 2px;
+}
+
+.acessos {
+  fill: green;
+  stroke: rgb(199, 255, 216);
+  stroke-width: 2px;
+
+}
+
+.roboto-mono-micro {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 8px;
+  fill: white;
+}
+
+.roboto-mono-normal {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 11px;
+  fill: white;
+}
+
+.roboto-mono-mini {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 9px;
+  fill: white;
+}
+
+.roboto-mono-titulo {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 18px;
+  fill: orange;
+}
+
+
+.estilo-simulador {
+  display: none;
+  /* Inicialmente oculta todos os andares */
+}
+
+.tooltip {
+  font-family: "Roboto Mono", monospace;
+  font-size: large;
+  position: absolute;
+  background-color: #004080;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 12px;
+  visibility: hidden;
+  pointer-events: none;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #fff;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 1px;
+  margin-left: 5px;
+  vertical-align: middle;
+}

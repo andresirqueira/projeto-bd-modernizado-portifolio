@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilo-login.css">
+    <script src="js/script.js" defer></script>
+    <title>Login</title>
+</head>
+<body onload="resetForm()"> <!-- Chama resetForm ao carregar a página -->
+    <div class="login-container">
+        <h1>Login</h1>
+        <form id="login-form" onsubmit="validarLogin(event)" autocomplete="off">
+            <label for="username">Usuário:</label>
+            <input type="text" id="username" name="username" required autocomplete="new-username">
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required autocomplete="new-password">
+            <button type="submit">OK</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Switch</title>
+    <link rel="stylesheet" href="css/estilo-base.css">
+    <link rel="stylesheet" href="css/estilo-editar-switch.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <div class="voltar-container">
+            <button class="card-btn voltar" onclick="voltarPainelConfig()" title="Voltar">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        
+        <h1>Editar Switch</h1>
+        <div id="empresa-logada"></div>
+        
+        <div class="switch-selector">
+            <label for="switchSelect">Selecione o Switch:</label>
+            <select id="switchSelect" onchange="carregarSwitch()">
+                <option value="">Selecione um switch...</option>
+            </select>
+        </div>
+
+        <div id="switchInfo" class="switch-info" style="display: none;">
+            <h3>Informações do Switch</h3>
+            <p><strong>ID:</strong> <span id="switchId"></span></p>
+            <p><strong>Data de Criação:</strong> <span id="switchDataCriacao"></span></p>
+        </div>
+
+        <form id="formEditarSwitch">
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+
+            <div class="form-group">
+                <label for="marca">Marca:</label>
+                <select id="marca" name="marca" required onchange="atualizarModelos()" disabled>
+                    <option value="">Selecione a marca...</option>
+                    <option value="Cisco">Cisco</option>
+                    <option value="HP">HP</option>
+                    <option value="Dell">Dell</option>
+                    <option value="Juniper">Juniper</option>
+                    <option value="Aruba">Aruba</option>
+                    <option value="Netgear">Netgear</option>
+                    <option value="TP-Link">TP-Link</option>
+                    <option value="Ubiquiti">Ubiquiti</option>
+                    <option value="Mikrotik">Mikrotik</option>
+                    <option value="Outro">Outro</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="modelo">Modelo:</label>
+                <select id="modelo" name="modelo" required disabled>
+                    <option value="">Selecione a marca primeiro</option>
+                </select>
+            </div>
+
+            <div class="btn-container">
+                <button type="submit" class="btn-salvar" id="btnSalvar" disabled>
+                    <i class="fas fa-save"></i> Salvar Alterações
+                </button>
+            </div>
+        </form>
+
+        <div class="msg" id="msg"></div>
+    </div>
+
+    <script>
+        let switchAtual = null;
+
+        // Modelos por marca
+        const modelosPorMarca = {
+            Cisco: [
+                "Catalyst 2960",
+                "Catalyst 3560",
+                "Catalyst 3750",
+                "Catalyst 3850",
+                "Catalyst 4500",
+                "Catalyst 6500",
+                "Nexus 3000",
+                "Nexus 5000",
+                "Nexus 7000",
+                "Nexus 9000",
+                "Outro"
+            ],
+            HP: [
+                "ProCurve 1800",
+                "ProCurve 2500",
+                "ProCurve 2600",
+                "ProCurve 2800",
+                "ProCurve 2900",
+                "ProCurve 3500",
+                "ProCurve 5400",
+                "Aruba 2530",
+                "Aruba 2930",
+                "Aruba 3810",
+                "Outro"
+            ],
+            Dell: [
+                "PowerConnect 2800",
+                "PowerConnect 3500",
+                "PowerConnect 5500",
+                "PowerConnect 6200",
+                "PowerConnect 7000",
+                "N-Series",
+                "S-Series",
+                "Z-Series",
+                "Outro"
+            ],
+            Juniper: [
+                "EX2200",
+                "EX2300",
+                "EX3300",
+                "EX3400",
+                "EX4300",
+                "EX4500",
+                "EX4600",
+                "EX9200",
+                "QFX5100",
+                "QFX5200",
+                "Outro"
+            ],
+            Aruba: [
+                "2530",
+                "2930",
+                "3810",
+                "5400",
+                "8320",
+                "8400",
+                "Outro"
+            ],
+            Netgear: [
+                "GS108",
+                "GS116",
+                "GS724T",
+                "GS748T",
+                "GS752TP",
+                "M4100",
+                "M4300",
+                "Outro"
+            ],
+            "TP-Link": [
+                "TL-SG1008",
+                "TL-SG1016",
+                "TL-SG1024",
+                "TL-SG108",
+                "TL-SG116",
+                "TL-SG2008",
+                "TL-SG2016",
+                "Outro"
+            ],
+            Ubiquiti: [
+                "US-8",
+                "US-16-150W",
+                "US-24",
+                "US-24-250W",
+                "US-48",
+                "US-48-500W",
+                "USW-Enterprise-24-POE",
+                "Outro"
+            ],
+            Mikrotik: [
+                "CRS125-24G-1S",
+                "CRS226-24G-2S",
+                "CRS328-24P-4S",
+                "CRS354-48G-4S",
+                "CSS326-24G-2S",
+                "CSS610-8G-2S",
+                "Outro"
+            ],
+            Outro: ["Outro"]
+        };
+
+        // Atualizar modelos quando marca for selecionada
+        function atualizarModelos() {
+            const marca = document.getElementById('marca').value;
+            const modeloSelect = document.getElementById('modelo');
+            const modeloAtual = modeloSelect.value; // Preservar o valor atual
+            
+            modeloSelect.innerHTML = "";
+            
+            if (modelosPorMarca[marca]) {
+                modeloSelect.innerHTML = '<option value="">Selecione o modelo...</option>';
+                modelosPorMarca[marca].forEach(modelo => {
+                    const opt = document.createElement('option');
+                    opt.value = modelo;
+                    opt.textContent = modelo;
+                    modeloSelect.appendChild(opt);
+                });
+                
+                // Se o modelo atual existe na nova lista de modelos, mantê-lo selecionado
+                if (modeloAtual && modelosPorMarca[marca].includes(modeloAtual)) {
+                    modeloSelect.value = modeloAtual;
+                }
+            } else {
+                modeloSelect.innerHTML = '<option value="">Selecione a marca primeiro</option>';
+            }
+        }
+
+        // Carregar lista de switches
+        async function carregarSwitches() {
+            try {
+                const resp = await fetch('/switches');
+                const switches = await resp.json();
+                const select = document.getElementById('switchSelect');
+                
+                select.innerHTML = '<option value="">Selecione um switch...</option>';
+                switches.forEach(sw => {
+                    const opt = document.createElement('option');
+                    opt.value = sw.id;
+                    opt.textContent = `${sw.nome} (${sw.marca} ${sw.modelo})`;
+                    select.appendChild(opt);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar switches:', error);
+                mostrarMensagem('Erro ao carregar switches', 'error');
+            }
+        }
+
+        // Carregar dados do switch selecionado
+        async function carregarSwitch() {
+            const switchId = document.getElementById('switchSelect').value;
+            const btnSalvar = document.getElementById('btnSalvar');
+            const switchInfo = document.getElementById('switchInfo');
+            const marcaSelect = document.getElementById('marca');
+            const modeloSelect = document.getElementById('modelo');
+            const nomeInput = document.getElementById('nome');
+            
+            if (!switchId) {
+                switchAtual = null;
+                btnSalvar.disabled = true;
+                switchInfo.style.display = 'none';
+                limparFormulario();
+                
+                // Desabilitar campos
+                nomeInput.disabled = true;
+                marcaSelect.disabled = true;
+                modeloSelect.disabled = true;
+                return;
+            }
+
+            try {
+                const resp = await fetch(`/switches/${switchId}`);
+                const switch_data = await resp.json();
+                
+                if (resp.ok) {
+                    switchAtual = switch_data;
+                    preencherFormulario(switch_data);
+                    mostrarInfoSwitch(switch_data);
+                    btnSalvar.disabled = false;
+                    
+                    // Habilitar campos
+                    nomeInput.disabled = false;
+                    marcaSelect.disabled = false;
+                    modeloSelect.disabled = false;
+                } else {
+                    mostrarMensagem(switch_data.mensagem || 'Erro ao carregar switch', 'error');
+                }
+            } catch (error) {
+                console.error('Erro ao carregar switch:', error);
+                mostrarMensagem('Erro ao carregar switch', 'error');
+            }
+        }
+
+        // Preencher formulário com dados do switch
+        function preencherFormulario(switch_data) {
+            document.getElementById('nome').value = switch_data.nome || '';
+            
+            // Selecionar a marca
+            const marcaSelect = document.getElementById('marca');
+            marcaSelect.value = switch_data.marca || '';
+            
+            // Atualizar os modelos baseado na marca selecionada
+            atualizarModelos();
+            
+            // Selecionar o modelo imediatamente após atualizar os modelos
+            const modeloSelect = document.getElementById('modelo');
+            modeloSelect.value = switch_data.modelo || '';
+        }
+
+        // Mostrar informações do switch
+        function mostrarInfoSwitch(switch_data) {
+            document.getElementById('switchId').textContent = switch_data.id;
+            
+            // Converter para fuso horário local
+            const dataCriacao = new Date(switch_data.data_criacao);
+            const dataLocal = dataCriacao.toLocaleString('pt-BR', {
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            document.getElementById('switchDataCriacao').textContent = dataLocal;
+            document.getElementById('switchInfo').style.display = 'block';
+        }
+
+        // Limpar formulário
+        function limparFormulario() {
+            const nomeInput = document.getElementById('nome');
+            const marcaSelect = document.getElementById('marca');
+            const modeloSelect = document.getElementById('modelo');
+            
+            nomeInput.value = '';
+            marcaSelect.value = '';
+            modeloSelect.innerHTML = '<option value="">Selecione a marca primeiro</option>';
+            
+            // Desabilitar campos
+            nomeInput.disabled = true;
+            marcaSelect.disabled = true;
+            modeloSelect.disabled = true;
+        }
+
+        // Mostrar mensagem
+        function mostrarMensagem(texto, tipo) {
+            const msg = document.getElementById('msg');
+            msg.innerText = texto;
+            msg.className = `msg ${tipo}`;
+            setTimeout(() => {
+                msg.innerText = '';
+                msg.className = 'msg';
+            }, 3000);
+        }
+
+        // Event listener para o formulário
+        document.getElementById('formEditarSwitch').onsubmit = async function(e) {
+            e.preventDefault();
+            
+            if (!switchAtual) {
+                mostrarMensagem('Selecione um switch primeiro', 'error');
+                return;
+            }
+
+            const dados = {
+                nome: document.getElementById('nome').value,
+                marca: document.getElementById('marca').value,
+                modelo: document.getElementById('modelo').value
+            };
+
+            try {
+                const resp = await fetch(`/switches/${switchAtual.id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dados)
+                });
+
+                const json = await resp.json();
+                
+                if (json.status === 'ok') {
+                    mostrarMensagem('Switch atualizado com sucesso!', 'success');
+                    // Aguardar um pouco para mostrar a mensagem e depois redirecionar
+                    setTimeout(() => {
+                        window.location.href = 'config-admin.html';
+                    }, 1500);
+                } else {
+                    mostrarMensagem(json.mensagem || 'Erro ao atualizar switch', 'error');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                mostrarMensagem('Erro ao atualizar switch', 'error');
+            }
+        };
+
+        function voltarPainelConfig() {
+            fetch('/perfil').then(resp => resp.json()).then(perfil => {
+                if (perfil.nivel === 'admin') {
+                    window.location.href = 'config-admin.html';
+                } else if (perfil.nivel === 'tecnico') {
+                    window.location.href = 'config-tecnico.html';
+                } else {
+                    window.location.href = 'config-usuario.html';
+                }
+            });
+        }
+
+        // Carregar switches ao iniciar a página
+        carregarSwitches();
+
+        window.addEventListener('DOMContentLoaded', function() {
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    if (data.logo) {
+                        document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                    } else if (data.nome) {
+                        document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
+                    }
+                });
+        });
+    </script>
+</body>
+
+</html> 

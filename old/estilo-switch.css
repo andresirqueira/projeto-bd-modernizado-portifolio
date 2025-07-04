@@ -1,0 +1,152 @@
+.sw-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  /* Ajuste conforme necessário */
+  width: 100%;
+  /* Ajuste conforme necessário */
+}
+
+
+@keyframes pulse {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.4);
+    opacity: 0.4;
+  }
+}
+
+
+
+@keyframes blink1 {
+
+  100%,
+  0% {
+    fill: darkslategray;
+
+  }
+
+  60% {
+    fill: greenyellow;
+
+  }
+}
+
+@keyframes blink2 {
+
+  100%,
+  0% {
+    fill: darkslategray;
+
+  }
+
+  60% {
+    fill: red;
+
+  }
+}
+
+.piscar {
+  animation: blink1 1s infinite;
+}
+
+.piscar-vermelho {
+  animation: blink2 1s infinite;
+}
+
+.sw-fundo {
+  fill: rgb(208, 208, 206);
+  stroke: gray;
+  stroke-width: 2px;
+  rx: 5px;
+  ry: 5px;
+  width: 1000px;
+  height: 120px;
+}
+
+.grupo-portas {
+  fill: transparent;
+  stroke: gray;
+  rx: 5px;
+  ry: 5px;
+  width: 197px;
+  height: 65px;
+}
+
+.borda-grupo-leds {
+  fill: transparent;
+  stroke: gray;
+  rx: 5px;
+  ry: 5px;
+  width: 822px;
+  height: 20px;
+
+}
+
+.leds {
+  transform: scale(0.05);
+}
+
+@keyframes flash {
+
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 0.1;
+  }
+}
+
+.highlighted {
+  fill: rgb(227, 170, 18);
+  animation: flash 2s infinite;
+  /* Verde com opacidade */
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
+.texto-switch {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  fill: black;
+  font-weight: bold;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+#img-device{
+  height: 150px;
+  width:300px;
+}
+
+.tooltip {
+  position: absolute;
+  background-color: black;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 12px;
+  visibility: hidden;
+  pointer-events: none;
+  /* Faz com que o tooltip não interfira nos eventos do mouse */
+}
+
+.sw-inativo {
+  display: none;
+  /* Inicialmente oculta todos os andares */
+}
+
+.sw-ativo {
+  display: block;
+  /* Inicialmente oculta todos os andares */
+}
+

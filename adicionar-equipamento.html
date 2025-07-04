@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Adicionar Equipamento</title>
+    <link rel="stylesheet" href="css/estilo-base.css">
+    <link rel="stylesheet" href="css/estilo-adicionar-equipamento.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <div class="voltar-container">
+            <button class="card-btn voltar" onclick="window.location.href='config-admin.html'" title="Voltar">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        <h1>Adicionar Equipamento</h1>
+        <div id="empresa-logada"></div>
+        <form id="formEquipamento" class="form-equipamento">
+            <label>Nome: <input type="text" name="nome" required class="input-estilizado"></label>
+            <label>Tipo:
+                <select name="tipo" id="tipo" required class="input-estilizado">
+                    <option value="">Selecione...</option>
+                    <option value="Projetor">Projetor</option>
+                    <option value="TV">TV</option>
+                    <option value="Tela Led">Tela Led</option>
+                    <option value="Tap">Tap</option>
+                    <option value="Microfone">Microfone</option>
+                    <option value="Speaker">Speaker</option>
+                    <option value="Camera">Camera</option>
+                    <option value="Meetup">Meetup</option>
+                    <option value="Painel">Painel</option>
+                    <option value="Sensor">Sensor</option>
+                    <option value="PC">PC</option>
+                    <option value="Hub">Hub</option>
+                    <option value="Clickshare">Clickshare</option>
+                    <option value="AVIO">AVIO</option>
+                    <option value="Extensores">Extensores</option>
+                    <option value="Dongle">Dongle</option>
+                    <option value="Switcher">Switcher</option>
+                    <option value="Outro">Outro</option>
+                </select>
+            </label>
+            <label>Marca:
+                <select name="marca" id="marca" required class="input-estilizado">
+                    <option value="">Selecione o tipo primeiro</option>
+                </select>
+            </label>
+            <label>Modelo:
+                <select name="modelo" id="modelo" class="input-estilizado">
+                    <option value="">Selecione a marca primeiro</option>
+                </select>
+            </label>
+            <label>Part Number: <input type="text" name="partnumber" class="input-estilizado"></label>
+            <label>Tamanho: <input type="text" name="tamanho" class="input-estilizado"></label>
+            <label>Descrição: <input type="text" name="descricao" class="input-estilizado"></label>
+            <label>Firmware: <input type="text" name="firmware" class="input-estilizado"></label>
+            <label>Número de Série: <input type="text" name="serie" required class="input-estilizado"></label>
+            <label>IP 1: <input type="text" name="ip1" class="input-estilizado"></label>
+            <label>MAC 1: <input type="text" name="mac1" class="input-estilizado"></label>
+            <label>IP 2: <input type="text" name="ip2" class="input-estilizado"></label>
+            <label>MAC 2: <input type="text" name="mac2" class="input-estilizado"></label>
+            <label>Sala:
+                <select name="sala_id" id="sala_id" class="input-estilizado">
+                    <option value="">Sem sala</option>
+                </select>
+            </label>
+            <div style="display: flex; justify-content: center;">
+                <button type="submit" class="card-btn cadastrar"
+                    style="width:auto;height:auto;padding:8px 16px;font-size:1em;display:inline-flex;align-items:center;gap:6px;">
+                    <i class="fas fa-plus"></i> Adicionar Equipamento
+                </button>
+            </div>
+        </form>
+        <div class="msg" id="msg"></div>
+    </div>
+    <script>
+        // Carregar salas para o select
+        async function carregarSalas() {
+            const resp = await fetch('/salas');
+            const salas = await resp.json();
+            const select = document.getElementById('sala_id');
+            salas.forEach(sala => {
+                const opt = document.createElement('option');
+                opt.value = sala.id;
+                opt.textContent = sala.nome;
+                select.appendChild(opt);
+            });
+        }
+        carregarSalas();
+
+        // Marcas por tipo
+        const marcasPorTipo = {
+            Projetor: ["Epson", "Outro"],
+            TV: ["LG", "Sony", "Outro"],
+            Tap: ["Logitech", "Outro"],
+            Microfone: ["Shure", "Logitech", "Jabra", "Outro"],
+            Speaker: ["JBL", "Shure", "Logitech", "Outro"],
+            Camera: ["Logitech", "Huddly", "Yealink", "Jabra", "Outro"],
+            Meetup: ["Logitech", "Outro"],
+            Painel: ["Crestron", "Outro"],
+            Sensor: ["Crestron", "Outro"],
+            PC: ["CTL", "Asus", "BlueTech", "Outro"],
+            Hub: ["Logitech", "Outro"],
+            Clickshare: ["Barco", "Outro"],
+            AVIO: ["Dante", "Outro"],
+            Extensores: ["Extron", "Outro"],
+            Dongle: ["Logitech", "Outro"],
+            "Tela Led": ["LG", "Leyard", "Outro"],
+            Switcher: ["Kramer", "Outro"],
+            Outro: ["Outro"]
+        };
+
+        // Modelos por tipo+marca
+        const modelosPorTipoMarca = {
+            Projetor: {
+                Epson: ["PowerLite X41+", "Outro"],
+                Outro: ["Outro"]
+            },
+            TV: {
+                LG: ["32LM621CBSB", "50UP751C0SF", "55UN731C0SC", "55UP751C0SF","75UN801C0SB", "75UP801C0SB", "82UN8000PSB", "Outro"],
+                Sony: ["Bravia", "Outro"],
+                Outro: ["Outro"]
+            },
+            "Tela Led": {
+                LG: ["LG", "Outro"],
+                Leyard: ["Leyard", "Outro"],
+                Outro: ["Outro"]
+            },
+            Tap: {
+                Logitech: ["Tap Poe", "Tap USB", "Outro"],
+                Outro: ["Outro"]
+            },
+            Microfone: {
+                Shure: ["MXA710", "MXA910", "MXA920", "Bastão SM58", "Outro"],
+                Logitech: ["Rally Mic Pod", "Outro"],
+                Jabra: ["Jabra Speak", "Outro"],
+                Outro: ["Outro"]
+            },
+            Speaker: {
+                JBL: ["JBL CBT 1000E", "Outro"],
+                Logitech: ["Rally", "Outro"],
+                Shure: ["MXN5W-C", "Outro"],
+                Outro: ["Outro"]
+            },
+            Camera: {
+                Logitech: ["Rally", "Outro"],
+                Huddly: ["Huddly Go", "Outro"],
+                Yealink: ["Yealink W52P", "Outro"],
+                Jabra: ["Panacast", "Outro"],
+                Outro: ["Outro"]
+            },
+            Meetup: {
+                Logitech: ["Meetup", "Outro"],
+                Outro: ["Outro"]
+            },
+            Painel: {
+                Crestron: ["TSW-770-B-S", "TSW-770-W-S", "Outro"],
+                Outro: ["Outro"]
+            },
+            Sensor: {
+                Crestron: ["CEN-ODT-C-POE", "Outro"],
+                Outro: ["Outro"]
+            },
+            PC: {
+                CTL: ["CTL-1000", "Outro"],
+                Asus: ["Asus", "Outro"],
+                BlueTech: ["BlueTech", "Outro"],
+                Outro: ["Outro"]
+            },
+            Hub: {
+                Logitech: ["Display", "Table", "Outro"],
+                Outro: ["Outro"]
+            },
+            Clickshare: {
+                Barco: ["C5", "C10", "CSE-200", "Outro"],
+                Outro: ["Outro"]
+            },
+            AVIO: {
+                Dante: ["2CH USB I/O Adapter", "2CH Analog Output Adapter", "1CH Analog Input Adapter", "Outro"],
+                Outro: ["Outro"]
+            },
+            Extensores: {
+                Extron: ["DTP HDMI 230 Tx", "USB EXTENDER Plus T", "Outro"],
+                Outro: ["Outro"]
+            },
+            Dongle: {
+                Logitech: ["Logitech", "Outro"],
+                Outro: ["Outro"]
+            },
+            "Tela Led": {
+                LG: ["LG", "Outro"],
+                Leyard: ["Leyard", "Outro"],
+                Outro: ["Outro"]
+            },
+            Switcher: {
+                Kramer: ["HDMI VS-211H2", "Outro"],
+                Outro: ["Outro"]
+            },
+            Outro: {
+                Outro: ["Outro"]
+            }
+        };
+
+        document.getElementById('tipo').addEventListener('change', function () {
+            const tipo = this.value;
+            const marcaSelect = document.getElementById('marca');
+            marcaSelect.innerHTML = "";
+            if (marcasPorTipo[tipo]) {
+                marcaSelect.innerHTML = '<option value="">Selecione...</option>';
+                marcasPorTipo[tipo].forEach(marca => {
+                    const opt = document.createElement('option');
+                    opt.value = marca;
+                    opt.textContent = marca;
+                    marcaSelect.appendChild(opt);
+                });
+            } else {
+                marcaSelect.innerHTML = '<option value="">Selecione o tipo primeiro</option>';
+            }
+            // Limpa modelos ao trocar tipo
+            const modeloSelect = document.getElementById('modelo');
+            modeloSelect.innerHTML = '<option value="">Selecione a marca primeiro</option>';
+        });
+
+        document.getElementById('marca').addEventListener('change', function () {
+            const tipo = document.getElementById('tipo').value;
+            const marca = this.value;
+            const modeloSelect = document.getElementById('modelo');
+            modeloSelect.innerHTML = "";
+            if (modelosPorTipoMarca[tipo] && modelosPorTipoMarca[tipo][marca]) {
+                modeloSelect.innerHTML = '<option value="">Selecione...</option>';
+                modelosPorTipoMarca[tipo][marca].forEach(modelo => {
+                    const opt = document.createElement('option');
+                    opt.value = modelo;
+                    opt.textContent = modelo;
+                    modeloSelect.appendChild(opt);
+                });
+            } else {
+                modeloSelect.innerHTML = '<option value="">Selecione a marca primeiro</option>';
+            }
+        });
+
+        document.getElementById('formEquipamento').onsubmit = async function (e) {
+            e.preventDefault();
+            const form = e.target;
+            const dados = {
+                nome: form.nome.value,
+                tipo: form.tipo.value,
+                marca: form.marca.value,
+                modelo: form.modelo.value,
+                descricao: form.descricao.value,
+                sala_id: form.sala_id.value || null,
+                dados: {
+                    firmware: form.firmware.value,
+                    serie: form.serie.value,
+                    ip1: form.ip1.value,
+                    mac1: form.mac1.value,
+                    ip2: form.ip2.value,
+                    mac2: form.mac2.value,
+                    partnumber: form.partnumber.value,
+                    tamanho: form.tamanho.value
+                }
+            };
+            const resp = await fetch('/equipamentos', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+            const json = await resp.json();
+            if (json.status === 'ok') {
+                document.getElementById('msg').innerText = 'Equipamento adicionado com sucesso!';
+                form.reset();
+            } else {
+                document.getElementById('msg').innerText = 'Erro ao adicionar equipamento!';
+            }
+        };
+
+        window.addEventListener('DOMContentLoaded', function() {
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    if (data.logo) {
+                        document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                    } else if (data.nome) {
+                        document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
+                    }
+                });
+        });
+    </script>
+</body>
+
+</html>

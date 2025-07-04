@@ -1,0 +1,332 @@
+html,
+body {
+    height: 100%;
+    /* Garante que o HTML e o body ocupem 100% da altura da tela */
+    margin: 0;
+    /* Remove margens padrão */
+    display: flex;
+    flex-direction: column;
+    /* Organiza os elementos em uma coluna */
+    justify-content: center;
+    background-color: rgb(18, 33, 55);
+}
+
+.header {
+    flex: 0 0 auto;
+    /* O header ocupa apenas o espaço necessário */
+    display: flex;
+    justify-content: space-between;
+    /* Espaço entre os elementos */
+    align-items: center;
+    background-color: rgb(18, 33, 55);
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+
+  position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+
+    /* Permite posicionar o h1 no centro */
+}
+
+.header img {
+    max-width: 150px;
+    height: auto;
+}
+
+.header h1 {
+    position: absolute;
+    /* Centraliza o h1 no header */
+    left: 50%;
+    /* Move para o centro horizontal */
+    transform: translateX(-50%);
+    /* Ajusta para centralizar */
+    font-family: sans-serif;
+    color: rgb(227, 170, 18);
+    font-size: 24px;
+    /* Tamanho da fonte */
+    font-weight: bold;
+    /* Deixa o texto em negrito */
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    /* Espaçamento entre o texto e o botão */
+    color: white;
+    font-size: 14px;
+    /* Tamanho do texto do usuário */
+    font-family: sans-serif;
+}
+
+.logout-button {
+    background-color: rgb(227, 170, 18);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    font-family: sans-serif;
+}
+
+.logout-button:hover {
+    background-color: rgb(200, 150, 10);
+    /* Cor ao passar o mouse */
+}
+
+.botao-voltar {
+    display: block;
+    margin: 20px auto;
+    /* Centraliza o botão horizontalmente */
+    padding: 5px 10px;
+    /* Aumenta o tamanho interno do botão */
+    background-color: rgb(227, 170, 18);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    /* Aumenta o tamanho do texto */
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    width: auto;
+    /* Ajusta a largura automaticamente */
+    height: auto;
+    /* Ajusta a altura automaticamente */
+}
+
+.botao-voltar:hover {
+    background-color: rgb(200, 150, 10);
+    /* Cor ao passar o mouse */
+}
+
+.content {
+    flex: 1 0 auto;
+    /* O conteúdo ocupa o espaço restante */
+    background-color: rgb(18, 33, 55);
+    font-family: sans-serif;
+    color: rgb(227, 170, 18);
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+
+
+    /* Centraliza verticalmente o conteúdo */
+}
+
+.content p {
+    color: white;
+    font-size: 18px;
+    /* Aumenta o tamanho do texto */
+    margin-top: 10px;
+    /* Espaçamento superior */
+
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    /* Centraliza as imagens */
+    gap: 40px;
+    /* Espaçamento entre os itens */
+    margin-top: 40px;
+
+}
+
+.image-item {
+    text-align: center;
+    /* Centraliza o texto abaixo das imagens */
+}
+
+.image-item img {
+    max-width: 300px;
+    /* Define a largura máxima das imagens */
+    height: auto;
+    /* Mantém a proporção das imagens */
+    border-radius: 8px;
+    /* Bordas arredondadas (opcional) */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Sombra nas imagens (opcional) */
+    filter: grayscale(100%);
+    /* Aplica o efeito preto e branco */
+    transition: transform 0.9s ease, filter 0.9s ease;
+    /* Transição mais lenta para o efeito */
+    cursor: pointer;
+    /* Altera o cursor para pointer */
+}
+
+.image-item img:hover {
+    filter: grayscale(0%);
+    /* Remove o efeito preto e branco */
+    transform: scale(1.1);
+    /* Aumenta o tamanho da imagem */
+}
+
+.image-item p {
+    margin-top: 10px;
+    /* Espaçamento entre a imagem e o texto */
+    font-size: 16px;
+    /* Tamanho da fonte */
+    color: white;
+    /* Cor padrão do texto */
+    font-weight: bold;
+    /* Deixa o texto em negrito */
+    transition: color 0.9s ease;
+    /* Transição suave para a cor */
+}
+
+.image-item:hover p {
+    color: rgb(227, 170, 18);
+    /* Altera a cor do texto ao passar o mouse */
+}
+
+.footer {
+    flex: 0 0 auto;
+    /* O footer ocupa apenas o espaço necessário */
+    display: flex;
+    justify-content: flex-end;
+    /* Posiciona a imagem no canto direito */
+    align-items: center;
+    background-color: rgb(18, 33, 55);
+    /* Cor de fundo do rodapé */
+    padding: 10px 20px;
+    /* Espaçamento interno */
+    border-top: 1px solid #ccc;
+    /* Linha superior opcional */
+}
+
+.footer img {
+    max-width: 100px;
+    /* Define a largura máxima da imagem */
+    height: auto;
+    /* Mantém a proporção da imagem */
+}
+
+.imagens-home-ca {
+    display: flex;
+    flex-direction: column;
+    /* Organiza as imagens e textos verticalmente */
+    align-items: flex-start;
+    /* Alinha os itens à esquerda */
+
+}
+
+.imagem-container {
+    display: flex;
+    /* Alinha a imagem e o texto na mesma linha */
+    align-items: center;
+    /* Centraliza verticalmente o texto em relação à imagem */
+    gap: 150px;
+    /* Espaçamento entre a imagem e o texto */
+}
+
+.imagem-container img {
+    display: block;
+    margin: 0;
+    padding-left: 100px;
+    border: none;
+    transition: transform 1.5s ease, opacity 1.5s ease;
+    /* Transição suave para entrada e saída */
+    opacity: 1;
+    /* Opacidade padrão */
+    width: 1000px;
+}
+
+.imagem-container img:hover {
+    opacity: 0.3;
+    /* Torna a imagem mais transparente ao passar o mouse */
+    transform: translateX(150px);
+    /* Move a imagem para a direita */
+    cursor: pointer;
+    /* Altera o cursor para pointer */
+}
+
+.texto-hover {
+    opacity: 0;
+    /* Texto invisível por padrão */
+    font-size: 14px;
+    /* Tamanho do texto */
+    color: white;
+    /* Cor do texto */
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Fundo semitransparente */
+    padding: 5px 10px;
+    /* Espaçamento interno do texto */
+    border-radius: 5px;
+    /* Bordas arredondadas */
+    transition: opacity 0.5s ease;
+    /* Transição suave para a opacidade */
+    white-space: nowrap;
+    /* Impede quebra de linha */
+}
+
+.imagem-container img:hover+.texto-hover {
+    opacity: 1;
+    /* Torna o texto visível ao passar o mouse */
+}
+
+.lista-salas {
+    list-style: none;
+    padding: 0;
+}
+
+.sala-item {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.sala-item h3 {
+    margin-bottom: 10px;
+}
+
+.foto-sala {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: color 0.3s;
+}
+
+.nav-button:hover {
+    color: rgb(227, 170, 18);
+}
+
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.nav-button.attention {
+    animation: pulse 2s infinite;
+}

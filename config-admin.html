@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Configurações Admin - Salas</title>
+    <link rel="stylesheet" href="css/estilo-base.css">
+    <link rel="stylesheet" href="css/estilo-config-admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <div class="voltar-container">
+            <button class="card-btn voltar" onclick="window.location.href='painel.html'" title="Voltar">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        <h1>Configurações Adminstrador</h1>
+        <div id="empresa-logada"></div>
+        <div class="top-cards">
+            <!-- Linha 1: Salas -->
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; justify-content: center;">
+                <button class="card-btn adicionar" onclick="window.location.href='adicionar-sala.html'">
+                    <i class="fas fa-plus-circle"></i>
+                    Adicionar Sala
+                </button>
+                <button class="card-btn atualizar" onclick="window.location.href='editar-sala.html'">
+                    <i class="fas fa-edit"></i>
+                    Editar Sala
+                </button>
+                <button class="card-btn excluir" onclick="window.location.href='excluir-sala.html'">
+                    <i class="fas fa-trash-alt"></i>
+                    Excluir Sala
+                </button>
+                <button class="card-btn ver" onclick="window.location.href='ver-salas.html'">
+                    <i class="fas fa-eye"></i>
+                    Ver Salas
+                </button>
+                <button class="card-btn adicionar azul" onclick="window.location.href='upload-fotos-salas.html'">
+                    <i class="fas fa-upload"></i>
+                    Upload Fotos
+                </button>
+            </div>
+            <!-- Linha 2: Equipamentos -->
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; justify-content: center;">
+                <button class="card-btn adicionar" onclick="window.location.href='adicionar-equipamento.html'">
+                    <i class="fas fa-plug"></i>
+                    Adicionar Equipamento
+                </button>
+                <button class="card-btn atualizar" onclick="window.location.href='editar-equipamento.html'">
+                    <i class="fas fa-edit"></i>
+                    Editar Equipamento
+                </button>
+                <button class="card-btn excluir" onclick="window.location.href='excluir-equipamento.html'">
+                    <i class="fas fa-trash-alt"></i>
+                    Excluir Equipamento
+                </button>
+                <button class="card-btn ver" onclick="window.location.href='ver-equipamento.html'">
+                    <i class="fas fa-eye"></i>
+                    Ver Equipamentos
+                </button>
+                <button class="card-btn atualizar azul" onclick="window.location.href='gerenciar-equipamentos.html'">
+                    <i class="fas fa-tools"></i>
+                    Gerenciar Equipamentos
+                </button>
+
+            </div>
+            <!-- Linha 3: Switches de Rede -->
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; justify-content: center;">
+                <button class="card-btn adicionar" onclick="window.location.href='adicionar-switch.html'">
+                    <i class="fas fa-network-wired"></i>
+                    Adicionar Switch
+                </button>
+                <button class="card-btn atualizar" onclick="window.location.href='editar-switch.html'">
+                    <i class="fas fa-edit"></i>
+                    Editar Switch
+                </button>
+                <button class="card-btn excluir" onclick="window.location.href='excluir-switch.html'">
+                    <i class="fas fa-trash-alt"></i>
+                    Excluir Switch
+                </button>
+                <button class="card-btn ver" onclick="window.location.href='ver-switch.html'">
+                    <i class="fas fa-eye"></i>
+                    Ver Switches
+                </button>
+                <button class="card-btn adicionar azul" onclick="window.location.href='gerenciar-portas-switch.html'">
+                    <i class="fas fa-plug"></i>
+                    Gerenciar Portas
+                </button>
+            </div>
+        </div>
+        <!-- Linha 5: Sistema e Logs + Sair -->
+        <div style="display: flex; justify-content: center; margin-top: 32px; gap: 16px; flex-wrap: wrap;">
+            <button class="card-btn ver roxo" onclick="window.location.href='visualizar-logs.html'">
+                <i class="fas fa-clipboard-list"></i>
+                Visualizar Logs
+            </button>
+            <button class="card-btn ver roxo" onclick="window.location.href='ping-equipamentos.html'">
+                <i class="fas fa-wifi"></i>
+                Testar (Ping)
+            </button>
+            <button class="card-btn ver roxo" onclick="window.location.href='conexoes-equipamentos.html'">
+                <i class="fas fa-project-diagram"></i>
+                Conexões de Equipamentos
+            </button>
+            <button class="card-btn sair" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Sair
+            </button>
+        </div>
+    </div>
+    <script>
+        function logout() {
+            fetch('/logout').then(() => window.location.href = '/login.html');
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    if (data.logo) {
+                        document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                    } else if (data.nome) {
+                        document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
+                    }
+                });
+        });
+    </script>
+</body>
+
+</html>

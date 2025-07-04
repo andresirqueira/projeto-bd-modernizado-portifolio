@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Configuração Master - Gestão de Usuários</title>
+    <link rel="stylesheet" href="css/estilo-config-master.css">
+    <style>
+        body { background: #23272b; color: #eee; font-family: Arial, sans-serif; }
+        h1 { color: #FFD600; }
+        .container { max-width: 900px; margin: 30px auto; background: #2c3e50; border-radius: 10px; box-shadow: 0 2px 8px #0008; padding: 24px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+        th, td { padding: 8px 10px; border-bottom: 1px solid #444; }
+        th { background: #222; color: #FFD600; }
+        tr:last-child td { border-bottom: none; }
+        select, button, input { padding: 4px 8px; border-radius: 4px; border: none; }
+        button { background: #FFD600; color: #222; font-weight: bold; cursor: pointer; margin-left: 4px; }
+        button.danger { background: #e74c3c; color: #fff; }
+        .flex { display: flex; gap: 8px; align-items: center; }
+        .section { margin-bottom: 32px; }
+        .label { color: #bfc9d1; font-size: 0.95em; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <button id="btn-logout" style="position:absolute;top:24px;right:36px;background:#e74c3c;color:#fff;font-weight:bold;padding:8px 18px;border-radius:6px;border:none;cursor:pointer;z-index:10;">Sair</button>
+    <h1>Gestão de Usuários (Master)</h1>
+    <div class="section" style="margin-bottom:18px;">
+        <h2>Criar Novo Usuário</h2>
+        <form id="form-criar-usuario" class="flex" style="flex-wrap:wrap;gap:12px;" onsubmit="criarUsuario(event)">
+            <input type="text" id="novo-nome" placeholder="Nome" required>
+            <input type="text" id="novo-username" placeholder="Usuário" required>
+            <input type="password" id="novo-senha" placeholder="Senha" required>
+            <select id="novo-nivel" required>
+                <option value="usuario">Usuário</option>
+                <option value="tecnico">Técnico</option>
+                <option value="admin">Admin</option>
+            </select>
+            <button type="submit">Criar</button>
+        </form>
+        <div id="msg-criar-usuario" style="color:#FFD600;margin-top:4px;"></div>
+    </div>
+    <div class="section">
+        <h2>Usuários</h2>
+        <table id="usuarios-table">
+            <thead>
+                <tr><th>ID</th><th>Username</th><th>Nome</th><th>Nível</th><th>Ações</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="section">
+        <h2>Empresas</h2>
+        <table id="empresas-table">
+            <thead>
+                <tr><th>ID</th><th>Nome</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="section">
+        <h2>Vínculos Usuário-Empresa</h2>
+        <table id="vinculos-table">
+            <thead>
+                <tr><th>Usuário</th><th>Empresa</th><th>Ações</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div class="flex">
+            <span class="label">Adicionar vínculo:</span>
+            <select id="add-usuario"></select>
+            <select id="add-empresa"></select>
+            <button onclick="adicionarVinculo()">Adicionar</button>
+        </div>
+    </div>
+</div>
+<script>
+let usuarios = [];
+let empresas = [];
+let vinculos = [];
+
+async function carregarDados() {
+    usuarios = await fetch('/admin/usuarios').then(r=>r.json());
+    empresas = await fetch('/admin/empresas').then(r=>r.json());
+    vinculos = await fetch('/admin/vinculos').then(r=>r.json());
+    renderUsuarios();
+    renderEmpresas();
+    renderVinculos();
+    renderSelects();
+}
+
+function renderUsuarios() {
+    const tbody = document.querySelector('#usuarios-table tbody');
+    tbody.innerHTML = '';
+    usuarios.forEach(u => {
+        let niveis = ['admin','tecnico','usuario'];
+        let select = '';
+        if (u.nivel === 'master') {
+            select = `<select disabled><option value='master' selected>master</option></select>`;
+        } else {
+            select = `<select onchange="alterarNivel(${u.id}, this.value)">` +
+                niveis.map(n => `<option value='${n}'${u.nivel===n?' selected':''}>${n}</option>`).join('') + '</select>';
+        }
+        tbody.innerHTML += `<tr><td>${u.id}</td><td>${u.username}</td><td>${u.nome}</td><td>${select}</td><td></td></tr>`;
+    });
+}
+
+function renderEmpresas() {
+    const tbody = document.querySelector('#empresas-table tbody');
+    tbody.innerHTML = '';
+    empresas.forEach(e => {
+        tbody.innerHTML += `<tr><td>${e.id}</td><td>${e.nome}</td></tr>`;
+    });
+}
+
+function renderVinculos() {
+    const tbody = document.querySelector('#vinculos-table tbody');
+    tbody.innerHTML = '';
+    vinculos.forEach(v => {
+        let usuario = usuarios.find(u=>u.id===v.usuario_id);
+        let empresa = empresas.find(e=>e.id===v.empresa_id);
+        tbody.innerHTML += `<tr><td>${usuario?usuario.nome:'?'}</td><td>${empresa?empresa.nome:'?'}</td><td><button class='danger' onclick='removerVinculo(${v.usuario_id},${v.empresa_id})'>Remover</button></td></tr>`;
+    });
+}
+
+function renderSelects() {
+    let uSel = document.getElementById('add-usuario');
+    let eSel = document.getElementById('add-empresa');
+    uSel.innerHTML = usuarios.map(u=>`<option value='${u.id}'>${u.nome}</option>`).join('');
+    eSel.innerHTML = empresas.map(e=>`<option value='${e.id}'>${e.nome}</option>`).join('');
+}
+
+async function adicionarVinculo() {
+    let usuario_id = document.getElementById('add-usuario').value;
+    let empresa_id = document.getElementById('add-empresa').value;
+    await fetch('/admin/vinculos', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({usuario_id, empresa_id})
+    });
+    await carregarDados();
+}
+
+async function removerVinculo(usuario_id, empresa_id) {
+    await fetch('/admin/vinculos', {
+        method: 'DELETE',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({usuario_id, empresa_id})
+    });
+    await carregarDados();
+}
+
+async function alterarNivel(usuario_id, nivel) {
+    await fetch(`/admin/usuarios/${usuario_id}/nivel`, {
+        method: 'PUT',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({nivel})
+    });
+    await carregarDados();
+}
+
+async function criarUsuario(event) {
+    event.preventDefault();
+    const nome = document.getElementById('novo-nome').value.trim();
+    const username = document.getElementById('novo-username').value.trim();
+    const senha = document.getElementById('novo-senha').value;
+    const nivel = document.getElementById('novo-nivel').value;
+    const resp = await fetch('/admin/usuarios', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({nome, username, senha, nivel})
+    });
+    const json = await resp.json();
+    const msg = document.getElementById('msg-criar-usuario');
+    if(json.status === 'ok') {
+        msg.textContent = 'Usuário criado com sucesso!';
+        document.getElementById('form-criar-usuario').reset();
+        await carregarDados();
+    } else {
+        msg.textContent = json.erro || 'Erro ao criar usuário.';
+    }
+}
+
+document.getElementById('btn-logout').onclick = async function() {
+    await fetch('/logout');
+    window.location.href = '/login.html';
+};
+
+carregarDados();
+</script>
+</body>
+</html> 

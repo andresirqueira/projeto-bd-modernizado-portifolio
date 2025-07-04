@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Configurações Técnico</title>
+    <link rel="stylesheet" href="css/estilo-base.css">
+    <link rel="stylesheet" href="css/estilo-config-admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="voltar-container">
+            <button class="card-btn voltar" onclick="window.location.href='painel.html'" title="Voltar">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        <h1>Configurações do Técnico</h1>
+        <div id="empresa-logada"></div>
+        <div class="top-cards">
+            <div style="display:flex;gap:12px;justify-content:center;margin-bottom:12px;">
+                <button class="card-btn ver" onclick="window.location.href='ver-salas.html'"><i class="fas fa-eye"></i>Ver Salas</button>
+                <button class="card-btn atualizar" onclick="window.location.href='editar-sala.html'"><i class="fas fa-edit"></i>Editar Sala</button>
+            </div>
+            <div style="display:flex;gap:12px;justify-content:center;margin-bottom:12px;">
+                <button class="card-btn ver" onclick="window.location.href='ver-equipamento.html'"><i class="fas fa-eye"></i>Ver Equipamentos</button>
+                <button class="card-btn atualizar" onclick="window.location.href='editar-equipamento.html'"><i class="fas fa-edit"></i>Editar Equipamento</button>
+                <button class="card-btn atualizar azul" onclick="window.location.href='gerenciar-equipamentos.html'"><i class="fas fa-tools"></i>Gerenciar Equipamentos</button>
+            </div>
+            <div style="display:flex;gap:12px;justify-content:center;margin-bottom:12px;">
+                <button class="card-btn ver" onclick="window.location.href='ver-switch.html'"><i class="fas fa-eye"></i>Ver Switches</button>
+                <button class="card-btn adicionar azul" onclick="window.location.href='gerenciar-portas-switch.html'"><i class="fas fa-plug"></i>Gerenciar Portas</button>
+            </div>
+            <div style="display:flex;gap:12px;justify-content:center;margin-bottom:12px;">
+                <button class="card-btn ver roxo" onclick="window.location.href='ping-equipamentos.html'"><i class="fas fa-wifi"></i>Testar (Ping)</button>
+                <button class="card-btn sair" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Sair</button>
+            </div>
+        </div>
+    </div>
+    <script>
+    function logout() {
+        fetch('/logout').then(() => window.location.href = '/login.html');
+    }
+
+    window.addEventListener('DOMContentLoaded', function() {
+        fetch('/empresa_atual')
+            .then(resp => resp.json())
+            .then(data => {
+                if (data.logo) {
+                    document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                } else if (data.nome) {
+                    document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
+                }
+            });
+    });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizar Salas</title>
+    <link rel="stylesheet" href="css/estilo-base.css">
+    <link rel="stylesheet" href="css/estilo-ver-salas.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body style="background: rgb(18, 33, 55);">
+    <div class="admin-container">
+        <div class="voltar-container">
+            <button class="card-btn voltar" onclick="voltarPainelConfig()" title="Voltar">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        <h1>Visualizar Salas</h1>
+        <div id="empresa-logada"></div>
+        <div style="text-align:center;margin-bottom:18px;">
+            <input id="filtroSala" type="text" class="input-filtro-sala" placeholder="Filtrar por nome da sala...">
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;" id="cardsSalasContainer"></div>
+    </div>
+    <script>
+    // Função para buscar equipamentos de uma sala
+    async function buscarEquipamentosSala(salaId) {
+        const resp = await fetch(`/equipamentos?sala_id=${salaId}`);
+        if (!resp.ok) return [];
+        return await resp.json();
+    }
+
+    // Renderiza a lista de equipamentos dentro do card
+    function renderEquipamentos(equipamentos) {
+        if (!equipamentos.length) {
+            return `<div class='equip-lista' style='color:#ccc;margin-top:8px;'>Nenhum equipamento vinculado.</div>`;
+        }
+        let html = `<div class='equip-lista' style='margin-top:8px;'>`;
+        equipamentos.forEach(eq => {
+            html += `<div class='equip-item' style='background:#223;padding:8px 12px;margin-bottom:6px;border-radius:6px;display:flex;align-items:center;gap:12px;'>`;
+            if (eq.icone) html += `<img src='${eq.icone.startsWith('img/') ? 'static/' + eq.icone : eq.icone}' style='max-width:32px;max-height:32px;border-radius:4px;'>`;
+            html += `<div style='flex:1;'>`;
+            html += `<b>${eq.nome || 'Equipamento'}</b> <span style='color:#7ed6df;'>${eq.tipo || ''}</span>`;
+            html += `<div style='font-size:0.97em;color:#b2bec3;'>${eq.marca || ''} ${eq.modelo || ''}</div>`;
+            html += `</div>`;
+            html += `<span style='font-size:0.97em;padding:2px 10px;border-radius:5px;${eq.defeito === 1 || eq.defeito === true ? 'background:#a94442;color:#fff;' : 'background:#2ecc40;color:#223;'}'>${eq.defeito === 1 || eq.defeito === true ? 'Defeito' : 'Funcionando'}</span>`;
+            html += `</div>`;
+        });
+        html += `</div>`;
+        return html;
+    }
+
+    // Renderiza todos os cards de sala
+    function renderCardsSalas(salas) {
+        const container = document.getElementById('cardsSalasContainer');
+        let html = '';
+        salas.forEach(sala => {
+            const cardId = `equipamentos_sala_${sala.id}`;
+            html += `<div class='card-sala' id='cardSala${sala.id}'>`;
+            if (sala.foto) {
+                html += `<div class='sala-foto'><img src='${sala.foto.startsWith('img/') ? 'static/' + sala.foto : sala.foto}' alt='${sala.nome || ''}'></div>`;
+            }
+            html += `<div class='nome'>${sala.nome || ''}</div>`;
+            html += `<div class='acoes'>`;
+            html += `<button onclick='window.location.href="detalhes-sala.html?id=${sala.id}"'><i class='fas fa-eye'></i> Ver Detalhes</button>`;
+            html += `<button class='btn-equipamentos' data-sala='${sala.id}' type='button'><i class='fas fa-plug'></i> <span id='labelBtn${sala.id}'>Mostrar Equipamentos</span></button>`;
+            html += `</div>`;
+            html += `<div id='equipamentos_sala_${sala.id}' style='display:none;'></div>`;
+            html += `</div>`;
+        });
+        container.innerHTML = html;
+
+        // Adiciona eventos aos botões de mostrar/ocultar equipamentos
+        document.querySelectorAll('.btn-equipamentos').forEach(btn => {
+            btn.addEventListener('click', async function(e) {
+                e.stopPropagation();
+                const salaId = this.getAttribute('data-sala');
+                const cardId = `equipamentos_sala_${salaId}`;
+                const divEquip = document.getElementById(cardId);
+                const labelBtn = document.getElementById('labelBtn'+salaId);
+                if (divEquip.style.display === 'none') {
+                    divEquip.innerHTML = `<div style='color:#aaa;padding:8px 0;'>Carregando...</div>`;
+                    divEquip.style.display = 'block';
+                    const equipamentos = await buscarEquipamentosSala(salaId);
+                    divEquip.innerHTML = renderEquipamentos(equipamentos);
+                    labelBtn.innerText = 'Ocultar Equipamentos';
+                } else {
+                    divEquip.style.display = 'none';
+                    labelBtn.innerText = 'Mostrar Equipamentos';
+                }
+            });
+        });
+    }
+
+    let todasSalas = [];
+    // Carrega as salas e renderiza os cards
+    function carregarSalas() {
+        fetch('/salas')
+            .then(resp => resp.json())
+            .then(salas => {
+                todasSalas = salas;
+                renderCardsSalas(salas);
+            });
+    }
+    // Filtro em tempo real
+    document.addEventListener('DOMContentLoaded', function() {
+        const filtro = document.getElementById('filtroSala');
+        filtro.addEventListener('input', function() {
+            const termo = filtro.value.trim().toLowerCase();
+            const filtradas = termo ? todasSalas.filter(s => (s.nome||'').toLowerCase().includes(termo)) : todasSalas;
+            renderCardsSalas(filtradas);
+        });
+    });
+    carregarSalas();
+
+    function voltarPainelConfig() {
+        fetch('/perfil').then(resp => resp.json()).then(perfil => {
+            if (perfil.nivel === 'admin') {
+                window.location.href = 'config-admin.html';
+            } else if (perfil.nivel === 'tecnico') {
+                window.location.href = 'config-tecnico.html';
+            } else {
+                window.location.href = 'config-usuario.html';
+            }
+        });
+    }
+
+    window.addEventListener('DOMContentLoaded', function() {
+        fetch('/empresa_atual')
+            .then(resp => resp.json())
+            .then(data => {
+                if (data.logo) {
+                    document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                } else if (data.nome) {
+                    document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
+                }
+            });
+    });
+    </script>
+</body>
+</html> 

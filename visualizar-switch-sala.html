@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilo-base.css">
+    <link rel="stylesheet" href="css/estilo-detalhes-sala.css">
+    <link rel="stylesheet" href="css/estilo-switch-sala.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Switch</title>
+    <style>
+    .tooltip {
+      position: fixed;
+      background: #222;
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 1em;
+      pointer-events: none;
+      z-index: 99999 !important;
+      display: none;
+      box-shadow: 0 2px 8px #0008;
+      opacity: 1 !important;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container" style="position:relative;">
+        <div class="voltar-container">
+            <button class="card-btn voltar" onclick="window.history.back()" title="Voltar">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        <div class="sala-titulo" id="switchTitulo">Switch</div>
+        <main class="content">
+            <div class="sw-container">
+                <div id="sw-andar">
+                    <svg width="1200" height="430" viewBox="100 0 800 400" xmlns="http://www.w3.org/2000/svg">
+
+                        <g class="sw-ativo" id="sw01">
+                            <rect width="1000" height="120" class="sw-fundo" />
+                            <text x="915" y="65" class="texto-switch"></text>
+                            <!-- 1 ao 12 -->
+                            <g>
+
+                                <rect width="200" height="65" class="grupo-portas" x="16" y="25" />
+
+                                <image x="20" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="55" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 01" />
+
+                                <image x="20" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="60" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 02" />
+
+                                <image x="52" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="25" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 03" />
+
+                                <image x="52" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="60" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 04" />
+
+                                <image x="84" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="25" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 05" />
+
+                                <image x="84" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="60" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 06" />
+
+                                <image x="116" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="25" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 07" />
+
+                                <image x="116" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="60" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 08" />
+
+                                <image x="148" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="25" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 09" />
+
+                                <image x="148" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="60" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 10" />
+
+                                <image x="180" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="25" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 11" />
+
+                                <image x="180" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="60" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 12" />
+                            </g>
+
+                            <!-- 13 ao 24 -->
+                            <g transform="translate(205,0)">
+                                <rect width="200" height="65" class="grupo-portas" x="16" y="25" />
+
+                                <image x="20" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="25" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 13" />
+
+                                <image x="20" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="60" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 14" />
+
+                                <image x="52" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="25" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 15" />
+
+                                <image x="52" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="60" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 16" />
+
+                                <image x="84" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="25" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 17" />
+
+                                <image x="84" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="60" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 18" />
+
+                                <image x="116" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="25" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 19" />
+
+                                <image x="116" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="60" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 20" />
+
+                                <image x="148" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="25" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 21" />
+
+                                <image x="148" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="60" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 22" />
+
+                                <image x="180" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="25" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 23" />
+
+                                <image x="180" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="60" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 24" />
+
+                            </g>
+
+                            <!-- 25 ao 36 -->
+                            <g transform="translate(415,0)">
+                                <rect width="200" height="65" class="grupo-portas" x="16" y="25" />
+                                <image x="20" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="25" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 25" />
+
+                                <image x="20" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="60" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 26" />
+
+                                <image x="52" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="25" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 27" />
+
+                                <image x="52" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="60" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 28" />
+
+                                <image x="84" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="25" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 29" />
+
+                                <image x="84" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="60" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 30" />
+
+                                <image x="116" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="25" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 31" />
+
+                                <image x="116" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="60" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 32" />
+
+                                <image x="148" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="25" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 33" />
+
+                                <image x="148" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="60" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 34" />
+
+                                <image x="180" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="25" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 35" />
+
+                                <image x="180" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="60" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 36" />
+                            </g>
+
+
+                            <g transform="translate(625,0)">
+                                <rect width="200" height="65" class="grupo-portas" x="16" y="25" />
+
+                                <image x="20" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="25" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 37" />
+
+                                <image x="20" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="60" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 38" />
+
+                                <image x="52" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="25" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 39" />
+
+                                <image x="52" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="60" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 40" />
+
+                                <image x="84" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="25" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 41" />
+
+                                <image x="84" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="60" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW01 - Porta 42" />
+
+                                <image x="116" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="25" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 43" />
+
+                                <image x="116" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="60" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 44" />
+
+                                <image x="148" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="25" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 45" />
+
+                                <image x="148" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="60" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 46" />
+
+                                <image x="180" y="25" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="25" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 47" />
+
+                                <image x="180" y="60" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="60" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW01 - Porta 48" />
+
+                            </g>
+
+
+                            <defs>
+                                <polygon class="leds" id="triangulo" points="100,10 10,190 190,190" />
+                            </defs>
+                            <rect class="borda-grupo-leds" x="16" y="95" />
+
+                            <!-- Grupo de LEDs 1 a 12 -->
+                            <g transform="translate(3,0)">
+                                <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led01" />
+                                <use href="#triangulo" x="40" y="100" fill="darkslategray" transform="rotate(180, 40, 105)"
+                                    id="sw01-led02" />
+                            </g>
+
+                            <g transform="translate(35,0)">
+                                <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led03" />
+                                <use href="#triangulo" x="40" y="100" fill="darkslategray" transform="rotate(180, 40, 105)"
+                                    id="sw01-led04" />
+                            </g>
+
+                            <g transform="translate(68,0)">
+                                <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led05" />
+                                <use href="#triangulo" x="40" y="100" fill="darkslategray" transform="rotate(180, 40, 105)"
+                                    id="sw01-led06" />
+                            </g>
+
+                            <g transform="translate(100,0)">
+                                <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led07" />
+                                <use href="#triangulo" x="40" y="100" fill="darkslategray" transform="rotate(180, 40, 105)"
+                                    id="sw01-led08" />
+                            </g>
+
+                            <g transform="translate(133,0)">
+                                <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led09" />
+                                <use href="#triangulo" x="40" y="100" fill="darkslategray" transform="rotate(180, 40, 105)"
+                                    id="sw01-led10" />
+                            </g>
+
+                            <g transform="translate(165,0)">
+                                <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led11" />
+                                <use href="#triangulo" x="40" y="100" fill="darkslategray" transform="rotate(180, 40, 105)"
+                                    id="sw01-led12" />
+                            </g>
+
+                            <!-- Grupo de LEDs 13 a 24 -->
+                            <g transform="translate(205,0)">
+                                <g transform="translate(3,0)">
+                                    <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led13" />
+                                    <use href="#triangulo" x="40" y="100" fill="darkslategray"
+                                        transform="rotate(180, 40, 105)" id="sw01-led14" />
+                                </g>
+
+                                <g transform="translate(35,0)">
+                                    <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led15" />
+                                    <use href="#triangulo" x="40" y="100" fill="darkslategray"
+                                        transform="rotate(180, 40, 105)" id="sw01-led16" />
+                                </g>
+
+                                <g transform="translate(68,0)">
+                                    <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led17" />
+                                    <use href="#triangulo" x="40" y="100" fill="darkslategray"
+                                        transform="rotate(180, 40, 105)" id="sw01-led18" />
+                                </g>
+
+                                <g transform="translate(100,0)">
+                                    <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led19" />
+                                    <use href="#triangulo" x="40" y="100" fill="darkslategray"
+                                        transform="rotate(180, 40, 105)" id="sw01-led20" />
+                                </g>
+
+                                <g transform="translate(133,0)">
+                                    <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led21" />
+                                    <use href="#triangulo" x="40" y="100" fill="darkslategray"
+                                        transform="rotate(180, 40, 105)" id="sw01-led22" />
+                                </g>
+
+                                <g transform="translate(165,0)">
+                                    <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led23" />
+                                    <use href="#triangulo" x="40" y="100" fill="darkslategray"
+                                        transform="rotate(180, 40, 105)" id="sw01-led24" />
+                                </g>
+                            </g>
+
+                            <!-- Grupo de LEDs 25 a 36 -->
+                            <g transform="translate(415,0)">
+                                <g transform="translate(3,0)">
+                                    <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led25" />
+                                    <use href="#triangulo" x="40" y="100" fill="darkslategray"
+                                        transform="rotate(180, 40, 105)" id="sw01-led26" />
+                                </g>
+
+                                <g transform="translate(35,0)">
+                                    <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led27" />
+                                    <use href="#triangulo" x="40" y="100" fill="darkslategray"
+                                        transform="rotate(180, 40, 105)" id="sw01-led28" />
+                                </g>
+
+                                <g transform="translate(68,0)">
+                                    <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led29" />
+                                    <use href="#triangulo" x="40" y="100" fill="darkslategray"
+                                        transform="rotate(180, 40, 105)" id="sw01-led30" />
+                                </g>
+
+                                <g transform="translate(100,0)">
+                                    <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led31" />
+                                    <use href="#triangulo" x="40" y="100" fill="darkslategray"
+                                        transform="rotate(180, 40, 105)" id="sw01-led32" />
+                                </g>
+
+                                <g transform="translate(133,0)">
+                                    <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led33" />
+                                    <use href="#triangulo" x="40" y="100" fill="darkslategray"
+                                        transform="rotate(180, 40, 105)" id="sw01-led34" />
+                                </g>
+
+                                <g transform="translate(165,0)">
+                                    <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led35" />
+                                    <use href="#triangulo" x="40" y="100" fill="darkslategray"
+                                        transform="rotate(180, 40, 105)" id="sw01-led36" />
+                                </g>
+                            </g>
+
+                            <!-- Grupo de LEDs 37 a 48 -->
+                            <g transform="translate(625,0)">
+                                <g transform="translate(3,0)">
+                                    <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led37" />
+                                    <use href="#triangulo" x="40" y="100" fill="darkslategray"
+                                        transform="rotate(180, 40, 105)" id="sw01-led38" />
+                                </g>
+
+                                <g transform="translate(35,0)">
+                                    <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led39" />
+                                    <use href="#triangulo" x="40" y="100" fill="darkslategray"
+                                        transform="rotate(180, 40, 105)" id="sw01-led40" />
+                                </g>
+
+                                <g transform="translate(68,0)">
+                                    <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led41" />
+                                    <use href="#triangulo" x="40" y="100" fill="darkslategray"
+                                        transform="rotate(180, 40, 105)" id="sw01-led42" />
+                                </g>
+
+                                <g transform="translate(100,0)">
+                                    <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led43" />
+                                    <use href="#triangulo" x="40" y="100" fill="darkslategray"
+                                        transform="rotate(180, 40, 105)" id="sw01-led44" />
+                                </g>
+
+                                <g transform="translate(133,0)">
+                                    <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led45" />
+                                    <use href="#triangulo" x="40" y="100" fill="darkslategray"
+                                        transform="rotate(180, 40, 105)" id="sw01-led46" />
+                                </g>
+
+                                <g transform="translate(165,0)">
+                                    <use href="#triangulo" x="20" y="100" fill="darkslategray" id="sw01-led47" />
+                                    <use href="#triangulo" x="40" y="100" fill="darkslategray"
+                                        transform="rotate(180, 40, 105)" id="sw01-led48" />
+                                </g>
+                            </g>
+
+                        </g>
+
+                        <g class="sw-ativo" id="sw02">
+                            <rect width="1000" height="120" class="sw-fundo" y="140" />
+                            <text x="915" y="205" class="texto-switch"></text>
+                            <!-- 1 ao 12 -->
+                            <g>
+
+                                <rect width="200" height="65" class="grupo-portas" x="16" y="165" />
+
+                                <image x="20" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 01" />
+
+                                <image x="20" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 02" />
+
+                                <image x="52" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 03" />
+
+                                <image x="52" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 04" />
+
+                                <image x="84" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 05" />
+
+                                <image x="84" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 06" />
+
+                                <image x="116" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 07" />
+
+                                <image x="116" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 08" />
+
+                                <image x="148" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 09" />
+
+                                <image x="148" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 10" />
+
+                                <image x="180" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 11" />
+
+                                <image x="180" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 12" />
+                            </g>
+
+                            <!-- 13 ao 24 -->
+                            <g transform="translate(205,0)">
+                                <rect width="200" height="65" class="grupo-portas" x="16" y="165" />
+
+                                <image x="20" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 13" />
+
+                                <image x="20" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 14" />
+
+                                <image x="52" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 15" />
+
+                                <image x="52" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 16" />
+
+                                <image x="84" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 17" />
+
+                                <image x="84" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 18" />
+
+                                <image x="116" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 19" />
+
+                                <image x="116" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 20" />
+
+                                <image x="148" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 21" />
+
+                                <image x="148" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 22" />
+
+                                <image x="180" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 23" />
+
+                                <image x="180" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 24" />
+
+                            </g>
+
+                            <!-- 25 ao 36 -->
+                            <g transform="translate(415,0)">
+                                <rect width="200" height="65" class="grupo-portas" x="16" y="165" />
+                                <image x="20" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="165" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW02 - Porta 25" />
+
+                                <image x="20" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 26" />
+
+                                <image x="52" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="165" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW02 - Porta 27" />
+
+                                <image x="52" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 28" />
+
+                                <image x="84" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 29" />
+
+                                <image x="84" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 30" />
+
+                                <image x="116" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 31" />
+
+                                <image x="116" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 32" />
+
+                                <image x="148" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 33" />
+
+                                <image x="148" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 34" />
+
+                                <image x="180" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 35" />
+
+                                <image x="180" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 36" />
+                            </g>
+
+
+                            <g transform="translate(625,0)">
+                                <rect width="200" height="65" class="grupo-portas" x="16" y="165" />
+
+                                <image x="20" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 37" />
+
+                                <image x="20" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 38" />
+
+                                <image x="52" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 39" />
+
+                                <image x="52" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 40" />
+
+                                <image x="84" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 41" />
+
+                                <image x="84" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 42" />
+
+                                <image x="116" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 43" />
+
+                                <image x="116" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 44" />
+
+                                <image x="148" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 45" />
+
+                                <image x="148" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 46" />
+
+                                <image x="180" y="165" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="165" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 47" />
+
+                                <image x="180" y="200" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="200" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW02 - Porta 48" />
+
+                            </g>
+
+
+                            <defs>
+                                <polygon class="leds" id="triangulo" points="100,10 10,190 190,190" />
+                            </defs>
+                            <rect class="borda-grupo-leds" x="16" y="235" />
+                            <!-- Grupo de LEDs 1 a 12 -->
+                            <g transform="translate(3,0)">
+                                <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led01" />
+                                <use href="#triangulo" x="40" y="240" fill="darkslategray" transform="rotate(180, 40, 245)"
+                                    id="sw02-led02" />
+                            </g>
+
+                            <g transform="translate(35,0)">
+                                <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led03" />
+                                <use href="#triangulo" x="40" y="240" fill="darkslategray" transform="rotate(180, 40, 245)"
+                                    id="sw02-led04" />
+                            </g>
+
+                            <g transform="translate(68,0)">
+                                <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led05" />
+                                <use href="#triangulo" x="40" y="240" fill="darkslategray" transform="rotate(180, 40, 245)"
+                                    id="sw02-led06" />
+                            </g>
+
+                            <g transform="translate(100,0)">
+                                <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led07" />
+                                <use href="#triangulo" x="40" y="240" fill="darkslategray" transform="rotate(180, 40, 245)"
+                                    id="sw02-led08" />
+                            </g>
+
+                            <g transform="translate(133,0)">
+                                <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led09" />
+                                <use href="#triangulo" x="40" y="240" fill="darkslategray" transform="rotate(180, 40, 245)"
+                                    id="sw02-led10" />
+                            </g>
+
+                            <g transform="translate(165,0)">
+                                <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led11" />
+                                <use href="#triangulo" x="40" y="240" fill="darkslategray" transform="rotate(180, 40, 245)"
+                                    id="sw02-led12" />
+                            </g>
+
+                            <!-- Grupo de LEDs 13 a 24 -->
+                            <g transform="translate(205,0)">
+                                <g transform="translate(3,0)">
+                                    <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led13" />
+                                    <use href="#triangulo" x="40" y="240" fill="darkslategray"
+                                        transform="rotate(180, 40, 245)" id="sw02-led14" />
+                                </g>
+
+                                <g transform="translate(35,0)">
+                                    <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led15" />
+                                    <use href="#triangulo" x="40" y="240" fill="darkslategray"
+                                        transform="rotate(180, 40, 245)" id="sw02-led16" />
+                                </g>
+
+                                <g transform="translate(68,0)">
+                                    <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led17" />
+                                    <use href="#triangulo" x="40" y="240" fill="darkslategray"
+                                        transform="rotate(180, 40, 245)" id="sw02-led18" />
+                                </g>
+
+                                <g transform="translate(100,0)">
+                                    <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led19" />
+                                    <use href="#triangulo" x="40" y="240" fill="darkslategray"
+                                        transform="rotate(180, 40, 245)" id="sw02-led20" />
+                                </g>
+
+                                <g transform="translate(133,0)">
+                                    <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led21" />
+                                    <use href="#triangulo" x="40" y="240" fill="darkslategray"
+                                        transform="rotate(180, 40, 245)" id="sw02-led22" />
+                                </g>
+
+                                <g transform="translate(165,0)">
+                                    <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led23" />
+                                    <use href="#triangulo" x="40" y="240" fill="darkslategray"
+                                        transform="rotate(180, 40, 245)" id="sw02-led24" />
+                                </g>
+                            </g>
+
+                            <!-- Grupo de LEDs 25 a 36 -->
+                            <g transform="translate(415,0)">
+                                <g transform="translate(3,0)">
+                                    <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led25" />
+                                    <use href="#triangulo" x="40" y="240" fill="darkslategray"
+                                        transform="rotate(180, 40, 245)" id="sw02-led26" />
+                                </g>
+
+                                <g transform="translate(35,0)">
+                                    <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led27" />
+                                    <use href="#triangulo" x="40" y="240" fill="darkslategray"
+                                        transform="rotate(180, 40, 245)" id="sw02-led28" />
+                                </g>
+
+                                <g transform="translate(68,0)">
+                                    <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led29" />
+                                    <use href="#triangulo" x="40" y="240" fill="darkslategray"
+                                        transform="rotate(180, 40, 245)" id="sw02-led30" />
+                                </g>
+
+                                <g transform="translate(100,0)">
+                                    <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led31" />
+                                    <use href="#triangulo" x="40" y="240" fill="darkslategray"
+                                        transform="rotate(180, 40, 245)" id="sw02-led32" />
+                                </g>
+
+                                <g transform="translate(133,0)">
+                                    <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led33" />
+                                    <use href="#triangulo" x="40" y="240" fill="darkslategray"
+                                        transform="rotate(180, 40, 245)" id="sw02-led34" />
+                                </g>
+
+                                <g transform="translate(165,0)">
+                                    <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led35" />
+                                    <use href="#triangulo" x="40" y="240" fill="darkslategray"
+                                        transform="rotate(180, 40, 245)" id="sw02-led36" />
+                                </g>
+                            </g>
+
+                            <!-- Grupo de LEDs 37 a 48 -->
+                            <g transform="translate(625,0)">
+                                <g transform="translate(3,0)">
+                                    <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led37" />
+                                    <use href="#triangulo" x="40" y="240" fill="darkslategray"
+                                        transform="rotate(180, 40, 245)" id="sw02-led38" />
+                                </g>
+
+                                <g transform="translate(35,0)">
+                                    <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led39" />
+                                    <use href="#triangulo" x="40" y="240" fill="darkslategray"
+                                        transform="rotate(180, 40, 245)" id="sw02-led40" />
+                                </g>
+
+                                <g transform="translate(68,0)">
+                                    <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led41" />
+                                    <use href="#triangulo" x="40" y="240" fill="darkslategray"
+                                        transform="rotate(180, 40, 245)" id="sw02-led42" />
+                                </g>
+
+                                <g transform="translate(100,0)">
+                                    <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led43" />
+                                    <use href="#triangulo" x="40" y="240" fill="darkslategray"
+                                        transform="rotate(180, 40, 245)" id="sw02-led44" />
+                                </g>
+
+                                <g transform="translate(133,0)">
+                                    <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led45" />
+                                    <use href="#triangulo" x="40" y="240" fill="darkslategray"
+                                        transform="rotate(180, 40, 245)" id="sw02-led46" />
+                                </g>
+
+                                <g transform="translate(165,0)">
+                                    <use href="#triangulo" x="20" y="240" fill="darkslategray" id="sw02-led47" />
+                                    <use href="#triangulo" x="40" y="240" fill="darkslategray"
+                                        transform="rotate(180, 40, 245)" id="sw02-led48" />
+                                </g>
+                            </g>
+
+                        </g>
+
+                        <g class="sw-ativo" id="sw03">
+                            <rect width="1000" height="150" class="sw-fundo" y="280" />
+                            <text x="915" y="345" class="texto-switch"></text>
+                            <!-- 1 ao 12 -->
+                            <g>
+
+                                <rect width="200" height="65" class="grupo-portas" x="16" y="300" />
+
+                                <image x="20" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 01" />
+
+                                <image x="20" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 02" />
+
+                                <image x="52" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 03" />
+
+                                <image x="52" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 04" />
+
+                                <image x="84" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 05" />
+
+                                <image x="84" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 06" />
+
+                                <image x="116" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 07" />
+
+                                <image x="116" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 08" />
+
+                                <image x="148" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 09" />
+
+                                <image x="148" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 10" />
+
+                                <image x="180" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 11" />
+
+                                <image x="180" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 12" />
+                            </g>
+
+                            <!-- 13 ao 24 -->
+                            <g transform="translate(205,0)">
+                                <rect width="200" height="65" class="grupo-portas" x="16" y="300" />
+
+                                <image x="20" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 13" />
+
+                                <image x="20" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 14" />
+
+                                <image x="52" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 15" />
+
+                                <image x="52" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 16" />
+
+                                <image x="84" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 17" />
+
+                                <image x="84" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 18" />
+
+                                <image x="116" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 19" />
+
+                                <image x="116" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 20" />
+
+                                <image x="148" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 21" />
+
+                                <image x="148" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 22" />
+
+                                <image x="180" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 23" />
+
+                                <image x="180" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 24" />
+
+                            </g>
+
+                            <!-- 25 ao 36 -->
+                            <g transform="translate(415,0)">
+                                <rect width="200" height="65" class="grupo-portas" x="16" y="300" />
+                                <image x="20" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 25" />
+
+                                <image x="20" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 26" />
+
+                                <image x="52" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 27" />
+
+                                <image x="52" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 28" />
+
+                                <image x="84" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 29" />
+
+                                <image x="84" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 30" />
+
+                                <image x="116" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 31" />
+
+                                <image x="116" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 32" />
+
+                                <image x="148" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 33" />
+
+                                <image x="148" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 34" />
+
+                                <image x="180" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 35" />
+
+                                <image x="180" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 36" />
+                            </g>
+
+
+                            <g transform="translate(625,0)">
+                                <rect width="200" height="65" class="grupo-portas" x="16" y="300" />
+
+                                <image x="20" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="300" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW03 - Porta 37" />
+
+                                <image x="20" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="335" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW03 - Porta 38" />
+
+                                <image x="52" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="300" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW03 - Porta 39" />
+
+                                <image x="52" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="335" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW03 - Porta 40" />
+
+                                <image x="84" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="300" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW03 - Porta 41" />
+
+                                <image x="84" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="335" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW03 - Porta 42" />
+
+                                <image x="116" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 43" />
+
+                                <image x="116" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 44" />
+
+                                <image x="148" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 45" />
+
+                                <image x="148" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 46" />
+
+                                <image x="180" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="300" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 47" />
+
+                                <image x="180" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="335" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW03 - Porta 48" />
+
+                            </g>
+
+
+                            <defs>
+                                <polygon class="leds" id="triangulo" points="100,10 10,190 190,190" />
+                            </defs>
+                            <rect class="borda-grupo-leds" x="16" y="370" />
+                            <!-- Grupo de LEDs 1 a 12 -->
+                            <g transform="translate(3,0)">
+                                <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led01" />
+                                <use href="#triangulo" x="40" y="375" fill="darkslategray" transform="rotate(180, 40, 380)"
+                                    id="sw03-led02" />
+                            </g>
+
+                            <g transform="translate(35,0)">
+                                <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led03" />
+                                <use href="#triangulo" x="40" y="375" fill="darkslategray" transform="rotate(180, 40, 380)"
+                                    id="sw03-led04" />
+                            </g>
+
+                            <g transform="translate(68,0)">
+                                <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led05" />
+                                <use href="#triangulo" x="40" y="375" fill="darkslategray" transform="rotate(180, 40, 380)"
+                                    id="sw03-led06" />
+                            </g>
+
+                            <g transform="translate(100,0)">
+                                <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led07" />
+                                <use href="#triangulo" x="40" y="375" fill="darkslategray" transform="rotate(180, 40, 380)"
+                                    id="sw03-led08" />
+                            </g>
+
+                            <g transform="translate(133,0)">
+                                <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led09" />
+                                <use href="#triangulo" x="40" y="375" fill="darkslategray" transform="rotate(180, 40, 380)"
+                                    id="sw03-led10" />
+                            </g>
+
+                            <g transform="translate(165,0)">
+                                <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led11" />
+                                <use href="#triangulo" x="40" y="375" fill="darkslategray" transform="rotate(180, 40, 380)"
+                                    id="sw03-led12" />
+                            </g>
+
+                            <!-- Grupo de LEDs 13 a 24 -->
+                            <g transform="translate(205,0)">
+                                <g transform="translate(3,0)">
+                                    <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led13" />
+                                    <use href="#triangulo" x="40" y="375" fill="darkslategray"
+                                        transform="rotate(180, 40, 380)" id="sw03-led14" />
+                                </g>
+
+                                <g transform="translate(35,0)">
+                                    <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led15" />
+                                    <use href="#triangulo" x="40" y="375" fill="darkslategray"
+                                        transform="rotate(180, 40, 380)" id="sw03-led16" />
+                                </g>
+
+                                <g transform="translate(68,0)">
+                                    <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led17" />
+                                    <use href="#triangulo" x="40" y="375" fill="darkslategray"
+                                        transform="rotate(180, 40, 380)" id="sw03-led18" />
+                                </g>
+
+                                <g transform="translate(100,0)">
+                                    <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led19" />
+                                    <use href="#triangulo" x="40" y="375" fill="darkslategray"
+                                        transform="rotate(180, 40, 380)" id="sw03-led20" />
+                                </g>
+
+                                <g transform="translate(133,0)">
+                                    <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led21" />
+                                    <use href="#triangulo" x="40" y="375" fill="darkslategray"
+                                        transform="rotate(180, 40, 380)" id="sw03-led22" />
+                                </g>
+
+                                <g transform="translate(165,0)">
+                                    <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led23" />
+                                    <use href="#triangulo" x="40" y="375" fill="darkslategray"
+                                        transform="rotate(180, 40, 380)" id="sw03-led24" />
+                                </g>
+                            </g>
+
+                            <!-- Grupo de LEDs 25 a 36 -->
+                            <g transform="translate(415,0)">
+                                <g transform="translate(3,0)">
+                                    <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led25" />
+                                    <use href="#triangulo" x="40" y="375" fill="darkslategray"
+                                        transform="rotate(180, 40, 380)" id="sw03-led26" />
+                                </g>
+
+                                <g transform="translate(35,0)">
+                                    <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led27" />
+                                    <use href="#triangulo" x="40" y="375" fill="darkslategray"
+                                        transform="rotate(180, 40, 380)" id="sw03-led28" />
+                                </g>
+
+                                <g transform="translate(68,0)">
+                                    <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led29" />
+                                    <use href="#triangulo" x="40" y="375" fill="darkslategray"
+                                        transform="rotate(180, 40, 380)" id="sw03-led30" />
+                                </g>
+
+                                <g transform="translate(100,0)">
+                                    <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led31" />
+                                    <use href="#triangulo" x="40" y="375" fill="darkslategray"
+                                        transform="rotate(180, 40, 380)" id="sw03-led32" />
+                                </g>
+
+                                <g transform="translate(133,0)">
+                                    <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led33" />
+                                    <use href="#triangulo" x="40" y="375" fill="darkslategray"
+                                        transform="rotate(180, 40, 380)" id="sw03-led34" />
+                                </g>
+
+                                <g transform="translate(165,0)">
+                                    <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led35" />
+                                    <use href="#triangulo" x="40" y="375" fill="darkslategray"
+                                        transform="rotate(180, 40, 380)" id="sw03-led36" />
+                                </g>
+                            </g>
+
+                            <!-- Grupo de LEDs 37 a 48 -->
+                            <g transform="translate(625,0)">
+                                <g transform="translate(3,0)">
+                                    <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led37" />
+                                    <use href="#triangulo" x="40" y="375" fill="darkslategray"
+                                        transform="rotate(180, 40, 380)" id="sw03-led38" />
+                                </g>
+
+                                <g transform="translate(35,0)">
+                                    <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led39" />
+                                    <use href="#triangulo" x="40" y="375" fill="darkslategray"
+                                        transform="rotate(180, 40, 380)" id="sw03-led40" />
+                                </g>
+
+                                <g transform="translate(68,0)">
+                                    <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led41" />
+                                    <use href="#triangulo" x="40" y="375" fill="darkslategray"
+                                        transform="rotate(180, 40, 380)" id="sw03-led42" />
+                                </g>
+
+                                <g transform="translate(100,0)">
+                                    <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led43" />
+                                    <use href="#triangulo" x="40" y="375" fill="darkslategray"
+                                        transform="rotate(180, 40, 380)" id="sw03-led44" />
+                                </g>
+
+                                <g transform="translate(133,0)">
+                                    <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led45" />
+                                    <use href="#triangulo" x="40" y="375" fill="darkslategray"
+                                        transform="rotate(180, 40, 380)" id="sw03-led46" />
+                                </g>
+
+                                <g transform="translate(165,0)">
+                                    <use href="#triangulo" x="20" y="375" fill="darkslategray" id="sw03-led47" />
+                                    <use href="#triangulo" x="40" y="375" fill="darkslategray"
+                                        transform="rotate(180, 40, 380)" id="sw03-led48" />
+                                </g>
+                            </g>
+
+                        </g>
+
+                        <g class="sw-ativo" id="sw04">
+                            <rect width="1000" height="150" class="sw-fundo" y="420" />
+                            <text x="915" y="485" class="texto-switch"></text>
+                            <!-- 1 ao 12 -->
+                            <g>
+
+                                <rect width="200" height="65" class="grupo-portas" x="16" y="440" />
+
+                                <image x="20" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 01" />
+
+                                <image x="20" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 02" />
+
+                                <image x="52" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 03" />
+
+                                <image x="52" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 04" />
+
+                                <image x="84" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 05" />
+
+                                <image x="84" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 06" />
+
+                                <image x="116" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 07" />
+
+                                <image x="116" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 08" />
+
+                                <image x="148" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 09" />
+
+                                <image x="148" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 10" />
+
+                                <image x="180" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 11" />
+
+                                <image x="180" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 12" />
+                            </g>
+
+                            <!-- 13 ao 24 -->
+                            <g transform="translate(205,0)">
+                                <rect width="200" height="65" class="grupo-portas" x="16" y="440" />
+
+                                <image x="20" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 13" />
+
+                                <image x="20" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 14" />
+
+                                <image x="52" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 15" />
+
+                                <image x="52" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 16" />
+
+                                <image x="84" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 17" />
+
+                                <image x="84" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 18" />
+
+                                <image x="116" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 19" />
+
+                                <image x="116" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 20" />
+
+                                <image x="148" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 21" />
+
+                                <image x="148" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 22" />
+
+                                <image x="180" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 23" />
+
+                                <image x="180" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 24" />
+
+                            </g>
+
+                            <!-- 25 ao 36 -->
+                            <g transform="translate(415,0)">
+                                <rect width="200" height="65" class="grupo-portas" x="16" y="440" />
+                                <image x="20" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="440" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW04 - Porta 25" />
+
+                                <image x="20" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 26" />
+
+                                <image x="52" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="440" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW04 - Porta 27" />
+
+                                <image x="52" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 28" />
+
+                                <image x="84" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 29" />
+
+                                <image x="84" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 30" />
+
+                                <image x="116" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 31" />
+
+                                <image x="116" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 32" />
+
+                                <image x="148" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 33" />
+
+                                <image x="148" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 34" />
+
+                                <image x="180" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 35" />
+
+                                <image x="180" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 36" />
+                            </g>
+
+
+                            <g transform="translate(625,0)">
+                                <rect width="200" height="65" class="grupo-portas" x="16" y="440" />
+
+                                <image x="20" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 37" />
+
+                                <image x="20" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="20" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 38" />
+
+                                <image x="52" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 39" />
+
+                                <image x="52" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="52" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 40" />
+
+                                <image x="84" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 41" />
+
+                                <image x="84" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="84" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 42" />
+
+                                <image x="116" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 43" />
+
+                                <image x="116" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="116" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 44" />
+
+                                <image x="148" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 45" />
+
+                                <image x="148" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="148" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 46" />
+
+                                <image x="180" y="440" href="static/img/switch/rj-cima.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="440" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 47" />
+
+                                <image x="180" y="475" href="static/img/switch/rj-baixo.png" width="30" height="30" />
+                                <rect width="30" height="30" x="180" y="475" fill="none" stroke="transparent"
+                                    stroke-width="5" id="SW04 - Porta 48" />
+
+                            </g>
+
+
+                            <defs>
+                                <polygon class="leds" id="triangulo" points="100,10 10,190 190,190" />
+                            </defs>
+                            <rect class="borda-grupo-leds" x="16" y="515" />
+                            <!-- Grupo de LEDs 1 a 12 -->
+                            <g transform="translate(3,0)">
+                                <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led01" />
+                                <use href="#triangulo" x="40" y="520" fill="darkslategray" transform="rotate(180, 40, 525)"
+                                    id="sw04-led02" />
+                            </g>
+
+                            <g transform="translate(35,0)">
+                                <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led03" />
+                                <use href="#triangulo" x="40" y="520" fill="darkslategray" transform="rotate(180, 40, 525)"
+                                    id="sw04-led04" />
+                            </g>
+
+                            <g transform="translate(68,0)">
+                                <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led05" />
+                                <use href="#triangulo" x="40" y="520" fill="darkslategray" transform="rotate(180, 40, 525)"
+                                    id="sw04-led06" />
+                            </g>
+
+                            <g transform="translate(100,0)">
+                                <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led07" />
+                                <use href="#triangulo" x="40" y="520" fill="darkslategray" transform="rotate(180, 40, 525)"
+                                    id="sw04-led08" />
+                            </g>
+
+                            <g transform="translate(133,0)">
+                                <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led09" />
+                                <use href="#triangulo" x="40" y="520" fill="darkslategray" transform="rotate(180, 40, 525)"
+                                    id="sw04-led10" />
+                            </g>
+
+                            <g transform="translate(165,0)">
+                                <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led11" />
+                                <use href="#triangulo" x="40" y="520" fill="darkslategray" transform="rotate(180, 40, 525)"
+                                    id="sw04-led12" />
+                            </g>
+
+                            <!-- Grupo de LEDs 13 a 24 -->
+                            <g transform="translate(205,0)">
+                                <g transform="translate(3,0)">
+                                    <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led13" />
+                                    <use href="#triangulo" x="40" y="520" fill="darkslategray"
+                                        transform="rotate(180, 40, 525)" id="sw04-led14" />
+                                </g>
+
+                                <g transform="translate(35,0)">
+                                    <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led15" />
+                                    <use href="#triangulo" x="40" y="520" fill="darkslategray"
+                                        transform="rotate(180, 40, 525)" id="sw04-led16" />
+                                </g>
+
+                                <g transform="translate(68,0)">
+                                    <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led17" />
+                                    <use href="#triangulo" x="40" y="520" fill="darkslategray"
+                                        transform="rotate(180, 40, 525)" id="sw04-led18" />
+                                </g>
+
+                                <g transform="translate(100,0)">
+                                    <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led19" />
+                                    <use href="#triangulo" x="40" y="520" fill="darkslategray"
+                                        transform="rotate(180, 40, 525)" id="sw04-led20" />
+                                </g>
+
+                                <g transform="translate(133,0)">
+                                    <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led21" />
+                                    <use href="#triangulo" x="40" y="520" fill="darkslategray"
+                                        transform="rotate(180, 40, 525)" id="sw04-led22" />
+                                </g>
+
+                                <g transform="translate(165,0)">
+                                    <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led23" />
+                                    <use href="#triangulo" x="40" y="520" fill="darkslategray"
+                                        transform="rotate(180, 40, 525)" id="sw04-led24" />
+                                </g>
+                            </g>
+
+                            <!-- Grupo de LEDs 25 a 36 -->
+                            <g transform="translate(415,0)">
+                                <g transform="translate(3,0)">
+                                    <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led25" />
+                                    <use href="#triangulo" x="40" y="520" fill="darkslategray"
+                                        transform="rotate(180, 40, 525)" id="sw04-led26" />
+                                </g>
+
+                                <g transform="translate(35,0)">
+                                    <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led27" />
+                                    <use href="#triangulo" x="40" y="520" fill="darkslategray"
+                                        transform="rotate(180, 40, 525)" id="sw04-led28" />
+                                </g>
+
+                                <g transform="translate(68,0)">
+                                    <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led29" />
+                                    <use href="#triangulo" x="40" y="520" fill="darkslategray"
+                                        transform="rotate(180, 40, 525)" id="sw04-led30" />
+                                </g>
+
+                                <g transform="translate(100,0)">
+                                    <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led31" />
+                                    <use href="#triangulo" x="40" y="520" fill="darkslategray"
+                                        transform="rotate(180, 40, 525)" id="sw04-led32" />
+                                </g>
+
+                                <g transform="translate(133,0)">
+                                    <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led33" />
+                                    <use href="#triangulo" x="40" y="520" fill="darkslategray"
+                                        transform="rotate(180, 40, 525)" id="sw04-led34" />
+                                </g>
+
+                                <g transform="translate(165,0)">
+                                    <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led35" />
+                                    <use href="#triangulo" x="40" y="520" fill="darkslategray"
+                                        transform="rotate(180, 40, 525)" id="sw04-led36" />
+                                </g>
+                            </g>
+
+                            <!-- Grupo de LEDs 37 a 48 -->
+                            <g transform="translate(625,0)">
+                                <g transform="translate(3,0)">
+                                    <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led37" />
+                                    <use href="#triangulo" x="40" y="520" fill="darkslategray"
+                                        transform="rotate(180, 40, 525)" id="sw04-led38" />
+                                </g>
+
+                                <g transform="translate(35,0)">
+                                    <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led39" />
+                                    <use href="#triangulo" x="40" y="520" fill="darkslategray"
+                                        transform="rotate(180, 40, 525)" id="sw04-led40" />
+                                </g>
+
+                                <g transform="translate(68,0)">
+                                    <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led41" />
+                                    <use href="#triangulo" x="40" y="520" fill="darkslategray"
+                                        transform="rotate(180, 40, 525)" id="sw04-led42" />
+                                </g>
+
+                                <g transform="translate(100,0)">
+                                    <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led43" />
+                                    <use href="#triangulo" x="40" y="520" fill="darkslategray"
+                                        transform="rotate(180, 40, 525)" id="sw04-led44" />
+                                </g>
+
+                                <g transform="translate(133,0)">
+                                    <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led45" />
+                                    <use href="#triangulo" x="40" y="520" fill="darkslategray"
+                                        transform="rotate(180, 40, 525)" id="sw04-led46" />
+                                </g>
+
+                                <g transform="translate(165,0)">
+                                    <use href="#triangulo" x="20" y="520" fill="darkslategray" id="sw04-led47" />
+                                    <use href="#triangulo" x="40" y="520" fill="darkslategray"
+                                        transform="rotate(180, 40, 525)" id="sw04-led48" />
+                                </g>
+                            </g>
+
+                        </g>
+                    </svg>
+
+
+
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+    // Utilitário para pegar o sala_id da URL
+    function getSalaIdFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('sala_id');
+    }
+
+    // Tooltip global
+    const tooltip = document.createElement('div');
+    tooltip.className = 'tooltip';
+    document.body.appendChild(tooltip);
+
+    async function carregarSwitchesUsados() {
+        const salaId = getSalaIdFromUrl();
+        if (!salaId) return;
+        const resp = await fetch(`/api/salas/${salaId}/switches-usados`);
+        if (!resp.ok) return;
+        const switches = await resp.json();
+
+        // Esconde todos os switches do SVG
+        document.querySelectorAll('.sw-ativo').forEach(g => g.style.display = 'none');
+
+        switches.forEach((sw, idx) => {
+            // Exemplo: sw.id = 1 => sw01
+            const swId = String(sw.id).padStart(2, '0');
+            const gSwitch = document.getElementById('sw' + swId);
+            if (gSwitch) {
+                gSwitch.style.display = 'block';
+                // Atualiza o nome do switch
+                const text = gSwitch.querySelector('text.texto-switch');
+                if (text) text.textContent = sw.nome;
+                // Destaca as portas usadas e adiciona tooltip
+                sw.portas.forEach(porta => {
+                    const numPorta = porta.numero;
+                    const nomeEquipamento = porta.equipamento;
+                    // Adiciona suporte a mais campos se existirem
+                    const portaId = `SW${swId} - Porta ${String(numPorta).padStart(2, '0')}`;
+                    const rect = gSwitch.querySelector(`rect[id="${portaId}"]`);
+                    if (rect) {
+                        rect.classList.add('highlighted');
+                        // Buscar dados detalhados se disponíveis
+                        let detalhes = porta.detalhes || {};
+                        // Fallback para compatibilidade
+                        if (!detalhes && typeof porta === 'object') detalhes = porta;
+                        // Montar HTML do tooltip
+                        rect.addEventListener('mouseenter', function(e) {
+                            let nomeSala = porta.sala || '-';
+                            let nomeEquipamento = porta.equipamento || '-';
+                            let tipo = porta.tipo || '-';
+                            let marca = porta.marca || '-';
+                            let serie = porta.serie || porta['série'] || porta['serial'] || porta['numero_serie'] || '-';
+                            let ip1 = porta.ip1 || '-';
+                            let mac1 = porta.mac1 || '-';
+                            let ip2 = porta.ip2 || '-';
+                            let mac2 = porta.mac2 || '-';
+                            // Caminho da logo da marca
+                            let logoMarca = (marca && marca !== '-') ? `static/img/${marca.toLowerCase()}.png` : '';
+                            let foto = porta.foto || '';
+                            let html = `<div style='background:#2c3e50;border-radius:10px;box-shadow:0 2px 8px #0008;padding:14px 16px 10px 14px;min-width:220px;max-width:270px;position:relative;color:#eee;'>`;
+                            if (logoMarca) {
+                                html += `<img src='${logoMarca}' alt='${marca}' title='${marca}' style='position:absolute;top:10px;right:14px;width:32px;height:32px;object-fit:contain;background:#fff2;border-radius:8px;box-shadow:0 2px 8px #0002;'>`;
+                            }
+                            if (foto) {
+                                html += `<div style='width:100%;display:flex;justify-content:center;align-items:center;margin-bottom:8px;'><img src='${foto}' alt='${nomeEquipamento}' style='max-width:60px;max-height:60px;object-fit:contain;display:block;'></div>`;
+                            }
+                            html += `<div style='font-size:1.1em;font-weight:bold;color:#FFD600;margin-bottom:8px;text-align:left;'>${nomeSala} - ${nomeEquipamento}</div>`;
+                            html += `<div style='color:#bfc9d1;font-weight:bold;margin-bottom:2px;'>Tipo: <span style='color:#fff;font-weight:normal;'>${tipo}</span></div>`;
+                            html += `<div style='color:#bfc9d1;font-weight:bold;margin-bottom:2px;'>Marca: <span style='color:#fff;font-weight:normal;'>${marca}</span></div>`;
+                            html += `<div style='color:#bfc9d1;font-weight:bold;margin-bottom:2px;'>Série: <span style='color:#fff;font-weight:normal;'>${serie}</span></div>`;
+                            html += `<div style='color:#bfc9d1;font-weight:bold;margin-bottom:2px;'>IP 1: <span style='color:#fff;font-weight:normal;'>${ip1}</span></div>`;
+                            html += `<div style='color:#bfc9d1;font-weight:bold;margin-bottom:2px;'>MAC 1: <span style='color:#fff;font-weight:normal;'>${mac1}</span></div>`;
+                            html += `<div style='color:#bfc9d1;font-weight:bold;margin-bottom:2px;'>IP 2: <span style='color:#fff;font-weight:normal;'>${ip2}</span></div>`;
+                            html += `<div style='color:#bfc9d1;font-weight:bold;margin-bottom:2px;'>MAC 2: <span style='color:#fff;font-weight:normal;'>${mac2}</span></div>`;
+                            html += `</div>`;
+                            tooltip.innerHTML = html;
+                            tooltip.style.display = 'block';
+                            tooltip.style.visibility = 'visible';
+                            tooltip.style.opacity = '1';
+                            tooltip.style.zIndex = '99999';
+                        });
+                        rect.addEventListener('mousemove', function(e) {
+                            tooltip.style.left = (e.clientX + 12) + 'px';
+                            tooltip.style.top = (e.clientY + 12) + 'px';
+                        });
+                        rect.addEventListener('mouseleave', function() {
+                            tooltip.style.display = 'none';
+                            tooltip.style.visibility = 'hidden';
+                            tooltip.style.opacity = '0';
+                        });
+                    }
+                    // LED correspondente
+                    const ledId = `sw${swId}-led${String(numPorta).padStart(2, '0')}`;
+                    const led = gSwitch.querySelector(`use[id="${ledId}"]`);
+                    if (led) led.classList.add('piscar');
+                });
+            }
+        });
+    }
+    window.addEventListener('DOMContentLoaded', carregarSwitchesUsados);
+
+    let t = document.querySelector('.tooltip');
+    t.textContent = 'Tooltip manual';
+    t.style.display = 'block';
+    t.style.left = '100px';
+    t.style.top = '100px';
+    t.style.opacity = '1';
+    t.style.zIndex = '99999';
+    </script>
+
+</body>
+
+</html>

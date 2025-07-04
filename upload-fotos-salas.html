@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload de Imagens de Salas</title>
+    <link rel="stylesheet" href="css/estilo-base.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .galeria-imgs { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 24px; }
+        .galeria-imgs img { max-width: 180px; max-height: 120px; border-radius: 8px; box-shadow: 0 2px 8px #0002; background: #222; }
+        .upload-container { background: #34495e; padding: 32px 40px; border-radius: 12px; max-width: 600px; margin: 40px auto; box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+        .msg { margin: 16px 0; color: #27ae60; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="upload-container" style="position:relative;">
+        <div id="empresa-logada" style="position:absolute;top:16px;right:24px;color:#4a90e2;font-weight:bold;z-index:2;"></div>
+        <div class="voltar-container" style="position:absolute;top:16px;left:24px;z-index:2;">
+            <button class="card-btn voltar" onclick="window.history.back()" title="Voltar" style="padding:8px 12px;min-width:unset;min-height:unset;width:40px;height:40px;display:flex;align-items:center;justify-content:center;">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        <h1 style="margin-top:48px;">Upload de Imagens de Salas</h1>
+        <form id="formUpload" enctype="multipart/form-data">
+            <input type="file" id="inputFoto" name="foto" accept="image/*" required>
+            <button type="submit" style="margin-left:12px;"><i class="fas fa-upload"></i> Enviar</button>
+        </form>
+        <div class="msg" id="msgUpload"></div>
+        <h2 style="margin-top:32px;">Imagens já enviadas</h2>
+        <div class="galeria-imgs" id="galeriaImgs"></div>
+    </div>
+    <script>
+    async function carregarGaleria() {
+        const resp = await fetch('/fotos-salas');
+        const data = await resp.json();
+        const galeria = document.getElementById('galeriaImgs');
+        galeria.innerHTML = '';
+        if (!data.imagens.length) {
+            galeria.innerHTML = '<span style="color:#aaa;">Nenhuma imagem enviada ainda.</span>';
+            return;
+        }
+        data.imagens.forEach(url => {
+            galeria.innerHTML += `<img src='${url}' alt='Foto da sala'>`;
+        });
+    }
+    document.getElementById('formUpload').onsubmit = async function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const msg = document.getElementById('msgUpload');
+        msg.textContent = '';
+        const resp = await fetch('/upload-foto-sala', { method: 'POST', body: formData });
+        const json = await resp.json();
+        if (json.status === 'ok') {
+            msg.textContent = 'Imagem enviada com sucesso!';
+            carregarGaleria();
+            this.reset();
+        } else {
+            msg.textContent = json.mensagem || 'Erro ao enviar imagem!';
+            msg.style.color = '#e74c3c';
+        }
+    };
+    carregarGaleria();
+
+    // Logo/nome da empresa logada
+    window.addEventListener('DOMContentLoaded', function() {
+        fetch('/empresa_atual')
+            .then(resp => resp.json())
+            .then(data => {
+                const el = document.getElementById('empresa-logada');
+                if (data.logo) {
+                    el.innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                } else if (data.nome) {
+                    el.innerText = 'Empresa: ' + data.nome;
+                }
+            });
+    });
+    </script>
+</body>
+</html> 

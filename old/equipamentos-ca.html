@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilo-equipamentos-ca.css">
+    <link rel="stylesheet" href="css/estilo-index-ca.css">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="js/script-ca.js" defer></script>
+    <title>Equipamentos CA</title>
+</head>
+
+<body onload="carregarUsuario()">
+    <header class="header">
+        <img src="img/logo-whirlpool.png" alt="Logo da Empresa Esquerda">
+        <div class="user-info">
+            <span id="welcome-message">Bem-vindo ao Inventory</span>
+            <button class="logout-button" onclick="logout()">Sair</button>
+        </div>
+        <img src="img/logo-convergint.png" alt="Logo da Empresa Direita">
+    </header>
+    <main class="content">
+        <div class="acesso-content">
+            <h2 id="acesso-nome" data-sala="">Nome da Sala</h2>
+            <!-- Foto da sala -->
+            <div class="acesso-foto">
+                <img id="acesso-foto" src="" alt="Foto do acesso">
+            </div>
+            <!-- Swiper para equipamentos -->
+            <div class="swiper-container">
+                <div class="swiper-wrapper" id="swiper-equipamentos">
+                    <!-- Slides serão inseridos aqui -->
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <!-- Paginação -->
+                
+            </div>
+
+        </div>
+        <button class="botao-voltar" onclick="window.history.back()">Voltar</button>
+    </main>
+    <footer class="footer">
+        <img src="img/footer-logo.png" alt="Logo do Rodapé">
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const acessoNome = urlParams.get('acesso'); // Obtém o nome da sala da URL
+
+            if (acessoNome) {
+                const acessoNomeElemento = document.getElementById('acesso-nome');
+                acessoNomeElemento.textContent = acessoNome; // Define o texto do elemento
+                acessoNomeElemento.setAttribute('data-sala', acessoNome); // Define o atributo data-sala
+                carregarDadosEquipamentosCA(acessoNome);
+            } else {
+                console.error("Nome do acesso não encontrado na URL.");
+            }
+        });
+
+
+    </script>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+</body>
+
+</html>

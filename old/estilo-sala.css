@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: #f4f4f4;
+}
+
+
+main {
+    padding: 20px;
+}
+
+.sala-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.sala-foto img {
+    max-width: 100%;
+    max-height: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.sala-info {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-item img {
+    width: 50px;
+    height: 50px;
+}
+
+footer button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+footer button:hover {
+    background-color: #0056b3;
+}
+
+.sala-icones {
+    display: flex;
+    justify-content: center;
+    gap: 100px; /* Espaçamento entre os ícones */
+    margin-top: 20px;
+}
+
+.icone-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.icone-item img {
+    width: 50px; /* Tamanho inicial do ícone */
+    height: 50px;
+    margin-bottom: 10px; /* Espaço entre o ícone e o texto */
+    transition: transform 0.3s ease; /* Animação suave ao passar o mouse */
+    cursor: pointer; /* Cursor muda para pointer */
+}
+
+.icone-item img:hover {
+    transform: scale(1.4); /* Aumenta o tamanho do ícone em 40% */
+}
+
+.icone-item p {
+    font-size: 14px;
+    color: rgb(227, 170, 18);
+    margin: 0;
+}
+.icone-item:hover p {
+    color: #007bff; /* Altera a cor do texto */
+    transition: all 0.3s ease; /* Animação suave */
+}
+

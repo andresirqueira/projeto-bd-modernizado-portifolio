@@ -1,0 +1,167 @@
+<!-- cadastrar-sala-e-equipamentos.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Adicionar Sala</title>
+    <link rel="stylesheet" href="css/estilo-base.css">
+    <link rel="stylesheet" href="css/estilo-adicionar-sala.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body style="background: rgb(18, 33, 55);">
+    <div class="admin-container">
+        <div class="voltar-container">
+            <button class="card-btn voltar" onclick="window.history.back()" title="Voltar">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        <h1>Cadastrar Sala e Equipamentos</h1>
+        <div id="empresa-logada"></div>
+        <form id="formSala" enctype="multipart/form-data">
+            <label for="nome">Nome da Sala:</label>
+            <input type="text" id="nome" name="nome" required class="input-estilizado">
+            <label for="tipo">Tipo:</label>
+            <input type="text" id="tipo" name="tipo" class="input-estilizado">
+            <label for="descricao">Descrição:</label>
+            <textarea id="descricao" name="descricao" class="input-estilizado"></textarea>
+            <div id="foto-preview-container" style="margin-bottom:10px;"></div>
+            <label for="fotoExistente">Escolher imagem já enviada:</label>
+            <select id="fotoExistente" name="foto" class="input-estilizado" style="margin-bottom:10px;"></select>
+            <div style="margin-bottom:10px;color:#e1b300;font-size:0.98em;">
+                Se a foto desejada não estiver aqui, <a href="upload-fotos-salas.html" style="color:#4a90e2;text-decoration:underline;">faça o upload na tela Upload Fotos</a>.
+            </div>
+            <label for="andar_id">Andar ID:</label>
+            <select id="andar_id" name="andar_id" class="input-estilizado" required>
+                <option value="">Selecione...</option>
+                <!-- opções de 0 a 199 -->
+                <script>
+                    for (let i = 0; i < 200; i++) {
+                        document.write(`<option value='${i}'>${i}</option>`);
+                    }
+                </script>
+            </select>
+            <label for="equipamentosSemSala">Equipamentos sem sala:</label>
+            <div style="overflow-x:auto;"><div id="equipamentosSemSalaTabela" style="margin-bottom:16px;"></div></div>
+            <div class="top-cards">
+                <button type="submit" class="card-btn cadastrar" style="width: auto; height: auto; max-width: none;">
+                    <i class="fas fa-check"></i> <span>Cadastrar</span>
+                </button>
+            </div>
+        </form>
+        <div class="msg" id="msg"></div>
+    </div>
+    <script>
+        async function carregarEquipamentosSemSala() {
+            const resp = await fetch('/equipamentos?sala_id=null');
+            const equipamentos = await resp.json();
+            const tabelaDiv = document.getElementById('equipamentosSemSalaTabela');
+            tabelaDiv.innerHTML = '';
+            if (equipamentos.length === 0) {
+                tabelaDiv.innerHTML = '<em>Nenhum equipamento disponível.</em>';
+                return;
+            }
+            renderTabelaEquipamentos(equipamentos);
+        }
+
+        function renderTabelaEquipamentos(equipamentos) {
+            let html = `<table class="tabela-equipamentos" style="min-width:1200px;width:100%;border-collapse:collapse;background:#2c3e50;color:#eee;">
+                <thead>
+                    <tr>
+                        <th style=\"text-align:center;\"></th>
+                        <th>Sala</th>
+                        <th>Foto</th>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Série</th>
+                        <th>Part Number</th>
+                        <th>Tamanho</th>
+                        <th>Firmware</th>
+                        <th>IP 1</th>
+                        <th>MAC 1</th>
+                        <th>IP 2</th>
+                        <th>MAC 2</th>
+                        <th>Descrição</th>
+                        <th>Ícone</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+            equipamentos.filter(eq => eq.defeito !== 1 && eq.defeito !== '1' && eq.defeito !== true).forEach(eq => {
+                const serie = (eq.dados && eq.dados.serie) ? eq.dados.serie : '';
+                const partnumber = (eq.dados && eq.dados.partnumber) ? eq.dados.partnumber : '';
+                const tamanho = (eq.dados && eq.dados.tamanho) ? eq.dados.tamanho : '';
+                const firmware = (eq.dados && eq.dados.firmware) ? eq.dados.firmware : '';
+                const ip1 = (eq.dados && eq.dados.ip1) ? eq.dados.ip1 : '';
+                const mac1 = (eq.dados && eq.dados.mac1) ? eq.dados.mac1 : '';
+                const ip2 = (eq.dados && eq.dados.ip2) ? eq.dados.ip2 : '';
+                const mac2 = (eq.dados && eq.dados.mac2) ? eq.dados.mac2 : '';
+                html += `<tr>\n                    <td style=\"text-align:center;\"><input type='checkbox' value='${eq.id}' class='equipamento-checkbox'></td>\n                    <td>Sem sala</td>\n                    <td>${eq.foto ? `<img src='${eq.foto.startsWith("img/") ? "static/" + eq.foto : eq.foto}' style='max-width:80px;max-height:60px;'>` : ''}</td>\n                    <td>${eq.nome || ''}</td>\n                    <td>${eq.tipo || ''}</td>\n                    <td>${eq.marca || ''}</td>\n                    <td>${eq.modelo || ''}</td>\n                    <td>${serie}</td>\n                    <td>${partnumber}</td>\n                    <td>${tamanho}</td>\n                    <td>${firmware}</td>\n                    <td>${ip1}</td>\n                    <td>${mac1}</td>\n                    <td>${ip2}</td>\n                    <td>${mac2}</td>\n                    <td>${eq.descricao || ''}</td>\n                    <td>${eq.icone ? `<img src='${eq.icone.startsWith("img/") ? "static/" + eq.icone : eq.icone}' style='max-width:32px;max-height:32px;'>` : ''}</td>\n                </tr>`;
+            });
+            html += '</tbody></table>';
+            tabelaDiv.innerHTML = html;
+        }
+
+        carregarEquipamentosSemSala();
+
+        document.getElementById('formSala').onsubmit = async function (e) {
+            e.preventDefault();
+            const form = document.getElementById('formSala');
+            const formData = new FormData(form);
+            // Adiciona os IDs dos equipamentos marcados
+            const selecionados = Array.from(document.querySelectorAll('.equipamento-checkbox:checked')).map(cb => cb.value);
+            selecionados.forEach(id => formData.append('equipamentos_ids[]', id));
+            const resp = await fetch('/adicionar-sala', {
+                method: 'POST',
+                body: formData
+            });
+            const json = await resp.json();
+            if (json.status === 'ok') {
+                document.getElementById('msg').innerText = 'Sala cadastrada com sucesso!';
+                form.reset();
+                document.getElementById('equipamentosSemSalaTabela').innerHTML = '';
+                carregarEquipamentosSemSala();
+            } else {
+                document.getElementById('msg').innerText = 'Erro ao cadastrar!';
+            }
+        };
+
+        window.addEventListener('DOMContentLoaded', function() {
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    if (data.logo) {
+                        document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                    } else if (data.nome) {
+                        document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
+                    }
+                });
+            // Carregar imagens já enviadas para o select
+            async function carregarFotosExistentes() {
+                const resp = await fetch('/fotos-salas');
+                const data = await resp.json();
+                const select = document.getElementById('fotoExistente');
+                select.innerHTML = '<option value="">Nenhuma</option>';
+                data.imagens.forEach(url => {
+                    const nome = url.split('/').pop();
+                    select.innerHTML += `<option value="${url}">${nome}</option>`;
+                });
+            }
+            carregarFotosExistentes();
+            // Atualizar preview ao escolher imagem existente
+            document.getElementById('fotoExistente').addEventListener('change', function() {
+                const url = this.value;
+                const preview = document.getElementById('foto-preview-container');
+                if (url) {
+                    preview.innerHTML = `<img src='${url}' alt='Foto da sala' style='max-width:180px;max-height:90px;object-fit:cover;border-radius:6px;'>`;
+                } else {
+                    preview.innerHTML = "<span style='color:#aaa;'>Sem foto cadastrada</span>";
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,2002 @@
+[
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.14",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:48",
+        "sala": "Sala 01",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.99",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:48",
+        "sala": "Sala 01",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.140",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:48",
+        "sala": "Sala 01",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.18",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:48",
+        "sala": "Sala 02",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.121",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:48",
+        "sala": "Sala 02",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.136",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:48",
+        "sala": "Sala 02",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.162",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:48",
+        "sala": "Sala 03",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.158",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:48",
+        "sala": "Sala 03",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.143",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:48",
+        "sala": "Sala 03",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.15",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:48",
+        "sala": "Sala 04",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.214",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:48",
+        "sala": "Sala 04",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.80",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:48",
+        "sala": "Sala 04",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.197",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:48",
+        "sala": "Sala 05",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.132",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:49",
+        "sala": "Sala 05",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.176",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:49",
+        "sala": "Sala 05",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.243",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:49",
+        "sala": "Sala 06",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.184",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:49",
+        "sala": "Sala 06",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.231",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:49",
+        "sala": "Sala 06",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.207",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:49",
+        "sala": "Sala 07",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.6",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:49",
+        "sala": "Sala 07",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.192",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:49:49",
+        "sala": "Sala 07",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.186.157",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:49:52",
+        "sala": "Sala 08",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.187.118",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:49:56",
+        "sala": "Sala 09",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.187.142",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:50:00",
+        "sala": "Sala 10",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.223",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:00",
+        "sala": "Sala 11",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.168",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:00",
+        "sala": "Sala 11",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.84",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:00",
+        "sala": "Sala 11",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.113",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:00",
+        "sala": "Sala 12",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.252",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Sala 12",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.146",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Sala 12",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Microfone MXA 920",
+        "ip": "10.12.186.111",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Cozinha Brastemp",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Speaker 01",
+        "ip": "10.12.186.125",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Cozinha Brastemp",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Speaker 02",
+        "ip": "10.12.186.62",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Cozinha Brastemp",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Speaker 03",
+        "ip": "10.12.186.123",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Cozinha Brastemp",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Speaker 04",
+        "ip": "10.12.186.54",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Cozinha Brastemp",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Speaker 05",
+        "ip": "10.12.186.102",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Cozinha Brastemp",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Painel Controle",
+        "ip": "10.12.187.219",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Cozinha Brastemp",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.200",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Cozinha Brastemp",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Clickshare",
+        "ip": "",
+        "status": "Sem Status",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Cozinha Brastemp",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "AVIO USB",
+        "ip": "10.12.186.68",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Cozinha Brastemp",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Microfone MXA 920",
+        "ip": "10.12.186.95",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Cozinha Consul",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Speaker 01",
+        "ip": "10.12.186.7",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Cozinha Consul",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Speaker 02",
+        "ip": "10.12.186.4",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Cozinha Consul",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Speaker 03",
+        "ip": "10.12.186.25",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Cozinha Consul",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.150",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Cozinha Consul",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Clickshare",
+        "ip": "",
+        "status": "Sem Status",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Cozinha Consul",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "AVIO USB",
+        "ip": "10.12.186.120",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Cozinha Consul",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "NUC 01 Esquerda",
+        "ip": "10.12.186.223",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Hall Elevador - Térreo",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "NUC 02 Direita",
+        "ip": "10.12.186.228",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Hall Elevador - Térreo",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "AVIO ANALOG",
+        "ip": "10.12.186.61",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Hall Elevador - Térreo",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Speaker",
+        "ip": "10.12.186.70",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:01",
+        "sala": "Hall Elevador - Térreo",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "NUC 01 Recepção",
+        "ip": "10.12.186.176",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:50:05",
+        "sala": "Recepção - Térreo",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "NUC 02 Recepção",
+        "ip": "10.12.186.207",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:05",
+        "sala": "Recepção - Térreo",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Brazilian Show",
+        "ip": "10.12.66.178",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:05",
+        "sala": "Restaurantes",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Fit & Health",
+        "ip": "10.12.66.198",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:05",
+        "sala": "Restaurantes",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Vegan & Vegetarian",
+        "ip": "10.12.66.184",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:05",
+        "sala": "Restaurantes",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Global Tastes",
+        "ip": "10.12.66.181",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:05",
+        "sala": "Restaurantes",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Grill & Barbecue",
+        "ip": "10.12.66.19",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:05",
+        "sala": "Restaurantes",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Saída Direita",
+        "ip": "10.12.66.85",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:05",
+        "sala": "Restaurantes",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Saída Esquerda",
+        "ip": "10.12.66.143",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:05",
+        "sala": "Restaurantes",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Lanchonete Esquerda",
+        "ip": "10.12.66.225",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:50:09",
+        "sala": "Restaurantes",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Lanchonete Direita",
+        "ip": "10.12.66.168",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Restaurantes",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "QSC-ml4i",
+        "ip": "10.12.186.89",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "IDF - Térreo",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "QSC-ml4o",
+        "ip": "10.12.186.107",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "IDF - Térreo",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "DXP 84 HD 4K Plus",
+        "ip": "",
+        "status": "Sem Status",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "IDF - Térreo",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Crestron CP4 Térreo",
+        "ip": "10.12.187.165",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "IDF - Térreo",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Controladora Painel LED LG Consul",
+        "ip": "",
+        "status": "Sem Status",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "IDF - Térreo",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "HDMI Line Receiver",
+        "ip": "",
+        "status": "Sem Status",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "IDF - Térreo",
+        "andar": "Térreo"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.30",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Sempre Mais",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.31",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Sempre Mais",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.151",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Sempre Mais",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.36",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Bem Pensado",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.37",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Bem Pensado",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.195",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Bem Pensado",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.38",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Faz a Diferença",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.39",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Faz a Diferença",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.19",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Faz a Diferença",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.34",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Pode Confiar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.35",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Pode Confiar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "",
+        "status": "Sem Status",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Pode Confiar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.40",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Facilita",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.41",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Facilita",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.191",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Facilita",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Microfone MXA 710",
+        "ip": "10.12.186.20",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Consul",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.32",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Consul",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.33",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Consul",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Painel Controle",
+        "ip": "10.12.187.104",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Consul",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.110",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Consul",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Speaker 01",
+        "ip": "10.12.186.16",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Consul",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Speaker 02",
+        "ip": "10.12.186.17",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:13",
+        "sala": "Sala Consul",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Speaker 03",
+        "ip": "10.12.186.18",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:14",
+        "sala": "Sala Consul",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Clickshare",
+        "ip": "",
+        "status": "Sem Status",
+        "timestamp": "2025-06-24 07:50:14",
+        "sala": "Sala Consul",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "AVIO USB",
+        "ip": "10.12.186.94",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:14",
+        "sala": "Sala Consul",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Controlart",
+        "ip": "",
+        "status": "Sem Status",
+        "timestamp": "2025-06-24 07:50:14",
+        "sala": "Sala Consul",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.24",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:14",
+        "sala": "Sala Kitchenaid",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.25",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:14",
+        "sala": "Sala Kitchenaid",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.68.138",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:14",
+        "sala": "Sala Kitchenaid",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.42",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:14",
+        "sala": "Sala Consulado",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.43",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:14",
+        "sala": "Sala Consulado",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.228",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:14",
+        "sala": "Sala Consulado",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.100",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:14",
+        "sala": "Sala CNS 101",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.68.116",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:50:17",
+        "sala": "Sala CNS 102",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.68.152",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:50:21",
+        "sala": "Sala CNS 103",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.68.147",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:50:25",
+        "sala": "Sala CNS 104",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.26",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:25",
+        "sala": "Sala KAD 105",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.27",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:25",
+        "sala": "Sala KAD 105",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.68.235",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:25",
+        "sala": "Sala KAD 105",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.22",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:25",
+        "sala": "Sala KAD 106",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.23",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:26",
+        "sala": "Sala KAD 106",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.7",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:26",
+        "sala": "Sala KAD 106",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.20",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:26",
+        "sala": "Sala KAD 107",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.21",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:26",
+        "sala": "Sala KAD 107",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.75",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:26",
+        "sala": "Sala KAD 107",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.5",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:26",
+        "sala": "Sala KAD 108",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.187.248",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:50:29",
+        "sala": "Sala KAD 109",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.187.149",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:50:33",
+        "sala": "Sala KAD 110",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.187.233",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:50:37",
+        "sala": "Sala KAD 111",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.68.240",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:50:41",
+        "sala": "Sala KAD 112",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.28",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:41",
+        "sala": "Sala KAD 113",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.29",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:41",
+        "sala": "Sala KAD 113",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.68.31",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:41",
+        "sala": "Sala KAD 113",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.103",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:41",
+        "sala": "Sala KAD 114",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.46",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:42",
+        "sala": "Sala CNS 115",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.47",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:42",
+        "sala": "Sala CNS 115",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.153",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:42",
+        "sala": "Sala CNS 115",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.68.144",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:50:45",
+        "sala": "Sala CNS 117",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.44",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:45",
+        "sala": "Sala CNS 118",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.45",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:45",
+        "sala": "Sala CNS 118",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.254",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:50:45",
+        "sala": "Sala CNS 118",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.187.193",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:50:49",
+        "sala": "Sala CNS 119",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.68.159",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:50:53",
+        "sala": "Sala CNS 120",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.187.141",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:50:57",
+        "sala": "Sala Aberta 01 - 1 Andar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.68.95",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:51:01",
+        "sala": "Sala Aberta 02 - 1 Andar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.187.221",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:51:05",
+        "sala": "Sala Aberta 03 - 1 Andar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.68.103",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:05",
+        "sala": "Outback 01 - 1 Andar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.68.214",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:05",
+        "sala": "Outback 02 - 1 Andar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.68.60",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:05",
+        "sala": "Outback 03 - 1 Andar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.68.122",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:05",
+        "sala": "Outback 04 - 1 Andar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.68.193",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:05",
+        "sala": "Outback 05 - 1 Andar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Monitor Jurídico",
+        "ip": "",
+        "status": "Sem Status",
+        "timestamp": "2025-06-24 07:51:05",
+        "sala": "Monitor Jurídico - 1 Andar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "NUC 01 Esquerda",
+        "ip": "10.12.186.219",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:06",
+        "sala": "Hall Elevador - 1 Andar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "NUC 02 Direita",
+        "ip": "10.12.186.185",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:06",
+        "sala": "Hall Elevador - 1 Andar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "AVIO ANALOG",
+        "ip": "",
+        "status": "Sem Status",
+        "timestamp": "2025-06-24 07:51:06",
+        "sala": "Hall Elevador - 1 Andar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Speaker",
+        "ip": "10.12.186.14",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:06",
+        "sala": "Hall Elevador - 1 Andar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "QSC CORE - LAN A",
+        "ip": "10.12.186.3",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:06",
+        "sala": "IDF - 1 Andar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "QSC CORE - LAN B",
+        "ip": "192.168.0.245",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:51:09",
+        "sala": "IDF - 1 Andar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "QSC CORE - LAN AUX",
+        "ip": "10.12.187.72",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:09",
+        "sala": "IDF - 1 Andar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Crestron CP3 1 Andar",
+        "ip": "10.12.187.3",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:09",
+        "sala": "IDF - 1 Andar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Crestron CP3 2 Andar",
+        "ip": "10.12.92.5",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:09",
+        "sala": "IDF - 1 Andar",
+        "andar": "Andar 1"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.62",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:10",
+        "sala": "Sala Retro",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.63",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:10",
+        "sala": "Sala Retro",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.246",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:10",
+        "sala": "Sala Retro",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.66",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:10",
+        "sala": "Sala Gourmand",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.67",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:10",
+        "sala": "Sala Gourmand",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.230",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:10",
+        "sala": "Sala Gourmand",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.60",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:10",
+        "sala": "Sala Inverse",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.61",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:10",
+        "sala": "Sala Inverse",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.226",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:10",
+        "sala": "Sala Inverse",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Microfone MXA 710",
+        "ip": "10.12.186.38",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:10",
+        "sala": "Sala Compra Certa",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.48",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:10",
+        "sala": "Sala Compra Certa",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.49",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:10",
+        "sala": "Sala Compra Certa",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Painel Controle",
+        "ip": "10.12.187.105",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:10",
+        "sala": "Sala Compra Certa",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.235",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:10",
+        "sala": "Sala Compra Certa",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Speaker 01",
+        "ip": "10.12.186.34",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:10",
+        "sala": "Sala Compra Certa",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Speaker 02",
+        "ip": "10.12.186.35",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:10",
+        "sala": "Sala Compra Certa",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Speaker 03",
+        "ip": "10.12.186.28",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:10",
+        "sala": "Sala Compra Certa",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Clickshare",
+        "ip": "10.12.187.177",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala Compra Certa",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "AVIO USB",
+        "ip": "10.12.186.75",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala Compra Certa",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Controlart",
+        "ip": "",
+        "status": "Sem Status",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala Compra Certa",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Microfone MXA 910",
+        "ip": "10.12.186.100",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala Brastemp",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.56",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala Brastemp",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.57",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala Brastemp",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Painel Controle",
+        "ip": "10.12.187.107",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala Brastemp",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.138",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala Brastemp",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Speaker 01",
+        "ip": "10.12.186.43",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala Brastemp",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Speaker 02",
+        "ip": "10.12.186.44",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala Brastemp",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Speaker 03",
+        "ip": "10.12.186.45",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala Brastemp",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Clickshare",
+        "ip": "10.12.187.137",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala Brastemp",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "AVIO USB",
+        "ip": "10.12.186.67",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala Brastemp",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Controlart",
+        "ip": "",
+        "status": "Sem Status",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala Brastemp",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.58",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala BTP 202",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.59",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala BTP 202",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.242",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala BTP 202",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.64",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala BTP 203",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.65",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala BTP 203",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.218",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:14",
+        "sala": "Sala BTP 203",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.187.164",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:51:18",
+        "sala": "Sala BTP 206",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.167",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:18",
+        "sala": "Sala CC 210",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.187.209",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:51:22",
+        "sala": "Sala CC 211",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "TV",
+        "ip": "",
+        "status": "Sem Status",
+        "timestamp": "2025-06-24 07:51:22",
+        "sala": "Sala CC 212",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.187.170",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:51:26",
+        "sala": "Sala CC 213",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.187.213",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:51:30",
+        "sala": "Sala CC 214",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.187.111",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:51:34",
+        "sala": "Sala CC 215",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.224",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:34",
+        "sala": "Sala CC 216",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.74",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:34",
+        "sala": "Sala CC 217",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.54",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:34",
+        "sala": "Sala CC 218",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.55",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:34",
+        "sala": "Sala CC 218",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.250",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:34",
+        "sala": "Sala CC 218",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.187.91",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:51:38",
+        "sala": "Sala CC 219",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.187.148",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:51:42",
+        "sala": "Sala CC 220",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.50",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:42",
+        "sala": "Sala CC 221",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.51",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:42",
+        "sala": "Sala CC 221",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.4",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:42",
+        "sala": "Sala CC 221",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.247",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:42",
+        "sala": "Sala BB 223",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.68",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:42",
+        "sala": "Sala B Blend",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.69",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:42",
+        "sala": "Sala B Blend",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "",
+        "status": "Sem Status",
+        "timestamp": "2025-06-24 07:51:42",
+        "sala": "Sala Blue Sky",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Microfone MXA 710",
+        "ip": "10.12.186.110",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:42",
+        "sala": "Sala Up",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Painel Agenda",
+        "ip": "10.12.187.52",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:42",
+        "sala": "Sala Up",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Sensor",
+        "ip": "10.12.187.53",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:42",
+        "sala": "Sala Up",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Painel Controle",
+        "ip": "10.12.187.106",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:42",
+        "sala": "Sala Up",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.96",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:42",
+        "sala": "Sala Up",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Speaker 01",
+        "ip": "10.12.186.39",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:42",
+        "sala": "Sala Up",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Speaker 02",
+        "ip": "10.12.186.40",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:42",
+        "sala": "Sala Up",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Clickshare",
+        "ip": "10.12.187.199",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:51:46",
+        "sala": "Sala Up",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "AVIO USB",
+        "ip": "10.12.186.109",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:46",
+        "sala": "Sala Up",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Controlart",
+        "ip": "",
+        "status": "Sem Status",
+        "timestamp": "2025-06-24 07:51:46",
+        "sala": "Sala Up",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Projetor",
+        "ip": "10.12.187.126",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:46",
+        "sala": "Town Hall",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.234",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:46",
+        "sala": "Town Hall",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "QSC Amplifier",
+        "ip": "10.12.186.77",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:46",
+        "sala": "Town Hall",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Receptor 01",
+        "ip": "10.12.186.49",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:46",
+        "sala": "Town Hall",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Receptor 02",
+        "ip": "10.12.186.48",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:51:50",
+        "sala": "Town Hall",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "ANI 22",
+        "ip": "10.12.186.50",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:51:54",
+        "sala": "Town Hall",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "AVIO USB",
+        "ip": "10.12.186.91",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:54",
+        "sala": "Town Hall",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "AVIO ANALOG",
+        "ip": "10.12.186.82",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:51:54",
+        "sala": "Town Hall",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Ipad",
+        "ip": "",
+        "status": "Sem Status",
+        "timestamp": "2025-06-24 07:51:54",
+        "sala": "Town Hall",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Monitor 01",
+        "ip": "10.12.187.130",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:51:58",
+        "sala": "Squads",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Monitor 02",
+        "ip": "10.12.187.152",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:52:02",
+        "sala": "Squads",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Monitor 03",
+        "ip": "10.12.187.83",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:52:06",
+        "sala": "Squads",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Monitor 04",
+        "ip": "10.12.187.199",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:52:10",
+        "sala": "Squads",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Monitor 05",
+        "ip": "10.12.187.172",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:52:14",
+        "sala": "Squads",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Monitor 06",
+        "ip": "10.12.187.118",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:52:18",
+        "sala": "Squads",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Monitor 07",
+        "ip": "10.12.187.92",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:52:22",
+        "sala": "Squads",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Monitor 08",
+        "ip": "10.12.187.134",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:52:26",
+        "sala": "Squads",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Monitor Esquerda",
+        "ip": "10.12.186.236",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:52:26",
+        "sala": "Corredor B Blend",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Monitor Direita",
+        "ip": "10.12.186.152",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:52:26",
+        "sala": "Corredor B Blend",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Monitor Vertical",
+        "ip": "10.12.186.173",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:52:26",
+        "sala": "Corredor B Blend",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "TV",
+        "ip": "10.12.187.198",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:52:30",
+        "sala": "Sala Aberta 01 - 2 Andar",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "TV",
+        "ip": "",
+        "status": "Sem Status",
+        "timestamp": "2025-06-24 07:52:30",
+        "sala": "Sala Aberta 02 - 2 Andar",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "",
+        "status": "Sem Status",
+        "timestamp": "2025-06-24 07:52:30",
+        "sala": "Outback 01 - 2 Andar",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.237",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:52:34",
+        "sala": "Outback 02 - 2 Andar",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.238",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:52:34",
+        "sala": "Outback 03 - 2 Andar",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Chromebox",
+        "ip": "10.12.187.239",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:52:34",
+        "sala": "Outback 04 - 2 Andar",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "NUC 01 Esquerda",
+        "ip": "10.12.186.162",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:52:34",
+        "sala": "Hall Elevador - 2 Andar",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "NUC 02 Direita",
+        "ip": "10.12.186.170",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:52:34",
+        "sala": "Hall Elevador - 2 Andar",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "AVIO ANALOG",
+        "ip": "10.12.186.117",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:52:34",
+        "sala": "Hall Elevador - 2 Andar",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Speaker",
+        "ip": "10.12.186.101",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:52:34",
+        "sala": "Hall Elevador - 2 Andar",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "QSC Amplifier",
+        "ip": "10.12.186.77",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:52:34",
+        "sala": "IDF - 2 Andar",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Receptor 01",
+        "ip": "10.12.186.49",
+        "status": "Online",
+        "timestamp": "2025-06-24 07:52:34",
+        "sala": "IDF - 2 Andar",
+        "andar": "Andar 2"
+    },
+    {
+        "nome": "Receptor 02",
+        "ip": "10.12.186.48",
+        "status": "Offline",
+        "timestamp": "2025-06-24 07:52:38",
+        "sala": "IDF - 2 Andar",
+        "andar": "Andar 2"
+    }
+]
