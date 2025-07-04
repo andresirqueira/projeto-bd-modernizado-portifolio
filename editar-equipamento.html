@@ -4,80 +4,113 @@
 <head>
     <meta charset="UTF-8">
     <title>Editar Equipamento</title>
-    <link rel="stylesheet" href="css/estilo-base.css">
-    <link rel="stylesheet" href="css/estilo-editar-equipamento.css">
-    <link rel="stylesheet" href="css/estilo-excluir-equipamento.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
 </head>
 
-<body style="background: rgb(18, 33, 55);">
-    <div class="admin-container">
-        <div class="voltar-container">
-            <button class="card-btn voltar" onclick="voltarPainelConfig()" title="Voltar">
-                <i class="fas fa-arrow-left"></i>
-            </button>
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-7xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarPainelConfig()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Editar Equipamento</h1>
         </div>
-        <h1>Editar Equipamento</h1>
-        <div id="empresa-logada"></div>
-        <div class="equip-layout-2col">
-            <div class="equip-col-cards">
-                <div style="width:100%;margin-bottom:18px;">
-                    <input id="filtroEquipamento" type="text" class="input-filtro-equipamento input-estilizado" placeholder="Filtrar por nome do equipamento...">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="space-y-6">
+                <div>
+                    <input id="filtroEquipamento" type="text" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600" placeholder="Filtrar por nome do equipamento...">
                 </div>
-                <div style="overflow-x:auto;"><div id="equipamentos-cards-container"></div></div>
+                <div id="equipamentos-cards-container" class="grid grid-cols-3 gap-3 max-h-80 overflow-y-auto"></div>
             </div>
-            <div class="equip-col-form">
-                <div class="card-form">
-                    <form id="formEquipamento" class="form-equipamento">
-                        <label for="nome">Nome:
-                            <input type="text" name="nome" id="nome" required class="input-estilizado">
-                        </label>
-                        <label for="tipo">Tipo:
-                            <select name="tipo" id="tipo" required class="input-estilizado"></select>
-                        </label>
-                        <label for="marca">Marca:
-                            <select name="marca" id="marca" required class="input-estilizado"></select>
-                        </label>
-                        <label for="modelo">Modelo:
-                            <select name="modelo" id="modelo" class="input-estilizado"></select>
-                        </label>
-                        <label for="partnumber">Part Number:
-                            <input type="text" name="partnumber" id="partnumber" class="input-estilizado">
-                        </label>
-                        <label for="tamanho">Tamanho:
-                            <input type="text" name="tamanho" id="tamanho" class="input-estilizado">
-                        </label>
-                        <label for="descricao">Descrição:
-                            <input type="text" name="descricao" id="descricao" class="input-estilizado">
-                        </label>
-                        <label for="firmware">Firmware:
-                            <input type="text" name="firmware" id="firmware" class="input-estilizado">
-                        </label>
-                        <label for="serie">Número de Série:
-                            <input type="text" name="serie" id="serie" required class="input-estilizado">
-                        </label>
-                        <label for="ip1">IP 1:
-                            <input type="text" name="ip1" id="ip1" class="input-estilizado">
-                        </label>
-                        <label for="mac1">MAC 1:
-                            <input type="text" name="mac1" id="mac1" class="input-estilizado">
-                        </label>
-                        <label for="ip2">IP 2:
-                            <input type="text" name="ip2" id="ip2" class="input-estilizado">
-                        </label>
-                        <label for="mac2">MAC 2:
-                            <input type="text" name="mac2" id="mac2" class="input-estilizado">
-                        </label>
-                        <div style="display: flex; justify-content: center;">
-                            <button type="submit" class="card-btn cadastrar" style="width:auto;height:auto;padding:8px 16px;font-size:1em;display:inline-flex;align-items:center;gap:6px;">
-                                <i class="fas fa-save"></i> Salvar Alterações
-                            </button>
-                        </div>
-                    </form>
-                </div>
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
+                <form id="formEquipamento" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="md:col-span-2">
+                        <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Nome:</label>
+                        <input type="text" name="nome" id="nome" required class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Tipo:</label>
+                        <select name="tipo" id="tipo" required class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-white dark:border-gray-600"></select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Marca:</label>
+                        <select name="marca" id="marca" required class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-white dark:border-gray-600"></select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Modelo:</label>
+                        <select name="modelo" id="modelo" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-white dark:border-gray-600"></select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Part Number:</label>
+                        <input type="text" name="partnumber" id="partnumber" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Tamanho:</label>
+                        <input type="text" name="tamanho" id="tamanho" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Descrição:</label>
+                        <input type="text" name="descricao" id="descricao" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Firmware:</label>
+                        <input type="text" name="firmware" id="firmware" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Número de Série:</label>
+                        <input type="text" name="serie" id="serie" required class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">IP 1:</label>
+                        <input type="text" name="ip1" id="ip1" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">MAC 1:</label>
+                        <input type="text" name="mac1" id="mac1" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">IP 2:</label>
+                        <input type="text" name="ip2" id="ip2" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">MAC 2:</label>
+                        <input type="text" name="mac2" id="mac2" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                    </div>
+                    <div class="md:col-span-2 flex justify-center mt-6">
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg shadow flex items-center gap-2 transition-colors text-lg">
+                            <i class="fas fa-save"></i> Salvar Alterações
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-        <div class="msg" id="msg"></div>
+        <div class="msg text-center mt-6 text-lg font-semibold" id="msg"></div>
     </div>
     <script>
         let equipamentos = [];
@@ -266,34 +299,35 @@
             let html = '';
             lista.forEach(eq => {
                 const salaIdStr = eq.sala_id !== undefined && eq.sala_id !== null ? String(eq.sala_id) : null;
-                html += `<div class='card-equipamento' data-id='${eq.id}'>`;
+                html += `<div class='bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md p-3 flex flex-col items-center cursor-pointer transition-colors border-2 border-gray-300 dark:border-gray-600 hover:shadow-lg' data-id='${eq.id}'>`;
                 if (eq.foto) {
-                    html += `<div class='equip-foto'><img src='${eq.foto.startsWith("img/") ? "static/" + eq.foto : eq.foto}' alt='${eq.nome || ''}'></div>`;
+                    html += `<div class='mb-2'><img src='${eq.foto.startsWith("img/") ? "static/" + eq.foto : eq.foto}' alt='${eq.nome || ''}' class='w-12 h-8 object-contain rounded'></div>`;
                 }
-                html += `<div class='equip-nome'>${eq.nome || ''}</div>`;
-                html += `<div class='equip-info'>`;
-                html += `<div class='equip-info-linha'><b>Sala:</b> ${salaIdStr && salasMap[salaIdStr] ? salasMap[salaIdStr] : (eq.sala_id ? eq.sala_id : 'Sem sala')}</div>`;
-                html += `<div class='equip-info-linha'><b>Status:</b> ${eq.defeito === 1 || eq.defeito === true || eq.status === 'defeito' ? 'Defeito' : 'Funcionando'}</div>`;
-                html += `<div class='equip-info-linha'><b>Tipo:</b> ${eq.tipo || ''}</div>`;
-                html += `<div class='equip-info-linha'><b>Marca:</b> ${eq.marca || ''}</div>`;
-                html += `<div class='equip-info-linha'><b>Série:</b> ${eq.dados?.serie || ''}</div>`;
-                html += `<div class='equip-info-linha'><b>Descrição:</b> ${eq.descricao || ''}</div>`;
+                html += `<div class='font-bold text-sm text-gray-800 dark:text-white text-center mb-1'>${eq.nome || ''}</div>`;
+                html += `<div class='text-xs text-gray-600 dark:text-gray-400 text-center space-y-0.5'>`;
+                html += `<div><span class='font-semibold'>Sala:</span> ${salaIdStr && salasMap[salaIdStr] ? salasMap[salaIdStr] : (eq.sala_id ? eq.sala_id : 'Sem sala')}</div>`;
+                html += `<div><span class='font-semibold'>Tipo:</span> ${eq.tipo || ''}</div>`;
+                html += `<div><span class='font-semibold'>Marca:</span> ${eq.marca || ''}</div>`;
                 html += `</div>`;
                 if (eq.icone) {
-                    html += `<div class='equip-icone'><img src='${eq.icone.startsWith("img/") ? "static/" + eq.icone : eq.icone}' alt='ícone'></div>`;
+                    html += `<div class='mt-1'><img src='${eq.icone.startsWith("img/") ? "static/" + eq.icone : eq.icone}' alt='ícone' class='w-6 h-6 object-contain'></div>`;
                 }
                 html += `</div>`;
             });
             container.innerHTML = html;
             // Evento de clique para seleção
-            document.querySelectorAll('.card-equipamento').forEach(card => {
+            container.querySelectorAll('div[data-id]').forEach(card => {
                 card.onclick = function() {
                     const id = card.getAttribute('data-id');
                     const eq = lista.find(e => String(e.id) === id);
                     selecionarEquipamentoCard(eq);
                     // Destacar card selecionado
-                    document.querySelectorAll('.card-equipamento').forEach(c => c.style.border = '2px solid #444');
-                    card.style.border = '2px solid #4a90e2';
+                    container.querySelectorAll('div[data-id]').forEach(c => {
+                        c.classList.remove('border-blue-500');
+                        c.classList.add('border-gray-300', 'dark:border-gray-600');
+                    });
+                    card.classList.remove('border-gray-300', 'dark:border-gray-600');
+                    card.classList.add('border-blue-500');
                     // Scroll automático para o formulário
                     const form = document.getElementById('formEquipamento');
                     if (form) {
@@ -399,14 +433,11 @@
             fetch('/empresa_atual')
                 .then(resp => resp.json())
                 .then(data => {
-                    if (data.logo) {
-                        document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
-                    } else if (data.nome) {
-                        document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
-                    }
+                    LogoManager.loadEmpresaLogo(data);
                 });
         });
     </script>
-</body>
+    <script src="static/js/logo-manager.js"></script>
+    </body>
 
 </html>

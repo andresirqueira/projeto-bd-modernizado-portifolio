@@ -4,28 +4,71 @@
 <head>
     <meta charset="UTF-8">
     <title>Painel do Sistema</title>
-    <link rel="stylesheet" href="css/estilo-base.css">
-    <link rel="stylesheet" href="css/estilo-painel.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' };
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        // Dark mode toggle
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            // Atualizar logo da empresa quando o tema mudar
+            updateEmpresaLogo();
+        }
+        
+        function updateEmpresaLogo() {
+            const empresaDiv = document.getElementById('empresa-logada');
+            if (empresaDiv && empresaDiv.querySelector('img')) {
+                const isDark = document.documentElement.classList.contains('dark');
+                const bgClass = isDark ? 'dark:bg-transparent' : 'bg-gray-800';
+                empresaDiv.className = `absolute top-4 right-4 text-indigo-500 font-bold ${bgClass} rounded-lg p-2`;
+            }
+        }
+        
+        // Persist theme on load
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
 </head>
 
-<body>
-    <div class="painel-container">
-        <h1 id="tituloPainel">Painel</h1>
-        <p id="boasVindas"></p>
-        <div id="empresa-logada" style="text-align:right; color:#4a90e2; font-weight:bold; margin-bottom:10px;"></div>
-
-        <div class="top-cards">
-            <button id="btnAdmin" class="card-btn config-adm oculto" onclick="window.location.href='config-admin.html'">
+<body
+    class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen flex items-center justify-center dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-xl bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-10 text-center">
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <h1 id="tituloPainel" class="text-3xl font-bold text-gray-800 dark:text-white mb-2">Painel</h1>
+        <p id="boasVindas" class="text-gray-600 dark:text-gray-300 mb-4"></p>
+        <div class="flex flex-wrap gap-4 justify-center mt-6">
+            <button id="btnAdmin"
+                class="hidden bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg shadow flex items-center gap-2 transition-colors"
+                onclick="window.location.href='config-admin.html'">
                 <i class="fas fa-user-shield"></i>Configurações de Admin
             </button>
-            <button id="btnTecnico" class="card-btn config-tecnico oculto" onclick="window.location.href='config-tecnico.html'">
+            <button id="btnTecnico"
+                class="hidden bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg shadow flex items-center gap-2 transition-colors"
+                onclick="window.location.href='config-tecnico.html'">
                 <i class="fas fa-tools"></i>Ferramentas Técnicas
             </button>
-            <button id="btnUsuario" class="card-btn config-usuario oculto" onclick="window.location.href='config-usuario.html'">
+            <button id="btnUsuario"
+                class="hidden bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow flex items-center gap-2 transition-colors"
+                onclick="window.location.href='config-usuario.html'">
                 <i class="fas fa-user"></i>Acesso Usuário
             </button>
-            <button class="card-btn sair" onclick="logout()">
+            <button
+                class="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-lg shadow flex items-center gap-2 transition-colors"
+                onclick="logout()">
                 <i class="fas fa-sign-out-alt"></i> Sair
             </button>
         </div>
@@ -41,13 +84,13 @@
             document.getElementById('boasVindas').innerText = `Bem-vindo, ${perfil.nivel}!`;
             // Personalização dos botões conforme o nível
             if (perfil.nivel === 'admin') {
-                document.getElementById('btnAdmin').classList.remove('oculto');
+                document.getElementById('btnAdmin').classList.remove('hidden');
                 document.getElementById('tituloPainel').innerText = 'Painel do Administrador';
             } else if (perfil.nivel === 'tecnico') {
-                document.getElementById('btnTecnico').classList.remove('oculto');
+                document.getElementById('btnTecnico').classList.remove('hidden');
                 document.getElementById('tituloPainel').innerText = 'Painel do Técnico';
             } else {
-                document.getElementById('btnUsuario').classList.remove('oculto');
+                document.getElementById('btnUsuario').classList.remove('hidden');
                 document.getElementById('tituloPainel').innerText = 'Painel do Usuário';
             }
         }
@@ -55,15 +98,19 @@
             fetch('/logout').then(() => window.location.href = '/login.html');
         }
         carregarPerfil();
-
         window.addEventListener('DOMContentLoaded', function() {
             fetch('/empresa_atual')
                 .then(resp => resp.json())
                 .then(data => {
+                    const empresaDiv = document.getElementById('empresa-logada');
                     if (data.logo) {
-                        document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                        // Aplicar classes baseadas no tema atual
+                        const isDark = document.documentElement.classList.contains('dark');
+                        const bgClass = isDark ? 'dark:bg-transparent' : 'bg-gray-800';
+                        empresaDiv.className = `absolute top-4 right-4 text-indigo-500 font-bold ${bgClass} rounded-lg p-2`;
+                        empresaDiv.innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
                     } else if (data.nome) {
-                        document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
+                        empresaDiv.innerText = 'Empresa: ' + data.nome;
                     }
                 });
         });

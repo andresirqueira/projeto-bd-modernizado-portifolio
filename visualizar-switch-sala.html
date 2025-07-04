@@ -4,10 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/estilo-base.css">
-    <link rel="stylesheet" href="css/estilo-detalhes-sala.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
     <link rel="stylesheet" href="css/estilo-switch-sala.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
     <title>Switch</title>
     <style>
     .tooltip {
@@ -23,17 +47,28 @@
       box-shadow: 0 2px 8px #0008;
       opacity: 1 !important;
     }
+    body { 
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        margin: 0; 
+    }
+    .dark body {
+        background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+    }
     </style>
 </head>
 
 <body>
-    <div class="admin-container" style="position:relative;">
-        <div class="voltar-container">
-            <button class="card-btn voltar" onclick="window.history.back()" title="Voltar">
-                <i class="fas fa-arrow-left"></i>
-            </button>
+    <div class="relative w-full max-w-7xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="window.history.back()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4" id="switchTitulo">Switch</h1>
         </div>
-        <div class="sala-titulo" id="switchTitulo">Switch</div>
         <main class="content">
             <div class="sw-container">
                 <div id="sw-andar">
@@ -911,16 +946,16 @@
                             <g transform="translate(415,0)">
                                 <rect width="200" height="65" class="grupo-portas" x="16" y="300" />
                                 <image x="20" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
-                                <rect width="30" height="30" x="20" y="300" fill="none" stroke="transparent"
-                                    stroke-width="5" id="SW03 - Porta 25" />
+                                <rect width="30" height="30" x="20" y="300" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW03 - Porta 25" />
 
                                 <image x="20" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
                                 <rect width="30" height="30" x="20" y="335" fill="none" stroke="transparent"
                                     stroke-width="5" id="SW03 - Porta 26" />
 
                                 <image x="52" y="300" href="static/img/switch/rj-cima.png" width="30" height="30" />
-                                <rect width="30" height="30" x="52" y="300" fill="none" stroke="transparent"
-                                    stroke-width="5" id="SW03 - Porta 27" />
+                                <rect width="30" height="30" x="52" y="300" fill="none" stroke="transparent" stroke-width="5"
+                                    id="SW03 - Porta 27" />
 
                                 <image x="52" y="335" href="static/img/switch/rj-baixo.png" width="30" height="30" />
                                 <rect width="30" height="30" x="52" y="335" fill="none" stroke="transparent"
@@ -1618,11 +1653,12 @@
                             let ip2 = porta.ip2 || '-';
                             let mac2 = porta.mac2 || '-';
                             // Caminho da logo da marca
-                            let logoMarca = (marca && marca !== '-') ? `static/img/${marca.toLowerCase()}.png` : '';
                             let foto = porta.foto || '';
                             let html = `<div style='background:#2c3e50;border-radius:10px;box-shadow:0 2px 8px #0008;padding:14px 16px 10px 14px;min-width:220px;max-width:270px;position:relative;color:#eee;'>`;
-                            if (logoMarca) {
-                                html += `<img src='${logoMarca}' alt='${marca}' title='${marca}' style='position:absolute;top:10px;right:14px;width:32px;height:32px;object-fit:contain;background:#fff2;border-radius:8px;box-shadow:0 2px 8px #0002;'>`;
+                            if (marca && marca !== '-') {
+                                const isDark = document.documentElement.classList.contains('dark');
+                                const bgClass = isDark ? 'background:#374151' : 'background:#1f2937';
+                                html += `<img src='static/img/${marca.toLowerCase()}.png' alt='${marca}' title='${marca}' style='position:absolute;top:10px;right:14px;width:32px;height:32px;object-fit:contain;${bgClass};border-radius:8px;box-shadow:0 2px 8px #0002;'>`;
                             }
                             if (foto) {
                                 html += `<div style='width:100%;display:flex;justify-content:center;align-items:center;margin-bottom:8px;'><img src='${foto}' alt='${nomeEquipamento}' style='max-width:60px;max-height:60px;object-fit:contain;display:block;'></div>`;
@@ -1662,6 +1698,19 @@
     }
     window.addEventListener('DOMContentLoaded', carregarSwitchesUsados);
 
+    // Logo/nome da empresa logada
+    window.addEventListener('DOMContentLoaded', function() {
+        fetch('/empresa_atual')
+            .then(resp => resp.json())
+            .then(data => {
+                if (data.logo) {
+                    document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                } else if (data.nome) {
+                    document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
+                }
+            });
+    });
+
     let t = document.querySelector('.tooltip');
     t.textContent = 'Tooltip manual';
     t.style.display = 'block';
@@ -1670,6 +1719,8 @@
     t.style.opacity = '1';
     t.style.zIndex = '99999';
     </script>
+
+    <script src="static/js/logo-manager.js"></script>
 
 </body>
 

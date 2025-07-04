@@ -3,27 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <title>Detalhes da Sala</title>
-    <link rel="stylesheet" href="css/estilo-base.css">
-    <link rel="stylesheet" href="css/estilo-detalhes-sala.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
 </head>
-<body>
-    <div class="admin-container" style="position:relative;">
-        <div id="empresa-logada" style="position:absolute;top:16px;right:24px;color:#4a90e2;font-weight:bold;z-index:2;"></div>
-        <div class="voltar-container">
-            <button class="card-btn voltar" onclick="window.history.back()" title="Voltar">
-                <i class="fas fa-arrow-left"></i>
-            </button>
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-4xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="window.history.back()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4" id="salaTitulo">Sala</h1>
+            <div id="salaFoto" class="flex justify-center mb-6"></div>
+            <div id="salaDesc" class="text-lg text-gray-700 dark:text-gray-300 mb-8"></div>
         </div>
-        <div class="sala-titulo" id="salaTitulo">Sala</div>
-        <div class="sala-foto" id="salaFoto"></div>
-        <div class="sala-desc" id="salaDesc"></div>
-        <div class="sala-acoes">
-            <div class="acao" onclick="window.location.href='detalhes-equipamentos-sala.html?id=' + getIdFromUrl()"><i class="fas fa-list"></i>Equipamentos</div>
-            <div class="acao" onclick="window.location.href='visualizar-layout-sala.html?sala_id=' + getIdFromUrl()"><i class="fas fa-random"></i>Conexões</div>
-            <div class="acao"><i class="fas fa-map-marker-alt"></i>Localização</div>
-            <div class="acao" id="acao-switch"><i class="fas fa-server"></i>Switch</div>
-            <div class="acao"><i class="fas fa-undo"></i>Histórico</div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 justify-items-center">
+            <div class="bg-blue-500 hover:bg-blue-600 text-white rounded-xl shadow-lg p-6 flex flex-col items-center w-full max-w-48 cursor-pointer transition-colors" onclick="window.location.href='detalhes-equipamentos-sala.html?id=' + getIdFromUrl()">
+                <i class="fas fa-list text-3xl mb-3"></i>
+                <span class="font-semibold text-center">Equipamentos</span>
+            </div>
+            <div class="bg-green-500 hover:bg-green-600 text-white rounded-xl shadow-lg p-6 flex flex-col items-center w-full max-w-48 cursor-pointer transition-colors" onclick="window.location.href='visualizar-layout-sala.html?sala_id=' + getIdFromUrl()">
+                <i class="fas fa-random text-3xl mb-3"></i>
+                <span class="font-semibold text-center">Conexões</span>
+            </div>
+            <div class="bg-purple-500 hover:bg-purple-600 text-white rounded-xl shadow-lg p-6 flex flex-col items-center w-full max-w-48 cursor-pointer transition-colors">
+                <i class="fas fa-map-marker-alt text-3xl mb-3"></i>
+                <span class="font-semibold text-center">Localização</span>
+            </div>
+            <div class="bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-lg p-6 flex flex-col items-center w-full max-w-48 cursor-pointer transition-colors" id="acao-switch">
+                <i class="fas fa-server text-3xl mb-3"></i>
+                <span class="font-semibold text-center">Switch</span>
+            </div>
+            <div class="bg-gray-500 hover:bg-gray-600 text-white rounded-xl shadow-lg p-6 flex flex-col items-center w-full max-w-48 cursor-pointer transition-colors">
+                <i class="fas fa-undo text-3xl mb-3"></i>
+                <span class="font-semibold text-center">Histórico</span>
+            </div>
         </div>
     </div>
     <script>
@@ -40,7 +82,7 @@
         document.getElementById('salaTitulo').innerText = sala.nome || 'Sala';
         // Foto
         const fotoDiv = document.getElementById('salaFoto');
-        fotoDiv.innerHTML = sala.foto ? `<img src='${sala.foto.startsWith('img/') ? 'static/' + sala.foto : sala.foto}' alt='${sala.nome}'>` : '';
+        fotoDiv.innerHTML = sala.foto ? `<img src='${sala.foto.startsWith('img/') ? 'static/' + sala.foto : sala.foto}' alt='${sala.nome}' class='rounded-xl shadow-2xl max-w-full max-h-80 object-cover'>` : '';
         // Descrição
         document.getElementById('salaDesc').innerText = sala.descricao || '';
     }
@@ -65,5 +107,6 @@
         }
     });
     </script>
-</body>
+    <script src="static/js/logo-manager.js"></script>
+    </body>
 </html> 

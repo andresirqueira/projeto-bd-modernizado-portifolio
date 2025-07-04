@@ -3,26 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/estilo-base.css">
-    <link rel="stylesheet" href="css/estilo-login.css">
     <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
+    <script>
+      // Dark mode toggle
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+      }
+      // Persist theme on load
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
 </head>
-<body>
-    <div class="login-container">
-        <h1>Login</h1>
-        <form id="login-form" autocomplete="off">
-            <label for="username">Usuário:</label>
-            <input type="text" id="username" name="username" required class="input-login">
-            <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" required class="input-login">
-            <button type="submit" id="btn-login">OK</button>
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen flex items-center justify-center dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="w-full max-w-md bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-10 text-center relative">
+        <button onclick="toggleDarkMode()" class="absolute top-4 right-4 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-6">Login</h1>
+        <form id="login-form" autocomplete="off" class="flex flex-col gap-4">
+            <label for="username" class="text-left text-gray-700 dark:text-gray-200">Usuário:</label>
+            <input type="text" id="username" name="username" required class="input-login px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white">
+            <label for="password" class="text-left text-gray-700 dark:text-gray-200">Senha:</label>
+            <input type="password" id="password" name="password" required class="input-login px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white">
+            <button type="submit" id="btn-login" class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 rounded-lg shadow transition-colors mt-4">OK</button>
         </form>
-        <div id="empresa-select-container" style="display:none;">
-            <label for="empresaSelect">Escolha a empresa:</label>
-            <select id="empresaSelect" class="input-login"></select>
-            <button id="btn-empresa" onclick="confirmarEmpresa()">Acessar</button>
+        <div id="empresa-select-container" style="display:none;" class="mt-6">
+            <label for="empresaSelect" class="text-gray-700 dark:text-gray-200">Escolha a empresa:</label>
+            <select id="empresaSelect" class="input-login px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white mt-2"></select>
+            <button id="btn-empresa" onclick="confirmarEmpresa()" class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 rounded-lg shadow transition-colors mt-2">Acessar</button>
         </div>
-        <div id="msg-erro"></div>
+        <div id="msg-erro" class="text-red-600 mt-4"></div>
     </div>
     <script>
         let empresasGlobais = [];

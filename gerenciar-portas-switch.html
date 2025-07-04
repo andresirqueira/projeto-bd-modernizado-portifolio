@@ -4,83 +4,108 @@
 <head>
     <meta charset="UTF-8">
     <title>Gerenciar Portas de Switch</title>
-    <link rel="stylesheet" href="css/estilo-base.css">
-    <link rel="stylesheet" href="css/estilo-gerenciar-portas-switch.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
 </head>
 
-<body>
-    <div class="admin-container">
-        <div class="voltar-container">
-            <button class="card-btn voltar" onclick="voltarPainelConfig()" title="Voltar">
-                <i class="fas fa-arrow-left"></i>
-            </button>
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-7xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarPainelConfig()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Gerenciar Portas de Switch</h1>
         </div>
-        <h1>Gerenciar Portas de Switch</h1>
         
-        <div class="switch-selector">
-            <label for="switchSelect">Selecione o Switch:</label><br>
-            <select id="switchSelect" onchange="carregarPortas()">
-                <option value="">Selecione um switch...</option>
-            </select>
-            <button id="btnAdicionarPorta" onclick="abrirModalPorta()" style="display:none;">
-                <i class="fas fa-plus"></i> ADICIONAR PORTA
-            </button>
-            <button id="btnAdicionarTodasPortas" style="display:none;">
-                <i class="fas fa-layer-group"></i> ADICIONAR TODAS AS PORTAS
-            </button>
+        <div class="mb-6">
+            <label for="switchSelect" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Selecione o Switch:</label>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <select id="switchSelect" onchange="carregarPortas()" class="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                    <option value="">Selecione um switch...</option>
+                </select>
+                <button id="btnAdicionarPorta" onclick="abrirModalPorta()" class="bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-800 text-white px-6 py-2 rounded-lg transition-colors flex items-center gap-2" style="display:none;">
+                    <i class="fas fa-plus"></i> ADICIONAR PORTA
+                </button>
+                <button id="btnAdicionarTodasPortas" class="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white px-6 py-2 rounded-lg transition-colors flex items-center gap-2" style="display:none;">
+                    <i class="fas fa-layer-group"></i> ADICIONAR TODAS AS PORTAS
+                </button>
+            </div>
         </div>
 
-        <div class="portas-grid" id="portasGrid">
+        <div id="portasGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             <!-- Portas serão carregadas aqui -->
         </div>
 
-        <div class="msg" id="msg"></div>
-        <div id="empresa-logada"></div>
+        <div id="msg" class="mt-6 p-4 rounded-lg text-center font-medium"></div>
     </div>
 
     <!-- Modal para conectar equipamento -->
-    <div id="modalConectar" class="modal">
-        <div class="modal-content">
-            <h2>Conectar Equipamento</h2>
-            <form id="formConectar">
-                <div class="form-group">
-                    <label>Porta:</label>
-                    <input type="text" id="portaNumero" readonly style="background: #222a33; color: #ecf0f1; cursor: not-allowed;">
+    <div id="modalConectar" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 w-full max-w-md mx-4">
+            <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Conectar Equipamento</h2>
+            <form id="formConectar" class="space-y-4">
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Porta:</label>
+                    <input type="text" id="portaNumero" readonly class="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 cursor-not-allowed">
                 </div>
-                <div class="form-group">
-                    <label>Equipamento:</label>
-                    <select id="equipamentoSelect" required>
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Equipamento:</label>
+                    <select id="equipamentoSelect" required class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
                         <option value="">Selecione um equipamento...</option>
                     </select>
                 </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-cancelar" onclick="fecharModal()">Cancelar</button>
-                    <button type="submit" class="btn btn-salvar">Conectar</button>
+                <div class="flex gap-3 pt-4">
+                    <button type="button" onclick="fecharModal()" class="flex-1 bg-gray-500 hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors">Cancelar</button>
+                    <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-800 text-white px-4 py-2 rounded-lg transition-colors">Conectar</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- Modal para adicionar porta -->
-    <div id="modalPorta" class="modal">
-        <div class="modal-content">
-            <h2>Adicionar Porta</h2>
-            <form id="formPorta">
-                <div class="form-group">
-                    <label>Número da Porta:</label>
-                    <select id="numeroPorta" required>
+    <div id="modalPorta" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 w-full max-w-md mx-4">
+            <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Adicionar Porta</h2>
+            <form id="formPorta" class="space-y-4">
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Número da Porta:</label>
+                    <select id="numeroPorta" required class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
                         <option value="">Selecione...</option>
                         <!-- opções de 1 a 48 -->
                     </select>
                 </div>
-                <div class="form-group">
-                    <label>Descrição:</label>
-                    <input type="text" id="descricaoPorta" placeholder="Ex: Porta para sala de reunião">
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descrição:</label>
+                    <input type="text" id="descricaoPorta" placeholder="Ex: Porta para sala de reunião" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
                 </div>
-                <div class="modal-actions" style="display: flex !important; gap: 12px; justify-content: flex-end; margin-top: 24px;">
-                    <button type="button" class="btn btn-cancelar" onclick="fecharModal()" style="background: #95a5a6; color: white; padding: 10px 20px; border-radius: 6px; border: none; display: inline-block !important; font-size: 1em !important;">Cancelar</button>
-                    <button type="submit" class="btn btn-salvar" style="background: #27ae60; color: white; padding: 10px 20px; border-radius: 6px; border: none; display: inline-block !important; font-size: 1em !important;">Adicionar</button>
+                <div class="flex gap-3 pt-4">
+                    <button type="button" onclick="fecharModal()" class="flex-1 bg-gray-500 hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors">Cancelar</button>
+                    <button type="submit" class="flex-1 bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white px-4 py-2 rounded-lg transition-colors">Adicionar</button>
                 </div>
             </form>
         </div>
@@ -127,7 +152,7 @@
             
             if (!switchId) {
                 console.log('Nenhum switch selecionado');
-                document.getElementById('portasGrid').innerHTML = '<div style="text-align: center; padding: 40px; color: #bdc3c7;">Selecione um switch para ver suas portas</div>';
+                document.getElementById('portasGrid').innerHTML = '<div class="col-span-full text-center text-gray-500 dark:text-gray-400 py-8">Selecione um switch para ver suas portas</div>';
                 return;
             }
 
@@ -138,7 +163,7 @@
                 
                 if (!resp.ok) {
                     console.error('Erro ao carregar portas:', resp.status, resp.statusText);
-                    document.getElementById('portasGrid').innerHTML = '<div style="text-align: center; padding: 40px; color: #e74c3c;">Erro ao carregar portas</div>';
+                    document.getElementById('portasGrid').innerHTML = '<div class="col-span-full text-center text-red-500 dark:text-red-400 py-8">Erro ao carregar portas</div>';
                     return;
                 }
                 
@@ -152,9 +177,9 @@
                 if (portas.length === 0) {
                     console.log('Nenhuma porta encontrada');
                     grid.innerHTML = `
-                        <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #bdc3c7; background: #2c3e50; border-radius: 8px; border: 2px dashed #555;">
-                            <p style="margin-bottom: 20px; font-size: 1.1em;">Nenhuma porta configurada para este switch.</p>
-                            <p style="color: #95a5a6; font-size: 0.9em;">Use o botão "ADICIONAR PORTA" acima para criar a primeira porta.</p>
+                        <div class="col-span-full text-center py-8 bg-gray-50 dark:bg-gray-800 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600">
+                            <p class="text-gray-600 dark:text-gray-400 mb-4 text-lg">Nenhuma porta configurada para este switch.</p>
+                            <p class="text-gray-500 dark:text-gray-500 text-sm">Use o botão "ADICIONAR PORTA" acima para criar a primeira porta.</p>
                         </div>
                     `;
                     return;
@@ -167,46 +192,50 @@
 
             } catch (error) {
                 console.error('Erro ao carregar portas:', error);
-                document.getElementById('portasGrid').innerHTML = '<div style="text-align: center; padding: 40px; color: #e74c3c;">Erro ao carregar portas</div>';
+                document.getElementById('portasGrid').innerHTML = '<div class="col-span-full text-center text-red-500 dark:text-red-400 py-8">Erro ao carregar portas</div>';
             }
         }
 
         // Criar card de porta
         function criarCardPorta(porta) {
             const card = document.createElement('div');
-            card.className = `porta-card ${porta.status}`;
+            card.className = `bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-4 ${porta.status === 'ocupada' ? 'ring-2 ring-red-200 dark:ring-red-800' : 'ring-2 ring-green-200 dark:ring-green-800'}`;
             
             const equipamentoInfo = porta.equipamento_conectado ? `
-                <div class="equipamento-info">
-                    <h4>Equipamento Conectado:</h4>
-                    <p><strong>${porta.equipamento_conectado.nome}</strong></p>
-                    <p>Tipo: ${porta.equipamento_conectado.tipo}</p>
-                    <p>Sala: ${porta.equipamento_conectado.sala_nome || 'Sem sala'}</p>
-                    <p>IP 1: ${porta.equipamento_conectado.ip1 || '-'}</p>
-                    <p>MAC 1: ${porta.equipamento_conectado.mac1 || '-'}</p>
-                    <p>IP 2: ${porta.equipamento_conectado.ip2 || '-'}</p>
-                    <p>MAC 2: ${porta.equipamento_conectado.mac2 || '-'}</p>
+                <div class="mt-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <h4 class="font-semibold text-gray-800 dark:text-white mb-2">Equipamento Conectado:</h4>
+                    <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                        <div><strong>${porta.equipamento_conectado.nome}</strong></div>
+                        <div>Tipo: ${porta.equipamento_conectado.tipo}</div>
+                        <div>Sala: ${porta.equipamento_conectado.sala_nome || 'Sem sala'}</div>
+                        <div>IP 1: ${porta.equipamento_conectado.ip1 || '-'}</div>
+                        <div>MAC 1: <span class="font-mono text-xs">${porta.equipamento_conectado.mac1 || '-'}</span></div>
+                        <div>IP 2: ${porta.equipamento_conectado.ip2 || '-'}</div>
+                        <div>MAC 2: <span class="font-mono text-xs">${porta.equipamento_conectado.mac2 || '-'}</span></div>
+                    </div>
                 </div>
             ` : '';
 
             const actions = porta.status === 'livre' ? `
-                <button class="btn btn-conectar" onclick="conectarEquipamento(${porta.id}, ${porta.numero_porta})">
+                <button class="w-full bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-800 text-white px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2" onclick="conectarEquipamento(${porta.id}, ${porta.numero_porta})">
                     <i class="fas fa-plug"></i> Conectar
                 </button>
             ` : `
-                <button class="btn btn-desconectar" onclick="desconectarEquipamento(${porta.id})">
+                <button class="w-full bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2" onclick="desconectarEquipamento(${porta.id})">
                     <i class="fas fa-unlink"></i> Desconectar
                 </button>
             `;
 
             card.innerHTML = `
-                <div class="porta-header">
-                    <span class="porta-numero">Porta ${porta.numero_porta}</span>
-                    <span class="porta-status ${porta.status}">${porta.status.toUpperCase()}</span>
+                <div class="flex items-center justify-between mb-3">
+                    <span class="font-semibold text-gray-800 dark:text-white">Porta ${porta.numero_porta}</span>
+                    <span class="px-2 py-1 rounded-full text-xs font-medium ${porta.status === 'livre' ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200'}">
+                        ${porta.status.toUpperCase()}
+                    </span>
                 </div>
-                <div class="porta-descricao">${porta.descricao || 'Sem descrição'}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-300 mb-3">${porta.descricao || 'Sem descrição'}</div>
                 ${equipamentoInfo}
-                <div class="porta-actions">
+                <div class="mt-4">
                     ${actions}
                 </div>
             `;
@@ -249,7 +278,7 @@
                 console.error('Erro ao carregar equipamentos:', error);
             }
             
-            document.getElementById('modalConectar').style.display = 'block';
+            document.getElementById('modalConectar').classList.remove('hidden');
         }
 
         // Desconectar equipamento
@@ -307,23 +336,29 @@
             } catch (error) {
                 console.error('Erro ao buscar portas existentes:', error);
             }
-            document.getElementById('modalPorta').style.display = 'block';
+            document.getElementById('modalPorta').classList.remove('hidden');
         }
 
         // Fechar modais
         function fecharModal() {
-            document.getElementById('modalConectar').style.display = 'none';
-            document.getElementById('modalPorta').style.display = 'none';
+            document.getElementById('modalConectar').classList.add('hidden');
+            document.getElementById('modalPorta').classList.add('hidden');
         }
 
         // Mostrar mensagem
         function mostrarMensagem(texto, tipo) {
             const msg = document.getElementById('msg');
             msg.innerText = texto;
-            msg.className = `msg ${tipo}`;
+            if (tipo === 'success') {
+                msg.className = 'mt-6 p-4 rounded-lg text-center font-medium bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300';
+            } else if (tipo === 'error') {
+                msg.className = 'mt-6 p-4 rounded-lg text-center font-medium bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300';
+            } else {
+                msg.className = 'mt-6 p-4 rounded-lg text-center font-medium bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300';
+            }
             setTimeout(() => {
                 msg.innerText = '';
-                msg.className = 'msg';
+                msg.className = 'mt-6 p-4 rounded-lg text-center font-medium';
             }, 3000);
         }
 
@@ -397,10 +432,10 @@
 
         // Fechar modal ao clicar fora
         window.onclick = function(event) {
-            const modals = document.querySelectorAll('.modal');
+            const modals = document.querySelectorAll('#modalConectar, #modalPorta');
             modals.forEach(modal => {
                 if (event.target === modal) {
-                    modal.style.display = 'none';
+                    modal.classList.add('hidden');
                 }
             });
         };
@@ -516,14 +551,11 @@
             fetch('/empresa_atual')
                 .then(resp => resp.json())
                 .then(data => {
-                    if (data.logo) {
-                        document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
-                    } else if (data.nome) {
-                        document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
-                    }
+                    LogoManager.loadEmpresaLogo(data);
                 });
         });
     </script>
-</body>
+    <script src="static/js/logo-manager.js"></script>
+    </body>
 
 </html> 

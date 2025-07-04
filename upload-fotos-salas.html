@@ -3,31 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Upload de Imagens de Salas</title>
-    <link rel="stylesheet" href="css/estilo-base.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .galeria-imgs { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 24px; }
-        .galeria-imgs img { max-width: 180px; max-height: 120px; border-radius: 8px; box-shadow: 0 2px 8px #0002; background: #222; }
-        .upload-container { background: #34495e; padding: 32px 40px; border-radius: 12px; max-width: 600px; margin: 40px auto; box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
-        .msg { margin: 16px 0; color: #27ae60; font-weight: bold; }
-    </style>
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
 </head>
-<body>
-    <div class="upload-container" style="position:relative;">
-        <div id="empresa-logada" style="position:absolute;top:16px;right:24px;color:#4a90e2;font-weight:bold;z-index:2;"></div>
-        <div class="voltar-container" style="position:absolute;top:16px;left:24px;z-index:2;">
-            <button class="card-btn voltar" onclick="window.history.back()" title="Voltar" style="padding:8px 12px;min-width:unset;min-height:unset;width:40px;height:40px;display:flex;align-items:center;justify-content:center;">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-        </div>
-        <h1 style="margin-top:48px;">Upload de Imagens de Salas</h1>
-        <form id="formUpload" enctype="multipart/form-data">
-            <input type="file" id="inputFoto" name="foto" accept="image/*" required>
-            <button type="submit" style="margin-left:12px;"><i class="fas fa-upload"></i> Enviar</button>
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-2xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="window.history.back()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-white text-center mb-8 mt-8">Upload de Imagens de Salas</h1>
+        <form id="formUpload" enctype="multipart/form-data" class="flex flex-col md:flex-row gap-4 items-center justify-center mb-6">
+            <input type="file" id="inputFoto" name="foto" accept="image/*" required class="block w-full text-sm text-gray-700 dark:text-gray-200 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 dark:file:bg-gray-800 dark:file:text-indigo-300">
+            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg shadow flex items-center gap-2 transition-colors text-base"><i class="fas fa-upload"></i> Enviar</button>
         </form>
-        <div class="msg" id="msgUpload"></div>
-        <h2 style="margin-top:32px;">Imagens já enviadas</h2>
-        <div class="galeria-imgs" id="galeriaImgs"></div>
+        <div class="msg text-center mb-4 text-lg font-semibold" id="msgUpload"></div>
+        <h2 class="text-xl font-bold text-gray-700 dark:text-gray-200 mt-8 mb-4">Imagens já enviadas</h2>
+        <div class="flex flex-wrap gap-6 justify-center" id="galeriaImgs"></div>
     </div>
     <script>
     async function carregarGaleria() {
@@ -36,11 +52,15 @@
         const galeria = document.getElementById('galeriaImgs');
         galeria.innerHTML = '';
         if (!data.imagens.length) {
-            galeria.innerHTML = '<span style="color:#aaa;">Nenhuma imagem enviada ainda.</span>';
+            galeria.innerHTML = '<span class="text-gray-400 dark:text-gray-500">Nenhuma imagem enviada ainda.</span>';
             return;
         }
         data.imagens.forEach(url => {
-            galeria.innerHTML += `<img src='${url}' alt='Foto da sala'>`;
+            galeria.innerHTML += `
+                <div class="rounded-lg shadow-md bg-gray-100 dark:bg-gray-800 p-2 flex flex-col items-center justify-center hover:shadow-xl transition-shadow">
+                    <img src='${url}' alt='Foto da sala' class="w-32 h-20 object-cover rounded-md shadow hover:scale-105 transition-transform duration-200 border border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-700" />
+                </div>
+            `;
         });
     }
     document.getElementById('formUpload').onsubmit = async function(e) {
@@ -66,14 +86,10 @@
         fetch('/empresa_atual')
             .then(resp => resp.json())
             .then(data => {
-                const el = document.getElementById('empresa-logada');
-                if (data.logo) {
-                    el.innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
-                } else if (data.nome) {
-                    el.innerText = 'Empresa: ' + data.nome;
-                }
+                LogoManager.loadEmpresaLogo(data);
             });
     });
     </script>
-</body>
+    <script src="static/js/logo-manager.js"></script>
+    </body>
 </html> 

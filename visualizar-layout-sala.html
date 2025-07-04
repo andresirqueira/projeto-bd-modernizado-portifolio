@@ -3,19 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Visualizar Layout da Sala</title>
-    <link rel="stylesheet" href="css/estilo-base.css">
-    <link rel="stylesheet" href="css/estilo-adicionar-equipamento.css">
-    <link rel="stylesheet" href="css/estilo-detalhes-sala.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
     <style>
-        body { background: #183c6b; margin: 0; }
+        body { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0; 
+        }
+        .dark body {
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+        }
         #mainCanvas {
             position: absolute;
-            left: 180px; top: 0; right: 0; bottom: 0;
-            width: calc(100vw - 180px);
+            left: 240px; 
+            top: 0; 
+            right: 0; 
+            bottom: 0;
+            width: calc(100vw - 240px);
             height: 100vh;
             background: url('static/img/blue-print.png') center/cover, #183c6b;
             overflow: hidden;
+        }
+        .dark #mainCanvas {
+            background: url('static/img/blue-print.png') center/cover, #1a202c;
         }
         .equip-instance {
             position: absolute;
@@ -28,7 +63,9 @@
             pointer-events: none;
         }
         .equip-instance img {
-            width: 100%; height: 100%; object-fit: contain;
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain;
             pointer-events: none;
         }
         .text-instance span {
@@ -62,10 +99,19 @@
     </style>
 </head>
 <body>
-    <button class="card-btn voltar" id="btnVoltarVisualizar" title="Voltar" style="position:fixed; top:24px; left:200px; z-index:10000;"><i class="fas fa-arrow-left"></i></button>
-    <div id="sidebar">
-        <h2>Layout da Sala</h2>
-        <div id="salaTitulo">Sala</div>
+    <button onclick="window.history.back()" class="fixed top-6 left-64 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-3 transition-colors z-50" title="Voltar">
+        <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+    </button>
+    <button onclick="toggleDarkMode()" class="fixed top-6 left-80 bg-gray-200 dark:bg-gray-700 rounded-full p-3 transition-colors z-50" title="Alternar modo escuro">
+        <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+    </button>
+    <div id="sidebar" class="fixed left-0 top-0 bottom-0 w-60 bg-white dark:bg-gray-800 text-gray-800 dark:text-white flex flex-col items-center z-10 shadow-2xl">
+        <div class="w-full p-6 border-b border-gray-200 dark:border-gray-700">
+            <h2 class="text-xl font-bold text-indigo-600 dark:text-indigo-400 text-center">Layout da Sala</h2>
+        </div>
+        <div class="flex-1 flex flex-col items-center justify-center">
+            <div id="salaTitulo" class="text-lg font-semibold text-gray-700 dark:text-gray-300 text-center">Sala</div>
+        </div>
     </div>
     <div id="mainCanvas" style="position:relative; min-height:600px; min-width:800px;">
         <svg id="svg-connections" style="position:absolute; left:0; top:0; width:100%; height:100%; pointer-events:none; z-index:0;"></svg>
@@ -174,9 +220,7 @@
             document.getElementById('mainCanvas').innerHTML = '<div style="color:#e74c3c;font-size:1.3em;text-align:center;margin-top:80px;">Sala não informada na URL.</div>';
         }
     })();
-    document.getElementById('btnVoltarVisualizar').onclick = function() {
-        window.history.back();
-    };
     </script>
-</body>
+    <script src="static/js/logo-manager.js"></script>
+    </body>
 </html> 

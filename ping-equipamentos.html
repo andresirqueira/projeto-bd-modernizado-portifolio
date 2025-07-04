@@ -4,55 +4,96 @@
 <head>
     <meta charset="UTF-8">
     <title>Ping de Equipamentos</title>
-    <link rel="stylesheet" href="css/estilo-base.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/estilo-ping-equipamentos.css">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
 </head>
 
-<body>
-    <div class="painel-ping admin-container">
-        <div class="voltar-container">
-            <button class="card-btn voltar" onclick="voltarPainelConfig()" title="Voltar">
-                <i class="fas fa-arrow-left"></i>
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-7xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarPainelConfig()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Teste de Ping dos Equipamentos</h1>
+        </div>
+        
+        <div class="mb-6 p-4 bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-700 rounded-lg">
+            <div class="flex items-center gap-2 text-yellow-800 dark:text-yellow-200">
+                <i class="fas fa-info-circle"></i>
+                <span class="text-sm">O teste de ping só será realizado se o servidor estiver na mesma rede local dos equipamentos.</span>
+            </div>
+        </div>
+        
+        <div class="mb-6 flex flex-col sm:flex-row gap-4 justify-center">
+            <button onclick="testarTodos()" class="bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-800 text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
+                <i class="fas fa-wifi"></i> Testar Todos
+            </button>
+            <button onclick="limparTestes()" class="bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
+                <i class="fas fa-trash"></i> Limpar Testes
             </button>
         </div>
-        <h1>Teste de Ping dos Equipamentos</h1>
-        <div class="ping-aviso" style="color:#e1b300; background:rgba(52,73,94,0.18); padding:8px 14px; border-radius:8px; margin-bottom:18px; text-align:center; font-size:1.01em;">
-            <i class="fas fa-info-circle"></i> O teste de ping só será realizado se o servidor estiver na mesma rede local dos equipamentos.
+        
+        <div id="msgPing" class="mb-6 p-4 rounded-lg text-center font-medium"></div>
+        
+        <div class="overflow-x-auto">
+            <table id="tabelaPing" class="w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                <thead class="bg-gray-50 dark:bg-gray-700">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Data/Hora</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Equipamento</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Sala</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">IP</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">MAC</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Switch</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Porta</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700"></tbody>
+            </table>
         </div>
-        <div id="empresa-logada"></div>
-        <div class="botoes-ping">
-            <button class="btn-ping" onclick="testarTodos()"><i class="fas fa-wifi"></i> Testar Todos</button>
-            <button class="btn-ping btn-ping-limpar" onclick="limparTestes()"><i class="fas fa-trash"></i> Limpar Testes</button>
-        </div>
-        <div class="msg" id="msgPing"></div>
-        <table id="tabelaPing">
-            <thead>
-                <tr>
-                    <th>Data/Hora</th>
-                    <th>Equipamento</th>
-                    <th>Sala</th>
-                    <th>IP</th>
-                    <th>MAC</th>
-                    <th>Switch</th>
-                    <th>Porta</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
     </div>
     <script>
         async function testarTodos() {
             const msg = document.getElementById('msgPing');
             msg.textContent = 'Testando todos os equipamentos... Aguarde.';
+            msg.className = 'mb-6 p-4 rounded-lg text-center font-medium bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300';
+            
             const resp = await fetch('/ping-equipamentos', { method: 'POST' });
             const json = await resp.json();
             if (json.status === 'ok') {
                 msg.textContent = 'Teste concluído!';
+                msg.className = 'mb-6 p-4 rounded-lg text-center font-medium bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300';
                 carregarLogs();
             } else {
                 msg.textContent = 'Erro ao testar: ' + (json.mensagem || '');
+                msg.className = 'mb-6 p-4 rounded-lg text-center font-medium bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300';
             }
         }
         async function carregarLogs() {
@@ -62,16 +103,21 @@
             tbody.innerHTML = '';
             logs.forEach(log => {
                 const tr = document.createElement('tr');
+                tr.className = 'hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors';
                 tr.innerHTML = `
-                <td>${formatarDataHora(log.timestamp)}</td>
-                <td>${log.nome}</td>
-                <td>${log.sala}</td>
-                <td>${log.ip}</td>
-                <td><span class='mac'>${log.mac || ''}</span></td>
-                <td>${log.switch || ''}</td>
-                <td>${log.porta || ''}</td>
-                <td class="${log.sucesso ? 'status-online' : 'status-offline'}">${log.sucesso ? 'Online' : 'Offline'}</td>
-            `;
+                    <td class="px-4 py-3 text-sm text-gray-900 dark:text-white">${formatarDataHora(log.timestamp)}</td>
+                    <td class="px-4 py-3 text-sm text-gray-900 dark:text-white">${log.nome}</td>
+                    <td class="px-4 py-3 text-sm text-gray-900 dark:text-white">${log.sala}</td>
+                    <td class="px-4 py-3 text-sm text-gray-900 dark:text-white font-mono">${log.ip}</td>
+                    <td class="px-4 py-3 text-sm text-gray-900 dark:text-white font-mono">${log.mac || ''}</td>
+                    <td class="px-4 py-3 text-sm text-gray-900 dark:text-white">${log.switch || ''}</td>
+                    <td class="px-4 py-3 text-sm text-gray-900 dark:text-white">${log.porta || ''}</td>
+                    <td class="px-4 py-3 text-sm">
+                        <span class="px-2 py-1 rounded-full text-xs font-medium ${log.sucesso ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200'}">
+                            ${log.sucesso ? 'Online' : 'Offline'}
+                        </span>
+                    </td>
+                `;
                 tbody.appendChild(tr);
             });
         }
@@ -84,11 +130,14 @@
             if (!confirm('Tem certeza que deseja apagar todos os testes?')) return;
             const resp = await fetch('/ping-logs', { method: 'DELETE' });
             const json = await resp.json();
+            const msg = document.getElementById('msgPing');
             if (json.status === 'ok') {
-                document.getElementById('msgPing').textContent = 'Testes apagados!';
+                msg.textContent = 'Testes apagados!';
+                msg.className = 'mb-6 p-4 rounded-lg text-center font-medium bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300';
                 carregarLogs();
             } else {
-                document.getElementById('msgPing').textContent = 'Erro ao apagar testes!';
+                msg.textContent = 'Erro ao apagar testes!';
+                msg.className = 'mb-6 p-4 rounded-lg text-center font-medium bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300';
             }
         }
         function voltarPainelConfig() {
@@ -103,18 +152,15 @@
             });
         }
         carregarLogs();
-        window.addEventListener('DOMContentLoaded', function () {
+        window.addEventListener('DOMContentLoaded', function() {
             fetch('/empresa_atual')
                 .then(resp => resp.json())
                 .then(data => {
-                    if (data.logo) {
-                        document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
-                    } else if (data.nome) {
-                        document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
-                    }
+                    LogoManager.loadEmpresaLogo(data);
                 });
         });
     </script>
-</body>
+    <script src="static/js/logo-manager.js"></script>
+    </body>
 
 </html>

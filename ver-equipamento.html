@@ -3,24 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Visualizar Equipamento</title>
-    <link rel="stylesheet" href="css/estilo-base.css">
-    <link rel="stylesheet" href="css/estilo-ver-equipamento.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
 </head>
-<body>
-    <div class="admin-container">
-        <div class="voltar-container">
-            <button class="card-btn voltar" onclick="voltarPainelConfig()" title="Voltar">
-                <i class="fas fa-arrow-left"></i>
-            </button>
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-7xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarPainelConfig()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Visualizar Equipamentos</h1>
         </div>
-        <h1>Visualizar Equipamentos</h1>
-        <div id="empresa-logada"></div>
-        <div style="text-align:center;margin-bottom:18px;">
-            <input id="filtroEquipamento" type="text" class="input-filtro-equipamento" placeholder="Filtrar por nome do equipamento...">
+        <div class="mb-6 flex flex-wrap gap-4 justify-center" id="resumoEquipamentos"></div>
+        <div class="mb-6">
+            <input id="filtroEquipamento" type="text" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600" placeholder="Filtrar por nome do equipamento...">
         </div>
-        <div id="resumoEquipamentos" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:18px;"></div>
-        <div style="overflow-x:auto;"><div id="tabelaEquipamentosContainer"></div></div>
+        <div id="tabelaEquipamentosContainer"></div>
     </div>
     <script>
     function voltarPainelConfig() {
@@ -57,7 +80,7 @@
     function renderizarResumo(equipamentos) {
         const resumoDiv = document.getElementById('resumoEquipamentos');
         if (!equipamentos.length) {
-            resumoDiv.innerHTML = "<span style='color:#ccc;'>Nenhum equipamento encontrado.</span>";
+            resumoDiv.innerHTML = "<span class='text-gray-400 dark:text-gray-500'>Nenhum equipamento encontrado.</span>";
             return;
         }
         // Conta por tipo
@@ -67,14 +90,14 @@
             tipos[eq.tipo]++;
         });
         let html = `
-            <div style="background:#223;padding:8px 18px;border-radius:8px;color:#eee;display:flex;align-items:center;gap:6px;">
-                <i class="fas fa-boxes"></i> Total: <b>${equipamentos.length}</b>
+            <div class="flex items-center gap-2 bg-indigo-600 dark:bg-indigo-800 text-white px-5 py-2 rounded-lg shadow">
+                <i class="fas fa-boxes"></i> Total: <b class='ml-1'>${equipamentos.length}</b>
             </div>
         `;
         Object.entries(tipos).forEach(([tipo, qtd]) => {
             html += `
-                <div style="background:#223;padding:8px 18px;border-radius:8px;color:#eee;display:flex;align-items:center;gap:6px;">
-                    <i class="fas fa-tag"></i> ${tipo || 'Sem tipo'}: <b>${qtd}</b>
+                <div class="flex items-center gap-2 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 px-5 py-2 rounded-lg shadow">
+                    <i class="fas fa-tag"></i> ${tipo || 'Sem tipo'}: <b class='ml-1'>${qtd}</b>
                 </div>
             `;
         });
@@ -82,21 +105,23 @@
     }
     function renderizarEquipamentos(equipamentos) {
         const container = document.getElementById('tabelaEquipamentosContainer');
-        let html = `<div id='cardsEquipamentosContainer' style='display:flex;flex-wrap:wrap;gap:12px;justify-content:center;'>`;
+        let html = `<div id='cardsEquipamentosContainer' class='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'>`;
         equipamentos.forEach(eq => {
             const salaIdStr = eq.sala_id !== undefined && eq.sala_id !== null ? String(eq.sala_id) : null;
-            html += `<div class='card-equipamento'>`;
+            html += `<div class='bg-white dark:bg-gray-800 rounded-xl shadow-lg flex flex-col h-full p-4 transition hover:scale-105 hover:shadow-2xl'>`;
             if (eq.foto) {
-                html += `<div class='equip-foto'><img src='${eq.foto.startsWith("img/") ? "static/" + eq.foto : eq.foto}' alt='${eq.nome || ''}'></div>`;
+                html += `<div class='w-full h-24 flex items-center justify-center mb-3'><img src='${eq.foto.startsWith("img/") ? "static/" + eq.foto : eq.foto}' alt='${eq.nome || ''}' class='object-contain max-h-24 rounded-md shadow'/></div>`;
+            } else {
+                html += `<div class='w-full h-24 flex items-center justify-center mb-3 bg-gray-100 dark:bg-gray-700 rounded-md'><i class='fas fa-image text-2xl text-gray-300 dark:text-gray-600'></i></div>`;
             }
-            html += `<div class='equip-nome'>${eq.nome || ''}</div>`;
-            html += `<div class='equip-info'>`;
-            html += `<div class='equip-info-linha'><b>Sala:</b> ${salaIdStr && salasMap[salaIdStr] ? salasMap[salaIdStr] : (eq.sala_id ? eq.sala_id : 'Sem sala')}</div>`;
-            html += `<div class='equip-info-linha'><b>Status:</b> ${eq.defeito === 1 || eq.defeito === true || eq.status === 'defeito' ? 'Defeito' : 'Funcionando'}</div>`;
-            html += `<div class='equip-info-linha'><b>Tipo:</b> ${eq.tipo || ''}</div>`;
-            html += `<div class='equip-info-linha'><b>Marca:</b> ${eq.marca || ''}</div>`;
-            html += `<div class='equip-info-linha'><b>Série:</b> ${eq.dados?.serie || ''}</div>`;
-            html += `<div class='equip-info-linha'><b>Descrição:</b> ${eq.descricao || ''}</div>`;
+            html += `<div class='font-semibold text-lg text-indigo-700 dark:text-indigo-300 mb-1 text-center'>${eq.nome || ''}</div>`;
+            html += `<div class='text-sm text-gray-700 dark:text-gray-200 space-y-1'>`;
+            html += `<div><b>Sala:</b> <span class='font-normal'>${salaIdStr && salasMap[salaIdStr] ? salasMap[salaIdStr] : (eq.sala_id ? eq.sala_id : 'Sem sala')}</span></div>`;
+            html += `<div><b>Status:</b> <span class='font-normal'>${eq.defeito === 1 || eq.defeito === true || eq.status === 'defeito' ? '<span class=\'text-red-600 dark:text-red-400\'>Defeito</span>' : '<span class=\'text-green-600 dark:text-green-400\'>Funcionando</span>'}</span></div>`;
+            html += `<div><b>Tipo:</b> <span class='font-normal'>${eq.tipo || ''}</span></div>`;
+            html += `<div><b>Marca:</b> <span class='font-normal'>${eq.marca || ''}</span></div>`;
+            html += `<div><b>Série:</b> <span class='font-normal'>${eq.dados?.serie || ''}</span></div>`;
+            html += `<div><b>Descrição:</b> <span class='font-normal'>${eq.descricao || ''}</span></div>`;
             html += `</div>`;
             html += `</div>`;
         });
@@ -114,13 +139,10 @@
         fetch('/empresa_atual')
             .then(resp => resp.json())
             .then(data => {
-                if (data.logo) {
-                    document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
-                } else if (data.nome) {
-                    document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
-                }
+                LogoManager.loadEmpresaLogo(data);
             });
     });
     </script>
-</body>
+    <script src="static/js/logo-manager.js"></script>
+    </body>
 </html> 

@@ -5,52 +5,68 @@
 <head>
     <meta charset="UTF-8">
     <title>Adicionar Sala</title>
-    <link rel="stylesheet" href="css/estilo-base.css">
-    <link rel="stylesheet" href="css/estilo-adicionar-sala.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
 </head>
 
-<body style="background: rgb(18, 33, 55);">
-    <div class="admin-container">
-        <div class="voltar-container">
-            <button class="card-btn voltar" onclick="window.history.back()" title="Voltar">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-        </div>
-        <h1>Cadastrar Sala e Equipamentos</h1>
-        <div id="empresa-logada"></div>
-        <form id="formSala" enctype="multipart/form-data">
-            <label for="nome">Nome da Sala:</label>
-            <input type="text" id="nome" name="nome" required class="input-estilizado">
-            <label for="tipo">Tipo:</label>
-            <input type="text" id="tipo" name="tipo" class="input-estilizado">
-            <label for="descricao">Descrição:</label>
-            <textarea id="descricao" name="descricao" class="input-estilizado"></textarea>
-            <div id="foto-preview-container" style="margin-bottom:10px;"></div>
-            <label for="fotoExistente">Escolher imagem já enviada:</label>
-            <select id="fotoExistente" name="foto" class="input-estilizado" style="margin-bottom:10px;"></select>
-            <div style="margin-bottom:10px;color:#e1b300;font-size:0.98em;">
-                Se a foto desejada não estiver aqui, <a href="upload-fotos-salas.html" style="color:#4a90e2;text-decoration:underline;">faça o upload na tela Upload Fotos</a>.
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-3xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="window.history.back()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-white text-center mb-8">Cadastrar Sala e Equipamentos</h1>
+        <form id="formSala" enctype="multipart/form-data" class="flex flex-col gap-4">
+            <label for="nome" class="text-gray-700 dark:text-gray-200">Nome da Sala:</label>
+            <input type="text" id="nome" name="nome" required class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white">
+            <label for="tipo" class="text-gray-700 dark:text-gray-200">Tipo:</label>
+            <input type="text" id="tipo" name="tipo" class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white">
+            <label for="descricao" class="text-gray-700 dark:text-gray-200">Descrição:</label>
+            <textarea id="descricao" name="descricao" class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white"></textarea>
+            <div id="foto-preview-container" class="mb-2"></div>
+            <label for="fotoExistente" class="text-gray-700 dark:text-gray-200">Escolher imagem já enviada:</label>
+            <select id="fotoExistente" name="foto" class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white mb-2"></select>
+            <div class="mb-2 text-yellow-500 text-sm">
+                Se a foto desejada não estiver aqui, <a href="upload-fotos-salas.html" class="text-blue-400 underline">faça o upload na tela Upload Fotos</a>.
             </div>
-            <label for="andar_id">Andar ID:</label>
-            <select id="andar_id" name="andar_id" class="input-estilizado" required>
+            <label for="andar_id" class="text-gray-700 dark:text-gray-200">Andar ID:</label>
+            <select id="andar_id" name="andar_id" required class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white">
                 <option value="">Selecione...</option>
-                <!-- opções de 0 a 199 -->
-                <script>
-                    for (let i = 0; i < 200; i++) {
-                        document.write(`<option value='${i}'>${i}</option>`);
-                    }
-                </script>
+                <script>for (let i = 0; i < 200; i++) { document.write(`<option value='${i}'>${i}</option>`); }</script>
             </select>
-            <label for="equipamentosSemSala">Equipamentos sem sala:</label>
-            <div style="overflow-x:auto;"><div id="equipamentosSemSalaTabela" style="margin-bottom:16px;"></div></div>
-            <div class="top-cards">
-                <button type="submit" class="card-btn cadastrar" style="width: auto; height: auto; max-width: none;">
+            <label for="equipamentosSemSala" class="text-gray-700 dark:text-gray-200">Equipamentos sem sala:</label>
+            <div class="overflow-x-auto"><div id="equipamentosSemSalaTabela" class="mb-4"></div></div>
+            <div class="flex justify-center mt-4">
+                <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-8 rounded-lg shadow flex items-center gap-2 transition-colors text-lg">
                     <i class="fas fa-check"></i> <span>Cadastrar</span>
                 </button>
             </div>
         </form>
-        <div class="msg" id="msg"></div>
+        <div class="msg text-center mt-4 text-lg font-semibold" id="msg"></div>
     </div>
     <script>
         async function carregarEquipamentosSemSala() {
@@ -132,11 +148,7 @@
             fetch('/empresa_atual')
                 .then(resp => resp.json())
                 .then(data => {
-                    if (data.logo) {
-                        document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
-                    } else if (data.nome) {
-                        document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
-                    }
+                    LogoManager.loadEmpresaLogo(data);
                 });
             // Carregar imagens já enviadas para o select
             async function carregarFotosExistentes() {
@@ -162,6 +174,7 @@
             });
         });
     </script>
-</body>
+    <script src="static/js/logo-manager.js"></script>
+    </body>
 
 </html>

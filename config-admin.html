@@ -4,112 +4,155 @@
 <head>
     <meta charset="UTF-8">
     <title>Configurações Admin - Salas</title>
-    <link rel="stylesheet" href="css/estilo-base.css">
-    <link rel="stylesheet" href="css/estilo-config-admin.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+      // Dark mode toggle
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+      
+      function updateEmpresaLogo() {
+        const empresaDiv = document.getElementById('empresa-logada');
+        if (empresaDiv && empresaDiv.querySelector('img')) {
+          const isDark = document.documentElement.classList.contains('dark');
+          const bgClass = isDark ? 'dark:bg-transparent' : 'bg-gray-800';
+          empresaDiv.className = `absolute top-4 right-4 text-indigo-500 font-bold ${bgClass} rounded-lg p-2`;
+        }
+      }
+      
+      // Persist theme on load
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
 </head>
 
-<body>
-    <div class="admin-container">
-        <div class="voltar-container">
-            <button class="card-btn voltar" onclick="window.location.href='painel.html'" title="Voltar">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-        </div>
-        <h1>Configurações Adminstrador</h1>
-        <div id="empresa-logada"></div>
-        <div class="top-cards">
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-6xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <!-- Botão Voltar -->
+        <button onclick="window.location.href='painel.html'" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        
+        <!-- Logo da Empresa -->
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        
+        <!-- Botão Dark Mode -->
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-white text-center mb-8">Configurações Administrador</h1>
+        
+        <div class="space-y-4 flex flex-col items-center">
             <!-- Linha 1: Salas -->
-            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; justify-content: center;">
-                <button class="card-btn adicionar" onclick="window.location.href='adicionar-sala.html'">
-                    <i class="fas fa-plus-circle"></i>
-                    Adicionar Sala
+            <div class="flex flex-row gap-1">
+                <button onclick="window.location.href='adicionar-sala.html'" class="w-32 h-32 m-0 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-plus-circle text-2xl"></i>
+                    <span class="text-sm text-center">Adicionar Sala</span>
                 </button>
-                <button class="card-btn atualizar" onclick="window.location.href='editar-sala.html'">
-                    <i class="fas fa-edit"></i>
-                    Editar Sala
+                <button onclick="window.location.href='editar-sala.html'" class="w-32 h-32 m-0 bg-yellow-400 hover:bg-yellow-500 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-edit text-2xl"></i>
+                    <span class="text-sm text-center">Editar Sala</span>
                 </button>
-                <button class="card-btn excluir" onclick="window.location.href='excluir-sala.html'">
-                    <i class="fas fa-trash-alt"></i>
-                    Excluir Sala
+                <button onclick="window.location.href='excluir-sala.html'" class="w-32 h-32 m-0 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-trash-alt text-2xl"></i>
+                    <span class="text-sm text-center">Excluir Sala</span>
                 </button>
-                <button class="card-btn ver" onclick="window.location.href='ver-salas.html'">
-                    <i class="fas fa-eye"></i>
-                    Ver Salas
+                <button onclick="window.location.href='ver-salas.html'" class="w-32 h-32 m-0 bg-teal-400 hover:bg-teal-500 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-eye text-2xl"></i>
+                    <span class="text-sm text-center">Ver Salas</span>
                 </button>
-                <button class="card-btn adicionar azul" onclick="window.location.href='upload-fotos-salas.html'">
-                    <i class="fas fa-upload"></i>
-                    Upload Fotos
+                <button onclick="window.location.href='upload-fotos-salas.html'" class="w-32 h-32 m-0 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-upload text-2xl"></i>
+                    <span class="text-sm text-center">Upload Fotos</span>
                 </button>
             </div>
+            
             <!-- Linha 2: Equipamentos -->
-            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; justify-content: center;">
-                <button class="card-btn adicionar" onclick="window.location.href='adicionar-equipamento.html'">
-                    <i class="fas fa-plug"></i>
-                    Adicionar Equipamento
+            <div class="flex flex-row gap-1">
+                <button onclick="window.location.href='adicionar-equipamento.html'" class="w-32 h-32 m-0 bg-green-400 hover:bg-green-500 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-plug text-2xl"></i>
+                    <span class="text-sm text-center">Adicionar Equipamento</span>
                 </button>
-                <button class="card-btn atualizar" onclick="window.location.href='editar-equipamento.html'">
-                    <i class="fas fa-edit"></i>
-                    Editar Equipamento
+                <button onclick="window.location.href='editar-equipamento.html'" class="w-32 h-32 m-0 bg-yellow-300 hover:bg-yellow-400 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-edit text-2xl"></i>
+                    <span class="text-sm text-center">Editar Equipamento</span>
                 </button>
-                <button class="card-btn excluir" onclick="window.location.href='excluir-equipamento.html'">
-                    <i class="fas fa-trash-alt"></i>
-                    Excluir Equipamento
+                <button onclick="window.location.href='excluir-equipamento.html'" class="w-32 h-32 m-0 bg-orange-400 hover:bg-orange-500 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-trash-alt text-2xl"></i>
+                    <span class="text-sm text-center">Excluir Equipamento</span>
                 </button>
-                <button class="card-btn ver" onclick="window.location.href='ver-equipamento.html'">
-                    <i class="fas fa-eye"></i>
-                    Ver Equipamentos
+                <button onclick="window.location.href='ver-equipamento.html'" class="w-32 h-32 m-0 bg-teal-300 hover:bg-teal-400 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-eye text-2xl"></i>
+                    <span class="text-sm text-center">Ver Equipamentos</span>
                 </button>
-                <button class="card-btn atualizar azul" onclick="window.location.href='gerenciar-equipamentos.html'">
-                    <i class="fas fa-tools"></i>
-                    Gerenciar Equipamentos
+                <button onclick="window.location.href='gerenciar-equipamentos.html'" class="w-32 h-32 m-0 bg-blue-400 hover:bg-blue-500 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-tools text-2xl"></i>
+                    <span class="text-sm text-center">Gerenciar Equipamentos</span>
                 </button>
-
             </div>
+            
             <!-- Linha 3: Switches de Rede -->
-            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; justify-content: center;">
-                <button class="card-btn adicionar" onclick="window.location.href='adicionar-switch.html'">
-                    <i class="fas fa-network-wired"></i>
-                    Adicionar Switch
+            <div class="flex flex-row gap-1">
+                <button onclick="window.location.href='adicionar-switch.html'" class="w-32 h-32 m-0 bg-green-300 hover:bg-green-400 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-network-wired text-2xl"></i>
+                    <span class="text-sm text-center">Adicionar Switch</span>
                 </button>
-                <button class="card-btn atualizar" onclick="window.location.href='editar-switch.html'">
-                    <i class="fas fa-edit"></i>
-                    Editar Switch
+                <button onclick="window.location.href='editar-switch.html'" class="w-32 h-32 m-0 bg-yellow-200 hover:bg-yellow-300 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-edit text-2xl"></i>
+                    <span class="text-sm text-center">Editar Switch</span>
                 </button>
-                <button class="card-btn excluir" onclick="window.location.href='excluir-switch.html'">
-                    <i class="fas fa-trash-alt"></i>
-                    Excluir Switch
+                <button onclick="window.location.href='excluir-switch.html'" class="w-32 h-32 m-0 bg-orange-300 hover:bg-orange-400 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-trash-alt text-2xl"></i>
+                    <span class="text-sm text-center">Excluir Switch</span>
                 </button>
-                <button class="card-btn ver" onclick="window.location.href='ver-switch.html'">
-                    <i class="fas fa-eye"></i>
-                    Ver Switches
+                <button onclick="window.location.href='ver-switch.html'" class="w-32 h-32 m-0 bg-teal-200 hover:bg-teal-300 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-eye text-2xl"></i>
+                    <span class="text-sm text-center">Ver Switches</span>
                 </button>
-                <button class="card-btn adicionar azul" onclick="window.location.href='gerenciar-portas-switch.html'">
-                    <i class="fas fa-plug"></i>
-                    Gerenciar Portas
+                <button onclick="window.location.href='gerenciar-portas-switch.html'" class="w-32 h-32 m-0 bg-blue-300 hover:bg-blue-400 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-plug text-2xl"></i>
+                    <span class="text-sm text-center">Gerenciar Portas</span>
                 </button>
             </div>
-        </div>
-        <!-- Linha 5: Sistema e Logs + Sair -->
-        <div style="display: flex; justify-content: center; margin-top: 32px; gap: 16px; flex-wrap: wrap;">
-            <button class="card-btn ver roxo" onclick="window.location.href='visualizar-logs.html'">
-                <i class="fas fa-clipboard-list"></i>
-                Visualizar Logs
-            </button>
-            <button class="card-btn ver roxo" onclick="window.location.href='ping-equipamentos.html'">
-                <i class="fas fa-wifi"></i>
-                Testar (Ping)
-            </button>
-            <button class="card-btn ver roxo" onclick="window.location.href='conexoes-equipamentos.html'">
-                <i class="fas fa-project-diagram"></i>
-                Conexões de Equipamentos
-            </button>
-            <button class="card-btn sair" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i>
-                Sair
-            </button>
+            
+            <!-- Linha 4: Sistema e Logs + Sair -->
+            <div class="flex flex-row gap-1 mt-4">
+                <button onclick="window.location.href='visualizar-logs.html'" class="w-32 h-32 m-0 bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-clipboard-list text-2xl"></i>
+                    <span class="text-sm text-center">Visualizar Logs</span>
+                </button>
+                <button onclick="window.location.href='ping-equipamentos.html'" class="w-32 h-32 m-0 bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-wifi text-2xl"></i>
+                    <span class="text-sm text-center">Testar (Ping)</span>
+                </button>
+                <button onclick="window.location.href='conexoes-equipamentos.html'" class="w-32 h-32 m-0 bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-project-diagram text-2xl"></i>
+                    <span class="text-sm text-center">Conexões de Equipamentos</span>
+                </button>
+                <button onclick="logout()" class="w-32 h-32 m-0 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-sign-out-alt text-2xl"></i>
+                    <span class="text-sm text-center">Sair</span>
+                </button>
+            </div>
         </div>
     </div>
+    
     <script>
         function logout() {
             fetch('/logout').then(() => window.location.href = '/login.html');
@@ -119,14 +162,20 @@
             fetch('/empresa_atual')
                 .then(resp => resp.json())
                 .then(data => {
+                    const empresaDiv = document.getElementById('empresa-logada');
                     if (data.logo) {
-                        document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                        // Aplicar classes baseadas no tema atual
+                        const isDark = document.documentElement.classList.contains('dark');
+                        const bgClass = isDark ? 'dark:bg-transparent' : 'bg-gray-800';
+                        empresaDiv.className = `absolute top-4 right-4 text-indigo-500 font-bold ${bgClass} rounded-lg p-2`;
+                        empresaDiv.innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
                     } else if (data.nome) {
-                        document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
+                        empresaDiv.innerText = 'Empresa: ' + data.nome;
                     }
                 });
         });
     </script>
-</body>
+    <script src="static/js/logo-manager.js"></script>
+    </body>
 
 </html>

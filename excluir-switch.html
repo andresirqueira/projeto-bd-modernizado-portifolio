@@ -3,21 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>Excluir Switch</title>
-    <link rel="stylesheet" href="css/estilo-base.css">
-    <link rel="stylesheet" href="css/estilo-excluir-switch.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
 </head>
-<body>
-    <div class="admin-container">
-        <div class="voltar-container">
-            <button class="card-btn voltar" onclick="window.location.href='config-admin.html'" title="Voltar">
-                <i class="fas fa-arrow-left"></i>
-            </button>
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-4xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="window.location.href='config-admin.html'" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Excluir Switch</h1>
         </div>
-        <h1>Excluir Switch</h1>
-        <div id="msg" class="msg" style="display:none;"></div>
-        <div id="empresa-logada"></div>
-        <div class="switch-list" id="switchList"></div>
+        <div id="msg" class="mb-6 p-4 rounded-lg text-center font-medium" style="display:none;"></div>
+        <div id="switchList" class="space-y-4"></div>
     </div>
     <script>
         async function carregarSwitches() {
@@ -26,7 +49,7 @@
             const container = document.getElementById('switchList');
             container.innerHTML = '';
             if (switches.length === 0) {
-                container.innerHTML = '<div class="aviso">Nenhum switch cadastrado.</div>';
+                container.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 py-8">Nenhum switch cadastrado.</div>';
                 return;
             }
             for (const sw of switches) {
@@ -36,19 +59,26 @@
                 const ocupadas = portas.filter(p => p.status === 'ocupada');
                 let aviso = '';
                 if (ocupadas.length > 0) {
-                    aviso = `<div class='aviso'>Atenção: Este switch possui ${ocupadas.length} porta(s) conectada(s) a equipamentos. Ao excluir, todas as conexões serão desfeitas e as portas liberadas.</div>`;
+                    aviso = `<div class='mt-3 p-3 bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-700 rounded-lg text-yellow-800 dark:text-yellow-200 text-sm'><i class='fas fa-exclamation-triangle mr-2'></i>Atenção: Este switch possui ${ocupadas.length} porta(s) conectada(s) a equipamentos. Ao excluir, todas as conexões serão desfeitas e as portas liberadas.</div>`;
                 }
                 container.innerHTML += `
-                    <div class="switch-item">
-                        <div class="switch-info">
-                            <strong>${sw.nome}</strong> <br>
-                            Marca: ${sw.marca} | Modelo: ${sw.modelo} <br>
-                            ID: ${sw.id}
-                            ${aviso}
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+                        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                            <div class="flex-grow">
+                                <div class="text-lg font-semibold text-gray-800 dark:text-white mb-2">${sw.nome}</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                    <div><strong>Marca:</strong> ${sw.marca}</div>
+                                    <div><strong>Modelo:</strong> ${sw.modelo}</div>
+                                    <div><strong>ID:</strong> ${sw.id}</div>
+                                </div>
+                                ${aviso}
+                            </div>
+                            <div class="flex-shrink-0">
+                                <button class="bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2" onclick="confirmarExclusao(${sw.id}, '${sw.nome}')">
+                                    <i class="fas fa-trash-alt"></i> Excluir
+                                </button>
+                            </div>
                         </div>
-                        <button class="btn-excluir" onclick="confirmarExclusao(${sw.id}, '${sw.nome}')">
-                            <i class="fas fa-trash-alt"></i> Excluir
-                        </button>
                     </div>
                 `;
             }
@@ -73,7 +103,13 @@
         function mostrarMensagem(msg, tipo) {
             const div = document.getElementById('msg');
             div.textContent = msg;
-            div.className = 'msg ' + tipo;
+            if (tipo === 'success') {
+                div.className = 'mb-6 p-4 rounded-lg text-center font-medium bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300';
+            } else if (tipo === 'error') {
+                div.className = 'mb-6 p-4 rounded-lg text-center font-medium bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300';
+            } else {
+                div.className = 'mb-6 p-4 rounded-lg text-center font-medium bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300';
+            }
             div.style.display = 'block';
             setTimeout(() => { div.style.display = 'none'; }, 3000);
         }
@@ -81,14 +117,11 @@
             fetch('/empresa_atual')
                 .then(resp => resp.json())
                 .then(data => {
-                    if (data.logo) {
-                        document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
-                    } else if (data.nome) {
-                        document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
-                    }
+                    LogoManager.loadEmpresaLogo(data);
                 });
         });
         carregarSwitches();
     </script>
-</body>
+    <script src="static/js/logo-manager.js"></script>
+    </body>
 </html> 

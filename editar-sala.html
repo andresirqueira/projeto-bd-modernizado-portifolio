@@ -4,70 +4,87 @@
 <head>
     <meta charset="UTF-8">
     <title>Editar Sala</title>
-    <link rel="stylesheet" href="css/estilo-base.css">
-    <link rel="stylesheet" href="css/estilo-editar-sala.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
 </head>
 
-<body>
-    <div class="admin-container">
-        <div class="voltar-container">
-            <button class="card-btn voltar" onclick="voltarPainelConfig()" title="Voltar">
-                <i class="fas fa-arrow-left"></i>
-            </button>
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-5xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarPainelConfig()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-white text-center mb-8">Editar Sala</h1>
+        <div class="flex flex-col gap-4 mb-6">
+            <input id="filtroSala" type="text" class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white w-full max-w-md mx-auto" placeholder="Filtrar por nome da sala...">
+            <div id="salas-cards-container" class="flex flex-wrap gap-4 justify-center mb-6"></div>
         </div>
-        <h1>Editar Sala</h1>
-        <div id="empresa-logada"></div>
-        <div style="text-align:center;margin-bottom:18px;">
-            <input id="filtroSala" type="text" class="input-filtro-sala" placeholder="Filtrar por nome da sala...">
-        </div>
-        <div id="salas-cards-container" style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:24px;"></div>
-        <form id="formEditarSala" class="form-sala">
+        <form id="formEditarSala" class="flex flex-col gap-4">
             <input type="hidden" id="salaIdSelecionada" name="salaIdSelecionada">
-            <label for="nomeSala">Nome:</label>
-            <input type="text" id="nomeSala" name="nomeSala" class="input-estilizado" required>
-            <label for="tipo">Tipo:</label>
-            <input type="text" id="tipo" name="tipo">
-            <label for="descricao">Descrição:</label>
-            <textarea id="descricao" name="descricao"></textarea>
-            <div id="foto-preview-container" style="margin-bottom:10px;"></div>
-            <label for="fotoExistente">Escolher imagem já enviada:</label>
-            <select id="fotoExistente" class="input-estilizado" style="margin-bottom:10px;"></select>
-            <label for="andar_id">Andar ID:</label>
-            <select id="andar_id" name="andar_id" class="input-estilizado" required>
+            <label for="nomeSala" class="text-gray-700 dark:text-gray-200">Nome:</label>
+            <input type="text" id="nomeSala" name="nomeSala" class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white" required>
+            <label for="tipo" class="text-gray-700 dark:text-gray-200">Tipo:</label>
+            <input type="text" id="tipo" name="tipo" class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white">
+            <label for="descricao" class="text-gray-700 dark:text-gray-200">Descrição:</label>
+            <textarea id="descricao" name="descricao" class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white"></textarea>
+            <div id="foto-preview-container" class="mb-2"></div>
+            <label for="fotoExistente" class="text-gray-700 dark:text-gray-200">Escolher imagem já enviada:</label>
+            <select id="fotoExistente" class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white mb-2"></select>
+            <label for="andar_id" class="text-gray-700 dark:text-gray-200">Andar ID:</label>
+            <select id="andar_id" name="andar_id" required class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white">
                 <option value="">Selecione...</option>
-                <script>
-                    for (let i = 0; i < 200; i++) {
-                        document.write(`<option value='${i}'>${i}</option>`);
-                    }
-                </script>
+                <script>for (let i = 0; i < 200; i++) { document.write(`<option value='${i}'>${i}</option>`); }</script>
             </select>
-            <label for="equipamentos">Equipamentos vinculados:</label>
-            <div style="margin-bottom:12px;">
-                <button type="button" id="btnVincularEquip" class="card-btn cadastrar" style="width:auto;height:auto;padding:6px 14px;font-size:0.97em;display:inline-flex;align-items:center;gap:6px;">
+            <label for="equipamentos" class="text-gray-700 dark:text-gray-200">Equipamentos vinculados:</label>
+            <div class="mb-2">
+                <button type="button" id="btnVincularEquip" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow flex items-center gap-2 transition-colors text-base">
                     <i class="fas fa-plus"></i> Vincular novo equipamento
                 </button>
             </div>
-            <div style="overflow-x:auto;"><div id="equipamentos-lista" style="margin-bottom:16px;"></div></div>
+            <div class="overflow-x-auto"><div id="equipamentos-lista" class="mb-4"></div></div>
             <div id="modalEquipamentos" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;">
-                <div style="background:#34495e;padding:32px 24px;border-radius:12px;min-width:320px;max-width:90vw;max-height:80vh;overflow:auto;">
-                    <h3 style="margin-top:0;color:#f1c40f;">Equipamentos disponíveis</h3>
+                <div class="bg-gray-800 text-white p-8 rounded-xl min-w-[320px] max-w-[90vw] max-h-[80vh] overflow-auto">
+                    <h3 class="text-lg font-bold text-yellow-400 mt-0 mb-4">Equipamentos disponíveis</h3>
                     <div id="equipamentos-disponiveis-lista"></div>
-                    <div style="margin-top:18px;display:flex;align-items:center;gap:12px;">
-                        <button id="btnFecharModal" type="button" class="card-btn voltar" style="padding:6px 18px;font-size:1em;"><i class='fas fa-arrow-left'></i> </button>
-                        <div style="flex:1;text-align:center;">
-                            <button id="btnConfirmarVinculo" type="button" class="card-btn cadastrar" style="padding:6px 18px;font-size:1em; height:auto;">Vincular selecionados</button>
+                    <div class="mt-6 flex items-center gap-4">
+                        <button id="btnFecharModal" type="button" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-6 rounded-lg flex items-center gap-2 transition-colors text-base"><i class='fas fa-arrow-left'></i> Fechar</button>
+                        <div class="flex-1 text-center">
+                            <button id="btnConfirmarVinculo" type="button" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg flex items-center gap-2 transition-colors text-base">Vincular selecionados</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div style="display: flex; justify-content: center; margin-top: 36px;">
-                <button type="submit" class="card-btn cadastrar" style="width:auto;height:auto;padding:8px 16px;font-size:1em;display:inline-flex;align-items:center;gap:6px;">
-                    <i class="fas fa-save"></i> Salvar Alterações
+            <div class="flex justify-center mt-8">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg shadow flex items-center gap-2 transition-colors text-lg">
+                    <i class="fas fa-save"></i> <span>Salvar Alterações</span>
                 </button>
             </div>
         </form>
-        <div class="msg" id="msg"></div>
+        <div class="msg text-center mt-4 text-lg font-semibold" id="msg"></div>
     </div>
     <script>
         // Pega o ID da sala da URL
@@ -276,13 +293,12 @@
             container.innerHTML = '';
             salas.forEach(sala => {
                 const card = document.createElement('div');
-                card.className = 'card-sala-editar';
-                card.style = 'background:#2c3e50;color:#eee;padding:18px 24px;border-radius:10px;min-width:220px;max-width:260px;box-shadow:0 2px 8px #0002;cursor:pointer;transition:box-shadow 0.2s;display:flex;flex-direction:column;align-items:flex-start;gap:8px;';
+                card.className = 'bg-gray-100 dark:bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col items-center w-64 min-h-[220px] card-sala-editar mb-2 cursor-pointer transition-colors';
                 card.innerHTML = `
-                    ${sala.foto ? `<img src='${sala.foto.startsWith('img/') ? 'static/' + sala.foto : sala.foto}' alt='${sala.nome}' style='width:100%;max-width:180px;max-height:90px;object-fit:cover;border-radius:6px;margin-bottom:8px;'>` : ''}
-                    <b>${sala.nome}</b>
-                    <span style='font-size:0.95em;'>Tipo: ${sala.tipo || '-'}</span>
-                    <span style='font-size:0.95em;'>Andar: ${sala.andar_id ?? '-'}</span>
+                    ${sala.foto ? `<div class='mb-3'><img src='${sala.foto.startsWith('img/') ? 'static/' + sala.foto : sala.foto}' alt='${sala.nome}' class='rounded-md object-cover max-w-[180px] max-h-[90px]'></div>` : ''}
+                    <div class='font-bold text-lg text-gray-800 dark:text-white mb-2 text-center'>${sala.nome}</div>
+                    <span class='text-gray-700 dark:text-gray-300 text-base mb-1'>Tipo: ${sala.tipo || '-'}</span>
+                    <span class='text-gray-700 dark:text-gray-300 text-base'>Andar: ${sala.andar_id ?? '-'}</span>
                 `;
                 card.onclick = function() {
                     selecionarSalaCard(sala);
@@ -363,20 +379,11 @@
             fetch('/empresa_atual')
                 .then(resp => resp.json())
                 .then(data => {
-                    if (data.logo) {
-                        document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
-                    } else if (data.nome) {
-                        document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
-                    }
+                    LogoManager.loadEmpresaLogo(data);
                 });
         });
-        // Filtro de salas por nome
-        document.getElementById('filtroSala').addEventListener('input', function() {
-            const termo = this.value.trim().toLowerCase();
-            const filtradas = termo ? todasSalas.filter(s => (s.nome||'').toLowerCase().includes(termo)) : todasSalas;
-            renderizarCardsSalas(filtradas);
-        });
     </script>
-</body>
+    <script src="static/js/logo-manager.js"></script>
+    </body>
 
 </html>

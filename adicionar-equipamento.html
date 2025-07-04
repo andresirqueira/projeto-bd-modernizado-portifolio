@@ -4,24 +4,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Adicionar Equipamento</title>
-    <link rel="stylesheet" href="css/estilo-base.css">
-    <link rel="stylesheet" href="css/estilo-adicionar-equipamento.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
 </head>
 
-<body>
-    <div class="admin-container">
-        <div class="voltar-container">
-            <button class="card-btn voltar" onclick="window.location.href='config-admin.html'" title="Voltar">
-                <i class="fas fa-arrow-left"></i>
-            </button>
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-4xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="window.location.href='config-admin.html'" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Adicionar Equipamento</h1>
         </div>
-        <h1>Adicionar Equipamento</h1>
-        <div id="empresa-logada"></div>
-        <form id="formEquipamento" class="form-equipamento">
-            <label>Nome: <input type="text" name="nome" required class="input-estilizado"></label>
-            <label>Tipo:
-                <select name="tipo" id="tipo" required class="input-estilizado">
+        <form id="formEquipamento" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="md:col-span-2">
+                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Nome:</label>
+                <input type="text" name="nome" required class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+            </div>
+            <div>
+                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Tipo:</label>
+                <select name="tipo" id="tipo" required class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
                     <option value="">Selecione...</option>
                     <option value="Projetor">Projetor</option>
                     <option value="TV">TV</option>
@@ -42,39 +69,68 @@
                     <option value="Switcher">Switcher</option>
                     <option value="Outro">Outro</option>
                 </select>
-            </label>
-            <label>Marca:
-                <select name="marca" id="marca" required class="input-estilizado">
+            </div>
+            <div>
+                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Marca:</label>
+                <select name="marca" id="marca" required class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
                     <option value="">Selecione o tipo primeiro</option>
                 </select>
-            </label>
-            <label>Modelo:
-                <select name="modelo" id="modelo" class="input-estilizado">
+            </div>
+            <div>
+                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Modelo:</label>
+                <select name="modelo" id="modelo" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
                     <option value="">Selecione a marca primeiro</option>
                 </select>
-            </label>
-            <label>Part Number: <input type="text" name="partnumber" class="input-estilizado"></label>
-            <label>Tamanho: <input type="text" name="tamanho" class="input-estilizado"></label>
-            <label>Descrição: <input type="text" name="descricao" class="input-estilizado"></label>
-            <label>Firmware: <input type="text" name="firmware" class="input-estilizado"></label>
-            <label>Número de Série: <input type="text" name="serie" required class="input-estilizado"></label>
-            <label>IP 1: <input type="text" name="ip1" class="input-estilizado"></label>
-            <label>MAC 1: <input type="text" name="mac1" class="input-estilizado"></label>
-            <label>IP 2: <input type="text" name="ip2" class="input-estilizado"></label>
-            <label>MAC 2: <input type="text" name="mac2" class="input-estilizado"></label>
-            <label>Sala:
-                <select name="sala_id" id="sala_id" class="input-estilizado">
+            </div>
+            <div>
+                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Part Number:</label>
+                <input type="text" name="partnumber" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+            </div>
+            <div>
+                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Tamanho:</label>
+                <input type="text" name="tamanho" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+            </div>
+            <div class="md:col-span-2">
+                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Descrição:</label>
+                <input type="text" name="descricao" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+            </div>
+            <div>
+                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Firmware:</label>
+                <input type="text" name="firmware" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+            </div>
+            <div>
+                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Número de Série:</label>
+                <input type="text" name="serie" required class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+            </div>
+            <div>
+                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">IP 1:</label>
+                <input type="text" name="ip1" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+            </div>
+            <div>
+                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">MAC 1:</label>
+                <input type="text" name="mac1" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+            </div>
+            <div>
+                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">IP 2:</label>
+                <input type="text" name="ip2" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+            </div>
+            <div>
+                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">MAC 2:</label>
+                <input type="text" name="mac2" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+            </div>
+            <div class="md:col-span-2">
+                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Sala:</label>
+                <select name="sala_id" id="sala_id" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
                     <option value="">Sem sala</option>
                 </select>
-            </label>
-            <div style="display: flex; justify-content: center;">
-                <button type="submit" class="card-btn cadastrar"
-                    style="width:auto;height:auto;padding:8px 16px;font-size:1em;display:inline-flex;align-items:center;gap:6px;">
+            </div>
+            <div class="md:col-span-2 flex justify-center mt-8">
+                <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-8 rounded-lg shadow flex items-center gap-2 transition-colors text-lg">
                     <i class="fas fa-plus"></i> Adicionar Equipamento
                 </button>
             </div>
         </form>
-        <div class="msg" id="msg"></div>
+        <div class="msg text-center mt-6 text-lg font-semibold" id="msg"></div>
     </div>
     <script>
         // Carregar salas para o select
@@ -281,14 +337,11 @@
             fetch('/empresa_atual')
                 .then(resp => resp.json())
                 .then(data => {
-                    if (data.logo) {
-                        document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
-                    } else if (data.nome) {
-                        document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
-                    }
+                    LogoManager.loadEmpresaLogo(data);
                 });
         });
     </script>
-</body>
+    <script src="static/js/logo-manager.js"></script>
+    </body>
 
 </html>

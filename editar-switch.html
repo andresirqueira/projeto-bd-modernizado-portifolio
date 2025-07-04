@@ -4,44 +4,68 @@
 <head>
     <meta charset="UTF-8">
     <title>Editar Switch</title>
-    <link rel="stylesheet" href="css/estilo-base.css">
-    <link rel="stylesheet" href="css/estilo-editar-switch.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
 </head>
 
-<body>
-    <div class="admin-container">
-        <div class="voltar-container">
-            <button class="card-btn voltar" onclick="voltarPainelConfig()" title="Voltar">
-                <i class="fas fa-arrow-left"></i>
-            </button>
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-2xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarPainelConfig()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Editar Switch</h1>
         </div>
         
-        <h1>Editar Switch</h1>
-        <div id="empresa-logada"></div>
-        
-        <div class="switch-selector">
-            <label for="switchSelect">Selecione o Switch:</label>
-            <select id="switchSelect" onchange="carregarSwitch()">
+        <div class="mb-6">
+            <label for="switchSelect" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Selecione o Switch:</label>
+            <select id="switchSelect" onchange="carregarSwitch()" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
                 <option value="">Selecione um switch...</option>
             </select>
         </div>
 
-        <div id="switchInfo" class="switch-info" style="display: none;">
-            <h3>Informações do Switch</h3>
-            <p><strong>ID:</strong> <span id="switchId"></span></p>
-            <p><strong>Data de Criação:</strong> <span id="switchDataCriacao"></span></p>
+        <div id="switchInfo" class="mb-6 p-4 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg border border-indigo-200 dark:border-indigo-700" style="display: none;">
+            <h3 class="text-lg font-semibold text-indigo-800 dark:text-indigo-200 mb-3">Informações do Switch</h3>
+            <div class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <p><strong>ID:</strong> <span id="switchId"></span></p>
+                <p><strong>Data de Criação:</strong> <span id="switchDataCriacao"></span></p>
+            </div>
         </div>
 
-        <form id="formEditarSwitch">
-            <div class="form-group">
-                <label for="nome">Nome:</label>
-                <input type="text" id="nome" name="nome" required>
+        <form id="formEditarSwitch" class="space-y-6">
+            <div class="space-y-2">
+                <label for="nome" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nome:</label>
+                <input type="text" id="nome" name="nome" required class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600 disabled:bg-gray-100 dark:disabled:bg-gray-700 disabled:cursor-not-allowed">
             </div>
 
-            <div class="form-group">
-                <label for="marca">Marca:</label>
-                <select id="marca" name="marca" required onchange="atualizarModelos()" disabled>
+            <div class="space-y-2">
+                <label for="marca" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Marca:</label>
+                <select id="marca" name="marca" required onchange="atualizarModelos()" disabled class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600 disabled:bg-gray-100 dark:disabled:bg-gray-700 disabled:cursor-not-allowed">
                     <option value="">Selecione a marca...</option>
                     <option value="Cisco">Cisco</option>
                     <option value="HP">HP</option>
@@ -56,21 +80,21 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="modelo">Modelo:</label>
-                <select id="modelo" name="modelo" required disabled>
+            <div class="space-y-2">
+                <label for="modelo" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Modelo:</label>
+                <select id="modelo" name="modelo" required disabled class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600 disabled:bg-gray-100 dark:disabled:bg-gray-700 disabled:cursor-not-allowed">
                     <option value="">Selecione a marca primeiro</option>
                 </select>
             </div>
 
-            <div class="btn-container">
-                <button type="submit" class="btn-salvar" id="btnSalvar" disabled>
+            <div class="pt-4">
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-800 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:bg-gray-400 dark:disabled:bg-gray-600 disabled:cursor-not-allowed" id="btnSalvar" disabled>
                     <i class="fas fa-save"></i> Salvar Alterações
                 </button>
             </div>
         </form>
 
-        <div class="msg" id="msg"></div>
+        <div id="msg" class="mt-4 p-4 rounded-lg text-center font-medium"></div>
     </div>
 
     <script>
@@ -326,10 +350,16 @@
         function mostrarMensagem(texto, tipo) {
             const msg = document.getElementById('msg');
             msg.innerText = texto;
-            msg.className = `msg ${tipo}`;
+            if (tipo === 'success') {
+                msg.className = 'mt-4 p-4 rounded-lg text-center font-medium bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300';
+            } else if (tipo === 'error') {
+                msg.className = 'mt-4 p-4 rounded-lg text-center font-medium bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300';
+            } else {
+                msg.className = 'mt-4 p-4 rounded-lg text-center font-medium bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300';
+            }
             setTimeout(() => {
                 msg.innerText = '';
-                msg.className = 'msg';
+                msg.className = 'mt-4 p-4 rounded-lg text-center font-medium';
             }, 3000);
         }
 
@@ -391,14 +421,11 @@
             fetch('/empresa_atual')
                 .then(resp => resp.json())
                 .then(data => {
-                    if (data.logo) {
-                        document.getElementById('empresa-logada').innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
-                    } else if (data.nome) {
-                        document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
-                    }
+                    LogoManager.loadEmpresaLogo(data);
                 });
         });
     </script>
-</body>
+    <script src="static/js/logo-manager.js"></script>
+    </body>
 
 </html> 
