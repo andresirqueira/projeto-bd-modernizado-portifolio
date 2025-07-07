@@ -1645,5 +1645,38 @@ def api_get_sala(id):
         return jsonify(dict(id=row[0], nome=row[1], tipo=row[2], descricao=row[3], foto=row[4], fotos=row[5], andar_id=row[6]))
     return jsonify({'erro': 'Sala não encontrada'}), 404
 
+@app.route('/dashboard.html')
+@login_required
+def dashboard_html():
+    return send_from_directory(os.path.dirname(__file__), 'dashboard.html')
+
+@app.route('/logs/sala/<int:sala_id>', methods=['GET'])
+@login_required
+def logs_por_sala(sala_id):
+    try:
+        with open(LOG_FILE, 'r', encoding='utf-8') as f:
+            logs = f.readlines()
+        # Filtra logs que mencionam a sala pelo ID ("ID=<sala_id>" ou "sala_id=<sala_id>")
+        sala_id_str = f"ID={sala_id}"
+        sala_id_alt = f"sala_id={sala_id}"
+        logs_sala = [l for l in logs if sala_id_str in l or sala_id_alt in l]
+        logs_sala = logs_sala[-100:] if len(logs_sala) > 100 else logs_sala
+        logs_sala.reverse()  # Mais recentes primeiro
+        return jsonify({'status': 'ok', 'logs': logs_sala, 'total_logs': len(logs_sala)})
+    except FileNotFoundError:
+        return jsonify({'status': 'ok', 'logs': [], 'total_logs': 0})
+    except Exception as e:
+        return jsonify({'status': 'erro', 'mensagem': f'Erro ao ler logs: {str(e)}'}), 500
+
+@app.route('/historico-sala.html')
+@login_required
+def historico_sala_html():
+    return send_from_directory(os.path.dirname(__file__), 'historico-sala.html')
+
+@app.route('/dashboard-sala.html')
+@login_required
+def dashboard_sala_html():
+    return send_from_directory(os.path.dirname(__file__), 'dashboard-sala.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

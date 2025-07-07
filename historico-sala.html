@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Histórico da Sala</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-4xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarDetalhesSala()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Histórico da Sala</h1>
+            <div id="salaNome" class="text-lg text-gray-700 dark:text-gray-300 mb-2"></div>
+        </div>
+        <div class="mb-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Filtrar por Ação:</label>
+                <select id="filtroAcao" onchange="filtrarLogs()" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                    <option value="">Todas as ações</option>
+                </select>
+            </div>
+            <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Filtrar por Status:</label>
+                <select id="filtroStatus" onchange="filtrarLogs()" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                    <option value="">Todos os status</option>
+                    <option value="sucesso">Sucesso</option>
+                    <option value="erro">Erro</option>
+                </select>
+            </div>
+        </div>
+        <div id="logsContainer" class="space-y-3 max-h-96 overflow-y-auto">
+            <div class="text-center text-gray-500 dark:text-gray-400 py-8">Carregando histórico...</div>
+        </div>
+    </div>
+    <script src="static/js/logo-manager.js"></script>
+    <script>
+    function getIdFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('id');
+    }
+    function voltarDetalhesSala() {
+        const id = getIdFromUrl();
+        if (id) {
+            window.location.href = 'detalhes-sala.html?id=' + id;
+        } else {
+            window.history.back();
+        }
+    }
+    let todosLogs = [];
+    let acoesUnicas = new Set();
+    function getStatusFromLog(log) {
+        const match = log.match(/Status:\s*(\w+)/);
+        return match ? match[1].toLowerCase() : '';
+    }
+    function getAcaoFromLog(log) {
+        const match = log.match(/Acao:\s*([\w_]+)/);
+        return match ? match[1] : '';
+    }
+    function getDetalhesFromLog(log) {
+        const match = log.match(/Detalhes:\s*(.*?)\s*\|\s*Status:/);
+        return match ? match[1] : '';
+    }
+    function getUsuarioFromLog(log) {
+        const match = log.match(/Usuario:\s*(.*?)\s*\|/);
+        return match ? match[1] : '';
+    }
+    function getTimestampFromLog(log) {
+        const match = log.match(/^\[(.*?)\]/);
+        return match ? match[1] : '';
+    }
+    function filtrarLogs() {
+        const filtroAcao = document.getElementById('filtroAcao').value;
+        const filtroStatus = document.getElementById('filtroStatus').value;
+        let logsFiltrados = todosLogs;
+        if (filtroAcao) {
+            logsFiltrados = logsFiltrados.filter(log => log.includes(`Acao: ${filtroAcao}`));
+        }
+        if (filtroStatus) {
+            logsFiltrados = logsFiltrados.filter(log => log.includes(`Status: ${filtroStatus}`));
+        }
+        exibirLogs(logsFiltrados);
+    }
+    async function carregarHistoricoSala() {
+        const salaId = getIdFromUrl();
+        if (!salaId) return;
+        // Busca nome da sala
+        let salaNome = '';
+        try {
+            const respSala = await fetch(`/salas/${salaId}`);
+            if (respSala.ok) {
+                const sala = await respSala.json();
+                salaNome = sala.nome || '';
+                document.getElementById('salaNome').innerText = salaNome ? `Sala: ${salaNome}` : '';
+            }
+        } catch {}
+        // Busca logs
+        const resp = await fetch(`/logs/sala/${salaId}`);
+        const data = await resp.json();
+        todosLogs = data.logs || [];
+        // Preencher filtro de ações
+        const select = document.getElementById('filtroAcao');
+        const acoes = Array.from(new Set(todosLogs.map(getAcaoFromLog).filter(Boolean)));
+        select.innerHTML = '<option value="">Todas as ações</option>' + acoes.map(a=>`<option value="${a}">${a}</option>`).join('');
+        exibirLogs(todosLogs);
+    }
+    function exibirLogs(logs) {
+        const container = document.getElementById('logsContainer');
+        if (!logs.length) {
+            container.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 py-8">Nenhuma ação registrada para esta sala.</div>';
+            return;
+        }
+        let html = '';
+        logs.forEach((log, index) => {
+            log = log.trim();
+            const partes = log.match(/\[(.*?)\]\s*Usuario:\s*(.*?)\s*\|\s*Acao:\s*(.*?)\s*\|\s*Detalhes:\s*(.*?)\s*\|\s*Status:\s*(.*?)\s*$/);
+            if (partes) {
+                const [, timestamp, usuario, acao, detalhes, status] = partes;
+                const isErro = status.trim() === 'erro';
+                html += `
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-4 ${isErro ? 'ring-2 ring-red-200 dark:ring-red-800' : 'ring-2 ring-green-200 dark:ring-green-800'}">
+                        <div class="flex flex-wrap items-center gap-2 mb-2 text-sm">
+                            <span class="font-mono text-gray-600 dark:text-gray-400">[${timestamp}]</span>
+                            <span class="text-gray-700 dark:text-gray-300"><strong>Usuário:</strong> ${usuario}</span>
+                            <span class="text-gray-700 dark:text-gray-300">| <strong>Ação:</strong> ${acao}</span>
+                            <span class="px-2 py-1 rounded-full text-xs font-medium ${isErro ? 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200' : 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'}">
+                                ${status.trim()}
+                            </span>
+                        </div>
+                        <div class="text-sm text-gray-600 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded p-2 font-mono">
+                            ${detalhes}
+                        </div>
+                    </div>
+                `;
+            }
+        });
+        container.innerHTML = html;
+    }
+    window.addEventListener('DOMContentLoaded', function() {
+        fetch('/empresa_atual')
+            .then(resp => resp.json())
+            .then(data => {
+                LogoManager.loadEmpresaLogo(data);
+            });
+        carregarHistoricoSala();
+    });
+    </script>
+</body>
+</html> 

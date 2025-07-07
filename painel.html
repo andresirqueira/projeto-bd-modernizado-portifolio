@@ -43,14 +43,14 @@
 
 <body
     class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen flex items-center justify-center dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
-    <div class="relative w-full max-w-xl bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-10 text-center">
+    <div class="relative w-full max-w-xl bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-10 text-center min-h-[500px] flex flex-col justify-center h-full">
         <button onclick="toggleDarkMode()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
             <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
         </button>
         <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
-        <h1 id="tituloPainel" class="text-3xl font-bold text-gray-800 dark:text-white mb-2">Painel</h1>
-        <p id="boasVindas" class="text-gray-600 dark:text-gray-300 mb-4"></p>
-        <div class="flex flex-wrap gap-4 justify-center mt-6">
+        <h1 id="tituloPainel" class="text-3xl font-bold text-gray-800 dark:text-white mb-2 flex-shrink-0">Painel</h1>
+        <p id="boasVindas" class="text-gray-600 dark:text-gray-300 mb-4 flex-shrink-0"></p>
+        <div class="flex flex-wrap gap-4 justify-center mt-6 flex-shrink-0">
             <button id="btnAdmin"
                 class="hidden bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg shadow flex items-center gap-2 transition-colors"
                 onclick="window.location.href='config-admin.html'">

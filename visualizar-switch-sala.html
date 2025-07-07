@@ -22,10 +22,6 @@
         // Atualizar logo da empresa quando o tema mudar
         updateEmpresaLogo();
       }
-        // Atualizar logo da empresa quando o tema mudar
-        updateEmpresaLogo();
-      }
-      }
       if (localStorage.getItem('theme') === 'dark') {
         document.documentElement.classList.add('dark');
       } else if (localStorage.getItem('theme') === 'light') {
@@ -57,7 +53,7 @@
     </style>
 </head>
 
-<body>
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
     <div class="relative w-full max-w-7xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
         <button onclick="window.history.back()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
             <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
@@ -1721,6 +1717,15 @@
     </script>
 
     <script src="static/js/logo-manager.js"></script>
+    <script>
+    window.addEventListener('DOMContentLoaded', function() {
+        fetch('/empresa_atual')
+            .then(resp => resp.json())
+            .then(data => {
+                LogoManager.loadEmpresaLogo(data);
+            });
+    });
+    </script>
 
 </body>
 

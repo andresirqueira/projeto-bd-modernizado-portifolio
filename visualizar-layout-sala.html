@@ -9,21 +9,6 @@
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
-      function toggleDarkMode() {
-        if (document.documentElement.classList.contains('dark')) {
-          document.documentElement.classList.remove('dark');
-          localStorage.setItem('theme', 'light');
-        } else {
-          document.documentElement.classList.add('dark');
-          localStorage.setItem('theme', 'dark');
-        }
-        // Atualizar logo da empresa quando o tema mudar
-        updateEmpresaLogo();
-      }
-        // Atualizar logo da empresa quando o tema mudar
-        updateEmpresaLogo();
-      }
-      }
       if (localStorage.getItem('theme') === 'dark') {
         document.documentElement.classList.add('dark');
       } else if (localStorage.getItem('theme') === 'light') {
@@ -101,9 +86,6 @@
 <body>
     <button onclick="window.history.back()" class="fixed top-6 left-64 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-3 transition-colors z-50" title="Voltar">
         <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
-    </button>
-    <button onclick="toggleDarkMode()" class="fixed top-6 left-80 bg-gray-200 dark:bg-gray-700 rounded-full p-3 transition-colors z-50" title="Alternar modo escuro">
-        <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
     </button>
     <div id="sidebar" class="fixed left-0 top-0 bottom-0 w-60 bg-white dark:bg-gray-800 text-gray-800 dark:text-white flex flex-col items-center z-10 shadow-2xl">
         <div class="w-full p-6 border-b border-gray-200 dark:border-gray-700">
