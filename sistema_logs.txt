@@ -82,3 +82,181 @@
 [2025-07-03 15:44:44] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=4 | Status: sucesso
 [2025-07-04 11:20:27] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=9 | Status: sucesso
 [2025-07-04 11:39:47] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=9 | Status: sucesso
+[2025-07-10 11:52:07] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=31, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 11:52:53] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=31, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 12:00:17] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=32, Nome=Câmera, Tipo=Camera, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-10 12:05:18] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=33, Nome=Microfone, Tipo=Microfone, Marca=Logitech, Modelo=Rally Mic Pod | Status: sucesso
+[2025-07-10 12:06:29] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=34, Nome=Speaker, Tipo=Speaker, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-10 12:08:29] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=35, Nome=TV, Tipo=TV, Marca=LG, Modelo=75UP801C0SB | Status: sucesso
+[2025-07-10 12:11:18] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=36, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-W-S | Status: sucesso
+[2025-07-10 12:14:21] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=36, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-10 12:16:03] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=37, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-10 12:17:00] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=38, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=CTL-1000 | Status: sucesso
+[2025-07-10 12:18:02] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=39, Nome=Display Hub, Tipo=Hub, Marca=Logitech, Modelo=Display | Status: sucesso
+[2025-07-10 12:18:39] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=40, Nome=Table Hub, Tipo=Hub, Marca=Logitech, Modelo=Table | Status: sucesso
+[2025-07-10 12:22:20] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=12, Porta ID=36, Equipamento ID=38 | Status: sucesso
+[2025-07-10 12:22:30] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=13, Porta ID=37, Equipamento ID=37 | Status: sucesso
+[2025-07-10 12:22:39] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=14, Porta ID=38, Equipamento ID=36 | Status: sucesso
+[2025-07-10 12:27:58] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=41, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 12:37:09] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=42, Nome=Câmera, Tipo=Camera, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-10 12:37:57] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=43, Nome=Microfone, Tipo=Microfone, Marca=Logitech, Modelo=Rally Mic Pod | Status: sucesso
+[2025-07-10 12:38:34] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=44, Nome=Speaker, Tipo=Speaker, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-10 12:39:25] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=45, Nome=TV, Tipo=TV, Marca=LG, Modelo=75UN801C0SB | Status: sucesso
+[2025-07-10 12:40:18] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=46, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-10 12:41:06] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=47, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-10 12:42:06] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=48, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=CTL-1000 | Status: sucesso
+[2025-07-10 12:43:04] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=49, Nome=Display Hub, Tipo=Hub, Marca=Logitech, Modelo=Display | Status: sucesso
+[2025-07-10 12:43:43] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=50, Nome=Table Hub, Tipo=Hub, Marca=Logitech, Modelo=Table | Status: sucesso
+[2025-07-10 12:44:59] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=15, Porta ID=33, Equipamento ID=48 | Status: sucesso
+[2025-07-10 12:45:09] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=16, Porta ID=34, Equipamento ID=47 | Status: sucesso
+[2025-07-10 12:45:17] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=17, Porta ID=35, Equipamento ID=46 | Status: sucesso
+[2025-07-10 14:41:46] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=51, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 14:42:14] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=52, Nome=Meetup, Tipo=Meetup, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-07-10 14:43:24] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=53, Nome=TV, Tipo=TV, Marca=LG, Modelo=55UP751C0SF | Status: sucesso
+[2025-07-10 14:44:20] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=54, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-10 14:45:08] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=55, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-10 14:45:56] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=56, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=CTL-1000 | Status: sucesso
+[2025-07-10 14:46:28] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=18, Porta ID=45, Equipamento ID=56 | Status: sucesso
+[2025-07-10 14:46:37] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=19, Porta ID=46, Equipamento ID=55 | Status: sucesso
+[2025-07-10 14:46:49] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=20, Porta ID=47, Equipamento ID=54 | Status: sucesso
+[2025-07-10 14:48:47] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=57, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 14:49:26] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=58, Nome=Meetup, Tipo=Meetup, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-07-10 14:50:10] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=59, Nome=TV, Tipo=TV, Marca=LG, Modelo=55UP751C0SF | Status: sucesso
+[2025-07-10 14:51:04] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=60, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-10 14:51:49] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=61, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-10 14:52:36] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=62, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=CTL-1000 | Status: sucesso
+[2025-07-10 14:53:27] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=21, Porta ID=42, Equipamento ID=62 | Status: sucesso
+[2025-07-10 14:53:37] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=22, Porta ID=43, Equipamento ID=61 | Status: sucesso
+[2025-07-10 14:53:46] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=23, Porta ID=44, Equipamento ID=60 | Status: sucesso
+[2025-07-10 14:55:23] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=63, Nome=TV, Tipo=TV, Marca=LG, Modelo=32LM621CBSB | Status: sucesso
+[2025-07-10 14:55:50] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=10, Nome=Sala 08 (via formulário) | Status: sucesso
+[2025-07-10 14:56:51] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=10, Nome=Sala 08, Equipamentos desatrelados=0, Equipamentos vinculados=1 | Status: sucesso
+[2025-07-10 14:58:20] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=64, Nome=TV, Tipo=TV, Marca=LG, Modelo=32LM621CBSB | Status: sucesso
+[2025-07-10 14:58:39] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=11, Nome=Sala 09 (via formulário) | Status: sucesso
+[2025-07-10 14:58:52] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=11, Nome=Sala 09, Equipamentos desatrelados=0, Equipamentos vinculados=1 | Status: sucesso
+[2025-07-10 14:59:53] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=12, Nome=Sala 10 (via formulário) | Status: sucesso
+[2025-07-10 15:00:45] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=65, Nome=TV, Tipo=TV, Marca=LG, Modelo=32LM621CBSB | Status: sucesso
+[2025-07-10 15:02:09] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=13, Nome=Sala 11 (via formulário) | Status: sucesso
+[2025-07-10 15:02:30] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=13, Nome=Sala 11, Equipamentos desatrelados=0, Equipamentos vinculados=0 | Status: sucesso
+[2025-07-10 15:03:21] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=66, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 15:03:50] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=67, Nome=Câmera, Tipo=Camera, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-10 15:04:20] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=68, Nome=Microfone, Tipo=Microfone, Marca=Logitech, Modelo=Rally Mic Pod | Status: sucesso
+[2025-07-10 15:04:49] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=69, Nome=Speaker, Tipo=Speaker, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-10 15:05:40] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=70, Nome=TV, Tipo=TV, Marca=LG, Modelo=75UP801C0SB | Status: sucesso
+[2025-07-10 15:06:40] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=71, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-10 15:07:27] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=72, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-10 15:08:09] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=71, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-10 15:08:27] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=46, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-10 15:09:16] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=73, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=CTL-1000 | Status: sucesso
+[2025-07-10 15:09:50] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=74, Nome=Display Hub, Tipo=Hub, Marca=Logitech, Modelo=Display | Status: sucesso
+[2025-07-10 15:10:35] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=75, Nome=Table Hub, Tipo=Hub, Marca=Logitech, Modelo=Table | Status: sucesso
+[2025-07-10 15:11:59] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=24, Porta ID=28, Equipamento ID=73 | Status: sucesso
+[2025-07-10 15:12:08] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=25, Porta ID=29, Equipamento ID=72 | Status: sucesso
+[2025-07-10 15:12:15] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=26, Porta ID=30, Equipamento ID=71 | Status: sucesso
+[2025-07-10 15:12:37] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=27, Porta ID=27, Equipamento ID=63 | Status: sucesso
+[2025-07-10 15:13:05] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=28, Porta ID=26, Equipamento ID=64 | Status: sucesso
+[2025-07-10 15:13:24] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=29, Porta ID=25, Equipamento ID=65 | Status: sucesso
+[2025-07-10 15:15:07] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=14, Nome=Sala 12 (via formulário) | Status: sucesso
+[2025-07-10 15:15:29] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=14, Nome=Sala 12, Equipamentos desatrelados=0, Equipamentos vinculados=0 | Status: sucesso
+[2025-07-10 15:16:08] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=76, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 15:16:40] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=77, Nome=Meetup, Tipo=Meetup, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-07-10 15:17:32] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=78, Nome=TV, Tipo=TV, Marca=LG, Modelo=55UP751C0SF | Status: sucesso
+[2025-07-10 15:18:14] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=79, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-10 15:18:51] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=80, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-10 15:19:24] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=81, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=CTL-1000 | Status: sucesso
+[2025-07-10 15:21:01] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=30, Porta ID=31, Equipamento ID=81 | Status: sucesso
+[2025-07-10 15:21:09] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=31, Porta ID=32, Equipamento ID=80 | Status: sucesso
+[2025-07-10 15:22:24] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=32, Porta ID=49, Equipamento ID=79 | Status: sucesso
+[2025-07-10 15:27:54] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=15, Nome=Cozinha Brastemp (via formulário) | Status: sucesso
+[2025-07-10 15:28:27] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=15, Nome=Cozinha Brastemp, Equipamentos desatrelados=0, Equipamentos vinculados=0 | Status: sucesso
+[2025-07-10 15:30:15] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=16, Nome=Cozinha Consul (via formulário) | Status: sucesso
+[2025-07-10 15:31:25] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=82, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-07-10 15:31:40] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=51, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 15:32:32] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=57, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 15:32:45] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=76, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 15:33:30] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=83, Nome=Câmera, Tipo=Camera, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-10 15:34:56] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=84, Nome=Microfone MXA 920, Tipo=Microfone, Marca=Shure, Modelo=MXA920 | Status: sucesso
+[2025-07-10 16:00:08] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=4, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-10 16:01:06] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=4, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-10 16:01:12] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=17, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-10 16:01:18] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=25, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-W-S | Status: sucesso
+[2025-07-10 16:01:23] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=25, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-W-S | Status: sucesso
+[2025-07-10 16:01:43] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=25, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-10 16:01:48] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=36, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-10 16:01:52] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=46, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-10 16:01:56] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=54, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-10 16:02:01] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=60, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-10 16:02:07] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=71, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-10 16:02:14] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=79, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-10 16:03:34] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=21, Nome=Câmera, Tipo=Camera, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-10 16:03:40] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=32, Nome=Câmera, Tipo=Camera, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-10 16:03:44] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=42, Nome=Câmera, Tipo=Camera, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-10 16:03:47] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=67, Nome=Câmera, Tipo=Camera, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-10 16:03:52] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=83, Nome=Câmera, Tipo=Camera, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-10 16:14:02] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=3, Nome=TV, Tipo=TV, Marca=LG, Modelo=50UP751C0SF | Status: sucesso
+[2025-07-10 16:14:07] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=24, Nome=TV, Tipo=TV, Marca=LG, Modelo=75UP801C0SB | Status: sucesso
+[2025-07-10 16:14:13] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=35, Nome=TV, Tipo=TV, Marca=LG, Modelo=75UP801C0SB | Status: sucesso
+[2025-07-10 16:14:19] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=45, Nome=TV, Tipo=TV, Marca=LG, Modelo=75UN801C0SB | Status: sucesso
+[2025-07-10 16:14:23] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=16, Nome=TV, Tipo=TV, Marca=LG, Modelo=55UP751C0SF | Status: sucesso
+[2025-07-10 16:14:27] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=53, Nome=TV, Tipo=TV, Marca=LG, Modelo=55UP751C0SF | Status: sucesso
+[2025-07-10 16:14:32] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=59, Nome=TV, Tipo=TV, Marca=LG, Modelo=55UP751C0SF | Status: sucesso
+[2025-07-10 16:14:36] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=63, Nome=TV, Tipo=TV, Marca=LG, Modelo=32LM621CBSB | Status: sucesso
+[2025-07-10 16:14:40] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=64, Nome=TV, Tipo=TV, Marca=LG, Modelo=32LM621CBSB | Status: sucesso
+[2025-07-10 16:14:46] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=65, Nome=TV, Tipo=TV, Marca=LG, Modelo=32LM621CBSB | Status: sucesso
+[2025-07-10 16:14:52] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=70, Nome=TV, Tipo=TV, Marca=LG, Modelo=75UP801C0SB | Status: sucesso
+[2025-07-10 16:14:56] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=78, Nome=TV, Tipo=TV, Marca=LG, Modelo=55UP751C0SF | Status: sucesso
+[2025-07-10 16:15:44] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=13, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 16:15:58] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=13, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 16:16:16] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=13, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 16:16:20] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=20, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 16:16:24] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=31, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 16:16:31] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=41, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 16:16:40] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=14, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 16:16:43] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=51, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 16:16:48] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=57, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 16:16:52] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=66, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 16:16:57] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=76, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap Poe | Status: sucesso
+[2025-07-10 16:17:01] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=82, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-07-10 16:17:45] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=82, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-07-10 16:19:38] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=7, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-10 16:19:53] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=19, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-10 16:19:58] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=27, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-10 16:20:06] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=38, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-10 16:20:13] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=48, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-10 16:20:18] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=56, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-10 16:20:23] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=62, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-10 16:20:28] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=73, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-10 16:20:34] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=81, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-10 16:22:37] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=84, Nome=Microfone MXA 920, Tipo=Microfone, Marca=Shure, Modelo=MXA920 | Status: sucesso
+[2025-07-10 16:23:16] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=22, Nome=Microfone, Tipo=Microfone, Marca=Logitech, Modelo=Rally Mic Pod | Status: sucesso
+[2025-07-10 16:23:19] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=33, Nome=Microfone, Tipo=Microfone, Marca=Logitech, Modelo=Rally Mic Pod | Status: sucesso
+[2025-07-10 16:23:21] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=43, Nome=Microfone, Tipo=Microfone, Marca=Logitech, Modelo=Rally Mic Pod | Status: sucesso
+[2025-07-10 16:23:24] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=68, Nome=Microfone, Tipo=Microfone, Marca=Logitech, Modelo=Rally Mic Pod | Status: sucesso
+[2025-07-10 16:24:15] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=28, Nome=Display Hub, Tipo=Hub, Marca=Logitech, Modelo=Display | Status: sucesso
+[2025-07-10 16:24:19] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=29, Nome=Table Hub, Tipo=Hub, Marca=Logitech, Modelo=Table | Status: sucesso
+[2025-07-10 16:24:21] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=30, Nome=Table Hub, Tipo=Hub, Marca=Logitech, Modelo=Table | Status: sucesso
+[2025-07-10 16:24:23] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=39, Nome=Display Hub, Tipo=Hub, Marca=Logitech, Modelo=Display | Status: sucesso
+[2025-07-10 16:24:26] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=40, Nome=Table Hub, Tipo=Hub, Marca=Logitech, Modelo=Table | Status: sucesso
+[2025-07-10 16:24:28] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=49, Nome=Display Hub, Tipo=Hub, Marca=Logitech, Modelo=Display | Status: sucesso
+[2025-07-10 16:24:34] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=50, Nome=Table Hub, Tipo=Hub, Marca=Logitech, Modelo=Table | Status: sucesso
+[2025-07-10 16:24:38] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=74, Nome=Display Hub, Tipo=Hub, Marca=Logitech, Modelo=Display | Status: sucesso
+[2025-07-10 16:24:43] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=75, Nome=Table Hub, Tipo=Hub, Marca=Logitech, Modelo=Table | Status: sucesso
+[2025-07-10 16:25:35] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=11, Nome=Meetup, Tipo=Meetup, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-07-10 16:25:38] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=15, Nome=Meetup, Tipo=Meetup, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-07-10 16:25:40] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=52, Nome=Meetup, Tipo=Meetup, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-07-10 16:25:43] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=58, Nome=Meetup, Tipo=Meetup, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-07-10 16:25:45] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=77, Nome=Meetup, Tipo=Meetup, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-07-10 16:26:20] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=23, Nome=Speaker, Tipo=Speaker, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-10 16:26:23] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=34, Nome=Speaker, Tipo=Speaker, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-10 16:26:26] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=44, Nome=Speaker, Tipo=Speaker, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-10 16:26:28] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=69, Nome=Speaker, Tipo=Speaker, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-10 16:27:01] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=5, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-10 16:27:04] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=18, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-10 16:27:06] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=26, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-10 16:27:09] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=37, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-10 16:27:12] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=47, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-10 16:27:15] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=55, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-10 16:27:20] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=61, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-10 16:27:25] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=72, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-10 16:27:30] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=80, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-10 16:38:27] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=85, Nome=Speaker 01, Tipo=Speaker, Marca=Shure, Modelo=MXN5W-C | Status: sucesso

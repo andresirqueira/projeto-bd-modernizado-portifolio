@@ -427,7 +427,8 @@ def criar_sala_com_equipamentos():
         # Gera caminho da foto automaticamente
         tipo = (eq.get('tipo') or '').strip().lower().replace(' ', '-').replace('ç','c').replace('ã','a').replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace('â','a').replace('ê','e').replace('ô','o').replace('õ','o').replace('ü','u').replace('ñ','n')
         marca = (eq.get('marca') or '').strip().lower().replace(' ', '-').replace('ç','c').replace('ã','a').replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace('â','a').replace('ê','e').replace('ô','o').replace('õ','o').replace('ü','u').replace('ñ','n')
-        caminho_foto = f'img/{tipo}-{marca}.png' if tipo and marca else None
+        modelo = (eq.get('modelo') or '').strip().lower().replace(' ', '-').replace('ç','c').replace('ã','a').replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace('â','a').replace('ê','e').replace('ô','o').replace('õ','o').replace('ü','u').replace('ñ','n')
+        caminho_foto = f'img/{tipo}-{marca}-{modelo}.png' if tipo and marca and modelo else None
         cur.execute('''
             INSERT INTO equipamentos (nome, tipo, marca, modelo, descricao, foto, icone, sala_id)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
@@ -473,7 +474,8 @@ def criar_equipamento():
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     tipo = (dados.get('tipo') or '').strip().lower().replace(' ', '-').replace('ç','c').replace('ã','a').replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace('â','a').replace('ê','e').replace('ô','o').replace('õ','o').replace('ü','u').replace('ñ','n')
     marca = (dados.get('marca') or '').strip().lower().replace(' ', '-').replace('ç','c').replace('ã','a').replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace('â','a').replace('ê','e').replace('ô','o').replace('õ','o').replace('ü','u').replace('ñ','n')
-    caminho_foto = f'img/{tipo}-{marca}.png' if tipo and marca else None
+    modelo = (dados.get('modelo') or '').strip().lower().replace(' ', '-').replace('ç','c').replace('ã','a').replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace('â','a').replace('ê','e').replace('ô','o').replace('õ','o').replace('ü','u').replace('ñ','n')
+    caminho_foto = f'img/{tipo}-{marca}-{modelo}.png' if tipo and marca and modelo else None
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
     cur.execute('''
@@ -566,7 +568,8 @@ def atualizar_equipamento(id):
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     tipo = (dados.get('tipo') or '').strip().lower().replace(' ', '-').replace('ç','c').replace('ã','a').replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace('â','a').replace('ê','e').replace('ô','o').replace('õ','o').replace('ü','u').replace('ñ','n')
     marca = (dados.get('marca') or '').strip().lower().replace(' ', '-').replace('ç','c').replace('ã','a').replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace('â','a').replace('ê','e').replace('ô','o').replace('õ','o').replace('ü','u').replace('ñ','n')
-    caminho_foto = f'img/{tipo}-{marca}.png' if tipo and marca else None
+    modelo = (dados.get('modelo') or '').strip().lower().replace(' ', '-').replace('ç','c').replace('ã','a').replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace('â','a').replace('ê','e').replace('ô','o').replace('õ','o').replace('ü','u').replace('ñ','n')
+    caminho_foto = f'img/{tipo}-{marca}-{modelo}.png' if tipo and marca and modelo else None
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
     cur.execute('''

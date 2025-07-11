@@ -73,11 +73,22 @@
             if (eq.dados && eq.dados.firmware) iconesHtml += `<div class='flex flex-col items-center text-gray-600 dark:text-gray-400 text-sm'><i class='fas fa-microchip text-lg mb-1'></i><span class='text-center'>${eq.dados.firmware}</span></div>`;
             if (eq.dados && eq.dados.partnumber) iconesHtml += `<div class='flex flex-col items-center text-gray-600 dark:text-gray-400 text-sm'><i class='fas fa-hashtag text-lg mb-1'></i><span class='text-center'>${eq.dados.partnumber}</span></div>`;
             if (eq.dados && eq.dados.tamanho) iconesHtml += `<div class='flex flex-col items-center text-gray-600 dark:text-gray-400 text-sm'><i class='fas fa-ruler-combined text-lg mb-1'></i><span class='text-center'>${eq.dados.tamanho}</span></div>`;
-            if (eq.dados && eq.dados.ip1) iconesHtml += `<div class='flex flex-col items-center text-gray-600 dark:text-gray-400 text-sm'><i class='fas fa-network-wired text-lg mb-1'></i><span class='text-center'>${eq.dados.ip1 || '-'}</span></div>`;
-            if (eq.dados && eq.dados.mac1) iconesHtml += `<div class='flex flex-col items-center text-gray-600 dark:text-gray-400 text-sm'><i class='fas fa-ethernet text-lg mb-1'></i><span class='text-center mac'>${eq.dados.mac1 || '-'}</span></div>`;
-            if (eq.dados && eq.dados.ip2) iconesHtml += `<div class='flex flex-col items-center text-gray-600 dark:text-gray-400 text-sm'><i class='fas fa-network-wired text-lg mb-1'></i><span class='text-center'>${eq.dados.ip2 || '-'}</span></div>`;
-            if (eq.dados && eq.dados.mac2) iconesHtml += `<div class='flex flex-col items-center text-gray-600 dark:text-gray-400 text-sm'><i class='fas fa-ethernet text-lg mb-1'></i><span class='text-center mac'>${eq.dados.mac2 || '-'}</span></div>`;
             if (eq.icone) iconesHtml += `<div class='flex flex-col items-center text-gray-600 dark:text-gray-400 text-sm'><img src='${eq.icone.startsWith('img/') ? 'static/' + eq.icone : eq.icone}' alt='Ícone' class='w-6 h-6 mb-1'></div>`;
+            // Pares de IP/MAC ocupando linha inteira
+            let redePairedHtml = '';
+            if (eq.dados && (eq.dados.ip1 || eq.dados.mac1)) {
+                redePairedHtml += `<div class='col-span-2 flex items-center justify-center gap-4 text-gray-600 dark:text-gray-400 text-sm'>
+                    ${eq.dados.ip1 ? `<span class='flex items-center gap-1'><i class='fas fa-network-wired text-lg'></i><span>${eq.dados.ip1}</span></span>` : ''}
+                    ${eq.dados.mac1 ? `<span class='flex items-center gap-1'><i class='fas fa-ethernet text-lg'></i><span class='mac'>${eq.dados.mac1}</span></span>` : ''}
+                </div>`;
+            }
+            if (eq.dados && (eq.dados.ip2 || eq.dados.mac2)) {
+                redePairedHtml += `<div class='col-span-2 flex items-center justify-center gap-4 text-gray-600 dark:text-gray-400 text-sm'>
+                    ${(eq.dados.ip2 && eq.dados.mac2) ? `<img src='static/img/dante.png' alt='Dante' title='Dante' class='w-8 h-8 mr-2' style='display:inline-block;vertical-align:middle;'>` : ''}
+                    ${eq.dados.ip2 ? `<span class='flex items-center gap-1'><i class='fas fa-network-wired text-lg'></i><span>${eq.dados.ip2}</span></span>` : ''}
+                    ${eq.dados.mac2 ? `<span class='flex items-center gap-1'><i class='fas fa-ethernet text-lg'></i><span class='mac'>${eq.dados.mac2}</span></span>` : ''}
+                </div>`;
+            }
             // Busca conexão deste equipamento
             const conexao = conexoes.find(c => c.equipamento === eq.nome && c.status === 'ativa');
             let redeHtml = '';
@@ -88,7 +99,7 @@
             const temRede = (eq.dados && (eq.dados.ip1 || eq.dados.ip2 || eq.dados.mac1 || eq.dados.mac2));
             container.innerHTML += `
                 <div class='bg-gray-100 dark:bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col items-center relative'>
-                    ${temRede ? `<i class='fas fa-network-wired absolute top-3 left-3 text-green-500 text-lg bg-white dark:bg-gray-700 rounded-md p-1 shadow-md' title='Necessita de rede'></i>` : ''}
+                    ${temRede ? `<i class='fas fa-network-wired absolute top-3 right-3 text-green-500 text-lg bg-white dark:bg-gray-700 rounded-md p-1 shadow-md' title='Necessita de rede'></i>` : ''}
                     ${(eq.marca ? LogoManager.renderMarcaLogo(eq.marca) : '')}
                     <div class='text-xl font-bold text-gray-800 dark:text-white text-center mb-4'>${eq.nome || 'Equipamento'}</div>
                     <div class='flex justify-center mb-4'>${eq.foto ? `<img src='${eq.foto.startsWith('img/') ? 'static/' + eq.foto : eq.foto}' alt='${eq.nome}' class='w-32 h-20 object-contain rounded-lg'>` : ''}</div>
@@ -96,7 +107,7 @@
                         <div><span class='font-bold'>Tipo:</span> ${eq.tipo || '-'}</div>
                         <div><span class='font-bold'>Série:</span> ${(eq.dados && eq.dados.serie) ? eq.dados.serie : '-'}</div>
                     </div>
-                    <div class='grid grid-cols-2 gap-4 mb-4'>${iconesHtml}</div>
+                    <div class='grid grid-cols-2 gap-4 mb-4'>${iconesHtml}${redePairedHtml}</div>
                     ${redeHtml}
                 </div>
             `;
