@@ -101,8 +101,16 @@
         </button>
       </div>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10" id="cardsResumo"></div>
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+    <div class="mb-10">
+      <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Equipamentos</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-8" id="cardsEquipamentos"></div>
+      <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Salas</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mb-8" id="cardsSalas"></div>
+      <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Switches</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="cardsSwitches"></div>
+    </div>
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6 mt-12">Gráficos de Equipamentos e Switches</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="dashboardCharts">
       <div class="chart-container">
         <div class="chart-title">Equipamentos por Tipo</div>
         <canvas id="chartTipos"></canvas>
@@ -112,10 +120,14 @@
         <canvas id="chartRede"></canvas>
       </div>
       <div class="chart-container">
+        <div class="chart-title">Ocupação de Portas de Switch</div>
+        <canvas id="chartPortas"></canvas>
+      </div>
+      <div class="chart-container md:col-span-3">
         <div class="chart-title">Equipamentos por Marca</div>
         <canvas id="chartMarcas"></canvas>
       </div>
-      <div class="chart-container md:col-span-2 xl:col-span-3">
+      <div class="chart-container md:col-span-3">
         <div class="chart-title">Equipamentos por Sala</div>
         <canvas id="chartSalas"></canvas>
       </div>
@@ -139,13 +151,26 @@
 
     let equipamentos = [];
     let salas = [];
+    let switches = [];
+    let portas = [];
     async function fetchData() {
-      const [equipResp, salasResp] = await Promise.all([
+      const [equipResp, salasResp, switchesResp] = await Promise.all([
         fetch('/equipamentos'),
-        fetch('/salas')
+        fetch('/salas'),
+        fetch('/switches')
       ]);
       equipamentos = await equipResp.json();
       salas = await salasResp.json();
+      switches = await switchesResp.json();
+      // Buscar todas as portas de todos os switches
+      portas = [];
+      await Promise.all(switches.map(async (sw) => {
+        const resp = await fetch(`/switch-portas/${sw.id}`);
+        if (resp.ok) {
+          const portasSwitch = await resp.json();
+          portas = portas.concat(portasSwitch);
+        }
+      }));
       renderCards();
       renderCharts();
     }
@@ -160,12 +185,19 @@
         } else {
           funcionando++;
         }
-        // Equipamento depende de rede se tem ip ou mac
         if (eq.dados && (eq.dados.ip1 || eq.dados.mac1 || eq.dados.ip2 || eq.dados.mac2)) {
           rede++;
         }
       });
-      const cards = [
+      // Estatísticas de marcas
+      const marcasSet = new Set(equipamentos.map(eq => eq.marca).filter(Boolean));
+      const totalMarcas = marcasSet.size;
+      // Estatísticas de portas
+      const totalSwitches = switches.length;
+      const totalPortas = portas.length;
+      const portasOcupadas = portas.filter(p => p.status === 'ocupada').length;
+      const portasLivres = portas.filter(p => p.status === 'livre').length;
+      const cardsEquipamentos = [
         {
           icon: 'fa-boxes',
           iconBg: 'fa-cubes',
@@ -173,22 +205,6 @@
           value: equipamentos.length,
           desc: 'Todos os equipamentos cadastrados',
           bg: 'from-indigo-500 to-blue-500'
-        },
-        {
-          icon: 'fa-door-open',
-          iconBg: 'fa-building',
-          title: 'Total de Salas',
-          value: salas.length,
-          desc: 'Salas cadastradas no sistema',
-          bg: 'from-blue-500 to-cyan-500'
-        },
-        {
-          icon: 'fa-network-wired',
-          iconBg: 'fa-wifi',
-          title: 'Dependem de Rede',
-          value: rede,
-          desc: 'Equipamentos com IP ou MAC',
-          bg: 'from-emerald-500 to-teal-500'
         },
         {
           icon: 'fa-check-circle',
@@ -205,35 +221,159 @@
           value: defeito,
           desc: 'Equipamentos com defeito',
           bg: 'from-red-500 to-pink-500'
+        },
+        {
+          icon: 'fa-network-wired',
+          iconBg: 'fa-wifi',
+          title: 'Dependem de Rede',
+          value: rede,
+          desc: 'Equipamentos com IP ou MAC',
+          bg: 'from-emerald-500 to-teal-500'
+        },
+        {
+          icon: 'fa-tags',
+          iconBg: 'fa-tag',
+          title: 'Marcas de Equipamentos',
+          value: totalMarcas,
+          desc: 'Marcas distintas cadastradas',
+          bg: 'from-pink-500 to-fuchsia-500'
         }
       ];
-      let html = '';
-      cards.forEach(card => {
-        html += `<div class="dashboard-card bg-gradient-to-br ${card.bg}">
-          <i class="fas ${card.icon} icon"></i>
-          <span class="icon-bg fas ${card.iconBg}"></span>
-          <div class="title">${card.title}</div>
-          <div class="value">${card.value}</div>
-          <div class="desc">${card.desc}</div>
-        </div>`;
+      const salasComAndar = salas.filter(s => s.andar_id !== null && s.andar_id !== undefined);
+      const salasPorAndar = {};
+      salasComAndar.forEach(s => {
+        const andar = s.andar_id;
+        if (!salasPorAndar[andar]) salasPorAndar[andar] = 0;
+        salasPorAndar[andar]++;
       });
-      document.getElementById('cardsResumo').innerHTML = html;
+      const maxSalas = Object.values(salasPorAndar).length > 0 ? Math.max(...Object.values(salasPorAndar)) : 0;
+      const andarMax = Object.entries(salasPorAndar).find(([_, qtd]) => qtd === maxSalas)?.[0] || '-';
+      const tooltipAndares = Object.entries(salasPorAndar).map(([andar, qtd]) => `Andar ${andar}: ${qtd} sala${qtd>1?'s':''}`).join('\n');
+      // Calcular equipamentos por sala (apenas salas com andar definido)
+      const eqPorSalaCount = {};
+      salasComAndar.forEach(sala => {
+        eqPorSalaCount[sala.nome] = 0;
+      });
+      equipamentos.forEach(eq => {
+        const sala = salasComAndar.find(s => s.id === eq.sala_id);
+        if (sala) eqPorSalaCount[sala.nome]++;
+      });
+      const maxEq = Math.max(...Object.values(eqPorSalaCount));
+      const minEq = Math.min(...Object.values(eqPorSalaCount));
+      const salaMaxEq = Object.entries(eqPorSalaCount).find(([_, qtd]) => qtd === maxEq)?.[0] || '-';
+      const salaMinEq = Object.entries(eqPorSalaCount).find(([_, qtd]) => qtd === minEq)?.[0] || '-';
+      const cardsSalas = [
+        {
+          icon: 'fa-door-open',
+          iconBg: 'fa-building',
+          title: 'Total de Salas',
+          value: salasComAndar.length,
+          desc: 'Salas cadastradas no sistema',
+          bg: 'from-blue-500 to-cyan-500'
+        },
+        {
+          icon: 'fa-layer-group',
+          iconBg: 'fa-layer-group',
+          title: 'Salas no Andar com Mais Salas',
+          value: maxSalas,
+          desc: `No Andar ${andarMax}`,
+          bg: 'from-indigo-500 to-purple-500',
+          tooltip: tooltipAndares
+        },
+        {
+          icon: 'fa-arrow-up',
+          iconBg: 'fa-arrow-up',
+          title: 'Sala com Mais Equipamentos',
+          value: maxEq,
+          desc: salaMaxEq,
+          bg: 'from-green-500 to-lime-500'
+        },
+        {
+          icon: 'fa-arrow-down',
+          iconBg: 'fa-arrow-down',
+          title: 'Sala com Menos Equipamentos',
+          value: minEq,
+          desc: salaMinEq,
+          bg: 'from-red-500 to-pink-500'
+        }
+      ];
+      const cardsSwitches = [
+        {
+          icon: 'fa-network-wired',
+          iconBg: 'fa-server',
+          title: 'Total de Switches',
+          value: totalSwitches,
+          desc: 'Switches cadastrados',
+          bg: 'from-purple-500 to-indigo-500'
+        },
+        {
+          icon: 'fa-ethernet',
+          iconBg: 'fa-plug',
+          title: 'Total de Portas',
+          value: totalPortas,
+          desc: 'Portas de todos os switches',
+          bg: 'from-yellow-500 to-orange-500'
+        },
+        {
+          icon: 'fa-plug',
+          iconBg: 'fa-bolt',
+          title: 'Portas Ocupadas',
+          value: portasOcupadas,
+          desc: `De ${totalPortas} portas`,
+          bg: 'from-rose-500 to-pink-500'
+        },
+        {
+          icon: 'fa-unlink',
+          iconBg: 'fa-circle',
+          title: 'Portas Livres',
+          value: portasLivres,
+          desc: `De ${totalPortas} portas`,
+          bg: 'from-green-500 to-lime-500'
+        }
+      ];
+      function renderCardArray(cards, containerId) {
+        let html = '';
+        cards.forEach(card => {
+          html += `<div class="dashboard-card bg-gradient-to-br ${card.bg}"${card.tooltip ? ` title="${card.tooltip}"` : ''}>
+            <i class="fas ${card.icon} icon"></i>
+            <span class="icon-bg fas ${card.iconBg}"></span>
+            <div class="title">${card.title}</div>
+            <div class="value">${card.value}</div>
+            <div class="desc">${card.desc}</div>
+          </div>`;
+        });
+        document.getElementById(containerId).innerHTML = html;
+      }
+      renderCardArray(cardsEquipamentos, 'cardsEquipamentos');
+      renderCardArray(cardsSalas, 'cardsSalas');
+      renderCardArray(cardsSwitches, 'cardsSwitches');
     }
     function renderCharts() {
-      // Tipos de equipamentos (pizza)
+      // Tipos de equipamentos (doughnut com agrupamento de 'Outros')
       const tipos = {};
       equipamentos.forEach(eq => {
         if (!tipos[eq.tipo]) tipos[eq.tipo] = 0;
         tipos[eq.tipo]++;
       });
-      const tiposLabels = Object.keys(tipos);
-      const tiposData = Object.values(tipos);
+      let tiposLabels = Object.keys(tipos);
+      let tiposData = Object.values(tipos);
       const tiposColors = [
         '#6366f1','#22d3ee','#f59e42','#f43f5e','#10b981','#eab308','#a21caf','#f87171','#0ea5e9','#facc15','#14b8a6','#f472b6'
       ];
+      // Agrupar tipos menores em 'Outros' se houver muitos
+      if (tiposLabels.length > 7) {
+        // Ordena do maior para o menor
+        const zipped = tiposLabels.map((label, i) => [label, tiposData[i]]);
+        zipped.sort((a, b) => b[1] - a[1]);
+        const top = zipped.slice(0, 6);
+        const outros = zipped.slice(6);
+        const outrosCount = outros.reduce((sum, item) => sum + item[1], 0);
+        tiposLabels = top.map(item => item[0]).concat('Outros');
+        tiposData = top.map(item => item[1]).concat(outrosCount);
+      }
       if (window.chartTipos && typeof window.chartTipos.destroy === 'function') window.chartTipos.destroy();
       window.chartTipos = new Chart(document.getElementById('chartTipos'), {
-        type: 'pie',
+        type: 'doughnut',
         data: {
           labels: tiposLabels,
           datasets: [{
@@ -243,7 +383,17 @@
         },
         options: {
           plugins: {
-            legend: { labels: { color: getComputedStyle(document.body).color } }
+            legend: { labels: { color: getComputedStyle(document.body).color } },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                  const value = context.parsed;
+                  const percent = ((value / total) * 100).toFixed(1);
+                  return `${context.label}: ${value} (${percent}%)`;
+                }
+              }
+            }
           }
         }
       });
@@ -306,7 +456,7 @@
       salas.forEach(s => salaMap[s.id] = s.nome);
       const eqPorSala = {};
       equipamentos.forEach(eq => {
-        const salaNome = salaMap[eq.sala_id] || 'Sem sala';
+        const salaNome = salaMap[eq.sala_id] || 'Estoque';
         if (!eqPorSala[salaNome]) eqPorSala[salaNome] = 0;
         eqPorSala[salaNome]++;
       });
@@ -333,6 +483,27 @@
           }
         }
       });
+      // Gráfico de ocupação de portas
+      if (document.getElementById('chartPortas')) {
+        if (window.chartPortas && typeof window.chartPortas.destroy === 'function') window.chartPortas.destroy();
+        const portasOcupadas = portas.filter(p => p.status === 'ocupada').length;
+        const portasLivres = portas.filter(p => p.status === 'livre').length;
+        window.chartPortas = new Chart(document.getElementById('chartPortas'), {
+          type: 'doughnut',
+          data: {
+            labels: ['Ocupadas', 'Livres'],
+            datasets: [{
+              data: [portasOcupadas, portasLivres],
+              backgroundColor: ['#ef4444', '#22c55e'], // vermelho para ocupadas, verde para livres
+            }]
+          },
+          options: {
+            plugins: {
+              legend: { labels: { color: getComputedStyle(document.body).color } }
+            }
+          }
+        });
+      }
     }
     fetchData();
     // Atualizar gráficos ao alternar dark mode

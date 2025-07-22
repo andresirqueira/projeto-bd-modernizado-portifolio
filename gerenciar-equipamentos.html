@@ -127,9 +127,9 @@
                 html += LogoManager.renderMarcaLogo(eq.marca);
             }
             if (eq.foto) {
-                html += `<div class='w-full h-24 flex items-center justify-center mb-3 mt-4'><img src='${eq.foto.startsWith("img/") ? "static/" + eq.foto : eq.foto}' alt='${eq.nome || ''}' class='object-contain max-h-24 rounded-md shadow'/></div>`;
+                html += `<div class='w-full h-20 flex items-center justify-center mb-3 mt-4'><img src='${eq.foto.startsWith("img/") ? "static/" + eq.foto : eq.foto}' alt='${eq.nome || ''}' class='object-contain max-h-20 max-w-20 rounded-md shadow'/></div>`;
             } else {
-                html += `<div class='w-full h-24 flex items-center justify-center mb-3 mt-4 bg-gray-100 dark:bg-gray-700 rounded-md'><i class='fas fa-image text-2xl text-gray-300 dark:text-gray-600'></i></div>`;
+                html += `<div class='w-full h-20 flex items-center justify-center mb-3 mt-4 bg-gray-100 dark:bg-gray-700 rounded-md'><i class='fas fa-image text-2xl text-gray-300 dark:text-gray-600'></i></div>`;
             }
             html += `<div class='font-semibold text-lg text-indigo-700 dark:text-indigo-300 mb-1 text-center'>${eq.nome || ''}</div>`;
             html += `<div class='text-sm text-gray-700 dark:text-gray-200 space-y-1 flex-grow'>`;

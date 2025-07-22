@@ -90,7 +90,7 @@
                 </div>`;
             }
             // Busca conexão deste equipamento
-            const conexao = conexoes.find(c => c.equipamento === eq.nome && c.status === 'ativa');
+            const conexao = conexoes.find(c => c.equipamento_id === eq.id && c.status === 'ativa');
             let redeHtml = '';
             if (conexao && conexao.switch && conexao.porta) {
                 redeHtml = `<div class='flex items-center justify-center gap-2 text-gray-600 dark:text-gray-400 text-sm mt-2'><i class='fas fa-network-wired'></i> <span class='font-semibold'>Switch:</span> ${conexao.switch} <span class='font-semibold'>Porta:</span> ${conexao.porta}</div>`;

@@ -44,7 +44,8 @@
         <form id="formSwitch" class="space-y-6">
             <div class="space-y-2">
                 <label for="nome" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nome:</label>
-                <input type="text" name="nome" id="nome" required placeholder="Digite o nome do switch" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                <input type="text" name="nome" id="nome" required placeholder="Switch 01 - Sala X" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                <small class="text-gray-500 dark:text-gray-400">Exemplo: Switch 04 - Térreo</small>
             </div>
             <div class="space-y-2">
                 <label for="marca" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Marca:</label>
@@ -212,9 +213,16 @@
                 msgDiv.className = 'mt-4 p-4 rounded-lg text-center font-medium bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300';
                 return;
             }
+            // Validação do padrão do nome do switch
+            const nome = form.nome.value.trim();
+            if (!/^Switch\s*\d+\s*-\s*/i.test(nome)) {
+                msgDiv.innerText = 'O nome deve seguir o padrão: Switch XX - Descrição';
+                msgDiv.className = 'mt-4 p-4 rounded-lg text-center font-medium bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300';
+                return;
+            }
 
             const dados = {
-                nome: form.nome.value.trim(),
+                nome: nome,
                 marca: form.marca.value,
                 modelo: form.modelo.value
             };

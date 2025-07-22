@@ -8,6 +8,7 @@ from werkzeug.utils import secure_filename
 import subprocess
 from typing import cast
 import glob
+import re
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'sua_chave_secreta_aqui'
@@ -226,6 +227,12 @@ def criar_sala():
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
+    # Verificação de nome duplicado (case-insensitive)
+    nome = dados['nome']
+    cur.execute('SELECT 1 FROM salas WHERE LOWER(nome) = LOWER(?)', (nome,))
+    if cur.fetchone():
+        conn.close()
+        return jsonify({'status': 'erro', 'mensagem': 'Já existe uma sala com esse nome!'}), 400
     cur.execute('''
         INSERT INTO salas (nome, tipo, descricao, foto, fotos, andar_id)
         VALUES (?, ?, ?, ?, ?, ?)
@@ -409,6 +416,16 @@ def criar_sala_com_equipamentos():
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
+    # Verificação de nome duplicado (case-insensitive)
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    conn = sqlite3.connect(db_file)
+    cur = conn.cursor()
+    cur.execute('SELECT 1 FROM salas WHERE LOWER(nome) = LOWER(?)', (nome,))
+    if cur.fetchone():
+        conn.close()
+        return jsonify({'status': 'erro', 'mensagem': 'Já existe uma sala com esse nome!'}), 400
     # Cria a sala
     cur.execute('''
         INSERT INTO salas (nome, tipo, descricao, foto, fotos, andar_id)
@@ -1078,8 +1095,8 @@ def listar_conexoes():
     
     cur.execute('''
         SELECT c.id, c.data_conexao, c.status,
-               sp.numero_porta, s.nome as switch_nome, s.marca as switch_marca,
-               e.nome as equipamento_nome, e.tipo as equipamento_tipo
+               sp.id as porta_id, sp.numero_porta, s.nome as switch_nome, s.marca as switch_marca,
+               e.id as equipamento_id, e.nome as equipamento_nome, e.tipo as equipamento_tipo
         FROM conexoes c
         JOIN switch_portas sp ON c.porta_id = sp.id
         JOIN switches s ON sp.switch_id = s.id
@@ -1091,8 +1108,8 @@ def listar_conexoes():
     conexoes = [
         dict(
             id=row[0], data_conexao=row[1], status=row[2],
-            porta=row[3], switch=row[4], switch_marca=row[5],
-            equipamento=row[6], equipamento_tipo=row[7]
+            porta_id=row[3], porta=row[4], switch=row[5], switch_marca=row[6],
+            equipamento_id=row[7], equipamento=row[8], equipamento_tipo=row[9]
         )
         for row in cur.fetchall()
     ]
@@ -1344,20 +1361,28 @@ def upload_foto_sala():
     file = request.files['foto']
     if not file.filename:
         return jsonify({'status': 'erro', 'mensagem': 'Nome de arquivo vazio'})
-    pasta = os.path.join('static', 'img', 'fotos-salas')
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'status': 'erro', 'mensagem': 'Nenhuma empresa selecionada!'})
+    empresa_dir = os.path.splitext(os.path.basename(db_file))[0]
+    pasta = os.path.join('static', 'img', 'fotos-salas', empresa_dir)
     os.makedirs(pasta, exist_ok=True)
     filename = cast(str, file.filename)
     caminho = os.path.join(pasta, filename)
     file.save(caminho)
-    return jsonify({'status': 'ok', 'caminho': f'static/img/fotos-salas/{filename}'})
+    return jsonify({'status': 'ok', 'caminho': f'static/img/fotos-salas/{empresa_dir}/{filename}'})
 
 @app.route('/fotos-salas')
 def fotos_salas():
-    pasta = os.path.join('static', 'img', 'fotos-salas')
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'imagens': []})
+    empresa_dir = os.path.splitext(os.path.basename(db_file))[0]
+    pasta = os.path.join('static', 'img', 'fotos-salas', empresa_dir)
     if not os.path.exists(pasta):
         return jsonify({'imagens': []})
     arquivos = [f for f in os.listdir(pasta) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
-    return jsonify({'imagens': [f'/static/img/fotos-salas/{arq}' for arq in arquivos]})
+    return jsonify({'imagens': [f'/static/img/fotos-salas/{empresa_dir}/{arq}' for arq in arquivos]})
 
 @app.route('/upload-fotos-salas.html')
 def upload_fotos_salas_html():
@@ -1489,18 +1514,25 @@ def switches_usados_sala(sala_id):
     ''', (sala_id,))
     rows = cur.fetchall()
     switches = {}
+    def extrair_numero_switch(nome):
+        match = re.search(r'Switch\s*(\d+)', nome, re.IGNORECASE)
+        if match:
+            return int(match.group(1))
+        return None
     for switch_id, switch_nome, numero_porta, equipamento_nome, equipamento_tipo, sala_nome, equipamento_id, equipamento_marca, equipamento_foto in rows:
         # Buscar dados extras do equipamento
         cur.execute("SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=? AND chave IN ('ip1','ip2','mac1','mac2','serie','série')", (equipamento_id,))
         dados = {chave: valor for chave, valor in cur.fetchall()}
         serie = dados.get('serie') or dados.get('série') or ''
-        # Ajustar caminho da foto
         let_foto = equipamento_foto or ''
         if let_foto and not let_foto.startswith('static/'):
             let_foto = 'static/' + let_foto
-        if switch_id not in switches:
-            switches[switch_id] = {'id': switch_id, 'nome': switch_nome, 'portas': []}
-        switches[switch_id]['portas'].append({
+        numero_logico = extrair_numero_switch(switch_nome)
+        if numero_logico is None:
+            numero_logico = switch_id  # fallback
+        if numero_logico not in switches:
+            switches[numero_logico] = {'id': numero_logico, 'nome': switch_nome, 'portas': []}
+        switches[numero_logico]['portas'].append({
             'numero': numero_porta,
             'equipamento': equipamento_nome,
             'tipo': equipamento_tipo,

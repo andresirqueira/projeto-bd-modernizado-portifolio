@@ -134,13 +134,16 @@
                 body: formData
             });
             const json = await resp.json();
+            const msgDiv = document.getElementById('msg');
             if (json.status === 'ok') {
-                document.getElementById('msg').innerText = 'Sala cadastrada com sucesso!';
+                msgDiv.innerText = 'Sala cadastrada com sucesso!';
+                msgDiv.className = 'msg text-center mt-4 text-lg font-semibold text-green-600';
                 form.reset();
                 document.getElementById('equipamentosSemSalaTabela').innerHTML = '';
                 carregarEquipamentosSemSala();
             } else {
-                document.getElementById('msg').innerText = 'Erro ao cadastrar!';
+                msgDiv.innerText = json.mensagem || 'Erro ao cadastrar!';
+                msgDiv.className = 'msg text-center mt-4 text-lg font-semibold text-red-600';
             }
         };
 

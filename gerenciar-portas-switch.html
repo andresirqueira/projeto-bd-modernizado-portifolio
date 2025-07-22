@@ -291,7 +291,7 @@
                 // Primeiro, buscar a conexão
                 const resp = await fetch('/conexoes');
                 const conexoes = await resp.json();
-                const conexao = conexoes.find(c => c.porta === portaId);
+                const conexao = conexoes.find(c => c.porta_id === portaId);
                 
                 if (conexao) {
                     const deleteResp = await fetch(`/conexoes/${conexao.id}`, {
