@@ -9,6 +9,7 @@
       tailwind.config = { darkMode: 'class' };
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="static/img/favicon-lapis.png">
     <script>
       function toggleDarkMode() {
         if (document.documentElement.classList.contains('dark')) {
@@ -134,6 +135,7 @@
             Dongle: ["Logitech", "Outro"],
             "Tela Led": ["LG", "Leyard", "Outro"],
             Switcher: ["Kramer", "Outro"],
+            Serial: ["Controlart", "Outro"],
             Outro: ["Outro"]
         };
         const modelosPorTipoMarca = {
@@ -142,7 +144,7 @@
                 Outro: ["Outro"]
             },
             TV: {
-                LG: ["32LM621CBSB", "50UP751C0SF", "55UN731C0SC", "75UN801C0SB", "75UP801C0SB", "82UN8000PSB", "50UL3G-BJ", "Outro"],
+                LG: ["32LM621CBSB", "50UP751C0SF", "55UN731C0SC", "75UN801C0SB", "75UP801C0SB", "82UN8000PSB", "50UL3G-BJ", "43UN731C0SC", "50UN731C0SC","32SM5KE-BJ","Outro"],
                 Sony: ["Bravia", "Outro"],
                 Outro: ["Outro"]
             },
@@ -197,7 +199,7 @@
                 Outro: ["Outro"]
             },
             AVIO: {
-                Dante: ["2CH USB IO Adapter", "2CH Analog Output Adapter", "1CH Analog Input Adapter", "Outro"],
+                Dante: ["2CH USB IO Adapter", "2CH Analog Output Adapter", "1CH Analog Input Adapter", "1CH Analog Output Adapter", "2CH Analog Input Adapter", "Outro"],
                 Outro: ["Outro"]
             },
             Extensores: {
@@ -211,6 +213,9 @@
             Switcher: {
                 Kramer: ["VP-440X", "Outro"],
                 Outro: ["Outro"]
+            },
+            Serial: {
+                Controlart: ["rs-232"]
             },
             Outro: {
                 Outro: ["Outro"]
@@ -260,10 +265,11 @@
             const modeloSelect = document.getElementById('modelo');
             modeloSelect.innerHTML = '<option value="">Selecione...</option>';
             let opcoes = [];
-            if (modelos && modelos.length > 0) {
-                opcoes = modelos.filter(modelo => modelo && modelo.trim() !== "");
-            } else if (modelosPorTipoMarca[tipo] && modelosPorTipoMarca[tipo][marca]) {
+            // Priorizar modelos locais se disponíveis
+            if (modelosPorTipoMarca[tipo] && modelosPorTipoMarca[tipo][marca]) {
                 opcoes = modelosPorTipoMarca[tipo][marca];
+            } else if (modelos && modelos.length > 0) {
+                opcoes = modelos.filter(modelo => modelo && modelo.trim() !== "");
             }
             opcoes.forEach(modelo => {
                 const opt = document.createElement('option');
@@ -283,6 +289,11 @@
             document.getElementById('marca').value = '';
             document.getElementById('modelo').innerHTML = '<option value="">Selecione a marca primeiro</option>';
             document.getElementById('modelo').value = '';
+        });
+        // Ao mudar a marca, atualiza os modelos
+        document.getElementById('marca').addEventListener('change', function () {
+            const tipo = document.getElementById('tipo').value;
+            preencherModelos(tipo, this.value);
         });
         // Buscar salas para mapear id -> nome
         fetch('/salas')

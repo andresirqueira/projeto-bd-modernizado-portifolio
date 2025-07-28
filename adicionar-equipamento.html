@@ -9,6 +9,7 @@
       tailwind.config = { darkMode: 'class' };
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="static/img/favicon-mais.png">
     <script>
       function toggleDarkMode() {
         if (document.documentElement.classList.contains('dark')) {
@@ -67,6 +68,7 @@
                     <option value="Extensores">Extensores</option>
                     <option value="Dongle">Dongle</option>
                     <option value="Switcher">Switcher</option>
+                    <option value="Serial">Serial</option>
                     <option value="Outro">Outro</option>
                 </select>
             </div>
@@ -166,6 +168,7 @@
             Dongle: ["Logitech", "Outro"],
             "Tela Led": ["LG", "Leyard", "Outro"],
             Switcher: ["Kramer", "Outro"],
+            Serial: ["Controlart", "Outro"],
             Outro: ["Outro"]
         };
 
@@ -176,7 +179,7 @@
                 Outro: ["Outro"]
             },
             TV: {
-                LG: ["32LM621CBSB", "50UP751C0SF", "55UN731C0SC", "55UP751C0SF","75UN801C0SB", "75UP801C0SB", "82UN8000PSB", "50UL3G-BJ","Outro"],
+                LG: ["32LM621CBSB", "50UP751C0SF", "55UN731C0SC", "55UP751C0SF","75UN801C0SB", "75UP801C0SB", "82UN8000PSB", "50UL3G-BJ","43UN731C0SC","50UN731C0SC","32SM5KE-BJ","Outro"],
                 Sony: ["Bravia", "Outro"],
                 Outro: ["Outro"]
             },
@@ -235,7 +238,7 @@
                 Outro: ["Outro"]
             },
             AVIO: {
-                Dante: ["2CH USB IO Adapter", "2CH Analog Output Adapter", "1CH Analog Input Adapter", "Outro"],
+                Dante: ["2CH USB IO Adapter", "2CH Analog Output Adapter", "1CH Analog Input Adapter", "1CH Analog Output Adapter", "2CH Analog Input Adapter", "Outro"],
                 Outro: ["Outro"]
             },
             Extensores: {
@@ -254,6 +257,9 @@
             Switcher: {
                 Kramer: ["HDMI VS-211H2", "Outro"],
                 Outro: ["Outro"]
+            },
+            Serial: {
+                Controlart: ["rs-232"]
             },
             Outro: {
                 Outro: ["Outro"]
