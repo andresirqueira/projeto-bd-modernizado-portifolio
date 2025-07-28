@@ -205,15 +205,15 @@
             const equipamentoInfo = porta.equipamento_conectado ? `
                 <div class="mt-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                     <h4 class="font-semibold text-gray-800 dark:text-white mb-2">Equipamento Conectado:</h4>
-                    <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                        <div><strong>${porta.equipamento_conectado.nome}</strong></div>
-                        <div>Tipo: ${porta.equipamento_conectado.tipo}</div>
-                        <div>Sala: ${porta.equipamento_conectado.sala_nome || 'Sem sala'}</div>
-                        <div>IP 1: ${porta.equipamento_conectado.ip1 || '-'}</div>
-                        <div>MAC 1: <span class="font-mono text-xs">${porta.equipamento_conectado.mac1 || '-'}</span></div>
-                        <div>IP 2: ${porta.equipamento_conectado.ip2 || '-'}</div>
-                        <div>MAC 2: <span class="font-mono text-xs">${porta.equipamento_conectado.mac2 || '-'}</span></div>
-                    </div>
+                                         <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                         <div><strong>${porta.equipamento_conectado.nome}</strong></div>
+                         <div>Tipo: ${porta.equipamento_conectado.tipo}</div>
+                         <div>Sala: ${porta.equipamento_conectado.sala_nome || 'Sem sala'}</div>
+                         <div>IP 1: ${porta.equipamento_conectado.ip1 || '-'}</div>
+                         <div>MAC 1: <span class="font-mono text-xs">${porta.equipamento_conectado.mac1 || '-'}</span></div>
+                         <div>IP 2: ${porta.equipamento_conectado.ip2 || '-'}</div>
+                         <div>MAC 2: <span class="font-mono text-xs">${porta.equipamento_conectado.mac2 || '-'}</span></div>
+                     </div>
                 </div>
             ` : '';
 

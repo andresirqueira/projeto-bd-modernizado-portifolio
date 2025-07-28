@@ -703,3 +703,167 @@
 [2025-07-28 09:27:58] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=340, Nome=Dante AVIO Analógico, Tipo=AVIO, Marca=Dante, Modelo=2CH Analog Output Adapter | Status: sucesso
 [2025-07-28 09:35:50] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=340, Nome=Dante AVIO Analógico, Tipo=AVIO, Marca=Dante, Modelo= | Status: sucesso
 [2025-07-28 09:36:01] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=340, Nome=Dante AVIO Analógico, Tipo=AVIO, Marca=Dante, Modelo=1CH Analog Input Adapter | Status: sucesso
+[2025-07-28 09:48:53] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=129, Nome=Dante AVIO Analógico, Tipo=AVIO, Marca=Dante, Modelo=1CH Analog Output Adapter | Status: sucesso
+[2025-07-28 09:49:04] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=340, Nome=Dante AVIO Analógico, Tipo=AVIO, Marca=Dante, Modelo=1CH Analog Output Adapter | Status: sucesso
+[2025-07-28 09:51:33] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=341, Nome=Speaker 01, Tipo=Speaker, Marca=Shure, Modelo=MXN5W-C | Status: sucesso
+[2025-07-28 09:52:21] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=340, Nome=Dante AVIO Analógico, Tipo=AVIO, Marca=Dante, Modelo=1CH Analog Output Adapter | Status: sucesso
+[2025-07-28 09:52:30] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=129, Porta ID=148, Equipamento ID=340 | Status: sucesso
+[2025-07-28 09:52:36] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=130, Porta ID=149, Equipamento ID=341 | Status: sucesso
+[2025-07-28 09:52:52] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=131, Porta ID=154, Equipamento ID=338 | Status: sucesso
+[2025-07-28 09:53:01] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=132, Porta ID=164, Equipamento ID=339 | Status: sucesso
+[2025-07-28 10:07:39] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=60, Nome=Sala Retrô (via formulário) | Status: sucesso
+[2025-07-28 10:08:32] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=342, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-07-28 10:09:13] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=343, Nome=Câmera, Tipo=Camera, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-28 10:09:42] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=344, Nome=Microfone, Tipo=Microfone, Marca=Logitech, Modelo=Rally Mic Pod | Status: sucesso
+[2025-07-28 10:10:08] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=345, Nome=Speaker, Tipo=Speaker, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-28 10:10:41] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=346, Nome=TV, Tipo=TV, Marca=LG, Modelo=55UN731C0SC | Status: sucesso
+[2025-07-28 10:11:17] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=347, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-28 10:11:53] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=348, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-28 10:12:22] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=349, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-28 10:12:57] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=350, Nome=Display Hub, Tipo=Hub, Marca=Logitech, Modelo=Display | Status: sucesso
+[2025-07-28 10:13:33] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=351, Nome=Table Hub, Tipo=Hub, Marca=Logitech, Modelo=Table | Status: sucesso
+[2025-07-28 10:14:02] Usuario: admin_wh | Acao: CRIAR_SWITCH | Detalhes: Switch criado: ID=9, Nome=Switch 01 - 2 Andar, Marca=Cisco, Modelo=Outro | Status: sucesso
+[2025-07-28 10:14:11] Usuario: admin_wh | Acao: CRIAR_SWITCH | Detalhes: Switch criado: ID=10, Nome=Switch 02 - 2 Andar, Marca=Cisco, Modelo=Outro | Status: sucesso
+[2025-07-28 10:14:20] Usuario: admin_wh | Acao: CRIAR_SWITCH | Detalhes: Switch criado: ID=11, Nome=Switch 03 - 2 Andar, Marca=Cisco, Modelo=Outro | Status: sucesso
+[2025-07-28 10:14:48] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=133, Porta ID=270, Equipamento ID=349 | Status: sucesso
+[2025-07-28 10:14:57] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=134, Porta ID=271, Equipamento ID=348 | Status: sucesso
+[2025-07-28 10:15:03] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=135, Porta ID=272, Equipamento ID=347 | Status: sucesso
+[2025-07-28 10:17:21] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=61, Nome=Sala Gourmand (via formulário) | Status: sucesso
+[2025-07-28 11:38:20] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=352, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-07-28 11:39:00] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=353, Nome=Câmera, Tipo=Camera, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-28 11:39:27] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=354, Nome=Microfone 01, Tipo=Microfone, Marca=Logitech, Modelo=Rally Mic Pod | Status: sucesso
+[2025-07-28 11:40:05] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=355, Nome=Microfone 02, Tipo=Microfone, Marca=Logitech, Modelo=Rally Mic Pod | Status: sucesso
+[2025-07-28 11:40:29] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=356, Nome=Speaker 01, Tipo=Speaker, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-28 11:40:51] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=357, Nome=Speaker 02, Tipo=Speaker, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-28 11:41:23] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=358, Nome=TV, Tipo=TV, Marca=LG, Modelo=75UN801C0SB | Status: sucesso
+[2025-07-28 11:41:53] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=359, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-28 11:42:24] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=360, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-28 11:43:09] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=361, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-28 11:43:38] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=362, Nome=Display Hub, Tipo=Hub, Marca=Logitech, Modelo=Display | Status: sucesso
+[2025-07-28 11:44:06] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=363, Nome=Table Hub, Tipo=Hub, Marca=Logitech, Modelo=Table | Status: sucesso
+[2025-07-28 11:44:23] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=359, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-28 11:44:52] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=294, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-28 11:45:08] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=285, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-28 11:46:01] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=232, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-28 11:46:18] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=91, Nome=Painel de Controle, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-28 11:46:47] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=91, Nome=Painel de Controle, Tipo=Painel, Marca=Crestron, Modelo=Outro | Status: sucesso
+[2025-07-28 11:47:04] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=253, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-28 11:47:35] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=352, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-07-28 11:56:09] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=136, Porta ID=323, Equipamento ID=359 | Status: sucesso
+[2025-07-28 11:56:16] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=137, Porta ID=324, Equipamento ID=360 | Status: sucesso
+[2025-07-28 11:56:22] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=138, Porta ID=325, Equipamento ID=361 | Status: sucesso
+[2025-07-28 12:23:15] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=62, Nome=Sala Inverse (via formulário) | Status: sucesso
+[2025-07-28 12:23:57] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=364, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-07-28 12:24:28] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=365, Nome=Câmera, Tipo=Camera, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-28 12:24:59] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=366, Nome=Microfone 01, Tipo=Microfone, Marca=Logitech, Modelo=Rally Mic Pod | Status: sucesso
+[2025-07-28 12:25:33] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=367, Nome=Microfone 02, Tipo=Microfone, Marca=Logitech, Modelo=Rally Mic Pod | Status: sucesso
+[2025-07-28 12:25:58] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=368, Nome=Speaker 01, Tipo=Speaker, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-28 12:26:28] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=369, Nome=Speaker 02, Tipo=Speaker, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-28 12:26:57] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=370, Nome=TV, Tipo=TV, Marca=LG, Modelo=75UP801C0SB | Status: sucesso
+[2025-07-28 12:27:42] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=371, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-28 12:28:46] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=372, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-28 12:29:17] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=373, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-28 12:29:49] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=374, Nome=Display Hub, Tipo=Hub, Marca=Logitech, Modelo=Display | Status: sucesso
+[2025-07-28 12:30:14] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=375, Nome=Table Hub, Tipo=Hub, Marca=Logitech, Modelo=Table | Status: sucesso
+[2025-07-28 12:30:39] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=139, Porta ID=316, Equipamento ID=372 | Status: sucesso
+[2025-07-28 12:30:43] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=140, Porta ID=317, Equipamento ID=373 | Status: sucesso
+[2025-07-28 12:30:49] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=141, Porta ID=318, Equipamento ID=371 | Status: sucesso
+[2025-07-28 12:32:25] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=63, Nome=Sala Compra Certa (via formulário) | Status: sucesso
+[2025-07-28 12:34:37] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=376, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-07-28 12:35:26] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=377, Nome=Câmera, Tipo=Camera, Marca=Logitech, Modelo=Rally | Status: sucesso
+[2025-07-28 12:36:28] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=378, Nome=Microfone MXA 710, Tipo=Microfone, Marca=Shure, Modelo=MXA710 | Status: sucesso
+[2025-07-28 12:43:51] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=379, Nome=TV 01, Tipo=TV, Marca=LG, Modelo=75UP801C0SB | Status: sucesso
+[2025-07-28 12:45:01] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=380, Nome=TV 02, Tipo=TV, Marca=LG, Modelo=82UN8000PSB | Status: sucesso
+[2025-07-28 12:45:43] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=381, Nome=TV 03, Tipo=TV, Marca=LG, Modelo=75UN801C0SB | Status: sucesso
+[2025-07-28 12:46:20] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=382, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-28 12:46:59] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=383, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-28 12:47:42] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=384, Nome=Painel de Controle, Tipo=Painel, Marca=Crestron, Modelo=Outro | Status: sucesso
+[2025-07-28 12:48:14] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=385, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-28 12:49:25] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=386, Nome=Speaker 01, Tipo=Speaker, Marca=Shure, Modelo=MXN5W-C | Status: sucesso
+[2025-07-28 12:50:13] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=387, Nome=Speaker 02, Tipo=Speaker, Marca=Shure, Modelo=MXN5W-C | Status: sucesso
+[2025-07-28 12:51:10] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=388, Nome=Speaker 03, Tipo=Speaker, Marca=Shure, Modelo=MXN5W-C | Status: sucesso
+[2025-07-28 12:51:49] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=389, Nome=Clickshare, Tipo=Clickshare, Marca=Barco, Modelo=CSE-200 | Status: sucesso
+[2025-07-28 12:52:46] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=390, Nome=Dante AVIO USB, Tipo=AVIO, Marca=Dante, Modelo=2CH USB IO Adapter | Status: sucesso
+[2025-07-28 12:54:14] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=391, Nome=7Port serial, Tipo=Serial, Marca=Controlart, Modelo=rs-232 | Status: sucesso
+[2025-07-28 12:55:18] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=392, Nome=Switcher HDMI, Tipo=Switcher, Marca=Kramer, Modelo=HDMI VS-211H2 | Status: sucesso
+[2025-07-28 12:55:47] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=142, Porta ID=344, Equipamento ID=390 | Status: sucesso
+[2025-07-28 12:55:56] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=143, Porta ID=345, Equipamento ID=388 | Status: sucesso
+[2025-07-28 12:56:05] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=144, Porta ID=346, Equipamento ID=378 | Status: sucesso
+[2025-07-28 12:56:12] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=145, Porta ID=347, Equipamento ID=387 | Status: sucesso
+[2025-07-28 12:56:34] Usuario: admin_wh | Acao: REMOVER_CONEXAO | Detalhes: Conexão removida: ID=145, Porta ID=347, Equipamento ID=387 | Status: sucesso
+[2025-07-28 12:56:41] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=146, Porta ID=347, Equipamento ID=386 | Status: sucesso
+[2025-07-28 12:56:45] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=147, Porta ID=348, Equipamento ID=387 | Status: sucesso
+[2025-07-28 12:57:00] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=148, Porta ID=364, Equipamento ID=382 | Status: sucesso
+[2025-07-28 12:57:14] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=149, Porta ID=366, Equipamento ID=385 | Status: sucesso
+[2025-07-28 12:57:28] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=150, Porta ID=367, Equipamento ID=391 | Status: sucesso
+[2025-07-28 12:57:35] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=151, Porta ID=368, Equipamento ID=389 | Status: sucesso
+[2025-07-28 12:57:43] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=152, Porta ID=369, Equipamento ID=383 | Status: sucesso
+[2025-07-28 12:57:59] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=153, Porta ID=281, Equipamento ID=384 | Status: sucesso
+[2025-07-28 15:20:29] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=64, Nome=Sala Brastemp (via formulário) | Status: sucesso
+[2025-07-28 15:35:05] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=393, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-07-28 15:35:55] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=394, Nome=Câmera, Tipo=Camera, Marca=Yealink, Modelo=Outro | Status: sucesso
+[2025-07-28 15:38:13] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=395, Nome=Microfone MXA 910, Tipo=Microfone, Marca=Shure, Modelo=MXA910 | Status: sucesso
+[2025-07-28 15:40:18] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=396, Nome=Tela LED, Tipo=Tela Led, Marca=Leyard, Modelo=Leyard | Status: sucesso
+[2025-07-28 15:41:03] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=397, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-28 15:41:40] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=398, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-28 15:43:13] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=399, Nome=Painel de Controle, Tipo=Painel, Marca=Crestron, Modelo=Outro | Status: sucesso
+[2025-07-28 15:43:47] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=400, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-28 15:45:52] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=401, Nome=Speaker 01, Tipo=Speaker, Marca=Shure, Modelo=MXN5W-C | Status: sucesso
+[2025-07-28 15:46:31] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=402, Nome=Speaker 02, Tipo=Speaker, Marca=Shure, Modelo=MXN5W-C | Status: sucesso
+[2025-07-28 15:47:42] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=403, Nome=Speaker 03, Tipo=Speaker, Marca=Shure, Modelo=MXN5W-C | Status: sucesso
+[2025-07-28 15:48:18] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=404, Nome=Clickshare, Tipo=Clickshare, Marca=Barco, Modelo=CSE-200 | Status: sucesso
+[2025-07-28 15:49:01] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=405, Nome=Dante AVIO USB, Tipo=AVIO, Marca=Dante, Modelo=2CH USB IO Adapter | Status: sucesso
+[2025-07-28 15:49:35] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=406, Nome=7Port serial, Tipo=Serial, Marca=Controlart, Modelo=rs-232 | Status: sucesso
+[2025-07-28 15:50:09] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=407, Nome=Switcher HDMI, Tipo=Switcher, Marca=Kramer, Modelo=HDMI VS-211H2 | Status: sucesso
+[2025-07-28 15:51:40] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=154, Porta ID=298, Equipamento ID=395 | Status: sucesso
+[2025-07-28 15:51:53] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=155, Porta ID=300, Equipamento ID=401 | Status: sucesso
+[2025-07-28 15:52:10] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=156, Porta ID=326, Equipamento ID=400 | Status: sucesso
+[2025-07-28 15:52:19] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=157, Porta ID=327, Equipamento ID=404 | Status: sucesso
+[2025-07-28 15:52:31] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=158, Porta ID=329, Equipamento ID=398 | Status: sucesso
+[2025-07-28 15:52:46] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=159, Porta ID=330, Equipamento ID=397 | Status: sucesso
+[2025-07-28 15:52:57] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=160, Porta ID=331, Equipamento ID=399 | Status: sucesso
+[2025-07-28 15:53:12] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=161, Porta ID=338, Equipamento ID=402 | Status: sucesso
+[2025-07-28 15:53:18] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=162, Porta ID=339, Equipamento ID=403 | Status: sucesso
+[2025-07-28 15:54:20] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=163, Porta ID=299, Equipamento ID=405 | Status: sucesso
+[2025-07-28 15:57:10] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=65, Nome=Sala BTP 202 (via formulário) | Status: sucesso
+[2025-07-28 15:57:45] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=408, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-07-28 15:58:15] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=409, Nome=Meetup, Tipo=Meetup, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-07-28 15:58:51] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=410, Nome=TV, Tipo=TV, Marca=LG, Modelo=55UN731C0SC | Status: sucesso
+[2025-07-28 15:59:36] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=411, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-28 16:00:17] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=412, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-28 16:00:56] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=413, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-28 16:01:57] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=164, Porta ID=319, Equipamento ID=413 | Status: sucesso
+[2025-07-28 16:02:06] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=165, Porta ID=320, Equipamento ID=412 | Status: sucesso
+[2025-07-28 16:02:22] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=166, Porta ID=321, Equipamento ID=411 | Status: sucesso
+[2025-07-28 16:02:45] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=167, Porta ID=328, Equipamento ID=406 | Status: sucesso
+[2025-07-28 16:04:45] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=66, Nome=Sala BTP 203 (via formulário) | Status: sucesso
+[2025-07-28 16:05:54] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=414, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-07-28 16:06:19] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=415, Nome=Meetup, Tipo=Meetup, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-07-28 16:06:52] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=416, Nome=TV, Tipo=TV, Marca=LG, Modelo=55UN731C0SC | Status: sucesso
+[2025-07-28 16:07:29] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=417, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-28 16:08:07] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=418, Nome=Sensor de presença, Tipo=Sensor, Marca=Crestron, Modelo=CEN-ODT-C-POE | Status: sucesso
+[2025-07-28 16:08:46] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=419, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-28 16:09:13] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=168, Porta ID=267, Equipamento ID=417 | Status: sucesso
+[2025-07-28 16:09:24] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=169, Porta ID=268, Equipamento ID=419 | Status: sucesso
+[2025-07-28 16:09:31] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=170, Porta ID=269, Equipamento ID=418 | Status: sucesso
+[2025-07-28 16:11:03] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=67, Nome=Sala BTP 206 (via formulário) | Status: sucesso
+[2025-07-28 16:11:48] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=420, Nome=TV, Tipo=TV, Marca=LG, Modelo=43UN731C0SC | Status: sucesso
+[2025-07-28 16:12:05] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=171, Porta ID=282, Equipamento ID=420 | Status: sucesso
+[2025-07-28 16:13:25] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=68, Nome=Sala CC 210 (via formulário) | Status: sucesso
+[2025-07-28 16:13:53] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=421, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-07-28 16:14:13] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=422, Nome=Meetup, Tipo=Meetup, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-07-28 16:14:58] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=423, Nome=TV, Tipo=TV, Marca=LG, Modelo=50UN731C0SC | Status: sucesso
+[2025-07-28 16:15:27] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=424, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-28 16:15:48] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=172, Porta ID=280, Equipamento ID=424 | Status: sucesso
+[2025-07-28 16:16:49] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=69, Nome=Sala CC 211 (via formulário) | Status: sucesso
+[2025-07-28 16:17:31] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=425, Nome=TV, Tipo=TV, Marca=LG, Modelo=32SM5KE-BJ | Status: sucesso
+[2025-07-28 16:17:59] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=173, Porta ID=377, Equipamento ID=425 | Status: sucesso
+[2025-07-28 16:19:06] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=70, Nome=Sala CC 212 (via formulário) | Status: sucesso
+[2025-07-28 16:19:49] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=426, Nome=TV, Tipo=TV, Marca=LG, Modelo=32SM5KE-BJ | Status: sucesso
+[2025-07-28 16:20:05] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=174, Porta ID=376, Equipamento ID=426 | Status: sucesso
+[2025-07-28 16:22:03] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=71, Nome=Sala CC 213 (via formulário) | Status: sucesso
+[2025-07-28 16:22:44] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=427, Nome=TV, Tipo=TV, Marca=LG, Modelo=32SM5KE-BJ | Status: sucesso
+[2025-07-28 16:22:59] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=175, Porta ID=375, Equipamento ID=427 | Status: sucesso
+[2025-07-28 16:26:55] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=72, Nome=Sala CC 214 (via formulário) | Status: sucesso
+[2025-07-28 16:28:34] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=428, Nome=TV, Tipo=TV, Marca=LG, Modelo=43UN731C0SC | Status: sucesso
+[2025-07-28 16:28:48] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=176, Porta ID=374, Equipamento ID=428 | Status: sucesso
