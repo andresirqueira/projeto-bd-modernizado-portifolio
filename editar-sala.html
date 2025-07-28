@@ -369,6 +369,18 @@
         }
         // --- Substituir chamada inicial ---
         carregarSalasCombo();
+        
+        // Adicionar funcionalidade de filtro
+        document.getElementById('filtroSala').addEventListener('input', function() {
+            const filtro = this.value.toLowerCase();
+            const salasFiltradas = todasSalas.filter(sala => 
+                sala.nome.toLowerCase().includes(filtro) ||
+                (sala.tipo && sala.tipo.toLowerCase().includes(filtro)) ||
+                (sala.descricao && sala.descricao.toLowerCase().includes(filtro))
+            );
+            renderizarCardsSalas(salasFiltradas);
+        });
+        
         function voltarPainelConfig() {
             fetch('/perfil').then(resp => resp.json()).then(perfil => {
                 if (perfil.nivel === 'admin') {
