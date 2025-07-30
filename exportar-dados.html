@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Exportar Dados</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="static/img/favicon-lista.png">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-6xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarPainelConfig()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Exportar Dados</h1>
+            <p class="text-gray-600 dark:text-gray-300">Selecione o tipo de dados que deseja exportar em planilha</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Exportar Salas -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-building text-2xl text-blue-500 mr-3"></i>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Salas</h3>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">Exportar todas as salas com suas informações básicas</p>
+                <button onclick="exportarSalas()" class="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2">
+                    <i class="fas fa-download"></i> Exportar Salas
+                </button>
+            </div>
+
+            <!-- Exportar Equipamentos -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-cube text-2xl text-green-500 mr-3"></i>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Equipamentos</h3>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">Exportar todos os equipamentos com dados completos</p>
+                <button onclick="exportarEquipamentos()" class="w-full bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2">
+                    <i class="fas fa-download"></i> Exportar Equipamentos
+                </button>
+            </div>
+
+            <!-- Exportar IPs e MACs -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-network-wired text-2xl text-purple-500 mr-3"></i>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">IPs e MACs</h3>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">Exportar equipamentos com endereços de rede</p>
+                <button onclick="exportarIPsMACs()" class="w-full bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 text-white px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2">
+                    <i class="fas fa-download"></i> Exportar IPs/MACs
+                </button>
+            </div>
+
+            <!-- Exportar Switches -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-server text-2xl text-orange-500 mr-3"></i>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Switches</h3>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">Exportar switches e suas portas</p>
+                <button onclick="exportarSwitches()" class="w-full bg-orange-600 hover:bg-orange-700 dark:bg-orange-700 dark:hover:bg-orange-800 text-white px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2">
+                    <i class="fas fa-download"></i> Exportar Switches
+                </button>
+            </div>
+
+            <!-- Exportar Conexões -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-plug text-2xl text-red-500 mr-3"></i>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Conexões</h3>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">Exportar equipamentos conectados aos switches</p>
+                <button onclick="exportarConexoes()" class="w-full bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2">
+                    <i class="fas fa-download"></i> Exportar Conexões
+                </button>
+            </div>
+
+            <!-- Exportar Inventário Completo -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-clipboard-list text-2xl text-indigo-500 mr-3"></i>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Inventário Completo</h3>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">Exportar todos os dados em uma planilha completa</p>
+                <button onclick="exportarInventarioCompleto()" class="w-full bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-800 text-white px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2">
+                    <i class="fas fa-download"></i> Exportar Tudo
+                </button>
+            </div>
+        </div>
+
+        <div id="msg" class="mt-6 p-4 rounded-lg text-center font-medium" style="display:none;"></div>
+    </div>
+
+    <script>
+        function mostrarMensagem(texto, tipo) {
+            const msg = document.getElementById('msg');
+            msg.innerText = texto;
+            if (tipo === 'success') {
+                msg.className = 'mt-6 p-4 rounded-lg text-center font-medium bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300';
+            } else if (tipo === 'error') {
+                msg.className = 'mt-6 p-4 rounded-lg text-center font-medium bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300';
+            } else {
+                msg.className = 'mt-6 p-4 rounded-lg text-center font-medium bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300';
+            }
+            msg.style.display = 'block';
+            setTimeout(() => {
+                msg.style.display = 'none';
+            }, 3000);
+        }
+
+        function downloadCSV(csvContent, filename) {
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            if (link.download !== undefined) {
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+
+        async function exportarSalas() {
+            try {
+                const resp = await fetch('/salas');
+                const salas = await resp.json();
+                
+                let csv = 'Nome,Tipo,Descrição,Andar\n';
+                salas.forEach(sala => {
+                    csv += `"${sala.nome || ''}","${sala.tipo || ''}","${sala.descricao || ''}","${sala.andar || ''}"\n`;
+                });
+                
+                downloadCSV(csv, 'salas.csv');
+                mostrarMensagem('Exportação de salas concluída!', 'success');
+            } catch (error) {
+                console.error('Erro ao exportar salas:', error);
+                mostrarMensagem('Erro ao exportar salas', 'error');
+            }
+        }
+
+        async function exportarEquipamentos() {
+            try {
+                const resp = await fetch('/equipamentos');
+                const equipamentos = await resp.json();
+                
+                let csv = 'Nome,Tipo,Marca,Modelo,Descrição,Sala,Número de Série,Firmware,Part Number,Tamanho,Defeito\n';
+                equipamentos.forEach(eq => {
+                    csv += `"${eq.nome || ''}","${eq.tipo || ''}","${eq.marca || ''}","${eq.modelo || ''}","${eq.descricao || ''}","${eq.sala_nome || ''}","${eq.dados?.serie || ''}","${eq.dados?.firmware || ''}","${eq.dados?.partnumber || ''}","${eq.dados?.tamanho || ''}","${eq.defeito ? 'Sim' : 'Não'}"\n`;
+                });
+                
+                downloadCSV(csv, 'equipamentos.csv');
+                mostrarMensagem('Exportação de equipamentos concluída!', 'success');
+            } catch (error) {
+                console.error('Erro ao exportar equipamentos:', error);
+                mostrarMensagem('Erro ao exportar equipamentos', 'error');
+            }
+        }
+
+        async function exportarIPsMACs() {
+            try {
+                const resp = await fetch('/equipamentos');
+                const equipamentos = await resp.json();
+                
+                let csv = 'Equipamento,Tipo,Sala,IP 1,MAC 1,IP 2,MAC 2\n';
+                equipamentos.forEach(eq => {
+                    if (eq.dados?.ip1 || eq.dados?.mac1 || eq.dados?.ip2 || eq.dados?.mac2) {
+                        csv += `"${eq.nome || ''}","${eq.tipo || ''}","${eq.sala_nome || ''}","${eq.dados?.ip1 || ''}","${eq.dados?.mac1 || ''}","${eq.dados?.ip2 || ''}","${eq.dados?.mac2 || ''}"\n`;
+                    }
+                });
+                
+                downloadCSV(csv, 'ips_macs.csv');
+                mostrarMensagem('Exportação de IPs e MACs concluída!', 'success');
+            } catch (error) {
+                console.error('Erro ao exportar IPs e MACs:', error);
+                mostrarMensagem('Erro ao exportar IPs e MACs', 'error');
+            }
+        }
+
+        async function exportarSwitches() {
+            try {
+                const resp = await fetch('/switches');
+                const switches = await resp.json();
+                
+                let csv = 'Switch,Marca,Modelo,Porta,Status,Descrição\n';
+                
+                for (const sw of switches) {
+                    const respPortas = await fetch(`/switch-portas/${sw.id}`);
+                    const portas = await respPortas.json();
+                    
+                    portas.forEach(porta => {
+                        csv += `"${sw.nome}","${sw.marca}","${sw.modelo}","${porta.numero_porta}","${porta.status}","${porta.descricao || ''}"\n`;
+                    });
+                }
+                
+                downloadCSV(csv, 'switches.csv');
+                mostrarMensagem('Exportação de switches concluída!', 'success');
+            } catch (error) {
+                console.error('Erro ao exportar switches:', error);
+                mostrarMensagem('Erro ao exportar switches', 'error');
+            }
+        }
+
+        async function exportarConexoes() {
+            try {
+                const resp = await fetch('/conexoes');
+                const conexoes = await resp.json();
+                
+                let csv = 'Equipamento,Tipo,Sala,Switch,Porta,Data da Conexão\n';
+                conexoes.forEach(conexao => {
+                    csv += `"${conexao.equipamento_nome || ''}","${conexao.equipamento_tipo || ''}","${conexao.sala_nome || ''}","${conexao.switch_nome || ''}","${conexao.numero_porta || ''}","${conexao.data_conexao || ''}"\n`;
+                });
+                
+                downloadCSV(csv, 'conexoes.csv');
+                mostrarMensagem('Exportação de conexões concluída!', 'success');
+            } catch (error) {
+                console.error('Erro ao exportar conexões:', error);
+                mostrarMensagem('Erro ao exportar conexões', 'error');
+            }
+        }
+
+        async function exportarInventarioCompleto() {
+            try {
+                // Buscar todos os dados
+                const [salasResp, equipamentosResp, switchesResp, conexoesResp] = await Promise.all([
+                    fetch('/salas'),
+                    fetch('/equipamentos'),
+                    fetch('/switches'),
+                    fetch('/conexoes')
+                ]);
+                
+                const salas = await salasResp.json();
+                const equipamentos = await equipamentosResp.json();
+                const switches = await switchesResp.json();
+                const conexoes = await conexoesResp.json();
+                
+                // Criar planilha com múltiplas abas (separadas por seções)
+                let csv = '=== INVENTÁRIO COMPLETO ===\n\n';
+                
+                // Seção 1: Salas
+                csv += '--- SALAS ---\n';
+                csv += 'Nome,Tipo,Descrição,Andar\n';
+                salas.forEach(sala => {
+                    csv += `"${sala.nome || ''}","${sala.tipo || ''}","${sala.descricao || ''}","${sala.andar || ''}"\n`;
+                });
+                
+                csv += '\n--- EQUIPAMENTOS ---\n';
+                csv += 'Nome,Tipo,Marca,Modelo,Descrição,Sala,Número de Série,Firmware,Part Number,Tamanho,IP 1,MAC 1,IP 2,MAC 2,Defeito\n';
+                equipamentos.forEach(eq => {
+                    csv += `"${eq.nome || ''}","${eq.tipo || ''}","${eq.marca || ''}","${eq.modelo || ''}","${eq.descricao || ''}","${eq.sala_nome || ''}","${eq.dados?.serie || ''}","${eq.dados?.firmware || ''}","${eq.dados?.partnumber || ''}","${eq.dados?.tamanho || ''}","${eq.dados?.ip1 || ''}","${eq.dados?.mac1 || ''}","${eq.dados?.ip2 || ''}","${eq.dados?.mac2 || ''}","${eq.defeito ? 'Sim' : 'Não'}"\n`;
+                });
+                
+                csv += '\n--- SWITCHES ---\n';
+                csv += 'Nome,Marca,Modelo,Porta,Status,Descrição\n';
+                for (const sw of switches) {
+                    const respPortas = await fetch(`/switch-portas/${sw.id}`);
+                    const portas = await respPortas.json();
+                    
+                    portas.forEach(porta => {
+                        csv += `"${sw.nome}","${sw.marca}","${sw.modelo}","${porta.numero_porta}","${porta.status}","${porta.descricao || ''}"\n`;
+                    });
+                }
+                
+                csv += '\n--- CONEXÕES ---\n';
+                csv += 'Equipamento,Tipo,Sala,Switch,Porta,Data da Conexão\n';
+                conexoes.forEach(conexao => {
+                    csv += `"${conexao.equipamento_nome || ''}","${conexao.equipamento_tipo || ''}","${conexao.sala_nome || ''}","${conexao.switch_nome || ''}","${conexao.numero_porta || ''}","${conexao.data_conexao || ''}"\n`;
+                });
+                
+                downloadCSV(csv, 'inventario_completo.csv');
+                mostrarMensagem('Exportação do inventário completo concluída!', 'success');
+            } catch (error) {
+                console.error('Erro ao exportar inventário completo:', error);
+                mostrarMensagem('Erro ao exportar inventário completo', 'error');
+            }
+        }
+
+        function voltarPainelConfig() {
+            fetch('/perfil').then(resp => resp.json()).then(perfil => {
+                if (perfil.nivel === 'admin') {
+                    window.location.href = 'config-admin.html';
+                } else if (perfil.nivel === 'tecnico') {
+                    window.location.href = 'config-tecnico.html';
+                } else {
+                    window.location.href = 'config-usuario.html';
+                }
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    LogoManager.loadEmpresaLogo(data);
+                });
+        });
+    </script>
+    <script src="static/js/logo-manager.js"></script>
+</body>
+</html> 

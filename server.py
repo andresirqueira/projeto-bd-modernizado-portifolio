@@ -1713,5 +1713,10 @@ def historico_sala_html():
 def dashboard_sala_html():
     return send_from_directory(os.path.dirname(__file__), 'dashboard-sala.html')
 
+@app.route('/exportar-dados.html')
+@login_required
+def exportar_dados_html():
+    return send_from_directory(os.path.dirname(__file__), 'exportar-dados.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
