@@ -192,11 +192,8 @@
                 const resp = await fetch('/equipamentos');
                 const equipamentos = await resp.json();
                 
-                console.log('Equipamentos carregados:', equipamentos);
-                
                 let csv = 'Equipamento,Tipo,Sala,IP 1,MAC 1,IP 2,MAC 2\n';
                 equipamentos.forEach(eq => {
-                    console.log('Processando equipamento:', eq);
                     if (eq.dados?.ip1 || eq.dados?.mac1 || eq.dados?.ip2 || eq.dados?.mac2) {
                         const nome = eq.nome || '';
                         const tipo = eq.tipo || '';
@@ -206,12 +203,10 @@
                         const ip2 = eq.dados?.ip2 || '';
                         const mac2 = eq.dados?.mac2 || '';
                         
-                        console.log('Dados extraídos:', { nome, tipo, sala, ip1, mac1, ip2, mac2 });
                         csv += `"${nome}","${tipo}","${sala}","${ip1}","${mac1}","${ip2}","${mac2}"\n`;
                     }
                 });
                 
-                console.log('CSV gerado:', csv);
                 downloadCSV(csv, 'ips_macs.csv');
                 mostrarMensagem('Exportação de IPs e MACs concluída!', 'success');
             } catch (error) {

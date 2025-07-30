@@ -546,11 +546,25 @@ def listar_equipamentos():
               AND (e.defeito IS NULL OR e.defeito = 0)
         ''')
     elif sala_id == 'null':
-        cur.execute('SELECT id, nome, tipo, marca, modelo, descricao, foto, icone, sala_id, defeito FROM equipamentos WHERE sala_id IS NULL')
+        cur.execute('''
+            SELECT e.id, e.nome, e.tipo, e.marca, e.modelo, e.descricao, e.foto, e.icone, e.sala_id, e.defeito, s.nome as sala_nome
+            FROM equipamentos e
+            LEFT JOIN salas s ON e.sala_id = s.id
+            WHERE e.sala_id IS NULL
+        ''')
     elif sala_id:
-        cur.execute('SELECT id, nome, tipo, marca, modelo, descricao, foto, icone, sala_id, defeito FROM equipamentos WHERE sala_id=?', (sala_id,))
+        cur.execute('''
+            SELECT e.id, e.nome, e.tipo, e.marca, e.modelo, e.descricao, e.foto, e.icone, e.sala_id, e.defeito, s.nome as sala_nome
+            FROM equipamentos e
+            LEFT JOIN salas s ON e.sala_id = s.id
+            WHERE e.sala_id=?
+        ''', (sala_id,))
     else:
-        cur.execute('SELECT id, nome, tipo, marca, modelo, descricao, foto, icone, sala_id, defeito FROM equipamentos')
+        cur.execute('''
+            SELECT e.id, e.nome, e.tipo, e.marca, e.modelo, e.descricao, e.foto, e.icone, e.sala_id, e.defeito, s.nome as sala_nome
+            FROM equipamentos e
+            LEFT JOIN salas s ON e.sala_id = s.id
+        ''')
     equipamentos = []
     for row in cur.fetchall():
         eq_id = row['id']
@@ -567,7 +581,7 @@ def listar_equipamentos():
             'foto': row['foto'],
             'icone': row['icone'],
             'sala_id': row['sala_id'],
-            'sala_nome': row['sala_nome'] if conectaveis == '1' else None,
+            'sala_nome': row['sala_nome'],
             'defeito': defeito_val,
             'dados': dados
         })
