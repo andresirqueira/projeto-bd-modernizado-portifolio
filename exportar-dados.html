@@ -156,9 +156,9 @@
                 const resp = await fetch('/salas');
                 const salas = await resp.json();
                 
-                let csv = 'Nome,Tipo,Descrição,Andar\n';
+                let csv = 'Nome;Tipo;Descrição;Andar\n';
                 salas.forEach(sala => {
-                    csv += `"${sala.nome || ''}","${sala.tipo || ''}","${sala.descricao || ''}","${sala.andar || ''}"\n`;
+                    csv += `${sala.nome || ''};${sala.tipo || ''};${sala.descricao || ''};${sala.andar || ''}\n`;
                 });
                 
                 downloadCSV(csv, 'salas.csv');
@@ -174,9 +174,9 @@
                 const resp = await fetch('/equipamentos');
                 const equipamentos = await resp.json();
                 
-                let csv = 'Nome,Tipo,Marca,Modelo,Descrição,Sala,Número de Série,Firmware,Part Number,Tamanho,Defeito\n';
+                let csv = 'Nome;Tipo;Marca;Modelo;Descrição;Sala;Número de Série;Firmware;Part Number;Tamanho;Defeito\n';
                 equipamentos.forEach(eq => {
-                    csv += `"${eq.nome || ''}","${eq.tipo || ''}","${eq.marca || ''}","${eq.modelo || ''}","${eq.descricao || ''}","${eq.sala_nome || ''}","${eq.dados?.serie || ''}","${eq.dados?.firmware || ''}","${eq.dados?.partnumber || ''}","${eq.dados?.tamanho || ''}","${eq.defeito ? 'Sim' : 'Não'}"\n`;
+                    csv += `${eq.nome || ''};${eq.tipo || ''};${eq.marca || ''};${eq.modelo || ''};${eq.descricao || ''};${eq.sala_nome || ''};${eq.dados?.serie || ''};${eq.dados?.firmware || ''};${eq.dados?.partnumber || ''};${eq.dados?.tamanho || ''};${eq.defeito ? 'Sim' : 'Não'}\n`;
                 });
                 
                 downloadCSV(csv, 'equipamentos.csv');
@@ -191,8 +191,8 @@
             try {
                 const resp = await fetch('/equipamentos');
                 const equipamentos = await resp.json();
-                
-                let csv = 'Equipamento,Tipo,Sala,IP 1,MAC 1,IP 2,MAC 2\n';
+
+                let csv = 'Equipamento;Tipo;Sala;IP 1;MAC 1;IP 2;MAC 2\n';
                 equipamentos.forEach(eq => {
                     if (eq.dados?.ip1 || eq.dados?.mac1 || eq.dados?.ip2 || eq.dados?.mac2) {
                         const nome = eq.nome || '';
@@ -202,11 +202,10 @@
                         const mac1 = eq.dados?.mac1 || '';
                         const ip2 = eq.dados?.ip2 || '';
                         const mac2 = eq.dados?.mac2 || '';
-                        
-                        csv += `"${nome}","${tipo}","${sala}","${ip1}","${mac1}","${ip2}","${mac2}"\n`;
+                        csv += `${nome};${tipo};${sala};${ip1};${mac1};${ip2};${mac2}\n`;
                     }
                 });
-                
+
                 downloadCSV(csv, 'ips_macs.csv');
                 mostrarMensagem('Exportação de IPs e MACs concluída!', 'success');
             } catch (error) {
@@ -220,14 +219,14 @@
                 const resp = await fetch('/switches');
                 const switches = await resp.json();
                 
-                let csv = 'Switch,Marca,Modelo,Porta,Status,Descrição\n';
+                let csv = 'Switch;Marca;Modelo;Porta;Status;Descrição\n';
                 
                 for (const sw of switches) {
                     const respPortas = await fetch(`/switch-portas/${sw.id}`);
                     const portas = await respPortas.json();
                     
                     portas.forEach(porta => {
-                        csv += `"${sw.nome}","${sw.marca}","${sw.modelo}","${porta.numero_porta}","${porta.status}","${porta.descricao || ''}"\n`;
+                        csv += `${sw.nome};${sw.marca};${sw.modelo};${porta.numero_porta};${porta.status};${porta.descricao || ''}\n`;
                     });
                 }
                 
@@ -244,9 +243,9 @@
                 const resp = await fetch('/conexoes');
                 const conexoes = await resp.json();
                 
-                let csv = 'Equipamento,Tipo,Sala,Switch,Porta,Data da Conexão\n';
+                let csv = 'Equipamento;Tipo;Sala;Switch;Porta;Data da Conexão\n';
                 conexoes.forEach(conexao => {
-                    csv += `"${conexao.equipamento_nome || ''}","${conexao.equipamento_tipo || ''}","${conexao.sala_nome || ''}","${conexao.switch_nome || ''}","${conexao.numero_porta || ''}","${conexao.data_conexao || ''}"\n`;
+                    csv += `${conexao.equipamento_nome || ''};${conexao.equipamento_tipo || ''};${conexao.sala_nome || ''};${conexao.switch_nome || ''};${conexao.numero_porta || ''};${conexao.data_conexao || ''}\n`;
                 });
                 
                 downloadCSV(csv, 'conexoes.csv');
@@ -277,32 +276,32 @@
                 
                 // Seção 1: Salas
                 csv += '--- SALAS ---\n';
-                csv += 'Nome,Tipo,Descrição,Andar\n';
+                csv += 'Nome;Tipo;Descrição;Andar\n';
                 salas.forEach(sala => {
-                    csv += `"${sala.nome || ''}","${sala.tipo || ''}","${sala.descricao || ''}","${sala.andar || ''}"\n`;
+                    csv += `${sala.nome || ''};${sala.tipo || ''};${sala.descricao || ''};${sala.andar || ''}\n`;
                 });
                 
                 csv += '\n--- EQUIPAMENTOS ---\n';
-                csv += 'Nome,Tipo,Marca,Modelo,Descrição,Sala,Número de Série,Firmware,Part Number,Tamanho,IP 1,MAC 1,IP 2,MAC 2,Defeito\n';
+                csv += 'Nome;Tipo;Marca;Modelo;Descrição;Sala;Número de Série;Firmware;Part Number;Tamanho;IP 1;MAC 1;IP 2;MAC 2;Defeito\n';
                 equipamentos.forEach(eq => {
-                    csv += `"${eq.nome || ''}","${eq.tipo || ''}","${eq.marca || ''}","${eq.modelo || ''}","${eq.descricao || ''}","${eq.sala_nome || ''}","${eq.dados?.serie || ''}","${eq.dados?.firmware || ''}","${eq.dados?.partnumber || ''}","${eq.dados?.tamanho || ''}","${eq.dados?.ip1 || ''}","${eq.dados?.mac1 || ''}","${eq.dados?.ip2 || ''}","${eq.dados?.mac2 || ''}","${eq.defeito ? 'Sim' : 'Não'}"\n`;
+                    csv += `${eq.nome || ''};${eq.tipo || ''};${eq.marca || ''};${eq.modelo || ''};${eq.descricao || ''};${eq.sala_nome || ''};${eq.dados?.serie || ''};${eq.dados?.firmware || ''};${eq.dados?.partnumber || ''};${eq.dados?.tamanho || ''};${eq.dados?.ip1 || ''};${eq.dados?.mac1 || ''};${eq.dados?.ip2 || ''};${eq.dados?.mac2 || ''};${eq.defeito ? 'Sim' : 'Não'}\n`;
                 });
                 
                 csv += '\n--- SWITCHES ---\n';
-                csv += 'Nome,Marca,Modelo,Porta,Status,Descrição\n';
+                csv += 'Nome;Marca;Modelo;Porta;Status;Descrição\n';
                 for (const sw of switches) {
                     const respPortas = await fetch(`/switch-portas/${sw.id}`);
                     const portas = await respPortas.json();
                     
                     portas.forEach(porta => {
-                        csv += `"${sw.nome}","${sw.marca}","${sw.modelo}","${porta.numero_porta}","${porta.status}","${porta.descricao || ''}"\n`;
+                        csv += `${sw.nome};${sw.marca};${sw.modelo};${porta.numero_porta};${porta.status};${porta.descricao || ''}\n`;
                     });
                 }
                 
                 csv += '\n--- CONEXÕES ---\n';
-                csv += 'Equipamento,Tipo,Sala,Switch,Porta,Data da Conexão\n';
+                csv += 'Equipamento;Tipo;Sala;Switch;Porta;Data da Conexão\n';
                 conexoes.forEach(conexao => {
-                    csv += `"${conexao.equipamento_nome || ''}","${conexao.equipamento_tipo || ''}","${conexao.sala_nome || ''}","${conexao.switch_nome || ''}","${conexao.numero_porta || ''}","${conexao.data_conexao || ''}"\n`;
+                    csv += `${conexao.equipamento_nome || ''};${conexao.equipamento_tipo || ''};${conexao.sala_nome || ''};${conexao.switch_nome || ''};${conexao.numero_porta || ''};${conexao.data_conexao || ''}\n`;
                 });
                 
                 downloadCSV(csv, 'inventario_completo.csv');
