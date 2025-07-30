@@ -92,18 +92,6 @@
                 </button>
             </div>
 
-            <!-- Exportar Conexões -->
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
-                <div class="flex items-center mb-4">
-                    <i class="fas fa-plug text-2xl text-red-500 mr-3"></i>
-                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Conexões</h3>
-                </div>
-                <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">Exportar equipamentos conectados aos switches</p>
-                <button onclick="exportarConexoes()" class="w-full bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2">
-                    <i class="fas fa-download"></i> Exportar Conexões
-                </button>
-            </div>
-
             <!-- Exportar Inventário Completo -->
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
                 <div class="flex items-center mb-4">
@@ -221,17 +209,20 @@
                 const resp = await fetch('/switches');
                 const switches = await resp.json();
                 
-                let csv = 'Switch;Marca;Modelo;Porta;Status;Descrição\n';
-                
+                let csv = 'Switch;Marca;Modelo;Porta;Status;Descrição;Equipamento;Sala Equipamento\n';
                 for (const sw of switches) {
                     const respPortas = await fetch(`/switch-portas/${sw.id}`);
                     const portas = await respPortas.json();
-                    
                     portas.forEach(porta => {
-                        csv += `${sw.nome};${sw.marca};${sw.modelo};${porta.numero_porta};${porta.status};${porta.descricao || ''}\n`;
+                        let equipamento = '';
+                        let salaEquip = '';
+                        if (porta.status === 'ocupada' && porta.equipamento_conectado) {
+                            equipamento = porta.equipamento_conectado.nome || '';
+                            salaEquip = porta.equipamento_conectado.sala_nome || '';
+                        }
+                        csv += `${sw.nome};${sw.marca};${sw.modelo};${porta.numero_porta};${porta.status};${porta.descricao || ''};${equipamento};${salaEquip}\n`;
                     });
                 }
-                
                 downloadCSV(csv, 'switches.csv');
                 mostrarMensagem('Exportação de switches concluída!', 'success');
             } catch (error) {
@@ -240,38 +231,18 @@
             }
         }
 
-        async function exportarConexoes() {
-            try {
-                const resp = await fetch('/conexoes');
-                const conexoes = await resp.json();
-                
-                let csv = 'Equipamento;Tipo;Sala;Switch;Porta;Data da Conexão\n';
-                conexoes.forEach(conexao => {
-                    csv += `${conexao.equipamento_nome || ''};${conexao.equipamento_tipo || ''};${conexao.sala_nome || ''};${conexao.switch_nome || ''};${conexao.numero_porta || ''};${conexao.data_conexao || ''}\n`;
-                });
-                
-                downloadCSV(csv, 'conexoes.csv');
-                mostrarMensagem('Exportação de conexões concluída!', 'success');
-            } catch (error) {
-                console.error('Erro ao exportar conexões:', error);
-                mostrarMensagem('Erro ao exportar conexões', 'error');
-            }
-        }
-
         async function exportarInventarioCompleto() {
             try {
                 // Buscar todos os dados
-                const [salasResp, equipamentosResp, switchesResp, conexoesResp] = await Promise.all([
+                const [salasResp, equipamentosResp, switchesResp] = await Promise.all([
                     fetch('/salas'),
                     fetch('/equipamentos'),
-                    fetch('/switches'),
-                    fetch('/conexoes')
+                    fetch('/switches')
                 ]);
                 
                 const salas = await salasResp.json();
                 const equipamentos = await equipamentosResp.json();
                 const switches = await switchesResp.json();
-                const conexoes = await conexoesResp.json();
                 
                 // Criar planilha com múltiplas abas (separadas por seções)
                 let csv = '=== INVENTÁRIO COMPLETO ===\n\n';
@@ -290,21 +261,21 @@
                 });
                 
                 csv += '\n--- SWITCHES ---\n';
-                csv += 'Nome;Marca;Modelo;Porta;Status;Descrição\n';
+                csv += 'Nome;Marca;Modelo;Porta;Status;Descrição;Equipamento;Sala Equipamento\n';
                 for (const sw of switches) {
                     const respPortas = await fetch(`/switch-portas/${sw.id}`);
                     const portas = await respPortas.json();
                     
                     portas.forEach(porta => {
-                        csv += `${sw.nome};${sw.marca};${sw.modelo};${porta.numero_porta};${porta.status};${porta.descricao || ''}\n`;
+                        let equipamento = '';
+                        let salaEquip = '';
+                        if (porta.status === 'ocupada' && porta.equipamento_conectado) {
+                            equipamento = porta.equipamento_conectado.nome || '';
+                            salaEquip = porta.equipamento_conectado.sala_nome || '';
+                        }
+                        csv += `${sw.nome};${sw.marca};${sw.modelo};${porta.numero_porta};${porta.status};${porta.descricao || ''};${equipamento};${salaEquip}\n`;
                     });
                 }
-                
-                csv += '\n--- CONEXÕES ---\n';
-                csv += 'Equipamento;Tipo;Sala;Switch;Porta;Data da Conexão\n';
-                conexoes.forEach(conexao => {
-                    csv += `${conexao.equipamento_nome || ''};${conexao.equipamento_tipo || ''};${conexao.sala_nome || ''};${conexao.switch_nome || ''};${conexao.numero_porta || ''};${conexao.data_conexao || ''}\n`;
-                });
                 
                 downloadCSV(csv, 'inventario_completo.csv');
                 mostrarMensagem('Exportação do inventário completo concluída!', 'success');
