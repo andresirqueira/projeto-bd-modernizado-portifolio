@@ -138,7 +138,9 @@
         }
 
         function downloadCSV(csvContent, filename) {
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            // Adiciona BOM UTF-8 para compatibilidade com Excel
+            const BOM = '\uFEFF';
+            const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             if (link.download !== undefined) {
                 const url = URL.createObjectURL(blob);
