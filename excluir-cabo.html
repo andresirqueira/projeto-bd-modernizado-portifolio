@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Excluir Cabo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="static/img/favicon-lapis.png">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+</head>
+
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-4xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarPainelConfig()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+                <i class="fas fa-trash-alt text-red-600 dark:text-red-400 mr-3"></i>
+                Excluir Cabo
+            </h1>
+            <p class="text-gray-600 dark:text-gray-300">Remova cabos do sistema de forma segura</p>
+        </div>
+
+        <!-- Filtros de Busca -->
+        <div class="mb-6 flex flex-wrap gap-4 justify-center">
+            <div class="flex gap-2">
+                <div class="relative">
+                    <input id="filtroCabo" type="text" class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600" placeholder="Buscar cabo...">
+                    <div class="absolute right-3 top-2.5 text-gray-400 dark:text-gray-500 text-sm">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                <button onclick="limparBusca()" class="px-3 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded transition-colors text-sm" title="Limpar busca">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="aplicarFiltroStatus('todos')" id="btn-todos" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors text-sm">
+                    <i class="fas fa-list"></i> Todos
+                </button>
+                <button onclick="aplicarFiltroStatus('funcionando')" id="btn-funcionando" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded transition-colors text-sm">
+                    <i class="fas fa-check"></i> Funcionando
+                </button>
+                <button onclick="aplicarFiltroStatus('defeito')" id="btn-defeito" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded transition-colors text-sm">
+                    <i class="fas fa-times"></i> Com Defeito
+                </button>
+            </div>
+        </div>
+
+        <div id="resultadosInfo" class="text-xs text-indigo-600 dark:text-indigo-400 text-center font-medium mb-4"></div>
+
+        <!-- Grid de Cabos -->
+        <div id="cabos-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8"></div>
+
+        <!-- Informações do Cabo Selecionado -->
+        <div id="infoCabo" class="mb-8 p-6 bg-gray-50 dark:bg-gray-800 rounded-lg" style="display: none;">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+                <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+                Informações do Cabo
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <strong class="text-gray-700 dark:text-gray-300">Código:</strong>
+                    <span id="codigo_unico" class="ml-2 text-gray-600 dark:text-gray-400"></span>
+                </div>
+                <div>
+                    <strong class="text-gray-700 dark:text-gray-300">Tipo:</strong>
+                    <span id="tipo" class="ml-2 text-gray-600 dark:text-gray-400"></span>
+                </div>
+                <div>
+                    <strong class="text-gray-700 dark:text-gray-300">Status:</strong>
+                    <span id="status" class="ml-2 text-gray-600 dark:text-gray-400"></span>
+                </div>
+                <div>
+                    <strong class="text-gray-700 dark:text-gray-300">Conectado:</strong>
+                    <span id="conectado" class="ml-2 text-gray-600 dark:text-gray-400"></span>
+                </div>
+                <div>
+                    <strong class="text-gray-700 dark:text-gray-300">Marca:</strong>
+                    <span id="marca" class="ml-2 text-gray-600 dark:text-gray-400"></span>
+                </div>
+                <div>
+                    <strong class="text-gray-700 dark:text-gray-300">Modelo:</strong>
+                    <span id="modelo" class="ml-2 text-gray-600 dark:text-gray-400"></span>
+                </div>
+                <div class="md:col-span-2">
+                    <strong class="text-gray-700 dark:text-gray-300">Descrição:</strong>
+                    <span id="descricao" class="ml-2 text-gray-600 dark:text-gray-400"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aviso de Segurança -->
+        <div class="mb-8 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+            <div class="flex items-start">
+                <i class="fas fa-exclamation-triangle text-red-500 mt-1 mr-3"></i>
+                <div>
+                    <h4 class="font-semibold text-red-800 dark:text-red-200">Atenção!</h4>
+                    <p class="text-red-700 dark:text-red-300 text-sm mt-1">
+                        Esta ação é <strong>irreversível</strong>. O cabo será permanentemente removido do sistema.
+                        Se o cabo estiver conectado a equipamentos, a exclusão será <strong>bloqueada</strong> por segurança.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botão de Exclusão -->
+        <div class="text-center">
+            <button id="btnExcluir" onclick="confirmarExclusao()" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors" style="display: none;">
+                <i class="fas fa-trash-alt mr-2"></i>
+                Excluir Cabo
+            </button>
+        </div>
+
+        <!-- Modal de Confirmação -->
+        <div id="modalConfirmacao" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full mx-4">
+                <div class="text-center">
+                    <i class="fas fa-exclamation-triangle text-6xl text-red-500 mb-4"></i>
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Confirmar Exclusão</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">
+                        Tem certeza que deseja excluir o cabo <strong id="caboNomeConfirmacao"></strong>?
+                        <br><br>
+                        Esta ação não pode ser desfeita.
+                    </p>
+                    <div class="flex gap-3">
+                        <button onclick="fecharModal()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                            Cancelar
+                        </button>
+                        <button onclick="excluirCabo()" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                            Excluir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Sucesso -->
+        <div id="modalSucesso" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full mx-4">
+                <div class="text-center">
+                    <i class="fas fa-check-circle text-6xl text-green-500 mb-4"></i>
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Cabo Excluído!</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">O cabo foi removido do sistema com sucesso.</p>
+                    <div class="flex gap-3">
+                        <button onclick="fecharModalSucesso()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                            OK
+                        </button>
+                        <button onclick="excluirOutro()" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                            Excluir Outro
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cabos = [];
+        let caboSelecionado = null;
+        let filtroStatusAtivo = 'todos';
+        let termoBusca = '';
+
+        // Carregar cabos
+        async function carregarCabos() {
+            try {
+                const response = await fetch('/cabos');
+                cabos = await response.json();
+                renderizarCabos(cabos);
+            } catch (error) {
+                console.error('Erro ao carregar cabos:', error);
+            }
+        }
+
+        // Renderizar cabos
+        function renderizarCabos(lista) {
+            const container = document.getElementById('cabos-container');
+            
+            if (lista.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i class="fas fa-plug text-6xl text-gray-300 dark:text-gray-600 mb-4"></i>
+                        <p class="text-gray-500 dark:text-gray-400 text-lg">Nenhum cabo encontrado</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            lista.forEach(cabo => {
+                const isDefeito = cabo.status === 'defeito';
+                const statusBg = isDefeito ? 'bg-red-100 dark:bg-red-900' : 'bg-green-100 dark:bg-green-900';
+                const statusText = isDefeito ? 'text-red-800 dark:text-red-200' : 'text-green-800 dark:text-green-200';
+                const borderColor = isDefeito ? 'border-red-300 dark:border-red-600' : 'border-green-300 dark:border-green-600';
+                
+                // Verificar se está conectado
+                const isConectado = cabo.conectado || false;
+                const conectadoBadge = isConectado ? 
+                    '<div class="absolute top-2 left-2"><div class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-2 py-1 rounded-full text-xs font-medium"><i class="fas fa-link mr-1"></i>Conectado</div></div>' : 
+                    '<div class="absolute top-2 left-2"><div class="bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 px-2 py-1 rounded-full text-xs font-medium"><i class="fas fa-box mr-1"></i>Estoque</div></div>';
+                
+                html += `
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border-2 ${borderColor} relative cursor-pointer hover:shadow-xl transition-shadow" onclick="selecionarCaboParaExcluir(${cabo.id})">
+                        <div class="p-4">
+                            <!-- Status Badge - Canto superior direito -->
+                            <div class="absolute top-2 right-2">
+                                <div class="flex items-center gap-1 ${statusBg} ${statusText} px-2 py-1 rounded-full text-xs font-medium">
+                                    <i class="fas ${isDefeito ? 'fa-times' : 'fa-check'}"></i>
+                                    ${isDefeito ? 'Defeito' : 'OK'}
+                                </div>
+                            </div>
+
+                            <!-- Conectado/Estoque Badge - Canto superior esquerdo -->
+                            ${conectadoBadge}
+
+                            <!-- Ícone do Tipo -->
+                            <div class="flex justify-center mb-3">
+                                <i class="${cabo.tipo_icone || 'fas fa-plug'} text-4xl text-indigo-500 dark:text-indigo-400"></i>
+                            </div>
+
+                            <!-- Informações Básicas -->
+                            <div class="space-y-2">
+                                <h3 class="font-bold text-lg text-gray-800 dark:text-white text-center">${cabo.codigo_unico}</h3>
+                                
+                                <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                    <div><strong>Tipo:</strong> ${cabo.tipo || 'Não informado'}</div>
+                                    ${cabo.comprimento ? `<div><strong>Comprimento:</strong> ${cabo.comprimento}m</div>` : ''}
+                                    ${cabo.marca ? `<div><strong>Marca:</strong> ${cabo.marca}</div>` : ''}
+                                    ${cabo.modelo ? `<div><strong>Modelo:</strong> ${cabo.modelo}</div>` : ''}
+                                </div>
+
+                                ${cabo.descricao ? `
+                                    <div class="mt-3 p-2 bg-gray-50 dark:bg-gray-700 rounded text-sm">
+                                        <strong class="text-gray-800 dark:text-gray-200">Descrição:</strong> <span class="text-gray-700 dark:text-gray-300">${cabo.descricao}</span>
+                                    </div>
+                                ` : ''}
+
+                                <!-- Data de Criação -->
+                                <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                                    <i class="fas fa-calendar mr-1"></i>
+                                    Criado em: ${new Date(cabo.data_criacao).toLocaleDateString('pt-BR')}
+                                </div>
+                            </div>
+
+                            <!-- Botão Excluir -->
+                            <div class="mt-4">
+                                <button class="w-full bg-red-500 hover:bg-red-600 text-white text-sm py-2 px-3 rounded transition-colors">
+                                    <i class="fas fa-trash mr-1"></i>Excluir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Selecionar cabo para excluir
+        async function selecionarCaboParaExcluir(caboId) {
+            await carregarDadosCabo(caboId);
+        }
+
+        // Carregar dados do cabo selecionado
+        async function carregarDadosCabo(caboId) {
+            try {
+                const response = await fetch(`/cabos/${caboId}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const cabo = await response.json();
+                
+                if (cabo.erro) {
+                    alert(`Erro: ${cabo.erro}`);
+                    return;
+                }
+                
+                caboSelecionado = cabo;
+                
+                // Preencher informações
+                document.getElementById('codigo_unico').textContent = cabo.codigo_unico;
+                document.getElementById('tipo').textContent = cabo.tipo;
+                document.getElementById('status').textContent = cabo.status === 'funcionando' ? 'Funcionando' : 'Com Defeito';
+                
+                // Verificar se está conectado
+                const conectado = await verificarSeConectado(caboId);
+                document.getElementById('conectado').textContent = conectado ? 'Sim' : 'Não';
+                
+                document.getElementById('marca').textContent = cabo.marca || 'Não informado';
+                document.getElementById('modelo').textContent = cabo.modelo || 'Não informado';
+                document.getElementById('descricao').textContent = cabo.descricao || 'Não informado';
+                
+                // Mostrar informações e botão
+                document.getElementById('infoCabo').style.display = 'block';
+                
+                // Verificar se pode ser excluído
+                if (conectado) {
+                    document.getElementById('btnExcluir').style.display = 'none';
+                    // Mostrar aviso de que não pode ser excluído
+                    const aviso = document.createElement('div');
+                    aviso.className = 'mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg';
+                    aviso.innerHTML = `
+                        <div class="flex items-center">
+                            <i class="fas fa-info-circle text-yellow-500 mr-2"></i>
+                            <span class="text-yellow-700 dark:text-yellow-300 text-sm">
+                                Este cabo não pode ser excluído pois está conectado a equipamentos. 
+                                Desconecte-o primeiro.
+                            </span>
+                        </div>
+                    `;
+                    document.getElementById('infoCabo').appendChild(aviso);
+                } else {
+                    document.getElementById('btnExcluir').style.display = 'inline-flex';
+                }
+                
+            } catch (error) {
+                console.error('Erro ao carregar dados do cabo:', error);
+                alert('Erro ao carregar dados do cabo');
+            }
+        }
+        
+        // Verificar se o cabo está conectado
+        async function verificarSeConectado(caboId) {
+            try {
+                const response = await fetch(`/conexoes-cabos`);
+                const conexoes = await response.json();
+                return conexoes.some(conexao => conexao.cabo_id === caboId);
+            } catch (error) {
+                console.error('Erro ao verificar conexões:', error);
+                return false;
+            }
+        }
+
+        // Confirmar exclusão
+        function confirmarExclusao() {
+            if (!caboSelecionado) return;
+            
+            document.getElementById('caboNomeConfirmacao').textContent = caboSelecionado.codigo_unico;
+            document.getElementById('modalConfirmacao').classList.remove('hidden');
+        }
+
+        // Excluir cabo
+        async function excluirCabo() {
+            if (!caboSelecionado) return;
+            
+            try {
+                const response = await fetch(`/cabos/${caboSelecionado.id}`, {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+                
+                if (result.status === 'ok') {
+                    fecharModal();
+                    mostrarModalSucesso();
+                } else {
+                    alert(`Erro: ${result.mensagem}`);
+                }
+            } catch (error) {
+                console.error('Erro ao excluir cabo:', error);
+                alert('Erro ao excluir cabo. Tente novamente.');
+            }
+        }
+
+        // Fechar modal de confirmação
+        function fecharModal() {
+            document.getElementById('modalConfirmacao').classList.add('hidden');
+        }
+
+        // Mostrar modal de sucesso
+        function mostrarModalSucesso() {
+            document.getElementById('modalSucesso').classList.remove('hidden');
+        }
+
+        // Fechar modal de sucesso
+        function fecharModalSucesso() {
+            document.getElementById('modalSucesso').classList.add('hidden');
+        }
+
+        // Excluir outro cabo
+        function excluirOutro() {
+            fecharModalSucesso();
+            limparSelecao();
+            document.getElementById('seletorCabo').focus();
+        }
+
+        // Limpar seleção
+        function limparSelecao() {
+            document.getElementById('seletorCabo').value = '';
+            document.getElementById('infoCabo').style.display = 'none';
+            document.getElementById('btnExcluir').style.display = 'none';
+            caboSelecionado = null;
+            
+            // Remover avisos adicionais
+            const avisos = document.querySelectorAll('#infoCabo > div:not(:first-child)');
+            avisos.forEach(aviso => aviso.remove());
+        }
+
+        // Voltar ao painel de configuração
+        function voltarPainelConfig() {
+            fetch('/perfil').then(resp => resp.json()).then(perfil => {
+                if (perfil.nivel === 'admin') {
+                    window.location.href = 'config-admin.html';
+                } else if (perfil.nivel === 'tecnico') {
+                    window.location.href = 'config-tecnico.html';
+                } else {
+                    window.location.href = 'config-usuario.html';
+                }
+            });
+        }
+
+        // Aplicar filtro por status
+        function aplicarFiltroStatus(status) {
+            filtroStatusAtivo = status;
+            
+            // Atualizar botões
+            document.querySelectorAll('[id^="btn-"]').forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-yellow-400');
+            });
+            document.getElementById(`btn-${status}`).classList.add('ring-2', 'ring-yellow-400');
+
+            aplicarFiltros();
+        }
+
+        // Aplicar filtros combinados
+        function aplicarFiltros() {
+            let filtrados = cabos;
+
+            // Filtro por status
+            if (filtroStatusAtivo === 'funcionando') {
+                filtrados = filtrados.filter(c => c.status === 'funcionando');
+            } else if (filtroStatusAtivo === 'defeito') {
+                filtrados = filtrados.filter(c => c.status === 'defeito');
+            }
+
+            // Filtro por busca
+            if (termoBusca) {
+                filtrados = filtrados.filter(c => {
+                    const busca = termoBusca.toLowerCase();
+                    return (
+                        (c.codigo_unico || '').toLowerCase().includes(busca) ||
+                        (c.tipo || '').toLowerCase().includes(busca) ||
+                        (c.marca || '').toLowerCase().includes(busca) ||
+                        (c.modelo || '').toLowerCase().includes(busca) ||
+                        (c.descricao || '').toLowerCase().includes(busca)
+                    );
+                });
+            }
+
+            renderizarCabos(filtrados);
+            atualizarIndicadorResultados(filtrados);
+        }
+
+        // Limpar busca
+        function limparBusca() {
+            document.getElementById('filtroCabo').value = '';
+            termoBusca = '';
+            filtroStatusAtivo = 'todos';
+            
+            // Atualizar botões
+            document.querySelectorAll('[id^="btn-"]').forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-yellow-400');
+            });
+            document.getElementById('btn-todos').classList.add('ring-2', 'ring-yellow-400');
+            
+            aplicarFiltros();
+        }
+
+        // Atualizar indicador de resultados
+        function atualizarIndicadorResultados(filtrados) {
+            const infoDiv = document.getElementById('resultadosInfo');
+            if (termoBusca || filtroStatusAtivo !== 'todos') {
+                const filtros = [];
+                if (termoBusca) filtros.push(`busca: "${termoBusca}"`);
+                if (filtroStatusAtivo !== 'todos') filtros.push(`status: ${filtroStatusAtivo}`);
+                
+                infoDiv.innerHTML = `<i class="fas fa-filter"></i> Filtros: ${filtros.join(', ')} (${filtrados.length} resultado${filtrados.length !== 1 ? 's' : ''})`;
+            } else {
+                infoDiv.innerHTML = '';
+            }
+        }
+
+        // Event listeners
+        document.getElementById('filtroCabo').addEventListener('input', function() {
+            termoBusca = this.value.trim();
+            aplicarFiltros();
+        });
+
+        // Inicialização
+        window.addEventListener('DOMContentLoaded', function() {
+            carregarCabos();
+            
+            // Carregar logo da empresa
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    LogoManager.loadEmpresaLogo(data);
+                });
+        });
+    </script>
+    <script src="static/js/logo-manager.js"></script>
+</body>
+
+</html> 

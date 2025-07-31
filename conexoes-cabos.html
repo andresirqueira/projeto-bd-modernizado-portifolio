@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Conexões de Cabos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="static/img/favicon-lapis.png">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+</head>
+
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-7xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarPainelConfig()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+                <i class="fas fa-project-diagram text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                Conexões de Cabos
+            </h1>
+            <p class="text-gray-600 dark:text-gray-300">Gerencie as conexões entre cabos e equipamentos</p>
+        </div>
+
+        <!-- Estatísticas -->
+        <div class="mb-6 flex flex-wrap gap-4 justify-center" id="resumoConexoes"></div>
+
+        <!-- Abas -->
+        <div class="mb-6">
+            <div class="flex border-b border-gray-200 dark:border-gray-700">
+                <button onclick="mostrarAba('conexoes')" id="tab-conexoes" class="px-6 py-3 text-sm font-medium border-b-2 border-indigo-500 text-indigo-600 dark:text-indigo-400">
+                    <i class="fas fa-link mr-2"></i>Conexões Ativas
+                </button>
+                <button onclick="mostrarAba('conectar')" id="tab-conectar" class="px-6 py-3 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                    <i class="fas fa-plus mr-2"></i>Nova Conexão
+                </button>
+            </div>
+        </div>
+
+        <!-- Aba: Conexões Ativas -->
+        <div id="aba-conexoes" class="space-y-6">
+            <!-- Filtros -->
+            <div class="flex flex-wrap gap-4 justify-center">
+                <div class="flex gap-2">
+                    <div class="relative">
+                        <input id="filtroConexao" type="text" class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600" placeholder="Buscar conexão...">
+                        <div class="absolute right-3 top-2.5 text-gray-400 dark:text-gray-500 text-sm">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <button onclick="limparBusca()" class="px-3 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded transition-colors text-sm" title="Limpar busca">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="aplicarFiltroSala('todos')" id="btn-sala-todos" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors text-sm">
+                        <i class="fas fa-building"></i> Todas as Salas
+                    </button>
+                </div>
+            </div>
+
+            <!-- Lista de Conexões -->
+            <div id="conexoes-container" class="space-y-4"></div>
+        </div>
+
+        <!-- Aba: Nova Conexão -->
+        <div id="aba-conectar" class="space-y-6" style="display: none;">
+            <form id="formNovaConexao" class="max-w-2xl mx-auto space-y-6">
+                <!-- Seleção do Cabo -->
+                <div>
+                    <label for="cabo_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i class="fas fa-plug mr-2"></i>Cabo *
+                    </label>
+                    <select id="cabo_id" name="cabo_id" required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                        <option value="">Selecione um cabo em estoque...</option>
+                    </select>
+                </div>
+
+                <!-- Seleção da Sala -->
+                <div>
+                    <label for="sala_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i class="fas fa-building mr-2"></i>Sala *
+                    </label>
+                    <select id="sala_id" name="sala_id" required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                        <option value="">Selecione a sala...</option>
+                    </select>
+                </div>
+
+                <!-- Equipamento Origem -->
+                <div>
+                    <label for="equipamento_origem_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i class="fas fa-arrow-right mr-2"></i>Equipamento Origem *
+                    </label>
+                    <select id="equipamento_origem_id" name="equipamento_origem_id" required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed">
+                        <option value="">Primeiro selecione uma sala...</option>
+                    </select>
+                </div>
+
+                <!-- Porta Origem -->
+                <div>
+                    <label for="porta_origem" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i class="fas fa-plug mr-2"></i>Porta Origem
+                    </label>
+                    <input type="text" id="porta_origem" name="porta_origem"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                           placeholder="Ex: HDMI 1, USB 2, etc.">
+                </div>
+
+                <!-- Equipamento Destino -->
+                <div>
+                    <label for="equipamento_destino_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i class="fas fa-arrow-left mr-2"></i>Equipamento Destino *
+                    </label>
+                    <select id="equipamento_destino_id" name="equipamento_destino_id" required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed">
+                        <option value="">Primeiro selecione equipamento origem...</option>
+                    </select>
+                </div>
+
+                <!-- Porta Destino -->
+                <div>
+                    <label for="porta_destino" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i class="fas fa-plug mr-2"></i>Porta Destino
+                    </label>
+                    <input type="text" id="porta_destino" name="porta_destino"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                           placeholder="Ex: HDMI 1, USB 2, etc.">
+                </div>
+
+                <!-- Observação -->
+                <div>
+                    <label for="observacao" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i class="fas fa-sticky-note mr-2"></i>Observação
+                    </label>
+                    <textarea id="observacao" name="observacao" rows="3"
+                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                              placeholder="Observações sobre a conexão..."></textarea>
+                </div>
+
+                <!-- Botões -->
+                <div class="flex gap-4 pt-6">
+                    <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                        <i class="fas fa-link mr-2"></i>Conectar Cabo
+                    </button>
+                    <button type="button" onclick="limparFormulario()" class="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg transition-colors">
+                        <i class="fas fa-eraser mr-2"></i>Limpar
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Modal de Sucesso -->
+        <div id="modalSucesso" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full mx-4">
+                <div class="text-center">
+                    <i class="fas fa-check-circle text-6xl text-green-500 mb-4"></i>
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Conexão Criada!</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">O cabo foi conectado com sucesso.</p>
+                    <button onclick="fecharModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let conexoes = [];
+        let cabos = [];
+        let equipamentos = [];
+        let salas = [];
+        let filtroSalaAtivo = 'todos';
+        let termoBusca = '';
+
+        // Carregar dados iniciais
+        async function carregarDados() {
+            await Promise.all([
+                carregarConexoes(),
+                carregarCabos(),
+                carregarEquipamentos(),
+                carregarSalas()
+            ]);
+        }
+
+        // Carregar conexões
+        async function carregarConexoes() {
+            try {
+                const response = await fetch('/conexoes-cabos');
+                conexoes = await response.json();
+                renderizarConexoes(conexoes);
+                renderizarResumoConexoes(conexoes);
+            } catch (error) {
+                console.error('Erro ao carregar conexões:', error);
+            }
+        }
+
+        // Carregar cabos em estoque
+        async function carregarCabos() {
+            try {
+                const response = await fetch('/cabos?conectado=false');
+                cabos = await response.json();
+                
+                const selectCabo = document.getElementById('cabo_id');
+                selectCabo.innerHTML = '<option value="">Selecione um cabo em estoque...</option>';
+                
+                cabos.forEach(cabo => {
+                    const option = document.createElement('option');
+                    option.value = cabo.id;
+                    option.textContent = `${cabo.codigo_unico} - ${cabo.tipo}`;
+                    selectCabo.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar cabos:', error);
+            }
+        }
+
+        // Carregar equipamentos
+        async function carregarEquipamentos() {
+            try {
+                const response = await fetch('/equipamentos');
+                equipamentos = await response.json();
+                
+                // Limpar seletores
+                const selectOrigem = document.getElementById('equipamento_origem_id');
+                const selectDestino = document.getElementById('equipamento_destino_id');
+                
+                selectOrigem.innerHTML = '<option value="">Primeiro selecione uma sala...</option>';
+                selectDestino.innerHTML = '<option value="">Primeiro selecione equipamento origem...</option>';
+                
+                // Desabilitar seletores inicialmente
+                selectOrigem.disabled = true;
+                selectDestino.disabled = true;
+            } catch (error) {
+                console.error('Erro ao carregar equipamentos:', error);
+            }
+        }
+
+        // Carregar salas
+        async function carregarSalas() {
+            try {
+                const response = await fetch('/salas');
+                salas = await response.json();
+                
+                const selectSala = document.getElementById('sala_id');
+                selectSala.innerHTML = '<option value="">Selecione a sala...</option>';
+                
+                salas.forEach(sala => {
+                    const option = document.createElement('option');
+                    option.value = sala.id;
+                    option.textContent = sala.nome;
+                    selectSala.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar salas:', error);
+            }
+        }
+
+        // Renderizar conexões
+        function renderizarConexoes(lista) {
+            const container = document.getElementById('conexoes-container');
+            
+            if (lista.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-project-diagram text-6xl text-gray-300 dark:text-gray-600 mb-4"></i>
+                        <p class="text-gray-500 dark:text-gray-400 text-lg">Nenhuma conexão encontrada</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            lista.forEach(conexao => {
+                html += `
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-link text-2xl text-indigo-500"></i>
+                                <div>
+                                    <h3 class="font-bold text-lg text-gray-800 dark:text-white">${conexao.codigo_unico}</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">${conexao.tipo}</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="desconectarCabo(${conexao.id})" class="bg-red-500 hover:bg-red-600 text-white text-sm py-2 px-3 rounded transition-colors">
+                                    <i class="fas fa-unlink mr-1"></i>Desconectar
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                <h4 class="font-semibold text-gray-800 dark:text-white mb-2">
+                                    <i class="fas fa-arrow-right text-green-500 mr-2"></i>Origem
+                                </h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">
+                                    <strong>Equipamento:</strong> ${conexao.equipamento_origem_nome}<br>
+                                    <strong>Porta:</strong> ${conexao.porta_origem || 'Não especificada'}
+                                </p>
+                            </div>
+                            
+                            <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                <h4 class="font-semibold text-gray-800 dark:text-white mb-2">
+                                    <i class="fas fa-arrow-left text-blue-500 mr-2"></i>Destino
+                                </h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">
+                                    <strong>Equipamento:</strong> ${conexao.equipamento_destino_nome}<br>
+                                    <strong>Porta:</strong> ${conexao.porta_destino || 'Não especificada'}
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex justify-between items-center text-sm text-gray-600 dark:text-gray-400">
+                                <div>
+                                    <strong>Sala:</strong> ${conexao.sala_nome || 'Não especificada'}
+                                    ${conexao.observacao ? `<br><strong>Obs:</strong> ${conexao.observacao}` : ''}
+                                </div>
+                                <div>
+                                    <strong>Conectado em:</strong> ${new Date(conexao.data_conexao).toLocaleDateString('pt-BR')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Renderizar resumo das conexões
+        function renderizarResumoConexoes(conexoes) {
+            const total = conexoes.length;
+            const salasUnicas = [...new Set(conexoes.map(c => c.sala_nome).filter(s => s))].length;
+
+            const resumoDiv = document.getElementById('resumoConexoes');
+            resumoDiv.innerHTML = `
+                <div class="flex items-center gap-2 bg-indigo-600 dark:bg-indigo-800 text-white px-5 py-3 rounded-lg shadow">
+                    <i class="fas fa-link"></i>
+                    <span>Total de Conexões: <b>${total}</b></span>
+                </div>
+                <div class="flex items-center gap-2 bg-green-600 dark:bg-green-800 text-white px-5 py-3 rounded-lg shadow">
+                    <i class="fas fa-building"></i>
+                    <span>Salas com Conexões: <b>${salasUnicas}</b></span>
+                </div>
+            `;
+        }
+
+        // Mostrar aba
+        function mostrarAba(aba) {
+            // Esconder todas as abas
+            document.getElementById('aba-conexoes').style.display = 'none';
+            document.getElementById('aba-conectar').style.display = 'none';
+            
+            // Remover classes ativas
+            document.getElementById('tab-conexoes').classList.remove('border-indigo-500', 'text-indigo-600', 'dark:text-indigo-400');
+            document.getElementById('tab-conectar').classList.remove('border-indigo-500', 'text-indigo-600', 'dark:text-indigo-400');
+            
+            // Mostrar aba selecionada
+            document.getElementById(`aba-${aba}`).style.display = 'block';
+            
+            // Ativar tab
+            document.getElementById(`tab-${aba}`).classList.add('border-indigo-500', 'text-indigo-600', 'dark:text-indigo-400');
+        }
+
+        // Aplicar filtro por sala
+        function aplicarFiltroSala(sala) {
+            filtroSalaAtivo = sala;
+            
+            // Atualizar botões
+            document.querySelectorAll('[id^="btn-sala"]').forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-yellow-400');
+            });
+            document.getElementById(`btn-sala-${sala}`).classList.add('ring-2', 'ring-yellow-400');
+
+            aplicarFiltros();
+        }
+
+        // Aplicar filtros
+        function aplicarFiltros() {
+            let filtrados = conexoes;
+
+            // Filtro por busca
+            if (termoBusca) {
+                filtrados = filtrados.filter(c => {
+                    const busca = termoBusca.toLowerCase();
+                    return (
+                        (c.codigo_unico || '').toLowerCase().includes(busca) ||
+                        (c.tipo || '').toLowerCase().includes(busca) ||
+                        (c.equipamento_origem_nome || '').toLowerCase().includes(busca) ||
+                        (c.equipamento_destino_nome || '').toLowerCase().includes(busca) ||
+                        (c.sala_nome || '').toLowerCase().includes(busca)
+                    );
+                });
+            }
+
+            renderizarConexoes(filtrados);
+        }
+
+        // Limpar busca
+        function limparBusca() {
+            document.getElementById('filtroConexao').value = '';
+            termoBusca = '';
+            aplicarFiltros();
+        }
+
+        // Desconectar cabo
+        async function desconectarCabo(conexaoId) {
+            if (!confirm('Tem certeza que deseja desconectar este cabo?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/conexoes-cabos/${conexaoId}`, {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+                
+                if (result.status === 'ok') {
+                    alert('Cabo desconectado com sucesso!');
+                    carregarDados();
+                } else {
+                    alert(`Erro: ${result.mensagem}`);
+                }
+            } catch (error) {
+                console.error('Erro ao desconectar cabo:', error);
+                alert('Erro ao desconectar cabo. Tente novamente.');
+            }
+        }
+
+        // Submeter formulário de nova conexão
+        document.getElementById('formNovaConexao').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const dados = {
+                cabo_id: parseInt(formData.get('cabo_id')),
+                equipamento_origem_id: parseInt(formData.get('equipamento_origem_id')),
+                equipamento_destino_id: parseInt(formData.get('equipamento_destino_id')),
+                porta_origem: formData.get('porta_origem'),
+                porta_destino: formData.get('porta_destino'),
+                sala_id: parseInt(formData.get('sala_id')),
+                observacao: formData.get('observacao')
+            };
+            
+            // Validação adicional da sequência
+            if (!dados.sala_id) {
+                alert('Por favor, selecione uma sala primeiro.');
+                return;
+            }
+            
+            if (!dados.equipamento_origem_id) {
+                alert('Por favor, selecione um equipamento de origem.');
+                return;
+            }
+            
+            if (!dados.equipamento_destino_id) {
+                alert('Por favor, selecione um equipamento de destino.');
+                return;
+            }
+            
+            if (dados.equipamento_origem_id === dados.equipamento_destino_id) {
+                alert('O equipamento de origem e destino não podem ser o mesmo.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/conexoes-cabos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                });
+
+                const result = await response.json();
+                
+                if (result.status === 'ok') {
+                    mostrarModalSucesso();
+                    limparFormulario();
+                    carregarDados();
+                } else {
+                    alert(`Erro: ${result.mensagem}`);
+                }
+            } catch (error) {
+                console.error('Erro ao criar conexão:', error);
+                alert('Erro ao criar conexão. Tente novamente.');
+            }
+        });
+
+        // Limpar formulário
+        function limparFormulario() {
+            document.getElementById('formNovaConexao').reset();
+            resetarSelecoes();
+        }
+
+        // Mostrar modal de sucesso
+        function mostrarModalSucesso() {
+            document.getElementById('modalSucesso').classList.remove('hidden');
+        }
+
+        // Fechar modal
+        function fecharModal() {
+            document.getElementById('modalSucesso').classList.add('hidden');
+        }
+
+        // Voltar ao painel de configuração
+        function voltarPainelConfig() {
+            fetch('/perfil').then(resp => resp.json()).then(perfil => {
+                if (perfil.nivel === 'admin') {
+                    window.location.href = 'config-admin.html';
+                } else if (perfil.nivel === 'tecnico') {
+                    window.location.href = 'config-tecnico.html';
+                } else {
+                    window.location.href = 'config-usuario.html';
+                }
+            });
+        }
+
+        // Função para carregar equipamentos da sala selecionada
+        function carregarEquipamentosDaSala(salaId) {
+            const selectOrigem = document.getElementById('equipamento_origem_id');
+            const selectDestino = document.getElementById('equipamento_destino_id');
+            
+            // Limpar seletores
+            selectOrigem.innerHTML = '<option value="">Selecione o equipamento de origem...</option>';
+            selectDestino.innerHTML = '<option value="">Primeiro selecione equipamento origem...</option>';
+            
+            if (!salaId) {
+                selectOrigem.disabled = true;
+                selectDestino.disabled = true;
+                return;
+            }
+            
+            // Filtrar equipamentos da sala selecionada
+            const equipamentosDaSala = equipamentos.filter(equip => equip.sala_id == salaId);
+            
+            // Preencher equipamento origem
+            equipamentosDaSala.forEach(equip => {
+                const option = document.createElement('option');
+                option.value = equip.id;
+                option.textContent = equip.nome;
+                selectOrigem.appendChild(option);
+            });
+            
+            // Habilitar apenas origem
+            selectOrigem.disabled = false;
+            selectDestino.disabled = true;
+        }
+        
+        // Função para carregar equipamentos destino (excluindo origem)
+        function carregarEquipamentosDestino(origemId) {
+            const selectDestino = document.getElementById('equipamento_destino_id');
+            const salaId = document.getElementById('sala_id').value;
+            
+            // Limpar destino
+            selectDestino.innerHTML = '<option value="">Selecione o equipamento de destino...</option>';
+            
+            if (!origemId) {
+                selectDestino.disabled = true;
+                return;
+            }
+            
+            // Filtrar equipamentos da mesma sala, excluindo origem
+            const equipamentosDestino = equipamentos.filter(equip => 
+                equip.sala_id == salaId && equip.id != origemId
+            );
+            
+            // Preencher equipamento destino
+            equipamentosDestino.forEach(equip => {
+                const option = document.createElement('option');
+                option.value = equip.id;
+                option.textContent = equip.nome;
+                selectDestino.appendChild(option);
+            });
+            
+            // Habilitar destino
+            selectDestino.disabled = false;
+        }
+        
+        // Função para resetar seleções
+        function resetarSelecoes() {
+            const selectOrigem = document.getElementById('equipamento_origem_id');
+            const selectDestino = document.getElementById('equipamento_destino_id');
+            
+            selectOrigem.innerHTML = '<option value="">Primeiro selecione uma sala...</option>';
+            selectDestino.innerHTML = '<option value="">Primeiro selecione equipamento origem...</option>';
+            
+            selectOrigem.disabled = true;
+            selectDestino.disabled = true;
+        }
+
+        // Event listeners
+        document.getElementById('filtroConexao').addEventListener('input', function() {
+            termoBusca = this.value.trim();
+            aplicarFiltros();
+        });
+        
+        // Event listener para mudança de sala
+        document.getElementById('sala_id').addEventListener('change', function() {
+            carregarEquipamentosDaSala(this.value);
+        });
+        
+        // Event listener para mudança de equipamento origem
+        document.getElementById('equipamento_origem_id').addEventListener('change', function() {
+            carregarEquipamentosDestino(this.value);
+        });
+
+        // Inicialização
+        window.addEventListener('DOMContentLoaded', function() {
+            carregarDados();
+            
+            // Carregar logo da empresa
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    LogoManager.loadEmpresaLogo(data);
+                });
+        });
+    </script>
+    <script src="static/js/logo-manager.js"></script>
+</body>
+
+</html> 

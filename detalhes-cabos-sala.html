@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cabos da Sala</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="static/img/favicon-lupa.png">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-6xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="window.location.href='detalhes-sala.html?id=' + getIdFromUrl()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+                <i class="fas fa-plug text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                Cabos da Sala
+            </h1>
+            <p class="text-gray-600 dark:text-gray-300">Conexões de cabos na sala selecionada</p>
+        </div>
+
+        <!-- Estatísticas -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="bg-blue-500 text-white rounded-lg p-4 text-center">
+                <i class="fas fa-plug text-2xl mb-2"></i>
+                <div class="text-2xl font-bold" id="total-cabos">0</div>
+                <div class="text-sm">Total de Cabos</div>
+            </div>
+            <div class="bg-green-500 text-white rounded-lg p-4 text-center">
+                <i class="fas fa-check-circle text-2xl mb-2"></i>
+                <div class="text-2xl font-bold" id="cabos-ativos">0</div>
+                <div class="text-sm">Conexões Ativas</div>
+            </div>
+            <div class="bg-purple-500 text-white rounded-lg p-4 text-center">
+                <i class="fas fa-tools text-2xl mb-2"></i>
+                <div class="text-2xl font-bold" id="tipos-diferentes">0</div>
+                <div class="text-sm">Tipos Diferentes</div>
+            </div>
+        </div>
+
+        <!-- Filtros e Busca -->
+        <div class="mb-6 flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div class="flex flex-wrap gap-2">
+                <button onclick="aplicarFiltroTipo('todos')" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg transition-colors">
+                    <i class="fas fa-filter mr-2"></i>Todos
+                </button>
+                <button onclick="aplicarFiltroTipo('USB')" class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors">
+                    <i class="fas fa-usb mr-2"></i>USB
+                </button>
+                <button onclick="aplicarFiltroTipo('HDMI')" class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors">
+                    <i class="fas fa-tv mr-2"></i>HDMI
+                </button>
+                <button onclick="aplicarFiltroTipo('Ethernet')" class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors">
+                    <i class="fas fa-network-wired mr-2"></i>Ethernet
+                </button>
+                <button onclick="aplicarFiltroTipo('Power')" class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors">
+                    <i class="fas fa-bolt mr-2"></i>Power
+                </button>
+            </div>
+            <div class="flex gap-2">
+                <input type="text" id="busca-cabo" placeholder="Buscar cabo..." class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <button onclick="limparBusca()" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors">
+                    <i class="fas fa-times mr-2"></i>Limpar
+                </button>
+            </div>
+        </div>
+
+        <!-- Filtro de Status -->
+        <div class="mb-4 flex flex-wrap gap-2">
+            <button onclick="aplicarFiltroStatus('ativos')" class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors">
+                <i class="fas fa-check-circle mr-2"></i>Ativos
+            </button>
+            <button onclick="aplicarFiltroStatus('inativos')" class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors">
+                <i class="fas fa-history mr-2"></i>Histórico
+            </button>
+            <button onclick="aplicarFiltroStatus('todos')" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors">
+                <i class="fas fa-list mr-2"></i>Todos
+            </button>
+        </div>
+
+        <!-- Indicador de Resultados -->
+        <div class="mb-4 text-sm text-gray-600 dark:text-gray-400" id="resultadosInfo">
+            Mostrando todos os cabos
+        </div>
+        
+        <!-- Aviso de Permissões (apenas para usuários) -->
+        <div id="aviso-permissoes" class="hidden mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+            <div class="flex items-center">
+                <i class="fas fa-info-circle text-blue-600 dark:text-blue-400 mr-2"></i>
+                <span class="text-sm text-blue-800 dark:text-blue-200">
+                    <strong>Modo Visualização:</strong> Você está visualizando os cabos em modo somente leitura. 
+                    Apenas administradores e técnicos podem realizar alterações.
+                </span>
+            </div>
+        </div>
+
+        <!-- Lista de Cabos -->
+        <div id="cabos-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Os cabos serão carregados aqui dinamicamente -->
+        </div>
+
+        <!-- Mensagem quando não há cabos -->
+        <div id="sem-cabos" class="hidden text-center py-12">
+            <i class="fas fa-plug text-6xl text-gray-400 mb-4"></i>
+            <h3 class="text-xl font-semibold text-gray-600 dark:text-gray-400 mb-2">Nenhum cabo encontrado</h3>
+            <p class="text-gray-500 dark:text-gray-500">Esta sala não possui cabos conectados.</p>
+        </div>
+    </div>
+
+    <script>
+    let cabosData = [];
+    let filtroAtual = 'todos';
+    let filtroStatus = 'ativos'; // Por padrão, mostra apenas ativos
+    let buscaAtual = '';
+    let userLevel = 'usuario'; // Nível do usuário (admin, tecnico, usuario)
+
+    function getIdFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('id');
+    }
+
+    async function carregarCabosSala() {
+        const salaId = getIdFromUrl();
+        if (!salaId) return;
+
+        try {
+            const response = await fetch(`/conexoes-cabos/sala/${salaId}`);
+            if (!response.ok) throw new Error('Erro ao carregar cabos');
+            
+            cabosData = await response.json();
+            atualizarEstatisticas();
+            renderizarCabos();
+        } catch (error) {
+            console.error('Erro:', error);
+            document.getElementById('sem-cabos').classList.remove('hidden');
+        }
+    }
+
+    function atualizarEstatisticas() {
+        const total = cabosData.length;
+        const ativos = cabosData.filter(cabo => cabo.ativo).length;
+        const inativos = total - ativos;
+        const tipos = new Set(cabosData.map(cabo => cabo.tipo_cabo)).size;
+
+        document.getElementById('total-cabos').textContent = total;
+        document.getElementById('cabos-ativos').textContent = ativos;
+        document.getElementById('tipos-diferentes').textContent = tipos;
+        
+        // Atualizar título da estatística de ativos para incluir inativos
+        const ativosElement = document.getElementById('cabos-ativos').parentElement;
+        ativosElement.innerHTML = `
+            <i class="fas fa-check-circle text-2xl mb-2"></i>
+            <div class="text-2xl font-bold" id="cabos-ativos">${ativos}</div>
+            <div class="text-sm">Conexões Ativas</div>
+            ${inativos > 0 ? `<div class="text-xs mt-1">+${inativos} no histórico</div>` : ''}
+        `;
+    }
+
+        function renderizarCabos() {
+        const container = document.getElementById('cabos-container');
+        const cabosFiltrados = filtrarCabos();
+
+        if (cabosFiltrados.length === 0) {
+            container.innerHTML = '';
+            document.getElementById('sem-cabos').classList.remove('hidden');
+        } else {
+            document.getElementById('sem-cabos').classList.add('hidden');
+            container.innerHTML = cabosFiltrados.map(cabo => `
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border-l-4 ${getBorderColor(cabo.tipo_cabo)} ${!cabo.ativo ? 'opacity-60' : ''}">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-plug text-2xl ${getIconColor(cabo.tipo_cabo)} mr-3"></i>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 dark:text-white">${cabo.codigo_cabo}</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">${cabo.tipo_cabo}</p>
+                                ${!cabo.ativo ? '<p class="text-xs text-red-600 dark:text-red-400">Desconectado</p>' : ''}
+                            </div>
+                        </div>
+                        <span class="px-2 py-1 text-xs rounded-full ${cabo.ativo ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                            ${cabo.ativo ? 'Ativo' : 'Inativo'}
+                        </span>
+                    </div>
+                    
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600 dark:text-gray-400">Origem:</span>
+                            <span class="font-medium text-gray-900 dark:text-white">${cabo.equipamento_origem || 'N/A'}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600 dark:text-gray-400">Destino:</span>
+                            <span class="font-medium text-gray-900 dark:text-white">${cabo.equipamento_destino || 'N/A'}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600 dark:text-gray-400">Porta Origem:</span>
+                            <span class="font-medium text-gray-900 dark:text-white">${cabo.porta_origem || 'N/A'}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600 dark:text-gray-400">Porta Destino:</span>
+                            <span class="font-medium text-gray-900 dark:text-white">${cabo.porta_destino || 'N/A'}</span>
+                        </div>
+                        ${cabo.observacao ? `
+                        <div class="mt-3 p-2 bg-gray-50 dark:bg-gray-700 rounded">
+                            <span class="text-gray-600 dark:text-gray-400 text-xs">Observação:</span>
+                            <p class="text-gray-900 dark:text-white text-xs">${cabo.observacao}</p>
+                        </div>
+                        ` : ''}
+                        ${!cabo.ativo && cabo.data_desconexao ? `
+                        <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                            <i class="fas fa-clock mr-1"></i>Desconectado em: ${new Date(cabo.data_desconexao).toLocaleDateString('pt-BR')}
+                        </div>
+                        ` : ''}
+                        
+                        <!-- Botões de Ação (apenas para admin/tecnico) -->
+                        <div class="mt-4 flex gap-2" id="botoes-acoes-${cabo.id}" style="display: none;">
+                            ${cabo.ativo ? `
+                            <button onclick="substituirCabo(${cabo.id}, '${cabo.codigo_cabo}', '${cabo.tipo_cabo}', '${cabo.equipamento_origem}', '${cabo.equipamento_destino}', '${cabo.porta_origem}', '${cabo.porta_destino}')" class="flex-1 px-3 py-2 bg-yellow-500 hover:bg-yellow-600 text-white text-xs rounded-lg transition-colors">
+                                <i class="fas fa-exchange-alt mr-1"></i>Substituir
+                            </button>
+                            <button onclick="desconectarCabo(${cabo.id})" class="flex-1 px-3 py-2 bg-red-500 hover:bg-red-600 text-white text-xs rounded-lg transition-colors">
+                                <i class="fas fa-unlink mr-1"></i>Desconectar
+                            </button>
+                            ` : `
+                            <button onclick="reconectarCabo(${cabo.id})" class="flex-1 px-3 py-2 bg-green-500 hover:bg-green-600 text-white text-xs rounded-lg transition-colors">
+                                <i class="fas fa-link mr-1"></i>Reconectar
+                            </button>
+                            `}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Mostrar botões apenas para admin/tecnico
+            if (userLevel === 'admin' || userLevel === 'tecnico') {
+                cabosFiltrados.forEach(cabo => {
+                    const botoesElement = document.getElementById(`botoes-acoes-${cabo.id}`);
+                    if (botoesElement) {
+                        botoesElement.style.display = 'flex';
+                    }
+                });
+            }
+        }
+
+        atualizarIndicadorResultados();
+    }
+
+    function filtrarCabos() {
+        return cabosData.filter(cabo => {
+            const passaFiltro = filtroAtual === 'todos' || cabo.tipo_cabo.includes(filtroAtual);
+            const passaBusca = !buscaAtual || 
+                cabo.codigo_cabo.toLowerCase().includes(buscaAtual.toLowerCase()) ||
+                cabo.tipo_cabo.toLowerCase().includes(buscaAtual.toLowerCase()) ||
+                (cabo.equipamento_origem && cabo.equipamento_origem.toLowerCase().includes(buscaAtual.toLowerCase())) ||
+                (cabo.equipamento_destino && cabo.equipamento_destino.toLowerCase().includes(buscaAtual.toLowerCase()));
+            
+            const passaStatus = filtroStatus === 'todos' || 
+                (filtroStatus === 'ativos' && cabo.ativo) ||
+                (filtroStatus === 'inativos' && !cabo.ativo);
+            
+            return passaFiltro && passaBusca && passaStatus;
+        });
+    }
+
+    function aplicarFiltroTipo(tipo) {
+        filtroAtual = tipo;
+        
+        // Atualizar botões
+        document.querySelectorAll('[onclick^="aplicarFiltroTipo"]').forEach(btn => {
+            btn.className = btn.className.replace('bg-indigo-500 hover:bg-indigo-600', 'bg-gray-500 hover:bg-gray-600');
+        });
+        
+        const btnAtivo = document.querySelector(`[onclick="aplicarFiltroTipo('${tipo}')"]`);
+        if (btnAtivo) {
+            btnAtivo.className = btnAtivo.className.replace('bg-gray-500 hover:bg-gray-600', 'bg-indigo-500 hover:bg-indigo-600');
+        }
+        
+        renderizarCabos();
+    }
+
+    function aplicarFiltroStatus(status) {
+        filtroStatus = status;
+        
+        // Atualizar botões de status
+        document.querySelectorAll('[onclick^="aplicarFiltroStatus"]').forEach(btn => {
+            btn.className = btn.className.replace('bg-green-500 hover:bg-green-600', 'bg-gray-500 hover:bg-gray-600');
+            btn.className = btn.className.replace('bg-blue-500 hover:bg-blue-600', 'bg-gray-500 hover:bg-gray-600');
+        });
+        
+        const btnAtivo = document.querySelector(`[onclick="aplicarFiltroStatus('${status}')"]`);
+        if (btnAtivo) {
+            if (status === 'ativos') {
+                btnAtivo.className = btnAtivo.className.replace('bg-gray-500 hover:bg-gray-600', 'bg-green-500 hover:bg-green-600');
+            } else if (status === 'todos') {
+                btnAtivo.className = btnAtivo.className.replace('bg-gray-500 hover:bg-gray-600', 'bg-blue-500 hover:bg-blue-600');
+            }
+        }
+        
+        renderizarCabos();
+    }
+
+    function limparBusca() {
+        document.getElementById('busca-cabo').value = '';
+        buscaAtual = '';
+        // Resetar filtros para padrão (apenas ativos)
+        aplicarFiltroStatus('ativos');
+        aplicarFiltroTipo('todos');
+        renderizarCabos();
+    }
+
+    function atualizarIndicadorResultados() {
+        const cabosFiltrados = filtrarCabos();
+        const total = cabosData.length;
+        const filtrados = cabosFiltrados.length;
+        
+        let texto = `Mostrando ${filtrados} de ${total} cabos`;
+        
+        if (filtroStatus !== 'todos') {
+            texto += ` | Status: ${filtroStatus === 'ativos' ? 'Ativos' : 'Histórico'}`;
+        }
+        
+        if (filtroAtual !== 'todos') {
+            texto += ` | Tipo: ${filtroAtual}`;
+        }
+        
+        if (buscaAtual) {
+            texto += ` | Busca: "${buscaAtual}"`;
+        }
+        
+        document.getElementById('resultadosInfo').textContent = texto;
+    }
+
+    function getBorderColor(tipo) {
+        if (tipo.includes('USB')) return 'border-blue-500';
+        if (tipo.includes('HDMI')) return 'border-green-500';
+        if (tipo.includes('Ethernet')) return 'border-purple-500';
+        if (tipo.includes('Power')) return 'border-yellow-500';
+        return 'border-gray-500';
+    }
+
+    function getIconColor(tipo) {
+        if (tipo.includes('USB')) return 'text-blue-500';
+        if (tipo.includes('HDMI')) return 'text-green-500';
+        if (tipo.includes('Ethernet')) return 'text-purple-500';
+        if (tipo.includes('Power')) return 'text-yellow-500';
+        return 'text-gray-500';
+    }
+
+    // Event listeners
+    document.getElementById('busca-cabo').addEventListener('input', function(e) {
+        buscaAtual = e.target.value;
+        renderizarCabos();
+    });
+
+    // Funções de ação dos cabos
+    async function substituirCabo(conexaoId, codigoAtual, tipoCabo, equipOrigem, equipDestino, portaOrigem, portaDestino) {
+        // Verificar permissões
+        if (userLevel !== 'admin' && userLevel !== 'tecnico') {
+            alert('Você não tem permissão para realizar esta ação. Apenas administradores e técnicos podem substituir cabos.');
+            return;
+        }
+        
+        if (!confirm(`Deseja substituir o cabo ${codigoAtual}?\n\nEsta ação irá:\n1. Desconectar o cabo atual\n2. Redirecionar para adicionar um novo cabo\n3. Conectar automaticamente o novo cabo`)) {
+            return;
+        }
+        
+        try {
+            // Primeiro, desconectar o cabo atual
+            const response = await fetch(`/conexoes-cabos/${conexaoId}`, {
+                method: 'DELETE'
+            });
+            
+            if (!response.ok) {
+                throw new Error('Erro ao desconectar cabo');
+            }
+            
+            // Salvar informações da conexão no localStorage para usar na nova conexão
+            const infoConexao = {
+                tipo_cabo: tipoCabo,
+                equipamento_origem: equipOrigem,
+                equipamento_destino: equipDestino,
+                porta_origem: portaOrigem,
+                porta_destino: portaDestino,
+                sala_id: getIdFromUrl(),
+                substituicao: true
+            };
+            
+            localStorage.setItem('substituicao_cabo', JSON.stringify(infoConexao));
+            
+            // Redirecionar para adicionar cabo
+            alert('Cabo desconectado! Você será redirecionado para adicionar um novo cabo.');
+            window.location.href = 'adicionar-cabo.html?substituicao=true';
+            
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro ao substituir cabo: ' + error.message);
+        }
+    }
+    
+    async function desconectarCabo(conexaoId) {
+        // Verificar permissões
+        if (userLevel !== 'admin' && userLevel !== 'tecnico') {
+            alert('Você não tem permissão para realizar esta ação. Apenas administradores e técnicos podem desconectar cabos.');
+            return;
+        }
+        
+        if (!confirm('Deseja realmente desconectar este cabo?')) {
+            return;
+        }
+        
+        try {
+            const response = await fetch(`/conexoes-cabos/${conexaoId}`, {
+                method: 'DELETE'
+            });
+            
+            if (!response.ok) {
+                throw new Error('Erro ao desconectar cabo');
+            }
+            
+            alert('Cabo desconectado com sucesso!');
+            carregarCabosSala(); // Recarregar dados
+            
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro ao desconectar cabo: ' + error.message);
+        }
+    }
+    
+    async function reconectarCabo(conexaoId) {
+        // Verificar permissões
+        if (userLevel !== 'admin' && userLevel !== 'tecnico') {
+            alert('Você não tem permissão para realizar esta ação. Apenas administradores e técnicos podem reconectar cabos.');
+            return;
+        }
+        
+        if (!confirm('Deseja reconectar este cabo?')) {
+            return;
+        }
+        
+        try {
+            const response = await fetch(`/conexoes-cabos/${conexaoId}/reconectar`, {
+                method: 'POST'
+            });
+            
+            if (!response.ok) {
+                throw new Error('Erro ao reconectar cabo');
+            }
+            
+            alert('Cabo reconectado com sucesso!');
+            carregarCabosSala(); // Recarregar dados
+            
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro ao reconectar cabo: ' + error.message);
+        }
+    }
+
+    // Verificar perfil do usuário
+    async function verificarPerfilUsuario() {
+        try {
+            const response = await fetch('/perfil');
+            const perfil = await response.json();
+            userLevel = perfil.nivel || 'usuario';
+            
+            // Mostrar aviso de permissões para usuários
+            if (userLevel === 'usuario') {
+                const avisoElement = document.getElementById('aviso-permissoes');
+                if (avisoElement) {
+                    avisoElement.classList.remove('hidden');
+                }
+            }
+        } catch (error) {
+            console.error('Erro ao verificar perfil:', error);
+            userLevel = 'usuario'; // Padrão seguro
+            
+            // Mostrar aviso mesmo em caso de erro
+            const avisoElement = document.getElementById('aviso-permissoes');
+            if (avisoElement) {
+                avisoElement.classList.remove('hidden');
+            }
+        }
+    }
+
+    // Carregar dados quando a página carregar
+    window.addEventListener('DOMContentLoaded', async function() {
+        // Primeiro verificar perfil do usuário
+        await verificarPerfilUsuario();
+        
+        // Depois carregar dados
+        carregarCabosSala();
+        
+        fetch('/empresa_atual')
+            .then(resp => resp.json())
+            .then(data => {
+                LogoManager.loadEmpresaLogo(data);
+            });
+        
+        // Aplicar filtro de status ativo por padrão
+        setTimeout(() => {
+            aplicarFiltroStatus('ativos');
+        }, 100);
+    });
+    </script>
+    <script src="static/js/logo-manager.js"></script>
+</body>
+</html> 

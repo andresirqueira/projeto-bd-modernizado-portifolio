@@ -1259,6 +1259,41 @@ def gerenciar_equipamentos_html():
 def estoque_equipamentos_html():
     return send_from_directory(os.path.dirname(__file__), 'estoque-equipamentos.html')
 
+@app.route('/adicionar-cabo.html')
+@admin_required
+def adicionar_cabo_html():
+    return send_from_directory(os.path.dirname(__file__), 'adicionar-cabo.html')
+
+@app.route('/ver-cabos.html')
+@login_required
+def ver_cabos_html():
+    return send_from_directory(os.path.dirname(__file__), 'ver-cabos.html')
+
+@app.route('/cabos-estoque.html')
+@login_required
+def cabos_estoque_html():
+    return send_from_directory(os.path.dirname(__file__), 'cabos-estoque.html')
+
+@app.route('/editar-cabo.html')
+@admin_required
+def editar_cabo_html():
+    return send_from_directory(os.path.dirname(__file__), 'editar-cabo.html')
+
+@app.route('/excluir-cabo.html')
+@admin_required
+def excluir_cabo_html():
+    return send_from_directory(os.path.dirname(__file__), 'excluir-cabo.html')
+
+@app.route('/conexoes-cabos.html')
+@admin_required
+def conexoes_cabos_html():
+    return send_from_directory(os.path.dirname(__file__), 'conexoes-cabos.html')
+
+@app.route('/detalhes-cabos-sala.html')
+@login_required
+def detalhes_cabos_sala_html():
+    return send_from_directory(os.path.dirname(__file__), 'detalhes-cabos-sala.html')
+
 @app.route('/config-usuario.html')
 @login_required
 def config_usuario_html():
@@ -1707,6 +1742,432 @@ def api_get_sala(id):
 @login_required
 def dashboard_html():
     return send_from_directory(os.path.dirname(__file__), 'dashboard.html')
+
+# --- API DE CABOS ---
+
+@app.route('/cabos', methods=['POST'])
+@admin_required
+def criar_cabo():
+    dados = request.json
+    if not dados:
+        return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
+    
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    # Validar campos obrigatórios
+    if not dados.get('codigo_unico') or not dados.get('tipo'):
+        return jsonify({'status': 'erro', 'mensagem': 'Código único e tipo são obrigatórios'}), 400
+    
+    conn = sqlite3.connect(db_file)
+    cur = conn.cursor()
+    
+    try:
+        cur.execute('''
+            INSERT INTO cabos (codigo_unico, tipo, comprimento, marca, modelo, descricao, foto, status)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (
+            dados['codigo_unico'],
+            dados['tipo'],
+            dados.get('comprimento'),
+            dados.get('marca'),
+            dados.get('modelo'),
+            dados.get('descricao'),
+            dados.get('foto'),
+            dados.get('status', 'funcionando')
+        ))
+        
+        cabo_id = cur.lastrowid
+        conn.commit()
+        
+        registrar_log(session.get('username'), 'criar_cabo', f'Cabo {dados["codigo_unico"]} criado', 'sucesso')
+        return jsonify({'status': 'ok', 'id': cabo_id})
+        
+    except sqlite3.IntegrityError:
+        return jsonify({'status': 'erro', 'mensagem': 'Código único já existe'}), 400
+    except Exception as e:
+        return jsonify({'status': 'erro', 'mensagem': str(e)}), 500
+    finally:
+        conn.close()
+
+@app.route('/cabos', methods=['GET'])
+@login_required
+def listar_cabos():
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    # Parâmetros de filtro
+    status = request.args.get('status')
+    tipo = request.args.get('tipo')
+    conectado = request.args.get('conectado')  # 'true' para conectados, 'false' para em estoque
+    
+    conn = sqlite3.connect(db_file)
+    cur = conn.cursor()
+    
+    query = '''
+        SELECT c.id, c.codigo_unico, c.tipo, c.comprimento, c.marca, c.modelo, 
+               c.descricao, c.foto, c.status, c.data_criacao, c.data_modificacao,
+               tc.descricao as tipo_descricao, tc.icone as tipo_icone
+        FROM cabos c
+        LEFT JOIN tipos_cabos tc ON c.tipo = tc.nome
+        WHERE 1=1
+    '''
+    params = []
+    
+    if status:
+        query += ' AND c.status = ?'
+        params.append(status)
+    
+    if tipo:
+        query += ' AND c.tipo = ?'
+        params.append(tipo)
+    
+    if conectado == 'true':
+        query += ' AND EXISTS (SELECT 1 FROM conexoes_cabos cc WHERE cc.cabo_id = c.id AND cc.data_desconexao IS NULL)'
+    elif conectado == 'false':
+        query += ' AND NOT EXISTS (SELECT 1 FROM conexoes_cabos cc WHERE cc.cabo_id = c.id AND cc.data_desconexao IS NULL)'
+    
+    query += ' ORDER BY c.codigo_unico'
+    
+    cur.execute(query, params)
+    rows = cur.fetchall()
+    
+    cabos = []
+    for row in rows:
+        cabo = {
+            'id': row[0],
+            'codigo_unico': row[1],
+            'tipo': row[2],
+            'comprimento': row[3],
+            'marca': row[4],
+            'modelo': row[5],
+            'descricao': row[6],
+            'foto': row[7],
+            'status': row[8],
+            'data_criacao': row[9],
+            'data_modificacao': row[10],
+            'tipo_descricao': row[11],
+            'tipo_icone': row[12]
+        }
+        cabos.append(cabo)
+    
+    conn.close()
+    return jsonify(cabos)
+
+@app.route('/cabos/<int:id>', methods=['GET'])
+@login_required
+def get_cabo(id):
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    conn = sqlite3.connect(db_file)
+    cur = conn.cursor()
+    
+    cur.execute('''
+        SELECT c.id, c.codigo_unico, c.tipo, c.comprimento, c.marca, c.modelo, 
+               c.descricao, c.foto, c.status, c.data_criacao, c.data_modificacao,
+               tc.descricao as tipo_descricao, tc.icone as tipo_icone
+        FROM cabos c
+        LEFT JOIN tipos_cabos tc ON c.tipo = tc.nome
+        WHERE c.id = ?
+    ''', (id,))
+    
+    row = cur.fetchone()
+    conn.close()
+    
+    if row:
+        cabo = {
+            'id': row[0],
+            'codigo_unico': row[1],
+            'tipo': row[2],
+            'comprimento': row[3],
+            'marca': row[4],
+            'modelo': row[5],
+            'descricao': row[6],
+            'foto': row[7],
+            'status': row[8],
+            'data_criacao': row[9],
+            'data_modificacao': row[10],
+            'tipo_descricao': row[11],
+            'tipo_icone': row[12]
+        }
+        return jsonify(cabo)
+    
+    return jsonify({'erro': 'Cabo não encontrado'}), 404
+
+@app.route('/cabos/<int:id>', methods=['PUT'])
+@admin_required
+def atualizar_cabo(id):
+    dados = request.json
+    if not dados:
+        return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
+    
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    conn = sqlite3.connect(db_file)
+    cur = conn.cursor()
+    
+    try:
+        cur.execute('''
+            UPDATE cabos 
+            SET codigo_unico = ?, tipo = ?, comprimento = ?, marca = ?, modelo = ?, 
+                descricao = ?, foto = ?, status = ?
+            WHERE id = ?
+        ''', (
+            dados.get('codigo_unico'),
+            dados.get('tipo'),
+            dados.get('comprimento'),
+            dados.get('marca'),
+            dados.get('modelo'),
+            dados.get('descricao'),
+            dados.get('foto'),
+            dados.get('status'),
+            id
+        ))
+        
+        if cur.rowcount == 0:
+            return jsonify({'status': 'erro', 'mensagem': 'Cabo não encontrado'}), 404
+        
+        conn.commit()
+        registrar_log(session.get('username'), 'atualizar_cabo', f'Cabo ID {id} atualizado', 'sucesso')
+        return jsonify({'status': 'ok'})
+        
+    except sqlite3.IntegrityError:
+        return jsonify({'status': 'erro', 'mensagem': 'Código único já existe'}), 400
+    except Exception as e:
+        return jsonify({'status': 'erro', 'mensagem': str(e)}), 500
+    finally:
+        conn.close()
+
+@app.route('/cabos/<int:id>', methods=['DELETE'])
+@admin_required
+def excluir_cabo(id):
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    conn = sqlite3.connect(db_file)
+    cur = conn.cursor()
+    
+    # Verificar se o cabo está conectado
+    cur.execute('SELECT COUNT(*) FROM conexoes_cabos WHERE cabo_id = ? AND data_desconexao IS NULL', (id,))
+    if cur.fetchone()[0] > 0:
+        conn.close()
+        return jsonify({'status': 'erro', 'mensagem': 'Não é possível excluir um cabo que está conectado'}), 400
+    
+    cur.execute('DELETE FROM cabos WHERE id = ?', (id,))
+    if cur.rowcount == 0:
+        conn.close()
+        return jsonify({'status': 'erro', 'mensagem': 'Cabo não encontrado'}), 404
+    
+    conn.commit()
+    conn.close()
+    
+    registrar_log(session.get('username'), 'excluir_cabo', f'Cabo ID {id} excluído', 'sucesso')
+    return jsonify({'status': 'ok'})
+
+@app.route('/tipos-cabos', methods=['GET'])
+@login_required
+def tipos_cabos():
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    conn = sqlite3.connect(db_file)
+    cur = conn.cursor()
+    cur.execute('SELECT nome, descricao, icone FROM tipos_cabos ORDER BY nome')
+    rows = cur.fetchall()
+    conn.close()
+    
+    tipos = [{'nome': row[0], 'descricao': row[1], 'icone': row[2]} for row in rows]
+    return jsonify(tipos)
+
+@app.route('/conexoes-cabos', methods=['POST'])
+@admin_required
+def criar_conexao_cabo():
+    dados = request.json
+    if not dados:
+        return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
+    
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    # Validar campos obrigatórios
+    if not dados.get('cabo_id') or not dados.get('equipamento_origem_id') or not dados.get('equipamento_destino_id'):
+        return jsonify({'status': 'erro', 'mensagem': 'cabo_id, equipamento_origem_id e equipamento_destino_id são obrigatórios'}), 400
+    
+    conn = sqlite3.connect(db_file)
+    cur = conn.cursor()
+    
+    try:
+        # Verificar se o cabo já está conectado
+        cur.execute('SELECT COUNT(*) FROM conexoes_cabos WHERE cabo_id = ? AND data_desconexao IS NULL', (dados['cabo_id'],))
+        if cur.fetchone()[0] > 0:
+            return jsonify({'status': 'erro', 'mensagem': 'Cabo já está conectado a outro equipamento'}), 400
+        
+        cur.execute('''
+            INSERT INTO conexoes_cabos (cabo_id, equipamento_origem_id, equipamento_destino_id, 
+                                      porta_origem, porta_destino, sala_id, observacao)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ''', (
+            dados['cabo_id'],
+            dados['equipamento_origem_id'],
+            dados['equipamento_destino_id'],
+            dados.get('porta_origem'),
+            dados.get('porta_destino'),
+            dados.get('sala_id'),
+            dados.get('observacao')
+        ))
+        
+        conexao_id = cur.lastrowid
+        conn.commit()
+        
+        registrar_log(session.get('username'), 'criar_conexao_cabo', f'Conexão de cabo {dados["cabo_id"]} criada', 'sucesso')
+        return jsonify({'status': 'ok', 'id': conexao_id})
+        
+    except Exception as e:
+        return jsonify({'status': 'erro', 'mensagem': str(e)}), 500
+    finally:
+        conn.close()
+
+@app.route('/conexoes-cabos', methods=['GET'])
+@login_required
+def listar_conexoes_cabos():
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    conn = sqlite3.connect(db_file)
+    cur = conn.cursor()
+    
+    cur.execute('''
+        SELECT cc.id, cc.cabo_id, cc.equipamento_origem_id, cc.equipamento_destino_id,
+               cc.porta_origem, cc.porta_destino, cc.sala_id, cc.observacao,
+               cc.data_conexao, cc.data_desconexao,
+               c.codigo_unico, c.tipo, c.comprimento, c.marca, c.modelo,
+               eo.nome as equipamento_origem_nome, ed.nome as equipamento_destino_nome,
+               s.nome as sala_nome
+        FROM conexoes_cabos cc
+        JOIN cabos c ON cc.cabo_id = c.id
+        LEFT JOIN equipamentos eo ON cc.equipamento_origem_id = eo.id
+        LEFT JOIN equipamentos ed ON cc.equipamento_destino_id = ed.id
+        LEFT JOIN salas s ON cc.sala_id = s.id
+        WHERE cc.data_desconexao IS NULL
+        ORDER BY cc.data_conexao DESC
+    ''')
+    
+    rows = cur.fetchall()
+    conn.close()
+    
+    conexoes = []
+    for row in rows:
+        conexao = {
+            'id': row[0],
+            'cabo_id': row[1],
+            'equipamento_origem_id': row[2],
+            'equipamento_destino_id': row[3],
+            'porta_origem': row[4],
+            'porta_destino': row[5],
+            'sala_id': row[6],
+            'observacao': row[7],
+            'data_conexao': row[8],
+            'data_desconexao': row[9],
+            'codigo_unico': row[10],
+            'tipo': row[11],
+            'comprimento': row[12],
+            'marca': row[13],
+            'modelo': row[14],
+            'equipamento_origem_nome': row[15],
+            'equipamento_destino_nome': row[16],
+            'sala_nome': row[17]
+        }
+        conexoes.append(conexao)
+    
+    return jsonify(conexoes)
+
+@app.route('/conexoes-cabos/<int:id>', methods=['DELETE'])
+@admin_required
+def desconectar_cabo(id):
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    conn = sqlite3.connect(db_file)
+    cur = conn.cursor()
+    
+    cur.execute('UPDATE conexoes_cabos SET data_desconexao = CURRENT_TIMESTAMP WHERE id = ?', (id,))
+    if cur.rowcount == 0:
+        conn.close()
+        return jsonify({'status': 'erro', 'mensagem': 'Conexão não encontrada'}), 404
+    
+    conn.commit()
+    conn.close()
+    
+    registrar_log(session.get('username'), 'desconectar_cabo', f'Conexão de cabo {id} desconectada', 'sucesso')
+    return jsonify({'status': 'ok'})
+
+@app.route('/conexoes-cabos/sala/<int:sala_id>', methods=['GET'])
+@login_required
+def cabos_por_sala(sala_id):
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    conn = sqlite3.connect(db_file)
+    cur = conn.cursor()
+    
+    cur.execute('''
+        SELECT cc.id, cc.cabo_id, cc.equipamento_origem_id, cc.equipamento_destino_id,
+               cc.porta_origem, cc.porta_destino, cc.sala_id, cc.observacao,
+               cc.data_conexao, cc.data_desconexao,
+               c.codigo_unico as codigo_cabo, c.tipo as tipo_cabo, c.comprimento, c.marca, c.modelo,
+               eo.nome as equipamento_origem, ed.nome as equipamento_destino,
+               s.nome as sala_nome,
+               CASE WHEN cc.data_desconexao IS NULL THEN 1 ELSE 0 END as ativo
+        FROM conexoes_cabos cc
+        JOIN cabos c ON cc.cabo_id = c.id
+        LEFT JOIN equipamentos eo ON cc.equipamento_origem_id = eo.id
+        LEFT JOIN equipamentos ed ON cc.equipamento_destino_id = ed.id
+        LEFT JOIN salas s ON cc.sala_id = s.id
+        WHERE cc.sala_id = ?
+        ORDER BY cc.data_conexao DESC
+    ''', (sala_id,))
+    
+    rows = cur.fetchall()
+    conn.close()
+    
+    cabos = []
+    for row in rows:
+        cabo = {
+            'id': row[0],
+            'cabo_id': row[1],
+            'equipamento_origem_id': row[2],
+            'equipamento_destino_id': row[3],
+            'porta_origem': row[4],
+            'porta_destino': row[5],
+            'sala_id': row[6],
+            'observacao': row[7],
+            'data_conexao': row[8],
+            'data_desconexao': row[9],
+            'codigo_cabo': row[10],
+            'tipo_cabo': row[11],
+            'comprimento': row[12],
+            'marca': row[13],
+            'modelo': row[14],
+            'equipamento_origem': row[15],
+            'equipamento_destino': row[16],
+            'sala_nome': row[17],
+            'ativo': bool(row[18])
+        }
+        cabos.append(cabo)
+    
+    return jsonify(cabos)
 
 @app.route('/logs/sala/<int:sala_id>', methods=['GET'])
 @login_required

@@ -1057,3 +1057,8 @@
 [2025-07-31 09:58:13] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=222, Porta ID=384, Equipamento ID=537 | Status: sucesso
 [2025-07-31 10:01:03] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=92, Nome=Outback 04 - 2 Andar (via formulário) | Status: sucesso
 [2025-07-31 12:14:46] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=82, Nome=Sala Blue Sky, Equipamentos desatrelados=0, Equipamentos vinculados=9 | Status: sucesso
+[2025-07-31 13:10:15] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDMI-0000001 criado | Status: sucesso
+[2025-07-31 13:12:16] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 1 criada | Status: sucesso
+[2025-07-31 14:47:02] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 1 desconectada | Status: sucesso
+[2025-07-31 14:47:43] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 1 criada | Status: sucesso
+[2025-07-31 14:48:31] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 1 atualizado | Status: sucesso

@@ -48,7 +48,13 @@
             <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
         </button>
         <div class="text-center mt-8 mb-8">
-            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Gerenciar Equipamentos</h1>
+            <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+                <i class="fas fa-cogs text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                Gerenciar Equipamentos
+            </h1>
+            <p class="text-gray-600 dark:text-gray-300">Gerencie todos os equipamentos do sistema</p>
+        </div>
             <div id="filtroAtivoIndicador" class="text-sm text-indigo-600 dark:text-indigo-400 font-medium"></div>
         </div>
         <div class="mb-6 flex flex-wrap gap-4 justify-center" id="resumoEquipamentos"></div>
@@ -131,8 +137,12 @@
     
     function atualizarIndicadorResultados(filtrados, termo) {
         const infoDiv = document.getElementById('resultadosInfo');
-        if (termo) {
-            infoDiv.innerHTML = `<i class="fas fa-search"></i> Busca: "${termo}" (${filtrados.length} resultado${filtrados.length !== 1 ? 's' : ''})`;
+        if (termo || (filtroAtivo && filtroAtivo !== 'total')) {
+            const filtros = [];
+            if (termo) filtros.push(`busca: "${termo}"`);
+            if (filtroAtivo && filtroAtivo !== 'total') filtros.push(`tipo: ${filtroAtivo}`);
+            
+            infoDiv.innerHTML = `<i class="fas fa-filter"></i> Filtros: ${filtros.join(', ')} (${filtrados.length} resultado${filtrados.length !== 1 ? 's' : ''})`;
         } else {
             infoDiv.innerHTML = '';
         }

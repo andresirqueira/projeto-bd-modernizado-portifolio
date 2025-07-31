@@ -57,7 +57,13 @@
             <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
         </button>
         
-        <h1 class="text-3xl font-bold text-gray-800 dark:text-white text-center mb-8">Configurações Administrador</h1>
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+                <i class="fas fa-user-shield text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                Configurações Administrador
+            </h1>
+            <p class="text-gray-600 dark:text-gray-300">Painel de controle administrativo do sistema</p>
+        </div>
         
         <div class="space-y-4 flex flex-col items-center">
             <!-- Linha 1: Salas -->
@@ -66,15 +72,15 @@
                     <i class="fas fa-plus-circle text-2xl"></i>
                     <span class="text-sm text-center">Adicionar Sala</span>
                 </button>
-                <button onclick="window.location.href='editar-sala.html'" class="w-32 h-32 m-0 bg-yellow-400 hover:bg-yellow-500 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                <button onclick="window.location.href='editar-sala.html'" class="w-32 h-32 m-0 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                     <i class="fas fa-edit text-2xl"></i>
                     <span class="text-sm text-center">Editar Sala</span>
                 </button>
-                <button onclick="window.location.href='excluir-sala.html'" class="w-32 h-32 m-0 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                <button onclick="window.location.href='excluir-sala.html'" class="w-32 h-32 m-0 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                     <i class="fas fa-trash-alt text-2xl"></i>
                     <span class="text-sm text-center">Excluir Sala</span>
                 </button>
-                <button onclick="window.location.href='ver-salas.html'" class="w-32 h-32 m-0 bg-teal-400 hover:bg-teal-500 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                <button onclick="window.location.href='ver-salas.html'" class="w-32 h-32 m-0 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                     <i class="fas fa-eye text-2xl"></i>
                     <span class="text-sm text-center">Ver Salas</span>
                 </button>
@@ -86,57 +92,85 @@
             
             <!-- Linha 2: Equipamentos -->
             <div class="flex flex-row gap-1">
-                <button onclick="window.location.href='adicionar-equipamento.html'" class="w-32 h-32 m-0 bg-green-400 hover:bg-green-500 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
-                    <i class="fas fa-plug text-2xl"></i>
+                <button onclick="window.location.href='adicionar-equipamento.html'" class="w-32 h-32 m-0 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-plus-circle text-2xl"></i>
                     <span class="text-sm text-center">Adicionar Equipamento</span>
                 </button>
-                <button onclick="window.location.href='editar-equipamento.html'" class="w-32 h-32 m-0 bg-yellow-300 hover:bg-yellow-400 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                <button onclick="window.location.href='editar-equipamento.html'" class="w-32 h-32 m-0 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                     <i class="fas fa-edit text-2xl"></i>
                     <span class="text-sm text-center">Editar Equipamento</span>
                 </button>
-                <button onclick="window.location.href='excluir-equipamento.html'" class="w-32 h-32 m-0 bg-orange-400 hover:bg-orange-500 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                <button onclick="window.location.href='excluir-equipamento.html'" class="w-32 h-32 m-0 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                     <i class="fas fa-trash-alt text-2xl"></i>
                     <span class="text-sm text-center">Excluir Equipamento</span>
                 </button>
-                <button onclick="window.location.href='ver-equipamento.html'" class="w-32 h-32 m-0 bg-teal-300 hover:bg-teal-400 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                <button onclick="window.location.href='ver-equipamento.html'" class="w-32 h-32 m-0 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                     <i class="fas fa-eye text-2xl"></i>
                     <span class="text-sm text-center">Ver Equipamentos</span>
                 </button>
-                <button onclick="window.location.href='gerenciar-equipamentos.html'" class="w-32 h-32 m-0 bg-blue-400 hover:bg-blue-500 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                <button onclick="window.location.href='gerenciar-equipamentos.html'" class="w-32 h-32 m-0 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                     <i class="fas fa-tools text-2xl"></i>
                     <span class="text-sm text-center">Gerenciar Equipamentos</span>
                 </button>
-                <button onclick="window.location.href='estoque-equipamentos.html'" class="w-32 h-32 m-0 bg-purple-400 hover:bg-purple-500 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                <button onclick="window.location.href='estoque-equipamentos.html'" class="w-32 h-32 m-0 bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                     <i class="fas fa-boxes text-2xl"></i>
                     <span class="text-sm text-center">Equipamentos em Estoque</span>
                 </button>
             </div>
             
-            <!-- Linha 3: Switches de Rede -->
+            <!-- Linha 3: Cabos -->
             <div class="flex flex-row gap-1">
-                <button onclick="window.location.href='adicionar-switch.html'" class="w-32 h-32 m-0 bg-green-300 hover:bg-green-400 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
-                    <i class="fas fa-network-wired text-2xl"></i>
+                <button onclick="window.location.href='adicionar-cabo.html'" class="w-32 h-32 m-0 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-plus-circle text-2xl"></i>
+                    <span class="text-sm text-center">Adicionar Cabo</span>
+                </button>
+                <button onclick="window.location.href='editar-cabo.html'" class="w-32 h-32 m-0 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-edit text-2xl"></i>
+                    <span class="text-sm text-center">Editar Cabo</span>
+                </button>
+                <button onclick="window.location.href='excluir-cabo.html'" class="w-32 h-32 m-0 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-trash-alt text-2xl"></i>
+                    <span class="text-sm text-center">Excluir Cabo</span>
+                </button>
+                <button onclick="window.location.href='ver-cabos.html'" class="w-32 h-32 m-0 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-eye text-2xl"></i>
+                    <span class="text-sm text-center">Ver Cabos</span>
+                </button>
+                <button onclick="window.location.href='conexoes-cabos.html'" class="w-32 h-32 m-0 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-project-diagram text-2xl"></i>
+                    <span class="text-sm text-center">Conexões</span>
+                </button>
+                <button onclick="window.location.href='cabos-estoque.html'" class="w-32 h-32 m-0 bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-box text-2xl"></i>
+                    <span class="text-sm text-center">Cabos em Estoque</span>
+                </button>
+            </div>
+            
+            <!-- Linha 4: Switches de Rede -->
+            <div class="flex flex-row gap-1">
+                <button onclick="window.location.href='adicionar-switch.html'" class="w-32 h-32 m-0 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-plus-circle text-2xl"></i>
                     <span class="text-sm text-center">Adicionar Switch</span>
                 </button>
-                <button onclick="window.location.href='editar-switch.html'" class="w-32 h-32 m-0 bg-yellow-200 hover:bg-yellow-300 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                <button onclick="window.location.href='editar-switch.html'" class="w-32 h-32 m-0 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                     <i class="fas fa-edit text-2xl"></i>
                     <span class="text-sm text-center">Editar Switch</span>
                 </button>
-                <button onclick="window.location.href='excluir-switch.html'" class="w-32 h-32 m-0 bg-orange-300 hover:bg-orange-400 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                <button onclick="window.location.href='excluir-switch.html'" class="w-32 h-32 m-0 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                     <i class="fas fa-trash-alt text-2xl"></i>
                     <span class="text-sm text-center">Excluir Switch</span>
                 </button>
-                <button onclick="window.location.href='ver-switch.html'" class="w-32 h-32 m-0 bg-teal-200 hover:bg-teal-300 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                <button onclick="window.location.href='ver-switch.html'" class="w-32 h-32 m-0 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                     <i class="fas fa-eye text-2xl"></i>
                     <span class="text-sm text-center">Ver Switches</span>
                 </button>
-                <button onclick="window.location.href='gerenciar-portas-switch.html'" class="w-32 h-32 m-0 bg-blue-300 hover:bg-blue-400 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                <button onclick="window.location.href='gerenciar-portas-switch.html'" class="w-32 h-32 m-0 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                     <i class="fas fa-plug text-2xl"></i>
                     <span class="text-sm text-center">Gerenciar Portas</span>
                 </button>
             </div>
             
-            <!-- Linha 4: Sistema e Logs + Sair -->
+            <!-- Linha 5: Sistema e Logs + Sair -->
             <div class="flex flex-row gap-1 mt-4">
                 <button onclick="window.location.href='dashboard.html'" class="w-32 h-32 m-0 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                     <i class="fas fa-chart-pie text-2xl"></i>
@@ -146,11 +180,11 @@
                     <i class="fas fa-clipboard-list text-2xl"></i>
                     <span class="text-sm text-center">Visualizar Logs</span>
                 </button>
-                <button onclick="window.location.href='ping-equipamentos.html'" class="w-32 h-32 m-0 bg-teal-500 hover:bg-teal-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                <button onclick="window.location.href='ping-equipamentos.html'" class="w-32 h-32 m-0 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                     <i class="fas fa-wifi text-2xl"></i>
                     <span class="text-sm text-center">Testar (Ping)</span>
                 </button>
-                <button onclick="window.location.href='conexoes-equipamentos.html'" class="w-32 h-32 m-0 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                <button onclick="window.location.href='conexoes-equipamentos.html'" class="w-32 h-32 m-0 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                     <i class="fas fa-project-diagram text-2xl"></i>
                     <span class="text-sm text-center">Conexões de Equipamentos</span>
                 </button>
