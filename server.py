@@ -2202,5 +2202,61 @@ def dashboard_sala_html():
 def exportar_dados_html():
     return send_from_directory(os.path.dirname(__file__), 'exportar-dados.html')
 
+@app.route('/cabos/<int:id>/defeito', methods=['POST'])
+@admin_required
+def marcar_cabo_defeito(id):
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    dados = request.json or {}
+    motivo = dados.get('motivo', 'Substituição automática')
+    conn = sqlite3.connect(db_file)
+    cur = conn.cursor()
+    # Buscar descricao atual
+    cur.execute('SELECT descricao FROM cabos WHERE id=?', (id,))
+    row = cur.fetchone()
+    if not row:
+        conn.close()
+        return jsonify({'status': 'erro', 'mensagem': 'Cabo não encontrado'}), 404
+    descricao_atual = row[0] or ''
+    nova_obs = f"[DEF. {motivo} em {__import__('datetime').datetime.now().strftime('%d/%m/%Y %H:%M')}] "
+    nova_descricao = (descricao_atual + '\n' + nova_obs).strip()
+    cur.execute('UPDATE cabos SET status=?, descricao=? WHERE id=?', ('defeito', nova_descricao, id))
+    conn.commit()
+    conn.close()
+    registrar_log(session.get('username'), 'marcar_cabo_defeito', f'Cabo ID {id} marcado como defeito', 'sucesso')
+    return jsonify({'status': 'ok'})
+
+@app.route('/cabos/<int:id>/reparar', methods=['POST'])
+@admin_required
+def reparar_cabo(id):
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    dados = request.json or {}
+    novo_status = dados.get('status', 'funcionando')
+    justificativa = dados.get('justificativa', 'Reparação realizada')
+    if novo_status not in ['funcionando', 'em_estoque']:
+        return jsonify({'status': 'erro', 'mensagem': 'Status inválido. Use "funcionando" ou "em_estoque"'}), 400
+    conn = sqlite3.connect(db_file)
+    cur = conn.cursor()
+    # Verificar se o cabo existe e está com defeito
+    cur.execute('SELECT status, descricao FROM cabos WHERE id=?', (id,))
+    row = cur.fetchone()
+    if not row:
+        conn.close()
+        return jsonify({'status': 'erro', 'mensagem': 'Cabo não encontrado'}), 404
+    if row[0] != 'defeito':
+        conn.close()
+        return jsonify({'status': 'erro', 'mensagem': 'Cabo não está com defeito'}), 400
+    descricao_atual = row[1] or ''
+    nova_obs = f"[REP. {justificativa} em {__import__('datetime').datetime.now().strftime('%d/%m/%Y %H:%M')}] "
+    nova_descricao = (descricao_atual + '\n' + nova_obs).strip()
+    cur.execute('UPDATE cabos SET status=?, descricao=? WHERE id=?', (novo_status, nova_descricao, id))
+    conn.commit()
+    conn.close()
+    registrar_log(session.get('username'), 'reparar_cabo', f'Cabo ID {id} reparado - Status: {novo_status}', 'sucesso')
+    return jsonify({'status': 'ok'})
+
 if __name__ == '__main__':
     app.run(debug=True)

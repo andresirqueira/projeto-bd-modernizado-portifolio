@@ -82,6 +82,53 @@
         <div id="cabos-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
     </div>
 
+    <!-- Modal de Reparação -->
+    <div id="modalReparacao" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 w-full max-w-md mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
+                    <i class="fas fa-wrench text-yellow-500 mr-2"></i>
+                    Reparar Cabo
+                </h3>
+                <button onclick="fecharModalReparacao()" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="mb-4">
+                <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">
+                    Reparando cabo: <strong id="codigoCaboReparacao" class="text-gray-800 dark:text-white"></strong>
+                </p>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Novo Status:
+                    </label>
+                    <select id="novoStatusCabo" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                        <option value="funcionando">Funcionando</option>
+                        <option value="em_estoque">Em Estoque</option>
+                    </select>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Justificativa da Reparação:
+                    </label>
+                    <textarea id="justificativaReparacao" rows="3" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Descreva o que foi reparado..."></textarea>
+                </div>
+            </div>
+            
+            <div class="flex gap-3">
+                <button onclick="confirmarReparacao()" class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-lg transition-colors">
+                    <i class="fas fa-wrench mr-2"></i>Confirmar Reparação
+                </button>
+                <button onclick="fecharModalReparacao()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition-colors">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         let cabos = [];
         let filtroStatusAtivo = 'todos';
@@ -169,12 +216,21 @@
 
                             <!-- Botões de Ação -->
                             <div class="flex gap-2 mt-4">
+                                ${!isDefeito ? `
                                 <button onclick="conectarCabo(${cabo.id})" class="flex-1 bg-green-500 hover:bg-green-600 text-white text-xs py-2 px-3 rounded transition-colors">
                                     <i class="fas fa-link mr-1"></i>Conectar
                                 </button>
                                 <button onclick="editarCabo(${cabo.id})" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white text-xs py-2 px-3 rounded transition-colors">
                                     <i class="fas fa-edit mr-1"></i>Editar
                                 </button>
+                                ` : `
+                                <button onclick="repararCabo(${cabo.id}, '${cabo.codigo_unico}')" class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white text-xs py-2 px-3 rounded transition-colors">
+                                    <i class="fas fa-wrench mr-1"></i>Reparar
+                                </button>
+                                <button onclick="editarCabo(${cabo.id})" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white text-xs py-2 px-3 rounded transition-colors">
+                                    <i class="fas fa-edit mr-1"></i>Editar
+                                </button>
+                                `}
                             </div>
                         </div>
                     </div>
@@ -288,6 +344,60 @@
         function editarCabo(id) {
             // Implementar redirecionamento para página de edição
             alert('Funcionalidade de edição será implementada em breve!');
+        }
+
+        // Variáveis para reparação
+        let caboReparacaoId = null;
+
+        // Abrir modal de reparação
+        function repararCabo(id, codigo) {
+            caboReparacaoId = id;
+            document.getElementById('codigoCaboReparacao').textContent = codigo;
+            document.getElementById('justificativaReparacao').value = '';
+            document.getElementById('novoStatusCabo').value = 'funcionando';
+            document.getElementById('modalReparacao').classList.remove('hidden');
+        }
+
+        // Fechar modal de reparação
+        function fecharModalReparacao() {
+            document.getElementById('modalReparacao').classList.add('hidden');
+            caboReparacaoId = null;
+        }
+
+        // Confirmar reparação
+        async function confirmarReparacao() {
+            if (!caboReparacaoId) return;
+
+            const novoStatus = document.getElementById('novoStatusCabo').value;
+            const justificativa = document.getElementById('justificativaReparacao').value.trim();
+
+            if (!justificativa) {
+                alert('Por favor, informe a justificativa da reparação.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/cabos/${caboReparacaoId}/reparar`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        status: novoStatus,
+                        justificativa: justificativa
+                    })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.mensagem || 'Erro ao reparar cabo');
+                }
+
+                alert('Cabo reparado com sucesso!');
+                fecharModalReparacao();
+                carregarCabosEstoque(); // Recarregar dados
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro ao reparar cabo: ' + error.message);
+            }
         }
 
         // Voltar ao painel de configuração

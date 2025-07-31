@@ -384,21 +384,23 @@
             alert('Você não tem permissão para realizar esta ação. Apenas administradores e técnicos podem substituir cabos.');
             return;
         }
-        
-        if (!confirm(`Deseja substituir o cabo ${codigoAtual}?\n\nEsta ação irá:\n1. Desconectar o cabo atual\n2. Redirecionar para adicionar um novo cabo\n3. Conectar automaticamente o novo cabo`)) {
+        if (!confirm(`Deseja substituir o cabo ${codigoAtual}?\n\nEsta ação irá:\n1. Desconectar o cabo atual\n2. Marcar como defeito e enviar para estoque\n3. Redirecionar para adicionar um novo cabo\n4. Conectar automaticamente o novo cabo`)) {
             return;
         }
-        
         try {
-            // Primeiro, desconectar o cabo atual
-            const response = await fetch(`/conexoes-cabos/${conexaoId}`, {
-                method: 'DELETE'
+            // Buscar o objeto do cabo pelo id da conexão
+            const caboObj = cabosData.find(c => c.id === conexaoId);
+            if (!caboObj) throw new Error('Cabo não encontrado nos dados carregados.');
+            // Desconectar o cabo atual
+            const response = await fetch(`/conexoes-cabos/${conexaoId}`, { method: 'DELETE' });
+            if (!response.ok) throw new Error('Erro ao desconectar cabo');
+            // Marcar o cabo físico como defeito
+            const respDefeito = await fetch(`/cabos/${caboObj.cabo_id}/defeito`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ motivo: 'Substituição' })
             });
-            
-            if (!response.ok) {
-                throw new Error('Erro ao desconectar cabo');
-            }
-            
+            if (!respDefeito.ok) throw new Error('Erro ao marcar cabo como defeito');
             // Salvar informações da conexão no localStorage para usar na nova conexão
             const infoConexao = {
                 tipo_cabo: tipoCabo,
@@ -409,13 +411,9 @@
                 sala_id: getIdFromUrl(),
                 substituicao: true
             };
-            
             localStorage.setItem('substituicao_cabo', JSON.stringify(infoConexao));
-            
-            // Redirecionar para adicionar cabo
-            alert('Cabo desconectado! Você será redirecionado para adicionar um novo cabo.');
+            alert('Cabo desconectado e enviado para estoque de defeito! Você será redirecionado para adicionar um novo cabo.');
             window.location.href = 'adicionar-cabo.html?substituicao=true';
-            
         } catch (error) {
             console.error('Erro:', error);
             alert('Erro ao substituir cabo: ' + error.message);
