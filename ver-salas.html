@@ -38,17 +38,108 @@
             <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
         </button>
         <h1 class="text-3xl font-bold text-gray-800 dark:text-white text-center mb-8">Visualizar Salas</h1>
+        <div class="mb-6 flex flex-wrap gap-4 justify-center" id="resumoSalas"></div>
         <div class="flex flex-col gap-4 mb-6">
-            <input id="filtroSala" type="text" class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white w-full max-w-md mx-auto" placeholder="Filtrar por nome da sala...">
+            <div class="flex gap-2">
+                <div class="relative flex-1 max-w-md mx-auto">
+                    <input id="filtroSala" type="text" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600" placeholder="Buscar por nome, tipo, descrição...">
+                    <div class="absolute right-3 top-2.5 text-gray-400 dark:text-gray-500 text-sm">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                <button onclick="limparBusca()" class="px-3 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded transition-colors text-sm" title="Limpar busca">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 text-center">
+                <i class="fas fa-info-circle"></i> Dica: Você pode buscar por nome, tipo, descrição ou andar
+            </div>
+            <div id="resultadosInfo" class="text-xs text-indigo-600 dark:text-indigo-400 text-center font-medium"></div>
             <div id="cardsSalasContainer" class="flex flex-wrap gap-6 justify-center"></div>
         </div>
     </div>
     <script>
+    // Variáveis para controle de filtros
+    let todasSalas = [];
+    let filtroAtivo = null; // Para controlar qual filtro está ativo
+    
     // Função para buscar equipamentos de uma sala
     async function buscarEquipamentosSala(salaId) {
         const resp = await fetch(`/equipamentos?sala_id=${salaId}`);
         if (!resp.ok) return [];
         return await resp.json();
+    }
+    
+    // Função para aplicar filtro por tipo
+    function aplicarFiltro(tipo) {
+        filtroAtivo = tipo;
+        const filtrados = tipo === 'total' ? todasSalas : todasSalas.filter(sala => sala.tipo === tipo);
+        renderCardsSalas(filtrados);
+        // Limpar o campo de busca quando aplicar filtro por tipo
+        document.getElementById('filtroSala').value = '';
+        atualizarIndicadorResultados(filtrados, '');
+    }
+    
+    // Função para limpar busca
+    function limparBusca() {
+        document.getElementById('filtroSala').value = '';
+        filtroAtivo = null;
+        renderCardsSalas(todasSalas);
+        atualizarIndicadorResultados(todasSalas, '');
+    }
+    
+    // Função para renderizar resumo das salas
+    function renderizarResumo(salas) {
+        const resumoDiv = document.getElementById('resumoSalas');
+        if (!salas.length) {
+            resumoDiv.innerHTML = "<span class='text-gray-400 dark:text-gray-500'>Nenhuma sala encontrada.</span>";
+            return;
+        }
+        // Conta por tipo
+        const tipos = {};
+        salas.forEach(sala => {
+            if (!tipos[sala.tipo]) tipos[sala.tipo] = 0;
+            tipos[sala.tipo]++;
+        });
+        
+        // Card Total - sempre clicável
+        const totalAtivo = filtroAtivo === 'total' ? 'ring-4 ring-yellow-400' : '';
+        let html = `
+            <div onclick="aplicarFiltro('total')" class="flex items-center gap-2 bg-indigo-600 dark:bg-indigo-800 text-white px-5 py-2 rounded-lg shadow cursor-pointer hover:bg-indigo-700 dark:hover:bg-indigo-700 transition-colors ${totalAtivo}" title="Mostrar todas as salas">
+                <i class="fas fa-building"></i> Total: <b class='ml-1'>${salas.length}</b>
+            </div>
+        `;
+        
+        // Se há filtro ativo, mostrar apenas o card do tipo selecionado
+        if (filtroAtivo && filtroAtivo !== 'total' && tipos[filtroAtivo]) {
+            const tipoAtivo = 'ring-4 ring-yellow-400';
+            html += `
+                <div onclick="aplicarFiltro('${filtroAtivo}')" class="flex items-center gap-2 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 px-5 py-2 rounded-lg shadow cursor-pointer hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors ${tipoAtivo}" title="Filtrar por ${filtroAtivo}">
+                    <i class="fas fa-tag"></i> ${filtroAtivo || 'Sem tipo'}: <b class='ml-1'>${tipos[filtroAtivo]}</b>
+                </div>
+            `;
+        } else {
+            // Cards por tipo - clicáveis (apenas quando não há filtro ativo)
+            Object.entries(tipos).forEach(([tipo, qtd]) => {
+                const tipoAtivo = filtroAtivo === tipo ? 'ring-4 ring-yellow-400' : '';
+                html += `
+                    <div onclick="aplicarFiltro('${tipo}')" class="flex items-center gap-2 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 px-5 py-2 rounded-lg shadow cursor-pointer hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors ${tipoAtivo}" title="Filtrar por ${tipo}">
+                        <i class="fas fa-tag"></i> ${tipo || 'Sem tipo'}: <b class='ml-1'>${qtd}</b>
+                    </div>
+                `;
+            });
+        }
+        resumoDiv.innerHTML = html;
+    }
+    
+    // Função para atualizar indicador de resultados
+    function atualizarIndicadorResultados(filtrados, termo) {
+        const infoDiv = document.getElementById('resultadosInfo');
+        if (termo) {
+            infoDiv.innerHTML = `<i class="fas fa-search"></i> Busca: "${termo}" (${filtrados.length} resultado${filtrados.length !== 1 ? 's' : ''})`;
+        } else {
+            infoDiv.innerHTML = '';
+        }
     }
 
     // Renderiza a lista de equipamentos dentro do card
@@ -74,14 +165,38 @@
     // Renderiza todos os cards de sala
     function renderCardsSalas(salas) {
         const container = document.getElementById('cardsSalasContainer');
+        const termoBusca = document.getElementById('filtroSala').value.trim().toLowerCase();
+        
         let html = '';
         salas.forEach(sala => {
             const cardId = `equipamentos_sala_${sala.id}`;
+            
+            // Destacar termo de busca no nome
+            const nomeDestacado = termoBusca && sala.nome ? 
+                sala.nome.replace(new RegExp(`(${termoBusca})`, 'gi'), '<mark class="bg-yellow-200 dark:bg-yellow-800 px-1 rounded">$1</mark>') : 
+                (sala.nome || '');
+            
+            // Destacar termo de busca no tipo
+            const tipoDestacado = termoBusca && sala.tipo ? 
+                sala.tipo.replace(new RegExp(`(${termoBusca})`, 'gi'), '<mark class="bg-yellow-200 dark:bg-yellow-800 px-1 rounded">$1</mark>') : 
+                (sala.tipo || '');
+            
+            // Destacar termo de busca na descrição
+            const descricaoDestacada = termoBusca && sala.descricao ? 
+                sala.descricao.replace(new RegExp(`(${termoBusca})`, 'gi'), '<mark class="bg-yellow-200 dark:bg-yellow-800 px-1 rounded">$1</mark>') : 
+                (sala.descricao || '');
+            
             html += `<div class='bg-gray-100 dark:bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col items-center w-72 min-h-[220px] mb-4'>`;
             if (sala.foto) {
                 html += `<div class='mb-3'><img src='${sala.foto.startsWith('img/') ? 'static/' + sala.foto : sala.foto}' alt='${sala.nome || ''}' class='rounded-md object-cover max-w-[180px] max-h-[90px]'></div>`;
             }
-            html += `<div class='font-bold text-lg text-gray-800 dark:text-white mb-2 text-center'>${sala.nome || ''}</div>`;
+            html += `<div class='font-bold text-lg text-gray-800 dark:text-white mb-2 text-center'>${nomeDestacado}</div>`;
+            if (sala.tipo) {
+                html += `<div class='text-sm text-gray-600 dark:text-gray-300 mb-1'>Tipo: ${tipoDestacado}</div>`;
+            }
+            if (sala.descricao) {
+                html += `<div class='text-sm text-gray-600 dark:text-gray-300 mb-2 text-center'>${descricaoDestacada}</div>`;
+            }
             html += `<div class='flex gap-2 mb-2'>`;
             html += `<button onclick='window.location.href="detalhes-sala.html?id=${sala.id}"' class='bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-2 rounded-lg shadow flex items-center gap-2 transition-colors text-sm'><i class='fas fa-eye'></i> Ver Detalhes</button>`;
             html += `<button class='btn-equipamentos bg-teal-500 hover:bg-teal-600 text-white font-semibold py-1 px-2 rounded-lg shadow flex items-center gap-2 transition-colors text-sm' data-sala='${sala.id}' type='button'><i class='fas fa-plug'></i> <span id='labelBtn${sala.id}'>Mostrar Equipamentos</span></button>`;
@@ -90,6 +205,7 @@
             html += `</div>`;
         });
         container.innerHTML = html;
+        renderizarResumo(todasSalas);
 
         // Adiciona eventos aos botões de mostrar/ocultar equipamentos
         document.querySelectorAll('.btn-equipamentos').forEach(btn => {
@@ -113,7 +229,6 @@
         });
     }
 
-    let todasSalas = [];
     // Carrega as salas e renderiza os cards
     function carregarSalas() {
         fetch('/salas')
@@ -121,15 +236,39 @@
             .then(salas => {
                 todasSalas = salas;
                 renderCardsSalas(salas);
+                renderizarResumo(salas);
             });
     }
-    // Filtro em tempo real
+    // Filtro de salas avançado
     document.addEventListener('DOMContentLoaded', function() {
         const filtro = document.getElementById('filtroSala');
         filtro.addEventListener('input', function() {
-            const termo = filtro.value.trim().toLowerCase();
-            const filtradas = termo ? todasSalas.filter(s => (s.nome||'').toLowerCase().includes(termo)) : todasSalas;
-            renderCardsSalas(filtradas);
+            const termo = this.value.trim().toLowerCase();
+            // Aplicar filtro de texto sobre o filtro de tipo ativo
+            let salasParaFiltrar = todasSalas;
+            if (filtroAtivo && filtroAtivo !== 'total') {
+                salasParaFiltrar = todasSalas.filter(sala => sala.tipo === filtroAtivo);
+            }
+            
+            const filtrados = termo ? salasParaFiltrar.filter(sala => {
+                // Busca por nome da sala
+                const nomeMatch = (sala.nome || '').toLowerCase().includes(termo);
+                
+                // Busca por tipo
+                const tipoMatch = (sala.tipo || '').toLowerCase().includes(termo);
+                
+                // Busca por descrição
+                const descricaoMatch = (sala.descricao || '').toLowerCase().includes(termo);
+                
+                // Busca por andar
+                const andarMatch = (sala.andar_id !== null && sala.andar_id !== undefined) ? 
+                    String(sala.andar_id).toLowerCase().includes(termo) : false;
+                
+                return nomeMatch || tipoMatch || descricaoMatch || andarMatch;
+            }) : salasParaFiltrar;
+            
+            renderCardsSalas(filtrados);
+            atualizarIndicadorResultados(filtrados, termo);
         });
     });
     carregarSalas();

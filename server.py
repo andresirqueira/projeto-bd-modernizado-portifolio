@@ -208,9 +208,13 @@ def listar_salas():
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
-    cur.execute('SELECT id, nome, tipo, descricao, foto, fotos, andar_id FROM salas')
+    cur.execute('''
+        SELECT s.id, s.nome, s.tipo, s.descricao, s.foto, s.fotos, s.andar_id, a.titulo as andar
+        FROM salas s
+        LEFT JOIN andares a ON s.andar_id = a.id
+    ''')
     salas = [
-        dict(id=row[0], nome=row[1], tipo=row[2], descricao=row[3], foto=row[4], fotos=row[5], andar_id=row[6])
+        dict(id=row[0], nome=row[1], tipo=row[2], descricao=row[3], foto=row[4], fotos=row[5], andar_id=row[6], andar=row[7])
         for row in cur.fetchall()
     ]
     conn.close()
@@ -1249,6 +1253,11 @@ def atualizar_defeito_equipamento(id):
 @login_required
 def gerenciar_equipamentos_html():
     return send_from_directory(os.path.dirname(__file__), 'gerenciar-equipamentos.html')
+
+@app.route('/estoque-equipamentos.html')
+@login_required
+def estoque_equipamentos_html():
+    return send_from_directory(os.path.dirname(__file__), 'estoque-equipamentos.html')
 
 @app.route('/config-usuario.html')
 @login_required

@@ -1,0 +1,168 @@
+/* Estilos específicos para a página de estoque de equipamentos */
+
+.equipamento-card {
+    border: 2px solid transparent;
+}
+
+.equipamento-card.funcionando {
+    border-color: #10b981;
+}
+
+.equipamento-card.defeito {
+    border-color: #ef4444;
+}
+
+.status-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    z-index: 10;
+}
+
+.status-badge.funcionando {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.status-badge.defeito {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.equipamento-foto {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.equipamento-foto img {
+    max-height: 100px;
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.equipamento-info {
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+.equipamento-info strong {
+    color: #374151;
+    font-weight: 600;
+}
+
+.equipamento-info .valor {
+    color: #6b7280;
+    font-weight: 400;
+}
+
+.filtro-ativo {
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.5);
+}
+
+.resumo-card {
+    background: linear-gradient(135deg, var(--bg-color) 0%, var(--bg-color-dark) 100%);
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.resumo-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Variáveis CSS para temas */
+:root {
+    --bg-color: #ffffff;
+    --bg-color-dark: #f8fafc;
+    --border-color: #e5e7eb;
+}
+
+.dark {
+    --bg-color: #1f2937;
+    --bg-color-dark: #111827;
+    --border-color: #374151;
+}
+
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .equipamento-card {
+        margin-bottom: 1rem;
+    }
+    
+    .resumo-card {
+        margin-bottom: 0.5rem;
+    }
+}
+
+
+
+/* Estados de carregamento */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+
+.status-badge:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Tooltips personalizados */
+.tooltip {
+    position: relative;
+}
+
+.tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1f2937;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 1000;
+}
+
+.tooltip:hover::after {
+    opacity: 1;
+} 

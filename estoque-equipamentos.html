@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Equipamentos em Estoque</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/estilo-estoque-equipamentos.css">
+    <link rel="icon" type="image/png" href="static/img/favicon-lapis.png">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+</head>
+
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-7xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarPainelConfig()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+                <i class="fas fa-boxes text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                Equipamentos em Estoque
+            </h1>
+            <p class="text-gray-600 dark:text-gray-300">Visualize todos os equipamentos sem sala atribuída</p>
+        </div>
+
+        <!-- Filtros e Estatísticas -->
+        <div class="mb-6 flex flex-wrap gap-4 justify-center" id="resumoEstoque"></div>
+        
+        <!-- Filtros de Busca -->
+        <div class="mb-6 flex flex-wrap gap-4 justify-center">
+            <div class="flex gap-2">
+                <div class="relative">
+                    <input id="filtroEquipamento" type="text" class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600" placeholder="Buscar equipamento...">
+                    <div class="absolute right-3 top-2.5 text-gray-400 dark:text-gray-500 text-sm">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                <button onclick="limparBusca()" class="px-3 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded transition-colors text-sm" title="Limpar busca">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="aplicarFiltroStatus('todos')" id="btn-todos" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors text-sm">
+                    <i class="fas fa-list"></i> Todos
+                </button>
+                <button onclick="aplicarFiltroStatus('funcionando')" id="btn-funcionando" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded transition-colors text-sm">
+                    <i class="fas fa-check"></i> Funcionando
+                </button>
+                <button onclick="aplicarFiltroStatus('defeito')" id="btn-defeito" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded transition-colors text-sm">
+                    <i class="fas fa-times"></i> Com Defeito
+                </button>
+            </div>
+        </div>
+
+        <div id="resultadosInfo" class="text-xs text-indigo-600 dark:text-indigo-400 text-center font-medium mb-4"></div>
+
+        <!-- Grid de Equipamentos -->
+        <div id="equipamentos-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+    </div>
+
+    <script>
+        let equipamentos = [];
+        let filtroStatusAtivo = 'todos';
+        let termoBusca = '';
+
+        // Carregar equipamentos em estoque
+        async function carregarEquipamentosEstoque() {
+            try {
+                const response = await fetch('/equipamentos?sala_id=null');
+                equipamentos = await response.json();
+                renderizarEquipamentos(equipamentos);
+                renderizarResumoEstoque(equipamentos);
+            } catch (error) {
+                console.error('Erro ao carregar equipamentos:', error);
+            }
+        }
+
+        // Renderizar equipamentos
+        function renderizarEquipamentos(lista) {
+            const container = document.getElementById('equipamentos-container');
+            
+            if (lista.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i class="fas fa-box-open text-6xl text-gray-300 dark:text-gray-600 mb-4"></i>
+                        <p class="text-gray-500 dark:text-gray-400 text-lg">Nenhum equipamento em estoque encontrado</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            lista.forEach(eq => {
+                const isDefeito = eq.defeito === 1 || eq.defeito === "1" || eq.defeito === true;
+                const statusBg = isDefeito ? 'bg-red-100 dark:bg-red-900' : 'bg-green-100 dark:bg-green-900';
+                const statusText = isDefeito ? 'text-red-800 dark:text-red-200' : 'text-green-800 dark:text-green-200';
+                const borderColor = isDefeito ? 'border-red-300 dark:border-red-600' : 'border-green-300 dark:border-green-600';
+                
+                html += `
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border-2 ${borderColor} relative">
+                        <div class="p-4">
+                            <!-- Status Badge - Canto superior direito -->
+                            <div class="absolute top-2 right-2">
+                                <div class="flex items-center gap-1 ${statusBg} ${statusText} px-2 py-1 rounded-full text-xs font-medium">
+                                    <i class="fas ${isDefeito ? 'fa-times' : 'fa-check'}"></i>
+                                    ${isDefeito ? 'Defeito' : 'OK'}
+                                </div>
+                            </div>
+
+                            <!-- Logo da Marca -->
+                            ${eq.marca ? `
+                                <div class="mb-3">
+                                    ${LogoManager.renderMarcaLogo(eq.marca)}
+                                </div>
+                            ` : ''}
+
+                            <!-- Foto do Equipamento -->
+                            <div class="w-full h-32 flex items-center justify-center mb-4">
+                                ${eq.foto ? 
+                                    `<img src="${eq.foto.startsWith("img/") ? "static/" + eq.foto : eq.foto}" alt="${eq.nome || ''}" class="object-contain max-h-28 max-w-full rounded-md">` : 
+                                    `<i class="fas fa-image text-4xl text-gray-300 dark:text-gray-600"></i>`
+                                }
+                            </div>
+
+                            <!-- Informações Básicas -->
+                            <div class="space-y-2">
+                                <h3 class="font-bold text-lg text-gray-800 dark:text-white text-center">${eq.nome || 'Sem nome'}</h3>
+                                
+                                <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                    <div><strong>Tipo:</strong> ${eq.tipo || 'Não informado'}</div>
+                                    <div><strong>Marca:</strong> ${eq.marca || 'Não informada'}</div>
+                                    <div><strong>Modelo:</strong> ${eq.modelo || 'Não informado'}</div>
+                                    ${eq.dados?.serie ? `<div><strong>Série:</strong> ${eq.dados.serie}</div>` : ''}
+                                    ${eq.dados?.partnumber ? `<div><strong>Part Number:</strong> ${eq.dados.partnumber}</div>` : ''}
+                                </div>
+
+                                ${eq.descricao ? `
+                                    <div class="mt-3 p-2 bg-gray-50 dark:bg-gray-700 rounded text-sm">
+                                        <strong class="text-gray-800 dark:text-gray-200">Descrição:</strong> <span class="text-gray-700 dark:text-gray-300">${eq.descricao}</span>
+                                    </div>
+                                ` : ''}
+                            </div>
+
+                            <!-- Ícone -->
+                            ${eq.icone ? `
+                                <div class="mt-3 flex justify-center">
+                                    <img src="${eq.icone.startsWith("img/") ? "static/" + eq.icone : eq.icone}" alt="ícone" class="h-8 object-contain">
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Renderizar resumo do estoque
+        function renderizarResumoEstoque(equipamentos) {
+            const total = equipamentos.length;
+            const funcionando = equipamentos.filter(eq => !(eq.defeito === 1 || eq.defeito === "1" || eq.defeito === true)).length;
+            const comDefeito = total - funcionando;
+
+            const resumoDiv = document.getElementById('resumoEstoque');
+            resumoDiv.innerHTML = `
+                <div class="flex items-center gap-2 bg-blue-600 dark:bg-blue-800 text-white px-5 py-3 rounded-lg shadow">
+                    <i class="fas fa-boxes"></i>
+                    <span>Total em Estoque: <b>${total}</b></span>
+                </div>
+                <div class="flex items-center gap-2 bg-green-600 dark:bg-green-800 text-white px-5 py-3 rounded-lg shadow">
+                    <i class="fas fa-check"></i>
+                    <span>Funcionando: <b>${funcionando}</b></span>
+                </div>
+                <div class="flex items-center gap-2 bg-red-600 dark:bg-red-800 text-white px-5 py-3 rounded-lg shadow">
+                    <i class="fas fa-times"></i>
+                    <span>Com Defeito: <b>${comDefeito}</b></span>
+                </div>
+            `;
+        }
+
+        // Aplicar filtro por status
+        function aplicarFiltroStatus(status) {
+            filtroStatusAtivo = status;
+            
+            // Atualizar botões
+            document.querySelectorAll('[id^="btn-"]').forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-yellow-400');
+            });
+            document.getElementById(`btn-${status}`).classList.add('ring-2', 'ring-yellow-400');
+
+            // Aplicar filtros
+            aplicarFiltros();
+        }
+
+        // Aplicar filtros combinados
+        function aplicarFiltros() {
+            let filtrados = equipamentos;
+
+            // Filtro por status
+            if (filtroStatusAtivo === 'funcionando') {
+                filtrados = filtrados.filter(eq => !(eq.defeito === 1 || eq.defeito === "1" || eq.defeito === true));
+            } else if (filtroStatusAtivo === 'defeito') {
+                filtrados = filtrados.filter(eq => eq.defeito === 1 || eq.defeito === "1" || eq.defeito === true);
+            }
+
+            // Filtro por busca
+            if (termoBusca) {
+                filtrados = filtrados.filter(eq => {
+                    const busca = termoBusca.toLowerCase();
+                    return (
+                        (eq.nome || '').toLowerCase().includes(busca) ||
+                        (eq.tipo || '').toLowerCase().includes(busca) ||
+                        (eq.marca || '').toLowerCase().includes(busca) ||
+                        (eq.modelo || '').toLowerCase().includes(busca) ||
+                        (eq.descricao || '').toLowerCase().includes(busca) ||
+                        (eq.dados?.serie || '').toLowerCase().includes(busca) ||
+                        (eq.dados?.partnumber || '').toLowerCase().includes(busca) ||
+                        (eq.dados?.ip1 || '').toLowerCase().includes(busca) ||
+                        (eq.dados?.mac1 || '').toLowerCase().includes(busca)
+                    );
+                });
+            }
+
+            renderizarEquipamentos(filtrados);
+            atualizarIndicadorResultados(filtrados);
+        }
+
+        // Limpar busca
+        function limparBusca() {
+            document.getElementById('filtroEquipamento').value = '';
+            termoBusca = '';
+            // Resetar filtro de status para 'todos'
+            filtroStatusAtivo = 'todos';
+            // Atualizar botões
+            document.querySelectorAll('[id^="btn-"]').forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-yellow-400');
+            });
+            document.getElementById('btn-todos').classList.add('ring-2', 'ring-yellow-400');
+            // Aplicar filtros
+            aplicarFiltros();
+        }
+
+        // Atualizar indicador de resultados
+        function atualizarIndicadorResultados(filtrados) {
+            const infoDiv = document.getElementById('resultadosInfo');
+            if (termoBusca || filtroStatusAtivo !== 'todos') {
+                const filtros = [];
+                if (termoBusca) filtros.push(`busca: "${termoBusca}"`);
+                if (filtroStatusAtivo !== 'todos') filtros.push(`status: ${filtroStatusAtivo}`);
+                
+                infoDiv.innerHTML = `<i class="fas fa-filter"></i> Filtros: ${filtros.join(', ')} (${filtrados.length} resultado${filtrados.length !== 1 ? 's' : ''})`;
+            } else {
+                infoDiv.innerHTML = '';
+            }
+        }
+
+
+
+        // Voltar ao painel de configuração
+        function voltarPainelConfig() {
+            fetch('/perfil').then(resp => resp.json()).then(perfil => {
+                if (perfil.nivel === 'admin') {
+                    window.location.href = 'config-admin.html';
+                } else if (perfil.nivel === 'tecnico') {
+                    window.location.href = 'config-tecnico.html';
+                } else {
+                    window.location.href = 'config-usuario.html';
+                }
+            });
+        }
+
+        // Event listeners
+        document.getElementById('filtroEquipamento').addEventListener('input', function() {
+            termoBusca = this.value.trim();
+            aplicarFiltros();
+        });
+
+
+
+        // Inicialização
+        window.addEventListener('DOMContentLoaded', function() {
+            carregarEquipamentosEstoque();
+            
+            // Carregar logo da empresa
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    LogoManager.loadEmpresaLogo(data);
+                });
+        });
+    </script>
+    <script src="static/js/logo-manager.js"></script>
+</body>
+
+</html> 

@@ -1007,3 +1007,53 @@
 [2025-07-29 15:23:01] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=516, Nome=TV 06, Tipo=TV, Marca=LG, Modelo=50UL3G-BJ | Status: sucesso
 [2025-07-29 15:24:24] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=517, Nome=TV 07, Tipo=TV, Marca=LG, Modelo=50UL3G-BJ | Status: sucesso
 [2025-07-29 15:26:29] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=518, Nome=TV 08, Tipo=TV, Marca=LG, Modelo=50UL3G-BJ | Status: sucesso
+[2025-07-30 11:16:56] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=371, Nome=Painel Agenda, Tipo=Painel, Marca=Crestron, Modelo=TSW-770-B-S | Status: sucesso
+[2025-07-30 15:31:03] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=86, Nome=Corredor B Blend (via formulário) | Status: sucesso
+[2025-07-30 15:32:02] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=519, Nome=TV esquerda, Tipo=TV, Marca=LG, Modelo=50UL3G-BJ | Status: sucesso
+[2025-07-30 15:32:50] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=520, Nome=TV Direita, Tipo=TV, Marca=LG, Modelo=50UL3G-BJ | Status: sucesso
+[2025-07-30 15:33:44] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=521, Nome=TV Vertical, Tipo=TV, Marca=LG, Modelo=50UL3G-BJ | Status: sucesso
+[2025-07-30 15:34:31] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=519, Nome=TV Esquerda, Tipo=TV, Marca=LG, Modelo=50UL3G-BJ | Status: sucesso
+[2025-07-30 15:35:05] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=207, Porta ID=302, Equipamento ID=519 | Status: sucesso
+[2025-07-30 15:35:17] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=208, Porta ID=306, Equipamento ID=521 | Status: sucesso
+[2025-07-30 15:35:30] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=209, Porta ID=255, Equipamento ID=520 | Status: sucesso
+[2025-07-30 15:35:59] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=210, Porta ID=370, Equipamento ID=511 | Status: sucesso
+[2025-07-30 15:36:07] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=211, Porta ID=371, Equipamento ID=513 | Status: sucesso
+[2025-07-30 15:36:20] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=212, Porta ID=372, Equipamento ID=514 | Status: sucesso
+[2025-07-30 15:36:31] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=213, Porta ID=381, Equipamento ID=515 | Status: sucesso
+[2025-07-30 15:36:39] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=214, Porta ID=382, Equipamento ID=517 | Status: sucesso
+[2025-07-30 15:37:00] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=215, Porta ID=276, Equipamento ID=518 | Status: sucesso
+[2025-07-30 15:37:08] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=216, Porta ID=277, Equipamento ID=516 | Status: sucesso
+[2025-07-30 15:37:17] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=217, Porta ID=285, Equipamento ID=512 | Status: sucesso
+[2025-07-30 15:39:04] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=87, Nome=Sala Aberta 01 - 2 Andar (via formulário) | Status: sucesso
+[2025-07-30 15:40:03] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=522, Nome=TV, Tipo=TV, Marca=LG, Modelo=55UN731C0SC | Status: sucesso
+[2025-07-30 15:40:49] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=87, Nome=Sala Aberta 01 - 2 Andar, Equipamentos desatrelados=0, Equipamentos vinculados=1 | Status: sucesso
+[2025-07-30 15:41:10] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=218, Porta ID=273, Equipamento ID=522 | Status: sucesso
+[2025-07-30 15:42:07] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=88, Nome=Sala Aberta 02 - 2 Andar (via formulário) | Status: sucesso
+[2025-07-30 15:42:51] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=523, Nome=TV, Tipo=TV, Marca=LG, Modelo=43UN731C0SC | Status: sucesso
+[2025-07-30 15:43:41] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=523, Nome=TV, Tipo=TV, Marca=LG, Modelo=43UN731C0SC | Status: sucesso
+[2025-07-30 15:43:58] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=219, Porta ID=322, Equipamento ID=523 | Status: sucesso
+[2025-07-30 15:45:43] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=89, Nome=Outback 01 - 2 Andar (via formulário) | Status: sucesso
+[2025-07-30 15:46:14] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=524, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-07-30 15:46:45] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=525, Nome=Câmera, Tipo=Camera, Marca=Jabra, Modelo=Panacast | Status: sucesso
+[2025-07-30 15:47:16] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=526, Nome=TV, Tipo=TV, Marca=LG, Modelo=32LM621CBSB | Status: sucesso
+[2025-07-30 15:47:51] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=527, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-30 15:48:19] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=220, Porta ID=266, Equipamento ID=527 | Status: sucesso
+[2025-07-30 15:50:03] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=528, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-07-30 15:50:19] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=90, Nome=Outback 02 - 2 Andar (via formulário) | Status: sucesso
+[2025-07-31 09:43:00] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=521, Nome=TV Vertical, Tipo=TV, Marca=LG, Modelo=50UL3G-BJ | Status: sucesso
+[2025-07-31 09:47:27] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=90, Nome=Outback 02 - 2 Andar, Equipamentos desatrelados=0, Equipamentos vinculados=1 | Status: sucesso
+[2025-07-31 09:48:13] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=529, Nome=Câmera, Tipo=Camera, Marca=Jabra, Modelo=Panacast | Status: sucesso
+[2025-07-31 09:48:45] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=530, Nome=Jabra Speak, Tipo=Microfone, Marca=Jabra, Modelo=Jabra Speak | Status: sucesso
+[2025-07-31 09:49:12] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=531, Nome=TV, Tipo=TV, Marca=LG, Modelo=32LM621CBSB | Status: sucesso
+[2025-07-31 09:49:50] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=532, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-31 09:50:04] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=221, Porta ID=385, Equipamento ID=532 | Status: sucesso
+[2025-07-31 09:52:37] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=91, Nome=Outback 03 - 2 Andar (via formulário) | Status: sucesso
+[2025-07-31 09:55:18] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=1, Nome=Sala 01, Equipamentos desatrelados=0, Equipamentos vinculados=6 | Status: sucesso
+[2025-07-31 09:55:49] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=533, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-07-31 09:56:20] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=534, Nome=Câmera, Tipo=Camera, Marca=Jabra, Modelo=Panacast | Status: sucesso
+[2025-07-31 09:56:51] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=535, Nome=Jabra Speak, Tipo=Microfone, Marca=Jabra, Modelo=Jabra Speak | Status: sucesso
+[2025-07-31 09:57:30] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=536, Nome=TV, Tipo=TV, Marca=LG, Modelo=32LM621CBSB | Status: sucesso
+[2025-07-31 09:57:59] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=537, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-07-31 09:58:13] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=222, Porta ID=384, Equipamento ID=537 | Status: sucesso
+[2025-07-31 10:01:03] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=92, Nome=Outback 04 - 2 Andar (via formulário) | Status: sucesso
+[2025-07-31 12:14:46] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=82, Nome=Sala Blue Sky, Equipamentos desatrelados=0, Equipamentos vinculados=9 | Status: sucesso
