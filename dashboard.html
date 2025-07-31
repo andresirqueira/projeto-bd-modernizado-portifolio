@@ -111,7 +111,9 @@
       <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Salas</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mb-8" id="cardsSalas"></div>
       <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Switches</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="cardsSwitches"></div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" id="cardsSwitches"></div>
+      <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Cabos</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="cardsCabos"></div>
     </div>
     <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6 mt-12">Gráficos de Equipamentos e Switches</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="dashboardCharts">
@@ -157,15 +159,21 @@
     let salas = [];
     let switches = [];
     let portas = [];
+    let cabos = [];
+    let conexoesCabos = [];
     async function fetchData() {
-      const [equipResp, salasResp, switchesResp] = await Promise.all([
+      const [equipResp, salasResp, switchesResp, cabosResp, conexoesResp] = await Promise.all([
         fetch('/equipamentos'),
         fetch('/salas'),
-        fetch('/switches')
+        fetch('/switches'),
+        fetch('/cabos'),
+        fetch('/conexoes-cabos')
       ]);
       equipamentos = await equipResp.json();
       salas = await salasResp.json();
       switches = await switchesResp.json();
+      cabos = await cabosResp.json();
+      conexoesCabos = await conexoesResp.json();
       // Buscar todas as portas de todos os switches
       portas = [];
       await Promise.all(switches.map(async (sw) => {
@@ -335,6 +343,48 @@
           bg: 'from-green-500 to-lime-500'
         }
       ];
+      
+      // Estatísticas de cabos
+      const totalCabos = cabos.length;
+      const conexoesAtivas = conexoesCabos.filter(c => !c.data_desconexao).length;
+      const conexoesInativas = conexoesCabos.filter(c => c.data_desconexao).length;
+      const tiposCabos = new Set(cabos.map(c => c.tipo)).size;
+      
+      const cardsCabos = [
+        {
+          icon: 'fa-plug',
+          iconBg: 'fa-plug',
+          title: 'Total de Cabos',
+          value: totalCabos,
+          desc: 'Cabos cadastrados no sistema',
+          bg: 'from-blue-500 to-cyan-500'
+        },
+        {
+          icon: 'fa-link',
+          iconBg: 'fa-check-circle',
+          title: 'Conexões Ativas',
+          value: conexoesAtivas,
+          desc: 'Cabos conectados',
+          bg: 'from-green-500 to-lime-500'
+        },
+        {
+          icon: 'fa-unlink',
+          iconBg: 'fa-times-circle',
+          title: 'Conexões Inativas',
+          value: conexoesInativas,
+          desc: 'Cabos desconectados',
+          bg: 'from-red-500 to-pink-500'
+        },
+        {
+          icon: 'fa-tags',
+          iconBg: 'fa-tag',
+          title: 'Tipos de Cabos',
+          value: tiposCabos,
+          desc: 'Tipos diferentes cadastrados',
+          bg: 'from-purple-500 to-indigo-500'
+        }
+      ];
+      
       function renderCardArray(cards, containerId) {
         let html = '';
         cards.forEach(card => {
@@ -351,6 +401,7 @@
       renderCardArray(cardsEquipamentos, 'cardsEquipamentos');
       renderCardArray(cardsSalas, 'cardsSalas');
       renderCardArray(cardsSwitches, 'cardsSwitches');
+      renderCardArray(cardsCabos, 'cardsCabos');
     }
     function renderCharts() {
       // Tipos de equipamentos (doughnut com agrupamento de 'Outros')
