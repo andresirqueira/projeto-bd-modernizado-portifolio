@@ -116,6 +116,7 @@
                     <i class="fas fa-boxes text-2xl"></i>
                     <span class="text-sm text-center">Equipamentos em Estoque</span>
                 </button>
+
             </div>
             
             <!-- Linha 3: Cabos -->
@@ -170,7 +171,31 @@
                 </button>
             </div>
             
-            <!-- Linha 5: Sistema e Logs + Sair -->
+                         <!-- Linha 5: Patch Panels -->
+             <div class="flex flex-row gap-1">
+                 <button onclick="window.location.href='adicionar-patch-panel.html'" class="w-32 h-32 m-0 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                     <i class="fas fa-plus-circle text-2xl"></i>
+                     <span class="text-sm text-center">Adicionar Patch Panel</span>
+                 </button>
+                 <button onclick="window.location.href='editar-patch-panel.html'" class="w-32 h-32 m-0 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                     <i class="fas fa-edit text-2xl"></i>
+                     <span class="text-sm text-center">Editar Patch Panel</span>
+                 </button>
+                 <button onclick="window.location.href='excluir-patch-panel.html'" class="w-32 h-32 m-0 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                     <i class="fas fa-trash-alt text-2xl"></i>
+                     <span class="text-sm text-center">Excluir Patch Panel</span>
+                 </button>
+                 <button onclick="window.location.href='ver-patch-panel.html'" class="w-32 h-32 m-0 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                     <i class="fas fa-eye text-2xl"></i>
+                     <span class="text-sm text-center">Ver Patch Panels</span>
+                 </button>
+                                 <button onclick="window.location.href='gerenciar-portas-patch-panel.html'" class="w-32 h-32 m-0 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-plug text-2xl"></i>
+                    <span class="text-sm text-center">Gerenciar Portas</span>
+                </button>
+             </div>
+            
+            <!-- Linha 6: Sistema e Logs + Sair -->
             <div class="flex flex-row gap-1 mt-4">
                 <button onclick="window.location.href='dashboard.html'" class="w-32 h-32 m-0 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                     <i class="fas fa-chart-pie text-2xl"></i>
@@ -197,13 +222,15 @@
                     <span class="text-sm text-center">Sair</span>
                 </button>
             </div>
-        </div>
-    </div>
-    
-    <script>
-        function logout() {
-            fetch('/logout').then(() => window.location.href = '/login.html');
-        }
+                 </div>
+     </div>
+
+
+     
+     <script>
+         function logout() {
+             fetch('/logout').then(() => window.location.href = '/login.html');
+         }
 
         window.addEventListener('DOMContentLoaded', function() {
             fetch('/empresa_atual')

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestão de Patch Panels</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="static/img/favicon-lapis.png">
+    <script>
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateEmpresaLogo();
+        }
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-7xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarConfigAdmin()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+                <i class="fas fa-th text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                Gestão de Patch Panels
+            </h1>
+            <p class="text-gray-600 dark:text-gray-300">Gerencie os patch panels e suas conexões com switches</p>
+        </div>
+
+        <!-- Botões de Ação -->
+        <div class="flex gap-4 mb-6">
+            <button onclick="abrirModalAdicionar()" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                <i class="fas fa-plus mr-2"></i>Adicionar Patch Panel
+            </button>
+            <button onclick="abrirModalMapeamento()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                <i class="fas fa-project-diagram mr-2"></i>Gerenciar Mapeamento
+            </button>
+        </div>
+
+        <!-- Lista de Patch Panels -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50 dark:bg-gray-700">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Código</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Nome</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Andar</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Portas</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Range</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaPatchPanels" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                        <!-- Dados serão carregados via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Modal Adicionar/Editar Patch Panel -->
+        <div id="modalPatchPanel" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full mx-4">
+                <h2 id="tituloModal" class="text-xl font-bold text-gray-800 dark:text-white mb-4">
+                    <i class="fas fa-th mr-2"></i>Adicionar Patch Panel
+                </h2>
+                <form id="formPatchPanel" class="space-y-4">
+                    <input type="hidden" id="patch_panel_id" name="patch_panel_id">
+                    
+                    <div>
+                        <label for="nome_patch_panel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Nome do Patch Panel *
+                        </label>
+                        <input type="text" id="nome_patch_panel" name="nome_patch_panel" required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                               placeholder="Ex: Patch Panel 1º Andar">
+                    </div>
+                    
+                    <div>
+                        <label for="andar_patch_panel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Andar *
+                        </label>
+                        <select id="andar_patch_panel" name="andar_patch_panel" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                            <option value="">Selecione o andar...</option>
+                            <option value="0">Térreo</option>
+                            <option value="1">1º Andar</option>
+                            <option value="2">2º Andar</option>
+                            <option value="3">3º Andar</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="num_portas_patch_panel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Número de Portas *
+                        </label>
+                        <select id="num_portas_patch_panel" name="num_portas_patch_panel" required onchange="atualizarPreviewPortas()"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                            <option value="">Selecione...</option>
+                            <option value="12">12 portas</option>
+                            <option value="24">24 portas</option>
+                            <option value="48">48 portas</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="porta_inicial_patch_panel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Porta Inicial *
+                        </label>
+                        <input type="number" id="porta_inicial_patch_panel" name="porta_inicial_patch_panel" required min="1"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                               placeholder="Ex: 1, 25, 49..." onchange="atualizarPreviewPortas()">
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Número da primeira porta deste patch panel</p>
+                    </div>
+                    
+                    <div id="preview_portas" class="hidden p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-info-circle text-blue-600 dark:text-blue-400 mr-2"></i>
+                            <span class="text-sm text-blue-700 dark:text-blue-300">
+                                <strong>Preview:</strong> Este patch panel terá as portas <span id="range_portas"></span>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="status_patch_panel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Status
+                        </label>
+                        <select id="status_patch_panel" name="status_patch_panel"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="descricao_patch_panel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Descrição
+                        </label>
+                        <textarea id="descricao_patch_panel" name="descricao_patch_panel" rows="3"
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                                  placeholder="Descrição adicional do patch panel..."></textarea>
+                    </div>
+                    
+                    <div class="flex gap-3 pt-4">
+                        <button type="button" onclick="fecharModalPatchPanel()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                            <i class="fas fa-save mr-2"></i>Salvar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal de Mapeamento de Portas -->
+        <div id="modalMapeamento" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+                <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">
+                    <i class="fas fa-project-diagram mr-2"></i>Mapeamento de Portas
+                </h2>
+                
+                <div class="mb-4">
+                    <label for="patch_panel_mapeamento" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Selecionar Patch Panel
+                    </label>
+                    <select id="patch_panel_mapeamento" onchange="carregarPortasMapeamento()"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                        <option value="">Selecione o patch panel...</option>
+                    </select>
+                </div>
+
+                <div id="tabelaMapeamento" class="hidden">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Keystone</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Switch</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Porta Switch</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Equipamento</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listaMapeamento" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                    <!-- Dados serão carregados via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-3 pt-4">
+                    <button onclick="fecharModalMapeamento()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                        Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let patchPanels = [];
+        let switches = [];
+
+        // Carregar patch panels
+        async function carregarPatchPanels() {
+            try {
+                const response = await fetch('/patch-panels');
+                patchPanels = await response.json();
+                
+                const tbody = document.getElementById('listaPatchPanels');
+                tbody.innerHTML = '';
+                
+                patchPanels.forEach(pp => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="text-sm font-medium text-gray-900 dark:text-white">${pp.codigo}</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="text-sm text-gray-900 dark:text-white">${pp.nome}</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="text-sm text-gray-900 dark:text-white">${pp.andar_nome}</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="text-sm text-gray-900 dark:text-white">${pp.num_portas}</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="text-sm text-gray-900 dark:text-white">${pp.porta_inicial || 1} - ${pp.porta_final || pp.num_portas}</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full ${pp.status === 'ativo' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                                ${pp.status === 'ativo' ? 'Ativo' : 'Inativo'}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <button onclick="editarPatchPanel(${pp.id})" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 mr-3">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="excluirPatchPanel(${pp.id})" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 mr-3">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button onclick="verMapeamento(${pp.id})" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                <i class="fas fa-project-diagram"></i>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar patch panels:', error);
+            }
+        }
+
+        // Carregar switches
+        async function carregarSwitches() {
+            try {
+                const response = await fetch('/switches');
+                switches = await response.json();
+            } catch (error) {
+                console.error('Erro ao carregar switches:', error);
+            }
+        }
+
+        // Abrir modal para adicionar
+        function abrirModalAdicionar() {
+            document.getElementById('tituloModal').innerHTML = '<i class="fas fa-plus mr-2"></i>Adicionar Patch Panel';
+            document.getElementById('formPatchPanel').reset();
+            document.getElementById('patch_panel_id').value = '';
+            document.getElementById('preview_portas').classList.add('hidden'); // Esconder preview
+            document.getElementById('modalPatchPanel').classList.remove('hidden');
+        }
+
+        // Abrir modal para editar
+        function editarPatchPanel(id) {
+            const patchPanel = patchPanels.find(pp => pp.id === id);
+            if (patchPanel) {
+                document.getElementById('tituloModal').innerHTML = '<i class="fas fa-edit mr-2"></i>Editar Patch Panel';
+                document.getElementById('patch_panel_id').value = patchPanel.id;
+                document.getElementById('nome_patch_panel').value = patchPanel.nome;
+                document.getElementById('andar_patch_panel').value = patchPanel.andar;
+                document.getElementById('porta_inicial_patch_panel').value = patchPanel.porta_inicial || 1;
+                document.getElementById('num_portas_patch_panel').value = patchPanel.num_portas;
+                document.getElementById('status_patch_panel').value = patchPanel.status;
+                document.getElementById('descricao_patch_panel').value = patchPanel.descricao || '';
+                atualizarPreviewPortas(); // Atualizar preview
+                document.getElementById('modalPatchPanel').classList.remove('hidden');
+            }
+        }
+
+        // Fechar modal patch panel
+        function fecharModalPatchPanel() {
+            document.getElementById('modalPatchPanel').classList.add('hidden');
+        }
+
+        // Abrir modal de mapeamento
+        function abrirModalMapeamento() {
+            const select = document.getElementById('patch_panel_mapeamento');
+            select.innerHTML = '<option value="">Selecione o patch panel...</option>';
+            
+            patchPanels.forEach(pp => {
+                const option = document.createElement('option');
+                option.value = pp.id;
+                option.textContent = `${pp.codigo} - ${pp.nome}`;
+                select.appendChild(option);
+            });
+            
+            document.getElementById('modalMapeamento').classList.remove('hidden');
+        }
+
+        // Fechar modal mapeamento
+        function fecharModalMapeamento() {
+            document.getElementById('modalMapeamento').classList.add('hidden');
+            document.getElementById('tabelaMapeamento').classList.add('hidden');
+        }
+
+        // Carregar portas para mapeamento
+        async function carregarPortasMapeamento() {
+            const patchPanelId = document.getElementById('patch_panel_mapeamento').value;
+            if (!patchPanelId) {
+                document.getElementById('tabelaMapeamento').classList.add('hidden');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/patch-panels/${patchPanelId}/portas`);
+                const portas = await response.json();
+                
+                const tbody = document.getElementById('listaMapeamento');
+                tbody.innerHTML = '';
+                
+                portas.forEach(porta => {
+                    const tr = document.createElement('tr');
+                    tr.setAttribute('data-porta-id', porta.id);
+                    tr.innerHTML = `
+                        <td class="px-4 py-4 whitespace-nowrap">
+                            <span class="text-sm font-medium text-gray-900 dark:text-white">${porta.keystone}</span>
+                        </td>
+                        <td class="px-4 py-4 whitespace-nowrap">
+                            <select class="text-sm border border-gray-300 rounded px-2 py-1" onchange="atualizarMapeamento(${porta.id}, 'switch_id', this.value)">
+                                <option value="">Selecione...</option>
+                                ${switches.map(sw => `<option value="${sw.id}" ${porta.switch_id === sw.id ? 'selected' : ''}>${sw.nome}</option>`).join('')}
+                            </select>
+                        </td>
+                        <td class="px-4 py-4 whitespace-nowrap">
+                            <input type="number" class="text-sm border border-gray-300 rounded px-2 py-1 w-20" 
+                                   value="${porta.porta_switch || ''}" 
+                                   onchange="atualizarMapeamento(${porta.id}, 'porta_switch', this.value)"
+                                   placeholder="Porta">
+                        </td>
+                        <td class="px-4 py-4 whitespace-nowrap">
+                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full ${porta.status === 'livre' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                                ${porta.status === 'livre' ? 'Livre' : 'Ocupada'}
+                            </span>
+                        </td>
+                        <td class="px-4 py-4 whitespace-nowrap">
+                            <span class="text-sm text-gray-900 dark:text-white">${porta.equipamento_nome || '-'}</span>
+                        </td>
+                        <td class="px-4 py-4 whitespace-nowrap text-sm font-medium">
+                            <button onclick="salvarMapeamento(${porta.id})" class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300">
+                                <i class="fas fa-save"></i>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+                
+                document.getElementById('tabelaMapeamento').classList.remove('hidden');
+            } catch (error) {
+                console.error('Erro ao carregar portas:', error);
+            }
+        }
+
+        // Atualizar mapeamento
+        async function atualizarMapeamento(portaId, campo, valor) {
+            try {
+                const response = await fetch(`/patch-panel-portas/${portaId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ [campo]: valor })
+                });
+                
+                const result = await response.json();
+                if (result.status === 'ok') {
+                    console.log(`Mapeamento atualizado: ${campo} = ${valor}`);
+                } else {
+                    console.error(`Erro ao atualizar mapeamento: ${result.mensagem}`);
+                }
+            } catch (error) {
+                console.error('Erro ao atualizar mapeamento:', error);
+            }
+        }
+
+        // Salvar mapeamento
+        async function salvarMapeamento(portaId) {
+            try {
+                const row = document.querySelector(`tr[data-porta-id="${portaId}"]`);
+                const switchSelect = row.querySelector('select');
+                const portaInput = row.querySelector('input[type="number"]');
+                
+                const dados = {
+                    switch_id: switchSelect.value ? parseInt(switchSelect.value) : null,
+                    porta_switch: portaInput.value ? parseInt(portaInput.value) : null
+                };
+                
+                const response = await fetch(`/patch-panel-portas/${portaId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                });
+                
+                const result = await response.json();
+                if (result.status === 'ok') {
+                    alert('Mapeamento salvo com sucesso!');
+                    carregarPortasMapeamento(); // Recarregar dados
+                } else {
+                    alert(`Erro: ${result.mensagem}`);
+                }
+            } catch (error) {
+                console.error('Erro ao salvar mapeamento:', error);
+                alert('Erro ao salvar mapeamento. Tente novamente.');
+            }
+        }
+
+        // Excluir patch panel
+        async function excluirPatchPanel(id) {
+            if (confirm('Tem certeza que deseja excluir este patch panel?')) {
+                try {
+                    const response = await fetch(`/patch-panels/${id}`, {
+                        method: 'DELETE'
+                    });
+                    
+                    const result = await response.json();
+                    if (result.status === 'ok') {
+                        alert('Patch Panel excluído com sucesso!');
+                        carregarPatchPanels();
+                    } else {
+                        alert(`Erro: ${result.mensagem}`);
+                    }
+                } catch (error) {
+                    console.error('Erro ao excluir patch panel:', error);
+                    alert('Erro ao excluir patch panel. Tente novamente.');
+                }
+            }
+        }
+
+        // Atualizar preview das portas
+        function atualizarPreviewPortas() {
+            const numPortas = document.getElementById('num_portas_patch_panel').value;
+            const portaInicial = document.getElementById('porta_inicial_patch_panel').value;
+            const previewDiv = document.getElementById('preview_portas');
+            const rangeSpan = document.getElementById('range_portas');
+            
+            if (numPortas && portaInicial) {
+                const portaFinal = parseInt(portaInicial) + parseInt(numPortas) - 1;
+                rangeSpan.textContent = `${portaInicial} a ${portaFinal}`;
+                previewDiv.classList.remove('hidden');
+            } else {
+                previewDiv.classList.add('hidden');
+            }
+        }
+
+        // Validar porta inicial
+        async function validarPortaInicial() {
+            const portaInicial = document.getElementById('porta_inicial_patch_panel').value;
+            const numPortas = document.getElementById('num_portas_patch_panel').value;
+            
+            if (!portaInicial || !numPortas) return true;
+            
+            const portaFinal = parseInt(portaInicial) + parseInt(numPortas) - 1;
+            
+            try {
+                const response = await fetch('/patch-panels/validar-portas');
+                const result = await response.json();
+                
+                if (result.status === 'ok') {
+                    const portasExistentes = result.portas_existentes || [];
+                    
+                    // Verificar se há conflito
+                    for (let porta = parseInt(portaInicial); porta <= portaFinal; porta++) {
+                        if (portasExistentes.includes(porta)) {
+                            alert(`Erro: A porta ${porta} já está em uso por outro patch panel.`);
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            } catch (error) {
+                console.error('Erro ao validar porta inicial:', error);
+                return true; // Em caso de erro, permitir continuar
+            }
+        }
+
+        // Submeter formulário de patch panel
+        document.getElementById('formPatchPanel').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const patchPanelId = formData.get('patch_panel_id');
+            
+            // Validar porta inicial antes de submeter
+            const portaInicial = formData.get('porta_inicial_patch_panel');
+            if (portaInicial && !patchPanelId) { // Só validar para novos patch panels
+                const valido = await validarPortaInicial();
+                if (!valido) return;
+            }
+            
+            const dados = {
+                nome: formData.get('nome_patch_panel'),
+                andar: parseInt(formData.get('andar_patch_panel')),
+                num_portas: parseInt(formData.get('num_portas_patch_panel')),
+                porta_inicial: parseInt(formData.get('porta_inicial_patch_panel')),
+                status: formData.get('status_patch_panel'),
+                descricao: formData.get('descricao_patch_panel')
+            };
+
+            try {
+                const url = patchPanelId ? `/patch-panels/${patchPanelId}` : '/patch-panels';
+                const method = patchPanelId ? 'PUT' : 'POST';
+                
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                });
+
+                const result = await response.json();
+                
+                if (result.status === 'ok') {
+                    alert(patchPanelId ? 'Patch Panel atualizado com sucesso!' : 'Patch Panel adicionado com sucesso!');
+                    fecharModalPatchPanel();
+                    carregarPatchPanels();
+                } else {
+                    alert(`Erro: ${result.mensagem}`);
+                }
+            } catch (error) {
+                console.error('Erro ao salvar patch panel:', error);
+                alert('Erro ao salvar patch panel. Tente novamente.');
+            }
+        });
+
+        // Voltar ao config admin
+        function voltarConfigAdmin() {
+            window.location.href = 'config-admin.html';
+        }
+
+        // Inicialização
+        window.addEventListener('DOMContentLoaded', function() {
+            carregarPatchPanels();
+            carregarSwitches();
+            
+            // Carregar logo da empresa
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    LogoManager.loadEmpresaLogo(data);
+                });
+        });
+    </script>
+    <script src="static/js/logo-manager.js"></script>
+</body>
+
+</html> 

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Excluir Patch Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="static/img/favicon-lapis.png">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+</head>
+
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-6xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarPainelConfig()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+                <i class="fas fa-trash-alt text-red-600 dark:text-red-400 mr-3"></i>
+                Excluir Patch Panel
+            </h1>
+            <p class="text-gray-600 dark:text-gray-300">Selecione um patch panel para excluir do sistema</p>
+        </div>
+
+        <!-- Aviso de Segurança -->
+        <div class="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+            <div class="flex items-start">
+                <i class="fas fa-exclamation-triangle text-red-600 dark:text-red-400 mt-1 mr-3"></i>
+                <div>
+                    <h3 class="text-sm font-medium text-red-800 dark:text-red-200 mb-1">Atenção!</h3>
+                    <p class="text-sm text-red-600 dark:text-red-300">
+                        A exclusão de um patch panel é <strong>irreversível</strong> e removerá todas as suas portas e mapeamentos. 
+                        Certifique-se de que não há equipamentos conectados antes de prosseguir.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="mb-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+            <div class="flex flex-wrap gap-4 items-center">
+                <div>
+                    <label for="filtroAndar" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Filtrar por Andar
+                    </label>
+                    <select id="filtroAndar" onchange="filtrarPatchPanels()"
+                            class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                        <option value="">Todos os andares</option>
+                        <option value="0">Térreo</option>
+                        <option value="1">1º Andar</option>
+                        <option value="2">2º Andar</option>
+                        <option value="3">3º Andar</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="filtroStatus" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Filtrar por Status
+                    </label>
+                    <select id="filtroStatus" onchange="filtrarPatchPanels()"
+                            class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                        <option value="">Todos os status</option>
+                        <option value="ativo">Ativo</option>
+                        <option value="inativo">Inativo</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="busca" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Buscar
+                    </label>
+                    <input type="text" id="busca" placeholder="Nome ou código..." onkeyup="filtrarPatchPanels()"
+                           class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                </div>
+                <button onclick="limparFiltros()" class="mt-6 px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors">
+                    <i class="fas fa-eraser mr-2"></i>Limpar Filtros
+                </button>
+            </div>
+        </div>
+
+        <!-- Tabela de Patch Panels -->
+        <div class="overflow-x-auto">
+            <table class="w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+                <thead class="bg-red-600 text-white">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Código</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nome</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Andar</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Portas</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Conexões</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Data Criação</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Ação</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaPatchPanels" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    <!-- Dados serão carregados aqui -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mensagem quando não há dados -->
+        <div id="semDados" class="hidden text-center py-8">
+            <i class="fas fa-inbox text-6xl text-gray-400 mb-4"></i>
+            <h3 class="text-xl font-semibold text-gray-600 dark:text-gray-400 mb-2">Nenhum Patch Panel Encontrado</h3>
+            <p class="text-gray-500 dark:text-gray-500">Não há patch panels cadastrados ou os filtros aplicados não retornaram resultados.</p>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="text-center py-8">
+            <i class="fas fa-spinner fa-spin text-4xl text-red-600 dark:text-red-400 mb-4"></i>
+            <p class="text-gray-600 dark:text-gray-400">Carregando patch panels...</p>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação -->
+    <div id="modalConfirmacao" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full mx-4">
+            <div class="text-center">
+                <i class="fas fa-exclamation-triangle text-6xl text-red-500 mb-4"></i>
+                <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">
+                    Confirmar Exclusão
+                </h2>
+                <p class="text-gray-600 dark:text-gray-300 mb-6" id="mensagemConfirmacao">
+                    Tem certeza que deseja excluir este patch panel?
+                </p>
+                
+                <div class="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg mb-6">
+                    <h4 class="text-sm font-medium text-red-800 dark:text-red-200 mb-2">Patch Panel a ser excluído:</h4>
+                    <div class="text-sm text-red-600 dark:text-red-300" id="detalhesPatchPanel">
+                        <!-- Detalhes serão inseridos aqui -->
+                    </div>
+                </div>
+                
+                <div class="flex gap-3">
+                    <button onclick="fecharModalConfirmacao()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                        Cancelar
+                    </button>
+                    <button onclick="confirmarExclusao()" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                        <i class="fas fa-trash-alt mr-2"></i>Excluir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let patchPanels = [];
+        let patchPanelsFiltrados = [];
+        let patchPanelParaExcluir = null;
+
+        // Carregar patch panels
+        async function carregarPatchPanels() {
+            try {
+                document.getElementById('loading').classList.remove('hidden');
+                document.getElementById('semDados').classList.add('hidden');
+                
+                const response = await fetch('/patch-panels');
+                patchPanels = await response.json();
+                patchPanelsFiltrados = [...patchPanels];
+                
+                exibirPatchPanels();
+            } catch (error) {
+                console.error('Erro ao carregar patch panels:', error);
+                alert('Erro ao carregar patch panels. Tente novamente.');
+            } finally {
+                document.getElementById('loading').classList.add('hidden');
+            }
+        }
+
+        // Exibir patch panels na tabela
+        function exibirPatchPanels() {
+            const tbody = document.getElementById('tabelaPatchPanels');
+            tbody.innerHTML = '';
+
+            if (patchPanelsFiltrados.length === 0) {
+                document.getElementById('semDados').classList.remove('hidden');
+                return;
+            }
+
+            patchPanelsFiltrados.forEach(pp => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors';
+                
+                const andarTexto = pp.andar === 0 ? 'Térreo' : `${pp.andar}º Andar`;
+                const statusClass = pp.status === 'ativo' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
+                
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="font-mono text-sm font-semibold text-indigo-600 dark:text-indigo-400">${pp.codigo}</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900 dark:text-white">${pp.nome}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="text-sm text-gray-900 dark:text-white">${andarTexto}</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="text-sm text-gray-900 dark:text-white">${pp.porta_inicial} - ${pp.porta_final}</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full ${statusClass}">
+                            ${pp.status === 'ativo' ? 'Ativo' : 'Inativo'}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="text-sm text-gray-900 dark:text-white" id="conexoes-${pp.id}">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="text-sm text-gray-900 dark:text-white">${formatarData(pp.data_criacao)}</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button onclick="abrirModalConfirmacao(${pp.id})" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300" title="Excluir patch panel">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+                
+                // Carregar informações de conexões
+                carregarConexoes(pp.id);
+            });
+        }
+
+        // Carregar informações de conexões
+        async function carregarConexoes(patchPanelId) {
+            try {
+                const response = await fetch(`/patch-panels/${patchPanelId}/portas`);
+                const portas = await response.json();
+                
+                const portasOcupadas = portas.filter(p => p.status === 'ocupada' || p.status === 'mapeada').length;
+                const totalPortas = portas.length;
+                
+                const elemento = document.getElementById(`conexoes-${patchPanelId}`);
+                if (elemento) {
+                    elemento.innerHTML = `${portasOcupadas}/${totalPortas} conectadas`;
+                }
+            } catch (error) {
+                console.error('Erro ao carregar conexões:', error);
+                const elemento = document.getElementById(`conexoes-${patchPanelId}`);
+                if (elemento) {
+                    elemento.innerHTML = 'Erro';
+                }
+            }
+        }
+
+        // Filtrar patch panels
+        function filtrarPatchPanels() {
+            const filtroAndar = document.getElementById('filtroAndar').value;
+            const filtroStatus = document.getElementById('filtroStatus').value;
+            const busca = document.getElementById('busca').value.toLowerCase();
+
+            patchPanelsFiltrados = patchPanels.filter(pp => {
+                const matchAndar = !filtroAndar || pp.andar.toString() === filtroAndar;
+                const matchStatus = !filtroStatus || pp.status === filtroStatus;
+                const matchBusca = !busca || 
+                    pp.nome.toLowerCase().includes(busca) || 
+                    pp.codigo.toLowerCase().includes(busca) ||
+                    (pp.descricao && pp.descricao.toLowerCase().includes(busca));
+
+                return matchAndar && matchStatus && matchBusca;
+            });
+
+            exibirPatchPanels();
+        }
+
+        // Limpar filtros
+        function limparFiltros() {
+            document.getElementById('filtroAndar').value = '';
+            document.getElementById('filtroStatus').value = '';
+            document.getElementById('busca').value = '';
+            patchPanelsFiltrados = [...patchPanels];
+            exibirPatchPanels();
+        }
+
+        // Formatar data
+        function formatarData(dataString) {
+            if (!dataString) return 'N/A';
+            const data = new Date(dataString);
+            return data.toLocaleDateString('pt-BR') + ' ' + data.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'});
+        }
+
+        // Abrir modal de confirmação
+        function abrirModalConfirmacao(patchPanelId) {
+            patchPanelParaExcluir = patchPanels.find(pp => pp.id === patchPanelId);
+            
+            if (!patchPanelParaExcluir) {
+                alert('Patch panel não encontrado!');
+                return;
+            }
+            
+            const andarTexto = patchPanelParaExcluir.andar === 0 ? 'Térreo' : `${patchPanelParaExcluir.andar}º Andar`;
+            
+            document.getElementById('mensagemConfirmacao').textContent = 
+                `Tem certeza que deseja excluir o patch panel "${patchPanelParaExcluir.nome}"?`;
+            
+            document.getElementById('detalhesPatchPanel').innerHTML = `
+                <strong>Nome:</strong> ${patchPanelParaExcluir.nome}<br>
+                <strong>Código:</strong> ${patchPanelParaExcluir.codigo}<br>
+                <strong>Andar:</strong> ${andarTexto}<br>
+                <strong>Portas:</strong> ${patchPanelParaExcluir.porta_inicial} - ${patchPanelParaExcluir.porta_final}<br>
+                <strong>Status:</strong> ${patchPanelParaExcluir.status}
+            `;
+            
+            document.getElementById('modalConfirmacao').classList.remove('hidden');
+        }
+
+        // Fechar modal de confirmação
+        function fecharModalConfirmacao() {
+            document.getElementById('modalConfirmacao').classList.add('hidden');
+            patchPanelParaExcluir = null;
+        }
+
+        // Confirmar exclusão
+        async function confirmarExclusao() {
+            if (!patchPanelParaExcluir) {
+                alert('Nenhum patch panel selecionado!');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/patch-panels/${patchPanelParaExcluir.id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    alert('Patch panel excluído com sucesso!');
+                    fecharModalConfirmacao();
+                    await carregarPatchPanels();
+                } else {
+                    const result = await response.json();
+                    alert(`Erro: ${result.mensagem}`);
+                }
+            } catch (error) {
+                console.error('Erro ao excluir patch panel:', error);
+                alert('Erro ao excluir patch panel. Tente novamente.');
+            }
+        }
+
+        // Voltar ao painel de configuração
+        function voltarPainelConfig() {
+            fetch('/perfil').then(resp => resp.json()).then(perfil => {
+                if (perfil.nivel === 'admin') {
+                    window.location.href = 'config-admin.html';
+                } else if (perfil.nivel === 'tecnico') {
+                    window.location.href = 'config-tecnico.html';
+                } else {
+                    window.location.href = 'config-usuario.html';
+                }
+            });
+        }
+
+        // Inicialização
+        window.addEventListener('DOMContentLoaded', function() {
+            carregarPatchPanels();
+            
+            // Carregar logo da empresa
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    LogoManager.loadEmpresaLogo(data);
+                });
+        });
+    </script>
+    <script src="static/js/logo-manager.js"></script>
+</body>
+
+</html> 

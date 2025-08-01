@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Adicionar Patch Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="static/img/favicon-lapis.png">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+</head>
+
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-4xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarConfigAdmin()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+                <i class="fas fa-th text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                Adicionar Patch Panel
+            </h1>
+            <p class="text-gray-600 dark:text-gray-300">Cadastre um novo patch panel no sistema</p>
+        </div>
+
+        <form id="formPatchPanel" class="space-y-6">
+            <!-- Nome -->
+            <div>
+                <label for="nome_patch_panel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <i class="fas fa-tag mr-2"></i>Nome do Patch Panel *
+                </label>
+                <input type="text" id="nome_patch_panel" name="nome_patch_panel" required
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                       placeholder="Ex: Patch Panel Principal 1º Andar">
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Nome único para identificar este patch panel. É possível ter múltiplos patch panels no mesmo andar.</p>
+            </div>
+
+                         <!-- Andar -->
+             <div>
+                 <label for="andar_patch_panel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                     <i class="fas fa-building mr-2"></i>Andar *
+                 </label>
+                 <select id="andar_patch_panel" name="andar_patch_panel" required
+                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                     <option value="">Selecione o andar...</option>
+                     <option value="0">Térreo</option>
+                     <option value="1">1º Andar</option>
+                     <option value="2">2º Andar</option>
+                     <option value="3">3º Andar</option>
+                 </select>
+             </div>
+
+             <!-- Prefixo dos Keystones -->
+             <div>
+                 <label for="prefixo_keystone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                     <i class="fas fa-tag mr-2"></i>Prefixo dos Keystones *
+                 </label>
+                 <input type="text" id="prefixo_keystone" name="prefixo_keystone" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                        placeholder="Ex: PT20, PT21, PT22..." onchange="atualizarPreviewPortas()">
+                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Prefixo que será usado nos keystones (ex: PT20-0001, PT20-0002...)</p>
+             </div>
+
+            <!-- Número de Portas -->
+            <div>
+                <label for="num_portas_patch_panel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <i class="fas fa-list-ol mr-2"></i>Número de Portas *
+                </label>
+                <select id="num_portas_patch_panel" name="num_portas_patch_panel" required onchange="atualizarPreviewPortas()"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                    <option value="">Selecione...</option>
+                    <option value="100">100 portas</option>
+                    <option value="250">250 portas</option>
+                    <option value="500">500 portas</option>
+                    <option value="750">750 portas</option>
+                    <option value="1000">1000 portas</option>
+                </select>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Patch panel gigante - sempre começa da porta 1</p>
+            </div>
+
+            <!-- Preview das Portas -->
+            <div id="preview_portas" class="hidden p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                <div class="flex items-center">
+                    <i class="fas fa-info-circle text-blue-600 dark:text-blue-400 mr-3"></i>
+                    <div class="text-left">
+                        <h3 class="font-semibold text-blue-800 dark:text-blue-200">Patch Panel Gigante</h3>
+                        <p class="text-sm text-blue-700 dark:text-blue-300">Este patch panel terá portas de <span id="range_portas" class="font-bold">1 a 500</span></p>
+                        <p class="text-sm text-blue-600 dark:text-blue-400 mt-1">Keystones: <span id="keystone_range" class="font-mono">PT20-0001 a PT20-0500</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status -->
+            <div>
+                <label for="status_patch_panel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <i class="fas fa-check-circle mr-2"></i>Status
+                </label>
+                <select id="status_patch_panel" name="status_patch_panel"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                    <option value="ativo">Ativo</option>
+                    <option value="inativo">Inativo</option>
+                </select>
+            </div>
+
+            <!-- Descrição -->
+            <div>
+                <label for="descricao_patch_panel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <i class="fas fa-align-left mr-2"></i>Descrição
+                </label>
+                <textarea id="descricao_patch_panel" name="descricao_patch_panel" rows="3"
+                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                          placeholder="Descrição adicional do patch panel..."></textarea>
+            </div>
+
+            <!-- Botões -->
+            <div class="flex gap-4 pt-6">
+                <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                    <i class="fas fa-save mr-2"></i>Salvar Patch Panel
+                </button>
+                <button type="button" onclick="limparFormulario()" class="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg transition-colors">
+                    <i class="fas fa-eraser mr-2"></i>Limpar
+                </button>
+            </div>
+        </form>
+
+        <!-- Modal de Sucesso -->
+        <div id="modalSucesso" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full mx-4">
+                <div class="text-center">
+                    <i class="fas fa-check-circle text-6xl text-green-500 mb-4"></i>
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Patch Panel Adicionado!</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">O patch panel foi cadastrado com sucesso no sistema.</p>
+                    <div class="flex gap-3">
+                        <button onclick="fecharModal()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                            OK
+                        </button>
+                        <button onclick="adicionarOutro()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                            Adicionar Outro
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+                 // Atualizar preview das portas
+         function atualizarPreviewPortas() {
+             const numPortas = document.getElementById('num_portas_patch_panel').value;
+             const prefixo = document.getElementById('prefixo_keystone').value;
+             const previewDiv = document.getElementById('preview_portas');
+             const rangeSpan = document.getElementById('range_portas');
+             const keystoneSpan = document.getElementById('keystone_range');
+             
+             if (numPortas && prefixo) {
+                 const portaFinal = parseInt(numPortas);
+                 rangeSpan.textContent = `1 a ${portaFinal}`;
+                 keystoneSpan.textContent = `${prefixo}-0001 a ${prefixo}-${portaFinal.toString().padStart(4, '0')}`;
+                 previewDiv.classList.remove('hidden');
+             } else {
+                 previewDiv.classList.add('hidden');
+             }
+         }
+
+        // Validar andar (verificar se já existe patch panel com mesmo nome)
+        async function validarNomePatchPanel() {
+            const nome = document.getElementById('nome_patch_panel').value;
+            const andar = document.getElementById('andar_patch_panel').value;
+            
+            if (!nome || !andar) return true;
+            
+            try {
+                const response = await fetch(`/patch-panels/andar/${andar}`);
+                const result = await response.json();
+                
+                // Verificar se já existe um patch panel com o mesmo nome no mesmo andar
+                const patchPanelExistente = result.find(pp => pp.nome.toLowerCase() === nome.toLowerCase());
+                
+                if (patchPanelExistente) {
+                    alert(`Erro: Já existe um patch panel com o nome "${nome}" no ${andar === '0' ? 'Térreo' : andar + 'º Andar'}!`);
+                    return false;
+                }
+                return true;
+            } catch (error) {
+                console.error('Erro ao validar nome do patch panel:', error);
+                return true; // Em caso de erro, permitir continuar
+            }
+        }
+
+        // Submeter formulário
+        document.getElementById('formPatchPanel').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            // Validar nome do patch panel antes de submeter
+            const valido = await validarNomePatchPanel();
+            if (!valido) return;
+            
+                         const dados = {
+                 nome: formData.get('nome_patch_panel'),
+                 andar: parseInt(formData.get('andar_patch_panel')),
+                 prefixo_keystone: formData.get('prefixo_keystone'),
+                 num_portas: parseInt(formData.get('num_portas_patch_panel')),
+                 status: formData.get('status_patch_panel'),
+                 descricao: formData.get('descricao_patch_panel')
+             };
+
+            try {
+                const response = await fetch('/patch-panels', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                });
+
+                const result = await response.json();
+                
+                if (result.status === 'ok') {
+                    mostrarModalSucesso();
+                } else {
+                    alert(`Erro: ${result.mensagem}`);
+                }
+            } catch (error) {
+                console.error('Erro ao adicionar patch panel:', error);
+                alert('Erro ao adicionar patch panel. Tente novamente.');
+            }
+        });
+
+        // Limpar formulário
+        function limparFormulario() {
+            document.getElementById('formPatchPanel').reset();
+            document.getElementById('preview_portas').classList.add('hidden');
+        }
+
+        // Mostrar modal de sucesso
+        function mostrarModalSucesso() {
+            document.getElementById('modalSucesso').classList.remove('hidden');
+        }
+
+        // Fechar modal
+        function fecharModal() {
+            document.getElementById('modalSucesso').classList.add('hidden');
+        }
+
+        // Adicionar outro patch panel
+        function adicionarOutro() {
+            fecharModal();
+            limparFormulario();
+            document.getElementById('nome_patch_panel').focus();
+        }
+
+        // Voltar ao config admin
+        function voltarConfigAdmin() {
+            window.location.href = 'config-admin.html';
+        }
+
+        // Inicialização
+        window.addEventListener('DOMContentLoaded', function() {
+            // Carregar logo da empresa
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    LogoManager.loadEmpresaLogo(data);
+                });
+            
+            // Adicionar listeners
+            document.getElementById('andar_patch_panel').addEventListener('change', atualizarPreviewPortas);
+            document.getElementById('prefixo_keystone').addEventListener('input', atualizarPreviewPortas);
+            
+            // Adicionar validação em tempo real para o nome do patch panel
+            let timeoutId;
+            document.getElementById('nome_patch_panel').addEventListener('input', function() {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(async () => {
+                    const nome = this.value.trim();
+                    const andar = document.getElementById('andar_patch_panel').value;
+                    
+                    if (nome && andar) {
+                        try {
+                            const response = await fetch(`/patch-panels/andar/${andar}`);
+                            const result = await response.json();
+                            
+                            const patchPanelExistente = result.find(pp => pp.nome.toLowerCase() === nome.toLowerCase());
+                            
+                            if (patchPanelExistente) {
+                                this.setCustomValidity(`Já existe um patch panel com o nome "${nome}" no ${andar === '0' ? 'Térreo' : andar + 'º Andar'}`);
+                                this.classList.add('border-red-500');
+                            } else {
+                                this.setCustomValidity('');
+                                this.classList.remove('border-red-500');
+                            }
+                        } catch (error) {
+                            console.error('Erro ao validar nome:', error);
+                        }
+                    } else {
+                        this.setCustomValidity('');
+                        this.classList.remove('border-red-500');
+                    }
+                }, 500); // Aguardar 500ms após o usuário parar de digitar
+            });
+        });
+    </script>
+    <script src="static/js/logo-manager.js"></script>
+</body>
+
+</html> 

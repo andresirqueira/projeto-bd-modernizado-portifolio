@@ -71,6 +71,7 @@
                 <button onclick="aplicarFiltroTipo('todos')" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg transition-colors">
                     <i class="fas fa-filter mr-2"></i>Todos
                 </button>
+
                 <button onclick="aplicarFiltroTipo('USB')" class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors">
                     <i class="fas fa-usb mr-2"></i>USB
                 </button>
@@ -145,6 +146,8 @@
         const params = new URLSearchParams(window.location.search);
         return params.get('id');
     }
+
+
 
     async function carregarCabosSala() {
         const salaId = getIdFromUrl();

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Patch Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="static/img/favicon-lapis.png">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+</head>
+
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-2xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarPainelConfig()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+                <i class="fas fa-edit text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                Editar Patch Panel
+            </h1>
+            <p class="text-gray-600 dark:text-gray-300">Modifique os dados do patch panel selecionado</p>
+        </div>
+
+        <div class="mb-6">
+            <label for="patchPanelSelect" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Selecione o Patch Panel:</label>
+            <select id="patchPanelSelect" onchange="carregarPatchPanel()" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                <option value="">Selecione um patch panel...</option>
+            </select>
+        </div>
+
+        <div id="patchPanelInfo" class="mb-6 p-4 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg border border-indigo-200 dark:border-indigo-700" style="display: none;">
+            <h3 class="text-lg font-semibold text-indigo-800 dark:text-indigo-200 mb-3">Informações do Patch Panel</h3>
+            <div class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <p><strong>ID:</strong> <span id="patchPanelId"></span></p>
+                <p><strong>Código:</strong> <span id="patchPanelCodigo"></span></p>
+                <p><strong>Data de Criação:</strong> <span id="patchPanelDataCriacao"></span></p>
+            </div>
+        </div>
+
+        <form id="formEditarPatchPanel" class="space-y-6">
+            <div class="space-y-2">
+                <label for="nome" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nome:</label>
+                <input type="text" id="nome" name="nome" required class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600 disabled:bg-gray-100 dark:disabled:bg-gray-700 disabled:cursor-not-allowed">
+                <small class="text-gray-500 dark:text-gray-400">Exemplo: Patch Panel Principal - Térreo</small>
+            </div>
+
+            <div class="space-y-2">
+                <label for="andar" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Andar:</label>
+                <select id="andar" name="andar" required onchange="validarPortaInicial()" disabled class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600 disabled:bg-gray-100 dark:disabled:bg-gray-700 disabled:cursor-not-allowed">
+                    <option value="">Selecione o andar...</option>
+                    <option value="0">Térreo</option>
+                    <option value="1">1º Andar</option>
+                    <option value="2">2º Andar</option>
+                    <option value="3">3º Andar</option>
+                </select>
+            </div>
+
+            <div class="space-y-2">
+                <label for="portaInicial" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Porta Inicial:</label>
+                <input type="number" id="portaInicial" name="portaInicial" min="1" required onchange="atualizarPreviewPortas()" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600 disabled:bg-gray-100 dark:disabled:bg-gray-700 disabled:cursor-not-allowed">
+                <small class="text-gray-500 dark:text-gray-400">Número da primeira porta do patch panel</small>
+            </div>
+
+            <div class="space-y-2">
+                <label for="numPortas" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Número de Portas:</label>
+                <input type="number" id="numPortas" name="numPortas" min="1" max="48" required onchange="atualizarPreviewPortas()" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600 disabled:bg-gray-100 dark:disabled:bg-gray-700 disabled:cursor-not-allowed">
+                <small class="text-gray-500 dark:text-gray-400">Quantidade de portas (máximo 48)</small>
+            </div>
+
+            <!-- Preview das Portas -->
+            <div class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                <h4 class="text-sm font-medium text-blue-800 dark:text-blue-200 mb-2">
+                    <i class="fas fa-eye mr-1"></i>Preview das Portas
+                </h4>
+                <p class="text-sm text-blue-600 dark:text-blue-300" id="previewPortas">
+                    Configure a porta inicial e número de portas para ver o preview
+                </p>
+            </div>
+
+            <!-- Aviso de Conflito -->
+            <div id="avisoConflito" class="hidden p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                <h4 class="text-sm font-medium text-red-800 dark:text-red-200 mb-2">
+                    <i class="fas fa-exclamation-triangle mr-1"></i>Aviso de Conflito
+                </h4>
+                <p class="text-sm text-red-600 dark:text-red-300" id="textoConflito">
+                    Existe conflito com o range de portas configurado
+                </p>
+            </div>
+
+            <div class="space-y-2">
+                <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Status:</label>
+                <select id="status" name="status" disabled class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600 disabled:bg-gray-100 dark:disabled:bg-gray-700 disabled:cursor-not-allowed">
+                    <option value="ativo">Ativo</option>
+                    <option value="inativo">Inativo</option>
+                </select>
+            </div>
+
+            <div class="space-y-2">
+                <label for="descricao" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descrição:</label>
+                <textarea id="descricao" name="descricao" rows="3" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600 disabled:bg-gray-100 dark:disabled:bg-gray-700 disabled:cursor-not-allowed" placeholder="Descrição opcional do patch panel..."></textarea>
+            </div>
+
+            <div class="pt-4">
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-800 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:bg-gray-400 dark:disabled:bg-gray-600 disabled:cursor-not-allowed" id="btnSalvar" disabled>
+                    <i class="fas fa-save"></i> Salvar Alterações
+                </button>
+            </div>
+        </form>
+
+        <div id="msg" class="mt-4 p-4 rounded-lg text-center font-medium"></div>
+    </div>
+
+    <script>
+        let patchPanelAtual = null;
+
+        // Carregar lista de patch panels
+        async function carregarPatchPanels() {
+            try {
+                const resp = await fetch('/patch-panels');
+                const patchPanels = await resp.json();
+                const select = document.getElementById('patchPanelSelect');
+                
+                select.innerHTML = '<option value="">Selecione um patch panel...</option>';
+                patchPanels.forEach(pp => {
+                    const opt = document.createElement('option');
+                    opt.value = pp.id;
+                    const andarTexto = pp.andar === 0 ? 'Térreo' : `${pp.andar}º Andar`;
+                    opt.textContent = `${pp.nome} (${pp.codigo} - ${andarTexto})`;
+                    select.appendChild(opt);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar patch panels:', error);
+                mostrarMensagem('Erro ao carregar patch panels', 'error');
+            }
+        }
+
+        // Carregar dados do patch panel selecionado
+        async function carregarPatchPanel() {
+            const patchPanelId = document.getElementById('patchPanelSelect').value;
+            const btnSalvar = document.getElementById('btnSalvar');
+            const patchPanelInfo = document.getElementById('patchPanelInfo');
+            const nomeInput = document.getElementById('nome');
+            const andarSelect = document.getElementById('andar');
+            const portaInicialInput = document.getElementById('portaInicial');
+            const numPortasInput = document.getElementById('numPortas');
+            const statusSelect = document.getElementById('status');
+            const descricaoTextarea = document.getElementById('descricao');
+            
+            if (!patchPanelId) {
+                patchPanelAtual = null;
+                btnSalvar.disabled = true;
+                patchPanelInfo.style.display = 'none';
+                limparFormulario();
+                
+                // Desabilitar campos
+                nomeInput.disabled = true;
+                andarSelect.disabled = true;
+                portaInicialInput.disabled = true;
+                numPortasInput.disabled = true;
+                statusSelect.disabled = true;
+                descricaoTextarea.disabled = true;
+                return;
+            }
+
+            try {
+                const resp = await fetch(`/patch-panels/${patchPanelId}`);
+                const patchPanel_data = await resp.json();
+                
+                if (resp.ok) {
+                    patchPanelAtual = patchPanel_data;
+                    preencherFormulario(patchPanel_data);
+                    mostrarInfoPatchPanel(patchPanel_data);
+                    btnSalvar.disabled = false;
+                    
+                    // Habilitar campos
+                    nomeInput.disabled = false;
+                    andarSelect.disabled = false;
+                    portaInicialInput.disabled = false;
+                    numPortasInput.disabled = false;
+                    statusSelect.disabled = false;
+                    descricaoTextarea.disabled = false;
+                } else {
+                    mostrarMensagem(patchPanel_data.mensagem || 'Erro ao carregar patch panel', 'error');
+                }
+            } catch (error) {
+                console.error('Erro ao carregar patch panel:', error);
+                mostrarMensagem('Erro ao carregar patch panel', 'error');
+            }
+        }
+
+        // Preencher formulário com dados do patch panel
+        function preencherFormulario(patchPanel_data) {
+            document.getElementById('nome').value = patchPanel_data.nome || '';
+            document.getElementById('andar').value = patchPanel_data.andar || '';
+            document.getElementById('portaInicial').value = patchPanel_data.porta_inicial || '';
+            document.getElementById('numPortas').value = patchPanel_data.num_portas || '';
+            document.getElementById('status').value = patchPanel_data.status || 'ativo';
+            document.getElementById('descricao').value = patchPanel_data.descricao || '';
+            
+            atualizarPreviewPortas();
+        }
+
+        // Mostrar informações do patch panel
+        function mostrarInfoPatchPanel(patchPanel_data) {
+            document.getElementById('patchPanelId').textContent = patchPanel_data.id;
+            document.getElementById('patchPanelCodigo').textContent = patchPanel_data.codigo;
+            
+            // Converter para fuso horário local
+            const dataCriacao = new Date(patchPanel_data.data_criacao);
+            const dataLocal = dataCriacao.toLocaleString('pt-BR', {
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            document.getElementById('patchPanelDataCriacao').textContent = dataLocal;
+            document.getElementById('patchPanelInfo').style.display = 'block';
+        }
+
+        // Limpar formulário
+        function limparFormulario() {
+            const nomeInput = document.getElementById('nome');
+            const andarSelect = document.getElementById('andar');
+            const portaInicialInput = document.getElementById('portaInicial');
+            const numPortasInput = document.getElementById('numPortas');
+            const statusSelect = document.getElementById('status');
+            const descricaoTextarea = document.getElementById('descricao');
+            
+            nomeInput.value = '';
+            andarSelect.value = '';
+            portaInicialInput.value = '';
+            numPortasInput.value = '';
+            statusSelect.value = 'ativo';
+            descricaoTextarea.value = '';
+            
+            // Desabilitar campos
+            nomeInput.disabled = true;
+            andarSelect.disabled = true;
+            portaInicialInput.disabled = true;
+            numPortasInput.disabled = true;
+            statusSelect.disabled = true;
+            descricaoTextarea.disabled = true;
+            
+            // Limpar preview e avisos
+            document.getElementById('previewPortas').textContent = 'Configure a porta inicial e número de portas para ver o preview';
+            document.getElementById('avisoConflito').classList.add('hidden');
+        }
+
+        // Atualizar preview das portas
+        function atualizarPreviewPortas() {
+            const portaInicial = parseInt(document.getElementById('portaInicial').value) || 0;
+            const numPortas = parseInt(document.getElementById('numPortas').value) || 0;
+            
+            if (portaInicial > 0 && numPortas > 0) {
+                const portaFinal = portaInicial + numPortas - 1;
+                document.getElementById('previewPortas').textContent = 
+                    `Portas: ${portaInicial} a ${portaFinal} (${numPortas} portas total)`;
+                
+                // Validar se há conflito
+                validarPortaInicial();
+            } else {
+                document.getElementById('previewPortas').textContent = 
+                    'Configure a porta inicial e número de portas para ver o preview';
+            }
+        }
+
+        // Validar porta inicial
+        async function validarPortaInicial() {
+            const portaInicial = parseInt(document.getElementById('portaInicial').value) || 0;
+            const numPortas = parseInt(document.getElementById('numPortas').value) || 0;
+            const andar = parseInt(document.getElementById('andar').value) || 0;
+            
+            if (portaInicial <= 0 || numPortas <= 0) {
+                document.getElementById('avisoConflito').classList.add('hidden');
+                return;
+            }
+            
+            try {
+                const excludeId = patchPanelAtual ? patchPanelAtual.id : '';
+                const response = await fetch(`/patch-panels/validar-portas?andar=${andar}&porta_inicial=${portaInicial}&num_portas=${numPortas}&exclude_id=${excludeId}`);
+                const result = await response.json();
+                
+                if (result.conflito) {
+                    document.getElementById('avisoConflito').classList.remove('hidden');
+                    document.getElementById('textoConflito').textContent = result.mensagem;
+                } else {
+                    document.getElementById('avisoConflito').classList.add('hidden');
+                }
+            } catch (error) {
+                console.error('Erro ao validar portas:', error);
+            }
+        }
+
+        // Mostrar mensagem
+        function mostrarMensagem(texto, tipo) {
+            const msg = document.getElementById('msg');
+            msg.innerText = texto;
+            if (tipo === 'success') {
+                msg.className = 'mt-4 p-4 rounded-lg text-center font-medium bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300';
+            } else if (tipo === 'error') {
+                msg.className = 'mt-4 p-4 rounded-lg text-center font-medium bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300';
+            } else {
+                msg.className = 'mt-4 p-4 rounded-lg text-center font-medium bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300';
+            }
+            setTimeout(() => {
+                msg.innerText = '';
+                msg.className = 'mt-4 p-4 rounded-lg text-center font-medium';
+            }, 3000);
+        }
+
+        // Envio do formulário de edição
+        document.getElementById('formEditarPatchPanel').onsubmit = async function (e) {
+            e.preventDefault();
+            const form = e.target;
+            const msgDiv = document.getElementById('msg');
+            
+            // Validar se todos os campos obrigatórios estão preenchidos
+            if (!form.nome.value.trim() || !form.andar.value || !form.portaInicial.value || !form.numPortas.value) {
+                msgDiv.innerText = 'Por favor, preencha todos os campos obrigatórios!';
+                msgDiv.className = 'mt-4 p-4 rounded-lg text-center font-medium bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300';
+                return;
+            }
+            
+            if (!patchPanelAtual) {
+                mostrarMensagem('Selecione um patch panel primeiro', 'error');
+                return;
+            }
+
+            const dados = {
+                nome: document.getElementById('nome').value,
+                andar: parseInt(document.getElementById('andar').value),
+                porta_inicial: parseInt(document.getElementById('portaInicial').value),
+                num_portas: parseInt(document.getElementById('numPortas').value),
+                status: document.getElementById('status').value,
+                descricao: document.getElementById('descricao').value
+            };
+
+            try {
+                const resp = await fetch(`/patch-panels/${patchPanelAtual.id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dados)
+                });
+
+                const json = await resp.json();
+                
+                if (resp.ok) {
+                    mostrarMensagem('Patch panel atualizado com sucesso!', 'success');
+                    // Aguardar um pouco para mostrar a mensagem e depois redirecionar
+                    setTimeout(() => {
+                        window.location.href = 'config-admin.html';
+                    }, 1500);
+                } else {
+                    mostrarMensagem(json.mensagem || 'Erro ao atualizar patch panel', 'error');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                mostrarMensagem('Erro ao atualizar patch panel', 'error');
+            }
+        };
+
+        function voltarPainelConfig() {
+            fetch('/perfil').then(resp => resp.json()).then(perfil => {
+                if (perfil.nivel === 'admin') {
+                    window.location.href = 'config-admin.html';
+                } else if (perfil.nivel === 'tecnico') {
+                    window.location.href = 'config-tecnico.html';
+                } else {
+                    window.location.href = 'config-usuario.html';
+                }
+            });
+        }
+
+        // Carregar patch panels ao iniciar a página
+        carregarPatchPanels();
+
+        window.addEventListener('DOMContentLoaded', function() {
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    LogoManager.loadEmpresaLogo(data);
+                });
+        });
+    </script>
+    <script src="static/js/logo-manager.js"></script>
+</body>
+
+</html> 

@@ -1062,3 +1062,204 @@
 [2025-07-31 14:47:02] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 1 desconectada | Status: sucesso
 [2025-07-31 14:47:43] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 1 criada | Status: sucesso
 [2025-07-31 14:48:31] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 1 atualizado | Status: sucesso
+[2025-07-31 16:41:01] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 2 desconectada | Status: sucesso
+[2025-07-31 16:42:16] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 1 criada | Status: sucesso
+[2025-08-01 08:02:54] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-001 criado | Status: sucesso
+[2025-08-01 08:04:01] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 2 criada | Status: sucesso
+[2025-08-01 08:04:51] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 3 desconectada | Status: sucesso
+[2025-08-01 08:05:10] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 1 criada | Status: sucesso
+[2025-08-01 09:07:42] Usuario: admin_wh | Acao: CRIAR_PATCH_PANEL | Detalhes: Patch Panel criado: Patch Panel 01 - Terreo - 24 portas | Status: sucesso
+[2025-08-01 09:08:30] Usuario: admin_wh | Acao: CRIAR_PATCH_PANEL | Detalhes: Erro ao criar patch panel: UNIQUE constraint failed: patch_panels.codigo | Status: erro
+[2025-08-01 09:08:44] Usuario: admin_wh | Acao: CRIAR_PATCH_PANEL | Detalhes: Erro ao criar patch panel: UNIQUE constraint failed: patch_panels.codigo | Status: erro
+[2025-08-01 09:14:01] Usuario: admin_wh | Acao: CRIAR_PATCH_PANEL | Detalhes: Patch Panel criado: Patch Panel 01 - Terreo - 24 portas | Status: sucesso
+[2025-08-01 09:14:18] Usuario: admin_wh | Acao: CRIAR_PATCH_PANEL | Detalhes: Patch Panel criado: Patch Panel 02- Terreo - 24 portas | Status: sucesso
+[2025-08-01 09:20:29] Usuario: admin_wh | Acao: CRIAR_PATCH_PANEL | Detalhes: Patch Panel criado: Patch Panel 02- Terreo - 24 portas | Status: sucesso
+[2025-08-01 10:03:30] Usuario: admin_wh | Acao: CRIAR_PATCH_PANEL | Detalhes: Patch Panel criado: Patch Panel 01 - Terreo - 24 portas | Status: sucesso
+[2025-08-01 10:03:43] Usuario: admin_wh | Acao: CRIAR_PATCH_PANEL | Detalhes: Patch Panel criado: Patch Panel 02- Terreo - 24 portas | Status: sucesso
+[2025-08-01 10:27:32] Usuario: admin_wh | Acao: ATUALIZAR_PATCH_PANEL | Detalhes: Patch Panel atualizado: Patch Panel 01 - Terreo | Status: sucesso
+[2025-08-01 10:40:18] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 128 do patch panel | Status: sucesso
+[2025-08-01 10:40:34] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 131 do patch panel | Status: sucesso
+[2025-08-01 10:40:56] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 132 do patch panel | Status: sucesso
+[2025-08-01 10:41:03] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Erro ao desconectar equipamento da porta 131: 'NoneType' object is not subscriptable | Status: erro
+[2025-08-01 10:41:05] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Erro ao desconectar equipamento da porta 131: 'NoneType' object is not subscriptable | Status: erro
+[2025-08-01 10:41:08] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Erro ao desconectar equipamento da porta 131: 'NoneType' object is not subscriptable | Status: erro
+[2025-08-01 10:41:16] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Erro ao desconectar equipamento da porta 131: 'NoneType' object is not subscriptable | Status: erro
+[2025-08-01 10:41:22] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Erro ao desconectar equipamento da porta 132: 'NoneType' object is not subscriptable | Status: erro
+[2025-08-01 10:42:51] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença desconectado da porta 131 do patch panel | Status: sucesso
+[2025-08-01 10:44:50] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox desconectado da porta 128 do patch panel | Status: sucesso
+[2025-08-01 10:44:52] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda desconectado da porta 132 do patch panel | Status: sucesso
+[2025-08-01 10:45:12] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 128 do patch panel | Status: sucesso
+[2025-08-01 10:45:28] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox desconectado da porta 128 do patch panel | Status: sucesso
+[2025-08-01 10:46:35] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 128 do patch panel | Status: sucesso
+[2025-08-01 10:47:02] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 131 do patch panel | Status: sucesso
+[2025-08-01 10:47:08] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 132 do patch panel | Status: sucesso
+[2025-08-01 10:47:59] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 01 conectado à porta 119 do patch panel | Status: sucesso
+[2025-08-01 10:48:25] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Dante AVIO Analógico conectado à porta 118 do patch panel | Status: sucesso
+[2025-08-01 10:49:11] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento NUC 01 Esquerda conectado à porta 120 do patch panel | Status: sucesso
+[2025-08-01 10:49:30] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento NUC 02 Direita conectado à porta 117 do patch panel | Status: sucesso
+[2025-08-01 10:51:04] Usuario: admin_wh | Acao: CRIAR_PATCH_PANEL | Detalhes: Patch Panel criado: Patch Panel 03- Terreo - 24 portas | Status: sucesso
+[2025-08-01 10:53:06] Usuario: admin_wh | Acao: CRIAR_PATCH_PANEL | Detalhes: Patch Panel criado: Patch Panel 04 - Terreo - 24 portas | Status: sucesso
+[2025-08-01 10:54:53] Usuario: admin_wh | Acao: CRIAR_PATCH_PANEL | Detalhes: Patch Panel criado: Patch Panel 05 - Terreo - 24 portas | Status: sucesso
+[2025-08-01 10:55:54] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 202 do patch panel | Status: sucesso
+[2025-08-01 10:56:07] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 207 do patch panel | Status: sucesso
+[2025-08-01 10:56:15] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 205 do patch panel | Status: sucesso
+[2025-08-01 10:56:30] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 196 do patch panel | Status: sucesso
+[2025-08-01 10:56:43] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 199 do patch panel | Status: sucesso
+[2025-08-01 10:57:02] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 201 do patch panel | Status: sucesso
+[2025-08-01 11:02:50] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 194 do patch panel | Status: sucesso
+[2025-08-01 11:03:08] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 195 do patch panel | Status: sucesso
+[2025-08-01 11:03:34] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 190 do patch panel | Status: sucesso
+[2025-08-01 11:10:29] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento NUC 02 Direita desconectado da porta 117 do patch panel | Status: sucesso
+[2025-08-01 11:10:31] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Dante AVIO Analógico desconectado da porta 118 do patch panel | Status: sucesso
+[2025-08-01 11:10:32] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 01 desconectado da porta 119 do patch panel | Status: sucesso
+[2025-08-01 11:10:34] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento NUC 01 Esquerda desconectado da porta 120 do patch panel | Status: sucesso
+[2025-08-01 11:10:39] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox desconectado da porta 128 do patch panel | Status: sucesso
+[2025-08-01 11:10:41] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda desconectado da porta 132 do patch panel | Status: sucesso
+[2025-08-01 11:10:42] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença desconectado da porta 131 do patch panel | Status: sucesso
+[2025-08-01 11:10:55] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox desconectado da porta 190 do patch panel | Status: sucesso
+[2025-08-01 11:11:01] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença desconectado da porta 194 do patch panel | Status: sucesso
+[2025-08-01 11:11:02] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda desconectado da porta 195 do patch panel | Status: sucesso
+[2025-08-01 11:11:04] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox desconectado da porta 196 do patch panel | Status: sucesso
+[2025-08-01 11:11:05] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença desconectado da porta 199 do patch panel | Status: sucesso
+[2025-08-01 11:11:07] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox desconectado da porta 202 do patch panel | Status: sucesso
+[2025-08-01 11:11:09] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda desconectado da porta 201 do patch panel | Status: sucesso
+[2025-08-01 11:11:11] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença desconectado da porta 205 do patch panel | Status: sucesso
+[2025-08-01 11:11:12] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda desconectado da porta 207 do patch panel | Status: sucesso
+[2025-08-01 11:11:22] Usuario: admin_wh | Acao: EXCLUIR_PATCH_PANEL | Detalhes: Patch Panel ID 5 excluído | Status: sucesso
+[2025-08-01 11:11:25] Usuario: admin_wh | Acao: EXCLUIR_PATCH_PANEL | Detalhes: Patch Panel ID 6 excluído | Status: sucesso
+[2025-08-01 11:11:28] Usuario: admin_wh | Acao: EXCLUIR_PATCH_PANEL | Detalhes: Patch Panel ID 7 excluído | Status: sucesso
+[2025-08-01 11:11:30] Usuario: admin_wh | Acao: EXCLUIR_PATCH_PANEL | Detalhes: Patch Panel ID 8 excluído | Status: sucesso
+[2025-08-01 11:11:33] Usuario: admin_wh | Acao: EXCLUIR_PATCH_PANEL | Detalhes: Patch Panel ID 9 excluído | Status: sucesso
+[2025-08-01 11:24:21] Usuario: admin_wh | Acao: CRIAR_PATCH_PANEL | Detalhes: Erro ao criar patch panel: table patch_panels has no column named prefixo_keystone | Status: erro
+[2025-08-01 11:29:07] Usuario: admin_wh | Acao: CRIAR_PATCH_PANEL | Detalhes: Patch Panel criado: Patch Panel 01 - Terreo - 250 portas (1-250) | Status: sucesso
+[2025-08-01 11:32:24] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 248 do patch panel | Status: sucesso
+[2025-08-01 11:32:42] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 251 do patch panel | Status: sucesso
+[2025-08-01 11:32:49] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 252 do patch panel | Status: sucesso
+[2025-08-01 11:33:29] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 322 do patch panel | Status: sucesso
+[2025-08-01 11:38:42] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 248 mapeada para Switch 1, Porta 15 | Status: sucesso
+[2025-08-01 11:46:19] Usuario: admin_wh | Acao: DESCONECTAR_PORTA_SWITCH | Detalhes: Porta 3 do switch desconectada | Status: sucesso
+[2025-08-01 11:46:23] Usuario: admin_wh | Acao: DESCONECTAR_PORTA_SWITCH | Detalhes: Porta 3 do switch desconectada | Status: sucesso
+[2025-08-01 11:47:42] Usuario: admin_wh | Acao: DESCONECTAR_PORTA_SWITCH | Detalhes: Porta 3 do switch desconectada | Status: sucesso
+[2025-08-01 11:48:29] Usuario: admin_wh | Acao: DESCONECTAR_PORTA_SWITCH | Detalhes: Porta 3 do switch desconectada | Status: sucesso
+[2025-08-01 11:49:15] Usuario: admin_wh | Acao: DESCONECTAR_PORTA_SWITCH | Detalhes: Porta 3 do switch desconectada | Status: sucesso
+[2025-08-01 11:51:50] Usuario: admin_wh | Acao: DESCONECTAR_PORTA_SWITCH | Detalhes: Porta 3 do switch desconectada | Status: sucesso
+[2025-08-01 11:57:05] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 248 mapeada para Switch 1, Porta 15 | Status: sucesso
+[2025-08-01 11:57:13] Usuario: admin_wh | Acao: DESCONECTAR_PORTA_SWITCH | Detalhes: Porta 3 do switch desconectada | Status: sucesso
+[2025-08-01 11:58:20] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 248 mapeada para Switch 1, Porta 15 | Status: sucesso
+[2025-08-01 12:01:33] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 251 mapeada para Switch 1, Porta 16 | Status: sucesso
+[2025-08-01 12:01:57] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 252 mapeada para Switch 1, Porta 17 | Status: sucesso
+[2025-08-01 12:02:23] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 322 mapeada para Switch 1, Porta 35 | Status: sucesso
+[2025-08-01 12:02:40] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 327 mapeada para Switch 1, Porta 37 | Status: sucesso
+[2025-08-01 12:03:05] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 325 mapeada para Switch 1, Porta 46 | Status: sucesso
+[2025-08-01 12:06:37] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 316 mapeada para Switch 1, Porta 32 | Status: sucesso
+[2025-08-01 12:11:02] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 319 mapeada para Switch 1, Porta 33 | Status: sucesso
+[2025-08-01 12:11:14] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 321 mapeada para Switch 1, Porta 34 | Status: sucesso
+[2025-08-01 12:11:33] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 310 mapeada para Switch 1, Porta 29 | Status: sucesso
+[2025-08-01 12:11:46] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 314 mapeada para Switch 1, Porta 30 | Status: sucesso
+[2025-08-01 12:12:02] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 315 mapeada para Switch 1, Porta 31 | Status: sucesso
+[2025-08-01 12:23:04] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 327 do patch panel | Status: sucesso
+[2025-08-01 12:27:58] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda desconectado da porta 327 do patch panel | Status: sucesso
+[2025-08-01 12:28:43] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 327 do patch panel | Status: sucesso
+[2025-08-01 12:28:57] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 325 do patch panel | Status: sucesso
+[2025-08-01 12:29:23] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 316 do patch panel | Status: sucesso
+[2025-08-01 12:29:35] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 319 do patch panel | Status: sucesso
+[2025-08-01 12:29:48] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 321 do patch panel | Status: sucesso
+[2025-08-01 12:30:50] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 310 do patch panel | Status: sucesso
+[2025-08-01 12:31:04] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 314 do patch panel | Status: sucesso
+[2025-08-01 12:31:16] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 315 do patch panel | Status: sucesso
+[2025-08-01 12:31:53] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 304 do patch panel | Status: sucesso
+[2025-08-01 12:32:08] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 307 do patch panel | Status: sucesso
+[2025-08-01 12:32:31] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 309 do patch panel | Status: sucesso
+[2025-08-01 12:33:06] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 304 mapeada para Switch 1, Porta 26 | Status: sucesso
+[2025-08-01 12:33:28] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 307 mapeada para Switch 1, Porta 27 | Status: sucesso
+[2025-08-01 12:33:40] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 309 mapeada para Switch 1, Porta 28 | Status: sucesso
+[2025-08-01 12:35:18] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 335 do patch panel | Status: sucesso
+[2025-08-01 12:35:30] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 336 do patch panel | Status: sucesso
+[2025-08-01 12:35:46] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 337 do patch panel | Status: sucesso
+[2025-08-01 12:36:14] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 335 mapeada para Switch 1, Porta 43 | Status: sucesso
+[2025-08-01 12:36:28] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 336 mapeada para Switch 1, Porta 44 | Status: sucesso
+[2025-08-01 12:36:46] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 337 mapeada para Switch 1, Porta 45 | Status: sucesso
+[2025-08-01 12:37:12] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 332 mapeada para Switch 1, Porta 40 | Status: sucesso
+[2025-08-01 12:37:26] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 333 mapeada para Switch 1, Porta 41 | Status: sucesso
+[2025-08-01 12:37:38] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 334 mapeada para Switch 1, Porta 42 | Status: sucesso
+[2025-08-01 12:38:11] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 290 mapeada para Switch 1, Porta 18 | Status: sucesso
+[2025-08-01 12:38:22] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 291 mapeada para Switch 1, Porta 19 | Status: sucesso
+[2025-08-01 12:38:38] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 292 mapeada para Switch 1, Porta 20 | Status: sucesso
+[2025-08-01 12:39:07] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 293 mapeada para Switch 1, Porta 21 | Status: sucesso
+[2025-08-01 12:39:18] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 295 mapeada para Switch 1, Porta 22 | Status: sucesso
+[2025-08-01 12:39:33] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 298 mapeada para Switch 1, Porta 23 | Status: sucesso
+[2025-08-01 12:39:54] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 299 mapeada para Switch 1, Porta 24 | Status: sucesso
+[2025-08-01 12:40:17] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 303 mapeada para Switch 1, Porta 25 | Status: sucesso
+[2025-08-01 12:40:31] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 353 mapeada para Switch 1, Porta 48 | Status: sucesso
+[2025-08-01 12:41:08] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 328 mapeada para Switch 1, Porta 38 | Status: sucesso
+[2025-08-01 12:41:27] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 331 mapeada para Switch 1, Porta 39 | Status: sucesso
+[2025-08-01 12:41:49] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 239 mapeada para Switch 1, Porta 1 | Status: sucesso
+[2025-08-01 12:42:00] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 238 mapeada para Switch 1, Porta 2 | Status: sucesso
+[2025-08-01 12:42:15] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 237 mapeada para Switch 1, Porta 7 | Status: sucesso
+[2025-08-01 12:42:28] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 240 mapeada para Switch 1, Porta 8 | Status: sucesso
+[2025-08-01 12:47:02] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=223, Porta ID=19, Equipamento ID=131 | Status: sucesso
+[2025-08-01 12:47:26] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=224, Porta ID=20, Equipamento ID=132 | Status: sucesso
+[2025-08-01 12:51:02] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 332 do patch panel | Status: sucesso
+[2025-08-01 12:51:16] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 333 do patch panel | Status: sucesso
+[2025-08-01 12:51:23] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 334 do patch panel | Status: sucesso
+[2025-08-01 12:52:07] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 290 do patch panel | Status: sucesso
+[2025-08-01 12:52:20] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 291 do patch panel | Status: sucesso
+[2025-08-01 12:52:30] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 292 do patch panel | Status: sucesso
+[2025-08-01 12:52:54] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 293 do patch panel | Status: sucesso
+[2025-08-01 12:53:05] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 295 do patch panel | Status: sucesso
+[2025-08-01 12:53:25] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 298 do patch panel | Status: sucesso
+[2025-08-01 12:53:41] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 299 do patch panel | Status: sucesso
+[2025-08-01 12:54:01] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 303 do patch panel | Status: sucesso
+[2025-08-01 12:54:37] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 353 do patch panel | Status: sucesso
+[2025-08-01 12:56:14] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 01 conectado à porta 239 do patch panel | Status: sucesso
+[2025-08-01 12:56:27] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Dante AVIO Analógico conectado à porta 238 do patch panel | Status: sucesso
+[2025-08-01 12:57:04] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento NUC 01 Esquerda conectado à porta 240 do patch panel | Status: sucesso
+[2025-08-01 12:57:22] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento NUC 02 Direita conectado à porta 237 do patch panel | Status: sucesso
+[2025-08-01 14:34:14] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 365 mapeada para Switch 5, Porta 6 | Status: sucesso
+[2025-08-01 14:34:31] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 356 mapeada para Switch 5, Porta 1 | Status: sucesso
+[2025-08-01 14:34:48] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 359 mapeada para Switch 5, Porta 4 | Status: sucesso
+[2025-08-01 14:35:04] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 360 mapeada para Switch 5, Porta 2 | Status: sucesso
+[2025-08-01 14:35:31] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 355 mapeada para Switch 5, Porta 16 | Status: sucesso
+[2025-08-01 14:36:01] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 358 mapeada para Switch 5, Porta 3 | Status: sucesso
+[2025-08-01 14:36:14] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 369 mapeada para Switch 5, Porta 9 | Status: sucesso
+[2025-08-01 14:36:27] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 370 mapeada para Switch 5, Porta 10 | Status: sucesso
+[2025-08-01 14:37:50] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 368 mapeada para Switch 5, Porta 8 | Status: sucesso
+[2025-08-01 14:38:05] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 367 mapeada para Switch 5, Porta 7 | Status: sucesso
+[2025-08-01 14:38:33] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 381 mapeada para Switch 5, Porta 15 | Status: sucesso
+[2025-08-01 14:38:52] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 363 mapeada para Switch 5, Porta 20 | Status: sucesso
+[2025-08-01 14:40:06] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Microfone MXA 920 conectado à porta 365 do patch panel | Status: sucesso
+[2025-08-01 14:40:26] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 01 conectado à porta 356 do patch panel | Status: sucesso
+[2025-08-01 14:40:42] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 02 conectado à porta 359 do patch panel | Status: sucesso
+[2025-08-01 14:41:08] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 03 conectado à porta 360 do patch panel | Status: sucesso
+[2025-08-01 14:42:28] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=209, Nome=Clickshare, Tipo=Clickshare, Marca=Barco, Modelo=CSE-200 | Status: sucesso
+[2025-08-01 14:43:33] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=111, Nome=Clickshare, Tipo=Clickshare, Marca=Barco, Modelo=C10 | Status: sucesso
+[2025-08-01 14:43:58] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Clickshare conectado à porta 355 do patch panel | Status: sucesso
+[2025-08-01 14:44:20] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Microfone MXA 920 conectado à porta 358 do patch panel | Status: sucesso
+[2025-08-01 14:44:31] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 01 conectado à porta 369 do patch panel | Status: sucesso
+[2025-08-01 14:44:41] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 02 conectado à porta 370 do patch panel | Status: sucesso
+[2025-08-01 14:45:02] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 04 conectado à porta 368 do patch panel | Status: sucesso
+[2025-08-01 14:45:10] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 05 conectado à porta 367 do patch panel | Status: sucesso
+[2025-08-01 14:45:32] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel de Controle conectado à porta 381 do patch panel | Status: sucesso
+[2025-08-01 14:46:13] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=95, Nome=Clickshare, Tipo=Clickshare, Marca=Barco, Modelo=C10 | Status: sucesso
+[2025-08-01 14:46:35] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Clickshare conectado à porta 363 do patch panel | Status: sucesso
+[2025-08-01 14:50:49] Usuario: admin_wh | Acao: CRIAR_PATCH_PANEL | Detalhes: Patch Panel criado: Patch Panel 02 - Terreo (RACK - AV) - 100 portas (1-100) | Status: sucesso
+[2025-08-01 14:51:37] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Dante AVIO USB conectado à porta 467 do patch panel | Status: sucesso
+[2025-08-01 14:51:55] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 473 do patch panel | Status: sucesso
+[2025-08-01 14:52:22] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 467 mapeada para Switch 5, Porta 13 | Status: sucesso
+[2025-08-01 14:52:38] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 473 mapeada para Switch 5, Porta 19 | Status: sucesso
+[2025-08-01 14:53:10] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Dante AVIO USB conectado à porta 474 do patch panel | Status: sucesso
+[2025-08-01 14:53:25] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 475 do patch panel | Status: sucesso
+[2025-08-01 14:53:45] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 474 mapeada para Switch 5, Porta 5 | Status: sucesso
+[2025-08-01 14:53:57] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 475 mapeada para Switch 5, Porta 21 | Status: sucesso
+[2025-08-01 14:54:36] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 469 mapeada para Switch 5, Porta 12 | Status: sucesso
+[2025-08-01 14:54:49] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 468 mapeada para Switch 5, Porta 11 | Status: sucesso
+[2025-08-01 15:35:29] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-001 criado | Status: sucesso
+[2025-08-01 15:44:07] Usuario: admin_wh | Acao: excluir_cabo | Detalhes: Cabo ID 3 excluído | Status: sucesso
+[2025-08-01 15:44:43] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-001 criado | Status: sucesso
+[2025-08-01 15:49:24] Usuario: admin_wh | Acao: excluir_cabo | Detalhes: Cabo ID 4 excluído | Status: sucesso
+[2025-08-01 15:49:58] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-001 criado | Status: sucesso
+[2025-08-01 15:49:58] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 5 criada | Status: sucesso
+[2025-08-01 16:06:00] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-002 criado | Status: sucesso
+[2025-08-01 16:06:00] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 6 criada | Status: sucesso
+[2025-08-01 16:06:53] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-003 criado | Status: sucesso
+[2025-08-01 16:06:53] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 7 criada | Status: sucesso

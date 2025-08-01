@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Portas Patch Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="static/img/favicon-lapis.png">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+</head>
+
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-7xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarPainelConfig()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+                <i class="fas fa-plug text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                Gerenciar Portas Patch Panel
+            </h1>
+            <p class="text-gray-600 dark:text-gray-300">Conecte equipamentos aos keystones dos patch panels</p>
+        </div>
+
+        <div class="mb-6">
+            <label for="patchPanelSelect" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Selecione o Patch Panel:</label>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <select id="patchPanelSelect" onchange="carregarPortas()" class="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                    <option value="">Selecione um patch panel...</option>
+                </select>
+                <button id="btnConectarEquipamento" onclick="abrirModalConectarEquipamento()" class="bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-800 text-white px-6 py-2 rounded-lg transition-colors flex items-center gap-2" style="display:none;">
+                    <i class="fas fa-link"></i> CONECTAR EQUIPAMENTO
+                </button>
+            </div>
+        </div>
+
+        <div id="portasGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <!-- Portas serão carregadas aqui -->
+        </div>
+
+        <div id="msg" class="mt-6 p-4 rounded-lg text-center font-medium"></div>
+    </div>
+
+    <!-- Modal para conectar equipamento -->
+    <div id="modalConectarEquipamento" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 w-full max-w-md mx-4">
+            <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Conectar Equipamento</h2>
+            <form id="formConectarEquipamento" class="space-y-4">
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Porta do Patch Panel:</label>
+                    <input type="text" id="portaPatchPanelNumero" readonly class="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 cursor-not-allowed">
+                </div>
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Keystone:</label>
+                    <input type="text" id="keystoneNumero" readonly class="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 cursor-not-allowed">
+                </div>
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Equipamento:</label>
+                    <select id="equipamentoSelect" required class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                        <option value="">Selecione um equipamento...</option>
+                    </select>
+                </div>
+                <div class="flex gap-3 pt-4">
+                    <button type="button" onclick="fecharModal()" class="flex-1 bg-gray-500 hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors">Cancelar</button>
+                    <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-800 text-white px-4 py-2 rounded-lg transition-colors">Conectar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let patchPanelAtual = null;
+        let portaSelecionada = null;
+        let patchPanels = [];
+
+        // Carregar patch panels
+        async function carregarPatchPanels() {
+            try {
+                const resp = await fetch('/patch-panels');
+                patchPanels = await resp.json();
+                const select = document.getElementById('patchPanelSelect');
+                select.innerHTML = '<option value="">Selecione um patch panel...</option>';
+                patchPanels.forEach(pp => {
+                    const opt = document.createElement('option');
+                    opt.value = pp.id;
+                    const andarTexto = pp.andar === 0 ? 'Térreo' : `${pp.andar}º Andar`;
+                    opt.textContent = `${pp.nome} (${pp.codigo} - ${andarTexto})`;
+                    select.appendChild(opt);
+                });
+                select.value = "";
+                carregarPortas();
+            } catch (error) {
+                console.error('Erro ao carregar patch panels:', error);
+            }
+        }
+
+        // Carregar portas do patch panel selecionado
+        async function carregarPortas() {
+            const patchPanelId = document.getElementById('patchPanelSelect').value;
+            const btnConectar = document.getElementById('btnConectarEquipamento');
+            
+            if (patchPanelId) {
+                btnConectar.style.display = 'block';
+            } else {
+                btnConectar.style.display = 'none';
+            }
+            
+            if (!patchPanelId) {
+                document.getElementById('portasGrid').innerHTML = '<div class="col-span-full text-center text-gray-500 dark:text-gray-400 py-8">Selecione um patch panel para ver suas portas</div>';
+                return;
+            }
+
+            try {
+                const resp = await fetch(`/patch-panels/${patchPanelId}/portas`);
+                
+                if (!resp.ok) {
+                    console.error('Erro ao carregar portas:', resp.status, resp.statusText);
+                    document.getElementById('portasGrid').innerHTML = '<div class="col-span-full text-center text-red-500 dark:text-red-400 py-8">Erro ao carregar portas</div>';
+                    return;
+                }
+                
+                const portas = await resp.json();
+                patchPanelAtual = patchPanelId;
+                
+                const grid = document.getElementById('portasGrid');
+                grid.innerHTML = '';
+                
+                if (portas.length === 0) {
+                    grid.innerHTML = `
+                        <div class="col-span-full text-center py-8 bg-gray-50 dark:bg-gray-800 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600">
+                            <p class="text-gray-600 dark:text-gray-400 mb-4 text-lg">Nenhuma porta configurada para este patch panel.</p>
+                            <p class="text-gray-500 dark:text-gray-500 text-sm">As portas são criadas automaticamente ao criar o patch panel.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                portas.forEach(porta => {
+                    const card = criarCardPorta(porta);
+                    grid.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error('Erro ao carregar portas:', error);
+                document.getElementById('portasGrid').innerHTML = '<div class="col-span-full text-center text-red-500 dark:text-red-400 py-8">Erro ao carregar portas</div>';
+            }
+        }
+
+        // Criar card de porta
+        function criarCardPorta(porta) {
+            const card = document.createElement('div');
+            card.className = `bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-4 ${getStatusClass(porta.status)}`;
+            
+                         // Gerar keystone usando o prefixo personalizado
+             const patchPanel = patchPanels.find(pp => pp.id == patchPanelAtual);
+             const keystone = `${porta.prefixo_keystone}-${porta.numero_porta.toString().padStart(4, '0')}`;
+            
+            const switchInfo = porta.switch_nome ? `
+                <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                    <h4 class="font-semibold text-blue-800 dark:text-blue-200 mb-2">Switch Mapeado:</h4>
+                    <div class="text-sm text-blue-600 dark:text-blue-300 space-y-1">
+                        <div><strong>${porta.switch_nome}</strong></div>
+                        <div>Porta: ${porta.porta_switch}</div>
+                    </div>
+                </div>
+            ` : '';
+
+            const equipamentoInfo = porta.equipamento_nome ? `
+                <div class="mt-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                    <h4 class="font-semibold text-green-800 dark:text-green-200 mb-2">Equipamento Conectado:</h4>
+                    <div class="text-sm text-green-600 dark:text-green-300">
+                        <div><strong>${porta.equipamento_nome}</strong></div>
+                        <div>Tipo: ${porta.equipamento_tipo || 'N/A'}</div>
+                        <div>Sala: ${porta.equipamento_sala || 'N/A'}</div>
+                    </div>
+                </div>
+            ` : '';
+
+            const actions = porta.status === 'ocupada' ? `
+                <button class="w-full bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2" onclick="desconectarEquipamento(${porta.id})">
+                    <i class="fas fa-unlink"></i> Desconectar Equipamento
+                </button>
+            ` : `
+                <button class="w-full bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-800 text-white px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2" onclick="conectarEquipamento(${porta.id}, ${porta.numero_porta})">
+                    <i class="fas fa-link"></i> Conectar Equipamento
+                </button>
+            `;
+
+                         card.innerHTML = `
+                 <div class="flex items-center justify-between mb-3">
+                     <span class="font-semibold text-gray-800 dark:text-white">Porta ${porta.numero_porta}</span>
+                     <span class="px-2 py-1 rounded-full text-xs font-medium ${getStatusTextClass(porta.status)}">
+                         ${getStatusText(porta.status)}
+                     </span>
+                 </div>
+                <div class="text-sm text-gray-600 dark:text-gray-300 mb-3">
+                    <div><strong>Keystone:</strong> <span class="font-mono">${keystone}</span></div>
+                </div>
+                ${switchInfo}
+                ${equipamentoInfo}
+                <div class="mt-4">
+                    ${actions}
+                </div>
+            `;
+            
+            return card;
+        }
+
+                 // Obter classe CSS para status
+         function getStatusClass(status) {
+             switch (status) {
+                 case 'livre': return 'ring-2 ring-green-200 dark:ring-green-800';
+                 case 'ocupada': return 'ring-2 ring-red-200 dark:ring-red-800';
+                 case 'mapeada': return 'ring-2 ring-blue-200 dark:ring-blue-800';
+                 default: return 'ring-2 ring-gray-200 dark:ring-gray-700';
+             }
+         }
+
+         // Obter classe CSS para texto do status
+         function getStatusTextClass(status) {
+             switch (status) {
+                 case 'livre': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+                 case 'ocupada': return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
+                 case 'mapeada': return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
+                 default: return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
+             }
+         }
+
+        // Obter texto para status
+        function getStatusText(status) {
+            switch (status) {
+                case 'livre': return 'LIVRE';
+                case 'ocupada': return 'OCUPADA';
+                case 'mapeada': return 'MAPEADA';
+                default: return 'DESCONHECIDO';
+            }
+        }
+
+        // Conectar equipamento
+        async function conectarEquipamento(portaId, numeroPorta) {
+            portaSelecionada = portaId;
+            document.getElementById('portaPatchPanelNumero').value = `Porta ${numeroPorta}`;
+            
+                         // Gerar keystone usando o prefixo da porta
+             const porta = await fetch(`/patch-panels/${patchPanelAtual}/portas`).then(resp => resp.json()).then(portas => portas.find(p => p.numero_porta === numeroPorta));
+             if (porta && porta.prefixo_keystone) {
+                 const keystone = `${porta.prefixo_keystone}-${numeroPorta.toString().padStart(4, '0')}`;
+                 document.getElementById('keystoneNumero').value = keystone;
+             }
+            
+            // Carregar equipamentos disponíveis (que não estão conectados a nenhum keystone)
+            try {
+                const resp = await fetch('/equipamentos?disponiveis=1');
+                const equipamentos = await resp.json();
+                const select = document.getElementById('equipamentoSelect');
+                
+                select.innerHTML = '<option value="">Selecione um equipamento...</option>';
+                equipamentos.forEach(eq => {
+                    const opt = document.createElement('option');
+                    opt.value = eq.id;
+                    opt.textContent = `${eq.nome} (${eq.tipo}) - Sala: ${eq.sala_nome}`;
+                    select.appendChild(opt);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar equipamentos:', error);
+            }
+            
+            document.getElementById('modalConectarEquipamento').classList.remove('hidden');
+        }
+
+        // Desconectar equipamento
+        async function desconectarEquipamento(portaId) {
+            if (!confirm('Tem certeza que deseja desconectar este equipamento?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/patch-panel-portas/${portaId}/desconectar-equipamento`, {
+                    method: 'PUT'
+                });
+
+                if (response.ok) {
+                    mostrarMensagem('Equipamento desconectado com sucesso!', 'success');
+                    carregarPortas();
+                } else {
+                    const result = await response.json();
+                    mostrarMensagem(`Erro: ${result.mensagem}`, 'error');
+                }
+            } catch (error) {
+                console.error('Erro ao desconectar equipamento:', error);
+                mostrarMensagem('Erro ao desconectar equipamento', 'error');
+            }
+        }
+
+        // Abrir modal para conectar equipamento
+        function abrirModalConectarEquipamento() {
+            if (!patchPanelAtual) {
+                alert('Selecione um patch panel primeiro!');
+                return;
+            }
+            alert('Selecione uma porta livre para conectar um equipamento');
+        }
+
+        // Fechar modais
+        function fecharModal() {
+            document.getElementById('modalConectarEquipamento').classList.add('hidden');
+        }
+
+        // Mostrar mensagem
+        function mostrarMensagem(texto, tipo) {
+            const msg = document.getElementById('msg');
+            msg.innerText = texto;
+            if (tipo === 'success') {
+                msg.className = 'mt-6 p-4 rounded-lg text-center font-medium bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300';
+            } else if (tipo === 'error') {
+                msg.className = 'mt-6 p-4 rounded-lg text-center font-medium bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300';
+            } else {
+                msg.className = 'mt-6 p-4 rounded-lg text-center font-medium bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300';
+            }
+            setTimeout(() => {
+                msg.innerText = '';
+                msg.className = 'mt-6 p-4 rounded-lg text-center font-medium';
+            }, 3000);
+        }
+
+        // Event listeners
+        document.getElementById('formConectarEquipamento').onsubmit = async function(e) {
+            e.preventDefault();
+            
+            const equipamentoId = document.getElementById('equipamentoSelect').value;
+            if (!equipamentoId) {
+                mostrarMensagem('Selecione um equipamento', 'error');
+                return;
+            }
+
+            try {
+                const resp = await fetch(`/patch-panel-portas/${portaSelecionada}/conectar-equipamento`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        equipamento_id: parseInt(equipamentoId)
+                    })
+                });
+
+                const json = await resp.json();
+                
+                if (resp.ok) {
+                    mostrarMensagem('Equipamento conectado com sucesso!', 'success');
+                    fecharModal();
+                    carregarPortas();
+                } else {
+                    mostrarMensagem(json.mensagem || 'Erro ao conectar equipamento', 'error');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                mostrarMensagem('Erro ao conectar equipamento', 'error');
+            }
+        };
+
+        // Fechar modal ao clicar fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('modalConectarEquipamento');
+            if (event.target === modal) {
+                modal.classList.add('hidden');
+            }
+        };
+
+        // Inicializar
+        carregarPatchPanels();
+
+        function voltarPainelConfig() {
+            fetch('/perfil').then(resp => resp.json()).then(perfil => {
+                if (perfil.nivel === 'admin') {
+                    window.location.href = 'config-admin.html';
+                } else if (perfil.nivel === 'tecnico') {
+                    window.location.href = 'config-tecnico.html';
+                } else {
+                    window.location.href = 'config-usuario.html';
+                }
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    LogoManager.loadEmpresaLogo(data);
+                });
+        });
+    </script>
+    <script src="static/js/logo-manager.js"></script>
+</body>
+
+</html> 
