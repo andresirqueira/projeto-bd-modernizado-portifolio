@@ -1263,3 +1263,4 @@
 [2025-08-01 16:06:00] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 6 criada | Status: sucesso
 [2025-08-01 16:06:53] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-003 criado | Status: sucesso
 [2025-08-01 16:06:53] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 7 criada | Status: sucesso
+[2025-08-04 08:23:22] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
