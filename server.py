@@ -970,7 +970,8 @@ def listar_portas_switch(switch_id):
     ''')
     
     cur.execute('''
-        SELECT sp.id, sp.numero_porta, sp.descricao, sp.status, 
+        SELECT sp.id, sp.numero_porta, sp.descricao, 
+               CASE WHEN c.id IS NOT NULL THEN 'ocupada' ELSE 'livre' END as status,
                e.nome as equipamento_nome, e.tipo as equipamento_tipo, s.nome as sala_nome,
                pp.nome as patch_panel_nome, ppp.numero_porta as porta_patch_panel, ppp.id as patch_panel_porta_id
         FROM switch_portas sp
