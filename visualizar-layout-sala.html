@@ -502,8 +502,51 @@
             }
         }
         
+        // Função para ordenar equipamentos na ordem específica
+        function ordenarEquipamentos(equipamentos) {
+            const ordemPrioritaria = [
+                'sensor', 'presença', 'presenca',
+                'tv', 'televisão', 'televisao',
+                'chromebox', 'pc',
+                'meetup',
+                'tap',
+                'painel', 'panel',
+                'agenda',
+                'poe',
+                'dongle'
+            ];
+            
+            return equipamentos.sort((a, b) => {
+                const nomeA = a.nome.toLowerCase();
+                const nomeB = b.nome.toLowerCase();
+                
+                // Encontra a posição de cada equipamento na ordem prioritária
+                const posA = ordemPrioritaria.findIndex(tipo => nomeA.includes(tipo));
+                const posB = ordemPrioritaria.findIndex(tipo => nomeB.includes(tipo));
+                
+                // Se ambos estão na ordem prioritária, ordena pela posição
+                if (posA !== -1 && posB !== -1) {
+                    return posA - posB;
+                }
+                
+                // Se apenas A está na ordem prioritária, A vem primeiro
+                if (posA !== -1 && posB === -1) {
+                    return -1;
+                }
+                
+                // Se apenas B está na ordem prioritária, B vem primeiro
+                if (posA === -1 && posB !== -1) {
+                    return 1;
+                }
+                
+                // Se nenhum está na ordem prioritária, mantém ordem alfabética
+                return nomeA.localeCompare(nomeB);
+            });
+        }
+        
         // Posiciona equipamentos em uma grade com melhor distribuição
-        const equipamentosArray = Array.from(equipamentos.values());
+        const equipamentosArray = ordenarEquipamentos(Array.from(equipamentos.values()));
+        console.log('Equipamentos ordenados:', equipamentosArray.map(e => e.nome));
         const items = [];
         
         // Calcula melhor distribuição baseada no número de equipamentos
