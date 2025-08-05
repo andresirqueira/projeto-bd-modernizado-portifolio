@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Conectar Cabo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="static/img/favicon-lapis.png">
+    <style>
+        /* Estilos para optgroups */
+        optgroup {
+            font-weight: bold;
+            color: #6b7280;
+            background-color: #f3f4f6;
+            padding: 4px 0;
+        }
+        
+        .dark optgroup {
+            color: #9ca3af;
+            background-color: #374151;
+        }
+        
+        optgroup option {
+            font-weight: normal;
+            color: #1f2937;
+            background-color: white;
+            padding: 8px 12px;
+        }
+        
+        .dark optgroup option {
+            color: #f9fafb;
+            background-color: #1f2937;
+        }
+        
+        /* Melhorar aparência dos selects */
+        select optgroup {
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .dark select optgroup {
+            border-bottom: 1px solid #4b5563;
+        }
+    </style>
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+</head>
+
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-4xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarCabosEstoque()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+                <i class="fas fa-link text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                Conectar Cabo
+            </h1>
+            <p class="text-gray-600 dark:text-gray-300">Conecte um cabo em estoque aos equipamentos</p>
+        </div>
+
+        <!-- Informações do Cabo -->
+        <div class="mb-8 p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl">
+            <h3 class="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-4">
+                <i class="fas fa-info-circle mr-2"></i>Informações do Cabo
+            </h3>
+            <div id="infoCabo" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <!-- Será preenchido dinamicamente -->
+            </div>
+        </div>
+
+        <form id="formConexao" class="space-y-6">
+            <!-- Tipo de Conexão -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <i class="fas fa-project-diagram mr-2"></i>Tipo de Conexão *
+                </label>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Escolha como o cabo será conectado</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Conexão Direta -->
+                    <label class="relative cursor-pointer">
+                        <input type="radio" name="tipo_conexao" value="direta" checked onchange="toggleTipoConexao()" class="sr-only">
+                        <div class="border-2 border-gray-200 dark:border-gray-600 rounded-lg p-4 transition-all duration-200 hover:border-indigo-300 dark:hover:border-indigo-500 bg-white dark:bg-gray-800">
+                            <div class="flex items-center mb-3">
+                                <div class="w-5 h-5 border-2 border-gray-300 dark:border-gray-500 rounded-full mr-3 flex items-center justify-center">
+                                    <div class="w-3 h-3 bg-gray-300 dark:bg-gray-500 rounded-full"></div>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-exchange-alt text-indigo-600 dark:text-indigo-400 mr-2"></i>
+                                    <span class="font-medium text-gray-900 dark:text-white">Conexão Direta</span>
+                                </div>
+                            </div>
+                            <div class="ml-8">
+                                <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">Equipamento ↔ Equipamento</p>
+                                <div class="flex items-center justify-center space-x-2 text-xs text-gray-500 dark:text-gray-400">
+                                    <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">Equip. A</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                    <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">Equip. B</span>
+                                </div>
+                            </div>
+                        </div>
+                    </label>
+
+                    <!-- Conexão via Patch Panel -->
+                    <label class="relative cursor-pointer">
+                        <input type="radio" name="tipo_conexao" value="patch_panel" onchange="toggleTipoConexao()" class="sr-only">
+                        <div class="border-2 border-gray-200 dark:border-gray-600 rounded-lg p-4 transition-all duration-200 hover:border-indigo-300 dark:hover:border-indigo-500 bg-white dark:bg-gray-800">
+                            <div class="flex items-center mb-3">
+                                <div class="w-5 h-5 border-2 border-gray-300 dark:border-gray-500 rounded-full mr-3 flex items-center justify-center">
+                                    <div class="w-3 h-3 bg-gray-300 dark:bg-gray-500 rounded-full"></div>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-th text-indigo-600 dark:text-indigo-400 mr-2"></i>
+                                    <span class="font-medium text-gray-900 dark:text-white">Via Patch Panel</span>
+                                </div>
+                            </div>
+                            <div class="ml-8">
+                                <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">Equipamento → Patch Panel</p>
+                                <div class="flex items-center justify-center space-x-1 text-xs text-gray-500 dark:text-gray-400">
+                                    <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">Equip.</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                    <span class="bg-blue-100 dark:bg-blue-900 px-2 py-1 rounded">Patch Panel</span>
+                                </div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Seção de Conexão Direta -->
+            <div id="secaoConexaoDireta">
+                <!-- Equipamento Origem -->
+                <div>
+                    <label for="equipamento_origem" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i class="fas fa-plug mr-2"></i>Equipamento Origem *
+                    </label>
+                    <!-- Campo de busca para equipamento origem -->
+                    <div class="relative mb-2">
+                        <input type="text" id="busca_origem" placeholder="Digite para buscar equipamento..."
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600 text-sm"
+                               oninput="filtrarEquipamentos('equipamento_origem', this.value)">
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </div>
+                    </div>
+                    <select id="equipamento_origem" name="equipamento_origem"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                        <option value="">Selecione o equipamento...</option>
+                    </select>
+                </div>
+
+                <!-- Equipamento Destino -->
+                <div>
+                    <label for="equipamento_destino" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i class="fas fa-plug mr-2"></i>Equipamento Destino *
+                    </label>
+                    <!-- Campo de busca para equipamento destino -->
+                    <div class="relative mb-2">
+                        <input type="text" id="busca_destino" placeholder="Digite para buscar equipamento..."
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600 text-sm"
+                               oninput="filtrarEquipamentos('equipamento_destino', this.value)">
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </div>
+                    </div>
+                    <select id="equipamento_destino" name="equipamento_destino"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                        <option value="">Selecione o equipamento...</option>
+                    </select>
+                </div>
+
+                <!-- Porta Origem -->
+                <div>
+                    <label for="porta_origem" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i class="fas fa-hashtag mr-2"></i>Porta Origem
+                    </label>
+                    <input type="text" id="porta_origem" name="porta_origem"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                           placeholder="Ex: HDMI 1, USB 2, Ethernet 1, etc.">
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Porta do equipamento origem (opcional)</p>
+                </div>
+
+                <!-- Porta Destino -->
+                <div>
+                    <label for="porta_destino" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i class="fas fa-hashtag mr-2"></i>Porta Destino
+                    </label>
+                    <input type="text" id="porta_destino" name="porta_destino"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                           placeholder="Ex: HDMI 1, USB 2, Ethernet 1, etc.">
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Porta do equipamento destino (opcional)</p>
+                </div>
+            </div>
+
+            <!-- Seção de Conexão via Patch Panel -->
+            <div id="secaoPatchPanel" class="hidden space-y-4">
+                <div class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-info-circle text-blue-600 dark:text-blue-400 mr-2"></i>
+                        <p class="text-sm text-blue-700 dark:text-blue-300">
+                            <strong>Dica:</strong> Selecione o equipamento primeiro para carregar automaticamente todas as informações do patch panel.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Equipamento -->
+                <div>
+                    <label for="equipamento_rede" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i class="fas fa-network-wired mr-2"></i>Equipamento de Rede *
+                    </label>
+                    <!-- Campo de busca para equipamento rede -->
+                    <div class="relative mb-2">
+                        <input type="text" id="busca_rede" placeholder="Digite para buscar equipamento..."
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600 text-sm"
+                               oninput="filtrarEquipamentos('equipamento_rede', this.value)">
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </div>
+                    </div>
+                    <select id="equipamento_rede" name="equipamento_rede" onchange="carregarInfoPatchPanel()"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                        <option value="">Selecione o equipamento (sensor, painel, etc.)...</option>
+                    </select>
+                </div>
+
+                <!-- Andar -->
+                <div>
+                    <label for="andar_patch_panel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i class="fas fa-building mr-2"></i>Andar *
+                    </label>
+                    <select id="andar_patch_panel" name="andar_patch_panel" onchange="carregarPatchPanelAndar()"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                        <option value="">Selecione o andar...</option>
+                        <option value="0">Térreo</option>
+                        <option value="1">1º Andar</option>
+                        <option value="2">2º Andar</option>
+                        <option value="3">3º Andar</option>
+                    </select>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Será preenchido automaticamente ao selecionar o equipamento</p>
+                </div>
+
+                <!-- Patch Panel do Andar -->
+                <div>
+                    <label for="patch_panel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i class="fas fa-th mr-2"></i>Patch Panel do Andar *
+                    </label>
+                    <select id="patch_panel" name="patch_panel" onchange="carregarPortasPatchPanel()"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                        <option value="">Selecione o patch panel...</option>
+                    </select>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Será preenchido automaticamente ao selecionar o equipamento</p>
+                </div>
+
+                <!-- Porta do Patch Panel (Keystone) -->
+                <div>
+                    <label for="porta_patch_panel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i class="fas fa-hashtag mr-2"></i>Porta Ocupada do Patch Panel *
+                    </label>
+                    <select id="porta_patch_panel" name="porta_patch_panel"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                        <option value="">Selecione a porta...</option>
+                    </select>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Será preenchido automaticamente ao selecionar o equipamento</p>
+                </div>
+            </div>
+
+            <!-- Observação -->
+            <div>
+                <label for="observacao" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <i class="fas fa-align-left mr-2"></i>Observação
+                </label>
+                <textarea id="observacao" name="observacao" rows="3"
+                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                          placeholder="Observações sobre a conexão..."></textarea>
+            </div>
+
+            <!-- Botões -->
+            <div class="flex gap-4 pt-6">
+                <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                    <i class="fas fa-link mr-2"></i>Conectar Cabo
+                </button>
+                <button type="button" onclick="voltarCabosEstoque()" class="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg transition-colors">
+                    <i class="fas fa-times mr-2"></i>Cancelar
+                </button>
+            </div>
+        </form>
+
+        <!-- Modal de Sucesso -->
+        <div id="modalSucesso" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full mx-4">
+                <div class="text-center">
+                    <i class="fas fa-check-circle text-6xl text-green-500 mb-4"></i>
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Cabo Conectado!</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">O cabo foi conectado com sucesso.</p>
+                    <div class="flex gap-3">
+                        <button onclick="fecharModal()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                            OK
+                        </button>
+                        <button onclick="voltarCabosEstoque()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                            Voltar ao Estoque
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let caboId = null;
+        let caboInfo = null;
+        let equipamentos = [];
+        let patchPanels = [];
+
+        // Carregar informações do cabo
+        async function carregarInfoCabo() {
+            const urlParams = new URLSearchParams(window.location.search);
+            caboId = urlParams.get('cabo_id');
+            
+            if (!caboId) {
+                alert('ID do cabo não fornecido!');
+                voltarCabosEstoque();
+                return;
+            }
+
+            try {
+                const response = await fetch(`/cabos/${caboId}`);
+                caboInfo = await response.json();
+                
+                if (!caboInfo) {
+                    alert('Cabo não encontrado!');
+                    voltarCabosEstoque();
+                    return;
+                }
+
+                // Preencher informações do cabo
+                const infoDiv = document.getElementById('infoCabo');
+                infoDiv.innerHTML = `
+                    <div><strong>Código:</strong> ${caboInfo.codigo_unico}</div>
+                    <div><strong>Tipo:</strong> ${caboInfo.tipo || 'Não informado'}</div>
+                    <div><strong>Comprimento:</strong> ${caboInfo.comprimento ? caboInfo.comprimento + 'm' : 'Não informado'}</div>
+                    <div><strong>Marca:</strong> ${caboInfo.marca || 'Não informado'}</div>
+                    <div><strong>Modelo:</strong> ${caboInfo.modelo || 'Não informado'}</div>
+                    <div><strong>Status:</strong> <span class="px-2 py-1 rounded text-xs ${caboInfo.status === 'funcionando' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">${caboInfo.status === 'funcionando' ? 'Funcionando' : 'Com Defeito'}</span></div>
+                `;
+            } catch (error) {
+                console.error('Erro ao carregar informações do cabo:', error);
+                alert('Erro ao carregar informações do cabo!');
+                voltarCabosEstoque();
+            }
+        }
+
+        // Carregar equipamentos
+        async function carregarEquipamentos() {
+            try {
+                const response = await fetch('/equipamentos');
+                equipamentos = await response.json();
+                
+                // Preencher selects de equipamentos
+                const equipOrigem = document.getElementById('equipamento_origem');
+                const equipDestino = document.getElementById('equipamento_destino');
+                const equipRede = document.getElementById('equipamento_rede');
+                
+                equipOrigem.innerHTML = '<option value="">Selecione o equipamento...</option>';
+                equipDestino.innerHTML = '<option value="">Selecione o equipamento...</option>';
+                equipRede.innerHTML = '<option value="">Selecione o equipamento (sensor, painel, etc.)...</option>';
+                
+                // Agrupar equipamentos por sala
+                const equipamentosPorSala = {};
+                equipamentos.forEach(eq => {
+                    const salaNome = eq.sala_nome || 'Sem Sala';
+                    if (!equipamentosPorSala[salaNome]) {
+                        equipamentosPorSala[salaNome] = [];
+                    }
+                    equipamentosPorSala[salaNome].push(eq);
+                });
+                
+                // Função para criar optgroups
+                function criarOptgroups(select) {
+                    // Ordenar salas alfabeticamente
+                    const salasOrdenadas = Object.keys(equipamentosPorSala).sort();
+                    
+                    salasOrdenadas.forEach(salaNome => {
+                        const equipamentosSala = equipamentosPorSala[salaNome];
+                        
+                        // Criar optgroup
+                        const optgroup = document.createElement('optgroup');
+                        optgroup.label = salaNome;
+                        
+                        // Ordenar equipamentos por nome
+                        equipamentosSala.sort((a, b) => a.nome.localeCompare(b.nome));
+                        
+                        equipamentosSala.forEach(eq => {
+                            const option = document.createElement('option');
+                            option.value = eq.id;
+                            option.textContent = `${eq.nome} (${eq.tipo})`;
+                            optgroup.appendChild(option);
+                        });
+                        
+                        select.appendChild(optgroup);
+                    });
+                }
+                
+                // Aplicar optgroups em todos os selects
+                criarOptgroups(equipOrigem);
+                criarOptgroups(equipDestino);
+                criarOptgroups(equipRede);
+                
+                // Armazenar dados originais para filtragem
+                window.equipamentosOriginais = {
+                    equipOrigem: equipOrigem.innerHTML,
+                    equipDestino: equipDestino.innerHTML,
+                    equipRede: equipRede.innerHTML
+                };
+                
+            } catch (error) {
+                console.error('Erro ao carregar equipamentos:', error);
+            }
+        }
+
+        // Função para filtrar equipamentos
+        function filtrarEquipamentos(selectId, termoBusca) {
+            const select = document.getElementById(selectId);
+            const termo = termoBusca.toLowerCase().trim();
+            
+            if (!termo) {
+                // Se não há termo de busca, restaurar dados originais
+                if (window.equipamentosOriginais && window.equipamentosOriginais[selectId]) {
+                    select.innerHTML = window.equipamentosOriginais[selectId];
+                }
+                return;
+            }
+            
+            // Limpar select atual
+            select.innerHTML = '<option value="">Selecione o equipamento...</option>';
+            
+            // Filtrar equipamentos que correspondem ao termo de busca
+            const equipamentosFiltrados = equipamentos.filter(eq => {
+                const nome = eq.nome.toLowerCase();
+                const tipo = eq.tipo.toLowerCase();
+                const sala = (eq.sala_nome || 'Sem Sala').toLowerCase();
+                return nome.includes(termo) || tipo.includes(termo) || sala.includes(termo);
+            });
+            
+            // Agrupar equipamentos filtrados por sala
+            const equipamentosPorSala = {};
+            equipamentosFiltrados.forEach(eq => {
+                const salaNome = eq.sala_nome || 'Sem Sala';
+                if (!equipamentosPorSala[salaNome]) {
+                    equipamentosPorSala[salaNome] = [];
+                }
+                equipamentosPorSala[salaNome].push(eq);
+            });
+            
+            // Criar optgroups com equipamentos filtrados
+            const salasOrdenadas = Object.keys(equipamentosPorSala).sort();
+            
+            salasOrdenadas.forEach(salaNome => {
+                const equipamentosSala = equipamentosPorSala[salaNome];
+                
+                // Criar optgroup
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = salaNome;
+                
+                // Ordenar equipamentos por nome
+                equipamentosSala.sort((a, b) => a.nome.localeCompare(b.nome));
+                
+                equipamentosSala.forEach(eq => {
+                    const option = document.createElement('option');
+                    option.value = eq.id;
+                    option.textContent = `${eq.nome} (${eq.tipo})`;
+                    optgroup.appendChild(option);
+                });
+                
+                select.appendChild(optgroup);
+            });
+            
+            // Se nenhum equipamento foi encontrado
+            if (equipamentosFiltrados.length === 0) {
+                const option = document.createElement('option');
+                option.value = "";
+                option.textContent = "Nenhum equipamento encontrado";
+                option.disabled = true;
+                select.appendChild(option);
+            }
+        }
+
+        // Função para alternar entre conexão direta e via Patch Panel
+        function toggleTipoConexao() {
+            const secaoConexaoDireta = document.getElementById('secaoConexaoDireta');
+            const secaoPatchPanel = document.getElementById('secaoPatchPanel');
+            const selectedValue = document.querySelector('input[name="tipo_conexao"]:checked').value;
+
+            // Atualizar visual dos cards
+            updateRadioCards(selectedValue);
+
+            if (selectedValue === 'patch_panel') {
+                secaoConexaoDireta.classList.add('hidden');
+                secaoPatchPanel.classList.remove('hidden');
+            } else {
+                secaoConexaoDireta.classList.remove('hidden');
+                secaoPatchPanel.classList.add('hidden');
+            }
+        }
+
+        // Função para atualizar o visual dos cards de radio
+        function updateRadioCards(selectedValue) {
+            const cards = document.querySelectorAll('input[name="tipo_conexao"]');
+            cards.forEach(card => {
+                const cardDiv = card.closest('label').querySelector('div');
+                const radioDot = cardDiv.querySelector('.w-3.h-3');
+                
+                if (card.value === selectedValue) {
+                    cardDiv.classList.add('border-indigo-500', 'bg-indigo-50', 'dark:bg-indigo-900/20');
+                    cardDiv.classList.remove('border-gray-200', 'dark:border-gray-600');
+                    radioDot.classList.add('bg-indigo-600');
+                    radioDot.classList.remove('bg-gray-300', 'dark:bg-gray-500');
+                } else {
+                    cardDiv.classList.remove('border-indigo-500', 'bg-indigo-50', 'dark:bg-indigo-900/20');
+                    cardDiv.classList.add('border-gray-200', 'dark:border-gray-600');
+                    radioDot.classList.remove('bg-indigo-600');
+                    radioDot.classList.add('bg-gray-300', 'dark:bg-gray-500');
+                }
+            });
+        }
+
+        // Carregar patch panels por andar
+        async function carregarPatchPanelAndar() {
+            const andar = document.getElementById('andar_patch_panel').value;
+            if (!andar) {
+                document.getElementById('patch_panel').innerHTML = '<option value="">Selecione o patch panel...</option>';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/patch-panels/andar/${andar}`);
+                const patchPanelsAndar = await response.json();
+                
+                const patchPanelSelect = document.getElementById('patch_panel');
+                patchPanelSelect.innerHTML = '<option value="">Selecione o patch panel...</option>';
+                
+                patchPanelsAndar.forEach(pp => {
+                    const option = document.createElement('option');
+                    option.value = pp.id;
+                    option.textContent = `${pp.nome} (${pp.num_portas} portas)`;
+                    patchPanelSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar patch panels do andar:', error);
+            }
+        }
+
+        // Carregar informações do patch panel baseado no equipamento selecionado
+        async function carregarInfoPatchPanel() {
+            const equipamentoId = document.getElementById('equipamento_rede').value;
+            if (!equipamentoId) {
+                // Limpar campos se nenhum equipamento estiver selecionado
+                document.getElementById('andar_patch_panel').value = '';
+                document.getElementById('patch_panel').innerHTML = '<option value="">Selecione o patch panel...</option>';
+                document.getElementById('porta_patch_panel').innerHTML = '<option value="">Selecione a porta...</option>';
+                return;
+            }
+            
+            try {
+                // Buscar informações do equipamento e sua conexão com patch panel
+                const response = await fetch(`/equipamentos/${equipamentoId}/patch-panel-info`);
+                const info = await response.json();
+                
+                if (info.patch_panel_info) {
+                    // Preencher andar
+                    document.getElementById('andar_patch_panel').value = info.patch_panel_info.andar;
+                    
+                    // Carregar patch panels do andar
+                    await carregarPatchPanelAndar();
+                    
+                    // Selecionar o patch panel correto
+                    document.getElementById('patch_panel').value = info.patch_panel_info.patch_panel_id;
+                    
+                    // Carregar e selecionar a porta correta
+                    await carregarPortasPatchPanel();
+                    document.getElementById('porta_patch_panel').value = info.patch_panel_info.porta_numero;
+                    
+                    // Mostrar mensagem de sucesso
+                    mostrarMensagemInfo('Informações do patch panel carregadas automaticamente!', 'success');
+                } else {
+                    mostrarMensagemInfo('Este equipamento não está conectado a nenhum patch panel.', 'warning');
+                }
+            } catch (error) {
+                console.error('Erro ao carregar informações do patch panel:', error);
+                mostrarMensagemInfo('Erro ao carregar informações do patch panel.', 'error');
+            }
+        }
+
+        // Carregar portas do patch panel (apenas ocupadas)
+        async function carregarPortasPatchPanel() {
+            const patchPanelId = document.getElementById('patch_panel').value;
+            if (!patchPanelId) {
+                document.getElementById('porta_patch_panel').innerHTML = '<option value="">Selecione a porta...</option>';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/patch-panels/${patchPanelId}/portas`);
+                const portas = await response.json();
+                
+                const portaSelect = document.getElementById('porta_patch_panel');
+                portaSelect.innerHTML = '<option value="">Selecione a porta...</option>';
+                
+                // Filtrar apenas portas ocupadas
+                const portasOcupadas = portas.filter(porta => porta.status === 'ocupada');
+                
+                if (portasOcupadas.length === 0) {
+                    portaSelect.innerHTML = '<option value="">Nenhuma porta ocupada encontrada</option>';
+                    return;
+                }
+                
+                portasOcupadas.forEach(porta => {
+                    const option = document.createElement('option');
+                    option.value = porta.numero_porta;
+                    
+                    option.textContent = `Porta ${porta.numero_porta} - ${porta.equipamento_nome} (${porta.sala_nome || 'Sem sala'})`;
+                    portaSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar portas do patch panel:', error);
+            }
+        }
+
+        // Mostrar mensagem informativa
+        function mostrarMensagemInfo(mensagem, tipo) {
+            // Remover mensagem anterior se existir
+            const mensagemAnterior = document.getElementById('mensagemInfo');
+            if (mensagemAnterior) {
+                mensagemAnterior.remove();
+            }
+            
+            // Criar nova mensagem
+            const mensagemDiv = document.createElement('div');
+            mensagemDiv.id = 'mensagemInfo';
+            
+            let classes = 'fixed top-20 right-4 p-4 rounded-lg shadow-lg z-50 max-w-sm';
+            let icone = '';
+            
+            switch (tipo) {
+                case 'success':
+                    classes += ' bg-green-100 border border-green-400 text-green-700 dark:bg-green-900/20 dark:border-green-800 dark:text-green-300';
+                    icone = 'fas fa-check-circle';
+                    break;
+                case 'warning':
+                    classes += ' bg-yellow-100 border border-yellow-400 text-yellow-700 dark:bg-yellow-900/20 dark:border-yellow-800 dark:text-yellow-300';
+                    icone = 'fas fa-exclamation-triangle';
+                    break;
+                case 'error':
+                    classes += ' bg-red-100 border border-red-400 text-red-700 dark:bg-red-900/20 dark:border-red-800 dark:text-red-300';
+                    icone = 'fas fa-times-circle';
+                    break;
+            }
+            
+            mensagemDiv.className = classes;
+            mensagemDiv.innerHTML = `
+                <div class="flex items-center">
+                    <i class="${icone} mr-2"></i>
+                    <span>${mensagem}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-auto text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(mensagemDiv);
+            
+            // Remover automaticamente após 5 segundos
+            setTimeout(() => {
+                if (mensagemDiv.parentElement) {
+                    mensagemDiv.remove();
+                }
+            }, 5000);
+        }
+
+        // Submeter formulário
+        document.getElementById('formConexao').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const tipoConexao = formData.get('tipo_conexao');
+            
+            // Validar campos obrigatórios baseado no tipo de conexão
+            if (tipoConexao === 'direta') {
+                const equipOrigem = formData.get('equipamento_origem');
+                const equipDestino = formData.get('equipamento_destino');
+                
+                if (!equipOrigem) {
+                    alert('Selecione o equipamento origem para conexão direta');
+                    const equipOrigemElement = document.getElementById('equipamento_origem');
+                    if (equipOrigemElement) equipOrigemElement.focus();
+                    return;
+                }
+                
+                if (!equipDestino) {
+                    alert('Selecione o equipamento destino para conexão direta');
+                    const equipDestinoElement = document.getElementById('equipamento_destino');
+                    if (equipDestinoElement) equipDestinoElement.focus();
+                    return;
+                }
+                
+                if (equipOrigem === equipDestino) {
+                    alert('O equipamento origem e destino não podem ser o mesmo');
+                    return;
+                }
+            } else if (tipoConexao === 'patch_panel') {
+                const equipRede = formData.get('equipamento_rede');
+                const patchPanel = formData.get('patch_panel');
+                const portaPatchPanel = formData.get('porta_patch_panel');
+                
+                if (!equipRede) {
+                    alert('Selecione o equipamento de rede para conexão via patch panel');
+                    const equipRedeElement = document.getElementById('equipamento_rede');
+                    if (equipRedeElement) equipRedeElement.focus();
+                    return;
+                }
+                
+                if (!patchPanel) {
+                    alert('Selecione o patch panel para conexão via patch panel');
+                    const patchPanelElement = document.getElementById('patch_panel');
+                    if (patchPanelElement) patchPanelElement.focus();
+                    return;
+                }
+                
+                if (!portaPatchPanel) {
+                    alert('Selecione a porta do patch panel para conexão via patch panel');
+                    const portaPatchPanelElement = document.getElementById('porta_patch_panel');
+                    if (portaPatchPanelElement) portaPatchPanelElement.focus();
+                    return;
+                }
+            }
+
+            try {
+                // Buscar informações do equipamento origem para obter a sala
+                const equipamentoResponse = await fetch(`/equipamentos/${formData.get('equipamento_origem') || formData.get('equipamento_rede')}`);
+                const equipamentoInfo = await equipamentoResponse.json();
+                
+                if (!equipamentoInfo.sala_id) {
+                    alert('Equipamento selecionado não possui sala associada!');
+                    return;
+                }
+
+                const dadosConexao = {
+                    cabo_id: parseInt(caboId),
+                    equipamento_origem_id: parseInt(formData.get('equipamento_origem') || formData.get('equipamento_rede')),
+                    equipamento_destino_id: tipoConexao === 'direta' ? parseInt(formData.get('equipamento_destino')) : parseInt(formData.get('patch_panel')),
+                    porta_origem: tipoConexao === 'direta' ? (formData.get('porta_origem') || null) : null,
+                    porta_destino: tipoConexao === 'patch_panel' ? parseInt(formData.get('porta_patch_panel')) : (formData.get('porta_destino') || null),
+                    sala_id: equipamentoInfo.sala_id,
+                    observacao: formData.get('observacao') || `Conexão ${tipoConexao === 'direta' ? 'Direta' : 'via Patch Panel'} - ${new Date().toLocaleString('pt-BR')}`
+                };
+
+                const response = await fetch('/conexoes-cabos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dadosConexao)
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.mensagem || 'Erro ao conectar cabo');
+                }
+
+                // Mostrar modal de sucesso
+                mostrarModalSucesso();
+                
+            } catch (error) {
+                console.error('Erro ao conectar cabo:', error);
+                alert('Erro ao conectar cabo: ' + error.message);
+            }
+        });
+
+        // Mostrar modal de sucesso
+        function mostrarModalSucesso() {
+            document.getElementById('modalSucesso').classList.remove('hidden');
+        }
+
+        // Fechar modal
+        function fecharModal() {
+            document.getElementById('modalSucesso').classList.add('hidden');
+        }
+
+        // Voltar aos cabos em estoque
+        function voltarCabosEstoque() {
+            window.location.href = 'cabos-estoque.html';
+        }
+
+        // Inicialização
+        window.addEventListener('DOMContentLoaded', function() {
+            carregarInfoCabo();
+            carregarEquipamentos();
+            
+            // Inicializar visual dos cards de radio
+            updateRadioCards('direta');
+            
+            // Carregar logo da empresa
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    LogoManager.loadEmpresaLogo(data);
+                });
+        });
+    </script>
+    <script src="static/js/logo-manager.js"></script>
+</body>
+
+</html> 

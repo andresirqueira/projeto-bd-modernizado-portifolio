@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Cabo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="static/img/favicon-lapis.png">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        updateEmpresaLogo();
+      }
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+</head>
+
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-4xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarCabosEstoque()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+                <i class="fas fa-edit text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                Editar Cabo
+            </h1>
+            <p class="text-gray-600 dark:text-gray-300">Modifique os dados do cabo selecionado</p>
+        </div>
+
+        <!-- Informações do Cabo -->
+        <div class="mb-8 p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl">
+            <h3 class="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-4">
+                <i class="fas fa-info-circle mr-2"></i>Informações do Cabo
+            </h3>
+            <div id="infoCabo" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <!-- Será preenchido dinamicamente -->
+            </div>
+        </div>
+
+        <form id="formEditarCabo" class="space-y-6">
+            <input type="hidden" id="cabo_id" name="cabo_id">
+            
+            <!-- Código Único -->
+            <div>
+                <label for="codigo_unico" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <i class="fas fa-barcode mr-2"></i>Código Único *
+                </label>
+                <input type="text" id="codigo_unico" name="codigo_unico" required
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                       placeholder="Ex: HDMI-001, USB-002, etc.">
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Código único para identificar o cabo físico</p>
+            </div>
+
+            <!-- Tipo de Cabo -->
+            <div>
+                <label for="tipo" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <i class="fas fa-tag mr-2"></i>Tipo de Cabo *
+                </label>
+                <select id="tipo" name="tipo" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                    <option value="">Selecione o tipo...</option>
+                </select>
+            </div>
+
+            <!-- Comprimento -->
+            <div>
+                <label for="comprimento" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <i class="fas fa-ruler mr-2"></i>Comprimento (metros)
+                </label>
+                <input type="number" id="comprimento" name="comprimento" min="0.1" step="0.1"
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                       placeholder="Ex: 2.5">
+            </div>
+
+            <!-- Marca -->
+            <div>
+                <label for="marca" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <i class="fas fa-industry mr-2"></i>Marca
+                </label>
+                <input type="text" id="marca" name="marca"
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                       placeholder="Ex: Belkin, AmazonBasics, etc.">
+            </div>
+
+            <!-- Modelo -->
+            <div>
+                <label for="modelo" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <i class="fas fa-cube mr-2"></i>Modelo
+                </label>
+                <input type="text" id="modelo" name="modelo"
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                       placeholder="Ex: Ultra HD, Premium, etc.">
+            </div>
+
+            <!-- Status -->
+            <div>
+                <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <i class="fas fa-check-circle mr-2"></i>Status
+                </label>
+                <select id="status" name="status"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                    <option value="funcionando">Funcionando</option>
+                    <option value="defeito">Com Defeito</option>
+                </select>
+            </div>
+
+            <!-- Descrição -->
+            <div>
+                <label for="descricao" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <i class="fas fa-align-left mr-2"></i>Descrição
+                </label>
+                <textarea id="descricao" name="descricao" rows="3"
+                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                          placeholder="Descrição adicional do cabo..."></textarea>
+            </div>
+
+            <!-- Botões -->
+            <div class="flex gap-4 pt-6">
+                <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                    <i class="fas fa-save mr-2"></i>Salvar Alterações
+                </button>
+                <button type="button" onclick="voltarCabosEstoque()" class="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg transition-colors">
+                    <i class="fas fa-times mr-2"></i>Cancelar
+                </button>
+            </div>
+        </form>
+
+        <!-- Modal de Sucesso -->
+        <div id="modalSucesso" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full mx-4">
+                <div class="text-center">
+                    <i class="fas fa-check-circle text-6xl text-green-500 mb-4"></i>
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Cabo Atualizado!</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">As alterações foram salvas com sucesso.</p>
+                    <div class="flex gap-3">
+                        <button onclick="fecharModal()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                            OK
+                        </button>
+                        <button onclick="voltarCabosEstoque()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                            Voltar ao Estoque
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let caboId = null;
+        let caboInfo = null;
+        let tiposCabos = [];
+
+        // Carregar informações do cabo
+        async function carregarInfoCabo() {
+            const urlParams = new URLSearchParams(window.location.search);
+            caboId = urlParams.get('id');
+            
+            if (!caboId) {
+                alert('ID do cabo não fornecido!');
+                voltarCabosEstoque();
+                return;
+            }
+
+            try {
+                const response = await fetch(`/cabos/${caboId}`);
+                caboInfo = await response.json();
+                
+                if (!caboInfo) {
+                    alert('Cabo não encontrado!');
+                    voltarCabosEstoque();
+                    return;
+                }
+
+                // Preencher informações do cabo
+                const infoDiv = document.getElementById('infoCabo');
+                infoDiv.innerHTML = `
+                    <div><strong>Código:</strong> ${caboInfo.codigo_unico}</div>
+                    <div><strong>Tipo:</strong> ${caboInfo.tipo || 'Não informado'}</div>
+                    <div><strong>Comprimento:</strong> ${caboInfo.comprimento ? caboInfo.comprimento + 'm' : 'Não informado'}</div>
+                    <div><strong>Marca:</strong> ${caboInfo.marca || 'Não informado'}</div>
+                    <div><strong>Modelo:</strong> ${caboInfo.modelo || 'Não informado'}</div>
+                    <div><strong>Status:</strong> <span class="px-2 py-1 rounded text-xs ${caboInfo.status === 'funcionando' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">${caboInfo.status === 'funcionando' ? 'Funcionando' : 'Com Defeito'}</span></div>
+                `;
+
+                // Preencher formulário com dados do cabo
+                document.getElementById('cabo_id').value = caboInfo.id;
+                document.getElementById('codigo_unico').value = caboInfo.codigo_unico;
+                document.getElementById('tipo').value = caboInfo.tipo || '';
+                document.getElementById('comprimento').value = caboInfo.comprimento || '';
+                document.getElementById('marca').value = caboInfo.marca || '';
+                document.getElementById('modelo').value = caboInfo.modelo || '';
+                document.getElementById('status').value = caboInfo.status || 'funcionando';
+                document.getElementById('descricao').value = caboInfo.descricao || '';
+
+            } catch (error) {
+                console.error('Erro ao carregar informações do cabo:', error);
+                alert('Erro ao carregar informações do cabo!');
+                voltarCabosEstoque();
+            }
+        }
+
+        // Carregar tipos de cabos
+        async function carregarTiposCabos() {
+            try {
+                const response = await fetch('/tipos-cabos');
+                tiposCabos = await response.json();
+                
+                const selectTipo = document.getElementById('tipo');
+                selectTipo.innerHTML = '<option value="">Selecione o tipo...</option>';
+                
+                tiposCabos.forEach(tipo => {
+                    const option = document.createElement('option');
+                    option.value = tipo.nome;
+                    option.textContent = `${tipo.nome} - ${tipo.descricao}`;
+                    selectTipo.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar tipos de cabos:', error);
+            }
+        }
+
+        // Submeter formulário
+        document.getElementById('formEditarCabo').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            // Validar campos obrigatórios
+            const codigoUnico = formData.get('codigo_unico');
+            const tipo = formData.get('tipo');
+            
+            if (!codigoUnico.trim()) {
+                alert('O código único é obrigatório!');
+                document.getElementById('codigo_unico').focus();
+                return;
+            }
+            
+            if (!tipo) {
+                alert('O tipo de cabo é obrigatório!');
+                document.getElementById('tipo').focus();
+                return;
+            }
+
+            try {
+                const dados = {
+                    codigo_unico: codigoUnico.trim(),
+                    tipo: tipo,
+                    comprimento: formData.get('comprimento') ? parseFloat(formData.get('comprimento')) : null,
+                    marca: formData.get('marca').trim() || null,
+                    modelo: formData.get('modelo').trim() || null,
+                    descricao: formData.get('descricao').trim() || null,
+                    status: formData.get('status')
+                };
+
+                const response = await fetch(`/cabos/${caboId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.mensagem || 'Erro ao atualizar cabo');
+                }
+
+                // Mostrar modal de sucesso
+                mostrarModalSucesso();
+                
+            } catch (error) {
+                console.error('Erro ao atualizar cabo:', error);
+                alert('Erro ao atualizar cabo: ' + error.message);
+            }
+        });
+
+        // Mostrar modal de sucesso
+        function mostrarModalSucesso() {
+            document.getElementById('modalSucesso').classList.remove('hidden');
+        }
+
+        // Fechar modal
+        function fecharModal() {
+            document.getElementById('modalSucesso').classList.add('hidden');
+        }
+
+        // Voltar aos cabos em estoque
+        function voltarCabosEstoque() {
+            window.location.href = 'cabos-estoque.html';
+        }
+
+        // Inicialização
+        window.addEventListener('DOMContentLoaded', function() {
+            carregarInfoCabo();
+            carregarTiposCabos();
+            
+            // Carregar logo da empresa
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    LogoManager.loadEmpresaLogo(data);
+                });
+        });
+    </script>
+    <script src="static/js/logo-manager.js"></script>
+</body>
+
+</html> 

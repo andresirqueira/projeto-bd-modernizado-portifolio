@@ -1264,3 +1264,17 @@
 [2025-08-01 16:06:53] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-003 criado | Status: sucesso
 [2025-08-01 16:06:53] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 7 criada | Status: sucesso
 [2025-08-04 08:23:22] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-04 12:46:24] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=538, Nome=Poe Logitech, Tipo=Poe, Marca=Logitech, Modelo=KIT CAT5E | Status: sucesso
+[2025-08-04 12:54:54] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-004 criado | Status: sucesso
+[2025-08-04 12:56:18] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=539, Nome=Dongle, Tipo=Dongle, Marca=Logitech, Modelo=Logitech | Status: sucesso
+[2025-08-04 12:58:08] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-005 criado | Status: sucesso
+[2025-08-04 13:23:09] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 8 criada | Status: sucesso
+[2025-08-04 13:27:05] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 9 desconectada | Status: sucesso
+[2025-08-04 13:27:36] Usuario: admin_wh | Acao: excluir_cabo | Detalhes: Cabo ID 8 excluído | Status: sucesso
+[2025-08-04 13:27:45] Usuario: admin_wh | Acao: excluir_cabo | Detalhes: Cabo ID 9 excluído | Status: sucesso
+[2025-08-04 13:38:35] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-004 criado | Status: sucesso
+[2025-08-04 13:38:35] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 10 criada | Status: sucesso
+[2025-08-04 13:40:11] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-005 criado | Status: sucesso
+[2025-08-04 13:40:11] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 11 criada | Status: sucesso
+[2025-08-04 16:13:33] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-04 16:19:24] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso

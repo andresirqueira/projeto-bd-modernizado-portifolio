@@ -3,7 +3,7 @@ import sqlite3
 import json
 from datetime import datetime
 from functools import wraps
-from flask import Flask, request, jsonify, send_from_directory, session, redirect, url_for
+from flask import Flask, request, jsonify, send_from_directory, session, redirect, url_for, send_file
 from werkzeug.utils import secure_filename
 import subprocess
 from typing import cast
@@ -971,9 +971,14 @@ def listar_portas_switch(switch_id):
     
     cur.execute('''
         SELECT sp.id, sp.numero_porta, sp.descricao, 
-               CASE WHEN c.id IS NOT NULL THEN 'ocupada' ELSE 'livre' END as status,
+               CASE 
+                   WHEN c.id IS NOT NULL THEN 'ocupada'
+                   WHEN ppp.equipamento_id IS NOT NULL THEN 'ocupada'
+                   ELSE 'livre' 
+               END as status,
                e.nome as equipamento_nome, e.tipo as equipamento_tipo, s.nome as sala_nome,
-               pp.nome as patch_panel_nome, ppp.numero_porta as porta_patch_panel, ppp.id as patch_panel_porta_id
+               pp.nome as patch_panel_nome, ppp.numero_porta as porta_patch_panel, ppp.id as patch_panel_porta_id,
+               ppp.equipamento_id as patch_panel_equipamento_id
         FROM switch_portas sp
         LEFT JOIN conexoes c ON sp.id = c.porta_id AND c.status = 'ativa'
         LEFT JOIN equipamentos e ON c.equipamento_id = e.id
@@ -1010,28 +1015,37 @@ def listar_portas_switch(switch_id):
         
         if row[7]:  # Patch panel mapeado
             # Gerar keystone usando o prefixo personalizado
-            cur.execute("SELECT prefixo_keystone FROM patch_panels WHERE nome = ?", (row[7],))
+            cur.execute("SELECT prefixo_keystone, andar FROM patch_panels WHERE nome = ?", (row[7],))
             prefixo_result = cur.fetchone()
-            prefixo = prefixo_result[0] if prefixo_result else f"PT{20 + (andar_result[0] if andar_result else 0)}"
+            prefixo = prefixo_result[0] if prefixo_result and prefixo_result[0] else f"PT{20 + (prefixo_result[1] if prefixo_result else 0)}"
             keystone = f"{prefixo}-{row[8]:04d}"
             
             # Buscar equipamento conectado no patch panel
             equipamento_patch = None
-            cur.execute("""
-                SELECT e.nome, e.tipo, sal.nome as sala_nome
-                FROM patch_panel_portas ppp
-                LEFT JOIN equipamentos e ON ppp.equipamento_id = e.id
-                LEFT JOIN salas sal ON e.sala_id = sal.id
-                WHERE ppp.id = ?
-            """, (row[9],))
-            
-            equip_result = cur.fetchone()
-            if equip_result and equip_result[0]:
-                equipamento_patch = {
-                    'nome': equip_result[0],
-                    'tipo': equip_result[1],
-                    'sala': equip_result[2]
-                }
+            if row[10]:  # Se há equipamento_id no patch panel
+                cur.execute("""
+                    SELECT e.nome, e.tipo, sal.nome as sala_nome, e.id
+                    FROM equipamentos e
+                    LEFT JOIN salas sal ON e.sala_id = sal.id
+                    WHERE e.id = ?
+                """, (row[10],))
+                
+                equip_result = cur.fetchone()
+                if equip_result and equip_result[0]:
+                    # Buscar dados extras do equipamento (IP, MAC)
+                    dados = {}
+                    cur.execute("SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=? AND chave IN ('ip1','ip2','mac1','mac2')", (equip_result[3],))
+                    dados = {chave: valor for chave, valor in cur.fetchall()}
+                    
+                    equipamento_patch = {
+                        'nome': equip_result[0],
+                        'tipo': equip_result[1],
+                        'sala': equip_result[2],
+                        'ip1': dados.get('ip1',''),
+                        'ip2': dados.get('ip2',''),
+                        'mac1': dados.get('mac1',''),
+                        'mac2': dados.get('mac2','')
+                    }
             
             patch_panel_info = {
                 'nome': row[7],
@@ -1327,7 +1341,7 @@ def ver_cabos_html():
 @app.route('/cabos-estoque.html')
 @login_required
 def cabos_estoque_html():
-    return send_from_directory(os.path.dirname(__file__), 'cabos-estoque.html')
+    return send_file('cabos-estoque.html')
 
 @app.route('/editar-cabo.html')
 @admin_required
@@ -1610,6 +1624,147 @@ def obter_layout_sala(sala_id):
         return jsonify(json.loads(row[0]))
     return jsonify({'erro': 'Nenhum layout salvo para esta sala.'}), 404
 
+@app.route('/api/salas/<int:sala_id>/conexoes-reais', methods=['GET'])
+@login_required
+def obter_conexoes_reais_sala(sala_id):
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    conn = sqlite3.connect(db_file)
+    cur = conn.cursor()
+    
+    # Buscar conexões de cabos ativas na sala
+    cur.execute('''
+        SELECT cc.id, cc.cabo_id, cc.equipamento_origem_id, cc.equipamento_destino_id,
+               cc.porta_origem, cc.porta_destino, cc.sala_id, cc.observacao,
+               c.codigo_unico as codigo_cabo, c.tipo as tipo_cabo, c.comprimento, c.marca, c.modelo,
+               eo.nome as equipamento_origem, ed.nome as equipamento_destino,
+               CASE WHEN cc.data_desconexao IS NULL THEN 1 ELSE 0 END as ativo
+        FROM conexoes_cabos cc
+        JOIN cabos c ON cc.cabo_id = c.id
+        LEFT JOIN equipamentos eo ON cc.equipamento_origem_id = eo.id
+        LEFT JOIN equipamentos ed ON cc.equipamento_destino_id = ed.id
+        WHERE cc.sala_id = ? AND cc.data_desconexao IS NULL
+        ORDER BY cc.data_conexao DESC
+    ''', (sala_id,))
+    
+    rows = cur.fetchall()
+    conn.close()
+    
+    conexoes = []
+    for row in rows:
+        conexao = {
+            'id': row[0],
+            'cabo_id': row[1],
+            'equipamento_origem_id': row[2],
+            'equipamento_destino_id': row[3],
+            'porta_origem': row[4],
+            'porta_destino': row[5],
+            'sala_id': row[6],
+            'observacao': row[7],
+            'codigo_cabo': row[8],
+            'tipo_cabo': row[9],
+            'comprimento': row[10],
+            'marca': row[11],
+            'modelo': row[12],
+            'equipamento_origem': row[13],
+            'equipamento_destino': row[14],
+            'ativo': bool(row[15])
+        }
+        conexoes.append(conexao)
+    
+    return jsonify(conexoes)
+
+@app.route('/api/salas/<int:sala_id>/layout-hibrido', methods=['GET'])
+@login_required
+def obter_layout_hibrido_sala(sala_id):
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    conn = sqlite3.connect(db_file)
+    cur = conn.cursor()
+    
+    # Buscar layout manual
+    cur.execute('SELECT layout_json FROM sala_layouts WHERE sala_id=?', (sala_id,))
+    layout_row = cur.fetchone()
+    
+    # Buscar conexões reais
+    cur.execute('''
+        SELECT cc.id, cc.cabo_id, cc.equipamento_origem_id, cc.equipamento_destino_id,
+               cc.porta_origem, cc.porta_destino, cc.sala_id, cc.observacao,
+               c.codigo_unico as codigo_cabo, c.tipo as tipo_cabo, c.comprimento, c.marca, c.modelo,
+               eo.nome as equipamento_origem, ed.nome as equipamento_destino,
+               CASE WHEN cc.data_desconexao IS NULL THEN 1 ELSE 0 END as ativo
+        FROM conexoes_cabos cc
+        JOIN cabos c ON cc.cabo_id = c.id
+        LEFT JOIN equipamentos eo ON cc.equipamento_origem_id = eo.id
+        LEFT JOIN equipamentos ed ON cc.equipamento_destino_id = ed.id
+        WHERE cc.sala_id = ? AND cc.data_desconexao IS NULL
+        ORDER BY cc.data_conexao DESC
+    ''', (sala_id,))
+    
+    conexoes_rows = cur.fetchall()
+    conn.close()
+    
+    # Preparar resultado
+    resultado = {
+        'items': [],
+        'conns': []
+    }
+    
+    # Adicionar layout manual se existir
+    if layout_row and layout_row[0]:
+        layout_manual = json.loads(layout_row[0])
+        resultado['items'] = layout_manual.get('items', [])
+        # Não incluir conexões manuais no híbrido
+        # resultado['conns'] = layout_manual.get('conns', [])
+    
+    # Função para definir cor baseada no tipo de cabo
+    def get_cor_por_tipo_cabo(tipo_cabo):
+        cores = {
+            'HDMI': '#e74c3c',      # Vermelho
+            'VGA': '#3498db',       # Azul
+            'USB': '#f39c12',       # Laranja
+            'RJ45': '#27ae60',      # Verde
+            'Audio': '#9b59b6',     # Roxo
+            'Power': '#e67e22',     # Laranja escuro
+            'Dante': '#1abc9c',     # Verde água
+            'Serial': '#34495e',    # Cinza escuro
+            'Fiber': '#f1c40f',     # Amarelo
+            'Coaxial': '#95a5a6'    # Cinza
+        }
+        return cores.get(tipo_cabo.upper(), '#e74c3c')  # Vermelho como padrão
+    
+    # Adicionar conexões reais
+    conexoes_reais = []
+    for row in conexoes_rows:
+        tipo_cabo = row[9] or 'Desconhecido'
+        cor_cabo = get_cor_por_tipo_cabo(tipo_cabo)
+        
+        conexao = {
+            'id': f"real_{row[0]}",
+            'fromId': f"equip_{row[2]}" if row[2] else None,
+            'toId': f"equip_{row[3]}" if row[3] else None,
+            'name': f"{row[8]} ({tipo_cabo})",
+            'label': f"{row[8]} ({tipo_cabo})",
+            'color': cor_cabo,
+            'fontSize': 12,
+            'tipo_cabo': tipo_cabo,
+            'codigo_cabo': row[8],
+            'equipamento_origem': row[13],
+            'equipamento_destino': row[14],
+            'porta_origem': row[4],
+            'porta_destino': row[5],
+            'is_real': True
+        }
+        conexoes_reais.append(conexao)
+    
+    resultado['conns'] = conexoes_reais
+    
+    return jsonify(resultado)
+
 @app.route('/visualizar-layout-sala.html')
 @login_required
 def visualizar_layout_html():
@@ -1640,56 +1795,246 @@ def visualizar_switch_sala_html():
 @app.route('/api/salas/<int:sala_id>/switches-usados')
 @login_required
 def switches_usados_sala(sala_id):
+
     db_file = session.get('db')
     if not db_file:
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
+    
+    # Buscar switches que têm conexão com equipamentos da sala específica
+    # Incluindo tanto conexões via patch panel quanto conexões diretas
     cur.execute('''
-        SELECT s.id as switch_id, s.nome as switch_nome, sp.numero_porta, e.nome as equipamento_nome, e.tipo as equipamento_tipo, sala.nome as sala_nome, e.id as equipamento_id, e.marca as equipamento_marca, e.foto as equipamento_foto
-        FROM equipamentos e
-        JOIN conexoes c ON c.equipamento_id = e.id AND c.status = 'ativa'
-        JOIN switch_portas sp ON c.porta_id = sp.id
-        JOIN switches s ON sp.switch_id = s.id
-        LEFT JOIN salas sala ON e.sala_id = sala.id
-        WHERE e.sala_id = ?
-        ORDER BY s.id, sp.numero_porta
-    ''', (sala_id,))
-    rows = cur.fetchall()
+        SELECT DISTINCT s.id as switch_id, s.nome as switch_nome, s.marca as switch_marca, s.modelo as switch_modelo
+        FROM switches s
+        JOIN switch_portas sp ON s.id = sp.switch_id
+        LEFT JOIN patch_panel_portas ppp ON sp.switch_id = ppp.switch_id AND sp.numero_porta = ppp.porta_switch
+        LEFT JOIN equipamentos e1 ON ppp.equipamento_id = e1.id
+        LEFT JOIN conexoes c ON sp.id = c.porta_id AND c.status = 'ativa'
+        LEFT JOIN equipamentos e2 ON c.equipamento_id = e2.id
+        WHERE (e1.sala_id = ? OR e2.sala_id = ?)
+        ORDER BY s.id
+    ''', (sala_id, sala_id))
+    
+    switches_rows = cur.fetchall()
     switches = {}
+    
     def extrair_numero_switch(nome):
+        import re
         match = re.search(r'Switch\s*(\d+)', nome, re.IGNORECASE)
         if match:
             return int(match.group(1))
         return None
-    for switch_id, switch_nome, numero_porta, equipamento_nome, equipamento_tipo, sala_nome, equipamento_id, equipamento_marca, equipamento_foto in rows:
-        # Buscar dados extras do equipamento
-        cur.execute("SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=? AND chave IN ('ip1','ip2','mac1','mac2','serie','série')", (equipamento_id,))
-        dados = {chave: valor for chave, valor in cur.fetchall()}
-        serie = dados.get('serie') or dados.get('série') or ''
-        let_foto = equipamento_foto or ''
-        if let_foto and not let_foto.startswith('static/'):
-            let_foto = 'static/' + let_foto
+    
+    for switch_id, switch_nome, switch_marca, switch_modelo in switches_rows:
         numero_logico = extrair_numero_switch(switch_nome)
         if numero_logico is None:
-            numero_logico = switch_id  # fallback
-        if numero_logico not in switches:
-            switches[numero_logico] = {'id': numero_logico, 'nome': switch_nome, 'portas': []}
-        switches[numero_logico]['portas'].append({
-            'numero': numero_porta,
-            'equipamento': equipamento_nome,
-            'tipo': equipamento_tipo,
-            'sala': sala_nome,
-            'marca': equipamento_marca,
-            'serie': serie,
-            'foto': let_foto,
-            'ip1': dados.get('ip1',''),
-            'ip2': dados.get('ip2',''),
-            'mac1': dados.get('mac1',''),
-            'mac2': dados.get('mac2','')
-        })
+            numero_logico = switch_id
+        
+        # Buscar todas as portas do switch (sem duplicatas)
+        cur.execute('''
+            SELECT DISTINCT sp.numero_porta, sp.descricao
+            FROM switch_portas sp
+            WHERE sp.switch_id = ?
+            ORDER BY sp.numero_porta
+        ''', (switch_id,))
+        
+        portas_data = []
+        for porta_row in cur.fetchall():
+            numero_porta, descricao = porta_row
+            
+            # Verificar se a porta está mapeada para patch panel
+            cur.execute('''
+                SELECT pp.nome, ppp.numero_porta, ppp.equipamento_id
+                FROM patch_panel_portas ppp
+                JOIN patch_panels pp ON ppp.patch_panel_id = pp.id
+                LEFT JOIN equipamentos e ON ppp.equipamento_id = e.id
+                WHERE ppp.switch_id = ? AND ppp.porta_switch = ?
+            ''', (switch_id, numero_porta))
+            
+            patch_panel_row = cur.fetchone()
+            
+            # Verificar se a porta tem conexão direta
+            cur.execute('''
+                SELECT c.equipamento_id
+                FROM conexoes c
+                JOIN switch_portas sp ON c.porta_id = sp.id
+                WHERE sp.switch_id = ? AND sp.numero_porta = ? AND c.status = 'ativa'
+            ''', (switch_id, numero_porta))
+            
+            conexao_direta_row = cur.fetchone()
+            
+            if patch_panel_row:
+                # Porta mapeada para patch panel
+                patch_panel_nome, porta_patch_panel, equipamento_id = patch_panel_row
+                
+                if equipamento_id:
+                    # Verificar se o equipamento é da sala específica
+                    cur.execute('''
+                        SELECT e.nome, e.tipo, e.marca, s.nome as sala_nome
+                        FROM equipamentos e
+                        LEFT JOIN salas s ON e.sala_id = s.id
+                        WHERE e.id = ? AND e.sala_id = ?
+                    ''', (equipamento_id, sala_id))
+                    
+                    equip_row = cur.fetchone()
+                    if equip_row:
+                        # Equipamento da sala específica - OCUPADA com destaque
+                        cur.execute("SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=? AND chave IN ('ip1','ip2','mac1','mac2')", (equipamento_id,))
+                        dados = {chave: valor for chave, valor in cur.fetchall()}
+                        
+                        equipamento_info = {
+                            'nome': equip_row[0],
+                            'tipo': equip_row[1],
+                            'marca': equip_row[2],
+                            'sala_nome': equip_row[3],
+                            'ip1': dados.get('ip1', ''),
+                            'ip2': dados.get('ip2', ''),
+                            'mac1': dados.get('mac1', ''),
+                            'mac2': dados.get('mac2', '')
+                        }
+                        
+                        porta_info = {
+                            'numero': numero_porta,
+                            'status': 'ocupada',
+                            'sala_especifica': True,
+                            'patch_panel_info': {
+                                'nome': patch_panel_nome,
+                                'porta_patch_panel': porta_patch_panel,
+                                'equipamento': equipamento_info
+                            }
+                        }
+                    else:
+                        # Equipamento de outra sala - OCUPADA sem destaque
+                        cur.execute("SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=? AND chave IN ('ip1','ip2','mac1','mac2')", (equipamento_id,))
+                        dados = {chave: valor for chave, valor in cur.fetchall()}
+                        
+                        cur.execute('''
+                            SELECT e.nome, e.tipo, e.marca, s.nome as sala_nome
+                            FROM equipamentos e
+                            LEFT JOIN salas s ON e.sala_id = s.id
+                            WHERE e.id = ?
+                        ''', (equipamento_id,))
+                        
+                        equip_row = cur.fetchone()
+                        equipamento_info = {
+                            'nome': equip_row[0],
+                            'tipo': equip_row[1],
+                            'marca': equip_row[2],
+                            'sala_nome': equip_row[3],
+                            'ip1': dados.get('ip1', ''),
+                            'ip2': dados.get('ip2', ''),
+                            'mac1': dados.get('mac1', ''),
+                            'mac2': dados.get('mac2', '')
+                        }
+                        
+                        porta_info = {
+                            'numero': numero_porta,
+                            'status': 'ocupada',
+                            'sala_especifica': False,
+                            'patch_panel_info': {
+                                'nome': patch_panel_nome,
+                                'porta_patch_panel': porta_patch_panel,
+                                'equipamento': equipamento_info
+                            }
+                        }
+                else:
+                    # Mapeada sem equipamento - MAPEADA
+                    porta_info = {
+                        'numero': numero_porta,
+                        'status': 'mapeada',
+                        'sala_especifica': False,
+                        'patch_panel_info': {
+                            'nome': patch_panel_nome,
+                            'porta_patch_panel': porta_patch_panel
+                        }
+                    }
+            elif conexao_direta_row:
+                # Porta com conexão direta
+                equipamento_id = conexao_direta_row[0]
+                
+                # Verificar se o equipamento é da sala específica
+                cur.execute('''
+                    SELECT e.nome, e.tipo, e.marca, s.nome as sala_nome
+                    FROM equipamentos e
+                    LEFT JOIN salas s ON e.sala_id = s.id
+                    WHERE e.id = ? AND e.sala_id = ?
+                ''', (equipamento_id, sala_id))
+                
+                equip_row = cur.fetchone()
+                if equip_row:
+                    # Equipamento da sala específica - OCUPADA com destaque
+                    cur.execute("SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=? AND chave IN ('ip1','ip2','mac1','mac2')", (equipamento_id,))
+                    dados = {chave: valor for chave, valor in cur.fetchall()}
+                    
+                    equipamento_info = {
+                        'nome': equip_row[0],
+                        'tipo': equip_row[1],
+                        'marca': equip_row[2],
+                        'sala_nome': equip_row[3],
+                        'ip1': dados.get('ip1', ''),
+                        'ip2': dados.get('ip2', ''),
+                        'mac1': dados.get('mac1', ''),
+                        'mac2': dados.get('mac2', '')
+                    }
+                    
+                    porta_info = {
+                        'numero': numero_porta,
+                        'status': 'ocupada',
+                        'sala_especifica': True,
+                        'equipamento_info': equipamento_info
+                    }
+                else:
+                    # Equipamento de outra sala - OCUPADA sem destaque
+                    cur.execute("SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=? AND chave IN ('ip1','ip2','mac1','mac2')", (equipamento_id,))
+                    dados = {chave: valor for chave, valor in cur.fetchall()}
+                    
+                    cur.execute('''
+                        SELECT e.nome, e.tipo, e.marca, s.nome as sala_nome
+                        FROM equipamentos e
+                        LEFT JOIN salas s ON e.sala_id = s.id
+                        WHERE e.id = ?
+                    ''', (equipamento_id,))
+                    
+                    equip_row = cur.fetchone()
+                    equipamento_info = {
+                        'nome': equip_row[0],
+                        'tipo': equip_row[1],
+                        'marca': equip_row[2],
+                        'sala_nome': equip_row[3],
+                        'ip1': dados.get('ip1', ''),
+                        'ip2': dados.get('ip2', ''),
+                        'mac1': dados.get('mac1', ''),
+                        'mac2': dados.get('mac2', '')
+                    }
+                    
+                    porta_info = {
+                        'numero': numero_porta,
+                        'status': 'ocupada',
+                        'sala_especifica': False,
+                        'equipamento_info': equipamento_info
+                    }
+            else:
+                # Porta livre
+                porta_info = {
+                    'numero': numero_porta,
+                    'status': 'livre',
+                    'sala_especifica': False
+                }
+            
+            portas_data.append(porta_info)
+        
+        switches[numero_logico] = {
+            'id': switch_id,
+            'nome': switch_nome,
+            'marca': switch_marca,
+            'modelo': switch_modelo,
+            'portas': portas_data
+        }
+    
     conn.close()
-    return jsonify(list(switches.values()))
+    result = list(switches.values())
+    return jsonify(result)
 
 def master_required(f):
     from functools import wraps
@@ -1894,7 +2239,8 @@ def listar_cabos():
     query = '''
         SELECT c.id, c.codigo_unico, c.tipo, c.comprimento, c.marca, c.modelo, 
                c.descricao, c.foto, c.status, c.data_criacao, c.data_modificacao,
-               tc.descricao as tipo_descricao, tc.icone as tipo_icone
+               tc.descricao as tipo_descricao, tc.icone as tipo_icone,
+               CASE WHEN EXISTS (SELECT 1 FROM conexoes_cabos cc WHERE cc.cabo_id = c.id AND cc.data_desconexao IS NULL) THEN 1 ELSE 0 END as conectado
         FROM cabos c
         LEFT JOIN tipos_cabos tc ON c.tipo = tc.nome
         WHERE 1=1
@@ -1934,7 +2280,8 @@ def listar_cabos():
             'data_criacao': row[9],
             'data_modificacao': row[10],
             'tipo_descricao': row[11],
-            'tipo_icone': row[12]
+            'tipo_icone': row[12],
+            'conectado': bool(row[13])
         }
         cabos.append(cabo)
     
@@ -3267,6 +3614,16 @@ def debug_equipamento(equipamento_id):
         
     except Exception as e:
         return jsonify({'erro': f'Erro ao buscar debug: {str(e)}'}), 500
+
+@app.route('/conectar-cabo-estoque.html')
+@admin_required
+def conectar_cabo_estoque_html():
+    return send_file('conectar-cabo-estoque.html')
+
+@app.route('/editar-cabo-especifico.html')
+@admin_required
+def editar_cabo_especifico_html():
+    return send_file('editar-cabo-especifico.html')
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0', port=8080)
