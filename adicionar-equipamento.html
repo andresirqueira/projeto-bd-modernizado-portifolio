@@ -80,6 +80,7 @@
                     <option value="Amplificador">Amplificador</option>
                     <option value="Receptor">Receptor</option>
                     <option value="Poe">Injetor Poe</option>
+                    <option value="Adaptador">Adaptador</option>
                     <option value="Outro">Outro</option>
                 </select>
             </div>
@@ -113,7 +114,7 @@
             </div>
             <div>
                 <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Número de Série:</label>
-                <input type="text" name="serie" required class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                <input type="text" name="serie" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
             </div>
             <div>
                 <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">IP 1:</label>
@@ -185,6 +186,7 @@
             Amplificador: ["QSC", "Outro"],
             Receptor: ["Shure", "Outro"],
             Poe: ["Logitech", "Outro"],
+            Adaptador: ["Kramer", "Outro"],
             Outro: ["Outro"]
         };
 
@@ -295,6 +297,10 @@
             },
             Poe: {
                 Logitech: ["KIT CAT5E", "Outro"],
+                Outro: ["Outro"]
+            },
+            Adaptador: {
+                Kramer: ["HDMI F to HDMI F", "Outro"],
                 Outro: ["Outro"]
             },
             Outro: {

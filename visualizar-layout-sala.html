@@ -33,32 +33,57 @@
             width: calc(100vw - 240px);
             height: 100vh;
             background: url('static/img/blue-print.png') center/cover, #183c6b;
-            overflow: hidden;
+             overflow: auto;
+             transform-origin: top left;
+             transition: transform 0.3s ease;
+         }
+         
+         #mainCanvas.zoomed {
+             cursor: grab;
+         }
+         
+         #mainCanvas.zoomed:active {
+             cursor: grabbing;
         }
         .dark #mainCanvas {
             background: url('static/img/blue-print.png') center/cover, #1a202c;
         }
         .equip-instance {
             position: absolute;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            border-radius: 12px;
-            background: rgba(255,255,255,0.1);
-            border: 2px solid rgba(255,255,255,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.4);
             display: flex;
             align-items: center;
             justify-content: center;
             pointer-events: none;
             transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
+            width: 120px !important;
+            height: 90px !important;
+        }
+        
+        .text-instance {
+            width: 100px !important;
+            height: 25px !important;
+            background: rgba(0,0,0,0.7) !important;
+            border: 1px solid rgba(255,255,255,0.3) !important;
         }
         .equip-instance:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
-            border-color: rgba(255,255,255,0.6);
+            transform: scale(1.02);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+            border-color: rgba(255,255,255,0.7);
+            background: rgba(255,255,255,0.2);
         }
         .equip-instance img {
             border-radius: 8px;
             transition: all 0.3s ease;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            max-width: 100%;
+            max-height: 100%;
         }
         .text-instance span {
             font-weight: bold;
@@ -119,32 +144,26 @@
         <div class="flex-1 flex flex-col items-center justify-center space-y-4">
             <div id="salaTitulo" class="text-lg font-semibold text-gray-700 dark:text-gray-300 text-center">Sala</div>
             
-            <!-- Botões de modo de visualização -->
-            <div class="w-full px-4 space-y-3">
-                <button id="btnManual" onclick="carregarLayoutManual()" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition-colors">
-                    <i class="fas fa-pencil-alt mr-2"></i>Layout Manual
-                </button>
-                
-                <button id="btnReal" onclick="carregarConexoesReais()" class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition-colors">
-                    <i class="fas fa-plug mr-2"></i>Conexões Reais
-                </button>
-                
-                <button id="btnHibrido" onclick="carregarLayoutHibrido()" class="w-full bg-purple-500 hover:bg-purple-600 text-white font-medium py-2 px-4 rounded-lg transition-colors">
-                    <i class="fas fa-layer-group mr-2"></i>Híbrido
-                </button>
-            </div>
-            
             <!-- Status atual -->
             <div id="statusAtual" class="text-sm text-gray-500 dark:text-gray-400 text-center px-4">
                 Carregando...
             </div>
             
-            <!-- Legenda de tipos de cabos -->
-            <div id="legendaCabos" class="w-full px-4 mt-4 hidden">
-                <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Tipos de Cabos:</h4>
-                <div class="space-y-1 text-xs">
-                    <!-- Legenda será preenchida dinamicamente -->
+             <!-- Controles de zoom -->
+             <div class="w-full px-4 space-y-3">
+                 <div class="text-sm font-semibold text-gray-700 dark:text-gray-300 text-center">Zoom</div>
+                 <div class="flex items-center justify-center space-x-2">
+                     <button id="btnZoomOut" class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-3 rounded-lg transition-colors">
+                         <i class="fas fa-search-minus"></i>
+                     </button>
+                     <span id="zoomLevel" class="text-sm font-medium text-gray-700 dark:text-gray-300">100%</span>
+                     <button id="btnZoomIn" class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-3 rounded-lg transition-colors">
+                         <i class="fas fa-search-plus"></i>
+                     </button>
                 </div>
+                 <button id="btnResetZoom" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition-colors">
+                     <i class="fas fa-expand-arrows-alt mr-2"></i>Resetar Zoom
+                 </button>
             </div>
         </div>
     </div>
@@ -153,7 +172,6 @@
     </div>
     <script>
     let sala_id_atual = null;
-    let modo_atual = 'manual';
     
     function getSalaIdFromUrl() {
         const params = new URLSearchParams(window.location.search);
@@ -189,493 +207,236 @@
         document.getElementById('statusAtual').innerText = mensagem;
     }
     
-    function atualizarBotaoAtivo(modo) {
-        // Remove classe ativa de todos os botões
-        document.getElementById('btnManual').classList.remove('ring-2', 'ring-blue-300');
-        document.getElementById('btnReal').classList.remove('ring-2', 'ring-green-300');
-        document.getElementById('btnHibrido').classList.remove('ring-2', 'ring-purple-300');
+    
+    
+    // Função para converter layout da grade para formato de visualização
+    function converterLayoutParaVisualizacao(layoutGrade) {
+        console.log('Convertendo layout da grade:', layoutGrade);
         
-        // Adiciona classe ativa ao botão selecionado
-        if (modo === 'manual') {
-            document.getElementById('btnManual').classList.add('ring-2', 'ring-blue-300');
-        } else if (modo === 'real') {
-            document.getElementById('btnReal').classList.add('ring-2', 'ring-green-300');
-        } else if (modo === 'hibrido') {
-            document.getElementById('btnHibrido').classList.add('ring-2', 'ring-purple-300');
+        const items = [];
+        const conns = [];
+        
+        // Configurações de visualização
+        const cellSize = 120; // Tamanho de cada "célula" na visualização
+        const spacing = 140; // Espaçamento entre equipamentos (reduzido para o novo tamanho)
+        const startX = 300;
+        const startY = -100; // Movido para cima
+        
+        // Converte equipamentos da grade para posições absolutas
+        if (layoutGrade.equipment && layoutGrade.equipment.length > 0) {
+            layoutGrade.equipment.forEach((equip, index) => {
+                // Calcula posição baseada na grade
+                const x = startX + equip.col * spacing;
+                const y = startY + equip.row * spacing;
+                
+                // Tamanho padronizado para todos os equipamentos
+                const largura = 120;
+                const altura = 90;
+                
+                                                 // Determina imagem baseada no tipo de equipamento
+                let imgSrc = equip.src;
+                const nome = equip.name.toLowerCase();
+                const isAdaptador = nome.includes('adaptador') || nome.includes('adapter');
+                let isKeystone = (equip.isKeystone || nome.includes('keystone') || nome.includes('pt')) && !isAdaptador;
+                
+                if (!imgSrc) {
+                    if (isKeystone) {
+                        imgSrc = null; // Keystones usarão ícone
+                    } else if (nome.includes('switch') || nome.includes('sw')) {
+                        imgSrc = 'static/img/equipamentos/switch-cisco.png';
+                    } else if (nome.includes('tv') || nome.includes('tela')) {
+                        imgSrc = 'static/img/equipamentos/tv-lg.png';
+                    } else if (nome.includes('camera') || nome.includes('câmera')) {
+                        imgSrc = 'static/img/equipamentos/camera-logitech.png';
+                    } else if (nome.includes('microfone') || nome.includes('mic')) {
+                        imgSrc = 'static/img/equipamentos/microfone-logitech.png';
+                    } else if (nome.includes('speaker') || nome.includes('alto-falante')) {
+                        imgSrc = 'static/img/equipamentos/speaker-logitech.png';
+                    } else if (nome.includes('hub')) {
+                        imgSrc = 'static/img/equipamentos/hub-logitech.png';
+                    } else if (nome.includes('painel') || nome.includes('panel')) {
+                        imgSrc = 'static/img/equipamentos/painel-crestron.png';
+                    } else if (nome.includes('tap')) {
+                        imgSrc = 'static/img/equipamentos/tap-logitech.png';
+                    } else if (nome.includes('chromebox') || nome.includes('pc')) {
+                        imgSrc = 'static/img/equipamentos/pc-ctl.png';
+                    } else if (nome.includes('poe')) {
+                        imgSrc = 'static/img/poe-logitech-kit-cat5e.png';
+                    } else if (nome.includes('dongle')) {
+                        imgSrc = 'static/img/dongle-logitech-logitech.png';
+                    } else if (nome.includes('sensor') || nome.includes('presença')) {
+                        imgSrc = 'static/img/sensor-crestron-cen-odt-c-poe.png';
+                    } else if (nome.includes('meetup')) {
+                        imgSrc = 'static/img/meetup-logitech-meetup.png';
+                    } else if (nome.includes('adaptador') || nome.includes('adapter')) {
+                        // Usar imagem específica do adaptador se disponível, senão usar uma genérica
+                        if (nome.includes('hdmi') && nome.includes('mesa')) {
+                            imgSrc = 'static/img/adaptador-kramer-hdmi-f-to-hdmi-f.png';
+                        } else if (nome.includes('kramer') && nome.includes('hdmi')) {
+                            imgSrc = 'static/img/adaptador-kramer-hdmi-f-to-hdmi-f.png';
+                        } else if (nome.includes('dante') && nome.includes('analog') && nome.includes('input')) {
+                            imgSrc = 'static/img/avio-dante-1ch-analog-input-adapter.png';
+                        } else if (nome.includes('dante') && nome.includes('analog') && nome.includes('output')) {
+                            imgSrc = 'static/img/avio-dante-1ch-analog-output-adapter.png';
+                        } else if (nome.includes('dante') && nome.includes('2ch') && nome.includes('analog') && nome.includes('output')) {
+                            imgSrc = 'static/img/avio-dante-2ch-analog-output-adapter.png';
+                        } else if (nome.includes('dante') && nome.includes('2ch') && nome.includes('usb')) {
+                            imgSrc = 'static/img/avio-dante-2ch-usb-io-adapter.png';
+                        } else {
+                            // Adaptador genérico - usar o primeiro disponível
+                            imgSrc = 'static/img/adaptador-kramer-hdmi-f-to-hdmi-f.png';
+                        }
+                    } else {
+                        imgSrc = 'static/img/equipamentos/pc-ctl.png';
+                    }
+                }
+                 
+                                 // Adiciona equipamento
+                items.push({
+                    type: 'equip',
+                    id: `equip_${index}`,
+                    x: x,
+                    y: y,
+                    w: largura,
+                    h: altura,
+                    img: imgSrc,
+                    nome: equip.name,
+                    isKeystone: isKeystone
+                });
+                
+                // Adiciona texto do nome
+                items.push({
+                    type: 'text',
+                    id: `text_${index}`,
+                    x: x + (largura - 100) / 2, // Centraliza o texto em relação ao equipamento
+                    y: y + altura + 5,
+                    w: 100,
+                    h: 25,
+                    text: equip.name,
+                    color: '#ffffff',
+                    fontSize: '11px'
+                });
+            });
         }
+        
+        // Converte conexões
+        if (layoutGrade.connections && layoutGrade.connections.length > 0) {
+            layoutGrade.connections.forEach((conn, index) => {
+                // Encontra os índices dos equipamentos conectados
+                const fromIndex = layoutGrade.equipment.findIndex(e => 
+                    e.row === conn.from.row && e.col === conn.from.col
+                );
+                const toIndex = layoutGrade.equipment.findIndex(e => 
+                    e.row === conn.to.row && e.col === conn.to.col
+                );
+                
+                if (fromIndex !== -1 && toIndex !== -1) {
+                    conns.push({
+                        id: `conn_${index}`,
+                        fromId: `equip_${fromIndex}`,
+                        toId: `equip_${toIndex}`,
+                        name: conn.cableInfo,
+                        label: conn.cableInfo,
+                        color: getCorPorTipoCabo(conn.cableInfo),
+                        fontSize: 11,
+                        is_real: false
+                    });
+                }
+            });
+        }
+        
+        console.log('Layout convertido:', { items, conns });
+        return { items, conns };
     }
     
     // Função para definir cor baseada no tipo de cabo
     function getCorPorTipoCabo(tipoCabo) {
         console.log('getCorPorTipoCabo chamada com:', tipoCabo);
         
-        const cores = {
-            // Cores mais vibrantes e distintas
-            'HDMI': '#FF0000',      // 🔴 Vermelho vibrante
-            'HDMI STANDARD': '#FF0000', // 🔴 Vermelho vibrante
-            'USB': '#FF6600',       // 🟠 Laranja vibrante
-            'USB-A PARA USB-C': '#FF6600', // 🟠 Laranja vibrante
-            'USB-C': '#FF6600',     // 🟠 Laranja vibrante
-            'USB-A': '#FF6600',     // 🟠 Laranja vibrante
-            'RJ45': '#00CC00',      // 🟢 Verde vibrante
-            'ETH': '#00CC00',       // 🟢 Verde vibrante
-            'CAT5E': '#00CC00',     // 🟢 Verde vibrante
-            'CAT6': '#00CC00',      // 🟢 Verde vibrante
-            'Power': '#000000',     // ⚫ Preto
-            'Audio': '#9933FF',     // 🟣 Roxo vibrante
-            'Dante': '#0066FF',     // 🔵 Azul vibrante
-            'VGA': '#FF9900',       // 🟠 Laranja escuro
-            'Serial': '#666666',    // ⚫ Cinza escuro
-            'Fiber': '#FFCC00',     // 🟡 Amarelo vibrante
-            'Coaxial': '#CC6600'    // 🟤 Marrom
-        };
-        
         if (!tipoCabo) {
             console.warn('Tipo de cabo é null/undefined');
-            return '#FF0000';  // Vermelho como padrão
+            return '#9E9E9E';  // Cinza como padrão
         }
         
-        const tipoUpper = tipoCabo.toUpperCase();
-        const cor = cores[tipoUpper];
+        const tipoLower = tipoCabo.toLowerCase();
         
-        if (cor) {
-            console.log(`Cor encontrada para ${tipoCabo}: ${cor}`);
-            return cor;
-        } else {
-            console.warn(`Cor não encontrada para tipo: ${tipoCabo}, usando padrão`);
-            return '#FF0000';  // Vermelho como padrão
+        // Ethernet / RJ45 / CAT
+        if (tipoLower.includes('ethernet') || tipoLower.includes('rj45') || tipoLower.includes('cat') || 
+            tipoLower.includes('eth') || tipoLower.includes('lan') || tipoLower.includes('network')) {
+            return '#4CAF50'; // Verde
         }
+        
+        // HDMI
+        if (tipoLower.includes('hdmi')) {
+            return '#2196F3'; // Azul
+        }
+        
+        // USB
+        if (tipoLower.includes('usb')) {
+            return '#FF9800'; // Laranja
+        }
+        
+        // VGA
+        if (tipoLower.includes('vga')) {
+            return '#9C27B0'; // Roxo
+        }
+        
+        // DisplayPort
+        if (tipoLower.includes('displayport') || tipoLower.includes('dp')) {
+            return '#00BCD4'; // Ciano
+        }
+        
+        // DVI
+        if (tipoLower.includes('dvi')) {
+            return '#795548'; // Marrom
+        }
+        
+        // Audio / XLR / TRS
+        if (tipoLower.includes('audio') || tipoLower.includes('xlr') || tipoLower.includes('trs') || 
+            tipoLower.includes('jack') || tipoLower.includes('mic') || tipoLower.includes('speaker')) {
+            return '#E91E63'; // Rosa
+        }
+        
+        // Power / Alimentação
+        if (tipoLower.includes('power') || tipoLower.includes('alimentacao') || tipoLower.includes('energia') ||
+            tipoLower.includes('poe') || tipoLower.includes('ac') || tipoLower.includes('dc')) {
+            return '#FF5722'; // Vermelho escuro
+        }
+        
+        // Serial / RS232 / RS485
+        if (tipoLower.includes('serial') || tipoLower.includes('rs232') || tipoLower.includes('rs485') ||
+            tipoLower.includes('com') || tipoLower.includes('modbus')) {
+            return '#607D8B'; // Azul acinzentado
+        }
+        
+        // Padrão - cinza
+        return '#9E9E9E';
     }
     
-    // Função para atualizar a legenda com apenas os tipos de cabos utilizados
-    function atualizarLegendaCabos(conexoes) {
-        const legendaDiv = document.getElementById('legendaCabos');
-        if (!legendaDiv) return;
-        
-        const legendaContent = legendaDiv.querySelector('.space-y-1');
-        if (!legendaContent) return;
-        
-        // Limpa a legenda atual
-        legendaContent.innerHTML = '';
-        
-        // Obtém tipos únicos de cabos
-        const tiposCabos = [...new Set(conexoes.map(conn => conn.tipo_cabo))];
-        
-        // Cores para os tipos de cabos (usando as mesmas cores da função getCorPorTipoCabo)
-        const cores = {
-            'HDMI': '#FF0000',      // 🔴 Vermelho vibrante
-            'HDMI STANDARD': '#FF0000', // 🔴 Vermelho vibrante
-            'USB': '#FF6600',       // 🟠 Laranja vibrante
-            'USB-A PARA USB-C': '#FF6600', // 🟠 Laranja vibrante
-            'USB-C': '#FF6600',     // 🟠 Laranja vibrante
-            'USB-A': '#FF6600',     // 🟠 Laranja vibrante
-            'RJ45': '#00CC00',      // 🟢 Verde vibrante
-            'ETH': '#00CC00',       // 🟢 Verde vibrante
-            'CAT5E': '#00CC00',     // 🟢 Verde vibrante
-            'CAT6': '#00CC00',      // 🟢 Verde vibrante
-            'Power': '#000000',     // ⚫ Preto
-            'Audio': '#9933FF',     // 🟣 Roxo vibrante
-            'Dante': '#0066FF',     // 🔵 Azul vibrante
-            'VGA': '#FF9900',       // 🟠 Laranja escuro
-            'Serial': '#666666',    // ⚫ Cinza escuro
-            'Fiber': '#FFCC00',     // 🟡 Amarelo vibrante
-            'Coaxial': '#CC6600'    // 🟤 Marrom
-        };
-        
-        // Cria itens da legenda apenas para os tipos utilizados
-        tiposCabos.forEach(tipo => {
-            if (tipo) {
-                const cor = cores[tipo.toUpperCase()] || '#FF0000';
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'flex items-center justify-between p-2 bg-white dark:bg-gray-700 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600';
-                itemDiv.innerHTML = `
-                    <div class="flex items-center">
-                        <div class="w-4 h-4 rounded-full mr-3 shadow-sm" style="background-color: ${cor}"></div>
-                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">${tipo}</span>
-                    </div>
-                    <div class="text-xs text-gray-500 dark:text-gray-400">
-                        <i class="fas fa-plug mr-1"></i>Cabo
-                    </div>
-                `;
-                legendaContent.appendChild(itemDiv);
-            }
-        });
-        
-        // Se não há tipos de cabos, mostra mensagem
-        if (tiposCabos.length === 0 || tiposCabos.every(tipo => !tipo)) {
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'text-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600';
-            itemDiv.innerHTML = `
-                <i class="fas fa-info-circle text-gray-400 mb-2"></i>
-                <div class="text-sm text-gray-500 dark:text-gray-400">Nenhum cabo conectado</div>
-            `;
-            legendaContent.appendChild(itemDiv);
-        }
-    }
+
     
-    async function carregarLayoutManual() {
+         async function carregarLayoutManual() {
         if (!sala_id_atual) return;
         
-        modo_atual = 'manual';
-        atualizarBotaoAtivo('manual');
         limparCanvas();
-        atualizarStatus('Carregando layout manual...');
-        
-        // Oculta legenda no modo manual
-        document.getElementById('legendaCabos').classList.add('hidden');
-        
-        try {
-            const resp = await fetch(`/api/salas/${sala_id_atual}/layout`);
-            if (!resp.ok) throw new Error('Nenhum layout salvo para esta sala.');
-            const layout = await resp.json();
-            await renderizarLayout(layout);
-            atualizarStatus('Layout manual carregado');
+         atualizarStatus('Carregando layout...');
+         
+         try {
+             const resp = await fetch(`/api/salas/${sala_id_atual}/layout`);
+             if (!resp.ok) throw new Error('Nenhum layout salvo para esta sala.');
+             const layout = await resp.json();
+             
+             // Converte o layout da grade para formato de visualização
+             const layoutVisualizacao = converterLayoutParaVisualizacao(layout);
+             await renderizarLayout(layoutVisualizacao);
+             atualizarStatus('Layout carregado com sucesso');
         } catch (e) {
-            document.getElementById('mainCanvas').innerHTML = `<div style='color:#e74c3c;font-size:1.3em;text-align:center;margin-top:80px;'>${e.message || 'Erro ao carregar layout manual.'}</div>`;
-            atualizarStatus('Erro ao carregar layout manual');
+             document.getElementById('mainCanvas').innerHTML = `<div style='color:#e74c3c;font-size:1.3em;text-align:center;margin-top:80px;'>${e.message || 'Erro ao carregar layout.'}</div>`;
+             atualizarStatus('Erro ao carregar layout');
         }
     }
     
-        async function carregarConexoesReais() {
-        if (!sala_id_atual) return;
         
-        modo_atual = 'real';
-        atualizarBotaoAtivo('real');
-        limparCanvas();
-        atualizarStatus('Carregando conexões reais...');
-        
-        // Mostra legenda no modo real
-        document.getElementById('legendaCabos').classList.remove('hidden');
-        
-        try {
-            console.log('Iniciando carregamento de conexões reais para sala:', sala_id_atual);
-            
-            // Primeiro carrega o layout manual para ter os equipamentos posicionados
-            const respLayout = await fetch(`/api/salas/${sala_id_atual}/layout`);
-            let layout = { items: [], conns: [] };
-            
-            if (respLayout.ok) {
-                layout = await respLayout.json();
-                console.log('Layout manual carregado:', layout);
-            } else {
-                console.log('Nenhum layout manual encontrado, criando automático');
-            }
-            
-            // Busca conexões reais
-            const respConexoes = await fetch(`/api/salas/${sala_id_atual}/conexoes-reais`);
-            if (!respConexoes.ok) {
-                console.error('Erro na resposta da API:', respConexoes.status, respConexoes.statusText);
-                throw new Error('Erro ao buscar conexões reais.');
-            }
-            
-            const conexoes = await respConexoes.json();
-            console.log('Conexões reais carregadas:', conexoes);
-            
-            if (!conexoes || conexoes.length === 0) {
-                throw new Error('Nenhuma conexão real encontrada para esta sala.');
-            }
-            
-            // Se não há layout manual, cria equipamentos automaticamente baseado nas conexões
-            if (layout.items.length === 0) {
-                console.log('Criando layout automático...');
-                layout = await criarLayoutAutomatico(conexoes);
-                console.log('Layout automático criado:', layout);
-            }
-            
-            // Converte conexões reais para formato do layout
-            const conexoesFormatadas = conexoes.map(conn => {
-                const cor = getCorPorTipoCabo(conn.tipo_cabo);
-                console.log(`Conexão ${conn.codigo_cabo}: tipo=${conn.tipo_cabo}, cor=${cor}`);
-                
-                return {
-                    id: `real_${conn.id}`,
-                    fromId: `equip_${conn.equipamento_origem_id}`,
-                    toId: `equip_${conn.equipamento_destino_id}`,
-                    name: `${conn.codigo_cabo} (${conn.tipo_cabo})`,
-                    label: `${conn.codigo_cabo} (${conn.tipo_cabo})`,
-                    color: cor,
-                    fontSize: 12,
-                    is_real: true,
-                    tipo_cabo: conn.tipo_cabo,
-                    codigo_cabo: conn.codigo_cabo,
-                    equipamento_origem: conn.equipamento_origem,
-                    equipamento_destino: conn.equipamento_destino,
-                    porta_origem: conn.porta_origem,
-                    porta_destino: conn.porta_destino
-                };
-            });
-            
-            layout.conns = conexoesFormatadas;
-            await renderizarLayout(layout);
-            
-            // Atualiza a legenda com apenas os tipos de cabos utilizados
-            atualizarLegendaCabos(conexoes);
-            
-            atualizarStatus(`Conexões reais carregadas (${conexoes.length} conexões) - Layout automático criado`);
-            
-        } catch (e) {
-            document.getElementById('mainCanvas').innerHTML = `<div style='color:#e74c3c;font-size:1.3em;text-align:center;margin-top:80px;'>${e.message || 'Erro ao carregar conexões reais.'}</div>`;
-            atualizarStatus('Erro ao carregar conexões reais');
-        }
-    }
-    
-    // Função para criar layout automático baseado nas conexões
-    async function criarLayoutAutomatico(conexoes) {
-        console.log('Criando layout automático com', conexoes.length, 'conexões');
-        
-        // Coleta todos os equipamentos únicos das conexões
-        const equipamentos = new Map();
-        
-        conexoes.forEach((conn, index) => {
-            console.log(`Conexão ${index + 1}:`, {
-                origem_id: conn.equipamento_origem_id,
-                origem_nome: conn.equipamento_origem,
-                destino_id: conn.equipamento_destino_id,
-                destino_nome: conn.equipamento_destino
-            });
-            
-            if (conn.equipamento_origem_id && conn.equipamento_origem) {
-                if (!equipamentos.has(conn.equipamento_origem_id)) {
-                    equipamentos.set(conn.equipamento_origem_id, {
-                        id: conn.equipamento_origem_id,
-                        nome: conn.equipamento_origem,
-                        tipo: 'equip'
-                    });
-                }
-            }
-            
-            if (conn.equipamento_destino_id && conn.equipamento_destino) {
-                if (!equipamentos.has(conn.equipamento_destino_id)) {
-                    equipamentos.set(conn.equipamento_destino_id, {
-                        id: conn.equipamento_destino_id,
-                        nome: conn.equipamento_destino,
-                        tipo: 'equip'
-                    });
-                }
-            }
-        });
-        
-        console.log('Equipamentos únicos encontrados:', Array.from(equipamentos.values()));
-        
-        // Função para determinar imagem baseada no nome do equipamento
-        function getImagemEquipamento(nome) {
-            // Verifica se o nome existe e não é null/undefined
-            if (!nome || typeof nome !== 'string') {
-                console.warn('Nome do equipamento inválido:', nome);
-                return 'static/img/equipamentos/pc-ctl.png'; // Imagem padrão
-            }
-            
-            const nomeLower = nome.toLowerCase();
-            console.log('Mapeando imagem para equipamento:', nome, '->', nomeLower);
-            
-            if (nomeLower.includes('switch') || nomeLower.includes('sw')) {
-                return 'static/img/equipamentos/switch-cisco.png';
-            } else if (nomeLower.includes('tv') || nomeLower.includes('televisão')) {
-                return 'static/img/equipamentos/tv-lg.png';
-            } else if (nomeLower.includes('câmera') || nomeLower.includes('camera')) {
-                return 'static/img/equipamentos/camera-logitech.png';
-            } else if (nomeLower.includes('microfone') || nomeLower.includes('mic')) {
-                return 'static/img/equipamentos/microfone-logitech.png';
-            } else if (nomeLower.includes('speaker') || nomeLower.includes('alto-falante')) {
-                return 'static/img/equipamentos/speaker-logitech.png';
-            } else if (nomeLower.includes('hub')) {
-                return 'static/img/equipamentos/hub-logitech.png';
-            } else if (nomeLower.includes('painel') || nomeLower.includes('panel')) {
-                return 'static/img/equipamentos/painel-crestron.png';
-            } else if (nomeLower.includes('tap')) {
-                return 'static/img/equipamentos/tap-logitech.png';
-            } else if (nomeLower.includes('patch') || nomeLower.includes('pt') || nomeLower.includes('keystone')) {
-                return 'static/img/equipamentos/patch-panel.png';
-            } else if (nomeLower.includes('chromebox') || nomeLower.includes('pc')) {
-                return 'static/img/equipamentos/pc-ctl.png';
-            } else if (nomeLower.includes('poe')) {
-                return 'static/img/poe-logitech-kit-cat5e.png';
-            } else if (nomeLower.includes('dongle')) {
-                return 'static/img/dongle-logitech-logitech.png';
-            } else if (nomeLower.includes('sensor') || nomeLower.includes('presença')) {
-                return 'static/img/sensor-crestron-cen-odt-c-poe.png';
-            } else if (nomeLower.includes('meetup')) {
-                return 'static/img/meetup-logitech-meetup.png';
-            } else {
-                console.log('Usando imagem padrão para:', nome);
-                return 'static/img/equipamentos/pc-ctl.png'; // Imagem padrão
-            }
-        }
-        
-        // Função para ordenar equipamentos na ordem específica
-        function ordenarEquipamentos(equipamentos) {
-            const ordemPrioritaria = [
-                'sensor', 'presença', 'presenca',
-                'tv', 'televisão', 'televisao',
-                'chromebox', 'pc',
-                'meetup',
-                'tap',
-                'painel', 'panel',
-                'agenda',
-                'poe',
-                'dongle'
-            ];
-            
-            return equipamentos.sort((a, b) => {
-                const nomeA = a.nome.toLowerCase();
-                const nomeB = b.nome.toLowerCase();
-                
-                // Encontra a posição de cada equipamento na ordem prioritária
-                const posA = ordemPrioritaria.findIndex(tipo => nomeA.includes(tipo));
-                const posB = ordemPrioritaria.findIndex(tipo => nomeB.includes(tipo));
-                
-                // Se ambos estão na ordem prioritária, ordena pela posição
-                if (posA !== -1 && posB !== -1) {
-                    return posA - posB;
-                }
-                
-                // Se apenas A está na ordem prioritária, A vem primeiro
-                if (posA !== -1 && posB === -1) {
-                    return -1;
-                }
-                
-                // Se apenas B está na ordem prioritária, B vem primeiro
-                if (posA === -1 && posB !== -1) {
-                    return 1;
-                }
-                
-                // Se nenhum está na ordem prioritária, mantém ordem alfabética
-                return nomeA.localeCompare(nomeB);
-            });
-        }
-        
-        // Posiciona equipamentos em uma grade com melhor distribuição
-        const equipamentosArray = ordenarEquipamentos(Array.from(equipamentos.values()));
-        console.log('Equipamentos ordenados:', equipamentosArray.map(e => e.nome));
-        const items = [];
-        
-        // Calcula melhor distribuição baseada no número de equipamentos
-        let colunas, larguraEquip, alturaEquip, espacamento;
-        
-        if (equipamentosArray.length <= 4) {
-            colunas = 2;
-            larguraEquip = 140;
-            alturaEquip = 100;
-            espacamento = 200;
-        } else if (equipamentosArray.length <= 9) {
-            colunas = 3;
-            larguraEquip = 130;
-            alturaEquip = 90;
-            espacamento = 180;
-        } else {
-            colunas = 4;
-            larguraEquip = 120;
-            alturaEquip = 80;
-            espacamento = 160;
-        }
-        
-        equipamentosArray.forEach((equip, index) => {
-            const col = index % colunas;
-            const linha = Math.floor(index / colunas);
-            
-            // Centraliza melhor no espaço disponível
-            const totalWidth = colunas * larguraEquip + (colunas - 1) * espacamento;
-            const startX = Math.max(100, (window.innerWidth - 300 - totalWidth) / 2);
-            const startY = 100;
-            
-            const x = startX + col * (larguraEquip + espacamento);
-            const y = startY + linha * (alturaEquip + espacamento);
-            
-            // Adiciona o equipamento
-            items.push({
-                type: 'equip',
-                id: `equip_${equip.id}`,
-                x: x,
-                y: y,
-                w: larguraEquip,
-                h: alturaEquip,
-                img: getImagemEquipamento(equip.nome),
-                nome: equip.nome
-            });
-            
-            // Adiciona texto com o nome do equipamento
-            items.push({
-                type: 'text',
-                id: `text_${equip.id}`,
-                x: x,
-                y: y + alturaEquip + 5,
-                w: larguraEquip,
-                h: 20,
-                text: equip.nome,
-                color: '#ffffff',
-                fontSize: '12px'
-            });
-        });
-        
-        return { items, conns: [] };
-    }
-    
-    async function carregarLayoutHibrido() {
-        if (!sala_id_atual) return;
-        
-        modo_atual = 'hibrido';
-        atualizarBotaoAtivo('hibrido');
-        limparCanvas();
-        atualizarStatus('Carregando layout híbrido...');
-        
-        // Mostra legenda no modo híbrido
-        document.getElementById('legendaCabos').classList.remove('hidden');
-        
-        try {
-            // Busca conexões reais primeiro
-            const respConexoes = await fetch(`/api/salas/${sala_id_atual}/conexoes-reais`);
-            if (!respConexoes.ok) throw new Error('Erro ao buscar conexões reais.');
-            const conexoes = await respConexoes.json();
-            
-            // Busca layout manual
-            const respLayout = await fetch(`/api/salas/${sala_id_atual}/layout`);
-            let layout = { items: [], conns: [] };
-            
-            if (respLayout.ok) {
-                layout = await respLayout.json();
-            }
-            
-            // Se não há layout manual, cria automaticamente
-            if (layout.items.length === 0) {
-                layout = await criarLayoutAutomatico(conexoes);
-            }
-            
-            // Converte conexões reais para formato do layout
-            const conexoesFormatadas = conexoes.map(conn => {
-                const cor = getCorPorTipoCabo(conn.tipo_cabo);
-                console.log(`Conexão ${conn.codigo_cabo}: tipo=${conn.tipo_cabo}, cor=${cor}`);
-                
-                return {
-                    id: `real_${conn.id}`,
-                    fromId: `equip_${conn.equipamento_origem_id}`,
-                    toId: `equip_${conn.equipamento_destino_id}`,
-                    name: `${conn.codigo_cabo} (${conn.tipo_cabo})`,
-                    label: `${conn.codigo_cabo} (${conn.tipo_cabo})`,
-                    color: cor,
-                    fontSize: 12,
-                    is_real: true,
-                    tipo_cabo: conn.tipo_cabo,
-                    codigo_cabo: conn.codigo_cabo,
-                    equipamento_origem: conn.equipamento_origem,
-                    equipamento_destino: conn.equipamento_destino,
-                    porta_origem: conn.porta_origem,
-                    porta_destino: conn.porta_destino
-                };
-            });
-            
-            layout.conns = conexoesFormatadas;
-            await renderizarLayout(layout);
-            
-            // Atualiza a legenda com apenas os tipos de cabos utilizados
-            atualizarLegendaCabos(conexoes);
-            
-            atualizarStatus(`Layout híbrido carregado (${layout.conns.length} conexões reais) - Layout automático criado`);
-            
-        } catch (e) {
-            document.getElementById('mainCanvas').innerHTML = `<div style='color:#e74c3c;font-size:1.3em;text-align:center;margin-top:80px;'>${e.message || 'Erro ao carregar layout híbrido.'}</div>`;
-            atualizarStatus('Erro ao carregar layout híbrido');
-        }
-    }
     
     async function renderizarLayout(layout) {
         const mainCanvas = document.getElementById('mainCanvas');
@@ -702,19 +463,38 @@
                     div.style.height = item.h + 'px';
                     div.dataset.id = item.id;
                     
-                    // Cria a imagem
-                    const img = document.createElement('img');
-                    img.src = item.img || 'static/img/equipamentos/pc-ctl.png';
-                    img.style.width = '100%';
-                    img.style.height = '100%';
-                    img.style.objectFit = 'contain';
-                    img.style.borderRadius = '8px';
-                    img.onerror = function() {
-                        console.warn('Erro ao carregar imagem:', item.img);
-                        this.style.display = 'none';
-                    };
+                    // Verifica se é um adaptador (deve usar imagem mesmo se marcado como keystone)
+                    const isAdaptador = item.nome && (item.nome.toLowerCase().includes('adaptador') || item.nome.toLowerCase().includes('adapter'));
                     
-                    div.appendChild(img);
+                    if (item.isKeystone && !isAdaptador) {
+                        // Para keystones (exceto adaptadores), cria um ícone
+                        const icon = document.createElement('div');
+                        icon.innerHTML = '<i class="fas fa-network-wired" style="font-size: 2em; color: #ffffff;"></i>';
+                        icon.style.display = 'flex';
+                        icon.style.alignItems = 'center';
+                        icon.style.justifyContent = 'center';
+                        icon.style.width = '100%';
+                        icon.style.height = '100%';
+                        icon.style.fontSize = '24px';
+                        icon.style.color = '#ffffff';
+                        
+                        div.appendChild(icon);
+                    } else {
+                        // Para outros equipamentos, cria a imagem
+                        const img = document.createElement('img');
+                        img.src = item.img || 'static/img/equipamentos/pc-ctl.png';
+                        img.style.width = '100%';
+                        img.style.height = '100%';
+                        img.style.objectFit = 'contain';
+                        img.style.borderRadius = '8px';
+                        img.onerror = function() {
+                            console.warn('Erro ao carregar imagem:', item.img);
+                            this.style.display = 'none';
+                        };
+                        
+                        div.appendChild(img);
+                    }
+                    
                     mainCanvas.appendChild(div);
                     
                 } else if (item.type === 'text') {
@@ -726,11 +506,21 @@
                     div.style.width = item.w + 'px';
                     div.style.height = item.h + 'px';
                     div.dataset.id = item.id;
+                    div.style.display = 'flex';
+                    div.style.alignItems = 'center';
+                    div.style.justifyContent = 'center';
+                    div.style.textAlign = 'center';
+                    div.style.padding = '2px';
                     
                     const span = document.createElement('span');
                     span.textContent = item.text;
                     span.style.color = item.color;
                     span.style.fontSize = item.fontSize;
+                    span.style.fontWeight = 'bold';
+                    span.style.lineHeight = '1.2';
+                    span.style.wordWrap = 'break-word';
+                    span.style.overflowWrap = 'break-word';
+                    span.style.maxWidth = '100%';
                     div.appendChild(span);
                     mainCanvas.appendChild(div);
                 }
@@ -768,20 +558,23 @@
                             
                             // Cria o caminho SVG com arco mais suave
                             const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                            const dx = Math.abs(x2 - x1) * 0.3;
-                            const dy = Math.abs(y2 - y1) * 0.3;
+                            const dx = Math.abs(x2 - x1) * 0.2;
+                            const dy = Math.abs(y2 - y1) * 0.2;
                             
                             // Cria um arco mais suave e visível
                             path.setAttribute('d', `M${x1},${y1} C${x1+dx},${y1-dy} ${x2-dx},${y2+dy} ${x2},${y2}`);
-                            path.setAttribute('stroke', conn.color || '#FF0000');
-                            path.setAttribute('stroke-width', conn.is_real ? '6' : '4');
+                            path.setAttribute('stroke', conn.color || '#9E9E9E');
+                            path.setAttribute('stroke-width', conn.is_real ? '5' : '3');
                             path.setAttribute('fill', 'none');
-                            path.setAttribute('opacity', '0.9');
+                            path.setAttribute('opacity', '0.85');
                             
-                            // Adiciona estilo tracejado para conexões reais
+                            // Adiciona estilo tracejado para todas as conexões (visual de desenho técnico)
+                            path.setAttribute('stroke-dasharray', '6,4');
+                            
                             if (conn.is_real) {
-                                path.setAttribute('stroke-dasharray', '8,6');
                                 path.setAttribute('title', `Cabo: ${conn.codigo_cabo}\nTipo: ${conn.tipo_cabo}\nDe: ${conn.equipamento_origem || 'N/A'}\nPara: ${conn.equipamento_destino || 'N/A'}\nPorta Origem: ${conn.porta_origem || 'N/A'}\nPorta Destino: ${conn.porta_destino || 'N/A'}`);
+                            } else {
+                                path.setAttribute('title', `Cabo: ${conn.name || 'N/A'}`);
                             }
                             
                             svgEl.appendChild(path);
@@ -789,30 +582,29 @@
                             // Adiciona texto da conexão com melhor legibilidade
                             if (conn.name || conn.label) {
                                 const labelText = conn.name || conn.label;
-                                const textWidth = labelText.length * 7; // Aproximação da largura do texto
-                                const textX = (x1+x2)/2 - textWidth/2;
-                                const textY = (y1+y2)/2 - 25; // Posiciona acima da linha
+                                 const textX = (x1+x2)/2;
+                                 const textY = (y1+y2)/2 - 15; // Posiciona acima da linha
                                 
-                                // Cria um fundo mais visível para o texto
+                                 // Cria um fundo escuro para melhor contraste
                                 const textBg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-                                textBg.setAttribute('x', textX - 6);
-                                textBg.setAttribute('y', textY - 4);
-                                textBg.setAttribute('width', textWidth + 12);
-                                textBg.setAttribute('height', 20);
-                                textBg.setAttribute('fill', 'rgba(255,255,255,0.95)');
+                                 textBg.setAttribute('x', textX - 40);
+                                 textBg.setAttribute('y', textY - 8);
+                                 textBg.setAttribute('width', 80);
+                                 textBg.setAttribute('height', 16);
+                                 textBg.setAttribute('fill', 'rgba(0,0,0,0.8)');
                                 textBg.setAttribute('rx', '4');
-                                textBg.setAttribute('stroke', conn.color || '#FF0000');
-                                textBg.setAttribute('stroke-width', '1');
+                                 textBg.setAttribute('opacity', '0.9');
                                 svgEl.appendChild(textBg);
                                 
                                 const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                                text.setAttribute('x', (x1+x2)/2);
-                                text.setAttribute('y', textY + 8);
-                                text.setAttribute('fill', conn.color || '#FF0000');
+                                 text.setAttribute('x', textX);
+                                 text.setAttribute('y', textY + 4);
+                                 text.setAttribute('fill', '#FFFFFF');
                                 text.setAttribute('font-size', '11');
                                 text.setAttribute('font-family', 'Arial, sans-serif');
                                 text.setAttribute('text-anchor', 'middle');
                                 text.setAttribute('font-weight', 'bold');
+                                 text.setAttribute('letter-spacing', '0.3');
                                 text.textContent = labelText;
                                 
                                 if (conn.is_real) {
@@ -849,6 +641,113 @@
             idToDiv: Object.keys(idToDiv)
         });
     }
+    
+         // Variáveis de zoom
+     let currentZoom = 1;
+     let isDragging = false;
+     let lastMouseX = 0;
+     let lastMouseY = 0;
+     let translateX = 0;
+     let translateY = 0;
+     
+     // Funções de controle de zoom
+     function updateZoom() {
+         const mainCanvas = document.getElementById('mainCanvas');
+         const zoomLevel = document.getElementById('zoomLevel');
+         
+         mainCanvas.style.transform = `scale(${currentZoom}) translate(${translateX}px, ${translateY}px)`;
+         zoomLevel.textContent = Math.round(currentZoom * 100) + '%';
+         
+         if (currentZoom > 1) {
+             mainCanvas.classList.add('zoomed');
+         } else {
+             mainCanvas.classList.remove('zoomed');
+         }
+     }
+     
+     function zoomIn() {
+         if (currentZoom < 3) {
+             currentZoom *= 1.2;
+             updateZoom();
+         }
+     }
+     
+     function zoomOut() {
+         if (currentZoom > 0.3) {
+             currentZoom /= 1.2;
+             updateZoom();
+         }
+     }
+     
+     function resetZoom() {
+         currentZoom = 1;
+         translateX = 0;
+         translateY = 0;
+         updateZoom();
+     }
+     
+     // Event listeners para zoom
+     document.addEventListener('DOMContentLoaded', function() {
+         const btnZoomIn = document.getElementById('btnZoomIn');
+         const btnZoomOut = document.getElementById('btnZoomOut');
+         const btnResetZoom = document.getElementById('btnResetZoom');
+         const mainCanvas = document.getElementById('mainCanvas');
+         
+         btnZoomIn.addEventListener('click', zoomIn);
+         btnZoomOut.addEventListener('click', zoomOut);
+         btnResetZoom.addEventListener('click', resetZoom);
+         
+         // Pan com mouse quando zoomado
+         mainCanvas.addEventListener('mousedown', function(e) {
+             if (currentZoom > 1) {
+                 isDragging = true;
+                 lastMouseX = e.clientX;
+                 lastMouseY = e.clientY;
+                 mainCanvas.style.cursor = 'grabbing';
+             }
+         });
+         
+         mainCanvas.addEventListener('mousemove', function(e) {
+             if (isDragging && currentZoom > 1) {
+                 const deltaX = e.clientX - lastMouseX;
+                 const deltaY = e.clientY - lastMouseY;
+                 
+                 translateX += deltaX / currentZoom;
+                 translateY += deltaY / currentZoom;
+                 
+                 lastMouseX = e.clientX;
+                 lastMouseY = e.clientY;
+                 
+                 updateZoom();
+             }
+         });
+         
+         mainCanvas.addEventListener('mouseup', function() {
+             isDragging = false;
+             if (currentZoom > 1) {
+                 mainCanvas.style.cursor = 'grab';
+             }
+         });
+         
+         mainCanvas.addEventListener('mouseleave', function() {
+             isDragging = false;
+             if (currentZoom > 1) {
+                 mainCanvas.style.cursor = 'grab';
+             }
+         });
+         
+         // Zoom com scroll
+         mainCanvas.addEventListener('wheel', function(e) {
+             if (e.ctrlKey || e.metaKey) {
+                 e.preventDefault();
+                 if (e.deltaY < 0) {
+                     zoomIn();
+                 } else {
+                     zoomOut();
+                 }
+             }
+         });
+     });
     
     // Inicialização
     (function(){

@@ -187,9 +187,12 @@
       renderCharts();
     }
     function renderCards() {
+      // Estatísticas de marcas (excluindo Pontos Usuário)
+      const equipamentosFiltrados = equipamentos.filter(eq => !eq.nome || !eq.nome.toLowerCase().includes('ponto usuário'));
+      
       const tipos = {};
       let funcionando = 0, defeito = 0, rede = 0;
-      equipamentos.forEach(eq => {
+      equipamentosFiltrados.forEach(eq => {
         if (!tipos[eq.tipo]) tipos[eq.tipo] = 0;
         tipos[eq.tipo]++;
         if (eq.defeito === 1 || eq.defeito === true || eq.defeito === '1') {
@@ -201,8 +204,7 @@
           rede++;
         }
       });
-      // Estatísticas de marcas
-      const marcasSet = new Set(equipamentos.map(eq => eq.marca).filter(Boolean));
+      const marcasSet = new Set(equipamentosFiltrados.map(eq => eq.marca).filter(Boolean));
       const totalMarcas = marcasSet.size;
       // Estatísticas de portas
       const totalSwitches = switches.length;
@@ -214,7 +216,7 @@
           icon: 'fa-boxes',
           iconBg: 'fa-cubes',
           title: 'Total de Equipamentos',
-          value: equipamentos.length,
+          value: equipamentosFiltrados.length,
           desc: 'Todos os equipamentos cadastrados',
           bg: 'from-indigo-500 to-blue-500'
         },
@@ -266,7 +268,7 @@
       salasComAndar.forEach(sala => {
         eqPorSalaCount[sala.nome] = 0;
       });
-      equipamentos.forEach(eq => {
+      equipamentosFiltrados.forEach(eq => {
         const sala = salasComAndar.find(s => s.id === eq.sala_id);
         if (sala) eqPorSalaCount[sala.nome]++;
       });
@@ -404,9 +406,12 @@
       renderCardArray(cardsCabos, 'cardsCabos');
     }
     function renderCharts() {
+      // Estatísticas de marcas (excluindo Pontos Usuário)
+      const equipamentosFiltrados = equipamentos.filter(eq => !eq.nome || !eq.nome.toLowerCase().includes('ponto usuário'));
+      
       // Tipos de equipamentos (doughnut com agrupamento de 'Outros')
       const tipos = {};
-      equipamentos.forEach(eq => {
+      equipamentosFiltrados.forEach(eq => {
         if (!tipos[eq.tipo]) tipos[eq.tipo] = 0;
         tipos[eq.tipo]++;
       });
@@ -454,7 +459,7 @@
       });
       // Equipamentos dependentes de rede (doughnut)
       let rede = 0, semRede = 0;
-      equipamentos.forEach(eq => {
+      equipamentosFiltrados.forEach(eq => {
         if (eq.dados && (eq.dados.ip1 || eq.dados.mac1 || eq.dados.ip2 || eq.dados.mac2)) {
           rede++;
         } else {
@@ -477,9 +482,9 @@
           }
         }
       });
-      // Equipamentos por marca (barra)
+      // Equipamentos por marca (barra) - excluindo Pontos Usuário
       const marcas = {};
-      equipamentos.forEach(eq => {
+      equipamentosFiltrados.forEach(eq => {
         if (!marcas[eq.marca]) marcas[eq.marca] = 0;
         marcas[eq.marca]++;
       });
@@ -506,11 +511,11 @@
           }
         }
       });
-      // Equipamentos por sala (barras)
+      // Equipamentos por sala (barras) - excluindo Pontos Usuário
       const salaMap = {};
       salas.forEach(s => salaMap[s.id] = s.nome);
       const eqPorSala = {};
-      equipamentos.forEach(eq => {
+      equipamentosFiltrados.forEach(eq => {
         const salaNome = salaMap[eq.sala_id] || 'Estoque';
         if (!eqPorSala[salaNome]) eqPorSala[salaNome] = 0;
         eqPorSala[salaNome]++;

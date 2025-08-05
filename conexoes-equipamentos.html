@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Conexões de Equipamentos</title>
-  <link rel="stylesheet" href="css/estilo-adicionar-equipamento.css">
   <style>
     body {
       margin: 0;
@@ -18,161 +17,747 @@
     }
 
     .sidebar {
-      width: 220px;
+      width: 280px;
       background: #222;
       color: #fff;
-      padding: 10px;
+      padding: 15px;
       overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
 
     .sidebar h2 {
-      font-size: 1.1em;
-      margin-bottom: 10px;
+      font-size: 1.2em;
+      margin-bottom: 15px;
       color: #ffd700;
+      text-align: center;
     }
 
-    .equip-list {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+    .equipment-select-container {
+      margin-bottom: 20px;
+    }
+
+    .equipment-select {
       width: 100%;
-      align-items: center;
+      padding: 10px;
+      background: #333;
+      border: 2px solid #555;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
     }
 
-    .equip-list img {
-      width: 90px;
-      height: 90px;
+    .equipment-select:hover {
+      border-color: #ffd700;
+      background: #444;
+    }
+
+    .equipment-select:focus {
+      outline: none;
+      border-color: #ffd700;
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+    }
+
+    .equipment-select option {
+      background: #333;
+      color: #fff;
+      padding: 8px;
+    }
+
+    .equipment-select option:hover {
+      background: #444;
+    }
+
+    .equipment-select:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background: #222;
+    }
+
+    .equipment-select:disabled:hover {
+      border-color: #555;
+      background: #222;
+    }
+
+    .equipment-preview {
+      margin-top: 10px;
+      text-align: center;
+      padding: 16px;
+      background: #333;
+      border-radius: 6px;
+      border: 1px solid #555;
+    }
+
+    .equipment-preview img {
+      width: 80px;
+      height: 80px;
       object-fit: contain;
-      background: #fff;
-      border-radius: 8px;
-      border: 1px solid #444;
-      cursor: grab;
-      transition: box-shadow 0.2s;
-      display: block;
-      margin: 0 auto;
+      /* background: #fff; removido para fundo transparente */
+      border-radius: 4px;
+      margin-bottom: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
     }
 
-    .equip-list img:active {
-      cursor: grabbing;
-      box-shadow: 0 0 8px #ffd700;
+    .equipment-preview .name {
+      font-size: 12px;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .equipment-preview.hidden {
+      display: none;
+    }
+
+    .patch-panel-item {
+      background: #2a4a6b;
+      border: 2px solid #4a90e2;
+      border-radius: 8px;
+      padding: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .patch-panel-item:hover {
+      background: #3a5a7b;
+      border-color: #5aa0f2;
+      box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+    }
+
+    .patch-panel-item.selected {
+      background: #4a6a8b;
+      border-color: #ffd700;
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+    }
+
+    .patch-panel-icon {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .patch-info {
+      font-size: 10px;
+      color: #a0c0e0;
+    }
+
+    .keystone-slot {
+      background: rgba(138, 74, 226, 0.15);
+      border: 2px solid #8a4ae2;
+      border-radius: 6px;
+      padding: 8px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      min-height: 60px;
+    }
+
+    .keystone-slot:hover {
+      background: rgba(138, 74, 226, 0.2);
+      border-color: #9a5af2;
+      box-shadow: 0 0 6px rgba(138, 74, 226, 0.4);
+    }
+
+    .keystone-icon {
+      font-size: 20px;
+      margin-bottom: 2px;
+    }
+
+    .grid-cell.keystone {
+      background: rgba(138, 74, 226, 0.1);
+      border-color: #8a4ae2;
+    }
+
+    .grid-cell.keystone:hover {
+      background: rgba(138, 74, 226, 0.15);
+      border-color: #9a5af2;
     }
 
     .main-canvas {
       flex: 1;
       position: relative;
-      background: #fff url('static/img/blue-print.png') center center / cover no-repeat;
+      background: url('static/img/blue-print.png');
+      background-size: cover;
       overflow: auto;
     }
 
-    #svg-connections {
-      position: absolute;
-      top: 0;
-      left: 0;
+    .grid-container {
+      position: relative; /* Changed from absolute to relative */
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      display: grid;
+      gap: 2px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      padding: 2px;
+      z-index: 0; /* Ensure grid is behind connections */
+    }
+
+    .grid-cell {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      min-height: 100px;
+      z-index: 10;
+    }
+
+    .grid-cell:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .grid-cell.occupied {
+      background: rgba(76, 175, 80, 0.1);
+      border-color: #4caf50;
+      cursor: grab;
+      z-index: 15;
+    }
+
+    .grid-cell.occupied:active {
+      cursor: grabbing;
+    }
+
+    .grid-cell.drag-over {
+      background: rgba(255, 215, 0, 0.3) !important;
+      border-color: #ffd700 !important;
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+      z-index: 20;
+    }
+
+    .equipment-slot {
       width: 100%;
       height: 100%;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .equip-instance {
-      position: absolute;
-      width: 64px;
-      height: 64px;
-      cursor: move;
-      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      text-align: center;
       user-select: none;
-      box-sizing: border-box;
+      position: relative;
+      z-index: 25;
     }
 
-    .equip-instance img {
-      max-width: 100%;
-      max-height: 100%;
+    .equipment-slot.dragging {
+      opacity: 0.5;
+      z-index: 30;
+    }
+
+    .equipment-slot img {
+      max-width: 85px;
+      max-height: 85px;
+      min-width: 60px;
+      min-height: 60px;
       object-fit: contain;
+      margin-bottom: 6px;
+      border-radius: 6px;
+      padding: 3px;
+      pointer-events: none;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Tamanhos específicos por tipo de equipamento */
+    .equipment-slot img[src*="tv"] {
+      max-width: 95px;
+      max-height: 95px;
+    }
+
+    .equipment-slot img[src*="camera"] {
+      max-width: 75px;
+      max-height: 75px;
+    }
+
+    .equipment-slot img[src*="microfone"] {
+      max-width: 70px;
+      max-height: 70px;
+    }
+
+    .equipment-slot img[src*="speaker"] {
+      max-width: 80px;
+      max-height: 80px;
+    }
+
+    .equipment-slot img[src*="amplificador"] {
+      max-width: 90px;
+      max-height: 90px;
+    }
+
+    .equipment-slot img[src*="mixer"] {
+      max-width: 85px;
+      max-height: 85px;
+    }
+
+    .equipment-slot img[src*="projetor"] {
+      max-width: 100px;
+      max-height: 100px;
+    }
+
+    .equipment-slot img[src*="switch"] {
+      max-width: 80px;
+      max-height: 80px;
+    }
+
+    .equipment-slot img[src*="hub"] {
+      max-width: 75px;
+      max-height: 75px;
+    }
+
+    .equipment-slot img[src*="painel"] {
+      max-width: 90px;
+      max-height: 90px;
+    }
+
+    .equipment-slot img[src*="tap"] {
+      max-width: 85px;
+      max-height: 85px;
+    }
+
+    .equipment-slot img[src*="meetup"] {
+      max-width: 90px;
+      max-height: 90px;
+    }
+
+    .equipment-slot img[src*="chromebox"] {
+      max-width: 70px;
+      max-height: 70px;
+    }
+
+    .equipment-slot img[src*="pc"] {
+      max-width: 75px;
+      max-height: 75px;
+    }
+
+    /* Classes de tamanho baseadas no tipo de equipamento */
+    .equipment-slot.equipment-small img {
+      max-width: 65px;
+      max-height: 65px;
+    }
+
+    .equipment-slot.equipment-medium img {
+      max-width: 80px;
+      max-height: 80px;
+    }
+
+    .equipment-slot.equipment-medium-large img {
+      max-width: 90px;
+      max-height: 90px;
+    }
+
+    .equipment-slot.equipment-large img {
+      max-width: 100px;
+      max-height: 100px;
+    }
+
+    .equipment-slot.equipment-xlarge img {
+      max-width: 110px;
+      max-height: 110px;
+    }
+
+    .equipment-slot .name {
+      font-size: 11px;
+      color: #fff;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+      word-break: break-word;
+      line-height: 1.3;
+      pointer-events: none;
+      text-align: center;
+      max-width: 90px;
+    }
+
+    .patch-panel-item {
+      background: #333;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .patch-panel-item:hover {
+      background: #444;
+      border-color: #ffd700;
+    }
+
+    .patch-panel-item.selected {
+      background: #555;
+      border-color: #ffd700;
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+    }
+
+    .patch-panel-icon {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .patch-info {
+      font-size: 10px;
+      color: #888;
+    }
+
+    .keystone-slot {
+      background: rgba(138, 74, 226, 0.15);
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .keystone-slot:hover {
+      background: rgba(138, 74, 226, 0.2);
+      border-color: #ffd700;
+    }
+
+    .keystone-slot.selected {
+      background: rgba(138, 74, 226, 0.25);
+      border-color: #ffd700;
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+    }
+
+    .keystone-icon {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+
+
+    .control-group {
+      margin-bottom: 15px;
+    }
+
+    .control-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 12px;
+    }
+
+    .control-group input {
+      width: 60px;
+      padding: 5px;
+      border: 1px solid #555;
+      border-radius: 4px;
+      background: #333;
+      color: #fff;
+      text-align: center;
+    }
+
+    .control-group button {
+      padding: 10px 12px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+
+    .control-group button:hover {
+      background: #0056b3;
+    }
+
+    .control-group button.danger {
+      background: #dc3545;
+    }
+
+    .control-group button.danger:hover {
+      background: #c82333;
+    }
+
+    .control-group button.success {
+      background: #28a745;
+    }
+
+    .control-group button.success:hover {
+      background: #218838;
+    }
+
+    .control-group button.warning {
+      background: #ffc107;
+      color: #000;
+    }
+
+    .control-group button.warning:hover {
+      background: #e0a800;
+    }
+
+    .control-group button.active {
+      background: #ff4444;
+      box-shadow: 0 0 8px rgba(255, 68, 68, 0.5);
+    }
+
+    .connection-line {
       position: absolute;
+      pointer-events: auto;
+      z-index: 5;
+      cursor: pointer;
+    }
+
+    .connection-line:hover {
+      filter: brightness(1.2);
+    }
+
+    .connection-line svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .connection-line path {
+      stroke: #ff4444;
+      stroke-width: 2;
+      stroke-dasharray: 5,5;
+      fill: none;
+    }
+
+    .connection-line.selected path {
+      stroke: #ff0000;
+      stroke-width: 3;
+      stroke-dasharray: none;
+    }
+
+    .connection-label {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid #ff4444;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 10px;
+      color: #333;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 6;
+    }
+
+    .connection-line.selected .connection-label {
+      background: rgba(255, 0, 0, 0.9);
+      color: #fff;
+      border-color: #ff0000;
+    }
+
+    .grid-cell.selected {
+      background: rgba(255, 68, 68, 0.3) !important;
+      border-color: #ff4444 !important;
+      box-shadow: 0 0 8px rgba(255, 68, 68, 0.5);
+      z-index: 20;
+    }
+
+    .grid-cell.connectable {
+      background: rgba(255, 215, 0, 0.2) !important;
+      border-color: #ffd700 !important;
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+      z-index: 20;
+    }
+
+    .grid-cell.removable {
+      background: rgba(220, 53, 69, 0.2) !important;
+      border-color: #dc3545 !important;
+      box-shadow: 0 0 8px rgba(220, 53, 69, 0.5);
+      z-index: 20;
+    }
+
+    .remove-mode .grid-cell.occupied {
+      cursor: pointer;
+    }
+
+    .remove-mode .grid-cell.occupied:hover {
+      background: rgba(220, 53, 69, 0.3) !important;
+      border-color: #dc3545 !important;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
       top: 0;
       left: 0;
-      right: 0;
-      bottom: 0;
-      margin: auto;
-      display: block;
-      pointer-events: none;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
     }
 
-    .equip-instance.selected {
-      outline: 2px solid #007bff;
-      z-index: 3;
+    .modal-content {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      min-width: 400px;
+      text-align: center;
     }
 
-    .resize-handle {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      width: 14px;
-      height: 14px;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 2px;
-      border: 1.5px solid #007bff;
-      cursor: se-resize;
-      z-index: 4;
-      display: none;
-      align-items: flex-end;
-      justify-content: flex-end;
+    .modal h3 {
+      margin: 0 0 20px 0;
+      color: #333;
     }
 
-    .resize-handle:after {
-      content: '';
-      display: block;
-      width: 8px;
-      height: 8px;
-      border-right: 2px solid #007bff;
-      border-bottom: 2px solid #007bff;
-      margin: 2px;
+    .modal select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
     }
 
-    .equip-instance.selected .resize-handle {
+    .modal-buttons {
       display: flex;
+      gap: 10px;
+      justify-content: center;
     }
 
-    @keyframes highlightPulse {
-      0% {
-        box-shadow: 0 0 0 0 #007bff55;
-      }
-
-      50% {
-        box-shadow: 0 0 0 6px #007bff33;
-      }
-
-      100% {
-        box-shadow: 0 0 0 0 #007bff55;
-      }
+    .modal button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
     }
 
-    .connect-highlight {
-      outline: 3px solid #007bff;
-      animation: highlightPulse 1s infinite;
-      z-index: 10 !important;
+    .modal button.primary {
+      background: #007bff;
+      color: #fff;
     }
 
-    .resize-handle.resize-highlight {
-      box-shadow: 0 0 0 4px #27ae60, 0 0 8px 4px #27ae6066;
-      animation: highlightPulseResize 1.2s;
+    .modal button.secondary {
+      background: #6c757d;
+      color: #fff;
     }
 
-    @keyframes highlightPulseResize {
-      0% {
-        box-shadow: 0 0 0 0 #27ae60, 0 0 8px 4px #27ae6066;
-      }
+    .modal button.danger {
+      background: #dc3545;
+      color: #fff;
+    }
 
-      50% {
-        box-shadow: 0 0 0 8px #27ae6033, 0 0 8px 4px #27ae6066;
-      }
+    .modal button.success {
+      background: #28a745;
+      color: #fff;
+    }
 
-      100% {
-        box-shadow: 0 0 0 0 #27ae60, 0 0 8px 4px #27ae6066;
-      }
+    .modal button.info {
+      background: #17a2b8;
+      color: #fff;
+    }
+
+    .modal button:hover {
+      opacity: 0.9;
+    }
+
+    .modal-steps {
+      display: none;
+    }
+
+    .modal-steps.active {
+      display: block;
+    }
+
+    .sala-info {
+      background: #f8f9fa;
+      border-radius: 6px;
+      padding: 15px;
+      margin: 15px 0;
+      border-left: 4px solid #007bff;
+    }
+
+    .sala-info h4 {
+      margin: 0 0 10px 0;
+      color: #333;
+    }
+
+    .sala-info p {
+      margin: 5px 0;
+      color: #666;
+    }
+
+    .layout-status {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .layout-status.exists {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .layout-status.new {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .status-bar {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 6px;
+      font-size: 12px;
+      z-index: 1000;
+    }
+
+    .patch-panel-slot {
+      background: #2a4a6b;
+      border: 2px solid #4a90e2;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      min-height: 80px;
+    }
+
+    .patch-panel-slot:hover {
+      background: #3a5a7b;
+      border-color: #5aa0f2;
+      box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+    }
+
+    .grid-cell.patch-panel {
+      background: rgba(74, 144, 226, 0.1);
+      border-color: #4a90e2;
+    }
+
+    .grid-cell.patch-panel:hover {
+      background: rgba(74, 144, 226, 0.15);
+      border-color: #5aa0f2;
     }
   </style>
 </head>
@@ -180,1614 +765,2487 @@
 <body>
   <div class="container">
     <aside class="sidebar">
-      <h2>Equipamentos</h2>
-      <button id="addTextBtn"
-        style="margin-bottom: 16px; width: 90%; padding: 8px; background: #007bff; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 1em;">Adicionar
-        Texto</button>
-      <input type="color" id="textColorPicker"
-        style="display:none; margin-bottom: 8px; width: 90%; height: 32px; cursor: pointer;" title="Cor do texto" />
-      <input type="number" id="fontSizePicker" min="8" max="96" value="18"
-        style="display:none; margin-bottom: 16px; width: 90%; height: 32px; font-size: 1em; padding: 2px 8px; border-radius: 6px; border: 1px solid #ccc;"
-        title="Tamanho da fonte (px)" />
-      <button id="removeEquipBtn"
-        style="display:none; margin-bottom: 16px; width: 90%; background: #e74c3c; color: #fff; border: none; border-radius: 6px; height: 32px; font-size: 1em; cursor: pointer;">Excluir
-        Selecionado</button>
-      <div id="lineEditPanel"
-        style="display:none; margin-bottom: 16px; width: 90%; background: #f8f8f8; border-radius: 6px; border: 1px solid #ccc; padding: 10px;">
-        <label style="font-size:0.95em; color:#333;">Cor da linha:</label>
-        <input type="color" id="lineColorPicker"
-          style="width: 100%; height: 32px; margin-bottom: 8px; cursor: pointer;">
-        <label style="font-size:0.95em; color:#333;">Nome da conexão:</label>
-        <input type="text" id="lineNameInput"
-          style="width: 100%; height: 28px; font-size: 1em; padding: 2px 8px; border-radius: 4px; border: 1px solid #bbb;">
-        <label style="font-size:0.95em; color:#333; margin-top:8px;">Tamanho do texto:</label>
-        <input type="number" id="lineFontSizeInput" min="8" max="48" value="15"
-          style="width: 100%; height: 28px; font-size: 1em; padding: 2px 8px; border-radius: 4px; border: 1px solid #bbb; margin-bottom: 4px;">
-        <button id="removeLineBtn"
-          style="margin-top: 10px; width: 100%; background: #e74c3c; color: #fff; border: none; border-radius: 4px; height: 32px; font-size: 1em; cursor: pointer;">Remover
-          Linha</button>
+      <h2>Equipamentos Disponíveis</h2>
+      <div class="equipment-select-container">
+        <select class="equipment-select" id="equipmentSelect">
+          <option value="">Selecione um equipamento...</option>
+        </select>
+        
+        <div class="equipment-preview hidden" id="equipmentPreview">
+          <img id="previewImage" src="" alt="">
+          <div class="name" id="previewName"></div>
+        </div>
       </div>
-      <div class="equip-list" id="equipList">
-        <!-- Imagens de equipamentos serão inseridas aqui via JS -->
+      
+      <div style="margin-top: 25px; border-top: 1px solid #444; padding-top: 20px;">
+        <h3 style="color: #ffd700; margin-bottom: 20px; font-size: 14px; text-align: center;">🎛️ Controles</h3>
+        
+        <div class="control-group" style="margin-bottom: 15px;">
+          <label style="color: #ccc; font-size: 11px; margin-bottom: 8px; display: block;">Modos de Edição:</label>
+          <button id="btnPlaceMode" class="control-group button active" style="width: 100%; margin-bottom: 5px;">
+            📦 Posicionar
+          </button>
+          <button id="btnConnectMode" class="control-group button" style="width: 100%; margin-bottom: 5px;">
+            🔗 Conectar
+          </button>
+          <button id="btnRemoveMode" class="control-group button" style="width: 100%; margin-bottom: 10px;">
+            🗑️ Remover
+          </button>
+        </div>
+        
+        <div class="control-group" style="margin-bottom: 15px;">
+          <label style="color: #ccc; font-size: 11px; margin-bottom: 8px; display: block;">Carregar Dados:</label>
+          <button id="btnLoadRealData" class="control-group button warning" style="width: 100%; margin-bottom: 5px;">
+            🔍 Dados Reais
+          </button>
+          <button id="btnLoadKeystones" class="control-group button info" style="width: 100%; margin-bottom: 10px;">
+            🔌 Keystones
+          </button>
+        </div>
+        
+        <div class="control-group" style="margin-bottom: 15px;">
+          <label style="color: #ccc; font-size: 11px; margin-bottom: 8px; display: block;">Ações:</label>
+          <button id="btnSave" class="control-group button success" style="width: 100%; margin-bottom: 5px;">
+            💾 Salvar Layout
+          </button>
+          <button id="btnClear" class="control-group button danger" style="width: 100%; margin-bottom: 10px;">
+            🗑️ Limpar Tudo
+          </button>
+        </div>
+        
+        <div class="control-group" style="margin-top: 20px; border-top: 1px solid #444; padding-top: 15px;">
+          <button id="btnSair" class="control-group button" style="width: 100%; background: #6c757d;">
+            🚪 Sair
+          </button>
+        </div>
+      </div>
+      
+      <!-- Seção de Informações -->
+      <div style="margin-top: 25px; border-top: 1px solid #444; padding-top: 20px;">
+        <h3 style="color: #ffd700; margin-bottom: 20px; font-size: 14px; text-align: center;">ℹ️ Informações</h3>
+        
+        <div class="control-group" style="margin-bottom: 15px;">
+          <label style="color: #ccc; font-size: 11px; margin-bottom: 8px; display: block;">Grade:</label>
+          <div style="color: #fff; font-size: 12px; background: rgba(255,255,255,0.1); padding: 8px; border-radius: 4px; text-align: center;">
+            12 x 12 células
+          </div>
+        </div>
+        
+        <div class="control-group" style="margin-bottom: 15px;">
+          <label style="color: #ccc; font-size: 11px; margin-bottom: 8px; display: block;">Status:</label>
+          <div id="statusInfo" style="color: #fff; font-size: 11px; background: rgba(255,255,255,0.1); padding: 8px; border-radius: 4px; text-align: center; min-height: 20px;">
+            Pronto para editar
+          </div>
+        </div>
       </div>
     </aside>
-    <main class="main-canvas" id="mainCanvas">
-      <svg id="svg-connections"></svg>
-      <!-- Instâncias dos equipamentos serão inseridas aqui via JS -->
+
+    <main class="main-canvas">
+      <div class="grid-container grid-layout" id="gridContainer">
+        <!-- Grade será criada dinamicamente -->
+      </div>
     </main>
   </div>
-  <div id="equipMenu" style="display:none; position:absolute; z-index:1000;"></div>
-  <div id="salaModal"
-    style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); z-index:4000; align-items:center; justify-content:center;">
-    <div
-      style="background:#fff; padding:32px 24px; border-radius:12px; min-width:320px; max-width:90vw; box-shadow:0 4px 24px #0003; display:flex; flex-direction:column; align-items:center;">
-      <h3 style="margin-top:0; color:#222;">Salvar layout para sala</h3>
-      <select id="salaSelect" style="width:100%;padding:8px 12px;font-size:1.1em;margin-bottom:18px;"></select>
-      <div style="display:flex;gap:16px;justify-content:center;width:100%;">
-        <button id="btnCancelarSala"
-          style="padding:8px 24px;font-size:1em;background:#aaa;color:#fff;border:none;border-radius:6px;">Cancelar</button>
-        <button id="btnConfirmarSala"
-          style="padding:8px 24px;font-size:1em;background:#27ae60;color:#fff;border:none;border-radius:6px;font-weight:bold;">Salvar</button>
+
+
+
+  <div class="status-bar" id="statusBar">
+    Pronto para editar
+  </div>
+
+  <!-- Modal inicial para seleção de layout -->
+  <div class="modal" id="initialModal">
+    <div class="modal-content">
+      <h3>Gerenciador de Layouts</h3>
+      
+      <!-- Passo 1: Selecionar sala -->
+      <div class="modal-steps active" id="step1">
+        <p style="margin-bottom: 20px; color: #666;">Selecione o ambiente/sala para editar ou criar layout:</p>
+        <select id="salaSelect">
+          <option value="">Carregando salas...</option>
+        </select>
+        
+        <div id="salaInfo" class="sala-info" style="display: none;">
+          <h4>Informações da Sala</h4>
+          <div id="salaDetails"></div>
+          <div id="layoutStatus" style="margin-top: 10px;"></div>
+        </div>
+        
+        <div class="modal-buttons">
+          <button class="secondary" id="btnCancel">Cancelar</button>
+          <button class="primary" id="btnContinue">Continuar</button>
+        </div>
+      </div>
+
+      <!-- Passo 2: Confirmar ação -->
+      <div class="modal-steps" id="step2">
+        <div id="confirmInfo"></div>
+        <div class="modal-buttons">
+          <button class="secondary" id="btnBack">← Voltar</button>
+          <button class="success" id="btnConfirm">Confirmar</button>
+        </div>
       </div>
     </div>
   </div>
-  <div id="modalInicio"
-    style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); z-index:5000; align-items:center; justify-content:center;">
-    <div
-      style="background:#fff; padding:32px 24px; border-radius:12px; min-width:320px; max-width:90vw; box-shadow:0 4px 24px #0003; display:flex; flex-direction:column; align-items:center;">
-      <h3 style="margin-top:0; color:#222;">Conexões de Equipamentos</h3>
-      <div id="botoesInicio" style="display:flex;gap:24px;margin:24px 0;">
-        <button id="btnNovoLayout"
-          style="padding:16px 32px;font-size:1.1em;background:#27ae60;color:#fff;border:none;border-radius:8px;font-weight:bold;">Novo</button>
-        <button id="btnAbrirLayout"
-          style="padding:16px 32px;font-size:1.1em;background:#2980b9;color:#fff;border:none;border-radius:8px;font-weight:bold;">Abrir</button>
-      </div>
-      <div id="abrirSalasBox" style="display:none;flex-direction:column;align-items:center;width:100%;">
-        <div style="margin-bottom:10px;font-weight:bold;">Escolha uma sala para editar o layout:</div>
-        <select id="salasComLayout" style="width:100%;padding:8px 12px;font-size:1.1em;margin-bottom:18px;"></select>
-        <button id="btnAbrirSalaLayout"
-          style="padding:8px 24px;font-size:1em;background:#27ae60;color:#fff;border:none;border-radius:6px;font-weight:bold;">Abrir
-          Layout</button>
+
+  <!-- Modal para seleção de sala -->
+  <div class="modal" id="salaModal">
+    <div class="modal-content">
+      <h3>Selecionar Sala</h3>
+      <select id="salaSelect">
+        <option value="">Carregando salas...</option>
+      </select>
+      <div class="modal-buttons">
+        <button class="secondary" id="btnCancelSala">Cancelar</button>
+        <button class="primary" id="btnConfirmSala">Confirmar</button>
       </div>
     </div>
   </div>
+
   <script>
-    // Gera a barra lateral com as imagens dinamicamente
-    const equipList = document.getElementById('equipList');
-    fetch('/api/equipamentos-imagens')
-      .then(resp => resp.json())
-      .then(equipamentos => {
-        equipamentos.forEach((src, idx) => {
-          const img = document.createElement('img');
-          img.src = src;
-          img.draggable = true;
-          img.title = src.split('/').pop().replace(/\.[a-z]+$/i, '');
-          img.dataset.equipType = src;
-          img.addEventListener('dragstart', (e) => {
-            e.dataTransfer.setData('equipType', src);
-          });
-          equipList.appendChild(img);
-        });
-      });
-
-    // Canvas principal
-    const mainCanvas = document.getElementById('mainCanvas');
-    const svg = document.getElementById('svg-connections');
-    let equipCounter = 0;
-    let draggingEquip = null;
-    let offsetX = 0, offsetY = 0;
-    let selectedEquip = null;
-    let connectionStart = null;
-    let connections = [];
-
-    // Color picker para texto
-    const textColorPicker = document.getElementById('textColorPicker');
-    let currentTextInstance = null;
-    const fontSizePicker = document.getElementById('fontSizePicker');
-
-    // Painel de edição de linha
-    const lineEditPanel = document.getElementById('lineEditPanel');
-    const lineColorPicker = document.getElementById('lineColorPicker');
-    const lineNameInput = document.getElementById('lineNameInput');
-    const lineFontSizeInput = document.getElementById('lineFontSizeInput');
-    let selectedLineIndex = null;
-
-    // Remover linha selecionada
-    const removeLineBtn = document.getElementById('removeLineBtn');
-
-    // Remover equipamento/texto selecionado
-    const removeEquipBtn = document.getElementById('removeEquipBtn');
-    let selectedEquipInstance = null;
-
-    // Paleta de cores para múltiplas conexões
-    const connectionColors = ['#007bff', '#e67e22', '#27ae60', '#e74c3c', '#8e44ad', '#16a085', '#f39c12', '#2c3e50'];
-
-    // Menu flutuante para equipamento/texto selecionado
-    const equipMenu = document.getElementById('equipMenu');
-    let menuHideTimeout = null;
-    let resizeMode = false;
-
-    // Variável global para sala atual
-    let salaIdAtual = null;
-
-    // Cores básicas para seleção rápida
-    const basicColors = ['#fff', '#222', '#007bff', '#e74c3c', '#27ae60', '#e67e22', '#8e44ad', '#888'];
-
-    // Adicionar fileira de botões de cor rápida no painel de edição de linha
-    const lineColorQuickRow = document.createElement('div');
-    lineColorQuickRow.style.display = 'flex';
-    lineColorQuickRow.style.gap = '8px';
-    lineColorQuickRow.style.margin = '8px 0 4px 0';
-    basicColors.forEach(color => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.style.width = '22px';
-      btn.style.height = '22px';
-      btn.style.borderRadius = '50%';
-      btn.style.border = '2px solid #fff';
-      btn.style.background = color;
-      btn.style.cursor = 'pointer';
-      btn.style.boxShadow = '0 1px 4px #0002';
-      btn.title = color;
-      btn.onclick = function () {
-        lineColorPicker.value = color;
-        lineColorPicker.dispatchEvent(new Event('input'));
-      };
-      lineColorQuickRow.appendChild(btn);
-    });
-    lineEditPanel.insertBefore(lineColorQuickRow, lineColorPicker.nextSibling);
-
-    function showEquipMenu(targetDiv) {
-      const rect = targetDiv.getBoundingClientRect();
-      const canvasRect = mainCanvas.getBoundingClientRect();
-      if (targetDiv.classList.contains('text-instance')) {
-        equipMenu.innerHTML = `
-          <div style=\"display: flex; flex-direction: row; gap: 10px; align-items: center;\">
-            <button id=\"equipMenuDuplicate\" title=\"Duplicar\" style=\"background: #f39c12; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px #0002; cursor: pointer;\">\n              <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\"/><rect x=\"3\" y=\"3\" width=\"13\" height=\"13\" rx=\"2\"/></svg>\n            </button>
-            <button id=\"equipMenuColor\" title=\"Mudar cor\" style=\"background: #222; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px #0002; cursor: pointer;\">\n              <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 16v-4\"/><path d=\"M12 8h.01\"/></svg>\n            </button>
-            <button id=\"equipMenuFontSize\" title=\"Tamanho da fonte\" style=\"background: #007bff; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px #0002; cursor: pointer; font-size:1.1em; color:#fff; font-weight:bold;\">A</button>
-            <button id=\"equipMenuResize\" title=\"Redimensionar\" style=\"background: #27ae60; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px #0002; cursor: pointer;\">\n              <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"16 8 16 16 8 16\"/><line x1=\"16\" y1=\"16\" x2=\"8\" y2=\"8\"/></svg>\n            </button>
-            <button id=\"equipMenuDelete\" title=\"Excluir\" style=\"background: #e74c3c; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px #0002; cursor: pointer;\">\n              <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"3 6 5 6 21 6\"/><path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2\"/><line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"/><line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"/></svg>\n            </button>
-          </div>
-          <div id=\"equipMenuColorPickerBox\" style=\"display:none; position:absolute; top:40px; left:0; background:#fff; border-radius:8px; box-shadow:0 2px 8px #0002; padding:10px 12px; z-index:2001; flex-direction:column; align-items:center; gap:8px;\"></div>
-          <div id=\"equipMenuFontSizeBox\" style=\"display:none; position:absolute; top:40px; left:40px; background:#fff; border-radius:8px; box-shadow:0 2px 8px #0002; padding:10px 12px; z-index:2001; flex-direction:column; align-items:center; gap:8px;\"></div>
-        `;
-      } else {
-        equipMenu.innerHTML = `
-          <div style=\"display: flex; flex-direction: row; gap: 10px; align-items: center;\">
-            <button id=\"equipMenuDuplicate\" title=\"Duplicar\" style=\"background: #f39c12; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px #0002; cursor: pointer;\">\n              <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\"/><rect x=\"3\" y=\"3\" width=\"13\" height=\"13\" rx=\"2\"/></svg>\n            </button>
-            <button id=\"equipMenuConnect\" title=\"Conectar\" style=\"background: #007bff; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px #0002; cursor: pointer;\">\n              <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4.93 19.07a10 10 0 0 1 0-14.14\"/><path d=\"M7.76 16.24a6 6 0 0 1 0-8.48\"/><line x1=\"12\" y1=\"20\" x2=\"12\" y2=\"4\"/><polyline points=\"16 8 12 4 8 8\"/></svg>\n            </button>
-            <button id=\"equipMenuResize\" title=\"Redimensionar\" style=\"background: #27ae60; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px #0002; cursor: pointer;\">\n              <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"16 8 16 16 8 16\"/><line x1=\"16\" y1=\"16\" x2=\"8\" y2=\"8\"/></svg>\n            </button>
-            <button id=\"equipMenuDelete\" title=\"Excluir\" style=\"background: #e74c3c; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px #0002; cursor: pointer;\">\n              <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"3 6 5 6 21 6\"/><path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2\"/><line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"/><line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"/></svg>\n            </button>
-          </div>
-        `;
-      }
-      equipMenu.style.display = 'block';
-      // Centralizar dentro do item, sobrepondo a parte superior, corrigindo para posição relativa ao mainCanvas
-      requestAnimationFrame(() => {
-        const menuWidth = equipMenu.offsetWidth;
-        const menuHeight = equipMenu.offsetHeight;
-        const elemRect = targetDiv.getBoundingClientRect();
-        const canvasRect = mainCanvas.getBoundingClientRect();
-        let left = elemRect.left - canvasRect.left + (targetDiv.offsetWidth - menuWidth) / 2 + 150;
-        let top;
-        if (targetDiv.classList.contains('text-instance')) {
-          // Centralizar verticalmente no texto
-          top = elemRect.top - canvasRect.top + (targetDiv.offsetHeight - menuHeight) / 2 - 50;
-        } else {
-          // Para imagens/equipamentos, mantém o cálculo atual
-          top = elemRect.top - canvasRect.top + 80;
-        }
-        // Garantir que o menu não fique fora do canvas
-        left = Math.max(2, Math.min(left, mainCanvas.offsetWidth - menuWidth - 2));
-        top = Math.max(2, Math.min(top, mainCanvas.offsetHeight - menuHeight - 2));
-        equipMenu.style.left = `${left}px`;
-        equipMenu.style.top = `${top}px`;
-      });
-      // Evento de clique
-      const connectBtn = document.getElementById('equipMenuConnect');
-      if (connectBtn) {
-        connectBtn.onclick = function (e) {
-          e.stopPropagation();
-          clearSelections();
-          targetDiv.classList.add('selected');
-          connectionStart = targetDiv;
-          hideEquipMenu();
-          highlightConnectableEquipments(targetDiv);
-        };
-      }
-      const resizeBtn = document.getElementById('equipMenuResize');
-      if (resizeBtn) {
-        resizeBtn.onclick = function (e) {
-          e.stopPropagation();
-          // Seleciona o equipamento/texto e remove seleção dos outros
-          document.querySelectorAll('.equip-instance.selected').forEach(div => div.classList.remove('selected'));
-          targetDiv.classList.add('selected');
-          // Destaca o handle de resize piscando
-          const handle = targetDiv.querySelector('.resize-handle');
-          if (handle) {
-            handle.classList.add('resize-highlight');
-            setTimeout(() => handle.classList.remove('resize-highlight'), 1200);
-          }
-          // Posiciona e mostra o botão OK
-          const rect = targetDiv.getBoundingClientRect();
-          const canvasRect = mainCanvas.getBoundingClientRect();
-          resizeOkBtn.style.left = (rect.right - canvasRect.left + 8) + 'px';
-          resizeOkBtn.style.top = (rect.bottom - canvasRect.top - 32) + 'px';
-          resizeOkBtn.style.display = 'flex';
-          hideEquipMenu();
-          // Salva referência para reabrir menu após OK
-          resizeOkBtn._targetDiv = targetDiv;
-          resizeMode = true;
-        };
-      }
-      const deleteBtn = document.getElementById('equipMenuDelete');
-      if (deleteBtn) {
-        deleteBtn.onclick = function (e) {
-          e.stopPropagation();
-          // Remove conexões relacionadas
-          connections = connections.filter(conn => conn.from !== targetDiv && conn.to !== targetDiv);
-          targetDiv.remove();
-          clearSelections();
-          updateConnections();
-          equipMenu.style.display = 'none';
-        };
-      }
-      const colorBtn = document.getElementById('equipMenuColor');
-      if (colorBtn) {
-        colorBtn.onclick = function (e) {
-          e.stopPropagation();
-          // Mostra o color picker e as cores rápidas
-          let colorBox = document.getElementById('equipMenuColorPickerBox');
-          if (!colorBox) return;
-          colorBox.innerHTML = '';
-          colorBox.style.display = 'flex';
-          // Color picker
-          const picker = document.createElement('input');
-          picker.type = 'color';
-          const span = targetDiv.querySelector('span');
-          picker.value = rgbToHex(span.style.color);
-          picker.style.width = '40px';
-          picker.style.height = '40px';
-          picker.style.border = 'none';
-          picker.style.background = 'none';
-          picker.style.cursor = 'pointer';
-          picker.oninput = function () {
-            span.style.color = picker.value;
-          };
-          colorBox.appendChild(picker);
-          // Cores rápidas
-          const quickRow = document.createElement('div');
-          quickRow.style.display = 'flex';
-          quickRow.style.gap = '8px';
-          basicColors.forEach(color => {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.style.width = '22px';
-            btn.style.height = '22px';
-            btn.style.borderRadius = '50%';
-            btn.style.border = '2px solid #fff';
-            btn.style.background = color;
-            btn.style.cursor = 'pointer';
-            btn.style.boxShadow = '0 1px 4px #0002';
-            btn.title = color;
-            btn.onclick = function () {
-              span.style.color = color;
-              picker.value = color;
-            };
-            quickRow.appendChild(btn);
-          });
-          colorBox.appendChild(quickRow);
-          // Fechar ao clicar fora
-          setTimeout(() => {
-            function closeColorBox(ev) {
-              if (!colorBox.contains(ev.target) && ev.target !== colorBtn) {
-                colorBox.style.display = 'none';
-                document.removeEventListener('mousedown', closeColorBox);
-              }
-            }
-            document.addEventListener('mousedown', closeColorBox);
-          }, 100);
-        };
-      }
-      const fontSizeBtn = document.getElementById('equipMenuFontSize');
-      if (fontSizeBtn) {
-        fontSizeBtn.onclick = function (e) {
-          e.stopPropagation();
-          let fontBox = document.getElementById('equipMenuFontSizeBox');
-          if (!fontBox) return;
-          fontBox.innerHTML = '';
-          fontBox.style.display = 'flex';
-          const span = targetDiv.querySelector('span');
-          const input = document.createElement('input');
-          input.type = 'number';
-          input.min = 8;
-          input.max = 96;
-          input.value = parseInt(span.style.fontSize) || 18;
-          input.style.width = '60px';
-          input.style.fontSize = '1.1em';
-          input.style.padding = '2px 8px';
-          input.style.borderRadius = '6px';
-          input.style.border = '1px solid #ccc';
-          input.oninput = function () {
-            span.style.fontSize = input.value + 'px';
-          };
-          fontBox.appendChild(input);
-          // Fechar ao clicar fora
-          setTimeout(() => {
-            function closeFontBox(ev) {
-              if (!fontBox.contains(ev.target) && ev.target !== fontSizeBtn) {
-                fontBox.style.display = 'none';
-                document.removeEventListener('mousedown', closeFontBox);
-              }
-            }
-            document.addEventListener('mousedown', closeFontBox);
-          }, 100);
-        };
-      }
-      // Evento de clique para duplicar
-      const duplicateBtn = document.getElementById('equipMenuDuplicate');
-      if (duplicateBtn) {
-        duplicateBtn.onclick = function (e) {
-          e.stopPropagation();
-          duplicarItem(targetDiv);
-          hideEquipMenu();
-        };
-      }
-    }
-    function hideEquipMenu() {
-      equipMenu.style.display = 'none';
-    }
-
-    // Permite soltar equipamentos no canvas
-    mainCanvas.addEventListener('dragover', e => {
-      e.preventDefault();
-    });
-    mainCanvas.addEventListener('drop', e => {
-      e.preventDefault();
-      const equipType = e.dataTransfer.getData('equipType');
-      if (equipType) {
-        addEquipInstance(equipType, e.offsetX, e.offsetY);
-      }
-    });
-
-    function inicializarEquipInstance(div) {
-      const handle = div.querySelector('.resize-handle');
-      // Drag interno
-      div.addEventListener('mousedown', (e) => {
-        if (e.button !== 0) return;
-        if (e.target.classList.contains('resize-handle')) return;
-        draggingEquip = div;
-        offsetX = e.offsetX;
-        offsetY = e.offsetY;
-      });
-      div.addEventListener('mouseup', (e) => {
-        draggingEquip = null;
-        div.classList.remove('selected');
-        setTimeout(() => {
-          if (!div.classList.contains('selected')) {
-            textColorPicker.style.display = 'none';
-            fontSizePicker.style.display = 'none';
-            currentTextInstance = null;
-            removeEquipBtn.style.display = 'none';
-            selectedEquipInstance = null;
-            hideEquipMenu();
-          }
-        }, 100);
-      });
-      div.addEventListener('click', (e) => {
-        if (resizeMode) return;
-        showEquipMenu(div);
-        if (div.classList.contains('text-instance')) {
-          // Remove seleção de outros
-          document.querySelectorAll('.equip-instance.selected').forEach(d => d.classList.remove('selected'));
-          div.classList.add('selected');
-          selectedEquipInstance = div;
-          currentTextInstance = div;
-          // Mostra controles de edição de texto
-          textColorPicker.style.display = 'block';
-          fontSizePicker.style.display = 'block';
-          removeEquipBtn.style.display = 'block';
-          // Atualiza valores dos controles
-          const span = div.querySelector('span');
-          textColorPicker.value = rgbToHex(span.style.color);
-          fontSizePicker.value = parseInt(span.style.fontSize) || 18;
-        } else {
-          // Seleção normal de equipamento
-          document.querySelectorAll('.equip-instance.selected').forEach(d => d.classList.remove('selected'));
-          div.classList.add('selected');
-          selectedEquipInstance = div;
-          currentTextInstance = null;
-          textColorPicker.style.display = 'none';
-          fontSizePicker.style.display = 'none';
-          removeEquipBtn.style.display = 'block';
-        }
-        if (connectionStart && connectionStart !== div) {
-          // Só conecta se ambos NÃO forem textos
-          if (!connectionStart.classList.contains('text-instance') && !div.classList.contains('text-instance')) {
-            const key = [connectionStart.dataset.id, div.dataset.id].sort().join('-');
-            const siblings = connections.filter(conn => {
-              return [conn.from.dataset.id, conn.to.dataset.id].sort().join('-') === key;
-            });
-            if (siblings.length >= 2) {
-              alert('Já existem duas conexões entre estes equipamentos. Não é possível criar mais.');
-            } else {
-              const alreadyConnected = siblings.length > 0;
-              if (alreadyConnected) {
-                if (window.confirm('Estes equipamentos já estão conectados. Deseja criar uma segunda conexão mesmo assim?')) {
-                  addConnection(connectionStart, div);
-                }
-              } else {
-                if (window.confirm('Deseja realmente conectar estes dois equipamentos?')) {
-                  addConnection(connectionStart, div);
-                }
-              }
-            }
-          }
-          connectionStart.classList.remove('selected');
-          clearConnectHighlights();
-          connectionStart = null;
-        }
-      });
-      // Resize logic
-      let resizing = false;
-      let startX, startY, startW, startH;
-      handle.addEventListener('mousedown', function (e) {
-        e.stopPropagation();
-        resizing = true;
-        startX = e.clientX;
-        startY = e.clientY;
-        startW = parseInt(document.defaultView.getComputedStyle(div).width, 10);
-        startH = parseInt(document.defaultView.getComputedStyle(div).height, 10);
-        document.body.style.cursor = 'se-resize';
-      });
-      document.addEventListener('mousemove', function (e) {
-        if (!resizing) return;
-        let dx = e.clientX - startX;
-        let dy = e.clientY - startY;
-        if (div.classList.contains('text-instance')) {
-          let newW = Math.max(32, startW + dx);
-          let newH = Math.max(24, startH + dy);
-          div.style.width = newW + 'px';
-          div.style.height = newH + 'px';
-        } else {
-          let size = Math.max(32, Math.round(Math.max(startW + dx, startH + dy)));
-          div.style.width = size + 'px';
-          div.style.height = size + 'px';
-        }
-        updateConnections();
-      });
-      document.addEventListener('mouseup', function (e) {
-        if (resizing) {
-          resizing = false;
-          document.body.style.cursor = '';
-        }
-      });
-      // Mostrar menu ao passar o mouse
-      div.addEventListener('mouseenter', () => {
-        if (resizeMode) return;
-        if (menuHideTimeout) clearTimeout(menuHideTimeout);
-        showEquipMenu(div);
-      });
-      div.addEventListener('mouseleave', () => {
-        if (resizeMode) return;
-        menuHideTimeout = setTimeout(() => {
-          hideEquipMenu();
-        }, 350);
-      });
-      // Editar texto ao duplo clique (apenas para textos)
-      if (div.classList.contains('text-instance')) {
-        const span = div.querySelector('span');
-        span.addEventListener('dblclick', function (e) {
-          e.stopPropagation();
-          const input = document.createElement('input');
-          input.type = 'text';
-          input.value = span.textContent;
-          input.style.width = '90%';
-          input.style.height = '100%';
-          input.style.fontSize = '1.1em';
-          input.style.fontWeight = 'bold';
-          input.style.textAlign = 'center';
-          input.style.boxSizing = 'border-box';
-          div.replaceChild(input, span);
-          input.focus();
-          input.select();
-          input.addEventListener('blur', function () {
-            span.textContent = input.value || 'Novo texto';
-            div.replaceChild(span, input);
-          });
-          input.addEventListener('keydown', function (ev) {
-            if (ev.key === 'Enter') {
-              input.blur();
-            }
-          });
-        });
-      }
-    }
-
-    function addEquipInstance(src, x, y) {
-      const div = document.createElement('div');
-      div.className = 'equip-instance';
-      div.style.left = (x - 32) + 'px';
-      div.style.top = (y - 32) + 'px';
-      div.style.width = '64px';
-      div.style.height = '64px';
-      div.dataset.id = 'equip-' + (++equipCounter);
-      div.dataset.equipType = src;
-      div.tabIndex = 0;
-      const img = document.createElement('img');
-      img.src = src;
-      div.appendChild(img);
-      // Adiciona handle de resize
-      const handle = document.createElement('div');
-      handle.className = 'resize-handle';
-      div.appendChild(handle);
-      mainCanvas.appendChild(div);
-      inicializarEquipInstance(div);
-      updateConnections();
-    }
-
-    function addTextInstance(text = 'Novo texto', x = 200, y = 200) {
-      const div = document.createElement('div');
-      div.className = 'equip-instance text-instance';
-      div.style.left = (x - 32) + 'px';
-      div.style.top = (y - 16) + 'px';
-      div.style.width = '128px';
-      div.style.height = '32px';
-      div.style.minWidth = '32px';
-      div.style.minHeight = '24px';
-      div.tabIndex = 0;
-      div.dataset.id = 'text-' + (++equipCounter);
-      div.dataset.type = 'text';
-      const span = document.createElement('span');
-      span.textContent = text;
-      span.style.display = 'block';
-      span.style.width = '100%';
-      span.style.height = '100%';
-      span.style.fontSize = '1.1em';
-      span.style.color = '#222';
-      span.style.fontWeight = 'bold';
-      span.style.textAlign = 'center';
-      span.style.lineHeight = '32px';
-      span.style.cursor = 'text';
-      span.style.userSelect = 'none';
-      div.appendChild(span);
-      // Handle de resize
-      const handle = document.createElement('div');
-      handle.className = 'resize-handle';
-      div.appendChild(handle);
-      mainCanvas.appendChild(div);
-      inicializarEquipInstance(div);
-      updateConnections();
-    }
-
-    // Drag dos equipamentos no canvas
-    document.addEventListener('mousemove', (e) => {
-      if (draggingEquip) {
-        const rect = mainCanvas.getBoundingClientRect();
-        let x = e.clientX - rect.left - offsetX;
-        let y = e.clientY - rect.top - offsetY;
-        draggingEquip.style.left = x + 'px';
-        draggingEquip.style.top = y + 'px';
-        updateConnections();
-      }
-    });
-    document.addEventListener('mouseup', () => {
-      if (draggingEquip) draggingEquip.classList.remove('selected');
-      draggingEquip = null;
-    });
-
-    // Desmarcar seleção ao clicar fora
-    mainCanvas.addEventListener('click', () => {
-      if (!resizeMode) {
-        clearSelections();
-        updateConnections();
-        hideEquipMenu();
-        clearConnectHighlights();
-      }
-    });
-
-    // Conexões SVG
-    function addConnection(fromDiv, toDiv) {
-      // Descobrir quantas conexões já existem entre esses dois
-      const key = [fromDiv.dataset.id, toDiv.dataset.id].sort().join('-');
-      const siblings = connections.filter(conn => {
-        return [conn.from.dataset.id, conn.to.dataset.id].sort().join('-') === key;
-      });
-      const color = connectionColors[siblings.length % connectionColors.length];
-      connections.push({ from: fromDiv, to: toDiv, color: color, name: '', fontSize: 15 });
-      updateConnections();
-    }
-    function updateConnections() {
-      const svg = document.getElementById('svg-connections');
-      svg.innerHTML = '';
-      // Agrupa conexões por par de equipamentos
-      const pairMap = {};
-      connections.forEach((conn, idx) => {
-        const key = [conn.from.dataset.id, conn.to.dataset.id].sort().join('-');
-        if (!pairMap[key]) pairMap[key] = [];
-        pairMap[key].push(idx);
-      });
-      connections.forEach((conn, idx) => {
-        const x1 = conn.from.offsetLeft + conn.from.offsetWidth / 2;
-        const y1 = conn.from.offsetTop + conn.from.offsetHeight / 2;
-        const x2 = conn.to.offsetLeft + conn.to.offsetWidth / 2;
-        const y2 = conn.to.offsetTop + conn.to.offsetHeight / 2;
-        // Offset para múltiplas conexões
-        const key = [conn.from.dataset.id, conn.to.dataset.id].sort().join('-');
-        const siblings = pairMap[key];
-        const myIndex = siblings.indexOf(idx);
-        let offset = 0;
-        if (siblings.length > 1) {
-          const base = 20;
-          offset = (myIndex - (siblings.length - 1) / 2) * base;
-        }
-        // Curva de Bézier suave com offset
-        const dx = Math.abs(x2 - x1) * 0.4;
-        const dy = Math.abs(y2 - y1) * 0.4;
-        const angle = Math.atan2(y2 - y1, x2 - x1) - Math.PI / 2;
-        const ox = Math.cos(angle) * offset;
-        const oy = Math.sin(angle) * offset;
-        const c1x = x1 + (x2 > x1 ? dx : -dx) + ox;
-        const c1y = y1 + oy;
-        const c2x = x2 - (x2 > x1 ? dx : -dx) + ox;
-        const c2y = y2 + oy;
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', `M${x1},${y1} C${c1x},${c1y} ${c2x},${c2y} ${x2},${y2}`);
-        path.setAttribute('stroke', conn.color || '#007bff');
-        path.setAttribute('stroke-width', conn.strokeWidth || 3);
-        path.setAttribute('fill', 'none');
-        path.style.cursor = 'pointer';
-        path.setAttribute('pointer-events', 'stroke');
-        svg.appendChild(path);
-        // Texto do nome da conexão
-        if (conn.name && conn.name.trim() !== '') {
-          const t = 0.5;
-          function bezier(t, p0, p1, p2, p3) {
-            const mt = 1 - t;
-            return mt * mt * mt * p0 + 3 * mt * mt * t * p1 + 3 * mt * t * t * p2 + t * t * t * p3;
-          }
-          const textX = bezier(t, x1, c1x, c2x, x2);
-          const textY = bezier(t, y1, c1y, c2y, y2) - 20;
-          const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-          text.setAttribute('x', textX);
-          text.setAttribute('y', textY);
-          text.setAttribute('text-anchor', 'middle');
-          text.setAttribute('font-size', (conn.fontSize || 15) + 'px');
-          text.setAttribute('font-family', 'Arial, sans-serif');
-          text.setAttribute('fill', conn.color || '#007bff');
-          text.setAttribute('pointer-events', 'none');
-          text.textContent = conn.name;
-          svg.appendChild(text);
-        }
-      });
-      addLineMenuEvents();
-    }
-
-    // Botão para adicionar texto
-    document.getElementById('addTextBtn').addEventListener('click', function () {
-      addTextInstance();
-    });
-
-    // Utilitário para converter rgb para hex
-    function rgbToHex(rgb) {
-      if (!rgb) return '#222222';
-      if (rgb.startsWith('#')) return rgb;
-      const result = rgb.match(/\d+/g);
-      if (!result) return '#222222';
-      return '#' + result.slice(0, 3).map(x => (+x).toString(16).padStart(2, '0')).join('');
-    }
-
-    // Evento do color picker
-    textColorPicker.addEventListener('input', function () {
-      if (currentTextInstance) {
-        const span = currentTextInstance.querySelector('span');
-        span.style.color = textColorPicker.value;
-      }
-    });
-
-    // Evento do font size picker
-    fontSizePicker.addEventListener('input', function () {
-      if (currentTextInstance) {
-        const span = currentTextInstance.querySelector('span');
-        span.style.fontSize = fontSizePicker.value + 'px';
-      }
-    });
-
-    // Painel de edição de linha
-    function showLineEditPanel(conn) {
-      lineEditPanel.style.display = 'block';
-      lineColorPicker.value = conn.color || '#007bff';
-      lineNameInput.value = conn.name || '';
-      lineFontSizeInput.value = conn.fontSize || 15;
-    }
-
-    // Atualizar cor da linha
-    lineColorPicker.addEventListener('input', function () {
-      if (selectedLineIndex !== null && connections[selectedLineIndex]) {
-        connections[selectedLineIndex].color = lineColorPicker.value;
-        updateConnections();
-      }
-    });
-
-    // Atualizar nome da linha
-    lineNameInput.addEventListener('input', function () {
-      if (selectedLineIndex !== null && connections[selectedLineIndex]) {
-        connections[selectedLineIndex].name = lineNameInput.value;
-        updateConnections();
-      }
-    });
-
-    // Atualizar tamanho do texto da linha
-    lineFontSizeInput.addEventListener('input', function () {
-      if (selectedLineIndex !== null && connections[selectedLineIndex]) {
-        connections[selectedLineIndex].fontSize = parseInt(lineFontSizeInput.value) || 15;
-        updateConnections();
-      }
-    });
-
-    // Remover linha selecionada
-    removeLineBtn.addEventListener('click', function () {
-      if (selectedLineIndex !== null && connections[selectedLineIndex]) {
-        connections.splice(selectedLineIndex, 1);
-        selectedLineIndex = null;
-        lineEditPanel.style.display = 'none';
-        updateConnections();
-      }
-    });
-
-    // Excluir equipamento/texto selecionado
-    removeEquipBtn.addEventListener('click', function () {
-      if (selectedEquipInstance) {
-        // Remove conexões relacionadas
-        connections = connections.filter(conn => conn.from !== selectedEquipInstance && conn.to !== selectedEquipInstance);
-        // Remove do DOM
-        selectedEquipInstance.remove();
-        clearSelections();
-        updateConnections();
-      }
-    });
-
-    // Excluir com tecla Delete
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Delete') {
-        if (selectedEquipInstance) {
-          // Remove conexões relacionadas
-          connections = connections.filter(conn => conn.from !== selectedEquipInstance && conn.to !== selectedEquipInstance);
-          // Remove do DOM
-          selectedEquipInstance.remove();
-          clearSelections();
-          updateConnections();
-        } else if (selectedLineIndex !== null && connections[selectedLineIndex]) {
-          connections.splice(selectedLineIndex, 1);
-          selectedLineIndex = null;
-          lineEditPanel.style.display = 'none';
-          updateConnections();
-        }
-      }
-    });
-
-    function clearSelections() {
-      if (selectedEquipInstance) {
-        selectedEquipInstance.classList.remove('selected');
-        selectedEquipInstance = null;
-      }
-      if (currentTextInstance) {
-        currentTextInstance = null;
-      }
-      if (connectionStart) {
-        connectionStart.classList.remove('selected');
-        connectionStart = null;
-      }
-      removeEquipBtn.style.display = 'none';
-      textColorPicker.style.display = 'none';
-      fontSizePicker.style.display = 'none';
-      lineEditPanel.style.display = 'none';
-      selectedLineIndex = null;
-      resizeOkBtn.style.display = 'none';
-      resizeMode = false;
-    }
-
-    function highlightConnectableEquipments(originDiv) {
-      // Destaca todos os equipamentos (não textos, não o próprio)
-      document.querySelectorAll('.equip-instance').forEach(div => {
-        if (!div.classList.contains('text-instance') && div !== originDiv) {
-          div.classList.add('connect-highlight');
-        }
-      });
-    }
-    function clearConnectHighlights() {
-      document.querySelectorAll('.connect-highlight').forEach(div => div.classList.remove('connect-highlight'));
-    }
-
-    // Se mouse entrar no menu, não esconder
-    equipMenu.addEventListener('mouseenter', () => {
-      if (resizeMode) return;
-      if (menuHideTimeout) clearTimeout(menuHideTimeout);
-    });
-    equipMenu.addEventListener('mouseleave', () => {
-      if (resizeMode) return;
-      menuHideTimeout = setTimeout(() => {
-        hideEquipMenu();
-      }, 350);
-    });
-
-    // Botão OK para finalizar redimensionamento
-    const resizeOkBtn = document.createElement('button');
-    resizeOkBtn.id = 'resizeOkBtn';
-    resizeOkBtn.title = 'Finalizar redimensionamento';
-    resizeOkBtn.style.display = 'none';
-    resizeOkBtn.style.position = 'absolute';
-    resizeOkBtn.style.zIndex = '2000';
-    resizeOkBtn.style.background = '#27ae60';
-    resizeOkBtn.style.border = 'none';
-    resizeOkBtn.style.borderRadius = '50%';
-    resizeOkBtn.style.width = '32px';
-    resizeOkBtn.style.height = '32px';
-    resizeOkBtn.style.alignItems = 'center';
-    resizeOkBtn.style.justifyContent = 'center';
-    resizeOkBtn.style.boxShadow = '0 2px 8px #0002';
-    resizeOkBtn.style.cursor = 'pointer';
-    resizeOkBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
-    document.body.appendChild(resizeOkBtn);
-    resizeOkBtn.onclick = function () {
-      document.querySelectorAll('.equip-instance.selected').forEach(div => div.classList.remove('selected'));
-      resizeOkBtn.style.display = 'none';
-      resizeMode = false;
-      // Reabrir menu se necessário
-      if (resizeOkBtn._targetDiv) {
-        showEquipMenu(resizeOkBtn._targetDiv);
-        resizeOkBtn._targetDiv = null;
-      }
+    // Estado global
+    let gridData = {
+      rows: 12,
+      cols: 12,
+      selectedEquipment: null,
+      connections: [],
+      currentSalaId: null,
+      connectionMode: false,
+      connectionStart: null,
+      removeMode: false,
+      selectedConnection: null,
+      dragState: {
+        isDragging: false,
+        draggedElement: null,
+        originalCell: null,
+        originalRow: null,
+        originalCol: null,
+        dragStartTime: null
+      },
+      selectedPatchPanel: null
     };
 
-    // Adiciona botões Salvar, Salvar Como e Fechar no topo direito
-    const closeBtn = document.createElement('button');
-    closeBtn.textContent = 'Fechar';
-    closeBtn.style.position = 'fixed';
-    closeBtn.style.top = '18px';
-    closeBtn.style.right = '32px';
-    closeBtn.style.zIndex = '3000';
-    closeBtn.style.background = '#e74c3c';
-    closeBtn.style.color = 'white';
-    closeBtn.style.fontWeight = 'bold';
-    closeBtn.style.fontSize = '0.95em';
-    closeBtn.style.padding = '7px 18px';
-    closeBtn.style.border = 'none';
-    closeBtn.style.borderRadius = '8px';
-    closeBtn.style.boxShadow = '0 2px 8px #0002';
-    closeBtn.style.cursor = 'pointer';
-    closeBtn.style.minWidth = '90px';
-    document.body.appendChild(closeBtn);
-
-    const saveAsBtn = document.createElement('button');
-    saveAsBtn.textContent = 'Salvar como';
-    saveAsBtn.style.position = 'fixed';
-    saveAsBtn.style.top = '18px';
-    saveAsBtn.style.right = '152px';
-    saveAsBtn.style.zIndex = '3000';
-    saveAsBtn.style.background = '#2980b9';
-    saveAsBtn.style.color = 'white';
-    saveAsBtn.style.fontWeight = 'bold';
-    saveAsBtn.style.fontSize = '0.95em';
-    saveAsBtn.style.padding = '7px 18px';
-    saveAsBtn.style.border = 'none';
-    saveAsBtn.style.borderRadius = '8px';
-    saveAsBtn.style.boxShadow = '0 2px 8px #0002';
-    saveAsBtn.style.cursor = 'pointer';
-    saveAsBtn.style.minWidth = '90px';
-    document.body.appendChild(saveAsBtn);
-
-    const saveBtn = document.createElement('button');
-    saveBtn.textContent = 'Salvar';
-    saveBtn.style.position = 'fixed';
-    saveBtn.style.top = '18px';
-    saveBtn.style.right = '300px';
-    saveBtn.style.zIndex = '3000';
-    saveBtn.style.background = '#27ae60';
-    saveBtn.style.color = 'white';
-    saveBtn.style.fontWeight = 'bold';
-    saveBtn.style.fontSize = '0.95em';
-    saveBtn.style.padding = '7px 18px';
-    saveBtn.style.border = 'none';
-    saveBtn.style.borderRadius = '8px';
-    saveBtn.style.boxShadow = '0 2px 8px #0002';
-    saveBtn.style.cursor = 'pointer';
-    saveBtn.style.minWidth = '90px';
-    document.body.appendChild(saveBtn);
-
-    closeBtn.onclick = function () {
-      window.location.href = 'config-admin.html';
-    };
-
-    // Função para obter sala_id da URL
-    function getSalaIdFromUrl() {
-      const params = new URLSearchParams(window.location.search);
-      return params.get('sala_id');
-    }
-
-    // Serializa o layout atual
-    function serializeLayout() {
-      // Equipamentos e textos
-      const items = [];
-      document.querySelectorAll('.equip-instance').forEach(div => {
-        // Usar left/top absolutos do estilo
-        const x = parseFloat(div.style.left) || 0;
-        const y = parseFloat(div.style.top) || 0;
-        const w = parseFloat(div.style.width) || div.offsetWidth;
-        const h = parseFloat(div.style.height) || div.offsetHeight;
-        if (div.classList.contains('text-instance')) {
-          const span = div.querySelector('span');
-          items.push({
-            type: 'text',
-            id: div.dataset.id, // garantir id único
-            x, y, w, h,
-            text: span.textContent,
-            color: span.style.color,
-            fontSize: span.style.fontSize
-          });
-        } else {
-          items.push({
-            type: 'equip',
-            id: div.dataset.id, // garantir id único
-            x, y, w, h,
-            img: div.querySelector('img').getAttribute('data-src') || div.querySelector('img').src
-          });
-        }
-      });
-      // Conexões
-      const conns = connections.map(conn => ({
-        fromId: conn.from.dataset.id,
-        toId: conn.to.dataset.id,
-        color: conn.color,
-        name: conn.name || conn.label || '',
-        fontSize: conn.fontSize,
-        strokeWidth: conn.strokeWidth
-      }));
-      return { items, conns };
-    }
-
-    // Modal de seleção de sala
+    // Elementos DOM
+    const gridContainer = document.getElementById('gridContainer');
+    const equipmentSelect = document.getElementById('equipmentSelect');
+    const equipmentPreview = document.getElementById('equipmentPreview');
+    const previewImage = document.getElementById('previewImage');
+    const previewName = document.getElementById('previewName');
+    const btnSave = document.getElementById('btnSave');
+    const btnClear = document.getElementById('btnClear');
+    const btnPlaceMode = document.getElementById('btnPlaceMode');
+    const btnConnectMode = document.getElementById('btnConnectMode');
+    const btnRemoveMode = document.getElementById('btnRemoveMode');
+    const btnLoadRealData = document.getElementById('btnLoadRealData');
+    const btnLoadKeystones = document.getElementById('btnLoadKeystones');
+    const btnSair = document.getElementById('btnSair');
+    const statusBar = document.getElementById('statusBar');
+    const statusInfo = document.getElementById('statusInfo');
     const salaModal = document.getElementById('salaModal');
-    async function abrirSalaModal() {
-      salaModal.style.display = 'flex';
-      const salaSelect = document.getElementById('salaSelect');
-      salaSelect.innerHTML = '<option>Carregando salas...</option>';
+    const salaSelect = document.getElementById('salaSelect');
+    const btnCancelSala = document.getElementById('btnCancelSala');
+    const btnConfirmSala = document.getElementById('btnConfirmSala');
+    
+    // Elementos do modal inicial
+    const initialModal = document.getElementById('initialModal');
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+    const salaSelectInitial = document.getElementById('salaSelect');
+    const salaInfo = document.getElementById('salaInfo');
+    const salaDetails = document.getElementById('salaDetails');
+    const layoutStatus = document.getElementById('layoutStatus');
+    const confirmInfo = document.getElementById('confirmInfo');
+    const btnBack = document.getElementById('btnBack');
+    const btnContinue = document.getElementById('btnContinue');
+    const btnConfirm = document.getElementById('btnConfirm');
+    const btnCancel = document.getElementById('btnCancel');
+
+    // Estado do modal
+    let modalState = {
+      currentStep: 1,
+      action: null, // 'new' ou 'edit'
+      selectedSala: null,
+      layoutExists: false
+    };
+
+    // Função para carregar equipamentos
+    async function loadEquipment() {
       try {
-        const resp = await fetch('/api/salas');
-        const salas = await resp.json();
-        salaSelect.innerHTML = '';
-        salas.forEach(sala => {
-          const opt = document.createElement('option');
-          opt.value = sala.id;
-          opt.textContent = sala.nome || ('Sala ' + sala.id);
-          salaSelect.appendChild(opt);
+        const response = await fetch('/api/equipamentos-imagens');
+        const equipment = await response.json();
+        
+        // Limpar opções existentes (exceto a primeira)
+        equipmentSelect.innerHTML = '<option value="">Selecione um equipamento...</option>';
+        
+        equipment.forEach((src, index) => {
+          const name = src.split('/').pop().replace(/\.[a-z]+$/i, '').replace(/-/g, ' ');
+          
+          const option = document.createElement('option');
+          option.value = src;
+          option.textContent = name;
+          option.dataset.equipment = src;
+          
+          equipmentSelect.appendChild(option);
         });
-      } catch (e) {
-        salaSelect.innerHTML = '<option>Erro ao carregar salas</option>';
+        
+        // Event listener para mudança de seleção
+        equipmentSelect.addEventListener('change', () => {
+          const selectedValue = equipmentSelect.value;
+          
+          if (selectedValue) {
+            const name = selectedValue.split('/').pop().replace(/\.[a-z]+$/i, '').replace(/-/g, ' ');
+            
+            // Atualizar preview
+            previewImage.src = selectedValue;
+            previewImage.alt = name;
+            previewName.textContent = name;
+            equipmentPreview.classList.remove('hidden');
+            
+            // Selecionar equipamento
+            gridData.selectedEquipment = selectedValue;
+            
+            updateStatus(`Equipamento selecionado: ${name}`);
+          } else {
+            // Esconder preview
+            equipmentPreview.classList.add('hidden');
+            gridData.selectedEquipment = null;
+            updateStatus('Nenhum equipamento selecionado');
+          }
+        });
+        
+      } catch (error) {
+        console.error('Erro ao carregar equipamentos:', error);
+        updateStatus('Erro ao carregar equipamentos');
       }
     }
 
-    document.getElementById('btnCancelarSala').onclick = () => {
+
+
+    // Função para criar keystone visual
+    function createKeystoneVisual(keystone, row, col) {
+      console.log(`createKeystoneVisual chamada: keystone=${keystone}, row=${row}, col=${col}`);
+      
+      const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+      if (!cell) {
+        console.error(`Célula não encontrada para posição (${row}, ${col})`);
+        return;
+      }
+      
+      console.log(`Célula encontrada:`, cell);
+      
+      cell.innerHTML = `
+        <div class="equipment-slot keystone-slot">
+          <div class="keystone-icon">🔌</div>
+          <div class="name">${keystone}</div>
+          </div>
+      `;
+      
+      cell.classList.add('occupied', 'keystone');
+      cell.dataset.keystone = keystone;
+      
+      // Torna o keystone arrastável
+      const keystoneSlot = cell.querySelector('.keystone-slot');
+      if (keystoneSlot) {
+        makeEquipmentDraggable(keystoneSlot);
+        console.log(`Keystone ${keystone} criado com sucesso na posição (${row}, ${col})`);
+      } else {
+        console.error(`Keystone slot não encontrado após criação`);
+      }
+    }
+
+    // Função para criar a grade
+    function createGrid() {
+      // Salvar dados existentes antes de limpar
+      const existingEquipment = [];
+      const existingConnections = [...gridData.connections];
+      
+      // Coletar equipamentos existentes
+      document.querySelectorAll('.grid-cell.occupied').forEach(cell => {
+        const row = parseInt(cell.dataset.row);
+        const col = parseInt(cell.dataset.col);
+        const img = cell.querySelector('img');
+        const name = cell.querySelector('.name').textContent;
+        const isKeystone = cell.classList.contains('keystone');
+        const keystone = isKeystone ? cell.dataset.keystone : null;
+        
+        existingEquipment.push({
+          row: row,
+          col: col,
+          src: img ? img.src : null,
+          name: name,
+          isKeystone: isKeystone,
+          keystone: keystone
+        });
+      });
+      
+      // Limpar container
+      gridContainer.innerHTML = '';
+      gridContainer.style.gridTemplateColumns = `repeat(${gridData.cols}, 1fr)`;
+      gridContainer.style.gridTemplateRows = `repeat(${gridData.rows}, 1fr)`;
+      
+      // Criar SVG de conexões
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.id = 'svg-connections';
+      svg.style.position = 'absolute';
+      svg.style.top = '0';
+      svg.style.left = '0';
+      svg.style.width = '100%';
+      svg.style.height = '100%';
+      svg.style.pointerEvents = 'none';
+      svg.style.zIndex = '5';
+      
+      // Adicionar definições SVG
+      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      const marker = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
+      marker.id = 'arrowhead';
+      marker.setAttribute('markerWidth', '10');
+      marker.setAttribute('markerHeight', '7');
+      marker.setAttribute('refX', '9');
+      marker.setAttribute('refY', '3.5');
+      marker.setAttribute('orient', 'auto');
+      
+      const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+      polygon.setAttribute('points', '0 0, 10 3.5, 0 7');
+      polygon.setAttribute('fill', '#007bff');
+      
+      marker.appendChild(polygon);
+      defs.appendChild(marker);
+      svg.appendChild(defs);
+      gridContainer.appendChild(svg);
+      
+      gridData.cells = [];
+      
+      for (let row = 0; row < gridData.rows; row++) {
+        for (let col = 0; col < gridData.cols; col++) {
+          const cell = document.createElement('div');
+          cell.className = 'grid-cell';
+          cell.dataset.row = row;
+          cell.dataset.col = col;
+          cell.dataset.index = gridData.cells.length;
+          
+          // Evento de clique simples
+          cell.addEventListener('click', (e) => {
+            // Se está arrastando, ignora clique
+            if (gridData.dragState.isDragging) {
+              return;
+            }
+            
+            // Se acabou de arrastar, ignora clique por um tempo
+            if (gridData.dragState.dragStartTime && (Date.now() - gridData.dragState.dragStartTime) < 300) {
+              return;
+            }
+            
+            handleCellClick(cell, row, col);
+          });
+          
+          cell.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            handleCellRightClick(cell, row, col);
+          });
+          
+          // Eventos de drag and drop
+          cell.addEventListener('dragover', (e) => handleDragOver(e, cell));
+          cell.addEventListener('dragenter', (e) => handleDragEnter(e, cell));
+          cell.addEventListener('dragleave', (e) => handleDragLeave(e, cell));
+          cell.addEventListener('drop', (e) => handleDrop(e, cell, row, col));
+          
+          gridContainer.appendChild(cell);
+          gridData.cells.push({
+            element: cell,
+            row: row,
+            col: col,
+            equipment: null,
+            equipmentName: null
+          });
+        }
+      }
+      
+      // Restaurar equipamentos que ainda cabem na nova grade
+      let restoredEquipment = 0;
+      existingEquipment.forEach(item => {
+        if (item.row < gridData.rows && item.col < gridData.cols) {
+          const cell = document.querySelector(`[data-row="${item.row}"][data-col="${item.col}"]`);
+          if (cell) {
+            if (item.isKeystone) {
+              // Restaurar keystone
+              cell.innerHTML = `
+                <div class="equipment-slot keystone-slot">
+                  <div class="keystone-icon">🔌</div>
+                  <div class="name">${item.name}</div>
+                </div>
+              `;
+              cell.classList.add('occupied', 'keystone');
+              cell.dataset.keystone = item.keystone;
+            } else {
+              // Restaurar equipamento normal
+              cell.innerHTML = `
+                <div class="equipment-slot">
+                  <img src="${item.src}" alt="${item.name}">
+                  <div class="name">${item.name}</div>
+                </div>
+              `;
+              cell.classList.add('occupied');
+            }
+            
+            // Torna o equipamento arrastável
+            const equipmentSlot = cell.querySelector('.equipment-slot');
+            if (equipmentSlot) {
+              makeEquipmentDraggable(equipmentSlot);
+            }
+            restoredEquipment++;
+          }
+        }
+      });
+      
+      // Restaurar conexões que ainda são válidas
+      const validConnections = existingConnections.filter(conn => {
+        const fromValid = conn.from.row < gridData.rows && conn.from.col < gridData.cols;
+        const toValid = conn.to.row < gridData.rows && conn.to.col < gridData.cols;
+        return fromValid && toValid;
+      });
+      
+      gridData.connections = validConnections;
+      
+      // Redesenhar conexões válidas
+      if (gridData.connections.length > 0) {
+        redrawAllConnections();
+      }
+      
+      // Mostrar aviso se equipamentos ou conexões foram perdidos
+      const lostEquipment = existingEquipment.length - restoredEquipment;
+      const lostConnections = existingConnections.length - validConnections.length;
+      
+      if (lostEquipment > 0 || lostConnections > 0) {
+        let warningMessage = '';
+        if (lostEquipment > 0) {
+          warningMessage += `${lostEquipment} equipamento(s) perdido(s) `;
+        }
+        if (lostConnections > 0) {
+          warningMessage += `${lostConnections} conexão(ões) perdida(s) `;
+        }
+        warningMessage += 'devido à redução da grade';
+        
+        // Mostrar alerta temporário
+        setTimeout(() => {
+          alert(`⚠️ ${warningMessage}\n\nEquipamentos e conexões fora dos limites da nova grade foram removidos.`);
+        }, 100);
+      }
+    }
+
+    // Função para tornar equipamento arrastável
+    function makeEquipmentDraggable(equipmentSlot) {
+      equipmentSlot.draggable = true;
+      
+      equipmentSlot.addEventListener('dragstart', (e) => {
+        if (gridData.connectionMode || gridData.removeMode) {
+          e.preventDefault();
+          return;
+        }
+        
+        gridData.dragState.isDragging = true;
+        gridData.dragState.draggedElement = equipmentSlot;
+        gridData.dragState.originalCell = equipmentSlot.closest('.grid-cell');
+        gridData.dragState.originalRow = parseInt(gridData.dragState.originalCell.dataset.row);
+        gridData.dragState.originalCol = parseInt(gridData.dragState.originalCell.dataset.col);
+        gridData.dragState.dragStartTime = Date.now();
+        
+        equipmentSlot.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', 'equipment');
+        
+        console.log('Iniciando arrasto:', gridData.dragState.originalRow, gridData.dragState.originalCol);
+      });
+      
+      equipmentSlot.addEventListener('dragend', (e) => {
+        gridData.dragState.isDragging = false;
+        gridData.dragState.draggedElement = null;
+        gridData.dragState.originalCell = null;
+        gridData.dragState.originalRow = null;
+        gridData.dragState.originalCol = null;
+        gridData.dragState.dragStartTime = null;
+        
+        equipmentSlot.classList.remove('dragging');
+        
+        // Remove destaque de todas as células
+        document.querySelectorAll('.grid-cell.drag-over').forEach(cell => {
+          cell.classList.remove('drag-over');
+        });
+        
+        console.log('Finalizando arrasto');
+      });
+    }
+
+    // Função para lidar com clique na célula - otimizada
+    function handleCellClick(cell, row, col) {
+      // Verificações rápidas primeiro
+      if (gridData.removeMode) {
+        handleRemoveClick(cell, row, col);
+        return;
+      }
+      
+      if (gridData.connectionMode) {
+        handleConnectionClick(cell, row, col);
+        return;
+      }
+      
+      // Modo posicionamento
+      handlePlacementClick(cell, cell.dataset.index);
+    }
+
+    // Função para determinar classe de tamanho baseada no nome do equipamento
+    function getEquipmentSizeClass(equipmentName) {
+      const name = equipmentName.toLowerCase();
+      
+      // TVs - maiores
+      if (name.includes('tv') || name.includes('tela') || name.includes('monitor')) {
+        return 'equipment-large';
+      }
+      
+      // Projetores - muito grandes
+      if (name.includes('projetor') || name.includes('projector')) {
+        return 'equipment-xlarge';
+      }
+      
+      // Amplificadores - grandes
+      if (name.includes('amplificador') || name.includes('amplifier')) {
+        return 'equipment-large';
+      }
+      
+      // Painéis e TAPs - médios-grandes
+      if (name.includes('painel') || name.includes('panel') || name.includes('tap')) {
+        return 'equipment-medium-large';
+      }
+      
+      // Meetups - médios-grandes
+      if (name.includes('meetup')) {
+        return 'equipment-medium-large';
+      }
+      
+      // Câmeras - médias
+      if (name.includes('camera') || name.includes('cam')) {
+        return 'equipment-medium';
+      }
+      
+      // Speakers - médios
+      if (name.includes('speaker') || name.includes('caixa')) {
+        return 'equipment-medium';
+      }
+      
+      // Switches e Hubs - médios
+      if (name.includes('switch') || name.includes('hub')) {
+        return 'equipment-medium';
+      }
+      
+      // Microfones - pequenos
+      if (name.includes('microfone') || name.includes('mic')) {
+        return 'equipment-small';
+      }
+      
+      // Chromebox - médio (maior que antes)
+      if (name.includes('chromebox')) {
+        return 'equipment-medium';
+      }
+      
+      // PC, Dongle - pequenos
+      if (name.includes('pc') || name.includes('dongle')) {
+        return 'equipment-small';
+      }
+      
+      // POE, Mixers - médios
+      if (name.includes('poe') || name.includes('mixer')) {
+        return 'equipment-medium';
+      }
+      
+      // Padrão - médio
+      return 'equipment-medium';
+    }
+
+    // Função para lidar com clique para posicionamento - otimizada
+    function handlePlacementClick(cell, cellIndex) {
+      if (!gridData.selectedEquipment) {
+        updateStatus('Selecione um equipamento primeiro!');
+        return;
+      }
+      
+      const cellData = gridData.cells[cellIndex];
+      
+      // Se é um patch panel selecionado
+      if (gridData.selectedEquipment === 'patch-panel' && gridData.selectedPatchPanel) {
+        const panel = gridData.selectedPatchPanel;
+        
+        // Criar patch panel visual
+        cell.innerHTML = `
+          <div class="equipment-slot patch-panel-slot">
+            <div class="patch-panel-icon">📡</div>
+            <div class="name">${panel.nome}</div>
+            <div class="patch-info">${panel.num_portas} portas</div>
+          </div>
+        `;
+        
+        cell.classList.add('occupied', 'patch-panel');
+        cellData.equipment = 'patch-panel';
+        cellData.equipmentName = panel.nome;
+        cellData.patchPanelId = panel.id;
+        
+        // Torna o patch panel arrastável
+        const patchPanelSlot = cell.querySelector('.patch-panel-slot');
+        makeEquipmentDraggable(patchPanelSlot);
+        
+        // Carregar keystones ocupados automaticamente
+        loadKeystonesForPanel(panel.id, cellIndex);
+        
+        updateStatus(`Patch Panel ${panel.nome} posicionado`);
+        return;
+      }
+      
+      // Equipamento normal
+      const name = gridData.selectedEquipment.split('/').pop().replace(/\.[a-z]+$/i, '').replace(/-/g, ' ');
+      const sizeClass = getEquipmentSizeClass(name);
+      
+      // Atualiza célula diretamente
+      cell.innerHTML = `
+        <div class="equipment-slot ${sizeClass}">
+          <img src="${gridData.selectedEquipment}" alt="${name}">
+          <div class="name">${name}</div>
+        </div>
+      `;
+      
+      cell.classList.add('occupied');
+      cellData.equipment = gridData.selectedEquipment;
+      cellData.equipmentName = name;
+      
+      // Torna o equipamento arrastável
+      const equipmentSlot = cell.querySelector('.equipment-slot');
+      makeEquipmentDraggable(equipmentSlot);
+      
+      updateStatus(`Equipamento ${name} posicionado`);
+    }
+
+
+
+    // Função para lidar com clique para conexões - otimizada
+    function handleConnectionClick(cell, row, col) {
+      if (!cell.classList.contains('occupied')) {
+        updateStatus('Selecione uma célula com equipamento para conectar!');
+        return;
+      }
+
+      if (!gridData.connectionStart) {
+        // Primeira seleção
+        gridData.connectionStart = { cell, row, col };
+        cell.classList.add('selected');
+        highlightConnectableCells(cell);
+        updateStatus('Selecione o segundo equipamento para conectar');
+      } else if (gridData.connectionStart.cell === cell) {
+        // Desselecionar
+        gridData.connectionStart = null;
+        cell.classList.remove('selected');
+        clearConnectableHighlights();
+        updateStatus('Conexão cancelada');
+      } else {
+        // Segunda seleção - criar conexão
+        const startCell = gridData.connectionStart.cell;
+        startCell.classList.remove('selected');
+        clearConnectableHighlights();
+        
+        createConnection(gridData.connectionStart, { cell, row, col });
+        gridData.connectionStart = null;
+      }
+    }
+
+    // Função para lidar com clique para remoção - otimizada
+    function handleRemoveClick(cell, row, col) {
+      if (cell.classList.contains('occupied')) {
+        const name = cell.querySelector('.name').textContent;
+        if (confirm(`Remover equipamento "${name}" desta posição?`)) {
+          removeEquipment(cell, row, col);
+        }
+      }
+    }
+
+    // Remover equipamento
+    function removeEquipment(cell, row, col) {
+      const name = cell.querySelector('.name').textContent;
+      
+      // Remove equipamento da célula
+      cell.innerHTML = '';
+      cell.classList.remove('occupied', 'keystone');
+      delete cell.dataset.keystone;
+      
+      // Remove conexões relacionadas
+      const connectionsToRemove = gridData.connections.filter(conn => 
+        (conn.from.row === row && conn.from.col === col) ||
+        (conn.to.row === row && conn.to.col === col)
+      );
+      
+      connectionsToRemove.forEach(conn => {
+        removeConnection(conn.id);
+      });
+      
+      updateStatus(`Equipamento "${name}" removido${connectionsToRemove.length > 0 ? ` e ${connectionsToRemove.length} conexão(ões) removida(s)` : ''}`);
+    }
+
+    // Remover conexão
+    function removeConnection(connectionId) {
+      const connection = gridData.connections.find(conn => conn.id === connectionId);
+      if (connection) {
+        // Remove do array
+        gridData.connections = gridData.connections.filter(conn => conn.id !== connectionId);
+        
+        // Remove elementos visuais do SVG
+        const svg = document.getElementById('svg-connections');
+        const path = svg.querySelector(`path[data-connection-id="${connectionId}"]`);
+        if (path) {
+          // Remove o path e os elementos relacionados (texto e fundo)
+          const pathIndex = Array.from(svg.children).indexOf(path);
+          if (pathIndex !== -1) {
+            // Remove o path
+            svg.removeChild(path);
+            
+            // Remove o texto e fundo relacionados (se existirem)
+            const textElements = svg.querySelectorAll('text');
+            const rectElements = svg.querySelectorAll('rect');
+            
+            // Remove elementos próximos que podem ser o texto e fundo desta conexão
+            for (let i = 0; i < textElements.length; i++) {
+              const text = textElements[i];
+              if (text.textContent === connection.cableInfo) {
+                svg.removeChild(text);
+                break;
+              }
+            }
+            
+            for (let i = 0; i < rectElements.length; i++) {
+              const rect = rectElements[i];
+              if (rect.getAttribute('fill') === 'rgba(255, 255, 255, 0.9)') {
+                svg.removeChild(rect);
+                break;
+              }
+            }
+          }
+        }
+        
+        updateStatus(`Conexão "${connection.cableInfo}" removida`);
+      }
+    }
+
+    // Função para destacar células conectáveis - otimizada
+    function highlightConnectableCells(excludeCell) {
+      const cells = document.querySelectorAll('.grid-cell.occupied');
+      for (let i = 0; i < cells.length; i++) {
+        const cell = cells[i];
+        if (cell !== excludeCell) {
+          cell.classList.add('connectable');
+        }
+      }
+    }
+
+    // Função para limpar destaque de células conectáveis - otimizada
+    function clearConnectableHighlights() {
+      const cells = document.querySelectorAll('.grid-cell.connectable');
+      for (let i = 0; i < cells.length; i++) {
+        cells[i].classList.remove('connectable');
+      }
+    }
+
+    // Criar conexão
+    function createConnection(from, to) {
+      const fromName = from.cell.querySelector('.name').textContent;
+      const toName = to.cell.querySelector('.name').textContent;
+      
+      // Solicitar informações do cabo
+      const cableInfo = prompt(`Conexão: ${fromName} → ${toName}\n\nDigite as informações do cabo (ex: HDMI-001, USB-002):`);
+      
+      if (cableInfo === null) {
+        updateStatus('Conexão cancelada');
+        return;
+      }
+
+      const connection = {
+        from: { row: from.row, col: from.col },
+        to: { row: to.row, col: to.col },
+        fromName: fromName,
+        toName: toName,
+        cableInfo: cableInfo,
+        id: Date.now()
+      };
+
+      gridData.connections.push(connection);
+      drawConnection(connection);
+      updateStatus(`Conexão criada: ${fromName} → ${toName} (${cableInfo})`);
+    }
+
+    // Redesenhar todas as conexões - otimizada
+    function redrawAllConnections() {
+      console.log('Redesenhando todas as conexões...');
+      console.log('Total de conexões:', gridData.connections.length);
+      
+      // Verificar se o SVG existe
+      const svg = document.getElementById('svg-connections');
+      if (!svg) {
+        console.warn('SVG de conexões não encontrado');
+        return;
+      }
+      
+      const defs = svg.querySelector('defs');
+      if (!defs) {
+        console.warn('Definições SVG não encontradas');
+        return;
+      }
+      
+      // Remove todos os elementos exceto defs
+      while (svg.firstChild) {
+        svg.removeChild(svg.firstChild);
+      }
+      
+      // Readiciona as definições
+      svg.appendChild(defs);
+      
+      // Verificar se há equipamentos posicionados antes de desenhar conexões
+      const occupiedCells = document.querySelectorAll('.grid-cell.occupied');
+      console.log('Células ocupadas encontradas:', occupiedCells.length);
+      
+      if (occupiedCells.length === 0) {
+        console.warn('Nenhuma célula ocupada encontrada. Aguardando posicionamento de equipamentos...');
+        return;
+      }
+      
+      // Redesenha todas as conexões
+      const connections = gridData.connections;
+      let drawnConnections = 0;
+      
+      for (let i = 0; i < connections.length; i++) {
+        try {
+          drawConnection(connections[i]);
+          drawnConnections++;
+        } catch (error) {
+          console.error(`Erro ao desenhar conexão ${i}:`, error);
+        }
+      }
+      
+      console.log(`✅ ${drawnConnections}/${connections.length} conexões redesenhadas com sucesso`);
+    }
+
+    // Função para determinar cor do cabo baseado no tipo
+    function getCableColor(cableInfo) {
+      const info = cableInfo.toLowerCase();
+      
+      // Ethernet / RJ45 / CAT
+      if (info.includes('ethernet') || info.includes('rj45') || info.includes('cat') || 
+          info.includes('eth') || info.includes('lan') || info.includes('network')) {
+        return '#4CAF50'; // Verde
+      }
+      
+      // HDMI
+      if (info.includes('hdmi')) {
+        return '#2196F3'; // Azul
+      }
+      
+      // USB
+      if (info.includes('usb')) {
+        return '#FF9800'; // Laranja
+      }
+      
+      // VGA
+      if (info.includes('vga')) {
+        return '#9C27B0'; // Roxo
+      }
+      
+      // DisplayPort
+      if (info.includes('displayport') || info.includes('dp')) {
+        return '#00BCD4'; // Ciano
+      }
+      
+      // DVI
+      if (info.includes('dvi')) {
+        return '#795548'; // Marrom
+      }
+      
+      // Audio / XLR / TRS
+      if (info.includes('audio') || info.includes('xlr') || info.includes('trs') || 
+          info.includes('jack') || info.includes('mic') || info.includes('speaker')) {
+        return '#E91E63'; // Rosa
+      }
+      
+      // Power / Alimentação
+      if (info.includes('power') || info.includes('alimentacao') || info.includes('energia') ||
+          info.includes('poe') || info.includes('ac') || info.includes('dc')) {
+        return '#FF5722'; // Vermelho escuro
+      }
+      
+      // Serial / RS232 / RS485
+      if (info.includes('serial') || info.includes('rs232') || info.includes('rs485') ||
+          info.includes('com') || info.includes('modbus')) {
+        return '#607D8B'; // Azul acinzentado
+      }
+      
+      // Padrão - cinza
+      return '#9E9E9E';
+    }
+
+    // Função para desenhar conexão - otimizada
+    function drawConnection(connection) {
+      console.log(`drawConnection chamada para: ${connection.fromName} → ${connection.toName}`);
+      console.log('Dados da conexão:', connection);
+      
+      const fromCell = document.querySelector(`[data-row="${connection.from.row}"][data-col="${connection.from.col}"]`);
+      const toCell = document.querySelector(`[data-row="${connection.to.row}"][data-col="${connection.to.col}"]`);
+      
+      console.log('Célula de origem encontrada:', fromCell);
+      console.log('Célula de destino encontrada:', toCell);
+      
+      if (!fromCell || !toCell) {
+        console.warn('Células de conexão não encontradas:', connection);
+        return;
+      }
+
+      const fromRect = fromCell.getBoundingClientRect();
+      const toRect = toCell.getBoundingClientRect();
+      const containerRect = gridContainer.getBoundingClientRect();
+
+      const x1 = fromRect.left + fromRect.width / 2 - containerRect.left;
+      const y1 = fromRect.top + fromRect.height / 2 - containerRect.top;
+      const x2 = toRect.left + toRect.width / 2 - containerRect.left;
+      const y2 = toRect.top + toRect.height / 2 - containerRect.top;
+
+      console.log(`Coordenadas da conexão: (${x1},${y1}) → (${x2},${y2})`);
+
+      // Usar o SVG dentro do grid-container
+      const svg = document.getElementById('svg-connections');
+      if (!svg) {
+        console.warn('SVG de conexões não encontrado');
+        return;
+      }
+      
+      console.log('SVG encontrado, criando path...');
+      
+      // Determinar cor do cabo
+      const cableColor = getCableColor(connection.cableInfo);
+      
+      // Criar path para a conexão
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', `M${x1},${y1} L${x2},${y2}`);
+      path.setAttribute('stroke', cableColor);
+      path.setAttribute('stroke-width', '2');
+      path.setAttribute('stroke-dasharray', '5,5');
+        path.setAttribute('fill', 'none');
+      // path.setAttribute('marker-end', 'url(#arrowhead)'); // Removido para não mostrar seta
+      path.dataset.connectionId = connection.id;
+      
+      // Adicionar evento de clique para remover conexão
+      path.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (confirm(`Remover conexão "${connection.cableInfo}"?`)) {
+          removeConnection(connection.id);
+        }
+      });
+
+      // Adicionar evento de hover para destacar
+      path.addEventListener('mouseenter', () => {
+        if (!gridData.removeMode) {
+          path.setAttribute('stroke', '#ff0000');
+          path.setAttribute('stroke-width', '3');
+          path.setAttribute('stroke-dasharray', 'none');
+        }
+      });
+
+      path.addEventListener('mouseleave', () => {
+        path.setAttribute('stroke', cableColor);
+        path.setAttribute('stroke-width', '2');
+        path.setAttribute('stroke-dasharray', '5,5');
+      });
+
+      svg.appendChild(path);
+      console.log('Path adicionado ao SVG');
+
+      // Criar label do cabo como elemento SVG
+          const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      text.setAttribute('x', (x1 + x2) / 2);
+      text.setAttribute('y', (y1 + y2) / 2 - 5);
+          text.setAttribute('text-anchor', 'middle');
+      text.setAttribute('font-size', '10px');
+          text.setAttribute('font-family', 'Arial, sans-serif');
+      text.setAttribute('fill', '#333');
+          text.setAttribute('pointer-events', 'none');
+      text.textContent = connection.cableInfo;
+      
+      // Adicionar fundo ao texto
+      const textBBox = text.getBBox();
+      const background = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      background.setAttribute('x', textBBox.x - 2);
+      background.setAttribute('y', textBBox.y - 1);
+      background.setAttribute('width', textBBox.width + 4);
+      background.setAttribute('height', textBBox.height + 2);
+      background.setAttribute('fill', 'rgba(255, 255, 255, 0.9)');
+      background.setAttribute('stroke', cableColor);
+      background.setAttribute('stroke-width', '0.5');
+      background.setAttribute('rx', '2');
+      background.setAttribute('pointer-events', 'none');
+      
+      svg.appendChild(background);
+          svg.appendChild(text);
+      
+      console.log(`✅ Conexão desenhada com sucesso: ${connection.fromName} → ${connection.toName}`);
+        }
+
+    // Manipular clique direito (remover equipamento)
+    function handleCellRightClick(cell, row, col) {
+      if (cell.classList.contains('occupied')) {
+        const name = cell.querySelector('.name').textContent;
+        if (confirm(`Remover ${name} desta posição?`)) {
+          cell.innerHTML = '';
+          cell.classList.remove('occupied', 'keystone');
+          delete cell.dataset.keystone;
+          updateStatus(`${name} removido da posição (${row}, ${col})`);
+        }
+      }
+    }
+
+    // Atualizar status com debounce
+    let statusTimeout = null;
+    function updateStatus(message) {
+      if (statusTimeout) {
+        clearTimeout(statusTimeout);
+      }
+      statusTimeout = setTimeout(() => {
+        statusBar.textContent = message;
+        if (statusInfo) {
+          statusInfo.textContent = message;
+        }
+      }, 10);
+    }
+
+    // Salvar layout
+    async function saveLayout() {
+      if (!gridData.currentSalaId) {
+        alert('Nenhuma sala selecionada! Selecione uma sala primeiro.');
+        return;
+      }
+      
+      try {
+        updateStatus('Salvando layout...');
+        
+        const layout = {
+          grid: {
+            rows: gridData.rows,
+            cols: gridData.cols
+          },
+          equipment: [],
+          connections: gridData.connections
+        };
+        
+        // Coleta equipamentos posicionados
+        document.querySelectorAll('.grid-cell.occupied').forEach(cell => {
+          const row = parseInt(cell.dataset.row);
+          const col = parseInt(cell.dataset.col);
+          const img = cell.querySelector('img');
+          const name = cell.querySelector('.name').textContent;
+          
+          // Verificar se é um keystone
+          const isKeystone = cell.classList.contains('keystone');
+          
+          layout.equipment.push({
+            row: row,
+            col: col,
+            src: img ? img.src : null,
+            name: name,
+            isKeystone: isKeystone,
+            keystone: isKeystone ? cell.dataset.keystone : null
+          });
+        });
+        
+        console.log('Layout a ser salvo:', layout);
+        
+        const response = await fetch(`/api/salas/${gridData.currentSalaId}/layout`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(layout)
+        });
+        
+        if (response.ok) {
+          updateStatus('✅ Layout salvo com sucesso!');
+          alert('Layout salvo com sucesso!');
+        } else {
+          const errorText = await response.text();
+          console.error('Erro ao salvar layout:', errorText);
+          updateStatus('❌ Erro ao salvar layout');
+          alert(`Erro ao salvar layout: ${errorText}`);
+        }
+      } catch (error) {
+        console.error('Erro ao salvar:', error);
+        updateStatus('❌ Erro ao salvar layout');
+        alert(`Erro ao salvar layout: ${error.message}`);
+      }
+    }
+
+    // Carregar layout
+    async function loadLayout(salaId) {
+      try {
+        updateStatus('Carregando layout...');
+        
+        const response = await fetch(`/api/salas/${salaId}/layout`);
+        if (!response.ok) {
+          updateStatus('Nenhum layout encontrado para esta sala');
+          return;
+        }
+        
+        const layout = await response.json();
+        console.log('Layout carregado:', layout);
+        
+        // Verificar se a grade existe antes de limpar
+        const cells = document.querySelectorAll('.grid-cell');
+        if (cells.length > 0) {
+          // Limpa grade atual
+          cells.forEach(cell => {
+            cell.innerHTML = '';
+            cell.classList.remove('occupied', 'keystone');
+          });
+        }
+        
+        // Posiciona equipamentos
+        if (layout.equipment) {
+          layout.equipment.forEach(item => {
+            const cell = document.querySelector(`[data-row="${item.row}"][data-col="${item.col}"]`);
+            if (cell) {
+              if (item.isKeystone) {
+                // É um keystone
+                cell.innerHTML = `
+                  <div class="equipment-slot keystone-slot">
+                    <div class="keystone-icon">🔌</div>
+                    <div class="name">${item.name}</div>
+                  </div>
+                `;
+                cell.classList.add('occupied', 'keystone');
+                cell.dataset.keystone = item.keystone;
+              } else {
+                // É um equipamento normal
+                const sizeClass = getEquipmentSizeClass(item.name);
+                cell.innerHTML = `
+                  <div class="equipment-slot ${sizeClass}">
+                    <img src="${item.src}" alt="${item.name}">
+                    <div class="name">${item.name}</div>
+                  </div>
+                `;
+                cell.classList.add('occupied');
+              }
+              
+              // Torna o equipamento arrastável
+              const equipmentSlot = cell.querySelector('.equipment-slot');
+              if (equipmentSlot) {
+                makeEquipmentDraggable(equipmentSlot);
+              }
+            }
+          });
+          
+          console.log(`${layout.equipment.length} equipamentos posicionados`);
+        }
+        
+        // Carrega conexões
+        gridData.connections = layout.connections || [];
+        
+        // Sempre redesenhar conexões após carregar layout
+        setTimeout(() => {
+          redrawAllConnections();
+        }, 100);
+        
+        // Verificação adicional após um delay maior
+        setTimeout(() => {
+          if (gridData.connections.length > 0) {
+            const svg = document.getElementById('svg-connections');
+            const paths = svg ? svg.querySelectorAll('path') : [];
+            if (paths.length === 0) {
+              console.log('Conexões não foram desenhadas, tentando novamente...');
+              redrawAllConnections();
+            }
+          }
+        }, 500);
+        
+        updateStatus(`✅ Layout carregado da sala ${salaId}`);
+        
+      } catch (error) {
+        console.error('Erro ao carregar layout:', error);
+        updateStatus('❌ Erro ao carregar layout');
+        alert(`Erro ao carregar layout: ${error.message}`);
+      }
+    }
+
+    // Mostrar modal de seleção de sala
+    async function showSalaModal(action) {
+      salaModal.style.display = 'flex';
+      
+      try {
+        const response = await fetch('/api/salas');
+        const salas = await response.json();
+        
+        salaSelect.innerHTML = '<option value="">Carregando salas...</option>';
+        salas.forEach(sala => {
+          const option = document.createElement('option');
+          option.value = sala.id;
+          option.textContent = sala.nome || `Sala ${sala.id}`;
+          salaSelect.appendChild(option);
+        });
+        
+        // Configura ação do botão confirmar
+        btnConfirmSala.onclick = () => {
+          const salaId = salaSelect.value;
+          if (!salaId) {
+            alert('Selecione uma sala!');
+            return;
+          }
+          
+          gridData.currentSalaId = salaId;
+          salaModal.style.display = 'none';
+          
+          if (action === 'save') {
+            saveLayout();
+          } else if (action === 'load') {
+            loadLayout(salaId);
+          }
+        };
+        
+      } catch (error) {
+        console.error('Erro ao carregar salas:', error);
+        salaSelect.innerHTML = '<option value="">Erro ao carregar salas</option>';
+      }
+    }
+
+    // Limpar tudo
+    function clearAll() {
+      if (confirm('Tem certeza que deseja limpar todo o layout?')) {
+        const cells = document.querySelectorAll('.grid-cell');
+        if (cells.length > 0) {
+          cells.forEach(cell => {
+            cell.innerHTML = '';
+            cell.classList.remove('occupied', 'selected', 'connectable', 'removable', 'keystone');
+            delete cell.dataset.keystone;
+          });
+        }
+        
+        gridData.connections = [];
+        gridData.connectionStart = null;
+        gridData.selectedConnection = null;
+        
+        // Limpar seleção de equipamento
+        equipmentSelect.value = '';
+        equipmentPreview.classList.add('hidden');
+        gridData.selectedEquipment = null;
+        
+        // Só redesenha se o SVG existir
+        const svg = document.getElementById('svg-connections');
+        if (svg) {
+          redrawAllConnections();
+        }
+        
+        updateStatus('Layout limpo');
+      }
+    }
+
+    // Função para mostrar modal inicial
+    function showInitialModal() {
+      initialModal.style.display = 'flex';
+      modalState.currentStep = 1;
+      modalState.action = null;
+      modalState.selectedSala = null;
+      modalState.layoutExists = false;
+      
+      // Mostra passo 1
+      step1.classList.add('active');
+      step2.classList.remove('active');
+      
+      // Carregar salas automaticamente
+      loadSalas();
+    }
+
+    // Função para carregar salas
+    async function loadSalas() {
+      try {
+        const response = await fetch('/api/salas');
+        const salas = await response.json();
+        
+        salaSelectInitial.innerHTML = '<option value="">Selecione uma sala...</option>';
+        salas.forEach(sala => {
+          const option = document.createElement('option');
+          option.value = sala.id;
+          option.textContent = sala.nome || `Sala ${sala.id}`;
+          option.dataset.sala = JSON.stringify(sala);
+          salaSelectInitial.appendChild(option);
+        });
+      } catch (error) {
+        console.error('Erro ao carregar salas:', error);
+        salaSelectInitial.innerHTML = '<option value="">Erro ao carregar salas</option>';
+      }
+    }
+
+    // Função para verificar se layout existe
+    async function checkLayoutExists(salaId) {
+      try {
+        const response = await fetch(`/api/salas/${salaId}/layout`);
+        return response.ok;
+      } catch (error) {
+        return false;
+      }
+    }
+
+    // Função para mostrar informações da sala
+    function showSalaInfo(sala) {
+      salaDetails.innerHTML = `
+        <p><strong>Nome:</strong> ${sala.nome || 'Não informado'}</p>
+        <p><strong>ID:</strong> ${sala.id}</p>
+      `;
+      salaInfo.style.display = 'block';
+    }
+
+    // Função para atualizar status do layout
+    async function updateLayoutStatus(salaId) {
+      const exists = await checkLayoutExists(salaId);
+      modalState.layoutExists = exists;
+      
+      if (exists) {
+        layoutStatus.innerHTML = '<span class="layout-status exists">✅ Layout existente</span>';
+      } else {
+        layoutStatus.innerHTML = '<span class="layout-status new">🆕 Sem layout</span>';
+      }
+    }
+
+    // Função para ir para próximo passo
+    function nextStep() {
+      const currentStepElement = document.querySelector(`#step${modalState.currentStep}`);
+      currentStepElement.classList.remove('active');
+      
+      modalState.currentStep++;
+      const nextStepElement = document.querySelector(`#step${modalState.currentStep}`);
+      nextStepElement.classList.add('active');
+    }
+
+    // Função para voltar passo
+    function prevStep() {
+      const currentStepElement = document.querySelector(`#step${modalState.currentStep}`);
+      currentStepElement.classList.remove('active');
+      
+      modalState.currentStep--;
+      const nextStepElement = document.querySelector(`#step${modalState.currentStep}`);
+      nextStepElement.classList.add('active');
+    }
+
+    // Função para confirmar ação
+    function confirmAction() {
+      // Se existe layout, carrega. Se não existe, cria novo
+      if (modalState.layoutExists) {
+        // Carregar layout existente
+        gridData.currentSalaId = modalState.selectedSala.id;
+        loadLayout(modalState.selectedSala.id);
+        updateStatus(`Layout carregado para ${modalState.selectedSala.nome || `Sala ${modalState.selectedSala.id}`}`);
+      } else {
+        // Criar novo layout
+        gridData.currentSalaId = modalState.selectedSala.id;
+        clearAll();
+        updateStatus(`Novo layout iniciado para ${modalState.selectedSala.nome || `Sala ${modalState.selectedSala.id}`}`);
+      }
+      
+      initialModal.style.display = 'none';
+    }
+
+    // Função para atualizar conexões após mover equipamento - otimizada
+    function updateConnectionsAfterMove(fromRow, fromCol, toRow, toCol, equipmentName) {
+      // Atualiza posições das conexões
+      const connections = gridData.connections;
+      for (let i = 0; i < connections.length; i++) {
+        const connection = connections[i];
+        if (connection.from.row === fromRow && connection.from.col === fromCol) {
+          connection.from.row = toRow;
+          connection.from.col = toCol;
+        }
+        if (connection.to.row === fromRow && connection.to.col === fromCol) {
+          connection.to.row = toRow;
+          connection.to.col = toCol;
+        }
+      }
+      
+      // Redesenha todas as conexões
+      redrawAllConnections();
+    }
+
+    // Função para mover equipamento - otimizada
+    function moveEquipment(fromRow, fromCol, toRow, toCol) {
+      const fromCell = document.querySelector(`[data-row="${fromRow}"][data-col="${fromCol}"]`);
+      const toCell = document.querySelector(`[data-row="${toRow}"][data-col="${toCol}"]`);
+      
+      if (!fromCell || !toCell) return;
+      
+      // Pega o conteúdo do equipamento
+      const equipmentSlot = fromCell.querySelector('.equipment-slot');
+      if (!equipmentSlot) return;
+      
+      const equipmentName = equipmentSlot.querySelector('.name').textContent;
+      
+      // Verificar se é um keystone (tem ícone) ou equipamento normal (tem imagem)
+      const equipmentImg = equipmentSlot.querySelector('img');
+      const isKeystone = fromCell.classList.contains('keystone');
+      const keystoneData = isKeystone ? fromCell.dataset.keystone : null;
+      
+      // Remove da célula original
+      fromCell.innerHTML = '';
+      fromCell.classList.remove('occupied', 'keystone');
+      delete fromCell.dataset.keystone;
+      
+      // Adiciona na nova célula
+      if (isKeystone) {
+        // É um keystone - usar estrutura de keystone
+        toCell.innerHTML = `
+          <div class="equipment-slot keystone-slot">
+            <div class="keystone-icon">🔌</div>
+            <div class="name">${equipmentName}</div>
+          </div>
+        `;
+        toCell.classList.add('occupied', 'keystone');
+        if (keystoneData) {
+          toCell.dataset.keystone = keystoneData;
+        }
+      } else {
+        // É um equipamento normal - usar estrutura com imagem
+        toCell.innerHTML = `
+          <div class="equipment-slot">
+            <img src="${equipmentImg ? equipmentImg.src : ''}" alt="${equipmentName}">
+            <div class="name">${equipmentName}</div>
+          </div>
+        `;
+        toCell.classList.add('occupied');
+      }
+      
+      // Torna o novo equipamento arrastável
+      const newEquipmentSlot = toCell.querySelector('.equipment-slot');
+      makeEquipmentDraggable(newEquipmentSlot);
+      
+      // Atualiza conexões
+      updateConnectionsAfterMove(fromRow, fromCol, toRow, toCol, equipmentName);
+      
+      updateStatus(`${isKeystone ? 'Keystone' : 'Equipamento'} "${equipmentName}" movido`);
+    }
+
+    // Função para lidar com drop - otimizada
+    function handleDrop(e, cell, row, col) {
+      if (gridData.connectionMode || gridData.removeMode) return;
+      
+      e.preventDefault();
+      cell.classList.remove('drag-over');
+      
+      if (!gridData.dragState.isDragging || !gridData.dragState.draggedElement) return;
+      
+      const originalCell = gridData.dragState.originalCell;
+      const originalRow = gridData.dragState.originalRow;
+      const originalCol = gridData.dragState.originalCol;
+      
+      // Se a célula de destino está ocupada, não permite o drop
+      if (cell.classList.contains('occupied') && cell !== originalCell) {
+        return;
+      }
+      
+      // Se é a mesma célula, não faz nada
+      if (cell === originalCell) {
+        return;
+      }
+      
+      // Move o equipamento
+      moveEquipment(originalRow, originalCol, row, col);
+    }
+
+    // Função para lidar com drag over - otimizada
+    function handleDragOver(e, cell) {
+      if (gridData.connectionMode || gridData.removeMode) return;
+      
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    }
+
+    // Função para lidar com drag enter - otimizada
+    function handleDragEnter(e, cell) {
+      if (gridData.connectionMode || gridData.removeMode) return;
+      
+      e.preventDefault();
+      if (!cell.classList.contains('occupied') || cell === gridData.dragState.originalCell) {
+        cell.classList.add('drag-over');
+      }
+    }
+
+    // Função para lidar com drag leave - otimizada
+    function handleDragLeave(e, cell) {
+      if (gridData.connectionMode || gridData.removeMode) return;
+      
+      cell.classList.remove('drag-over');
+    }
+
+    // Função para carregar dados reais da sala
+    async function loadRealData() {
+      if (!gridData.currentSalaId) {
+        alert('Nenhuma sala selecionada! Selecione uma sala primeiro.');
+        return;
+      }
+
+      try {
+        updateStatus('Carregando dados reais da sala...');
+        
+        console.log('=== INICIANDO CARREGAMENTO DE DADOS REAIS ===');
+        console.log('Sala ID:', gridData.currentSalaId);
+        
+        // Buscar equipamentos da sala E equipamentos em estoque (sem sala)
+        console.log('Fazendo fetch para equipamentos da sala...');
+        const equipResponse = await fetch(`/equipamentos?sala_id=${gridData.currentSalaId}`);
+        console.log('Resposta da API de equipamentos da sala:', equipResponse.status, equipResponse.ok);
+        
+        // Buscar equipamentos em estoque (sem sala)
+        console.log('Fazendo fetch para equipamentos em estoque...');
+        const estoqueResponse = await fetch('/equipamentos?sala_id=');
+        console.log('Resposta da API de equipamentos em estoque:', estoqueResponse.status, estoqueResponse.ok);
+        
+        let equipamentos = [];
+        let equipamentosEstoque = [];
+        
+        // Processar equipamentos da sala
+        if (equipResponse.ok) {
+          const equipamentosText = await equipResponse.text();
+          try {
+            equipamentos = JSON.parse(equipamentosText);
+            console.log('Equipamentos da sala (JSON válido):', equipamentos);
+          } catch (error) {
+            console.warn('API retornou página de login em vez de JSON para equipamentos da sala.');
+            equipamentos = [];
+          }
+        }
+        
+        // Processar equipamentos em estoque
+        if (estoqueResponse.ok) {
+          const estoqueText = await estoqueResponse.text();
+          try {
+            equipamentosEstoque = JSON.parse(estoqueText);
+            console.log('Equipamentos em estoque (JSON válido):', equipamentosEstoque);
+          } catch (error) {
+            console.warn('API retornou página de login em vez de JSON para equipamentos em estoque.');
+            equipamentosEstoque = [];
+          }
+        }
+        
+        // Combinar equipamentos da sala e em estoque
+        const todosEquipamentos = [...equipamentos, ...equipamentosEstoque];
+        console.log('Todos os equipamentos (sala + estoque):', todosEquipamentos);
+        
+        console.log('Todos os equipamentos (sala + estoque):', todosEquipamentos);
+        console.log('Detalhes dos equipamentos:');
+        todosEquipamentos.forEach((equip, index) => {
+          console.log(`  ${index + 1}. ${equip.nome}: id=${equip.id}, sala_id=${equip.sala_id}, tipo=${equip.tipo}`);
+        });
+        
+        // Buscar keystones dos equipamentos da sala
+        const keystonesEquipamentos = await loadKeystonesFromEquipamentos(todosEquipamentos);
+        
+        console.log('Keystones encontrados:', keystonesEquipamentos);
+        console.log('Tipo de keystones:', typeof keystonesEquipamentos);
+        console.log('É array?', Array.isArray(keystonesEquipamentos));
+        console.log('Comprimento:', keystonesEquipamentos ? keystonesEquipamentos.length : 'null/undefined');
+        
+        // Buscar conexões reais da sala - API correta
+        console.log('Fazendo fetch para conexões...');
+        const connResponse = await fetch(`/conexoes-cabos/sala/${gridData.currentSalaId}`);
+        console.log('Resposta da API de conexões:', connResponse.status, connResponse.ok);
+        
+        if (!connResponse.ok) {
+          throw new Error('Erro ao carregar conexões da sala');
+        }
+        
+        const conexoesText = await connResponse.text();
+        console.log('Texto da resposta da API de conexões (primeiros 200 chars):', conexoesText.substring(0, 200));
+        let conexoes = [];
+        
+        // Verificar se a resposta é JSON válido ou se é a página de login
+        try {
+          conexoes = JSON.parse(conexoesText);
+          console.log('✅ Conexões reais da sala (JSON válido):', conexoes);
+        } catch (error) {
+          console.warn('❌ API retornou página de login em vez de JSON. Usando dados simulados.');
+          console.log('Erro de parse:', error.message);
+          console.log('Resposta da API:', conexoesText.substring(0, 200) + '...');
+          
+          // Criar dados simulados baseados nos keystones encontrados
+          console.log('Criando dados simulados...');
+          conexoes = keystonesEquipamentos.map((keystone, index) => ({
+            id: index + 1,
+            equipamento_origem_id: keystone.equipamento_sala_id,
+            equipamento_destino_id: null,
+            porta_destino: keystone.porta_original.numero_porta,
+            keystone_destino: keystone.keystone,
+            codigo_cabo: `ETH-${(index + 1).toString().padStart(3, '0')}`,
+            nome_cabo: `Ethernet-${(index + 1).toString().padStart(3, '0')}`,
+            tipo_cabo: 'Ethernet'
+          }));
+          
+          console.log('✅ Dados simulados criados:', conexoes);
+        }
+        
+        console.log('Conexões reais da sala:', conexoes);
+        console.log('=== DETALHES DAS CONEXÕES REAIS ===');
+        conexoes.forEach((conexao, index) => {
+          console.log(`Conexão ${index + 1}:`, conexao);
+          console.log(`  - equipamento_origem_id: ${conexao.equipamento_origem_id}`);
+          console.log(`  - equipamento_destino_id: ${conexao.equipamento_destino_id}`);
+          console.log(`  - porta_destino: ${conexao.porta_destino}`);
+          console.log(`  - keystone_destino: ${conexao.keystone_destino}`);
+          console.log(`  - codigo_cabo: ${conexao.codigo_cabo}`);
+          console.log(`  - nome_cabo: ${conexao.nome_cabo}`);
+          console.log(`  - tipo_cabo: ${conexao.tipo_cabo}`);
+          console.log(`  - id: ${conexao.id}`);
+        });
+        console.log('=== FIM DOS DETALHES ===');
+        
+        // Mapear keystones com as conexões reais para obter os nomes corretos dos cabos
+        console.log('=== INICIANDO MAPEAMENTO DE KEYSTONES ===');
+        console.log('Total de keystones para mapear:', keystonesEquipamentos.length);
+        console.log('Total de conexões disponíveis:', conexoes.length);
+        
+        const keystonesComConexoes = keystonesEquipamentos.map(keystone => {
+          console.log(`\n--- Mapeando keystone: ${keystone.keystone} ---`);
+          console.log(`Dados do keystone:`, keystone);
+          console.log(`  - equipamento_sala_id: ${keystone.equipamento_sala_id}`);
+          console.log(`  - porta_original.numero_porta: ${keystone.porta_original.numero_porta}`);
+          console.log(`  - codigo_cabo original: ${keystone.codigo_cabo}`);
+          
+          // Buscar conexão que conecta a este keystone
+          const conexao = conexoes.find(conn => {
+            console.log(`\n  Verificando conexão:`, conn);
+            console.log(`    - equipamento_origem_id: ${conn.equipamento_origem_id}`);
+            console.log(`    - equipamento_destino_id: ${conn.equipamento_destino_id}`);
+            console.log(`    - porta_destino: ${conn.porta_destino}`);
+            console.log(`    - keystone_destino: ${conn.keystone_destino}`);
+            
+            // Verificar se a conexão é para um keystone (porta do patch panel)
+            const isKeystoneConnection = conn.equipamento_destino_id === 10 || // Patch panel ID
+                                       conn.porta_destino === keystone.porta_original.numero_porta ||
+                                       conn.keystone_destino === keystone.keystone;
+            
+            console.log(`    - isKeystoneConnection: ${isKeystoneConnection}`);
+            
+            // Verificar se o equipamento de origem corresponde
+            const equipOrigem = equipamentos.find(e => e.id === conn.equipamento_origem_id);
+            console.log(`    - equipOrigem encontrado:`, equipOrigem);
+            
+            // Buscar o equipamento correto baseado no nome do equipamento da porta
+            const equipamentoCorreto = equipamentos.find(e => 
+              e.nome.toLowerCase().includes(keystone.equipamento_nome?.toLowerCase() || '') ||
+              keystone.equipamento_nome?.toLowerCase().includes(e.nome.toLowerCase())
+            );
+            
+            const isEquipamentoCorreto = equipOrigem && equipamentoCorreto && 
+                                        equipOrigem.id === equipamentoCorreto.id;
+            
+            console.log(`    - equipamentoCorreto:`, equipamentoCorreto);
+            console.log(`    - isEquipamentoCorreto: ${isEquipamentoCorreto}`);
+            console.log(`    - Resultado final: ${isKeystoneConnection && isEquipamentoCorreto}`);
+            
+            return isKeystoneConnection && isEquipamentoCorreto;
+          });
+          
+          if (conexao) {
+            console.log(`✅ Conexão encontrada para keystone ${keystone.keystone}:`, conexao);
+            console.log(`  - Código do cabo na conexão: ${conexao.codigo_cabo}`);
+            console.log(`  - Nome do cabo na conexão: ${conexao.nome_cabo}`);
+            
+            const resultado = {
+              ...keystone,
+              codigo_cabo: conexao.codigo_cabo || conexao.nome_cabo || keystone.codigo_cabo
+            };
+            
+            console.log(`  - Código do cabo final: ${resultado.codigo_cabo}`);
+            return resultado;
+          } else {
+            console.log(`❌ Nenhuma conexão encontrada para keystone ${keystone.keystone}`);
+            console.log(`  - Usando código do cabo original: ${keystone.codigo_cabo}`);
+            return keystone;
+          }
+        });
+        
+        console.log('Keystones com conexões mapeadas:', keystonesComConexoes);
+        
+        // Verificar se o mapeamento funcionou
+        console.log('=== VERIFICAÇÃO DO MAPEAMENTO ===');
+        keystonesComConexoes.forEach((keystone, index) => {
+          console.log(`Keystone ${index + 1}: ${keystone.keystone}`);
+          console.log(`  - Código do cabo original: ${keystone.codigo_cabo}`);
+          console.log(`  - Equipamento sala ID: ${keystone.equipamento_sala_id}`);
+          console.log(`  - Número da porta: ${keystone.porta_original.numero_porta}`);
+          
+          // Verificar se foi mapeado com uma conexão real
+          const conexaoEncontrada = conexoes.find(conn => {
+            return (conn.equipamento_destino_id === null || 
+                   conn.porta_destino === keystone.porta_original.numero_porta ||
+                   conn.keystone_destino === keystone.keystone) &&
+                   equipamentos.find(e => e.id === conn.equipamento_origem_id);
+          });
+          
+          if (conexaoEncontrada) {
+            console.log(`  - ✅ Mapeado com conexão real: ${conexaoEncontrada.codigo_cabo || conexaoEncontrada.nome_cabo}`);
+          } else {
+            console.log(`  - ❌ NÃO mapeado com conexão real`);
+          }
+        });
+        console.log('=== FIM DA VERIFICAÇÃO ===');
+        
+        // Limpar grade atual
+        clearAll();
+        
+        // Verificar se a grade existe
+        const cells = document.querySelectorAll('.grid-cell');
+        if (cells.length === 0) {
+          throw new Error('Grade não encontrada. Atualize a grade primeiro.');
+        }
+        
+        // Posicionar equipamentos automaticamente
+        let equipCount = 0;
+        let keystoneCount = 0;
+        
+        // Primeiro posicionar equipamentos
+        for (let row = 0; row < gridData.rows && equipCount < equipamentos.length; row++) {
+          for (let col = 0; col < gridData.cols && equipCount < equipamentos.length; col++) {
+            const equip = equipamentos[equipCount];
+            const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+            
+            if (cell && !cell.classList.contains('occupied')) {
+              // Buscar imagem do equipamento
+              const imgSrc = await findEquipmentImage(equip.tipo || equip.nome);
+              
+              cell.innerHTML = `
+                <div class="equipment-slot">
+                  <img src="${imgSrc}" alt="${equip.nome}">
+                  <div class="name">${equip.nome}</div>
+                </div>
+              `;
+              
+              cell.classList.add('occupied');
+              
+              // Torna o equipamento arrastável
+              const equipmentSlot = cell.querySelector('.equipment-slot');
+              if (equipmentSlot) {
+                makeEquipmentDraggable(equipmentSlot);
+              }
+              
+              equipCount++;
+            }
+          }
+        }
+        
+        // Depois posicionar keystones dos equipamentos
+        console.log('Posicionando keystones:', keystonesEquipamentos);
+        console.log('Equipamentos disponíveis:', equipamentos);
+        
+        // Criar mapa de equipamentos para facilitar busca
+        const equipMap = new Map();
+        equipamentos.forEach((equip, index) => {
+          equipMap.set(equip.id, { equip, index });
+        });
+        
+        console.log('Mapa de equipamentos:', equipMap);
+        
+        // Posicionar keystones de forma simples - qualquer célula vazia
+        for (let i = 0; i < keystonesEquipamentos.length; i++) {
+          const keystone = keystonesEquipamentos[i];
+          console.log(`Processando keystone ${i + 1}:`, keystone);
+          
+          const equipInfo = equipMap.get(keystone.equipamento_sala_id);
+          console.log(`Equipamento encontrado para keystone ${keystone.keystone}:`, equipInfo);
+          
+          // Tentar posicionar em qualquer célula vazia
+          let posicionado = false;
+          
+          // Buscar todas as células vazias
+          const cells = document.querySelectorAll('.grid-cell');
+          console.log(`Total de células na grade: ${cells.length}`);
+          
+          for (let j = 0; j < cells.length && !posicionado; j++) {
+            const cell = cells[j];
+            if (!cell.classList.contains('occupied')) {
+              const row = parseInt(cell.dataset.row);
+              const col = parseInt(cell.dataset.col);
+              
+              console.log(`Tentando posicionar keystone ${keystone.keystone} na célula (${row}, ${col})`);
+              
+              try {
+                createKeystoneVisual(keystone.keystone, row, col);
+                keystoneCount++;
+                posicionado = true;
+                console.log(`✅ Keystone ${keystone.keystone} posicionado com sucesso na posição (${row}, ${col})`);
+              } catch (error) {
+                console.error(`❌ Erro ao posicionar keystone ${keystone.keystone}:`, error);
+              }
+            }
+          }
+          
+          if (!posicionado) {
+            console.error(`❌ Não foi possível posicionar keystone ${keystone.keystone} - nenhuma célula vazia encontrada`);
+          }
+        }
+        
+        console.log(`Total de keystones posicionados: ${keystoneCount}`);
+        
+        // Criar conexões baseadas nos dados reais
+        const connectionPromises = conexoes.map(async (conexao) => {
+          // Encontrar equipamentos de origem e destino
+          const fromEquip = equipamentos.find(e => e.id === conexao.equipamento_origem_id);
+          const toEquip = equipamentos.find(e => e.id === conexao.equipamento_destino_id);
+          
+          if (fromEquip && toEquip) {
+            // Encontrar células onde estão os equipamentos
+            const fromCell = findEquipmentCell(fromEquip.nome);
+            const toCell = findEquipmentCell(toEquip.nome);
+            
+            if (fromCell && toCell) {
+              const fromRow = parseInt(fromCell.dataset.row);
+              const fromCol = parseInt(fromCell.dataset.col);
+              const toRow = parseInt(toCell.dataset.row);
+              const toCol = parseInt(toCell.dataset.col);
+              
+              const connection = {
+                from: { row: fromRow, col: fromCol },
+                to: { row: toRow, col: toCol },
+                fromName: fromEquip.nome,
+                toName: toEquip.nome,
+                cableInfo: conexao.codigo_cabo || `${conexao.tipo_cabo || 'Cabo'}-${conexao.id}`,
+                id: Date.now() + Math.random()
+              };
+              
+              gridData.connections.push(connection);
+              drawConnection(connection);
+            }
+          }
+        });
+        
+        // Criar conexões entre equipamentos e seus keystones
+        console.log('=== CRIANDO CONEXÕES ENTRE EQUIPAMENTOS E KEYSTONES ===');
+        console.log('Keystones para conectar:', keystonesComConexoes);
+        console.log('Equipamentos disponíveis:', equipamentos);
+        
+        // Log detalhado dos IDs dos equipamentos
+        console.log('IDs dos equipamentos:');
+        equipamentos.forEach(equip => {
+          console.log(`  - ${equip.nome}: id=${equip.id}, sala_id=${equip.sala_id}, tipo=${equip.tipo}`);
+        });
+        
+        // Log das conexões reais para debug
+        console.log('=== CONEXÕES REAIS DISPONÍVEIS ===');
+        conexoes.forEach((conexao, index) => {
+          console.log(`Conexão ${index + 1}:`, conexao);
+          console.log(`  - equipamento_origem_id: ${conexao.equipamento_origem_id}`);
+          console.log(`  - equipamento_destino_id: ${conexao.equipamento_destino_id}`);
+          console.log(`  - porta_destino: ${conexao.porta_destino}`);
+          console.log(`  - keystone_destino: ${conexao.keystone_destino}`);
+          console.log(`  - codigo_cabo: ${conexao.codigo_cabo}`);
+          console.log(`  - nome_cabo: ${conexao.nome_cabo}`);
+        });
+        console.log('=== FIM DAS CONEXÕES REAIS ===');
+        
+        // Criar conexões entre equipamentos e seus keystones
+        console.log('=== CRIANDO CONEXÕES ENTRE EQUIPAMENTOS E KEYSTONES ===');
+        console.log('Keystones para conectar:', keystonesComConexoes);
+        console.log('Equipamentos disponíveis:', equipamentos);
+        
+        // Log detalhado dos IDs dos equipamentos
+        console.log('IDs dos equipamentos:');
+        equipamentos.forEach(equip => {
+          console.log(`  - ${equip.nome}: id=${equip.id}, sala_id=${equip.sala_id}, tipo=${equip.tipo}`);
+        });
+        
+        for (const keystone of keystonesComConexoes) {
+          console.log(`\n--- Processando keystone: ${keystone.keystone} ---`);
+          console.log(`Keystone equipamento_sala_id: ${keystone.equipamento_sala_id}`);
+          console.log(`Dados completos do keystone:`, keystone);
+          
+          // Primeira tentativa: usar nome do equipamento da porta (se existir)
+          let equipSelecionado = null;
+          
+          if (keystone.equipamento_nome) {
+            console.log(`Tentando encontrar equipamento por nome da porta: "${keystone.equipamento_nome}"`);
+            equipSelecionado = equipamentos.find(e => 
+              e.nome.toLowerCase().includes(keystone.equipamento_nome.toLowerCase()) ||
+              keystone.equipamento_nome.toLowerCase().includes(e.nome.toLowerCase())
+            );
+            
+            if (equipSelecionado) {
+              console.log(`✅ Equipamento encontrado por nome da porta: ${equipSelecionado.nome}`);
+            }
+          }
+          
+          // Segunda tentativa: usar tipo do equipamento da porta (se existir)
+          if (!equipSelecionado && keystone.equipamento_tipo) {
+            console.log(`Tentando encontrar equipamento por tipo da porta: "${keystone.equipamento_tipo}"`);
+            equipSelecionado = equipamentos.find(e => 
+              e.tipo && e.tipo.toLowerCase().includes(keystone.equipamento_tipo.toLowerCase())
+            );
+            
+            if (equipSelecionado) {
+              console.log(`✅ Equipamento encontrado por tipo da porta: ${equipSelecionado.nome}`);
+            }
+          }
+          
+          // Terceira tentativa: usar equipamento_sala_id
+          if (!equipSelecionado) {
+            console.log(`Tentando encontrar equipamento por ID: ${keystone.equipamento_sala_id}`);
+            equipSelecionado = equipamentos.find(e => e.id == keystone.equipamento_sala_id);
+            
+            if (equipSelecionado) {
+              console.log(`✅ Equipamento encontrado por ID: ${equipSelecionado.nome}`);
+            }
+          }
+          
+          // Quarta tentativa: distribuição inteligente por proximidade
+          if (!equipSelecionado) {
+            console.log(`❌ Equipamento não encontrado, usando distribuição por proximidade`);
+            
+            const keystoneIndex = keystonesComConexoes.indexOf(keystone);
+            const equipIndex = keystoneIndex % equipamentos.length;
+            equipSelecionado = equipamentos[equipIndex];
+            
+            console.log(`✅ Distribuindo keystone ${keystone.keystone} (índice ${keystoneIndex}) para equipamento ${equipSelecionado.nome} (índice ${equipIndex})`);
+            
+            // Tentar encontrar equipamento mais próximo na grade
+            const keystoneCellTemp = findEquipmentCell(keystone.keystone);
+            if (keystoneCellTemp) {
+              const keystoneRow = parseInt(keystoneCellTemp.dataset.row);
+              const keystoneCol = parseInt(keystoneCellTemp.dataset.col);
+              
+              console.log(`Keystone ${keystone.keystone} está na posição (${keystoneRow}, ${keystoneCol})`);
+              
+              // Encontrar equipamento mais próximo
+              let equipMaisProximo = equipSelecionado;
+              let menorDistancia = Infinity;
+              
+              for (const equip of equipamentos) {
+                const equipCell = findEquipmentCell(equip.nome);
+                if (equipCell) {
+                  const equipRow = parseInt(equipCell.dataset.row);
+                  const equipCol = parseInt(equipCell.dataset.col);
+                  
+                  const distancia = Math.sqrt(
+                    Math.pow(equipRow - keystoneRow, 2) + 
+                    Math.pow(equipCol - keystoneCol, 2)
+                  );
+                  
+                  console.log(`  - ${equip.nome} na posição (${equipRow}, ${equipCol}): distância = ${distancia.toFixed(2)}`);
+                  
+                  if (distancia < menorDistancia) {
+                    menorDistancia = distancia;
+                    equipMaisProximo = equip;
+                  }
+                }
+              }
+              
+              console.log(`✅ Equipamento mais próximo: ${equipMaisProximo.nome} (distância: ${menorDistancia.toFixed(2)})`);
+              equipSelecionado = equipMaisProximo;
+            }
+          }
+          
+          if (equipSelecionado) {
+            console.log(`Procurando célula do equipamento: ${equipSelecionado.nome}`);
+            const equipCell = findEquipmentCell(equipSelecionado.nome);
+            console.log(`Célula do equipamento encontrada:`, equipCell);
+            
+            console.log(`Procurando célula do keystone: ${keystone.keystone}`);
+            const keystoneCell = findEquipmentCell(keystone.keystone);
+            console.log(`Célula do keystone encontrada:`, keystoneCell);
+            
+            if (equipCell && keystoneCell) {
+              const equipRow = parseInt(equipCell.dataset.row);
+              const equipCol = parseInt(equipCell.dataset.col);
+              const keystoneRow = parseInt(keystoneCell.dataset.row);
+              const keystoneCol = parseInt(keystoneCell.dataset.col);
+              
+              console.log(`Criando conexão: ${equipSelecionado.nome}(${equipRow},${equipCol}) → ${keystone.keystone}(${keystoneRow},${keystoneCol})`);
+              
+              // Usar código do cabo da porta se existir, senão criar um baseado no patch panel e porta
+              let cableInfo = keystone.codigo_cabo;
+              if (!cableInfo) {
+                // Criar código baseado no patch panel e número da porta
+                const patchPanelPrefix = keystone.patch_panel_nome ? keystone.patch_panel_nome.replace(/\s+/g, '').substring(0, 3) : 'PP';
+                const portaNum = keystone.porta_original.numero_porta.toString().padStart(3, '0');
+                cableInfo = `${patchPanelPrefix}-${portaNum}`;
+              }
+              
+              console.log(`  - Código do cabo do keystone: ${keystone.codigo_cabo}`);
+              console.log(`  - CableInfo final: ${cableInfo}`);
+              
+              const connection = {
+                from: { row: equipRow, col: equipCol },
+                to: { row: keystoneRow, col: keystoneCol },
+                fromName: equipSelecionado.nome,
+                toName: keystone.keystone,
+                cableInfo: cableInfo,
+                id: Date.now() + Math.random()
+              };
+              
+              console.log(`  - Connection object:`, connection);
+              
+              gridData.connections.push(connection);
+              drawConnection(connection);
+              console.log(`✅ Conexão criada com sucesso: ${equipSelecionado.nome} → ${keystone.keystone} (${cableInfo})`);
+            } else {
+              console.warn(`❌ Não foi possível criar conexão para keystone ${keystone.keystone}:`);
+              if (!equipCell) console.warn(`  - Célula do equipamento ${equipSelecionado.nome} não encontrada`);
+              if (!keystoneCell) console.warn(`  - Célula do keystone ${keystone.keystone} não encontrada`);
+            }
+          } else {
+            console.warn(`❌ Nenhum equipamento encontrado para keystone ${keystone.keystone}`);
+          }
+        }
+        
+        console.log('=== FIM DAS CONEXÕES ENTRE EQUIPAMENTOS E KEYSTONES ===');
+        
+        await Promise.all(connectionPromises);
+        
+        // Contar conexões de keystones criadas
+        const keystoneConnections = keystonesEquipamentos.filter(keystone => {
+          const equip = equipamentos.find(e => e.id == keystone.equipamento_sala_id);
+          return equip && findEquipmentCell(equip.nome) && findEquipmentCell(keystone.keystone);
+        }).length;
+        
+        updateStatus(`Dados reais carregados: ${equipCount} equipamentos, ${keystoneCount} keystones, ${conexoes.length} conexões e ${keystoneConnections} conexões de keystones`);
+        
+      } catch (error) {
+        console.error('Erro ao carregar dados reais:', error);
+        updateStatus(`Erro ao carregar dados reais: ${error.message}`);
+        alert(`Erro ao carregar dados reais: ${error.message}`);
+      }
+    }
+
+    // Função para encontrar imagem do equipamento
+    async function findEquipmentImage(equipmentType) {
+      try {
+        const response = await fetch('/api/equipamentos-imagens');
+        const images = await response.json();
+        
+        const type = equipmentType.toLowerCase();
+        
+        // Buscar imagem que contenha o tipo do equipamento
+        const matchingImage = images.find(img => {
+          const imgName = img.split('/').pop().toLowerCase();
+          return imgName.includes(type) || type.includes(imgName.replace(/\.[a-z]+$/i, ''));
+        });
+        
+        return matchingImage || images[0]; // Retorna primeira imagem se não encontrar
+      } catch (error) {
+        console.error('Erro ao buscar imagem do equipamento:', error);
+        return '/static/img/default-equipment.png'; // Imagem padrão
+      }
+    }
+
+    // Função para encontrar célula onde está um equipamento
+    function findEquipmentCell(equipmentName) {
+      console.log(`findEquipmentCell procurando por: "${equipmentName}"`);
+      
+      const cells = document.querySelectorAll('.grid-cell.occupied');
+      console.log(`Células ocupadas encontradas: ${cells.length}`);
+      
+      for (const cell of cells) {
+        const name = cell.querySelector('.name').textContent;
+        console.log(`Verificando célula com nome: "${name}"`);
+        
+        if (name.toLowerCase().includes(equipmentName.toLowerCase()) || 
+            equipmentName.toLowerCase().includes(name.toLowerCase())) {
+          console.log(`Equipamento "${equipmentName}" encontrado na célula com nome "${name}"`);
+          return cell;
+        }
+      }
+      
+      console.warn(`Equipamento "${equipmentName}" não encontrado`);
+      return null;
+    }
+
+    // Função para carregar dados reais com modal de confirmação
+    function showLoadRealDataModal() {
+      if (!gridData.currentSalaId) {
+        alert('Nenhuma sala selecionada! Selecione uma sala primeiro.');
+        return;
+      }
+
+      const confirmLoad = confirm(
+        'Carregar dados reais da sala?\n\n' +
+        'Isso irá:\n' +
+        '• Limpar o layout atual\n' +
+        '• Buscar equipamentos reais da sala\n' +
+        '• Buscar conexões reais da sala\n' +
+        '• Posicionar tudo automaticamente\n\n' +
+        'Deseja continuar?'
+      );
+
+      if (confirmLoad) {
+        loadRealData();
+      }
+    }
+
+
+
+    btnPlaceMode.addEventListener('click', () => {
+      gridData.connectionMode = false;
+      gridData.removeMode = false;
+      gridData.connectionStart = null;
+      btnPlaceMode.classList.add('active');
+      btnConnectMode.classList.remove('active');
+      btnRemoveMode.classList.remove('active');
+      
+      // Limpa seleções
+      document.querySelectorAll('.grid-cell.selected, .grid-cell.connectable, .grid-cell.removable').forEach(cell => {
+        cell.classList.remove('selected', 'connectable', 'removable');
+      });
+      
+      // Remove classe remove-mode do container
+      gridContainer.classList.remove('remove-mode');
+      
+      // Habilitar seleção de equipamentos
+      equipmentSelect.disabled = false;
+      
+      updateStatus('Modo: Posicionar equipamentos');
+    });
+
+    btnConnectMode.addEventListener('click', () => {
+      gridData.connectionMode = true;
+      gridData.removeMode = false;
+      btnConnectMode.classList.add('active');
+      btnPlaceMode.classList.remove('active');
+      btnRemoveMode.classList.remove('active');
+      
+      // Limpa seleções de remoção
+      document.querySelectorAll('.grid-cell.removable').forEach(cell => {
+        cell.classList.remove('removable');
+      });
+      
+      // Remove classe remove-mode do container
+      gridContainer.classList.remove('remove-mode');
+      
+      // Limpar seleção de equipamento no modo conexão
+      equipmentSelect.value = '';
+      equipmentPreview.classList.add('hidden');
+      gridData.selectedEquipment = null;
+      
+      // Desabilitar seleção de equipamentos
+      equipmentSelect.disabled = true;
+      
+      updateStatus('Modo: Conectar equipamentos');
+    });
+
+    btnRemoveMode.addEventListener('click', () => {
+      gridData.removeMode = true;
+      gridData.connectionMode = false;
+      gridData.connectionStart = null;
+      btnRemoveMode.classList.add('active');
+      btnPlaceMode.classList.remove('active');
+      btnConnectMode.classList.remove('active');
+      
+      // Limpa seleções de conexão
+      document.querySelectorAll('.grid-cell.selected, .grid-cell.connectable').forEach(cell => {
+        cell.classList.remove('selected', 'connectable');
+      });
+      
+      // Adiciona classe remove-mode ao container
+      gridContainer.classList.add('remove-mode');
+      
+      // Limpar seleção de equipamento no modo remoção
+      equipmentSelect.value = '';
+      equipmentPreview.classList.add('hidden');
+      gridData.selectedEquipment = null;
+      
+      // Desabilitar seleção de equipamentos
+      equipmentSelect.disabled = true;
+      
+      updateStatus('Modo: Remover equipamentos (clique nos equipamentos para remover)');
+    });
+
+    btnLoadRealData.addEventListener('click', showLoadRealDataModal);
+
+    btnLoadKeystones.addEventListener('click', () => {
+      loadKeystonesToGrid();
+    });
+
+    btnSair.addEventListener('click', () => {
+      if (confirm('Tem certeza que deseja sair? As alterações não salvas serão perdidas.')) {
+        window.location.href = 'config-admin.html';
+      }
+    });
+
+    btnSave.addEventListener('click', saveLayout);
+    btnClear.addEventListener('click', clearAll);
+    
+    btnCancelSala.addEventListener('click', () => {
       salaModal.style.display = 'none';
-    };
-    document.getElementById('btnConfirmarSala').onclick = async () => {
-      const sala_id = document.getElementById('salaSelect').value;
-      if (!sala_id) {
+    });
+
+    // Event listeners do modal inicial
+    btnBack.addEventListener('click', () => {
+      prevStep();
+    });
+
+    btnContinue.addEventListener('click', () => {
+      const salaId = salaSelectInitial.value;
+      if (!salaId) {
         alert('Selecione uma sala!');
         return;
       }
-      const layout = serializeLayout();
-      try {
-        const resp = await fetch('/api/salas/' + sala_id + '/layout', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(layout)
-        });
-        if (resp.ok) {
-          alert('Layout salvo com sucesso!');
-          salaModal.style.display = 'none';
-        } else {
-          alert('Erro ao salvar layout.');
-        }
-      } catch (e) {
-        alert('Erro ao salvar layout: ' + e.message);
+      
+      const option = salaSelectInitial.options[salaSelectInitial.selectedIndex];
+      const sala = JSON.parse(option.dataset.sala);
+      modalState.selectedSala = sala;
+      
+      showSalaInfo(sala);
+      updateLayoutStatus(salaId);
+      nextStep();
+      
+      // Configurar informações de confirmação
+      if (modalState.layoutExists) {
+        confirmInfo.innerHTML = `
+          <h4>Editar Layout Existente</h4>
+          <p><strong>Sala:</strong> ${sala.nome || `Sala ${sala.id}`}</p>
+          <p><strong>Ação:</strong> Editar layout existente</p>
+          <p style="color: #28a745; font-size: 12px;">✅ Layout encontrado e será carregado.</p>
+        `;
+      } else {
+        confirmInfo.innerHTML = `
+          <h4>Criar Novo Layout</h4>
+          <p><strong>Sala:</strong> ${sala.nome || `Sala ${sala.id}`}</p>
+          <p><strong>Ação:</strong> Criar novo layout</p>
+          <p style="color: #ffc107; font-size: 12px;">🆕 Nenhum layout encontrado. Será criado um novo.</p>
+        `;
       }
-    };
+    });
 
-    // Salvar na sala atual
-    saveBtn.onclick = async function () {
-      if (!salaIdAtual) {
-        alert('Nenhuma sala selecionada para salvar!');
+    btnConfirm.addEventListener('click', confirmAction);
+    btnCancel.addEventListener('click', () => {
+      window.location.href = 'config-admin.html';
+    });
+
+    // Event listener para mudança na seleção de sala
+    salaSelectInitial.addEventListener('change', async () => {
+      const salaId = salaSelectInitial.value;
+      if (salaId) {
+        const option = salaSelectInitial.options[salaSelectInitial.selectedIndex];
+        const sala = JSON.parse(option.dataset.sala);
+        showSalaInfo(sala);
+        await updateLayoutStatus(salaId);
+      } else {
+        salaInfo.style.display = 'none';
+      }
+    });
+
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', () => {
+      loadEquipment();
+      createGrid();
+      
+      // Verificar se há sala_id na URL
+      const params = new URLSearchParams(window.location.search);
+      const salaId = params.get('sala_id');
+      
+      if (salaId) {
+        // Se há sala_id na URL, carrega diretamente
+        gridData.currentSalaId = salaId;
+        loadLayout(salaId);
+      } else {
+        // Se não há sala_id, mostra modal inicial
+        showInitialModal();
+      }
+    });
+
+    // Função para buscar keystones dos equipamentos da sala
+    async function loadKeystonesFromEquipamentos(equipamentos) {
+      try {
+        const keystones = [];
+        
+        // Buscar todos os patch panels
+        const patchPanelsResponse = await fetch('/patch-panels');
+        if (!patchPanelsResponse.ok) {
+          console.warn('Não foi possível carregar patch panels');
+          return [];
+        }
+        
+        const patchPanels = await patchPanelsResponse.json();
+        console.log('Patch panels encontrados:', patchPanels);
+        
+        // Para cada patch panel, buscar suas portas
+        for (const patchPanel of patchPanels) {
+          const portasResponse = await fetch(`/patch-panels/${patchPanel.id}/portas`);
+          if (!portasResponse.ok) {
+            console.warn(`Não foi possível carregar portas do patch panel ${patchPanel.id}`);
+            continue;
+          }
+          
+          const portas = await portasResponse.json();
+          console.log(`Portas do patch panel ${patchPanel.id}:`, portas);
+          
+          // Verificar se há uma API específica para buscar detalhes das portas
+          if (portas.length > 0) {
+            console.log(`Verificando se há API específica para detalhes da porta ${portas[0].id}`);
+            try {
+              const portaDetalhesResponse = await fetch(`/patch-panels/${patchPanel.id}/portas/${portas[0].id}`);
+              if (portaDetalhesResponse.ok) {
+                const portaDetalhes = await portaDetalhesResponse.json();
+                console.log(`Detalhes da porta ${portas[0].id}:`, portaDetalhes);
+                console.log(`Campos disponíveis nos detalhes:`, Object.keys(portaDetalhes));
+              }
+            } catch (error) {
+              console.log(`API de detalhes da porta não disponível:`, error.message);
+            }
+          }
+          
+          // Filtrar apenas portas ocupadas que têm equipamentos da sala atual
+          const portasSala = portas.filter(porta => {
+            const isOcupada = porta.status === 'ocupada';
+            const isSalaCorreta = porta.equipamento_sala_id == gridData.currentSalaId;
+            
+            console.log(`Porta ${porta.id}: status=${porta.status}, equipamento_sala_id=${porta.equipamento_sala_id}, sala_atual=${gridData.currentSalaId}, ocupada=${isOcupada}, sala_correta=${isSalaCorreta}`);
+            console.log(`  - Detalhes da porta:`, porta);
+            console.log(`  - Campos disponíveis na porta:`, Object.keys(porta));
+            console.log(`  - Valores dos campos relacionados a cabo:`);
+            console.log(`    * codigo_cabo: ${porta.codigo_cabo}`);
+            console.log(`    * codigo: ${porta.codigo}`);
+            console.log(`    * cable_code: ${porta.cable_code}`);
+            console.log(`    * cabo: ${porta.cabo}`);
+            console.log(`    * ethernet: ${porta.ethernet}`);
+            console.log(`    * nome_cabo: ${porta.nome_cabo}`);
+            console.log(`    * identificacao_cabo: ${porta.identificacao_cabo}`);
+            
+            return isOcupada && isSalaCorreta;
+          });
+          
+          console.log(`Portas da sala ${gridData.currentSalaId} no patch panel ${patchPanel.id}:`, portasSala);
+          
+          // Adicionar keystones das portas ocupadas
+          portasSala.forEach(async (porta) => {
+            const keystone = `${porta.prefixo_keystone}-${porta.numero_porta.toString().padStart(4, '0')}`;
+            
+            // Tentar buscar informações completas da porta
+            let portaCompleta = porta;
+            try {
+              const portaDetalhesResponse = await fetch(`/patch-panels/${patchPanel.id}/portas/${porta.id}`);
+              if (portaDetalhesResponse.ok) {
+                portaCompleta = await portaDetalhesResponse.json();
+                console.log(`Informações completas da porta ${porta.id}:`, portaCompleta);
+              }
+            } catch (error) {
+              console.log(`Não foi possível buscar detalhes da porta ${porta.id}:`, error.message);
+            }
+            
+            // Buscar código do cabo em diferentes campos possíveis
+            let codigoCabo = null;
+            
+            // Tentar todos os campos possíveis em ordem de prioridade
+            if (portaCompleta.codigo_cabo) codigoCabo = portaCompleta.codigo_cabo;
+            else if (portaCompleta.codigo) codigoCabo = portaCompleta.codigo;
+            else if (portaCompleta.cable_code) codigoCabo = portaCompleta.cable_code;
+            else if (portaCompleta.cabo) codigoCabo = portaCompleta.cabo;
+            else if (portaCompleta.ethernet) codigoCabo = portaCompleta.ethernet;
+            else if (portaCompleta.nome_cabo) codigoCabo = portaCompleta.nome_cabo;
+            else if (portaCompleta.identificacao_cabo) codigoCabo = portaCompleta.identificacao_cabo;
+            else if (portaCompleta.cable_name) codigoCabo = portaCompleta.cable_name;
+            else if (portaCompleta.cable_id) codigoCabo = portaCompleta.cable_id;
+            else if (portaCompleta.etiqueta) codigoCabo = portaCompleta.etiqueta;
+            else if (portaCompleta.label) codigoCabo = portaCompleta.label;
+            
+            // Se não encontrou nenhum, usar um código baseado no patch panel
+            if (!codigoCabo) {
+              const patchPanelPrefix = patchPanel.nome ? patchPanel.nome.replace(/\s+/g, '').substring(0, 3) : 'PP';
+              codigoCabo = `${patchPanelPrefix}-${porta.numero_porta.toString().padStart(3, '0')}`;
+            }
+            
+            console.log(`Keystone ${keystone}: código do cabo encontrado: "${codigoCabo}"`);
+            console.log(`  - Campo usado: ${portaCompleta.codigo_cabo ? 'codigo_cabo' : portaCompleta.codigo ? 'codigo' : portaCompleta.cable_code ? 'cable_code' : portaCompleta.cabo ? 'cabo' : portaCompleta.ethernet ? 'ethernet' : portaCompleta.nome_cabo ? 'nome_cabo' : portaCompleta.identificacao_cabo ? 'identificacao_cabo' : portaCompleta.cable_name ? 'cable_name' : portaCompleta.cable_id ? 'cable_id' : portaCompleta.etiqueta ? 'etiqueta' : portaCompleta.label ? 'label' : 'gerado automaticamente'}`);
+            
+            keystones.push({
+              keystone: keystone,
+              patch_panel_id: patchPanel.id,
+              patch_panel_nome: patchPanel.nome,
+              porta_id: porta.id,
+              equipamento_sala_id: porta.equipamento_sala_id,
+              porta_original: portaCompleta, // Incluir todos os dados da porta
+              equipamento_nome: portaCompleta.equipamento_nome || null, // Se existir
+              equipamento_tipo: portaCompleta.equipamento_tipo || null, // Se existir
+              codigo_cabo: codigoCabo // Código do cabo encontrado
+            });
+          });
+        }
+        
+        console.log(`Keystones encontrados nos equipamentos da sala:`, keystones);
+        console.log('Tipo de keystones:', typeof keystones);
+        console.log('É array?', Array.isArray(keystones));
+        console.log('Comprimento:', keystones ? keystones.length : 'null/undefined');
+        return keystones;
+        
+      } catch (error) {
+        console.error('Erro ao buscar keystones dos equipamentos:', error);
+        return [];
+      }
+    }
+
+
+
+    // Função para carregar keystones da sala na grade
+    async function loadKeystonesToGrid() {
+      if (!gridData.currentSalaId) {
+        alert('Nenhuma sala selecionada! Selecione uma sala primeiro.');
         return;
       }
-      const layout = serializeLayout();
+
       try {
-        const resp = await fetch('/api/salas/' + salaIdAtual + '/layout', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(layout)
-        });
-        if (resp.ok) {
-          alert('Layout salvo com sucesso!');
-        } else {
-          alert('Erro ao salvar layout.');
+        updateStatus('Carregando keystones da sala...');
+        console.log('Sala ID:', gridData.currentSalaId);
+        
+        // Buscar equipamentos da sala
+        const equipResponse = await fetch(`/equipamentos?sala_id=${gridData.currentSalaId}`);
+        if (!equipResponse.ok) {
+          throw new Error('Erro ao carregar equipamentos da sala');
         }
-      } catch (e) {
-        alert('Erro ao salvar layout: ' + e.message);
-      }
-    };
-
-    // Salvar como (abre modal de seleção de sala)
-    saveAsBtn.onclick = abrirSalaModal;
-
-    // Ao abrir um layout existente, armazena salaIdAtual
-    document.addEventListener('DOMContentLoaded', function () {
-      const params = new URLSearchParams(window.location.search);
-      const sala_id = params.get('sala_id');
-      if (sala_id) {
-        salaIdAtual = sala_id;
-      }
-    });
-
-    // Ao criar novo layout, salaIdAtual = null
-    // (pode ser ajustado conforme fluxo de novo layout)
-
-    // Função para renderizar layout salvo (visualização)
-    async function renderizarLayoutVisualizacao(sala_id) {
-      // Esconde botão salvar
-      if (saveBtn) saveBtn.style.display = 'none';
-      // Remove menus, disables
-      document.getElementById('sidebar').style.pointerEvents = 'none';
-      document.getElementById('sidebar').style.opacity = '0.5';
-      // Remove eventos de drag, resize, menus
-      mainCanvas.style.pointerEvents = 'none';
-      // Limpa canvas
-      mainCanvas.innerHTML = '';
-      // Limpa conexões
-      if (window.connections) window.connections = [];
-      // Busca layout
-      try {
-        const resp = await fetch(`/api/salas/${sala_id}/layout`);
-        if (!resp.ok) throw new Error('Nenhum layout salvo para esta sala.');
-        const layout = await resp.json();
-        // Renderiza equipamentos/textos
-        layout.items.forEach(item => {
-          if (item.type === 'equip') {
-            const div = document.createElement('div');
-            div.className = 'equip-instance';
-            div.style.position = 'absolute';
-            div.style.left = item.x + 'px';
-            div.style.top = item.y + 'px';
-            div.style.width = item.w + 'px';
-            div.style.height = item.h + 'px';
-            div.style.pointerEvents = 'none';
-            const img = document.createElement('img');
-            img.src = item.img;
-            img.style.width = '100%';
-            img.style.height = '100%';
-            img.style.objectFit = 'contain';
-            div.appendChild(img);
-            mainCanvas.appendChild(div);
-          } else if (item.type === 'text') {
-            const div = document.createElement('div');
-            div.className = 'equip-instance text-instance';
-            div.style.position = 'absolute';
-            div.style.left = item.x + 'px';
-            div.style.top = item.y + 'px';
-            div.style.width = item.w + 'px';
-            div.style.height = item.h + 'px';
-            div.style.pointerEvents = 'none';
-            const span = document.createElement('span');
-            span.textContent = item.text;
-            span.style.color = item.color;
-            span.style.fontSize = item.fontSize;
-            div.appendChild(span);
-            mainCanvas.appendChild(div);
-          }
-        });
-        // Renderiza conexões
-        if (layout.conns && layout.conns.length > 0) {
-          layout.conns.forEach(conn => {
-            const from = mainCanvas.children[conn.fromIndex];
-            const to = mainCanvas.children[conn.toIndex];
-            if (from && to) {
-              // Desenha SVG
-              const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-              svg.style.position = 'absolute';
-              svg.style.left = '0';
-              svg.style.top = '0';
-              svg.style.width = '100%';
-              svg.style.height = '100%';
-              svg.style.pointerEvents = 'none';
-              svg.style.zIndex = '0';
-              const fromRect = from.getBoundingClientRect();
-              const toRect = to.getBoundingClientRect();
-              const canvasRect = mainCanvas.getBoundingClientRect();
-              const x1 = fromRect.left + fromRect.width / 2 - canvasRect.left;
-              const y1 = fromRect.top + fromRect.height / 2 - canvasRect.top;
-              const x2 = toRect.left + toRect.width / 2 - canvasRect.left;
-              const y2 = toRect.top + toRect.height / 2 - canvasRect.top;
-              const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-              const dx = Math.abs(x2 - x1) * 0.4;
-              path.setAttribute('d', `M${x1},${y1} C${x1 + dx},${y1} ${x2 - dx},${y2} ${x2},${y2}`);
-              path.setAttribute('stroke', conn.color || '#e74c3c');
-              path.setAttribute('stroke-width', '3');
-              path.setAttribute('fill', 'none');
-              svg.appendChild(path);
-              // Label
-              if (conn.label) {
-                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                text.setAttribute('x', (x1 + x2) / 2);
-                text.setAttribute('y', (y1 + y2) / 2 - 8);
-                text.setAttribute('fill', conn.color || '#e74c3c');
-                text.setAttribute('font-size', conn.fontSize || 16);
-                text.setAttribute('font-family', 'inherit');
-                text.setAttribute('text-anchor', 'middle');
-                text.textContent = conn.label;
-                svg.appendChild(text);
-              }
-              mainCanvas.appendChild(svg);
+        const equipamentos = await equipResponse.json();
+        
+        console.log('Equipamentos da sala:', equipamentos);
+        
+        // Buscar keystones dos equipamentos da sala (portas dos patch panels)
+        const keystonesEquipamentos = await loadKeystonesFromEquipamentos(equipamentos);
+        
+        console.log('Keystones encontrados:', keystonesEquipamentos);
+        
+        if (keystonesEquipamentos.length === 0) {
+          updateStatus('Nenhum keystone encontrado para os equipamentos desta sala');
+          alert(`Nenhum keystone encontrado para os equipamentos desta sala.\n\nEquipamentos da sala: ${equipamentos.length}\nKeystones encontrados: 0\n\nVerifique se os equipamentos estão conectados a portas de patch panels.`);
+          return;
+        }
+        
+        // Verificar se a grade existe
+        const cells = document.querySelectorAll('.grid-cell');
+        if (cells.length === 0) {
+          throw new Error('Grade não encontrada. Atualize a grade primeiro.');
+        }
+        
+        let keystoneCount = 0;
+        
+        // Posicionar keystones
+        for (let row = 0; row < gridData.rows && keystoneCount < keystonesEquipamentos.length; row++) {
+          for (let col = 0; col < gridData.cols && keystoneCount < keystonesEquipamentos.length; col++) {
+            const keystone = keystonesEquipamentos[keystoneCount];
+            const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+            
+            if (cell && !cell.classList.contains('occupied')) {
+              createKeystoneVisual(keystone.keystone, row, col);
+              keystoneCount++;
             }
-          });
-        }
-      } catch (e) {
-        mainCanvas.innerHTML = `<div style='color:#e74c3c;font-size:1.3em;text-align:center;margin-top:80px;'>${e.message || 'Erro ao carregar layout.'}</div>`;
-      }
-      // Dentro da função renderizarLayoutVisualizacao, garantir que a sidebar tenha width: 220px
-      // Procure por: document.getElementById('sidebar')
-      // Se não existir, crie um seletor para a sidebar e defina: style.width = '220px';
-      const sidebar = document.querySelector('.sidebar') || document.getElementById('sidebar');
-      if (sidebar) sidebar.style.width = '220px';
-    }
-
-    // Detecta modo visualização
-    (function () {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('view') === '1' && params.get('sala_id')) {
-        renderizarLayoutVisualizacao(params.get('sala_id'));
-      }
-    })();
-
-    // Função para carregar layout salvo no editor
-    async function carregarLayoutEditor(sala_id) {
-      try {
-        const resp = await fetch(`/api/salas/${sala_id}/layout`);
-        if (!resp.ok) return; // Não há layout salvo
-        const layout = await resp.json();
-        // Limpa canvas e conexões
-        mainCanvas.innerHTML = '';
-        // Adiciona novamente o SVG de conexões
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('id', 'svg-connections');
-        svg.style.position = 'absolute';
-        svg.style.top = '0';
-        svg.style.left = '0';
-        svg.style.width = '100%';
-        svg.style.height = '100%';
-        svg.style.pointerEvents = 'none';
-        svg.style.zIndex = '1';
-        mainCanvas.appendChild(svg);
-        connections = [];
-        // Renderiza equipamentos/textos e cria mapa de id
-        const idToDiv = {};
-        layout.items.forEach(item => {
-          let div;
-          if (item.type === 'equip') {
-            div = document.createElement('div');
-            div.className = 'equip-instance';
-            div.style.position = 'absolute';
-            div.style.left = item.x + 'px';
-            div.style.top = item.y + 'px';
-            div.style.width = item.w + 'px';
-            div.style.height = item.h + 'px';
-            div.dataset.id = item.id; // garantir id único
-            const img = document.createElement('img');
-            img.src = item.img;
-            img.setAttribute('data-src', item.img);
-            img.style.width = '100%';
-            img.style.height = '100%';
-            img.style.objectFit = 'contain';
-            div.appendChild(img);
-            // Adiciona handle de resize
-            const handle = document.createElement('div');
-            handle.className = 'resize-handle';
-            div.appendChild(handle);
-            mainCanvas.appendChild(div);
-            inicializarEquipInstance(div);
-          } else if (item.type === 'text') {
-            div = document.createElement('div');
-            div.className = 'equip-instance text-instance';
-            div.style.position = 'absolute';
-            div.style.left = item.x + 'px';
-            div.style.top = item.y + 'px';
-            div.style.width = item.w + 'px';
-            div.style.height = item.h + 'px';
-            div.dataset.id = item.id; // garantir id único
-            const span = document.createElement('span');
-            span.textContent = item.text;
-            span.style.color = item.color;
-            span.style.fontSize = item.fontSize;
-            div.appendChild(span);
-            // Adiciona handle de resize
-            const handle = document.createElement('div');
-            handle.className = 'resize-handle';
-            div.appendChild(handle);
-            mainCanvas.appendChild(div);
-            inicializarEquipInstance(div);
           }
-          idToDiv[item.id] = div;
-        });
-        // Renderiza conexões
-        connections = [];
-        if (layout.conns && layout.conns.length > 0) {
-          layout.conns.forEach(conn => {
-            const from = idToDiv[conn.fromId];
-            const to = idToDiv[conn.toId];
-            if (from && to) {
-              connections.push({
-                from,
-                to,
-                color: conn.color,
-                name: conn.name,
-                fontSize: conn.fontSize,
-                strokeWidth: conn.strokeWidth
-              });
-            }
-            // Se não existir from ou to, ignora a conexão
-          });
         }
-        // Limpa SVG de conexões antes de redesenhar
-        while (svg.firstChild) svg.removeChild(svg.firstChild);
-        updateConnections();
-      } catch (e) {
-        // Não faz nada se não houver layout
-      }
-    }
-
-    // Detecta sala_id na URL e carrega layout salvo no editor
-    (function () {
-      const params = new URLSearchParams(window.location.search);
-      const sala_id = params.get('sala_id');
-      if (sala_id && !params.get('view')) {
-        carregarLayoutEditor(sala_id);
-      }
-    })();
-
-    // Modal inicial: Novo ou Abrir
-    (function () {
-      // Cria o modal e adiciona ao DOM
-      const modalInicio = document.createElement('div');
-      modalInicio.style.display = 'none';
-      modalInicio.style.position = 'fixed';
-      modalInicio.style.top = '0';
-      modalInicio.style.left = '0';
-      modalInicio.style.width = '100vw';
-      modalInicio.style.height = '100vh';
-      modalInicio.style.background = 'rgba(0,0,0,0.35)';
-      modalInicio.style.zIndex = '5000';
-      modalInicio.style.alignItems = 'center';
-      modalInicio.style.justifyContent = 'center';
-      modalInicio.innerHTML = `
-        <div style="background:#fff; padding:32px 24px; border-radius:12px; min-width:320px; max-width:90vw; box-shadow:0 4px 24px #0003; display:flex; flex-direction:column; align-items:center; position:relative;">
-          <button id="btnFecharModalInicio" style="position:absolute; top:10px; right:10px; background:transparent; color:#e74c3c; border:none; border-radius:50%; width:36px; height:36px; font-size:1.7em; font-weight:bold; cursor:pointer; line-height:1; display:flex; align-items:center; justify-content:center;">&times;</button>
-          <h3 style="margin-top:0; color:#222;">Conexões de Equipamentos</h3>
-          <div id="botoesInicio" style="display:flex;gap:24px;margin:24px 0;">
-            <button id="btnNovoLayout" style="padding:16px 32px;font-size:1.1em;background:#27ae60;color:#fff;border:none;border-radius:8px;font-weight:bold;">Novo</button>
-            <button id="btnAbrirLayout" style="padding:16px 32px;font-size:1.1em;background:#2980b9;color:#fff;border:none;border-radius:8px;font-weight:bold;">Abrir</button>
-          </div>
-          <div id="abrirSalasBox" style="display:none;flex-direction:column;align-items:center;width:100%;">
-            <div style="margin-bottom:10px;font-weight:bold;">Escolha uma sala para editar o layout:</div>
-            <select id="salasComLayout" style="width:100%;padding:8px 12px;font-size:1.1em;margin-bottom:18px;"></select>
-            <button id="btnAbrirSalaLayout" style="padding:8px 24px;font-size:1em;background:#27ae60;color:#fff;border:none;border-radius:6px;font-weight:bold;">Abrir Layout</button>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(modalInicio);
-
-      // Busca elementos após adicionar ao DOM
-      const btnNovoLayout = modalInicio.querySelector('#btnNovoLayout');
-      const btnAbrirLayout = modalInicio.querySelector('#btnAbrirLayout');
-      const botoesInicio = modalInicio.querySelector('#botoesInicio');
-      const abrirSalasBox = modalInicio.querySelector('#abrirSalasBox');
-      const select = modalInicio.querySelector('#salasComLayout');
-      const btnAbrirSalaLayout = modalInicio.querySelector('#btnAbrirSalaLayout');
-
-      function abrirModalInicio() {
-        modalInicio.style.display = 'flex';
-        botoesInicio.style.display = 'flex';
-        abrirSalasBox.style.display = 'none';
-      }
-
-      btnNovoLayout.onclick = () => {
-        modalInicio.style.display = 'none';
-      };
-
-      btnAbrirLayout.onclick = async () => {
-        botoesInicio.style.display = 'none';
-        abrirSalasBox.style.display = 'flex';
-        select.innerHTML = '<option>Carregando...</option>';
-        btnAbrirSalaLayout.disabled = true;
-        try {
-          const resp = await fetch('/api/salas-com-layout');
-          const salasComLayout = await resp.json();
-          console.log('Salas com layout:', salasComLayout);
-          select.innerHTML = '';
-          if (!salasComLayout.length) {
-            select.innerHTML = '<option>Nenhuma sala com layout salvo</option>';
-            btnAbrirSalaLayout.disabled = true;
-          } else {
-            salasComLayout.forEach(sala => {
-              const opt = document.createElement('option');
-              opt.value = sala.id;
-              opt.textContent = sala.nome || ('Sala ' + sala.id);
-              select.appendChild(opt);
-            });
-            btnAbrirSalaLayout.disabled = false;
-          }
-        } catch (e) {
-          select.innerHTML = '<option>Erro ao buscar salas</option>';
-          btnAbrirSalaLayout.disabled = true;
-          console.error('Erro ao buscar salas com layout:', e);
+        
+        if (keystoneCount === 0) {
+          updateStatus('Não foi possível posicionar keystones - grade cheia');
+          alert('Não foi possível posicionar keystones. A grade pode estar cheia.');
+          return;
         }
-      };
-
-      btnAbrirSalaLayout.onclick = () => {
-        const sala_id = select.value;
-        if (sala_id && !isNaN(Number(sala_id))) {
-          window.location.search = '?sala_id=' + sala_id;
-        }
-      };
-
-      // Exibe modal se não houver sala_id nem view na URL
-      const params = new URLSearchParams(window.location.search);
-      if (!params.get('sala_id') && !params.get('view')) {
-        abrirModalInicio();
-      }
-
-      // Botão fechar do modal de início
-      modalInicio.querySelector('#btnFecharModalInicio').onclick = function () {
-        window.location.href = 'config-admin.html';
-      };
-    })();
-
-    // Adicionar botão Fechar no modal de seleção de sala
-    let btnFecharSalaModal = document.getElementById('btnFecharSalaModal');
-    if (!btnFecharSalaModal) {
-      btnFecharSalaModal = document.createElement('button');
-      btnFecharSalaModal.id = 'btnFecharSalaModal';
-      btnFecharSalaModal.textContent = 'Fechar';
-      btnFecharSalaModal.style.position = 'absolute';
-      btnFecharSalaModal.style.top = '12px';
-      btnFecharSalaModal.style.right = '12px';
-      btnFecharSalaModal.style.background = '#e74c3c';
-      btnFecharSalaModal.style.color = '#fff';
-      btnFecharSalaModal.style.border = 'none';
-      btnFecharSalaModal.style.borderRadius = '6px';
-      btnFecharSalaModal.style.padding = '6px 18px';
-      btnFecharSalaModal.style.fontSize = '1em';
-      btnFecharSalaModal.style.fontWeight = 'bold';
-      btnFecharSalaModal.style.cursor = 'pointer';
-      salaModal.firstElementChild.appendChild(btnFecharSalaModal);
-    }
-    btnFecharSalaModal.onclick = function () {
-      window.location.href = 'config-admin.html';
-    };
-
-    // Função para duplicar item (texto ou imagem)
-    function duplicarItem(div) {
-      const desloc = 32; // deslocamento visual
-      const elemRect = div.getBoundingClientRect();
-      const canvasRect = mainCanvas.getBoundingClientRect();
-      const x = elemRect.left - canvasRect.left + desloc;
-      const y = elemRect.top - canvasRect.top + desloc;
-      if (div.classList.contains('text-instance')) {
-        const span = div.querySelector('span');
-        addTextInstance(span.textContent, x, y);
-        // Copia cor e tamanho
-        const newDiv = mainCanvas.lastElementChild;
-        const newSpan = newDiv.querySelector('span');
-        newSpan.style.color = span.style.color;
-        newSpan.style.fontSize = span.style.fontSize;
-      } else {
-        const img = div.querySelector('img');
-        addEquipInstance(img.getAttribute('data-src') || img.src, x, y);
-        // Copia tamanho
-        const newDiv = mainCanvas.lastElementChild;
-        newDiv.style.width = div.style.width;
-        newDiv.style.height = div.style.height;
+        
+        updateStatus(`${keystoneCount} keystones da sala carregados`);
+        
+      } catch (error) {
+        console.error('Erro ao carregar keystones da sala:', error);
+        updateStatus(`Erro ao carregar keystones: ${error.message}`);
+        alert(`Erro ao carregar keystones: ${error.message}`);
       }
     }
-
-    // Suporte a Ctrl+C/Ctrl+V para duplicar item selecionado
-    let clipboardItem = null;
-    document.addEventListener('keydown', function (e) {
-      // Ctrl+C para copiar
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
-        if (selectedEquipInstance) {
-          clipboardItem = selectedEquipInstance;
-        }
-      }
-      // Ctrl+V para colar
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'v') {
-        if (clipboardItem) {
-          duplicarItem(clipboardItem);
-        }
-      }
-    });
-
-    // Remover painel lateral de edição de linha
-    lineEditPanel.parentNode.removeChild(lineEditPanel);
-
-    // Criar menu flutuante para edição de conexões
-    const lineMenu = document.createElement('div');
-    lineMenu.id = 'lineMenu';
-    lineMenu.style.position = 'absolute';
-    lineMenu.style.display = 'none';
-    lineMenu.style.zIndex = '4000';
-    lineMenu.style.background = '#fff';
-    lineMenu.style.border = '1px solid #ccc';
-    lineMenu.style.borderRadius = '8px';
-    lineMenu.style.boxShadow = '0 2px 12px #0002';
-    lineMenu.style.padding = '14px 16px 10px 16px';
-    lineMenu.style.minWidth = '220px';
-    lineMenu.style.fontFamily = 'Arial, sans-serif';
-    document.body.appendChild(lineMenu);
-
-    let lineMenuConnIdx = null;
-
-    function showLineMenu(connIdx, mouseX, mouseY) {
-      const conn = connections[connIdx];
-      if (!conn) return;
-      lineMenuConnIdx = connIdx;
-      // Gera as bolinhas de cor rápida
-      let quickColorsHtml = '<div style="display:flex;gap:8px;margin:8px 0 0 0;">';
-      basicColors.forEach(color => {
-        quickColorsHtml += `<button type='button' data-color='${color}' style='width:22px;height:22px;border-radius:50%;border:2px solid #fff;background:${color};cursor:pointer;box-shadow:0 1px 4px #0002;' title='${color}'></button>`;
-      });
-      quickColorsHtml += '</div>';
-      lineMenu.innerHTML = `
-        <div style=\"display:flex;align-items:center;gap:8px;margin-bottom:8px;\">
-          <label style=\"font-size:0.95em;min-width:60px;\">Cor:</label>
-          <input type=\"color\" id=\"lineMenuColor\" value=\"${conn.color || '#007bff'}\" style=\"width:32px;height:32px;cursor:pointer;\">
-        </div>
-        ${quickColorsHtml}
-        <div style=\"display:flex;align-items:center;gap:8px;margin-bottom:8px;\">
-          <label style=\"font-size:0.95em;min-width:60px;\">Nome:</label>
-          <input type=\"text\" id=\"lineMenuName\" value=\"${conn.name || ''}\" style=\"flex:1;height:28px;font-size:1em;padding:2px 8px;border-radius:4px;border:1px solid #bbb;\">
-        </div>
-        <div style=\"display:flex;align-items:center;gap:8px;margin-bottom:8px;\">
-          <label style=\"font-size:0.95em;min-width:60px;\">Tamanho:</label>
-          <input type=\"number\" id=\"lineMenuFontSize\" min=\"8\" max=\"48\" value=\"${conn.fontSize || 15}\" style=\"width:60px;height:28px;font-size:1em;padding:2px 8px;border-radius:4px;border:1px solid #bbb;\">
-        </div>
-        <div style=\"display:flex;align-items:center;gap:8px;margin-bottom:8px;\">
-          <label style=\"font-size:0.95em;min-width:60px;\">Espessura:</label>
-          <input type=\"number\" id=\"lineMenuStroke\" min=\"1\" max=\"12\" value=\"${conn.strokeWidth || 3}\" style=\"width:60px;height:28px;font-size:1em;padding:2px 8px;border-radius:4px;border:1px solid #bbb;\">
-        </div>
-        <button id=\"lineMenuRemove\" style=\"margin-top:6px;width:100%;background:#e74c3c;color:#fff;border:none;border-radius:4px;height:32px;font-size:1em;cursor:pointer;\">Remover Linha</button>
-      `;
-      // Posicionar menu próximo ao mouse
-      lineMenu.style.left = (mouseX + 12) + 'px';
-      lineMenu.style.top = (mouseY + 12) + 'px';
-      lineMenu.style.display = 'block';
-      // Eventos
-      document.getElementById('lineMenuColor').oninput = function () {
-        conn.color = this.value;
-        updateConnections();
-      };
-      // Evento para as bolinhas de cor rápida
-      Array.from(lineMenu.querySelectorAll('button[data-color]')).forEach(btn => {
-        btn.onclick = function () {
-          conn.color = btn.getAttribute('data-color');
-          document.getElementById('lineMenuColor').value = conn.color;
-          updateConnections();
-        };
-      });
-      document.getElementById('lineMenuName').oninput = function () {
-        conn.name = this.value;
-        updateConnections();
-      };
-      document.getElementById('lineMenuFontSize').oninput = function () {
-        conn.fontSize = parseInt(this.value) || 15;
-        updateConnections();
-      };
-      document.getElementById('lineMenuStroke').oninput = function () {
-        conn.strokeWidth = parseInt(this.value) || 3;
-        updateConnections();
-      };
-      document.getElementById('lineMenuRemove').onclick = function () {
-        connections.splice(connIdx, 1);
-        lineMenu.style.display = 'none';
-        updateConnections();
-      };
-    }
-
-    function hideLineMenu() {
-      lineMenu.style.display = 'none';
-      lineMenuConnIdx = null;
-    }
-
-    // Adicionar eventos de hover nas linhas SVG
-    function addLineMenuEvents() {
-      const svg = document.getElementById('svg-connections');
-      Array.from(svg.querySelectorAll('path')).forEach((path, idx) => {
-        path.addEventListener('click', function (e) {
-          e.stopPropagation();
-          showLineMenu(idx, e.clientX, e.clientY);
-        });
-        // Remover mouseleave
-      });
-    }
-
-    // Esconde menu ao clicar fora
-    window.addEventListener('mousedown', function (e) {
-      if (lineMenu.style.display === 'block' && !lineMenu.contains(e.target)) {
-        hideLineMenu();
-      }
-    });
-
-    // Chamar addLineMenuEvents sempre que atualizar conexões
-    // No final de updateConnections():
-    addLineMenuEvents();
-
-    // Adiciona botão Limpar Projeto no topo direito
-    const clearBtn = document.createElement('button');
-    clearBtn.textContent = 'Limpar Projeto';
-    clearBtn.style.position = 'fixed';
-    clearBtn.style.top = '18px';
-    clearBtn.style.right = '440px';
-    clearBtn.style.zIndex = '3000';
-    clearBtn.style.background = '#f39c12';
-    clearBtn.style.color = 'white';
-    clearBtn.style.fontWeight = 'bold';
-    clearBtn.style.fontSize = '0.95em';
-    clearBtn.style.padding = '7px 18px';
-    clearBtn.style.border = 'none';
-    clearBtn.style.borderRadius = '8px';
-    clearBtn.style.boxShadow = '0 2px 8px #0002';
-    clearBtn.style.cursor = 'pointer';
-    clearBtn.style.minWidth = '120px';
-    document.body.appendChild(clearBtn);
-
-    clearBtn.onclick = function () {
-      if (confirm('Tem certeza que deseja limpar todo o projeto? Isso apagará todos os textos, conexões e imagens do canvas.')) {
-        // Remove todos os elementos do canvas exceto o SVG de conexões
-        document.querySelectorAll('.equip-instance').forEach(div => div.remove());
-        // Limpa conexões
-        connections = [];
-        updateConnections();
-      }
-    };
-
-    // Exibir nome da sala ou 'Novo layout' no topo da sidebar
-    (function () {
-      const sidebar = document.querySelector('.sidebar');
-      if (!sidebar) return;
-      const infoDiv = document.createElement('div');
-      infoDiv.id = 'sidebarSalaInfo';
-      infoDiv.style.width = '100%';
-      infoDiv.style.textAlign = 'center';
-      infoDiv.style.fontWeight = 'bold';
-      infoDiv.style.fontSize = '1.08em';
-      infoDiv.style.margin = '10px 0 14px 0';
-      infoDiv.style.color = '#ffd700';
-      sidebar.insertBefore(infoDiv, sidebar.firstChild);
-      const params = new URLSearchParams(window.location.search);
-      const sala_id = params.get('sala_id');
-      if (sala_id) {
-        // Buscar nome da sala via API
-        fetch('/api/salas/' + sala_id)
-          .then(resp => resp.json())
-          .then(sala => {
-            infoDiv.textContent = sala.nome ? `Editando: ${sala.nome}` : `Editando: Sala ${sala_id}`;
-          })
-          .catch(() => {
-            infoDiv.textContent = `Editando: Sala ${sala_id}`;
-          });
-      } else {
-        infoDiv.textContent = 'Novo layout';
-      }
-    })();
   </script>
 </body>
 

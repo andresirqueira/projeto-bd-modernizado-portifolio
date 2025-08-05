@@ -1278,3 +1278,41 @@
 [2025-08-04 13:40:11] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 11 criada | Status: sucesso
 [2025-08-04 16:13:33] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
 [2025-08-04 16:19:24] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 08:28:31] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 08:55:30] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 08:56:02] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 09:03:03] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 09:19:49] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 09:40:28] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 09:40:30] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 09:48:52] Usuario: admin_wh | Acao: CRIAR_PATCH_PANEL | Detalhes: Patch Panel criado: Patch Panel Principal - 48 portas (1-48) | Status: sucesso
+[2025-08-05 11:52:21] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 12:07:31] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 12:12:11] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 12:22:55] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 12:34:22] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 12:37:07] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 12:38:18] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 12:51:18] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 13:27:49] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 15:24:55] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=540, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-05 15:40:28] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 1 atualizado | Status: sucesso
+[2025-08-05 15:41:57] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 5 desconectada | Status: sucesso
+[2025-08-05 15:42:14] Usuario: admin_wh | Acao: excluir_cabo | Detalhes: Cabo ID 1 excluído | Status: sucesso
+[2025-08-05 15:43:55] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-001 criado | Status: sucesso
+[2025-08-05 15:43:55] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 12 criada | Status: sucesso
+[2025-08-05 15:49:39] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-002 criado | Status: sucesso
+[2025-08-05 15:49:39] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 13 criada | Status: sucesso
+[2025-08-05 15:51:07] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 15:52:02] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 15:54:36] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 15:56:57] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 15:57:00] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 15:58:45] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 16:00:33] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 16:02:41] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 16:03:42] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 16:08:51] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-05 16:32:25] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=541, Nome=Ponto Usuário HDMI, Tipo=Outro, Marca=Outro, Modelo=Outro | Status: sucesso
+[2025-08-05 16:44:09] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-003 criado | Status: sucesso
+[2025-08-05 16:44:09] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 14 criada | Status: sucesso
