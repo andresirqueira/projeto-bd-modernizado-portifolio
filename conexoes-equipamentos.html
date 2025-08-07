@@ -798,9 +798,10 @@
           <button id="btnLoadRealData" class="control-group button warning" style="width: 100%; margin-bottom: 5px;">
             🔍 Dados Reais
           </button>
-          <button id="btnLoadKeystones" class="control-group button info" style="width: 100%; margin-bottom: 10px;">
+          <button id="btnLoadKeystones" class="control-group button info" style="width: 100%; margin-bottom: 5px;">
             🔌 Keystones
           </button>
+
         </div>
         
         <div class="control-group" style="margin-bottom: 15px;">
@@ -902,6 +903,7 @@
     </div>
   </div>
 
+  <script src="/static/js/equipment-images-map.js"></script>
   <script>
     // Estado global
     let gridData = {
@@ -2288,18 +2290,12 @@
         console.log('=== INICIANDO CARREGAMENTO DE DADOS REAIS ===');
         console.log('Sala ID:', gridData.currentSalaId);
         
-        // Buscar equipamentos da sala E equipamentos em estoque (sem sala)
+        // Buscar equipamentos da sala
         console.log('Fazendo fetch para equipamentos da sala...');
         const equipResponse = await fetch(`/equipamentos?sala_id=${gridData.currentSalaId}`);
         console.log('Resposta da API de equipamentos da sala:', equipResponse.status, equipResponse.ok);
         
-        // Buscar equipamentos em estoque (sem sala)
-        console.log('Fazendo fetch para equipamentos em estoque...');
-        const estoqueResponse = await fetch('/equipamentos?sala_id=');
-        console.log('Resposta da API de equipamentos em estoque:', estoqueResponse.status, estoqueResponse.ok);
-        
         let equipamentos = [];
-        let equipamentosEstoque = [];
         
         // Processar equipamentos da sala
         if (equipResponse.ok) {
@@ -2312,6 +2308,13 @@
             equipamentos = [];
           }
         }
+        
+        // Buscar equipamentos em estoque que têm conexões com a sala
+        console.log('Fazendo fetch para equipamentos em estoque...');
+        const estoqueResponse = await fetch('/equipamentos?sala_id=null');
+        console.log('Resposta da API de equipamentos em estoque:', estoqueResponse.status, estoqueResponse.ok);
+        
+        let equipamentosEstoque = [];
         
         // Processar equipamentos em estoque
         if (estoqueResponse.ok) {
@@ -2360,6 +2363,23 @@
         try {
           conexoes = JSON.parse(conexoesText);
           console.log('✅ Conexões reais da sala (JSON válido):', conexoes);
+          
+          // Filtrar conexões que envolvem equipamentos em estoque
+          const conexoesComEstoque = conexoes.filter(conexao => {
+            const equipOrigem = todosEquipamentos.find(e => e.id === conexao.equipamento_origem_id);
+            const equipDestino = todosEquipamentos.find(e => e.id === conexao.equipamento_destino_id);
+            
+            // Incluir se pelo menos um dos equipamentos está em estoque (sala_id = null)
+            return (equipOrigem && equipOrigem.sala_id === null) || 
+                   (equipDestino && equipDestino.sala_id === null);
+          });
+          
+          if (conexoesComEstoque.length > 0) {
+            console.log('✅ Conexões com equipamentos em estoque encontradas:', conexoesComEstoque);
+            // Adicionar essas conexões ao array de conexões
+            conexoes = [...conexoes, ...conexoesComEstoque];
+          }
+          
         } catch (error) {
           console.warn('❌ API retornou página de login em vez de JSON. Usando dados simulados.');
           console.log('Erro de parse:', error.message);
@@ -2501,15 +2521,40 @@
         let equipCount = 0;
         let keystoneCount = 0;
         
+        // Filtrar equipamentos que têm conexões com a sala (incluindo equipamentos em estoque)
+        const equipamentosComConexoes = todosEquipamentos.filter(equip => {
+          // Verificar se o equipamento tem conexões na sala
+          const temConexao = conexoes.some(conexao => 
+            conexao.equipamento_origem_id === equip.id || 
+            conexao.equipamento_destino_id === equip.id
+          );
+          
+          // Incluir se está na sala OU se está em estoque mas tem conexão com a sala
+          return equip.sala_id == gridData.currentSalaId || 
+                 (equip.sala_id === null && temConexao);
+        });
+        
+        console.log('Equipamentos com conexões na sala:', equipamentosComConexoes);
+        
         // Primeiro posicionar equipamentos
-        for (let row = 0; row < gridData.rows && equipCount < equipamentos.length; row++) {
-          for (let col = 0; col < gridData.cols && equipCount < equipamentos.length; col++) {
-            const equip = equipamentos[equipCount];
+        for (let row = 0; row < gridData.rows && equipCount < equipamentosComConexoes.length; row++) {
+          for (let col = 0; col < gridData.cols && equipCount < equipamentosComConexoes.length; col++) {
+            const equip = equipamentosComConexoes[equipCount];
             const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
             
             if (cell && !cell.classList.contains('occupied')) {
               // Buscar imagem do equipamento
-              const imgSrc = await findEquipmentImage(equip.tipo || equip.nome);
+              console.log('=== DEBUG EQUIPAMENTO ===');
+              console.log('Nome do equipamento:', equip.nome);
+              console.log('Nome em lowercase:', equip.nome ? equip.nome.toLowerCase() : 'null');
+              console.log('Tipo do equipamento:', equip.tipo);
+              console.log('========================');
+              
+              // Usar o sistema de mapeamento inteligente para encontrar a imagem
+              let imgSrc = await findEquipmentImage(equip.tipo || equip.nome, equip.nome || '', equip.marca || '', equip.modelo || '');
+              console.log('✅ Imagem selecionada para', equip.nome, ':', imgSrc);
+              
+
               
               cell.innerHTML = `
                 <div class="equipment-slot">
@@ -2586,9 +2631,9 @@
         
         // Criar conexões baseadas nos dados reais
         const connectionPromises = conexoes.map(async (conexao) => {
-          // Encontrar equipamentos de origem e destino
-          const fromEquip = equipamentos.find(e => e.id === conexao.equipamento_origem_id);
-          const toEquip = equipamentos.find(e => e.id === conexao.equipamento_destino_id);
+          // Encontrar equipamentos de origem e destino (incluindo equipamentos em estoque)
+          const fromEquip = equipamentosComConexoes.find(e => e.id === conexao.equipamento_origem_id);
+          const toEquip = equipamentosComConexoes.find(e => e.id === conexao.equipamento_destino_id);
           
           if (fromEquip && toEquip) {
             // Encontrar células onde estão os equipamentos
@@ -2799,11 +2844,14 @@
         
         // Contar conexões de keystones criadas
         const keystoneConnections = keystonesEquipamentos.filter(keystone => {
-          const equip = equipamentos.find(e => e.id == keystone.equipamento_sala_id);
+          const equip = equipamentosComConexoes.find(e => e.id == keystone.equipamento_sala_id);
           return equip && findEquipmentCell(equip.nome) && findEquipmentCell(keystone.keystone);
         }).length;
         
-        updateStatus(`Dados reais carregados: ${equipCount} equipamentos, ${keystoneCount} keystones, ${conexoes.length} conexões e ${keystoneConnections} conexões de keystones`);
+        // Contar equipamentos em estoque incluídos
+        const equipamentosEstoqueIncluidos = equipamentosComConexoes.filter(e => e.sala_id === null).length;
+        
+        updateStatus(`Dados reais carregados: ${equipCount} equipamentos (${equipamentosEstoqueIncluidos} em estoque), ${keystoneCount} keystones, ${conexoes.length} conexões e ${keystoneConnections} conexões de keystones`);
         
       } catch (error) {
         console.error('Erro ao carregar dados reais:', error);
@@ -2812,26 +2860,48 @@
       }
     }
 
-    // Função para encontrar imagem do equipamento
-    async function findEquipmentImage(equipmentType) {
+    // Função para encontrar imagem do equipamento usando o sistema de mapeamento inteligente
+    async function findEquipmentImage(equipmentType, equipmentName = '', equipmentMarca = '', equipmentModelo = '') {
       try {
+        console.log('🔍 findEquipmentImage procurando por:', equipmentType, equipmentName, equipmentMarca, equipmentModelo);
+        
+        // Usar o novo sistema de mapeamento inteligente
+        const mappedImage = findEquipmentImageByType(equipmentType, equipmentName, equipmentMarca, equipmentModelo);
+        
+        if (mappedImage) {
+          console.log('✅ Imagem encontrada pelo mapeamento:', mappedImage);
+          return mappedImage;
+        }
+        
+        // Fallback: buscar na API de imagens se o mapeamento não encontrou
         const response = await fetch('/api/equipamentos-imagens');
         const images = await response.json();
         
         const type = equipmentType.toLowerCase();
         
-        // Buscar imagem que contenha o tipo do equipamento
-        const matchingImage = images.find(img => {
-          const imgName = img.split('/').pop().toLowerCase();
-          return imgName.includes(type) || type.includes(imgName.replace(/\.[a-z]+$/i, ''));
+        // Busca genérica por tipo
+        let matchingImage = images.find(img => {
+          const imgName = img.split('/').pop().toLowerCase().replace(/\.[a-z]+$/i, '');
+          return imgName === type || imgName.includes(type) || type.includes(imgName);
         });
         
-        return matchingImage || images[0]; // Retorna primeira imagem se não encontrar
+        if (matchingImage) {
+          console.log('✅ Imagem encontrada por busca genérica:', matchingImage);
+          return matchingImage;
+        }
+        
+        // Se ainda não encontrou, usar a primeira imagem disponível
+        matchingImage = images[0];
+        console.log('⚠️ Nenhuma imagem específica encontrada, usando padrão:', matchingImage);
+        return matchingImage;
+        
       } catch (error) {
         console.error('Erro ao buscar imagem do equipamento:', error);
-        return '/static/img/default-equipment.png'; // Imagem padrão
+        return '/static/img/outro-outro-outro.png'; // Imagem padrão
       }
     }
+    
+    
 
     // Função para encontrar célula onde está um equipamento
     function findEquipmentCell(equipmentName) {
@@ -2959,6 +3029,8 @@
     btnLoadKeystones.addEventListener('click', () => {
       loadKeystonesToGrid();
     });
+    
+
 
     btnSair.addEventListener('click', () => {
       if (confirm('Tem certeza que deseja sair? As alterações não salvas serão perdidas.')) {

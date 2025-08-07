@@ -28,6 +28,7 @@ for tipo in tipos_para_remover:
 # Agora vamos inserir os tipos mais específicos
 tipos_cabos_detalhados = [
     # USB - Tipos específicos
+    ('USB-A para USB-A', 'Cabo USB tipo A para tipo A', 'fas fa-usb'),
     ('USB-A para USB-B', 'Cabo USB tipo A para tipo B (printer)', 'fas fa-usb'),
     ('USB-A para USB-C', 'Cabo USB tipo A para tipo C', 'fas fa-usb'),
     ('USB-C para USB-C', 'Cabo USB tipo C para tipo C', 'fas fa-usb'),

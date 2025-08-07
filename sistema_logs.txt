@@ -1316,3 +1316,270 @@
 [2025-08-05 16:32:25] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=541, Nome=Ponto Usuário HDMI, Tipo=Outro, Marca=Outro, Modelo=Outro | Status: sucesso
 [2025-08-05 16:44:09] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-003 criado | Status: sucesso
 [2025-08-05 16:44:09] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 14 criada | Status: sucesso
+[2025-08-06 08:23:58] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-06 08:34:37] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-06 08:38:21] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=4 | Status: sucesso
+[2025-08-06 08:46:23] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-002 criado | Status: sucesso
+[2025-08-06 08:46:23] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 15 criada | Status: sucesso
+[2025-08-06 08:46:58] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=4 | Status: sucesso
+[2025-08-06 08:50:22] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-006 criado | Status: sucesso
+[2025-08-06 08:50:22] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 16 criada | Status: sucesso
+[2025-08-06 08:52:01] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-007 criado | Status: sucesso
+[2025-08-06 08:52:01] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 17 criada | Status: sucesso
+[2025-08-06 08:54:42] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-008 criado | Status: sucesso
+[2025-08-06 08:54:42] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 18 criada | Status: sucesso
+[2025-08-06 08:57:12] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=542, Nome=Poe Logitech, Tipo=Poe, Marca=Logitech, Modelo=KIT CAT5E | Status: sucesso
+[2025-08-06 09:00:16] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-009 criado | Status: sucesso
+[2025-08-06 09:00:17] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 19 criada | Status: sucesso
+[2025-08-06 09:02:57] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=543, Nome=Dongle, Tipo=Dongle, Marca=Logitech, Modelo=Logitech | Status: sucesso
+[2025-08-06 09:03:20] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=544, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-06 09:05:28] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-010 criado | Status: sucesso
+[2025-08-06 09:05:28] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 20 criada | Status: sucesso
+[2025-08-06 09:08:51] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-004 criado | Status: sucesso
+[2025-08-06 09:08:51] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 21 criada | Status: sucesso
+[2025-08-06 09:10:02] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-005 criado | Status: sucesso
+[2025-08-06 09:10:02] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 22 criada | Status: sucesso
+[2025-08-06 09:11:01] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-006 criado | Status: sucesso
+[2025-08-06 09:11:01] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 23 criada | Status: sucesso
+[2025-08-06 09:12:24] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=4 | Status: sucesso
+[2025-08-06 09:25:38] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-06 09:41:07] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=545, Nome=Poe Logitech, Tipo=Poe, Marca=Logitech, Modelo=KIT CAT5E | Status: sucesso
+[2025-08-06 09:41:34] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=546, Nome=Dongle, Tipo=Dongle, Marca=Logitech, Modelo=Logitech | Status: sucesso
+[2025-08-06 09:41:53] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=547, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-06 09:46:15] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-003 criado | Status: sucesso
+[2025-08-06 09:46:15] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 24 criada | Status: sucesso
+[2025-08-06 09:47:34] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-004 criado | Status: sucesso
+[2025-08-06 09:47:34] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 25 criada | Status: sucesso
+[2025-08-06 09:48:42] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-011 criado | Status: sucesso
+[2025-08-06 09:48:42] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 26 criada | Status: sucesso
+[2025-08-06 09:49:18] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 26 atualizado | Status: sucesso
+[2025-08-06 09:52:01] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-012 criado | Status: sucesso
+[2025-08-06 09:52:01] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 27 criada | Status: sucesso
+[2025-08-06 09:53:30] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-013 criado | Status: sucesso
+[2025-08-06 09:53:30] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 28 criada | Status: sucesso
+[2025-08-06 09:54:57] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-014 criado | Status: sucesso
+[2025-08-06 09:54:57] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 29 criada | Status: sucesso
+[2025-08-06 09:55:41] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-015 criado | Status: sucesso
+[2025-08-06 09:55:41] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 30 criada | Status: sucesso
+[2025-08-06 09:56:04] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-016 criado | Status: sucesso
+[2025-08-06 09:56:04] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 31 criada | Status: sucesso
+[2025-08-06 09:57:00] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-007 criado | Status: sucesso
+[2025-08-06 09:57:00] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 32 criada | Status: sucesso
+[2025-08-06 09:57:42] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-008 criado | Status: sucesso
+[2025-08-06 09:57:42] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 33 criada | Status: sucesso
+[2025-08-06 09:58:16] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-009 criado | Status: sucesso
+[2025-08-06 09:58:16] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 34 criada | Status: sucesso
+[2025-08-06 10:00:35] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=5 | Status: sucesso
+[2025-08-06 10:04:17] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=5 | Status: sucesso
+[2025-08-06 10:05:51] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=5 | Status: sucesso
+[2025-08-06 10:17:20] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=548, Nome=Adaptador USB mesa, Tipo=Adaptador, Marca=Outro, Modelo=USBA F to USBA F | Status: sucesso
+[2025-08-06 10:32:00] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=549, Nome=Ponto Usuário USB, Tipo=Outro, Marca=Outro, Modelo=Outro | Status: sucesso
+[2025-08-06 10:32:35] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=549, Nome=Ponto Usuário USB, Tipo=Outro, Marca=Outro, Modelo=Outro | Status: sucesso
+[2025-08-06 10:34:07] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-005 criado | Status: sucesso
+[2025-08-06 10:34:07] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 35 criada | Status: sucesso
+[2025-08-06 10:37:55] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-006 criado | Status: sucesso
+[2025-08-06 10:37:55] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 36 criada | Status: sucesso
+[2025-08-06 10:44:20] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=5 | Status: sucesso
+[2025-08-06 10:47:49] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=5 | Status: sucesso
+[2025-08-06 10:48:53] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=5 | Status: sucesso
+[2025-08-06 10:49:12] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=5 | Status: sucesso
+[2025-08-06 10:49:56] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=5 | Status: sucesso
+[2025-08-06 10:50:48] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=5 | Status: sucesso
+[2025-08-06 10:52:45] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=5 | Status: sucesso
+[2025-08-06 11:22:54] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=550, Nome=Poe Logitech, Tipo=Poe, Marca=Logitech, Modelo=KIT CAT5E | Status: sucesso
+[2025-08-06 11:23:10] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=551, Nome=Dongle, Tipo=Dongle, Marca=Logitech, Modelo=Logitech | Status: sucesso
+[2025-08-06 11:23:28] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=552, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-06 11:23:44] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=553, Nome=Adaptador USB mesa, Tipo=Adaptador, Marca=Outro, Modelo=USBA F to USBA F | Status: sucesso
+[2025-08-06 11:24:42] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=6, Nome=Sala 04, Equipamentos desatrelados=0, Equipamentos vinculados=14 | Status: sucesso
+[2025-08-06 11:30:21] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-007 criado | Status: sucesso
+[2025-08-06 11:30:21] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 37 criada | Status: sucesso
+[2025-08-06 11:31:56] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-008 criado | Status: sucesso
+[2025-08-06 11:31:56] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 38 criada | Status: sucesso
+[2025-08-06 11:34:41] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-009 criado | Status: sucesso
+[2025-08-06 11:34:41] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 39 criada | Status: sucesso
+[2025-08-06 11:35:53] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-010 criado | Status: sucesso
+[2025-08-06 11:35:53] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 40 criada | Status: sucesso
+[2025-08-06 11:37:18] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-017 criado | Status: sucesso
+[2025-08-06 11:37:18] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 41 criada | Status: sucesso
+[2025-08-06 11:38:16] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-018 criado | Status: sucesso
+[2025-08-06 11:38:16] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 42 criada | Status: sucesso
+[2025-08-06 11:38:53] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-019 criado | Status: sucesso
+[2025-08-06 11:38:53] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 43 criada | Status: sucesso
+[2025-08-06 11:39:37] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-020 criado | Status: sucesso
+[2025-08-06 11:39:37] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 44 criada | Status: sucesso
+[2025-08-06 11:40:04] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-021 criado | Status: sucesso
+[2025-08-06 11:40:04] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 45 criada | Status: sucesso
+[2025-08-06 11:40:38] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-022 criado | Status: sucesso
+[2025-08-06 11:40:38] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 46 criada | Status: sucesso
+[2025-08-06 11:41:32] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-010 criado | Status: sucesso
+[2025-08-06 11:41:32] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 47 criada | Status: sucesso
+[2025-08-06 11:42:53] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-011 criado | Status: sucesso
+[2025-08-06 11:42:53] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 48 criada | Status: sucesso
+[2025-08-06 11:43:48] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-012 criado | Status: sucesso
+[2025-08-06 11:43:48] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 49 criada | Status: sucesso
+[2025-08-06 11:47:19] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=6 | Status: sucesso
+[2025-08-06 12:32:33] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=554, Nome=Poe Logitech, Tipo=Poe, Marca=Logitech, Modelo=KIT CAT5E | Status: sucesso
+[2025-08-06 12:32:59] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=555, Nome=Dongle, Tipo=Dongle, Marca=Logitech, Modelo=Logitech | Status: sucesso
+[2025-08-06 12:33:20] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=556, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-06 12:33:37] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=557, Nome=Adaptador USB mesa, Tipo=Adaptador, Marca=Outro, Modelo=USBA F to USBA F | Status: sucesso
+[2025-08-06 12:35:58] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-011 criado | Status: sucesso
+[2025-08-06 12:35:58] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 50 criada | Status: sucesso
+[2025-08-06 12:36:54] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-012 criado | Status: sucesso
+[2025-08-06 12:36:54] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 51 criada | Status: sucesso
+[2025-08-06 12:38:44] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-013 criado | Status: sucesso
+[2025-08-06 12:38:44] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 52 criada | Status: sucesso
+[2025-08-06 12:39:45] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-014 criado | Status: sucesso
+[2025-08-06 12:39:45] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 53 criada | Status: sucesso
+[2025-08-06 12:40:46] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-023 criado | Status: sucesso
+[2025-08-06 12:40:46] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 54 criada | Status: sucesso
+[2025-08-06 12:42:53] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-024 criado | Status: sucesso
+[2025-08-06 12:42:53] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 55 criada | Status: sucesso
+[2025-08-06 12:44:11] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-025 criado | Status: sucesso
+[2025-08-06 12:44:11] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 56 criada | Status: sucesso
+[2025-08-06 12:45:09] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-026 criado | Status: sucesso
+[2025-08-06 12:45:09] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 57 criada | Status: sucesso
+[2025-08-06 12:45:42] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-027 criado | Status: sucesso
+[2025-08-06 12:45:42] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 58 criada | Status: sucesso
+[2025-08-06 12:46:14] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-028 criado | Status: sucesso
+[2025-08-06 12:46:14] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 59 criada | Status: sucesso
+[2025-08-06 12:47:14] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-013 criado | Status: sucesso
+[2025-08-06 12:47:14] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 60 criada | Status: sucesso
+[2025-08-06 12:47:52] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-014 criado | Status: sucesso
+[2025-08-06 12:47:52] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 61 criada | Status: sucesso
+[2025-08-06 12:48:34] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-015 criado | Status: sucesso
+[2025-08-06 12:48:34] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 62 criada | Status: sucesso
+[2025-08-06 12:51:05] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=7 | Status: sucesso
+[2025-08-06 12:54:51] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-015 criado | Status: sucesso
+[2025-08-06 12:54:51] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 63 criada | Status: sucesso
+[2025-08-06 12:55:45] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-029 criado | Status: sucesso
+[2025-08-06 12:55:45] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 64 criada | Status: sucesso
+[2025-08-06 12:56:41] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-030 criado | Status: sucesso
+[2025-08-06 12:56:41] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 65 criada | Status: sucesso
+[2025-08-06 12:57:11] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-031 criado | Status: sucesso
+[2025-08-06 12:57:11] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 66 criada | Status: sucesso
+[2025-08-06 12:58:37] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=558, Nome=Poe Logitech, Tipo=Poe, Marca=Logitech, Modelo=KIT CAT5E | Status: sucesso
+[2025-08-06 12:58:52] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=559, Nome=Dongle, Tipo=Dongle, Marca=Logitech, Modelo=Logitech | Status: sucesso
+[2025-08-06 12:59:09] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=560, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Outro, Modelo=USBA F to USBA F | Status: sucesso
+[2025-08-06 13:00:15] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-032 criado | Status: sucesso
+[2025-08-06 13:00:15] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 67 criada | Status: sucesso
+[2025-08-06 13:01:06] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-033 criado | Status: sucesso
+[2025-08-06 13:01:06] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 68 criada | Status: sucesso
+[2025-08-06 13:02:02] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-016 criado | Status: sucesso
+[2025-08-06 13:02:02] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 69 criada | Status: sucesso
+[2025-08-06 13:03:02] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-017 criado | Status: sucesso
+[2025-08-06 13:03:02] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 70 criada | Status: sucesso
+[2025-08-06 13:04:03] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-018 criado | Status: sucesso
+[2025-08-06 13:04:03] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 71 criada | Status: sucesso
+[2025-08-06 13:06:07] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=8 | Status: sucesso
+[2025-08-06 13:09:47] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=561, Nome=Poe Logitech, Tipo=Poe, Marca=Logitech, Modelo=KIT CAT5E | Status: sucesso
+[2025-08-06 13:09:59] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=562, Nome=Dongle, Tipo=Dongle, Marca=Logitech, Modelo=Logitech | Status: sucesso
+[2025-08-06 13:10:15] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=563, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-06 13:11:40] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-016 criado | Status: sucesso
+[2025-08-06 13:11:40] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 72 criada | Status: sucesso
+[2025-08-06 13:12:23] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-034 criado | Status: sucesso
+[2025-08-06 13:12:23] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 73 criada | Status: sucesso
+[2025-08-06 13:12:48] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-035 criado | Status: sucesso
+[2025-08-06 13:12:48] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 74 criada | Status: sucesso
+[2025-08-06 13:13:20] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-036 criado | Status: sucesso
+[2025-08-06 13:13:20] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 75 criada | Status: sucesso
+[2025-08-06 13:14:31] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-037 criado | Status: sucesso
+[2025-08-06 13:14:31] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 76 criada | Status: sucesso
+[2025-08-06 13:15:36] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-038 criado | Status: sucesso
+[2025-08-06 13:15:36] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 77 criada | Status: sucesso
+[2025-08-06 13:16:22] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-019 criado | Status: sucesso
+[2025-08-06 13:16:22] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 78 criada | Status: sucesso
+[2025-08-06 13:17:38] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-020 criado | Status: sucesso
+[2025-08-06 13:17:38] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 79 criada | Status: sucesso
+[2025-08-06 13:18:21] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-021 criado | Status: sucesso
+[2025-08-06 13:18:21] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 80 criada | Status: sucesso
+[2025-08-06 13:20:03] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=9 | Status: sucesso
+[2025-08-06 13:21:56] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-039 criado | Status: sucesso
+[2025-08-06 13:21:56] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 81 criada | Status: sucesso
+[2025-08-06 13:22:45] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-022 criado | Status: sucesso
+[2025-08-06 13:24:18] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 82 criada | Status: sucesso
+[2025-08-06 13:25:18] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=10 | Status: sucesso
+[2025-08-06 13:26:39] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-040 criado | Status: sucesso
+[2025-08-06 13:26:39] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 83 criada | Status: sucesso
+[2025-08-06 13:27:27] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-023 criado | Status: sucesso
+[2025-08-06 13:27:27] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 84 criada | Status: sucesso
+[2025-08-06 13:28:26] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=11 | Status: sucesso
+[2025-08-06 13:29:59] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-041 criado | Status: sucesso
+[2025-08-06 13:29:59] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 85 criada | Status: sucesso
+[2025-08-06 13:30:35] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-024 criado | Status: sucesso
+[2025-08-06 13:30:35] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 86 criada | Status: sucesso
+[2025-08-06 13:31:48] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=12 | Status: sucesso
+[2025-08-06 13:33:38] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=564, Nome=Poe Logitech, Tipo=Poe, Marca=Logitech, Modelo=KIT CAT5E | Status: sucesso
+[2025-08-06 13:33:56] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=565, Nome=Dongle, Tipo=Dongle, Marca=Logitech, Modelo=Logitech | Status: sucesso
+[2025-08-06 13:34:13] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=566, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-06 13:34:29] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=567, Nome=Adaptador USB mesa, Tipo=Adaptador, Marca=Outro, Modelo=USBA F to USBA F | Status: sucesso
+[2025-08-06 13:36:21] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-017 criado | Status: sucesso
+[2025-08-06 13:36:21] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 87 criada | Status: sucesso
+[2025-08-06 13:38:02] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-018 criado | Status: sucesso
+[2025-08-06 13:38:02] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 88 criada | Status: sucesso
+[2025-08-06 15:17:23] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-019 criado | Status: sucesso
+[2025-08-06 15:17:23] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 89 criada | Status: sucesso
+[2025-08-06 15:19:08] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-020 criado | Status: sucesso
+[2025-08-06 15:19:08] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 90 criada | Status: sucesso
+[2025-08-06 15:20:25] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-042 criado | Status: sucesso
+[2025-08-06 15:20:25] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 91 criada | Status: sucesso
+[2025-08-06 15:22:04] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-043 criado | Status: sucesso
+[2025-08-06 15:22:04] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 92 criada | Status: sucesso
+[2025-08-06 15:22:59] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-044 criado | Status: sucesso
+[2025-08-06 15:22:59] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 93 criada | Status: sucesso
+[2025-08-06 15:23:49] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-045 criado | Status: sucesso
+[2025-08-06 15:23:49] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 94 criada | Status: sucesso
+[2025-08-06 15:24:24] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-046 criado | Status: sucesso
+[2025-08-06 15:24:24] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 95 criada | Status: sucesso
+[2025-08-06 15:25:03] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-047 criado | Status: sucesso
+[2025-08-06 15:25:03] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 96 criada | Status: sucesso
+[2025-08-06 15:25:47] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-025 criado | Status: sucesso
+[2025-08-06 15:25:47] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 97 criada | Status: sucesso
+[2025-08-06 15:26:34] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-026 criado | Status: sucesso
+[2025-08-06 15:26:34] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 98 criada | Status: sucesso
+[2025-08-06 15:27:18] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-027 criado | Status: sucesso
+[2025-08-06 15:27:18] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 99 criada | Status: sucesso
+[2025-08-06 15:31:25] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 90 desconectada | Status: sucesso
+[2025-08-06 15:32:14] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 90 criada | Status: sucesso
+[2025-08-06 15:42:46] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=13 | Status: sucesso
+[2025-08-06 15:47:24] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=568, Nome=Poe Logitech, Tipo=Poe, Marca=Logitech, Modelo=KIT CAT5E | Status: sucesso
+[2025-08-06 15:47:37] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=569, Nome=Dongle, Tipo=Dongle, Marca=Logitech, Modelo=Logitech | Status: sucesso
+[2025-08-06 15:48:05] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=570, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-06 15:49:24] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-021 criado | Status: sucesso
+[2025-08-06 15:49:24] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 100 criada | Status: sucesso
+[2025-08-06 15:50:18] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-048 criado | Status: sucesso
+[2025-08-06 15:50:18] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 101 criada | Status: sucesso
+[2025-08-06 15:50:56] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-049 criado | Status: sucesso
+[2025-08-06 15:50:56] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 102 criada | Status: sucesso
+[2025-08-06 15:51:39] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-050 criado | Status: sucesso
+[2025-08-06 15:51:39] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 103 criada | Status: sucesso
+[2025-08-06 15:52:37] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-051 criado | Status: sucesso
+[2025-08-06 15:52:37] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 104 criada | Status: sucesso
+[2025-08-06 15:53:53] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-052 criado | Status: sucesso
+[2025-08-06 15:53:53] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 105 criada | Status: sucesso
+[2025-08-06 15:54:57] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-028 criado | Status: sucesso
+[2025-08-06 15:54:57] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 106 criada | Status: sucesso
+[2025-08-06 15:55:37] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-029 criado | Status: sucesso
+[2025-08-06 15:55:37] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 107 criada | Status: sucesso
+[2025-08-06 15:56:33] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-030 criado | Status: sucesso
+[2025-08-06 15:56:33] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 108 criada | Status: sucesso
+[2025-08-06 15:58:02] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=14 | Status: sucesso
+[2025-08-06 16:17:05] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-053 criado | Status: sucesso
+[2025-08-06 16:17:05] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 109 criada | Status: sucesso
+[2025-08-06 16:18:44] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-054 criado | Status: sucesso
+[2025-08-06 16:18:45] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 110 criada | Status: sucesso
+[2025-08-07 09:18:43] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-055 criado | Status: sucesso
+[2025-08-07 09:18:43] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 111 criada | Status: sucesso
+[2025-08-07 09:20:09] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-056 criado | Status: sucesso
+[2025-08-07 09:20:09] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 112 criada | Status: sucesso
+[2025-08-07 09:20:41] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-057 criado | Status: sucesso
+[2025-08-07 09:20:41] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 113 criada | Status: sucesso
+[2025-08-07 09:32:37] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-058 criado | Status: sucesso
+[2025-08-07 09:32:37] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 114 criada | Status: sucesso
+[2025-08-07 09:33:04] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-059 criado | Status: sucesso
+[2025-08-07 09:33:04] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 115 criada | Status: sucesso
+[2025-08-07 09:33:30] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-060 criado | Status: sucesso
+[2025-08-07 09:33:30] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 116 criada | Status: sucesso
+[2025-08-07 09:34:30] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-061 criado | Status: sucesso
+[2025-08-07 09:34:30] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 117 criada | Status: sucesso
+[2025-08-07 09:39:12] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 117 desconectada | Status: sucesso
+[2025-08-07 09:39:47] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 116 criada | Status: sucesso

@@ -2554,6 +2554,7 @@ def cabos_por_sala(sala_id):
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
     
+    # Buscar conexões diretas de cabos
     cur.execute('''
         SELECT cc.id, cc.cabo_id, cc.equipamento_origem_id, cc.equipamento_destino_id,
                cc.porta_origem, cc.porta_destino, cc.sala_id, cc.observacao,
@@ -2561,21 +2562,59 @@ def cabos_por_sala(sala_id):
                c.codigo_unico as codigo_cabo, c.tipo as tipo_cabo, c.comprimento, c.marca, c.modelo,
                eo.nome as equipamento_origem, ed.nome as equipamento_destino,
                s.nome as sala_nome,
-               CASE WHEN cc.data_desconexao IS NULL THEN 1 ELSE 0 END as ativo
+               CASE WHEN cc.data_desconexao IS NULL THEN 1 ELSE 0 END as ativo,
+               'cabo_direto' as tipo_conexao
         FROM conexoes_cabos cc
         JOIN cabos c ON cc.cabo_id = c.id
         LEFT JOIN equipamentos eo ON cc.equipamento_origem_id = eo.id
         LEFT JOIN equipamentos ed ON cc.equipamento_destino_id = ed.id
         LEFT JOIN salas s ON cc.sala_id = s.id
-        WHERE cc.sala_id = ?
-        ORDER BY cc.data_conexao DESC
+        WHERE cc.sala_id = ? AND cc.data_desconexao IS NULL
     ''', (sala_id,))
     
-    rows = cur.fetchall()
+    conexoes_diretas = cur.fetchall()
+    
+    # Buscar conexões via patch panel
+    cur.execute('''
+        SELECT 
+            ppp.id as id,
+            cc.cabo_id,
+            e.id as equipamento_origem_id,
+            cc.equipamento_destino_id,
+            cc.porta_origem,
+            ppp.numero_porta as porta_destino,
+            e.sala_id,
+            cc.observacao,
+            cc.data_conexao,
+            cc.data_desconexao,
+            COALESCE(c.codigo_unico, pp.prefixo_keystone || '-' || printf('%03d', ppp.numero_porta)) as codigo_cabo,
+            COALESCE(c.tipo, 'Ethernet') as tipo_cabo,
+            c.comprimento,
+            c.marca,
+            c.modelo,
+            e.nome as equipamento_origem,
+            pp.nome as equipamento_destino,
+            s.nome as sala_nome,
+            CASE WHEN cc.data_desconexao IS NULL THEN 1 ELSE 0 END as ativo,
+            'patch_panel' as tipo_conexao
+        FROM patch_panel_portas ppp
+        JOIN patch_panels pp ON ppp.patch_panel_id = pp.id
+        JOIN equipamentos e ON ppp.equipamento_id = e.id
+        LEFT JOIN salas s ON e.sala_id = s.id
+        LEFT JOIN conexoes_cabos cc ON cc.equipamento_origem_id = e.id AND cc.equipamento_destino_id = pp.id AND cc.porta_destino = ppp.numero_porta
+        LEFT JOIN cabos c ON cc.cabo_id = c.id
+        WHERE e.sala_id = ? AND ppp.status = 'ocupada'
+    ''', (sala_id,))
+    
+    conexoes_patch_panel = cur.fetchall()
+    
     conn.close()
     
+    # Combinar os resultados
+    todas_conexoes = conexoes_diretas + conexoes_patch_panel
+    
     cabos = []
-    for row in rows:
+    for row in todas_conexoes:
         cabo = {
             'id': row[0],
             'cabo_id': row[1],
@@ -2595,9 +2634,13 @@ def cabos_por_sala(sala_id):
             'equipamento_origem': row[15],
             'equipamento_destino': row[16],
             'sala_nome': row[17],
-            'ativo': bool(row[18])
+            'ativo': bool(row[18]),
+            'tipo_conexao': row[19] if len(row) > 19 else 'cabo_direto'
         }
         cabos.append(cabo)
+    
+    # Ordenar por data de conexão (conexões diretas primeiro, depois patch panel)
+    cabos.sort(key=lambda x: (x['tipo_conexao'] == 'patch_panel', x.get('data_conexao', '')))
     
     return jsonify(cabos)
 
@@ -3624,6 +3667,8 @@ def conectar_cabo_estoque_html():
 @admin_required
 def editar_cabo_especifico_html():
     return send_file('editar-cabo-especifico.html')
+
+
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0', port=8080)

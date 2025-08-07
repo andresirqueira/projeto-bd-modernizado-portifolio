@@ -183,14 +183,15 @@
                     <label for="equipamento_origem" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         <i class="fas fa-plug mr-2"></i>Equipamento Origem *
                     </label>
-                    <!-- Campo de busca para equipamento origem -->
-                    <div class="relative mb-2">
-                        <input type="text" id="busca_origem" placeholder="Digite para buscar equipamento..."
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600 text-sm"
-                               oninput="filtrarEquipamentos('equipamento_origem', this.value)">
-                        <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-                            <i class="fas fa-search text-gray-400"></i>
-                        </div>
+                    <!-- Filtro por sala para equipamento origem -->
+                    <div class="mb-2">
+                        <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                            <i class="fas fa-filter mr-1"></i>Filtrar por sala:
+                        </label>
+                        <select id="filtro_sala_origem" onchange="filtrarEquipamentosPorSala('equipamento_origem', this.value)"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600 text-sm">
+                            <option value="">Todas as salas</option>
+                        </select>
                     </div>
                     <select id="equipamento_origem" name="equipamento_origem"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
@@ -203,14 +204,15 @@
                     <label for="equipamento_destino" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         <i class="fas fa-plug mr-2"></i>Equipamento Destino *
                     </label>
-                    <!-- Campo de busca para equipamento destino -->
-                    <div class="relative mb-2">
-                        <input type="text" id="busca_destino" placeholder="Digite para buscar equipamento..."
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600 text-sm"
-                               oninput="filtrarEquipamentos('equipamento_destino', this.value)">
-                        <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-                            <i class="fas fa-search text-gray-400"></i>
-                        </div>
+                    <!-- Filtro por sala para equipamento destino -->
+                    <div class="mb-2">
+                        <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                            <i class="fas fa-filter mr-1"></i>Filtrar por sala:
+                        </label>
+                        <select id="filtro_sala_destino" onchange="filtrarEquipamentosPorSala('equipamento_destino', this.value)"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600 text-sm">
+                            <option value="">Todas as salas</option>
+                        </select>
                     </div>
                     <select id="equipamento_destino" name="equipamento_destino"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
@@ -256,14 +258,15 @@
                      <label for="equipamento_rede" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                          <i class="fas fa-network-wired mr-2"></i>Equipamento de Rede *
                      </label>
-                     <!-- Campo de busca para equipamento rede -->
-                     <div class="relative mb-2">
-                         <input type="text" id="busca_rede" placeholder="Digite para buscar equipamento..."
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600 text-sm"
-                                oninput="filtrarEquipamentos('equipamento_rede', this.value)">
-                         <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-                             <i class="fas fa-search text-gray-400"></i>
-                         </div>
+                     <!-- Filtro de sala para equipamento rede -->
+                     <div class="mb-2">
+                         <label for="filtro_sala_rede" class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                             <i class="fas fa-filter mr-1"></i>Filtrar por sala
+                         </label>
+                         <select id="filtro_sala_rede" onchange="filtrarEquipamentosPorSala('equipamento_rede', this.value)"
+                                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600 text-sm">
+                             <option value="">Todas as salas</option>
+                         </select>
                      </div>
                      <select id="equipamento_rede" name="equipamento_rede" onchange="carregarInfoPatchPanel()"
                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
@@ -366,16 +369,6 @@
                 <textarea id="descricao" name="descricao" rows="3"
                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
                           placeholder="Descrição adicional do cabo..."></textarea>
-            </div>
-
-            <!-- Foto -->
-            <div>
-                <label for="foto" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    <i class="fas fa-camera mr-2"></i>Foto do Cabo
-                </label>
-                <input type="file" id="foto" name="foto" accept="image/*"
-                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Opcional: foto do cabo para identificação visual</p>
             </div>
 
             <!-- Botões -->
@@ -512,12 +505,57 @@
                     equipRede: equipRede.innerHTML
                 };
                 
+                // Carregar salas para os filtros
+                await carregarSalasParaFiltros();
+                
             } catch (error) {
                 console.error('Erro ao carregar equipamentos:', error);
             }
         }
 
-        // Função para filtrar equipamentos
+        // Função para filtrar equipamentos por sala
+        function filtrarEquipamentosPorSala(selectId, salaId) {
+            const select = document.getElementById(selectId);
+            
+            if (!salaId) {
+                // Se nenhuma sala selecionada, restaurar dados originais
+                if (window.equipamentosOriginais && window.equipamentosOriginais[selectId]) {
+                    select.innerHTML = window.equipamentosOriginais[selectId];
+                }
+                return;
+            }
+            
+            // Limpar select atual
+            const placeholderText = selectId === 'equipamento_rede' 
+                ? 'Selecione o equipamento (sensor, painel, etc.)...' 
+                : 'Selecione o equipamento...';
+            select.innerHTML = `<option value="">${placeholderText}</option>`;
+            
+            // Filtrar equipamentos da sala selecionada
+            const equipamentosFiltrados = equipamentos.filter(eq => eq.sala_id == salaId);
+            
+            if (equipamentosFiltrados.length === 0) {
+                const option = document.createElement('option');
+                option.value = "";
+                option.textContent = "Nenhum equipamento nesta sala";
+                option.disabled = true;
+                select.appendChild(option);
+                return;
+            }
+            
+            // Ordenar equipamentos por nome
+            equipamentosFiltrados.sort((a, b) => a.nome.localeCompare(b.nome));
+            
+            // Adicionar equipamentos filtrados
+            equipamentosFiltrados.forEach(eq => {
+                const option = document.createElement('option');
+                option.value = eq.id;
+                option.textContent = `${eq.nome} (${eq.tipo})`;
+                select.appendChild(option);
+            });
+        }
+
+        // Função para filtrar equipamentos (mantida para compatibilidade)
         function filtrarEquipamentos(selectId, termoBusca) {
             const select = document.getElementById(selectId);
             const termo = termoBusca.toLowerCase().trim();
@@ -581,6 +619,48 @@
                 option.textContent = "Nenhum equipamento encontrado";
                 option.disabled = true;
                 select.appendChild(option);
+            }
+        }
+
+        // Carregar salas para os filtros
+        async function carregarSalasParaFiltros() {
+            try {
+                const response = await fetch('/salas');
+                salas = await response.json();
+                
+                // Preencher filtros de sala
+                const filtroOrigem = document.getElementById('filtro_sala_origem');
+                const filtroDestino = document.getElementById('filtro_sala_destino');
+                const filtroRede = document.getElementById('filtro_sala_rede');
+                
+                // Limpar e adicionar opção "Todas as salas"
+                filtroOrigem.innerHTML = '<option value="">Todas as salas</option>';
+                filtroDestino.innerHTML = '<option value="">Todas as salas</option>';
+                filtroRede.innerHTML = '<option value="">Todas as salas</option>';
+                
+                // Ordenar salas por nome
+                salas.sort((a, b) => a.nome.localeCompare(b.nome));
+                
+                // Adicionar salas aos filtros
+                salas.forEach(sala => {
+                    const optionOrigem = document.createElement('option');
+                    optionOrigem.value = sala.id;
+                    optionOrigem.textContent = sala.nome;
+                    filtroOrigem.appendChild(optionOrigem);
+                    
+                    const optionDestino = document.createElement('option');
+                    optionDestino.value = sala.id;
+                    optionDestino.textContent = sala.nome;
+                    filtroDestino.appendChild(optionDestino);
+                    
+                    const optionRede = document.createElement('option');
+                    optionRede.value = sala.id;
+                    optionRede.textContent = sala.nome;
+                    filtroRede.appendChild(optionRede);
+                });
+                
+            } catch (error) {
+                console.error('Erro ao carregar salas para filtros:', error);
             }
         }
 
@@ -884,14 +964,6 @@
                 console.log('Conexão via patch panel:', { equipamento_rede: dados.equipamento_rede_id, patch_panel: dados.patch_panel_id, porta: dados.porta_patch_panel });
             }
 
-            // Processar foto se fornecida
-            const fotoFile = formData.get('foto');
-            if (fotoFile && fotoFile.size > 0) {
-                // Aqui você pode implementar upload de foto
-                // Por enquanto, vamos apenas salvar o nome do arquivo
-                dados.foto = fotoFile.name;
-            }
-
             console.log('Dados completos a serem enviados:', dados);
 
             try {
@@ -1125,9 +1197,6 @@
                              
                              if (responseConexao.ok) {
                                  console.log('Conexão via patch panel criada com sucesso!');
-                                 alert('Cabo adicionado e conectado via patch panel!');
-                                 window.location.href = `detalhes-cabos-sala.html?id=${equipamentoInfo.sala_id}`;
-                                 return;
                              } else {
                                  console.error('Erro ao criar conexão via patch panel:', responseConexao.statusText);
                              }
@@ -1163,17 +1232,35 @@
                              
                              if (responseConexao.ok) {
                                  console.log('Conexão direta criada com sucesso!');
-                                 alert('Cabo adicionado e conectado diretamente!');
-                                 window.location.href = `detalhes-cabos-sala.html?id=${equipamentoInfo.sala_id}`;
-                                 return;
                              } else {
                                  console.error('Erro ao criar conexão direta:', responseConexao.statusText);
                              }
                          }
                      }
                      
-                     // Se não for substituição ou erro na conexão, mostrar modal normal
-                     mostrarModalSucesso();
+                     // Se não for substituição ou erro na conexão, perguntar ao usuário
+                     const querVerCabos = confirm('Cabo adicionado com sucesso! Deseja visualizar os cabos da sala ou retornar ao painel administrativo?');
+                     if (querVerCabos) {
+                         // Buscar informações do equipamento para obter a sala
+                         let salaId = null;
+                         if (dadosCabo.equipamento_origem_id) {
+                             const equipamentoResponse = await fetch(`/equipamentos/${dadosCabo.equipamento_origem_id}`);
+                             const equipamentoInfo = await equipamentoResponse.json();
+                             salaId = equipamentoInfo.sala_id;
+                         } else if (dadosCabo.equipamento_rede_id) {
+                             const equipamentoResponse = await fetch(`/equipamentos/${dadosCabo.equipamento_rede_id}`);
+                             const equipamentoInfo = await equipamentoResponse.json();
+                             salaId = equipamentoInfo.sala_id;
+                         }
+                         
+                         if (salaId) {
+                             window.location.href = `detalhes-cabos-sala.html?id=${salaId}`;
+                         } else {
+                             window.location.href = 'config-admin.html';
+                         }
+                     } else {
+                         window.location.href = 'config-admin.html';
+                     }
                 } else {
                     console.error('Erro na resposta do servidor:', resultCabo);
                     alert(`Erro: ${resultCabo.mensagem}`);
@@ -1189,7 +1276,6 @@
              carregarTiposCabos();
              carregarCabosExistentes();
              carregarEquipamentos();
-             carregarSalas();
              verificarSubstituicao();
             
             // Inicializar visual dos cards de radio
