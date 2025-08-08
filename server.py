@@ -1,6 +1,9 @@
 import os
 import sqlite3
 import json
+import psycopg2
+from psycopg2.extras import RealDictCursor
+from database_config import get_postgres_connection, get_postgres_dict_connection
 from datetime import datetime
 from functools import wraps
 from flask import Flask, request, jsonify, send_from_directory, session, redirect, url_for, send_file
@@ -64,7 +67,7 @@ def login():
     dados = request.json
     if not dados:
         return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
-    conn = sqlite3.connect('usuarios_empresas.db')
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT id, nivel, nome FROM usuarios WHERE username=? AND senha=?', (dados['username'], dados['senha']))
     user = cur.fetchone()
@@ -1511,7 +1514,7 @@ def empresa_atual():
     db_file = session.get('db')
     if not db_file:
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect('usuarios_empresas.db')
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT nome, logo FROM empresas WHERE db_file=?', (db_file,))
     row = cur.fetchone()
@@ -2066,7 +2069,7 @@ def admin_criar_usuario():
     nivel = data.get('nivel','usuario')
     if not nome or not username or not senha or not nivel:
         return jsonify({'erro': 'Todos os campos são obrigatórios!'}), 400
-    conn = sqlite3.connect('usuarios_empresas.db')
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT 1 FROM usuarios WHERE username=?', (username,))
     if cur.fetchone():
@@ -2080,7 +2083,7 @@ def admin_criar_usuario():
 @app.route('/admin/usuarios', methods=['GET'])
 @master_required
 def admin_listar_usuarios():
-    conn = sqlite3.connect('usuarios_empresas.db')
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT id, username, nome, nivel FROM usuarios')
     usuarios = [dict(id=row[0], username=row[1], nome=row[2], nivel=row[3]) for row in cur.fetchall()]
@@ -2090,7 +2093,7 @@ def admin_listar_usuarios():
 @app.route('/admin/empresas', methods=['GET'])
 @master_required
 def admin_listar_empresas():
-    conn = sqlite3.connect('usuarios_empresas.db')
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT id, nome FROM empresas')
     empresas = [dict(id=row[0], nome=row[1]) for row in cur.fetchall()]
@@ -2100,7 +2103,7 @@ def admin_listar_empresas():
 @app.route('/admin/vinculos', methods=['GET'])
 @master_required
 def admin_listar_vinculos():
-    conn = sqlite3.connect('usuarios_empresas.db')
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT usuario_id, empresa_id FROM usuario_empresas')
     vinculos = [dict(usuario_id=row[0], empresa_id=row[1]) for row in cur.fetchall()]
@@ -2117,7 +2120,7 @@ def admin_adicionar_vinculo():
     empresa_id = data.get('empresa_id')
     if not usuario_id or not empresa_id:
         return jsonify({'erro': 'usuario_id e empresa_id são obrigatórios'}), 400
-    conn = sqlite3.connect('usuarios_empresas.db')
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('INSERT OR IGNORE INTO usuario_empresas (usuario_id, empresa_id) VALUES (?, ?)', (usuario_id, empresa_id))
     conn.commit()
@@ -2134,7 +2137,7 @@ def admin_remover_vinculo():
     empresa_id = data.get('empresa_id')
     if not usuario_id or not empresa_id:
         return jsonify({'erro': 'usuario_id e empresa_id são obrigatórios'}), 400
-    conn = sqlite3.connect('usuarios_empresas.db')
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('DELETE FROM usuario_empresas WHERE usuario_id=? AND empresa_id=?', (usuario_id, empresa_id))
     conn.commit()
@@ -2150,7 +2153,7 @@ def admin_alterar_nivel_usuario(usuario_id):
     novo_nivel = data.get('nivel')
     if not novo_nivel:
         return jsonify({'erro': 'nivel é obrigatório'}), 400
-    conn = sqlite3.connect('usuarios_empresas.db')
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('UPDATE usuarios SET nivel=? WHERE id=?', (novo_nivel, usuario_id))
     conn.commit()
