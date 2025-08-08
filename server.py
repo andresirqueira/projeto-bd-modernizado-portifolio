@@ -138,6 +138,15 @@ def admin_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+def tecnico_required(f):
+    from functools import wraps
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session or session.get('nivel') not in ['admin', 'tecnico']:
+            return redirect('/login.html')
+        return f(*args, **kwargs)
+    return decorated_function
+
 @app.route('/painel.html')
 @login_required
 def painel_html():
@@ -1329,7 +1338,7 @@ def estoque_equipamentos_html():
     return send_from_directory(os.path.dirname(__file__), 'estoque-equipamentos.html')
 
 @app.route('/adicionar-cabo.html')
-@admin_required
+@tecnico_required
 def adicionar_cabo_html():
     return send_from_directory(os.path.dirname(__file__), 'adicionar-cabo.html')
 
@@ -1344,7 +1353,7 @@ def cabos_estoque_html():
     return send_file('cabos-estoque.html')
 
 @app.route('/editar-cabo.html')
-@admin_required
+@tecnico_required
 def editar_cabo_html():
     return send_from_directory(os.path.dirname(__file__), 'editar-cabo.html')
 
@@ -1354,7 +1363,7 @@ def excluir_cabo_html():
     return send_from_directory(os.path.dirname(__file__), 'excluir-cabo.html')
 
 @app.route('/conexoes-cabos.html')
-@admin_required
+@tecnico_required
 def conexoes_cabos_html():
     return send_from_directory(os.path.dirname(__file__), 'conexoes-cabos.html')
 
@@ -1374,7 +1383,7 @@ def config_tecnico_html():
     return send_from_directory(os.path.dirname(__file__), 'config-tecnico.html')
 
 @app.route('/patch-panels.html')
-@admin_required
+@tecnico_required
 def patch_panels_html():
     return send_from_directory(os.path.dirname(__file__), 'patch-panels.html')
 
@@ -1394,12 +1403,12 @@ def excluir_patch_panel_html():
     return send_from_directory(os.path.dirname(__file__), 'excluir-patch-panel.html')
 
 @app.route('/ver-patch-panel.html')
-@admin_required
+@tecnico_required
 def ver_patch_panel_html():
     return send_from_directory(os.path.dirname(__file__), 'ver-patch-panel.html')
 
 @app.route('/gerenciar-portas-patch-panel.html')
-@admin_required
+@tecnico_required
 def gerenciar_portas_patch_panel_html():
     return send_from_directory(os.path.dirname(__file__), 'gerenciar-portas-patch-panel.html')
 
@@ -1546,7 +1555,7 @@ def upload_fotos_salas_html():
     return send_from_directory(os.path.dirname(__file__), 'upload-fotos-salas.html')
 
 @app.route('/conexoes-equipamentos.html')
-@admin_required
+@tecnico_required
 def conexoes_equipamentos_html():
     return send_from_directory(os.path.dirname(__file__), 'conexoes-equipamentos.html')
 
@@ -2176,7 +2185,7 @@ def dashboard_html():
 # --- API DE CABOS ---
 
 @app.route('/cabos', methods=['POST'])
-@admin_required
+@tecnico_required
 def criar_cabo():
     dados = request.json
     if not dados:
@@ -2331,7 +2340,7 @@ def get_cabo(id):
     return jsonify({'erro': 'Cabo não encontrado'}), 404
 
 @app.route('/cabos/<int:id>', methods=['PUT'])
-@admin_required
+@tecnico_required
 def atualizar_cabo(id):
     dados = request.json
     if not dados:
@@ -2420,7 +2429,7 @@ def tipos_cabos():
     return jsonify(tipos)
 
 @app.route('/conexoes-cabos', methods=['POST'])
-@admin_required
+@tecnico_required
 def criar_conexao_cabo():
     dados = request.json
     if not dados:
@@ -2524,7 +2533,7 @@ def listar_conexoes_cabos():
     return jsonify(conexoes)
 
 @app.route('/conexoes-cabos/<int:id>', methods=['DELETE'])
-@admin_required
+@tecnico_required
 def desconectar_cabo(id):
     db_file = session.get('db')
     if not db_file:
@@ -2554,7 +2563,7 @@ def cabos_por_sala(sala_id):
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
     
-    # Buscar conexões diretas de cabos
+    # Buscar conexões diretas de cabos (excluindo conexões que vão para patch panels)
     cur.execute('''
         SELECT cc.id, cc.cabo_id, cc.equipamento_origem_id, cc.equipamento_destino_id,
                cc.porta_origem, cc.porta_destino, cc.sala_id, cc.observacao,
@@ -2565,16 +2574,25 @@ def cabos_por_sala(sala_id):
                CASE WHEN cc.data_desconexao IS NULL THEN 1 ELSE 0 END as ativo,
                'cabo_direto' as tipo_conexao
         FROM conexoes_cabos cc
-        JOIN cabos c ON cc.cabo_id = c.id
+        LEFT JOIN cabos c ON cc.cabo_id = c.id
         LEFT JOIN equipamentos eo ON cc.equipamento_origem_id = eo.id
         LEFT JOIN equipamentos ed ON cc.equipamento_destino_id = ed.id
         LEFT JOIN salas s ON cc.sala_id = s.id
-        WHERE cc.sala_id = ? AND cc.data_desconexao IS NULL
+        WHERE cc.sala_id = ? 
+        AND cc.data_desconexao IS NULL 
+        AND c.id IS NOT NULL
+        AND (ed.nome IS NULL OR ed.nome NOT LIKE '%Patch Panel%')
+        AND NOT EXISTS (
+            SELECT 1 FROM patch_panel_portas ppp 
+            JOIN patch_panels pp ON ppp.patch_panel_id = pp.id 
+            WHERE ppp.equipamento_id = cc.equipamento_origem_id 
+            AND ppp.numero_porta = cc.porta_destino
+        )
     ''', (sala_id,))
     
     conexoes_diretas = cur.fetchall()
     
-    # Buscar conexões via patch panel
+    # Buscar conexões via patch panel (apenas se houver conexão real de cabo)
     cur.execute('''
         SELECT 
             ppp.id as id,
@@ -2587,8 +2605,8 @@ def cabos_por_sala(sala_id):
             cc.observacao,
             cc.data_conexao,
             cc.data_desconexao,
-            COALESCE(c.codigo_unico, pp.prefixo_keystone || '-' || printf('%03d', ppp.numero_porta)) as codigo_cabo,
-            COALESCE(c.tipo, 'Ethernet') as tipo_cabo,
+            c.codigo_unico as codigo_cabo,
+            c.tipo as tipo_cabo,
             c.comprimento,
             c.marca,
             c.modelo,
@@ -2601,8 +2619,8 @@ def cabos_por_sala(sala_id):
         JOIN patch_panels pp ON ppp.patch_panel_id = pp.id
         JOIN equipamentos e ON ppp.equipamento_id = e.id
         LEFT JOIN salas s ON e.sala_id = s.id
-        LEFT JOIN conexoes_cabos cc ON cc.equipamento_origem_id = e.id AND cc.equipamento_destino_id = pp.id AND cc.porta_destino = ppp.numero_porta
-        LEFT JOIN cabos c ON cc.cabo_id = c.id
+        INNER JOIN conexoes_cabos cc ON cc.equipamento_origem_id = e.id AND cc.equipamento_destino_id = pp.id AND cc.porta_destino = ppp.numero_porta AND cc.data_desconexao IS NULL
+        INNER JOIN cabos c ON cc.cabo_id = c.id
         WHERE e.sala_id = ? AND ppp.status = 'ocupada'
     ''', (sala_id,))
     
@@ -3659,12 +3677,12 @@ def debug_equipamento(equipamento_id):
         return jsonify({'erro': f'Erro ao buscar debug: {str(e)}'}), 500
 
 @app.route('/conectar-cabo-estoque.html')
-@admin_required
+@tecnico_required
 def conectar_cabo_estoque_html():
     return send_file('conectar-cabo-estoque.html')
 
 @app.route('/editar-cabo-especifico.html')
-@admin_required
+@tecnico_required
 def editar_cabo_especifico_html():
     return send_file('editar-cabo-especifico.html')
 

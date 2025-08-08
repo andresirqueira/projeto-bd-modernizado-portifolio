@@ -1,0 +1,989 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Explicativo - Sistema de Gerenciamento de Infraestrutura</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+        h2 {
+            color: #34495e;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        h3 {
+            color: #2980b9;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .screen-section {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        .screen-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .screen-description {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .screen-features {
+            background: #e8f4fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .screen-features h4 {
+            color: #2980b9;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .screen-features ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .screen-features li {
+            margin-bottom: 5px;
+        }
+        .toc {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .toc h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .toc ul {
+            columns: 2;
+            column-gap: 40px;
+        }
+        .toc li {
+            margin-bottom: 8px;
+            break-inside: avoid;
+        }
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        .category {
+            background: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 30px 0 20px 0;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #7f8c8d;
+        }
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            .toc { break-inside: avoid; }
+            .screen-section { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📋 Manual Explicativo - Sistema de Gerenciamento de Infraestrutura</h1>
+        
+        <div class="footer">
+            <p><strong>Data de criação:</strong> 08/08/2025 às 08:36</p>
+            <p><strong>Versão:</strong> 1.0</p>
+        </div>
+
+        <div class="toc">
+            <h3>📑 Índice do Manual</h3>
+            <ul>
+                <li><a href="#autenticacao">🔐 Autenticação e Acesso</a></li>
+                <li><a href="#dashboard">📊 Dashboards e Visão Geral</a></li>
+                <li><a href="#gestao-salas">🏢 Gestão de Salas</a></li>
+                <li><a href="#gestao-equipamentos">🖥️ Gestão de Equipamentos</a></li>
+                <li><a href="#gestao-switches">🔌 Gestão de Switches</a></li>
+                <li><a href="#gestao-cabos">🔗 Gestão de Cabos</a></li>
+                <li><a href="#gestao-patch-panels">📡 Gestão de Patch Panels</a></li>
+                <li><a href="#conexoes">🔗 Conexões e Interconexões</a></li>
+                <li><a href="#monitoramento">📡 Monitoramento e Logs</a></li>
+                <li><a href="#configuracoes">⚙️ Configurações e Administração</a></li>
+                <li><a href="#utilitarios">🛠️ Utilitários e Ferramentas</a></li>
+            </ul>
+        </div>
+
+        <section id="autenticacao">
+            <div class="category">🔐 Autenticação e Acesso</div>
+            
+            <div class="screen-section">
+                <div class="screen-title">📱 Login (login.html)</div>
+                <div class="screen-description">
+                    Tela inicial de autenticação do sistema. Permite acesso aos usuários com diferentes níveis de permissão.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Autenticação por usuário e senha</li>
+                        <li>Diferentes níveis de acesso (Admin, Master, Técnico, Usuário)</li>
+                        <li>Redirecionamento baseado no tipo de usuário</li>
+                        <li>Validação de credenciais</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">🏠 Página Inicial (index.html)</div>
+                <div class="screen-description">
+                    Página de boas-vindas e redirecionamento inicial do sistema.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Apresentação do sistema</li>
+                        <li>Redirecionamento automático para login</li>
+                        <li>Informações sobre o projeto</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="dashboard">
+            <div class="category">📊 Dashboards e Visão Geral</div>
+            
+            <div class="screen-section">
+                <div class="screen-title">📊 Dashboard Principal (dashboard.html)</div>
+                <div class="screen-description">
+                    Dashboard principal com visão geral de toda a infraestrutura, estatísticas e acesso rápido às principais funcionalidades.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Visão geral de salas, equipamentos e switches</li>
+                        <li>Estatísticas em tempo real</li>
+                        <li>Gráficos de ocupação e status</li>
+                        <li>Acesso rápido às principais funcionalidades</li>
+                        <li>Notificações e alertas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">🏢 Dashboard de Sala (dashboard-sala.html)</div>
+                <div class="screen-description">
+                    Dashboard específico de uma sala, mostrando detalhes dos equipamentos, conexões e status.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Visão detalhada de uma sala específica</li>
+                        <li>Lista de equipamentos da sala</li>
+                        <li>Status das conexões</li>
+                        <li>Layout visual da sala</li>
+                        <li>Ações rápidas para gerenciamento</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">🎛️ Painel de Controle (painel.html)</div>
+                <div class="screen-description">
+                    Painel de controle central com acesso a todas as funcionalidades do sistema.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Menu de navegação completo</li>
+                        <li>Acesso organizado por categorias</li>
+                        <li>Indicadores de status</li>
+                        <li>Links rápidos para funcionalidades</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="gestao-salas">
+            <div class="category">🏢 Gestão de Salas</div>
+            
+            <div class="screen-section">
+                <div class="screen-title">➕ Adicionar Sala (adicionar-sala.html)</div>
+                <div class="screen-description">
+                    Formulário para cadastrar novas salas no sistema com informações completas.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Cadastro de informações básicas da sala</li>
+                        <li>Definição de andar e localização</li>
+                        <li>Upload de foto da sala</li>
+                        <li>Configuração de capacidade</li>
+                        <li>Validação de dados</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">👁️ Ver Salas (ver-salas.html)</div>
+                <div class="screen-description">
+                    Lista todas as salas cadastradas com informações resumidas e opções de ação.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Lista paginada de todas as salas</li>
+                        <li>Filtros de busca</li>
+                        <li>Informações resumidas (nome, andar, status)</li>
+                        <li>Ações rápidas (editar, excluir, visualizar)</li>
+                        <li>Ordenação por diferentes critérios</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">✏️ Editar Sala (editar-sala.html)</div>
+                <div class="screen-description">
+                    Permite modificar informações de uma sala existente.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Edição de todos os campos da sala</li>
+                        <li>Atualização de foto</li>
+                        <li>Modificação de configurações</li>
+                        <li>Validação de alterações</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">🗑️ Excluir Sala (excluir-sala.html)</div>
+                <div class="screen-description">
+                    Confirmação e exclusão de salas do sistema.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Confirmação de exclusão</li>
+                        <li>Verificação de dependências</li>
+                        <li>Exclusão em cascata (se configurado)</li>
+                        <li>Backup automático antes da exclusão</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">📋 Detalhes da Sala (detalhes-sala.html)</div>
+                <div class="screen-description">
+                    Visualização detalhada de uma sala específica com todas as informações.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Informações completas da sala</li>
+                        <li>Foto da sala</li>
+                        <li>Lista de equipamentos</li>
+                        <li>Status das conexões</li>
+                        <li>Histórico de modificações</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">📸 Upload de Fotos (upload-fotos-salas.html)</div>
+                <div class="screen-description">
+                    Interface para upload e gerenciamento de fotos das salas.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Upload de múltiplas fotos</li>
+                        <li>Visualização prévia</li>
+                        <li>Organização por sala</li>
+                        <li>Redimensionamento automático</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">📊 Histórico da Sala (historico-sala.html)</div>
+                <div class="screen-description">
+                    Histórico completo de modificações e atividades de uma sala.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Log de todas as alterações</li>
+                        <li>Histórico de equipamentos</li>
+                        <li>Registro de conexões</li>
+                        <li>Filtros por data e tipo</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="gestao-equipamentos">
+            <div class="category">🖥️ Gestão de Equipamentos</div>
+            
+            <div class="screen-section">
+                <div class="screen-title">➕ Adicionar Equipamento (adicionar-equipamento.html)</div>
+                <div class="screen-description">
+                    Formulário para cadastrar novos equipamentos no sistema.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Cadastro de informações do equipamento</li>
+                        <li>Seleção de tipo e marca</li>
+                        <li>Associação a sala</li>
+                        <li>Configuração de portas</li>
+                        <li>Upload de imagem</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">👁️ Ver Equipamento (ver-equipamento.html)</div>
+                <div class="screen-description">
+                    Visualização detalhada de um equipamento específico.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Informações completas do equipamento</li>
+                        <li>Status das portas</li>
+                        <li>Conexões ativas</li>
+                        <li>Histórico de modificações</li>
+                        <li>Ações disponíveis</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">✏️ Editar Equipamento (editar-equipamento.html)</div>
+                <div class="screen-description">
+                    Modificação de informações de equipamentos existentes.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Edição de todos os campos</li>
+                        <li>Modificação de configurações</li>
+                        <li>Atualização de imagem</li>
+                        <li>Reconfiguração de portas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">🗑️ Excluir Equipamento (excluir-equipamento.html)</div>
+                <div class="screen-description">
+                    Exclusão de equipamentos do sistema.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Confirmação de exclusão</li>
+                        <li>Verificação de conexões ativas</li>
+                        <li>Remoção de dependências</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">📦 Estoque de Equipamentos (estoque-equipamentos.html)</div>
+                <div class="screen-description">
+                    Gerenciamento de equipamentos em estoque.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Lista de equipamentos disponíveis</li>
+                        <li>Controle de quantidade</li>
+                        <li>Status de disponibilidade</li>
+                        <li>Movimentação de estoque</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">⚙️ Gerenciar Equipamentos (gerenciar-equipamentos.html)</div>
+                <div class="screen-description">
+                    Interface central para gerenciamento de equipamentos.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Lista completa de equipamentos</li>
+                        <li>Filtros avançados</li>
+                        <li>Ações em lote</li>
+                        <li>Relatórios</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">📋 Detalhes de Equipamentos da Sala (detalhes-equipamentos-sala.html)</div>
+                <div class="screen-description">
+                    Visualização de todos os equipamentos de uma sala específica.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Lista de equipamentos da sala</li>
+                        <li>Status individual</li>
+                        <li>Ações rápidas</li>
+                        <li>Informações resumidas</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="gestao-switches">
+            <div class="category">🔌 Gestão de Switches</div>
+            
+            <div class="screen-section">
+                <div class="screen-title">➕ Adicionar Switch (adicionar-switch.html)</div>
+                <div class="screen-description">
+                    Cadastro de novos switches no sistema.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Configuração de switch</li>
+                        <li>Definição de portas</li>
+                        <li>Associação a sala</li>
+                        <li>Configurações de rede</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">👁️ Ver Switch (ver-switch.html)</div>
+                <div class="screen-description">
+                    Visualização detalhada de um switch.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Informações do switch</li>
+                        <li>Status das portas</li>
+                        <li>Conexões ativas</li>
+                        <li>Configurações</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">✏️ Editar Switch (editar-switch.html)</div>
+                <div class="screen-description">
+                    Modificação de configurações de switches.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Edição de configurações</li>
+                        <li>Modificação de portas</li>
+                        <li>Atualização de parâmetros</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">🗑️ Excluir Switch (excluir-switch.html)</div>
+                <div class="screen-description">
+                    Exclusão de switches do sistema.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Confirmação de exclusão</li>
+                        <li>Verificação de conexões</li>
+                        <li>Remoção segura</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">🔌 Gerenciar Portas do Switch (gerenciar-portas-switch.html)</div>
+                <div class="screen-description">
+                    Gerenciamento detalhado das portas de um switch.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Configuração de portas</li>
+                        <li>Status individual</li>
+                        <li>Conexões por porta</li>
+                        <li>Configurações de VLAN</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">📊 Visualizar Switch da Sala (visualizar-switch-sala.html)</div>
+                <div class="screen-description">
+                    Visualização de switches de uma sala específica.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Lista de switches da sala</li>
+                        <li>Status geral</li>
+                        <li>Ações rápidas</li>
+                        <li>Informações resumidas</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="gestao-cabos">
+            <div class="category">🔗 Gestão de Cabos</div>
+            
+            <div class="screen-section">
+                <div class="screen-title">➕ Adicionar Cabo (adicionar-cabo.html)</div>
+                <div class="screen-description">
+                    Cadastro de novos cabos no sistema.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Definição de tipo de cabo</li>
+                        <li>Configuração de comprimento</li>
+                        <li>Especificações técnicas</li>
+                        <li>Localização</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">👁️ Ver Cabos (ver-cabos.html)</div>
+                <div class="screen-description">
+                    Visualização de todos os cabos cadastrados.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Lista completa de cabos</li>
+                        <li>Filtros por tipo</li>
+                        <li>Status de utilização</li>
+                        <li>Localização</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">✏️ Editar Cabo (editar-cabo.html)</div>
+                <div class="screen-description">
+                    Modificação de informações de cabos.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Edição de especificações</li>
+                        <li>Atualização de localização</li>
+                        <li>Modificação de status</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">🗑️ Excluir Cabo (excluir-cabo.html)</div>
+                <div class="screen-description">
+                    Exclusão de cabos do sistema.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Confirmação de exclusão</li>
+                        <li>Verificação de uso</li>
+                        <li>Remoção segura</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">📦 Cabos em Estoque (cabos-estoque.html)</div>
+                <div class="screen-description">
+                    Gerenciamento de cabos disponíveis em estoque.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Controle de estoque</li>
+                        <li>Quantidade disponível</li>
+                        <li>Tipos de cabos</li>
+                        <li>Movimentação</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">🔗 Conectar Cabo do Estoque (conectar-cabo-estoque.html)</div>
+                <div class="screen-description">
+                    Interface para conectar cabos do estoque aos equipamentos.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Seleção de cabo do estoque</li>
+                        <li>Definição de conexões</li>
+                        <li>Configuração de pontos</li>
+                        <li>Validação de compatibilidade</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">📋 Detalhes de Cabos da Sala (detalhes-cabos-sala.html)</div>
+                <div class="screen-description">
+                    Visualização de cabos de uma sala específica.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Lista de cabos da sala</li>
+                        <li>Status das conexões</li>
+                        <li>Roteamento</li>
+                        <li>Informações técnicas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">✏️ Editar Cabo Específico (editar-cabo-especifico.html)</div>
+                <div class="screen-description">
+                    Edição específica de um cabo em uso.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Modificação de conexões</li>
+                        <li>Atualização de roteamento</li>
+                        <li>Alteração de status</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="gestao-patch-panels">
+            <div class="category">📡 Gestão de Patch Panels</div>
+            
+            <div class="screen-section">
+                <div class="screen-title">➕ Adicionar Patch Panel (adicionar-patch-panel.html)</div>
+                <div class="screen-description">
+                    Cadastro de novos patch panels no sistema.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Configuração do patch panel</li>
+                        <li>Definição de portas</li>
+                        <li>Associação a sala</li>
+                        <li>Especificações técnicas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">👁️ Ver Patch Panel (ver-patch-panel.html)</div>
+                <div class="screen-description">
+                    Visualização detalhada de patch panels.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Informações do patch panel</li>
+                        <li>Status das portas</li>
+                        <li>Conexões ativas</li>
+                        <li>Configurações</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">✏️ Editar Patch Panel (editar-patch-panel.html)</div>
+                <div class="screen-description">
+                    Modificação de configurações de patch panels.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Edição de configurações</li>
+                        <li>Modificação de portas</li>
+                        <li>Atualização de parâmetros</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">🗑️ Excluir Patch Panel (excluir-patch-panel.html)</div>
+                <div class="screen-description">
+                    Exclusão de patch panels do sistema.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Confirmação de exclusão</li>
+                        <li>Verificação de conexões</li>
+                        <li>Remoção segura</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">🔌 Gerenciar Portas do Patch Panel (gerenciar-portas-patch-panel.html)</div>
+                <div class="screen-description">
+                    Gerenciamento detalhado das portas de um patch panel.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Configuração de portas</li>
+                        <li>Status individual</li>
+                        <li>Conexões por porta</li>
+                        <li>Mapeamento de cabos</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">📡 Patch Panels (patch-panels.html)</div>
+                <div class="screen-description">
+                    Lista geral de todos os patch panels do sistema.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Lista completa de patch panels</li>
+                        <li>Filtros e busca</li>
+                        <li>Status geral</li>
+                        <li>Ações rápidas</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="conexoes">
+            <div class="category">🔗 Conexões e Interconexões</div>
+            
+            <div class="screen-section">
+                <div class="screen-title">🔗 Conexões de Equipamentos (conexoes-equipamentos.html)</div>
+                <div class="screen-description">
+                    Gerenciamento completo das conexões entre equipamentos.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Visualização de todas as conexões</li>
+                        <li>Criação de novas conexões</li>
+                        <li>Modificação de conexões existentes</li>
+                        <li>Remoção de conexões</li>
+                        <li>Validação de compatibilidade</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">🔗 Conexões de Cabos (conexoes-cabos.html)</div>
+                <div class="screen-description">
+                    Gerenciamento específico das conexões de cabos.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Mapeamento de cabos</li>
+                        <li>Roteamento de conexões</li>
+                        <li>Status de conectividade</li>
+                        <li>Documentação de caminhos</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="monitoramento">
+            <div class="category">📡 Monitoramento e Logs</div>
+            
+            <div class="screen-section">
+                <div class="screen-title">📡 Ping de Equipamentos (ping-equipamentos.html)</div>
+                <div class="screen-description">
+                    Monitoramento de conectividade dos equipamentos via ping.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Teste de conectividade</li>
+                        <li>Monitoramento em tempo real</li>
+                        <li>Histórico de pings</li>
+                        <li>Alertas de falha</li>
+                        <li>Relatórios de status</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">📋 Visualizar Logs (visualizar-logs.html)</div>
+                <div class="screen-description">
+                    Visualização e análise dos logs do sistema.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Logs do sistema</li>
+                        <li>Filtros por data e tipo</li>
+                        <li>Busca em logs</li>
+                        <li>Exportação de logs</li>
+                        <li>Análise de eventos</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="configuracoes">
+            <div class="category">⚙️ Configurações e Administração</div>
+            
+            <div class="screen-section">
+                <div class="screen-title">👑 Configuração Admin (config-admin.html)</div>
+                <div class="screen-description">
+                    Configurações específicas para usuários administradores.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Configurações do sistema</li>
+                        <li>Gerenciamento de usuários</li>
+                        <li>Configurações de segurança</li>
+                        <li>Backup e restauração</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">🎯 Configuração Master (config-master.html)</div>
+                <div class="screen-description">
+                    Configurações para usuários master.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Configurações de empresa</li>
+                        <li>Gerenciamento de salas</li>
+                        <li>Configurações de equipamentos</li>
+                        <li>Relatórios</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">🔧 Configuração Técnico (config-tecnico.html)</div>
+                <div class="screen-description">
+                    Configurações para usuários técnicos.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Configurações de trabalho</li>
+                        <li>Ferramentas técnicas</li>
+                        <li>Configurações de monitoramento</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">👤 Configuração Usuário (config-usuario.html)</div>
+                <div class="screen-description">
+                    Configurações para usuários comuns.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Configurações pessoais</li>
+                        <li>Preferências de interface</li>
+                        <li>Configurações de notificação</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="utilitarios">
+            <div class="category">🛠️ Utilitários e Ferramentas</div>
+            
+            <div class="screen-section">
+                <div class="screen-title">📊 Exportar Dados (exportar-dados.html)</div>
+                <div class="screen-description">
+                    Exportação de dados do sistema em diferentes formatos.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Exportação em Excel</li>
+                        <li>Exportação em PDF</li>
+                        <li>Exportação em CSV</li>
+                        <li>Filtros de exportação</li>
+                        <li>Agendamento de exportações</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="screen-section">
+                <div class="screen-title">🏗️ Visualizar Layout da Sala (visualizar-layout-sala.html)</div>
+                <div class="screen-description">
+                    Visualização gráfica do layout de uma sala.
+                </div>
+                <div class="screen-features">
+                    <h4>Funcionalidades:</h4>
+                    <ul>
+                        <li>Layout visual da sala</li>
+                        <li>Posicionamento de equipamentos</li>
+                        <li>Conexões visuais</li>
+                        <li>Zoom e navegação</li>
+                        <li>Edição do layout</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="footer">
+            <h3>📞 Suporte e Contato</h3>
+            <p>Para dúvidas sobre o sistema, entre em contato com a equipe de suporte técnico.</p>
+            <p><strong>Data de atualização:</strong> 08/08/2025 às 08:36</p>
+        </div>
+    </div>
+</body>
+</html>

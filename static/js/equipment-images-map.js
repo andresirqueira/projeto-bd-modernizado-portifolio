@@ -129,7 +129,10 @@ const equipmentImageMap = {
   'extensores': {
     'extron-dtp-hdmi-230-tx': '/static/img/extensores-extron-dtp-hdmi-230-tx.png',
     'extron-usb-extender-plus-t': '/static/img/extensores-extron-usb-extender-plus-t.png',
+    'extron-usb-extender-plus-r': '/static/img/extensores-extron-usb-extender-plus-r.png',
     'extron': '/static/img/extensores-extron-dtp-hdmi-230-tx.png',
+    'usb': '/static/img/extensores-extron-usb-extender-plus-t.png',
+    'hdmi': '/static/img/extensores-extron-dtp-hdmi-230-tx.png',
     'default': '/static/img/extensores-extron-dtp-hdmi-230-tx.png'
   },
   
@@ -159,6 +162,12 @@ const equipmentImageMap = {
   'switcher': {
     'kramer-hdmi-vs-211H2': '/static/img/switcher-kramer-hdmi-vs-211H2.png',
     'kramer': '/static/img/switcher-kramer-hdmi-vs-211H2.png',
+    'extron-sw4-usb-plus': '/static/img/switcher-extron-sw4-usb-plus.png',
+    'extron-sw2-usb': '/static/img/switcher-extron-sw2-usb.png',
+    'extron': '/static/img/switcher-extron-sw4-usb-plus.png',
+    'usb': '/static/img/switcher-extron-sw4-usb-plus.png',
+    'sw4': '/static/img/switcher-extron-sw4-usb-plus.png',
+    'sw2': '/static/img/switcher-extron-sw2-usb.png',
     'default': '/static/img/switcher-kramer-hdmi-vs-211H2.png'
   },
   
@@ -288,6 +297,50 @@ function findEquipmentImageByType(equipmentType, equipmentName = '', equipmentMa
     if (name.includes('jbl cbt') || name.includes('cbt 1000e') || modelo.includes('jbl cbt') || modelo.includes('cbt 1000e')) {
       console.log('✅ Speaker JBL CBT detectado:', typeMap['jbl-cbt']);
       return typeMap['jbl-cbt'];
+    }
+  }
+  
+  if (type === 'switcher') {
+    // Verificar modelos específicos de switchers
+    if (name.includes('sw4') || name.includes('sw 4') || modelo.includes('sw4') || modelo.includes('sw 4') || name.includes('4ch') || modelo.includes('4ch')) {
+      console.log('✅ Switcher SW4 detectado:', typeMap['extron-sw4-usb-plus']);
+      return typeMap['extron-sw4-usb-plus'];
+    }
+    if (name.includes('sw2') || name.includes('sw 2') || modelo.includes('sw2') || modelo.includes('sw 2') || name.includes('2ch') || modelo.includes('2ch')) {
+      console.log('✅ Switcher SW2 detectado:', typeMap['extron-sw2-usb']);
+      return typeMap['extron-sw2-usb'];
+    }
+    if (name.includes('usb') || modelo.includes('usb')) {
+      console.log('✅ Switcher USB detectado:', typeMap['usb']);
+      return typeMap['usb'];
+    }
+    if (name.includes('hdmi') || modelo.includes('hdmi')) {
+      console.log('✅ Switcher HDMI detectado:', typeMap['kramer-hdmi-vs-211H2']);
+      return typeMap['kramer-hdmi-vs-211H2'];
+    }
+  }
+  
+  if (type === 'extensores') {
+    // Verificar modelos específicos de extensores
+    if (name.includes('usb extender plus r') || name.includes('usb-extender-plus-r') || modelo.includes('usb extender plus r') || modelo.includes('usb-extender-plus-r') || name.includes('plus r') || modelo.includes('plus r')) {
+      console.log('✅ Extensor USB Plus R detectado:', typeMap['extron-usb-extender-plus-r']);
+      return typeMap['extron-usb-extender-plus-r'];
+    }
+    if (name.includes('usb extender plus t') || name.includes('usb-extender-plus-t') || modelo.includes('usb extender plus t') || modelo.includes('usb-extender-plus-t') || name.includes('plus t') || modelo.includes('plus t')) {
+      console.log('✅ Extensor USB Plus T detectado:', typeMap['extron-usb-extender-plus-t']);
+      return typeMap['extron-usb-extender-plus-t'];
+    }
+    if (name.includes('dtp hdmi') || name.includes('dtp-hdmi') || modelo.includes('dtp hdmi') || modelo.includes('dtp-hdmi') || name.includes('hdmi 230') || modelo.includes('hdmi 230')) {
+      console.log('✅ Extensor DTP HDMI detectado:', typeMap['extron-dtp-hdmi-230-tx']);
+      return typeMap['extron-dtp-hdmi-230-tx'];
+    }
+    if (name.includes('usb') || modelo.includes('usb')) {
+      console.log('✅ Extensor USB detectado:', typeMap['usb']);
+      return typeMap['usb'];
+    }
+    if (name.includes('hdmi') || modelo.includes('hdmi')) {
+      console.log('✅ Extensor HDMI detectado:', typeMap['hdmi']);
+      return typeMap['hdmi'];
     }
   }
   

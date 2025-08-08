@@ -1583,3 +1583,73 @@
 [2025-08-07 09:34:30] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 117 criada | Status: sucesso
 [2025-08-07 09:39:12] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 117 desconectada | Status: sucesso
 [2025-08-07 09:39:47] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 116 criada | Status: sucesso
+[2025-08-07 10:23:35] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 119 desconectada | Status: sucesso
+[2025-08-07 10:23:39] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 118 desconectada | Status: sucesso
+[2025-08-07 10:24:59] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 110 desconectada | Status: sucesso
+[2025-08-07 10:25:02] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 111 desconectada | Status: sucesso
+[2025-08-07 10:25:05] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 112 desconectada | Status: sucesso
+[2025-08-07 10:25:07] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 113 desconectada | Status: sucesso
+[2025-08-07 10:25:12] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 114 desconectada | Status: sucesso
+[2025-08-07 10:25:15] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 115 desconectada | Status: sucesso
+[2025-08-07 10:25:18] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 116 desconectada | Status: sucesso
+[2025-08-07 10:27:15] Usuario: admin_wh | Acao: excluir_cabo | Detalhes: Cabo ID 111 excluído | Status: sucesso
+[2025-08-07 10:27:20] Usuario: admin_wh | Acao: excluir_cabo | Detalhes: Cabo ID 115 excluído | Status: sucesso
+[2025-08-07 10:27:25] Usuario: admin_wh | Acao: excluir_cabo | Detalhes: Cabo ID 114 excluído | Status: sucesso
+[2025-08-07 10:27:34] Usuario: admin_wh | Acao: excluir_cabo | Detalhes: Cabo ID 117 excluído | Status: sucesso
+[2025-08-07 10:27:55] Usuario: admin_wh | Acao: excluir_cabo | Detalhes: Cabo ID 109 excluído | Status: sucesso
+[2025-08-07 10:34:55] Usuario: admin_wh | Acao: excluir_cabo | Detalhes: Cabo ID 110 excluído | Status: sucesso
+[2025-08-07 10:35:32] Usuario: admin_wh | Acao: excluir_cabo | Detalhes: Cabo ID 112 excluído | Status: sucesso
+[2025-08-07 10:35:46] Usuario: admin_wh | Acao: excluir_cabo | Detalhes: Cabo ID 113 excluído | Status: sucesso
+[2025-08-07 10:35:53] Usuario: admin_wh | Acao: excluir_cabo | Detalhes: Cabo ID 116 excluído | Status: sucesso
+[2025-08-07 11:53:21] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 03 conectado à porta 371 do patch panel | Status: sucesso
+[2025-08-07 11:56:47] Usuario: admin_wh | Acao: DESCONECTAR_PORTA_SWITCH | Detalhes: Porta 60 do switch desconectada | Status: sucesso
+[2025-08-07 11:57:04] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 371 mapeada para Switch 5, Porta 11 | Status: sucesso
+[2025-08-07 11:59:42] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-053 criado | Status: sucesso
+[2025-08-07 11:59:42] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 118 criada | Status: sucesso
+[2025-08-07 12:28:50] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-054 criado | Status: sucesso
+[2025-08-07 12:28:50] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 119 criada | Status: sucesso
+[2025-08-07 12:32:02] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-055 criado | Status: sucesso
+[2025-08-07 12:32:02] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 120 criada | Status: sucesso
+[2025-08-07 12:34:09] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-056 criado | Status: sucesso
+[2025-08-07 12:34:09] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 121 criada | Status: sucesso
+[2025-08-07 12:34:35] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-057 criado | Status: sucesso
+[2025-08-07 12:34:35] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 122 criada | Status: sucesso
+[2025-08-07 12:35:01] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-058 criado | Status: sucesso
+[2025-08-07 12:35:01] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 123 criada | Status: sucesso
+[2025-08-07 12:35:36] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-059 criado | Status: sucesso
+[2025-08-07 12:35:36] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 124 criada | Status: sucesso
+[2025-08-07 12:36:00] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-060 criado | Status: sucesso
+[2025-08-07 12:36:00] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 125 criada | Status: sucesso
+[2025-08-07 12:36:31] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-061 criado | Status: sucesso
+[2025-08-07 12:36:31] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 126 criada | Status: sucesso
+[2025-08-07 12:37:10] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-062 criado | Status: sucesso
+[2025-08-07 12:37:10] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 127 criada | Status: sucesso
+[2025-08-07 12:39:04] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=571, Nome=Poe Logitech, Tipo=Poe, Marca=Logitech, Modelo=KIT CAT5E | Status: sucesso
+[2025-08-07 12:40:15] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-063 criado | Status: sucesso
+[2025-08-07 12:40:15] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 128 criada | Status: sucesso
+[2025-08-07 12:41:01] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-064 criado | Status: sucesso
+[2025-08-07 12:41:02] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 129 criada | Status: sucesso
+[2025-08-07 12:42:15] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-065 criado | Status: sucesso
+[2025-08-07 12:42:15] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 130 criada | Status: sucesso
+[2025-08-07 12:52:59] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-022 criado | Status: sucesso
+[2025-08-07 12:52:59] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 131 criada | Status: sucesso
+[2025-08-07 12:55:31] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=15 | Status: sucesso
+[2025-08-07 13:02:21] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=15 | Status: sucesso
+[2025-08-07 14:11:03] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=572, Nome=USB Switcher, Tipo=Switcher, Marca=Extron, Modelo=SW4 USB PLUS | Status: sucesso
+[2025-08-07 14:12:44] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-023 criado | Status: sucesso
+[2025-08-07 14:12:44] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 132 criada | Status: sucesso
+[2025-08-07 14:13:49] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-024 criado | Status: sucesso
+[2025-08-07 14:13:49] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 133 criada | Status: sucesso
+[2025-08-07 14:18:36] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=15 | Status: sucesso
+[2025-08-07 14:22:22] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=15 | Status: sucesso
+[2025-08-07 14:57:16] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=572, Nome=USB Switcher, Tipo=Switcher, Marca=Extron, Modelo=SW2 USB | Status: sucesso
+[2025-08-07 15:07:09] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=15 | Status: sucesso
+[2025-08-07 15:53:34] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=100, Nome=Usb Extender, Tipo=Extensores, Marca=Extron, Modelo=USB EXTENDER Plus R | Status: sucesso
+[2025-08-07 15:57:40] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=100, Nome=Usb Extender R, Tipo=Extensores, Marca=Extron, Modelo=USB EXTENDER Plus R | Status: sucesso
+[2025-08-07 15:59:37] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=573, Nome=Usb Extender T, Tipo=Extensores, Marca=Extron, Modelo=USB EXTENDER Plus T | Status: sucesso
+[2025-08-07 16:08:40] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-025 criado | Status: sucesso
+[2025-08-07 16:08:40] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 134 criada | Status: sucesso
+[2025-08-07 16:09:20] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-066 criado | Status: sucesso
+[2025-08-07 16:09:20] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 135 criada | Status: sucesso
+[2025-08-07 16:14:26] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=15 | Status: sucesso
+[2025-08-08 10:17:33] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
