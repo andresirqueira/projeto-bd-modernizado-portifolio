@@ -43,7 +43,7 @@ if (Test-Path ".git") {
 
 # 2. Atualizar clone do portfólio
 Write-Status "Atualizando clone do portfólio..."
-Set-Location projeto-bd-modernizado-portifolio
+Set-Location ..\projeto-bd-modernizado-portifolio
 
 if (Test-Path ".git") {
     Write-Status "Buscando mudanças do upstream..."
