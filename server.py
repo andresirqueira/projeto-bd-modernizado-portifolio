@@ -1,7 +1,7 @@
 import os
 import json
-import psycopg2
-from psycopg2.extras import RealDictCursor
+import psycopg
+from psycopg.rows import dict_row
 # Configuração PostgreSQL
 POSTGRES_CONFIG = {
     'host': os.getenv('POSTGRES_HOST', 'localhost'),
@@ -13,15 +13,13 @@ POSTGRES_CONFIG = {
 
 def get_postgres_connection():
     """Retorna uma conexão com PostgreSQL"""
-    return psycopg2.connect(**POSTGRES_CONFIG)
+    return psycopg.connect(**POSTGRES_CONFIG)
 
 def get_postgres_dict_connection():
-    """Retorna uma conexão com PostgreSQL usando RealDictCursor"""
+    """Retorna uma conexão com PostgreSQL usando dict_row"""
     config = POSTGRES_CONFIG.copy()
-    config['cursor_factory'] = RealDictCursor
-    return psycopg2.connect(**config)
-
-from database_config import get_postgres_connection, get_postgres_dict_connection
+    config['row_factory'] = dict_row
+    return psycopg.connect(**config)
 from datetime import datetime
 from functools import wraps
 from flask import Flask, request, jsonify, send_from_directory, session, redirect, url_for, send_file
