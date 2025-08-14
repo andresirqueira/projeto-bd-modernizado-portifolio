@@ -78,7 +78,7 @@ def registrar_log(usuario, acao, detalhes, status='sucesso'):
 
 # --- ROTAS DE AUTENTICAÇÃO ---
 
-@app.route(...)
+@app.route('/login', methods=['POST'])
 def login():
     dados = request.json
     if not dados:
@@ -101,12 +101,12 @@ def login():
 
 
 
-@app.route(...)
+@app.route('/logout', methods=['POST'])
 def logout():
     session.clear()
     return '', 204
 
-@app.route(...)
+@app.route('/perfil')
 def perfil():
     if 'user_id' in session:
         return jsonify({'nivel': session.get('nivel')})
@@ -114,11 +114,11 @@ def perfil():
 
 # --- ROTAS PÚBLICAS ---
 
-@app.route(...)
+@app.route('/')
 def index():
     return send_from_directory(os.path.dirname(__file__), 'index.html')
 
-@app.route(...)
+@app.route('/login.html')
 def login_html():
     return send_from_directory(os.path.dirname(__file__), 'login.html')
 
@@ -207,7 +207,7 @@ def excluir_equipamento_html():
 def ver_equipamento_html():
     return send_from_directory(os.path.dirname(__file__), 'ver-equipamento.html')
 
-@app.route(...)
+@app.route('/detalhes-sala.html')
 def detalhes_sala_html():
     return send_from_directory(os.path.dirname(__file__), 'detalhes-sala.html')
 
@@ -846,7 +846,7 @@ def atualizar_switch():
     
     return jsonify({'status': 'ok'})
 
-@app.route(...)
+@app.route('/css/<filename>')
 def css_static():
     return send_from_directory('css', filename)
 
@@ -1429,7 +1429,7 @@ def empresa_atual():
         return jsonify({'nome': row[0], 'logo': row[1]})
     return jsonify({'erro': 'Empresa não encontrada!'}), 404
 
-@app.route(...)
+@app.route('/upload-foto-sala', methods=['POST'])
 def upload_foto_sala():
     if 'foto' not in request.files:
         return jsonify({'status': 'erro', 'mensagem': 'Nenhum arquivo enviado'})
@@ -1444,7 +1444,7 @@ def upload_foto_sala():
     file.save(caminho)
     return jsonify({'status': 'ok', 'caminho': f'static/img/fotos-salas/{filename}'})
 
-@app.route(...)
+@app.route('/fotos-salas')
 def fotos_salas():
     return jsonify({'imagens': []})
     # Removido - não necessário no banco unificado
@@ -1454,7 +1454,7 @@ def fotos_salas():
     arquivos = [f for f in os.listdir(pasta) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
     return jsonify({'imagens': [f'/static/img/fotos-salas/{arq}' for arq in arquivos]})
 
-@app.route(...)
+@app.route('/upload-fotos-salas.html')
 def upload_fotos_salas_html():
     return send_from_directory(os.path.dirname(__file__), 'upload-fotos-salas.html')
 
