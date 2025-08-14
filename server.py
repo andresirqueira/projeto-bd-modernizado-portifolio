@@ -80,7 +80,7 @@ def registrar_log(usuario, acao, detalhes, status='sucesso'):
 
 # --- ROTAS DE AUTENTICAÇÃO ---
 
-@app.route('/login', methods=['POST'])
+@app.route(...)
 def login():
     dados = request.json
     if not dados:
@@ -103,12 +103,12 @@ def login():
 
 
 
-@app.route('/logout')
+@app.route(...)
 def logout():
     session.clear()
     return '', 204
 
-@app.route('/perfil')
+@app.route(...)
 def perfil():
     if 'user_id' in session:
         return jsonify({'nivel': session.get('nivel')})
@@ -116,11 +116,11 @@ def perfil():
 
 # --- ROTAS PÚBLICAS ---
 
-@app.route('/')
+@app.route(...)
 def index():
     return send_from_directory(os.path.dirname(__file__), 'index.html')
 
-@app.route('/login.html')
+@app.route(...)
 def login_html():
     return send_from_directory(os.path.dirname(__file__), 'login.html')
 
@@ -139,7 +139,7 @@ def admin_required(f):
     from functools import wraps
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'user_id' not in session or session.get('nivel') != 'admin':
+        if 'user_id' not in session or session.get('nivel') not in ['admin', 'master']:
             return redirect('/login.html')
         return f(*args, **kwargs)
     return decorated_function
@@ -148,7 +148,7 @@ def tecnico_required(f):
     from functools import wraps
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'user_id' not in session or session.get('nivel') not in ['admin', 'tecnico']:
+        if 'user_id' not in session or session.get('nivel') not in ['admin', 'tecnico', 'master']:
             return redirect('/login.html')
         return f(*args, **kwargs)
     return decorated_function
@@ -209,7 +209,7 @@ def excluir_equipamento_html():
 def ver_equipamento_html():
     return send_from_directory(os.path.dirname(__file__), 'ver-equipamento.html')
 
-@app.route('/detalhes-sala.html')
+@app.route(...)
 def detalhes_sala_html():
     return send_from_directory(os.path.dirname(__file__), 'detalhes-sala.html')
 
@@ -270,7 +270,7 @@ def criar_sala():
 
 @app.route('/salas/<int:id>', methods=['GET'])
 @login_required
-def get_sala(id):
+def get_sala():
     conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT id, nome, tipo, descricao, foto, fotos, andar_id FROM salas WHERE id=%s', (id,))
@@ -282,7 +282,7 @@ def get_sala(id):
 
 @app.route('/salas/<int:id>', methods=['PUT'])
 @admin_required
-def atualizar_sala(id):
+def atualizar_sala():
     dados = request.json
     if not dados:
         registrar_log(session.get('username', 'desconhecido'), 'ATUALIZAR_SALA', f'Sala ID={id}: Dados JSON inválidos', 'erro')
@@ -358,7 +358,7 @@ def atualizar_sala(id):
 
 @app.route('/salas/<int:id>', methods=['DELETE'])
 @admin_required
-def excluir_sala(id):
+def excluir_sala():
     conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT nome FROM salas WHERE id=%s', (id,))
@@ -595,7 +595,7 @@ def listar_equipamentos():
 
 @app.route('/equipamentos/<int:id>', methods=['PUT'])
 @admin_required
-def atualizar_equipamento(id):
+def atualizar_equipamento():
     dados = request.json
     if not dados:
         return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
@@ -634,7 +634,7 @@ def atualizar_equipamento(id):
 
 @app.route('/equipamentos/<int:id>', methods=['GET'])
 @login_required
-def get_equipamento(id):
+def get_equipamento():
     conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT id, nome, tipo, marca, modelo, descricao, foto, icone, sala_id FROM equipamentos WHERE id=%s', (id,))
@@ -661,7 +661,7 @@ def get_equipamento(id):
 
 @app.route('/equipamentos/<int:id>', methods=['DELETE'])
 @admin_required
-def excluir_equipamento(id):
+def excluir_equipamento():
     conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT nome, tipo, marca, modelo FROM equipamentos WHERE id=%s', (id,))
@@ -789,7 +789,7 @@ def listar_switches():
 
 @app.route('/switches/<int:id>', methods=['GET'])
 @login_required
-def get_switch(id):
+def get_switch():
     conn = get_postgres_connection()
     cur = conn.cursor()
     
@@ -813,7 +813,7 @@ def get_switch(id):
 
 @app.route('/switches/<int:id>', methods=['PUT'])
 @admin_required
-def atualizar_switch(id):
+def atualizar_switch():
     dados = request.json
     if not dados:
         registrar_log(session.get('username', 'desconhecido'), 'ATUALIZAR_SWITCH', f'Switch ID={id}: Dados JSON inválidos', 'erro')
@@ -848,8 +848,8 @@ def atualizar_switch(id):
     
     return jsonify({'status': 'ok'})
 
-@app.route('/css/<path:filename>')
-def css_static(filename):
+@app.route(...)
+def css_static():
     return send_from_directory('css', filename)
 
 # --- ROTAS DE PORTAS DE SWITCHES ---
@@ -901,7 +901,7 @@ def criar_porta_switch():
 
 @app.route('/switch-portas/<int:switch_id>', methods=['GET'])
 @login_required
-def listar_portas_switch(switch_id):
+def listar_portas_switch():
     conn = get_postgres_connection()
     cur = conn.cursor()
     
@@ -1082,7 +1082,7 @@ def criar_conexao():
 
 @app.route('/conexoes/<int:conexao_id>', methods=['DELETE'])
 @admin_required
-def remover_conexao(conexao_id):
+def remover_conexao():
     conn = get_postgres_connection()
     cur = conn.cursor()
     
@@ -1204,7 +1204,7 @@ def ver_switch_html():
 
 @app.route('/switches/<int:id>', methods=['DELETE'])
 @admin_required
-def excluir_switch(id):
+def excluir_switch():
     conn = get_postgres_connection()
     cur = conn.cursor()
     # Buscar dados do switch
@@ -1233,9 +1233,10 @@ def excluir_switch(id):
 
 @app.route('/equipamento-defeito/<int:id>', methods=['POST'])
 @admin_required
-def atualizar_defeito_equipamento(id):
+def atualizar_defeito_equipamento():
     dados = request.get_json()
-    defeito = 1 if dados.get('defeito') else 0            conn = get_postgres_connection()
+    defeito = 1 if dados.get('defeito') else 0
+    conn = get_postgres_connection()
     cur = conn.cursor()
     # Se marcar como defeito, desvincula da sala
     if defeito:
@@ -1430,30 +1431,32 @@ def empresa_atual():
         return jsonify({'nome': row[0], 'logo': row[1]})
     return jsonify({'erro': 'Empresa não encontrada!'}), 404
 
-@app.route('/upload-foto-sala', methods=['POST'])
+@app.route(...)
 def upload_foto_sala():
     if 'foto' not in request.files:
         return jsonify({'status': 'erro', 'mensagem': 'Nenhum arquivo enviado'})
     file = request.files['foto']
     if not file.filename:
+        return jsonify({'status': 'erro', 'mensagem': 'Nenhum arquivo selecionado'})
     # Removido - não necessário no banco unificado
-    pasta = os.path.join('static', 'img', 'fotos-salas', empresa_dir)
+    pasta = os.path.join('static', 'img', 'fotos-salas')
     os.makedirs(pasta, exist_ok=True)
     filename = cast(str, file.filename)
     caminho = os.path.join(pasta, filename)
     file.save(caminho)
-    return jsonify({'status': 'ok', 'caminho': f'static/img/fotos-salas/{empresa_dir}/{filename}'})
+    return jsonify({'status': 'ok', 'caminho': f'static/img/fotos-salas/{filename}'})
 
-@app.route('/fotos-salas')
-def fotos_salas():        return jsonify({'imagens': []})
+@app.route(...)
+def fotos_salas():
+    return jsonify({'imagens': []})
     # Removido - não necessário no banco unificado
-    pasta = os.path.join('static', 'img', 'fotos-salas', empresa_dir)
+    pasta = os.path.join('static', 'img', 'fotos-salas')
     if not os.path.exists(pasta):
         return jsonify({'imagens': []})
     arquivos = [f for f in os.listdir(pasta) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
-    return jsonify({'imagens': [f'/static/img/fotos-salas/{empresa_dir}/{arq}' for arq in arquivos]})
+    return jsonify({'imagens': [f'/static/img/fotos-salas/{arq}' for arq in arquivos]})
 
-@app.route('/upload-fotos-salas.html')
+@app.route(...)
 def upload_fotos_salas_html():
     return send_from_directory(os.path.dirname(__file__), 'upload-fotos-salas.html')
 
@@ -1486,7 +1489,8 @@ def api_salas():
 
 @app.route('/api/salas/<int:sala_id>/layout', methods=['POST'])
 @login_required
-def salvar_layout_sala(sala_id):            layout = request.get_json()
+def salvar_layout_sala():
+    layout = request.get_json()
     if not layout:
         return jsonify({'erro': 'JSON ausente ou inválido'}), 400
     conn = get_postgres_connection()
@@ -1516,7 +1520,7 @@ def salvar_layout_sala(sala_id):            layout = request.get_json()
 
 @app.route('/api/salas/<int:sala_id>/layout', methods=['GET'])
 @login_required
-def obter_layout_sala(sala_id):
+def obter_layout_sala():
     conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT layout_json FROM sala_layouts WHERE sala_id=%s', (sala_id,))
@@ -1528,7 +1532,7 @@ def obter_layout_sala(sala_id):
 
 @app.route('/api/salas/<int:sala_id>/conexoes-reais', methods=['GET'])
 @login_required
-def obter_conexoes_reais_sala(sala_id):
+def obter_conexoes_reais_sala():
     conn = get_postgres_connection()
     cur = conn.cursor()
     
@@ -1576,7 +1580,7 @@ def obter_conexoes_reais_sala(sala_id):
 
 @app.route('/api/salas/<int:sala_id>/layout-hibrido', methods=['GET'])
 @login_required
-def obter_layout_hibrido_sala(sala_id):
+def obter_layout_hibrido_sala():
     conn = get_postgres_connection()
     cur = conn.cursor()
     
@@ -1616,8 +1620,8 @@ def obter_layout_hibrido_sala(sala_id):
         # resultado['conns'] = layout_manual.get('conns', [])
     
     # Função para definir cor baseada no tipo de cabo
-    def get_cor_por_tipo_cabo(tipo_cabo):
-        cores = {
+    def get_cor_por_tipo_cabo():
+    cores = {
             'HDMI': '#e74c3c',      # Vermelho
             'VGA': '#3498db',       # Azul
             'USB': '#f39c12',       # Laranja
@@ -1685,7 +1689,7 @@ def visualizar_switch_sala_html():
 
 @app.route('/api/salas/<int:sala_id>/switches-usados')
 @login_required
-def switches_usados_sala(sala_id):
+def switches_usados_sala():
     conn = get_postgres_connection()
     cur = conn.cursor()
     
@@ -1706,8 +1710,8 @@ def switches_usados_sala(sala_id):
     switches_rows = cur.fetchall()
     switches = {}
     
-    def extrair_numero_switch(nome):
-        import re
+    def extrair_numero_switch():
+    import re
         match = re.search(r'Switch\s*(\d+)', nome, re.IGNORECASE)
         if match:
             return int(match.group(1))
@@ -1923,11 +1927,11 @@ def switches_usados_sala(sala_id):
     result = list(switches.values())
     return jsonify(result)
 
-def master_required(f):
+def master_required():
     from functools import wraps
     @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if session.get('nivel') != 'master':
+    def decorated_function():
+    if session.get('nivel') != 'master':
             return jsonify({'erro': 'Acesso restrito ao master'}), 403
         return f(*args, **kwargs)
     return decorated_function
@@ -2021,7 +2025,7 @@ def admin_remover_vinculo():
 
 @app.route('/admin/usuarios/<int:usuario_id>/nivel', methods=['PUT'])
 @master_required
-def admin_alterar_nivel_usuario(usuario_id):
+def admin_alterar_nivel_usuario():
     data = request.json
     if not data:
         return jsonify({'erro': 'JSON ausente ou inválido'}), 400
@@ -2042,7 +2046,7 @@ def config_master_html():
 
 @app.route('/api/salas/<int:id>', methods=['GET'])
 @login_required
-def api_get_sala(id):
+def api_get_sala():
     conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT id, nome, tipo, descricao, foto, fotos, andar_id FROM salas WHERE id=%s', (id,))
@@ -2165,7 +2169,7 @@ def listar_cabos():            # Parâmetros de filtro
 
 @app.route('/cabos/<int:id>', methods=['GET'])
 @login_required
-def get_cabo(id):
+def get_cabo():
     conn = get_postgres_connection()
     cur = conn.cursor()
     
@@ -2203,7 +2207,7 @@ def get_cabo(id):
 
 @app.route('/cabos/<int:id>', methods=['PUT'])
 @tecnico_required
-def atualizar_cabo(id):
+def atualizar_cabo():
     dados = request.json
     if not dados:
         return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
@@ -2245,7 +2249,7 @@ def atualizar_cabo(id):
 
 @app.route('/cabos/<int:id>', methods=['DELETE'])
 @admin_required
-def excluir_cabo(id):
+def excluir_cabo():
     conn = get_postgres_connection()
     cur = conn.cursor()
     
@@ -2376,7 +2380,7 @@ def listar_conexoes_cabos():
 
 @app.route('/conexoes-cabos/<int:id>', methods=['DELETE'])
 @tecnico_required
-def desconectar_cabo(id):
+def desconectar_cabo():
     conn = get_postgres_connection()
     cur = conn.cursor()
     
@@ -2393,7 +2397,7 @@ def desconectar_cabo(id):
 
 @app.route('/conexoes-cabos/sala/<int:sala_id>', methods=['GET'])
 @login_required
-def cabos_por_sala(sala_id):
+def cabos_por_sala():
     conn = get_postgres_connection()
     cur = conn.cursor()
     
@@ -2498,7 +2502,7 @@ def cabos_por_sala(sala_id):
 
 @app.route('/logs/sala/<int:sala_id>', methods=['GET'])
 @login_required
-def logs_por_sala(sala_id):
+def logs_por_sala():
     try:
         with open(LOG_FILE, 'r', encoding='utf-8') as f:
             logs = f.readlines()
@@ -2531,7 +2535,8 @@ def exportar_dados_html():
 
 @app.route('/cabos/<int:id>/defeito', methods=['POST'])
 @admin_required
-def marcar_cabo_defeito(id):            dados = request.json or {}
+def marcar_cabo_defeito():
+    dados = request.json or {}
     motivo = dados.get('motivo', 'Substituição automática')
     conn = get_postgres_connection()
     cur = conn.cursor()
@@ -2552,7 +2557,8 @@ def marcar_cabo_defeito(id):            dados = request.json or {}
 
 @app.route('/cabos/<int:id>/reparar', methods=['POST'])
 @admin_required
-def reparar_cabo(id):            dados = request.json or {}
+def reparar_cabo():
+    dados = request.json or {}
     novo_status = dados.get('status', 'funcionando')
     justificativa = dados.get('justificativa', 'Reparação realizada')
     if novo_status not in ['funcionando', 'em_estoque']:
@@ -2745,7 +2751,7 @@ def validar_portas_patch_panel():
 
 @app.route('/patch-panels/andar/<int:andar>', methods=['GET'])
 @login_required
-def listar_patch_panels_por_andar(andar):
+def listar_patch_panels_por_andar():
     conn = get_postgres_connection()
     cur = conn.cursor()
     
@@ -2785,7 +2791,8 @@ def listar_patch_panels_por_andar(andar):
 
 @app.route('/patch-panels/<int:id>', methods=['PUT'])
 @login_required
-def atualizar_patch_panel(id):            dados = request.get_json()
+def atualizar_patch_panel():
+    dados = request.get_json()
     
     conn = get_postgres_connection()
     cur = conn.cursor()
@@ -2859,7 +2866,7 @@ def atualizar_patch_panel(id):            dados = request.get_json()
 
 @app.route('/patch-panels/<int:id>', methods=['DELETE'])
 @login_required
-def excluir_patch_panel(id):
+def excluir_patch_panel():
     conn = get_postgres_connection()
     cur = conn.cursor()
     
@@ -2893,7 +2900,8 @@ def excluir_patch_panel(id):
 
 @app.route('/patch-panel-portas/<int:id>', methods=['PUT'])
 @login_required
-def atualizar_mapeamento_porta(id):            dados = request.get_json()
+def atualizar_mapeamento_porta():
+    dados = request.get_json()
     
     # Validar dados
     switch_id = dados.get('switch_id')
@@ -2982,7 +2990,7 @@ def atualizar_mapeamento_porta(id):            dados = request.get_json()
 
 @app.route('/patch-panels/<int:id>/portas', methods=['GET'])
 @login_required
-def listar_portas_patch_panel(id):
+def listar_portas_patch_panel():
     conn = get_postgres_connection()
     cur = conn.cursor()
     
@@ -3028,7 +3036,8 @@ def listar_portas_patch_panel(id):
 
 @app.route('/patch-panel-portas/<int:id>/conectar-equipamento', methods=['PUT'])
 @login_required
-def conectar_equipamento_patch_panel(id):            dados = request.get_json()
+def conectar_equipamento_patch_panel():
+    dados = request.get_json()
     equipamento_id = dados.get('equipamento_id')
     
     if not equipamento_id:
@@ -3091,7 +3100,7 @@ def conectar_equipamento_patch_panel(id):            dados = request.get_json()
 
 @app.route('/patch-panel-portas/<int:id>/desconectar-equipamento', methods=['PUT'])
 @login_required
-def desconectar_equipamento_patch_panel(id):
+def desconectar_equipamento_patch_panel():
     conn = get_postgres_connection()
     cur = conn.cursor()
     
@@ -3150,7 +3159,7 @@ def desconectar_equipamento_patch_panel(id):
 
 @app.route('/switch-portas/<int:id>/desconectar', methods=['PUT'])
 @login_required
-def desconectar_porta_switch(id):
+def desconectar_porta_switch():
     conn = get_postgres_connection()
     cur = conn.cursor()
     
@@ -3216,7 +3225,7 @@ def desconectar_porta_switch(id):
 
 @app.route('/salas/andar/<int:andar>', methods=['GET'])
 @login_required
-def listar_salas_por_andar(andar):
+def listar_salas_por_andar():
     conn = get_postgres_connection()
     cur = conn.cursor()
     
@@ -3247,7 +3256,7 @@ def listar_salas_por_andar(andar):
 
 @app.route('/patch-panels/<int:id>', methods=['GET'])
 @login_required
-def get_patch_panel(id):
+def get_patch_panel():
     try:            return jsonify({'status': 'erro', 'mensagem': 'Banco de dados não selecionado'}), 400
         
         conn = get_postgres_connection()
@@ -3338,7 +3347,7 @@ def get_patch_panel(id):
 
 @app.route('/equipamentos/<int:equipamento_id>/patch-panel-info', methods=['GET'])
 @login_required
-def get_equipamento_patch_panel_info(equipamento_id):
+def get_equipamento_patch_panel_info():
     try:        conn = get_postgres_connection()
         cur = conn.cursor()
         
