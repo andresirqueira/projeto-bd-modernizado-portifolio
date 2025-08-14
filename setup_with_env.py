@@ -1,21 +1,30 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Script Principal: Setup PostgreSQL
-Cria banco vazio e configura o sistema
-"""
-
 import psycopg2
 import os
 
-# Configuracoes do PostgreSQL (Render)
+# Ler variaveis do arquivo
+def load_env_vars():
+    env_vars = {}
+    with open('env_vars.txt', 'r') as f:
+        for line in f:
+            if '=' in line:
+                key, value = line.strip().split('=', 1)
+                env_vars[key] = value
+    return env_vars
+
+# Configuracoes do PostgreSQL
+env_vars = load_env_vars()
 POSTGRES_CONFIG = {
-    'host': os.getenv('POSTGRES_HOST', 'localhost'),
-    'database': os.getenv('POSTGRES_DB', 'portfolio_unified'),
-    'user': os.getenv('POSTGRES_USER', 'postgres'),
-    'password': os.getenv('POSTGRES_PASSWORD', ''),
-    'port': os.getenv('POSTGRES_PORT', '5432')
+    'host': env_vars.get('POSTGRES_HOST'),
+    'database': env_vars.get('POSTGRES_DB'),
+    'user': env_vars.get('POSTGRES_USER'),
+    'password': env_vars.get('POSTGRES_PASSWORD'),
+    'port': env_vars.get('POSTGRES_PORT')
 }
+
+print("Setup PostgreSQL")
+print("=" * 30)
+print(f"Host: {POSTGRES_CONFIG['host']}")
+print(f"Database: {POSTGRES_CONFIG['database']}")
 
 def create_database():
     """Cria estrutura do banco PostgreSQL"""
@@ -297,8 +306,6 @@ def create_admin_user():
 
 def main():
     """Funcao principal"""
-    print("Setup PostgreSQL")
-    print("=" * 30)
     
     # Criar estrutura do banco
     if not create_database():
@@ -310,10 +317,9 @@ def main():
     
     print("\nSetup concluido!")
     print("\nProximos passos:")
-    print("1. Configure as variaveis no Render")
-    print("2. Execute: python update_server.py")
-    print("3. Faca deploy da aplicacao")
-    print("4. Acesse com admin/admin123")
+    print("1. Execute: python update_server.py")
+    print("2. Faca deploy da aplicacao")
+    print("3. Acesse com admin/admin123")
     
     return True
 

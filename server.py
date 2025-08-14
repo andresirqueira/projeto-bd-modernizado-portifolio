@@ -3,6 +3,25 @@ import sqlite3
 import json
 import psycopg2
 from psycopg2.extras import RealDictCursor
+# Configuração PostgreSQL
+POSTGRES_CONFIG = {
+    'host': os.getenv('POSTGRES_HOST', 'localhost'),
+    'database': os.getenv('POSTGRES_DB', 'portfolio_unified'),
+    'user': os.getenv('POSTGRES_USER', 'postgres'),
+    'password': os.getenv('POSTGRES_PASSWORD', ''),
+    'port': os.getenv('POSTGRES_PORT', '5432')
+}
+
+def get_postgres_connection():
+    """Retorna uma conexão com PostgreSQL"""
+    return psycopg2.connect(**POSTGRES_CONFIG)
+
+def get_postgres_dict_connection():
+    """Retorna uma conexão com PostgreSQL usando RealDictCursor"""
+    config = POSTGRES_CONFIG.copy()
+    config['cursor_factory'] = RealDictCursor
+    return psycopg2.connect(**config)
+
 from database_config import get_postgres_connection, get_postgres_dict_connection
 from datetime import datetime
 from functools import wraps
@@ -69,7 +88,7 @@ def login():
         return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
     conn = get_postgres_connection()
     cur = conn.cursor()
-    cur.execute('SELECT id, nivel, nome FROM usuarios WHERE username=? AND senha=?', (dados['username'], dados['senha']))
+    cur.execute('SELECT id, nivel, nome FROM usuarios WHERE username=%s AND senha=%s', (dados['username'], dados['senha']))
     user = cur.fetchone()
     if not user:
         conn.close()
@@ -79,7 +98,7 @@ def login():
         SELECT e.id, e.nome, e.db_file
         FROM empresas e
         JOIN usuario_empresas ue ON ue.empresa_id = e.id
-        WHERE ue.usuario_id = ?
+        WHERE ue.usuario_id = %s
     ''', (user_id,))
     empresas = [{'id': row[0], 'nome': row[1], 'db_file': row[2]} for row in cur.fetchall()]
     conn.close()
@@ -245,13 +264,13 @@ def criar_sala():
     cur = conn.cursor()
     # Verificação de nome duplicado (case-insensitive)
     nome = dados['nome']
-    cur.execute('SELECT 1 FROM salas WHERE LOWER(nome) = LOWER(?)', (nome,))
+    cur.execute('SELECT 1 FROM salas WHERE LOWER(nome) = LOWER(%s)', (nome,))
     if cur.fetchone():
         conn.close()
         return jsonify({'status': 'erro', 'mensagem': 'Já existe uma sala com esse nome!'}), 400
     cur.execute('''
         INSERT INTO salas (nome, tipo, descricao, foto, fotos, andar_id)
-        VALUES (?, ?, ?, ?, ?, ?)
+        VALUES (%s, %s, %s, %s, %s, %s)
     ''', (
         dados['nome'],
         dados.get('tipo'),
@@ -263,7 +282,7 @@ def criar_sala():
     sala_id = cur.lastrowid
     equipamentos_ids = request.form.getlist('equipamentos_ids[]')
     for eq_id in equipamentos_ids:
-        cur.execute('UPDATE equipamentos SET sala_id=? WHERE id=?', (sala_id, eq_id))
+        cur.execute('UPDATE equipamentos SET sala_id=%s WHERE id=%s', (sala_id, eq_id))
     conn.commit()
     conn.close()
     # Log de criação de sala
@@ -279,7 +298,7 @@ def get_sala(id):
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
-    cur.execute('SELECT id, nome, tipo, descricao, foto, fotos, andar_id FROM salas WHERE id=?', (id,))
+    cur.execute('SELECT id, nome, tipo, descricao, foto, fotos, andar_id FROM salas WHERE id=%s', (id,))
     row = cur.fetchone()
     conn.close()
     if row:
@@ -300,13 +319,13 @@ def atualizar_sala(id):
     cur = conn.cursor()
     
     # Busca equipamentos atualmente vinculados à sala
-    cur.execute('SELECT id FROM equipamentos WHERE sala_id = ?', (id,))
+    cur.execute('SELECT id FROM equipamentos WHERE sala_id = %s', (id,))
     equipamentos_atuais = [row[0] for row in cur.fetchall()]
     
     # Atualiza dados da sala
     cur.execute('''
-        UPDATE salas SET nome=?, tipo=?, descricao=?, foto=?, fotos=?, andar_id=?
-        WHERE id=?
+        UPDATE salas SET nome=%s, tipo=%s, descricao=%s, foto=%s, fotos=%s, andar_id=%s
+        WHERE id=%s
     ''', (
         dados['nome'],
         dados.get('tipo'),
@@ -331,7 +350,7 @@ def atualizar_sala(id):
         # Busca a porta conectada ao equipamento
         cur.execute('''
             SELECT porta_id FROM conexoes 
-            WHERE equipamento_id = ? AND status = 'ativa'
+            WHERE equipamento_id = %s AND status = 'ativa'
         ''', (eq_id,))
         porta_result = cur.fetchone()
         
@@ -340,21 +359,21 @@ def atualizar_sala(id):
             # Marca a conexão como inativa
             cur.execute('''
                 UPDATE conexoes SET status = 'inativa' 
-                WHERE equipamento_id = ? AND status = 'ativa'
+                WHERE equipamento_id = %s AND status = 'ativa'
             ''', (eq_id,))
             
             # Marca a porta como livre
             cur.execute('''
                 UPDATE switch_portas SET status = 'livre' 
-                WHERE id = ?
+                WHERE id = %s
             ''', (porta_id,))
     
     # Desvincula todos os equipamentos da sala
-    cur.execute('UPDATE equipamentos SET sala_id=NULL WHERE sala_id=?', (id,))
+    cur.execute('UPDATE equipamentos SET sala_id=NULL WHERE sala_id=%s', (id,))
     
     # Vincula os selecionados
     for eq_id in equipamentos_ids:
-        cur.execute('UPDATE equipamentos SET sala_id=? WHERE id=?', (id, eq_id))
+        cur.execute('UPDATE equipamentos SET sala_id=%s WHERE id=%s', (id, eq_id))
     
     conn.commit()
     conn.close()
@@ -373,11 +392,11 @@ def excluir_sala(id):
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
-    cur.execute('SELECT nome FROM salas WHERE id=?', (id,))
+    cur.execute('SELECT nome FROM salas WHERE id=%s', (id,))
     row = cur.fetchone()
     nome_sala = row[0] if row else ''
-    cur.execute('UPDATE equipamentos SET sala_id=NULL WHERE sala_id=?', (id,))
-    cur.execute('DELETE FROM salas WHERE id=?', (id,))
+    cur.execute('UPDATE equipamentos SET sala_id=NULL WHERE sala_id=%s', (id,))
+    cur.execute('DELETE FROM salas WHERE id=%s', (id,))
     conn.commit()
     conn.close()
     # Log de exclusão de sala
@@ -438,14 +457,14 @@ def criar_sala_com_equipamentos():
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
-    cur.execute('SELECT 1 FROM salas WHERE LOWER(nome) = LOWER(?)', (nome,))
+    cur.execute('SELECT 1 FROM salas WHERE LOWER(nome) = LOWER(%s)', (nome,))
     if cur.fetchone():
         conn.close()
         return jsonify({'status': 'erro', 'mensagem': 'Já existe uma sala com esse nome!'}), 400
     # Cria a sala
     cur.execute('''
         INSERT INTO salas (nome, tipo, descricao, foto, fotos, andar_id)
-        VALUES (?, ?, ?, ?, ?, ?)
+        VALUES (%s, %s, %s, %s, %s, %s)
     ''', (
         nome,
         tipo,
@@ -464,7 +483,7 @@ def criar_sala_com_equipamentos():
         caminho_foto = f'img/{tipo}-{marca}-{modelo}.png' if tipo and marca and modelo else None
         cur.execute('''
             INSERT INTO equipamentos (nome, tipo, marca, modelo, descricao, foto, icone, sala_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         ''', (
             eq['nome'],
             eq.get('tipo'),
@@ -481,12 +500,12 @@ def criar_sala_com_equipamentos():
             if valor:
                 cur.execute('''
                     INSERT INTO equipamento_dados (equipamento_id, chave, valor)
-                    VALUES (?, ?, ?)
+                    VALUES (%s, %s, %s)
                 ''', (equipamento_id, chave, valor))
     # Vincular equipamentos já existentes (sem sala) à nova sala
     equipamentos_ids = request.form.getlist('equipamentos_ids[]')
     for eq_id in equipamentos_ids:
-        cur.execute('UPDATE equipamentos SET sala_id=? WHERE id=?', (sala_id, eq_id))
+        cur.execute('UPDATE equipamentos SET sala_id=%s WHERE id=%s', (sala_id, eq_id))
     conn.commit()
     conn.close()
     # Log de criação de sala (formulário/adicionar-sala)
@@ -513,7 +532,7 @@ def criar_equipamento():
     cur = conn.cursor()
     cur.execute('''
         INSERT INTO equipamentos (nome, tipo, marca, modelo, descricao, foto, icone, sala_id)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
     ''', (
         dados['nome'],
         dados.get('tipo'),
@@ -529,7 +548,7 @@ def criar_equipamento():
         if valor:
             cur.execute('''
                 INSERT INTO equipamento_dados (equipamento_id, chave, valor)
-                VALUES (?, ?, ?)
+                VALUES (%s, %s, %s)
             ''', (equipamento_id, chave, valor))
     conn.commit()
     conn.close()
@@ -588,7 +607,7 @@ def listar_equipamentos():
             SELECT e.id, e.nome, e.tipo, e.marca, e.modelo, e.descricao, e.foto, e.icone, e.sala_id, e.defeito, s.nome as sala_nome
             FROM equipamentos e
             LEFT JOIN salas s ON e.sala_id = s.id
-            WHERE e.sala_id=?
+            WHERE e.sala_id=%s
         ''', (sala_id,))
     else:
         cur.execute('''
@@ -599,7 +618,7 @@ def listar_equipamentos():
     equipamentos = []
     for row in cur.fetchall():
         eq_id = row['id']
-        cur.execute('SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=?', (eq_id,))
+        cur.execute('SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=%s', (eq_id,))
         dados = {chave: valor for chave, valor in cur.fetchall()}
         defeito_val = int(row['defeito']) if row['defeito'] is not None else 0
         equipamentos.append({
@@ -635,8 +654,8 @@ def atualizar_equipamento(id):
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
     cur.execute('''
-        UPDATE equipamentos SET nome=?, tipo=?, marca=?, modelo=?, descricao=?, foto=?, icone=?
-        WHERE id=?
+        UPDATE equipamentos SET nome=%s, tipo=%s, marca=%s, modelo=%s, descricao=%s, foto=%s, icone=%s
+        WHERE id=%s
     ''', (
         dados['nome'],
         dados.get('tipo'),
@@ -648,12 +667,12 @@ def atualizar_equipamento(id):
         id
     ))
     for chave, valor in dados.get('dados', {}).items():
-        cur.execute('SELECT id FROM equipamento_dados WHERE equipamento_id=? AND chave=?', (id, chave))
+        cur.execute('SELECT id FROM equipamento_dados WHERE equipamento_id=%s AND chave=%s', (id, chave))
         row = cur.fetchone()
         if row:
-            cur.execute('UPDATE equipamento_dados SET valor=? WHERE id=?', (valor, row[0]))
+            cur.execute('UPDATE equipamento_dados SET valor=%s WHERE id=%s', (valor, row[0]))
         else:
-            cur.execute('INSERT INTO equipamento_dados (equipamento_id, chave, valor) VALUES (?, ?, ?)', (id, chave, valor))
+            cur.execute('INSERT INTO equipamento_dados (equipamento_id, chave, valor) VALUES (%s, %s, %s)', (id, chave, valor))
     conn.commit()
     conn.close()
     # Log de edição de equipamento
@@ -669,12 +688,12 @@ def get_equipamento(id):
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
-    cur.execute('SELECT id, nome, tipo, marca, modelo, descricao, foto, icone, sala_id FROM equipamentos WHERE id=?', (id,))
+    cur.execute('SELECT id, nome, tipo, marca, modelo, descricao, foto, icone, sala_id FROM equipamentos WHERE id=%s', (id,))
     row = cur.fetchone()
     if not row:
         conn.close()
         return jsonify({'erro': 'Equipamento não encontrado'}), 404
-    cur.execute('SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=?', (id,))
+    cur.execute('SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=%s', (id,))
     dados = {chave: valor for chave, valor in cur.fetchall()}
     equipamento = {
         'id': row[0],
@@ -699,11 +718,11 @@ def excluir_equipamento(id):
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
-    cur.execute('SELECT nome, tipo, marca, modelo FROM equipamentos WHERE id=?', (id,))
+    cur.execute('SELECT nome, tipo, marca, modelo FROM equipamentos WHERE id=%s', (id,))
     row = cur.fetchone()
     nome, tipo, marca, modelo = row if row else ('', '', '', '')
-    cur.execute('DELETE FROM equipamento_dados WHERE equipamento_id=?', (id,))
-    cur.execute('DELETE FROM equipamentos WHERE id=?', (id,))
+    cur.execute('DELETE FROM equipamento_dados WHERE equipamento_id=%s', (id,))
+    cur.execute('DELETE FROM equipamentos WHERE id=%s', (id,))
     conn.commit()
     conn.close()
     # Log de exclusão de equipamento
@@ -733,7 +752,7 @@ def marcas_equipamento():
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
-    cur.execute('SELECT DISTINCT marca FROM equipamentos WHERE tipo=? AND marca IS NOT NULL AND marca != ""', (tipo,))
+    cur.execute('SELECT DISTINCT marca FROM equipamentos WHERE tipo=%s AND marca IS NOT NULL AND marca != ""', (tipo,))
     marcas = [row[0] for row in cur.fetchall()]
     conn.close()
     return jsonify(marcas)
@@ -748,7 +767,7 @@ def modelos_equipamento():
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
-    cur.execute('SELECT DISTINCT modelo FROM equipamentos WHERE tipo=? AND marca=? AND modelo IS NOT NULL AND modelo != ""', (tipo, marca))
+    cur.execute('SELECT DISTINCT modelo FROM equipamentos WHERE tipo=%s AND marca=%s AND modelo IS NOT NULL AND modelo != ""', (tipo, marca))
     modelos = [row[0] for row in cur.fetchall()]
     conn.close()
     return jsonify(modelos)
@@ -795,7 +814,7 @@ def criar_switch():
     ''')
     cur.execute('''
         INSERT INTO switches (nome, marca, modelo)
-        VALUES (?, ?, ?)
+        VALUES (%s, %s, %s)
     ''', (
         dados['nome'],
         dados['marca'],
@@ -846,7 +865,7 @@ def get_switch(id):
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
     
-    cur.execute('SELECT id, nome, marca, modelo, data_criacao FROM switches WHERE id=?', (id,))
+    cur.execute('SELECT id, nome, marca, modelo, data_criacao FROM switches WHERE id=%s', (id,))
     row = cur.fetchone()
     
     if not row:
@@ -879,7 +898,7 @@ def atualizar_switch(id):
     cur = conn.cursor()
     
     # Verificar se o switch existe
-    cur.execute('SELECT id FROM switches WHERE id=?', (id,))
+    cur.execute('SELECT id FROM switches WHERE id=%s', (id,))
     if not cur.fetchone():
         registrar_log(session.get('username', 'desconhecido'), 'ATUALIZAR_SWITCH', f'Switch ID={id}: Não encontrado', 'erro')
         conn.close()
@@ -887,8 +906,8 @@ def atualizar_switch(id):
     
     # Atualizar o switch
     cur.execute('''
-        UPDATE switches SET nome=?, marca=?, modelo=?
-        WHERE id=?
+        UPDATE switches SET nome=%s, marca=%s, modelo=%s
+        WHERE id=%s
     ''', (
         dados['nome'],
         dados['marca'],
@@ -937,7 +956,7 @@ def criar_porta_switch():
     ''')
     
     # Verificar se a porta já existe para este switch
-    cur.execute('SELECT id FROM switch_portas WHERE switch_id=? AND numero_porta=?', 
+    cur.execute('SELECT id FROM switch_portas WHERE switch_id=%s AND numero_porta=%s', 
                 (dados['switch_id'], dados['numero_porta']))
     
     if cur.fetchone():
@@ -946,7 +965,7 @@ def criar_porta_switch():
     
     cur.execute('''
         INSERT INTO switch_portas (switch_id, numero_porta, descricao, status)
-        VALUES (?, ?, ?, ?)
+        VALUES (%s, %s, %s, %s)
     ''', (
         dados['switch_id'],
         dados['numero_porta'],
@@ -997,7 +1016,7 @@ def listar_portas_switch(switch_id):
         LEFT JOIN salas s ON e.sala_id = s.id
         LEFT JOIN patch_panel_portas ppp ON ppp.switch_id = sp.switch_id AND ppp.porta_switch = sp.numero_porta
         LEFT JOIN patch_panels pp ON ppp.patch_panel_id = pp.id
-        WHERE sp.switch_id = ?
+        WHERE sp.switch_id = %s
         ORDER BY sp.numero_porta
     ''', (switch_id,))
     
@@ -1008,12 +1027,12 @@ def listar_portas_switch(switch_id):
         
         if row[4]:  # Equipamento conectado diretamente
             # Buscar dados extras do equipamento
-            cur.execute("SELECT id FROM equipamentos WHERE nome=? AND tipo=?", (row[4], row[5]))
+            cur.execute("SELECT id FROM equipamentos WHERE nome=%s AND tipo=%s", (row[4], row[5]))
             eq_row = cur.fetchone()
             eq_id = eq_row[0] if eq_row else None
             dados = {}
             if eq_id:
-                cur.execute("SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=? AND chave IN ('ip1','ip2','mac1','mac2')", (eq_id,))
+                cur.execute("SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=%s AND chave IN ('ip1','ip2','mac1','mac2')", (eq_id,))
                 dados = {chave: valor for chave, valor in cur.fetchall()}
             equipamento_info = {
                 'nome': row[4],
@@ -1027,7 +1046,7 @@ def listar_portas_switch(switch_id):
         
         if row[7]:  # Patch panel mapeado
             # Gerar keystone usando o prefixo personalizado
-            cur.execute("SELECT prefixo_keystone, andar FROM patch_panels WHERE nome = ?", (row[7],))
+            cur.execute("SELECT prefixo_keystone, andar FROM patch_panels WHERE nome = %s", (row[7],))
             prefixo_result = cur.fetchone()
             prefixo = prefixo_result[0] if prefixo_result and prefixo_result[0] else f"PT{20 + (prefixo_result[1] if prefixo_result else 0)}"
             keystone = f"{prefixo}-{row[8]:04d}"
@@ -1039,14 +1058,14 @@ def listar_portas_switch(switch_id):
                     SELECT e.nome, e.tipo, sal.nome as sala_nome, e.id
                     FROM equipamentos e
                     LEFT JOIN salas sal ON e.sala_id = sal.id
-                    WHERE e.id = ?
+                    WHERE e.id = %s
                 """, (row[10],))
                 
                 equip_result = cur.fetchone()
                 if equip_result and equip_result[0]:
                     # Buscar dados extras do equipamento (IP, MAC)
                     dados = {}
-                    cur.execute("SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=? AND chave IN ('ip1','ip2','mac1','mac2')", (equip_result[3],))
+                    cur.execute("SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=%s AND chave IN ('ip1','ip2','mac1','mac2')", (equip_result[3],))
                     dados = {chave: valor for chave, valor in cur.fetchall()}
                     
                     equipamento_patch = {
@@ -1109,7 +1128,7 @@ def criar_conexao():
     ''')
     
     # Verificar se a porta está livre
-    cur.execute('SELECT status FROM switch_portas WHERE id=?', (dados['porta_id'],))
+    cur.execute('SELECT status FROM switch_portas WHERE id=%s', (dados['porta_id'],))
     porta = cur.fetchone()
     
     if not porta:
@@ -1123,7 +1142,7 @@ def criar_conexao():
         return jsonify({'status': 'erro', 'mensagem': 'Porta já está ocupada'}), 400
     
     # Verificar se o equipamento já está conectado
-    cur.execute('SELECT id FROM conexoes WHERE equipamento_id=? AND status="ativa"', (dados['equipamento_id'],))
+    cur.execute('SELECT id FROM conexoes WHERE equipamento_id=%s AND status="ativa"', (dados['equipamento_id'],))
     if cur.fetchone():
         registrar_log(session.get('username', 'desconhecido'), 'CRIAR_CONEXAO', f'Equipamento ID={dados["equipamento_id"]}: Já conectado', 'erro')
         conn.close()
@@ -1132,11 +1151,11 @@ def criar_conexao():
     # Criar a conexão
     cur.execute('''
         INSERT INTO conexoes (porta_id, equipamento_id, status)
-        VALUES (?, ?, 'ativa')
+        VALUES (%s, %s, 'ativa')
     ''', (dados['porta_id'], dados['equipamento_id']))
     
     # Atualizar status da porta
-    cur.execute('UPDATE switch_portas SET status="ocupada" WHERE id=?', (dados['porta_id'],))
+    cur.execute('UPDATE switch_portas SET status="ocupada" WHERE id=%s', (dados['porta_id'],))
     
     conexao_id = cur.lastrowid
     conn.commit()
@@ -1158,7 +1177,7 @@ def remover_conexao(conexao_id):
     cur = conn.cursor()
     
     # Buscar a conexão
-    cur.execute('SELECT porta_id, equipamento_id FROM conexoes WHERE id=? AND status="ativa"', (conexao_id,))
+    cur.execute('SELECT porta_id, equipamento_id FROM conexoes WHERE id=%s AND status="ativa"', (conexao_id,))
     conexao = cur.fetchone()
     
     if not conexao:
@@ -1169,10 +1188,10 @@ def remover_conexao(conexao_id):
     porta_id, equipamento_id = conexao
     
     # Marcar conexão como inativa
-    cur.execute('UPDATE conexoes SET status="inativa" WHERE id=?', (conexao_id,))
+    cur.execute('UPDATE conexoes SET status="inativa" WHERE id=%s', (conexao_id,))
     
     # Marcar porta como livre
-    cur.execute('UPDATE switch_portas SET status="livre" WHERE id=?', (porta_id,))
+    cur.execute('UPDATE switch_portas SET status="livre" WHERE id=%s', (porta_id,))
     
     conn.commit()
     conn.close()
@@ -1285,22 +1304,22 @@ def excluir_switch(id):
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
     # Buscar dados do switch
-    cur.execute('SELECT nome, marca, modelo FROM switches WHERE id=?', (id,))
+    cur.execute('SELECT nome, marca, modelo FROM switches WHERE id=%s', (id,))
     row = cur.fetchone()
     nome, marca, modelo = row if row else ('', '', '')
     # Buscar portas do switch
-    cur.execute('SELECT id FROM switch_portas WHERE switch_id=?', (id,))
+    cur.execute('SELECT id FROM switch_portas WHERE switch_id=%s', (id,))
     portas = [r[0] for r in cur.fetchall()]
     # Para cada porta, marcar conexões como inativas e liberar porta
     for porta_id in portas:
         # Marcar conexões como inativas
-        cur.execute('UPDATE conexoes SET status="inativa" WHERE porta_id=? AND status="ativa"', (porta_id,))
+        cur.execute('UPDATE conexoes SET status="inativa" WHERE porta_id=%s AND status="ativa"', (porta_id,))
         # Marcar porta como livre
-        cur.execute('UPDATE switch_portas SET status="livre" WHERE id=?', (porta_id,))
+        cur.execute('UPDATE switch_portas SET status="livre" WHERE id=%s', (porta_id,))
     # Excluir portas do switch
-    cur.execute('DELETE FROM switch_portas WHERE switch_id=?', (id,))
+    cur.execute('DELETE FROM switch_portas WHERE switch_id=%s', (id,))
     # Excluir switch
-    cur.execute('DELETE FROM switches WHERE id=?', (id,))
+    cur.execute('DELETE FROM switches WHERE id=%s', (id,))
     conn.commit()
     conn.close()
     # Log de exclusão de switch
@@ -1320,12 +1339,12 @@ def atualizar_defeito_equipamento(id):
     cur = conn.cursor()
     # Se marcar como defeito, desvincula da sala
     if defeito:
-        cur.execute('UPDATE equipamentos SET defeito=?, sala_id=NULL WHERE id=?', (defeito, id))
+        cur.execute('UPDATE equipamentos SET defeito=%s, sala_id=NULL WHERE id=%s', (defeito, id))
     else:
-        cur.execute('UPDATE equipamentos SET defeito=? WHERE id=?', (defeito, id))
+        cur.execute('UPDATE equipamentos SET defeito=%s WHERE id=%s', (defeito, id))
     conn.commit()
     # Verifica valor salvo imediatamente após o update
-    cur.execute('SELECT defeito, sala_id FROM equipamentos WHERE id=?', (id,))
+    cur.execute('SELECT defeito, sala_id FROM equipamentos WHERE id=%s', (id,))
     row = cur.fetchone()
     conn.close()
     return jsonify({'status': 'ok'})
@@ -1442,7 +1461,7 @@ def ping_equipamentos():
             sucesso = 0
         # Salva no log
         cur.execute(
-            'INSERT INTO ping_logs (equipamento_id, nome_equipamento, ip, resultado, sucesso) VALUES (?, ?, ?, ?, ?)',
+            'INSERT INTO ping_logs (equipamento_id, nome_equipamento, ip, resultado, sucesso) VALUES (%s, %s, %s, %s, %s)',
             (eq_id, nome, ip, saida, sucesso)
         )
         resultados.append({'id': eq_id, 'nome': nome, 'ip': ip, 'sucesso': bool(sucesso), 'saida': saida})
@@ -1470,7 +1489,7 @@ def ping_logs():
     for row in cur.fetchall():
         eq_id = row[5]
         # Busca MAC
-        cur.execute("SELECT valor FROM equipamento_dados WHERE equipamento_id=? AND chave IN ('mac', 'mac1') LIMIT 1", (eq_id,))
+        cur.execute("SELECT valor FROM equipamento_dados WHERE equipamento_id=%s AND chave IN ('mac', 'mac1') LIMIT 1", (eq_id,))
         mac_row = cur.fetchone()
         mac = mac_row[0] if mac_row else ''
         # Busca switch e porta (se houver conexão ativa)
@@ -1479,7 +1498,7 @@ def ping_logs():
             FROM conexoes c
             JOIN switch_portas sp ON c.porta_id = sp.id
             JOIN switches s ON sp.switch_id = s.id
-            WHERE c.equipamento_id=? AND c.status='ativa' LIMIT 1
+            WHERE c.equipamento_id=%s AND c.status='ativa' LIMIT 1
         ''', (eq_id,))
         sw_row = cur.fetchone()
         switch = sw_row[0] if sw_row else ''
@@ -1516,7 +1535,7 @@ def empresa_atual():
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     conn = get_postgres_connection()
     cur = conn.cursor()
-    cur.execute('SELECT nome, logo FROM empresas WHERE db_file=?', (db_file,))
+    cur.execute('SELECT nome, logo FROM empresas WHERE db_file=%s', (db_file,))
     row = cur.fetchone()
     conn.close()
     if row:
@@ -1609,7 +1628,7 @@ def salvar_layout_sala(sala_id):
     # Salva ou atualiza o layout
     cur.execute('''
         INSERT INTO sala_layouts (sala_id, layout_json, atualizado_em)
-        VALUES (?, ?, CURRENT_TIMESTAMP)
+        VALUES (%s, %s, CURRENT_TIMESTAMP)
         ON CONFLICT(sala_id) DO UPDATE SET
             layout_json=excluded.layout_json,
             atualizado_em=CURRENT_TIMESTAMP
@@ -1629,7 +1648,7 @@ def obter_layout_sala(sala_id):
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
-    cur.execute('SELECT layout_json FROM sala_layouts WHERE sala_id=?', (sala_id,))
+    cur.execute('SELECT layout_json FROM sala_layouts WHERE sala_id=%s', (sala_id,))
     row = cur.fetchone()
     conn.close()
     if row and row[0]:
@@ -1657,7 +1676,7 @@ def obter_conexoes_reais_sala(sala_id):
         JOIN cabos c ON cc.cabo_id = c.id
         LEFT JOIN equipamentos eo ON cc.equipamento_origem_id = eo.id
         LEFT JOIN equipamentos ed ON cc.equipamento_destino_id = ed.id
-        WHERE cc.sala_id = ? AND cc.data_desconexao IS NULL
+        WHERE cc.sala_id = %s AND cc.data_desconexao IS NULL
         ORDER BY cc.data_conexao DESC
     ''', (sala_id,))
     
@@ -1699,7 +1718,7 @@ def obter_layout_hibrido_sala(sala_id):
     cur = conn.cursor()
     
     # Buscar layout manual
-    cur.execute('SELECT layout_json FROM sala_layouts WHERE sala_id=?', (sala_id,))
+    cur.execute('SELECT layout_json FROM sala_layouts WHERE sala_id=%s', (sala_id,))
     layout_row = cur.fetchone()
     
     # Buscar conexões reais
@@ -1713,7 +1732,7 @@ def obter_layout_hibrido_sala(sala_id):
         JOIN cabos c ON cc.cabo_id = c.id
         LEFT JOIN equipamentos eo ON cc.equipamento_origem_id = eo.id
         LEFT JOIN equipamentos ed ON cc.equipamento_destino_id = ed.id
-        WHERE cc.sala_id = ? AND cc.data_desconexao IS NULL
+        WHERE cc.sala_id = %s AND cc.data_desconexao IS NULL
         ORDER BY cc.data_conexao DESC
     ''', (sala_id,))
     
@@ -1824,7 +1843,7 @@ def switches_usados_sala(sala_id):
         LEFT JOIN equipamentos e1 ON ppp.equipamento_id = e1.id
         LEFT JOIN conexoes c ON sp.id = c.porta_id AND c.status = 'ativa'
         LEFT JOIN equipamentos e2 ON c.equipamento_id = e2.id
-        WHERE (e1.sala_id = ? OR e2.sala_id = ?)
+        WHERE (e1.sala_id = %s OR e2.sala_id = %s)
         ORDER BY s.id
     ''', (sala_id, sala_id))
     
@@ -1847,7 +1866,7 @@ def switches_usados_sala(sala_id):
         cur.execute('''
             SELECT DISTINCT sp.numero_porta, sp.descricao
             FROM switch_portas sp
-            WHERE sp.switch_id = ?
+            WHERE sp.switch_id = %s
             ORDER BY sp.numero_porta
         ''', (switch_id,))
         
@@ -1861,7 +1880,7 @@ def switches_usados_sala(sala_id):
                 FROM patch_panel_portas ppp
                 JOIN patch_panels pp ON ppp.patch_panel_id = pp.id
                 LEFT JOIN equipamentos e ON ppp.equipamento_id = e.id
-                WHERE ppp.switch_id = ? AND ppp.porta_switch = ?
+                WHERE ppp.switch_id = %s AND ppp.porta_switch = %s
             ''', (switch_id, numero_porta))
             
             patch_panel_row = cur.fetchone()
@@ -1871,7 +1890,7 @@ def switches_usados_sala(sala_id):
                 SELECT c.equipamento_id
                 FROM conexoes c
                 JOIN switch_portas sp ON c.porta_id = sp.id
-                WHERE sp.switch_id = ? AND sp.numero_porta = ? AND c.status = 'ativa'
+                WHERE sp.switch_id = %s AND sp.numero_porta = %s AND c.status = 'ativa'
             ''', (switch_id, numero_porta))
             
             conexao_direta_row = cur.fetchone()
@@ -1886,13 +1905,13 @@ def switches_usados_sala(sala_id):
                         SELECT e.nome, e.tipo, e.marca, s.nome as sala_nome
                         FROM equipamentos e
                         LEFT JOIN salas s ON e.sala_id = s.id
-                        WHERE e.id = ? AND e.sala_id = ?
+                        WHERE e.id = %s AND e.sala_id = %s
                     ''', (equipamento_id, sala_id))
                     
                     equip_row = cur.fetchone()
                     if equip_row:
                         # Equipamento da sala específica - OCUPADA com destaque
-                        cur.execute("SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=? AND chave IN ('ip1','ip2','mac1','mac2')", (equipamento_id,))
+                        cur.execute("SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=%s AND chave IN ('ip1','ip2','mac1','mac2')", (equipamento_id,))
                         dados = {chave: valor for chave, valor in cur.fetchall()}
                         
                         equipamento_info = {
@@ -1918,14 +1937,14 @@ def switches_usados_sala(sala_id):
                         }
                     else:
                         # Equipamento de outra sala - OCUPADA sem destaque
-                        cur.execute("SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=? AND chave IN ('ip1','ip2','mac1','mac2')", (equipamento_id,))
+                        cur.execute("SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=%s AND chave IN ('ip1','ip2','mac1','mac2')", (equipamento_id,))
                         dados = {chave: valor for chave, valor in cur.fetchall()}
                         
                         cur.execute('''
                             SELECT e.nome, e.tipo, e.marca, s.nome as sala_nome
                             FROM equipamentos e
                             LEFT JOIN salas s ON e.sala_id = s.id
-                            WHERE e.id = ?
+                            WHERE e.id = %s
                         ''', (equipamento_id,))
                         
                         equip_row = cur.fetchone()
@@ -1970,13 +1989,13 @@ def switches_usados_sala(sala_id):
                     SELECT e.nome, e.tipo, e.marca, s.nome as sala_nome
                     FROM equipamentos e
                     LEFT JOIN salas s ON e.sala_id = s.id
-                    WHERE e.id = ? AND e.sala_id = ?
+                    WHERE e.id = %s AND e.sala_id = %s
                 ''', (equipamento_id, sala_id))
                 
                 equip_row = cur.fetchone()
                 if equip_row:
                     # Equipamento da sala específica - OCUPADA com destaque
-                    cur.execute("SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=? AND chave IN ('ip1','ip2','mac1','mac2')", (equipamento_id,))
+                    cur.execute("SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=%s AND chave IN ('ip1','ip2','mac1','mac2')", (equipamento_id,))
                     dados = {chave: valor for chave, valor in cur.fetchall()}
                     
                     equipamento_info = {
@@ -1998,14 +2017,14 @@ def switches_usados_sala(sala_id):
                     }
                 else:
                     # Equipamento de outra sala - OCUPADA sem destaque
-                    cur.execute("SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=? AND chave IN ('ip1','ip2','mac1','mac2')", (equipamento_id,))
+                    cur.execute("SELECT chave, valor FROM equipamento_dados WHERE equipamento_id=%s AND chave IN ('ip1','ip2','mac1','mac2')", (equipamento_id,))
                     dados = {chave: valor for chave, valor in cur.fetchall()}
                     
                     cur.execute('''
                         SELECT e.nome, e.tipo, e.marca, s.nome as sala_nome
                         FROM equipamentos e
                         LEFT JOIN salas s ON e.sala_id = s.id
-                        WHERE e.id = ?
+                        WHERE e.id = %s
                     ''', (equipamento_id,))
                     
                     equip_row = cur.fetchone()
@@ -2071,11 +2090,11 @@ def admin_criar_usuario():
         return jsonify({'erro': 'Todos os campos são obrigatórios!'}), 400
     conn = get_postgres_connection()
     cur = conn.cursor()
-    cur.execute('SELECT 1 FROM usuarios WHERE username=?', (username,))
+    cur.execute('SELECT 1 FROM usuarios WHERE username=%s', (username,))
     if cur.fetchone():
         conn.close()
         return jsonify({'erro': 'Usuário já existe!'}), 400
-    cur.execute('INSERT INTO usuarios (nome, username, senha, nivel) VALUES (?, ?, ?, ?)', (nome, username, senha, nivel))
+    cur.execute('INSERT INTO usuarios (nome, username, senha, nivel) VALUES (%s, %s, %s, %s)', (nome, username, senha, nivel))
     conn.commit()
     conn.close()
     return jsonify({'status': 'ok'})
@@ -2122,7 +2141,7 @@ def admin_adicionar_vinculo():
         return jsonify({'erro': 'usuario_id e empresa_id são obrigatórios'}), 400
     conn = get_postgres_connection()
     cur = conn.cursor()
-    cur.execute('INSERT OR IGNORE INTO usuario_empresas (usuario_id, empresa_id) VALUES (?, ?)', (usuario_id, empresa_id))
+    cur.execute('INSERT OR IGNORE INTO usuario_empresas (usuario_id, empresa_id) VALUES (%s, %s)', (usuario_id, empresa_id))
     conn.commit()
     conn.close()
     return jsonify({'status': 'ok'})
@@ -2139,7 +2158,7 @@ def admin_remover_vinculo():
         return jsonify({'erro': 'usuario_id e empresa_id são obrigatórios'}), 400
     conn = get_postgres_connection()
     cur = conn.cursor()
-    cur.execute('DELETE FROM usuario_empresas WHERE usuario_id=? AND empresa_id=?', (usuario_id, empresa_id))
+    cur.execute('DELETE FROM usuario_empresas WHERE usuario_id=%s AND empresa_id=%s', (usuario_id, empresa_id))
     conn.commit()
     conn.close()
     return jsonify({'status': 'ok'})
@@ -2155,7 +2174,7 @@ def admin_alterar_nivel_usuario(usuario_id):
         return jsonify({'erro': 'nivel é obrigatório'}), 400
     conn = get_postgres_connection()
     cur = conn.cursor()
-    cur.execute('UPDATE usuarios SET nivel=? WHERE id=?', (novo_nivel, usuario_id))
+    cur.execute('UPDATE usuarios SET nivel=%s WHERE id=%s', (novo_nivel, usuario_id))
     conn.commit()
     conn.close()
     return jsonify({'status': 'ok'})
@@ -2173,7 +2192,7 @@ def api_get_sala(id):
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
-    cur.execute('SELECT id, nome, tipo, descricao, foto, fotos, andar_id FROM salas WHERE id=?', (id,))
+    cur.execute('SELECT id, nome, tipo, descricao, foto, fotos, andar_id FROM salas WHERE id=%s', (id,))
     row = cur.fetchone()
     conn.close()
     if row:
@@ -2208,7 +2227,7 @@ def criar_cabo():
     try:
         cur.execute('''
             INSERT INTO cabos (codigo_unico, tipo, comprimento, marca, modelo, descricao, foto, status)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         ''', (
             dados['codigo_unico'],
             dados['tipo'],
@@ -2260,11 +2279,11 @@ def listar_cabos():
     params = []
     
     if status:
-        query += ' AND c.status = ?'
+        query += ' AND c.status = %s'
         params.append(status)
     
     if tipo:
-        query += ' AND c.tipo = ?'
+        query += ' AND c.tipo = %s'
         params.append(tipo)
     
     if conectado == 'true':
@@ -2316,7 +2335,7 @@ def get_cabo(id):
                tc.descricao as tipo_descricao, tc.icone as tipo_icone
         FROM cabos c
         LEFT JOIN tipos_cabos tc ON c.tipo = tc.nome
-        WHERE c.id = ?
+        WHERE c.id = %s
     ''', (id,))
     
     row = cur.fetchone()
@@ -2359,9 +2378,9 @@ def atualizar_cabo(id):
     try:
         cur.execute('''
             UPDATE cabos 
-            SET codigo_unico = ?, tipo = ?, comprimento = ?, marca = ?, modelo = ?, 
-                descricao = ?, foto = ?, status = ?
-            WHERE id = ?
+            SET codigo_unico = %s, tipo = %s, comprimento = %s, marca = %s, modelo = %s, 
+                descricao = %s, foto = %s, status = %s
+            WHERE id = %s
         ''', (
             dados.get('codigo_unico'),
             dados.get('tipo'),
@@ -2399,12 +2418,12 @@ def excluir_cabo(id):
     cur = conn.cursor()
     
     # Verificar se o cabo está conectado
-    cur.execute('SELECT COUNT(*) FROM conexoes_cabos WHERE cabo_id = ? AND data_desconexao IS NULL', (id,))
+    cur.execute('SELECT COUNT(*) FROM conexoes_cabos WHERE cabo_id = %s AND data_desconexao IS NULL', (id,))
     if cur.fetchone()[0] > 0:
         conn.close()
         return jsonify({'status': 'erro', 'mensagem': 'Não é possível excluir um cabo que está conectado'}), 400
     
-    cur.execute('DELETE FROM cabos WHERE id = ?', (id,))
+    cur.execute('DELETE FROM cabos WHERE id = %s', (id,))
     if cur.rowcount == 0:
         conn.close()
         return jsonify({'status': 'erro', 'mensagem': 'Cabo não encontrado'}), 404
@@ -2451,14 +2470,14 @@ def criar_conexao_cabo():
     
     try:
         # Verificar se o cabo já está conectado
-        cur.execute('SELECT COUNT(*) FROM conexoes_cabos WHERE cabo_id = ? AND data_desconexao IS NULL', (dados['cabo_id'],))
+        cur.execute('SELECT COUNT(*) FROM conexoes_cabos WHERE cabo_id = %s AND data_desconexao IS NULL', (dados['cabo_id'],))
         if cur.fetchone()[0] > 0:
             return jsonify({'status': 'erro', 'mensagem': 'Cabo já está conectado a outro equipamento'}), 400
         
         cur.execute('''
             INSERT INTO conexoes_cabos (cabo_id, equipamento_origem_id, equipamento_destino_id, 
                                       porta_origem, porta_destino, sala_id, observacao)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
         ''', (
             dados['cabo_id'],
             dados['equipamento_origem_id'],
@@ -2545,7 +2564,7 @@ def desconectar_cabo(id):
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
     
-    cur.execute('UPDATE conexoes_cabos SET data_desconexao = CURRENT_TIMESTAMP WHERE id = ?', (id,))
+    cur.execute('UPDATE conexoes_cabos SET data_desconexao = CURRENT_TIMESTAMP WHERE id = %s', (id,))
     if cur.rowcount == 0:
         conn.close()
         return jsonify({'status': 'erro', 'mensagem': 'Conexão não encontrada'}), 404
@@ -2581,7 +2600,7 @@ def cabos_por_sala(sala_id):
         LEFT JOIN equipamentos eo ON cc.equipamento_origem_id = eo.id
         LEFT JOIN equipamentos ed ON cc.equipamento_destino_id = ed.id
         LEFT JOIN salas s ON cc.sala_id = s.id
-        WHERE cc.sala_id = ? 
+        WHERE cc.sala_id = %s 
         AND cc.data_desconexao IS NULL 
         AND c.id IS NOT NULL
         AND (ed.nome IS NULL OR ed.nome NOT LIKE '%Patch Panel%')
@@ -2624,7 +2643,7 @@ def cabos_por_sala(sala_id):
         LEFT JOIN salas s ON e.sala_id = s.id
         INNER JOIN conexoes_cabos cc ON cc.equipamento_origem_id = e.id AND cc.equipamento_destino_id = pp.id AND cc.porta_destino = ppp.numero_porta AND cc.data_desconexao IS NULL
         INNER JOIN cabos c ON cc.cabo_id = c.id
-        WHERE e.sala_id = ? AND ppp.status = 'ocupada'
+        WHERE e.sala_id = %s AND ppp.status = 'ocupada'
     ''', (sala_id,))
     
     conexoes_patch_panel = cur.fetchall()
@@ -2709,7 +2728,7 @@ def marcar_cabo_defeito(id):
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
     # Buscar descricao atual
-    cur.execute('SELECT descricao FROM cabos WHERE id=?', (id,))
+    cur.execute('SELECT descricao FROM cabos WHERE id=%s', (id,))
     row = cur.fetchone()
     if not row:
         conn.close()
@@ -2717,7 +2736,7 @@ def marcar_cabo_defeito(id):
     descricao_atual = row[0] or ''
     nova_obs = f"[DEF. {motivo} em {__import__('datetime').datetime.now().strftime('%d/%m/%Y %H:%M')}] "
     nova_descricao = (descricao_atual + '\n' + nova_obs).strip()
-    cur.execute('UPDATE cabos SET status=?, descricao=? WHERE id=?', ('defeito', nova_descricao, id))
+    cur.execute('UPDATE cabos SET status=%s, descricao=%s WHERE id=%s', ('defeito', nova_descricao, id))
     conn.commit()
     conn.close()
     registrar_log(session.get('username'), 'marcar_cabo_defeito', f'Cabo ID {id} marcado como defeito', 'sucesso')
@@ -2737,7 +2756,7 @@ def reparar_cabo(id):
     conn = sqlite3.connect(db_file)
     cur = conn.cursor()
     # Verificar se o cabo existe e está com defeito
-    cur.execute('SELECT status, descricao FROM cabos WHERE id=?', (id,))
+    cur.execute('SELECT status, descricao FROM cabos WHERE id=%s', (id,))
     row = cur.fetchone()
     if not row:
         conn.close()
@@ -2748,7 +2767,7 @@ def reparar_cabo(id):
     descricao_atual = row[1] or ''
     nova_obs = f"[REP. {justificativa} em {__import__('datetime').datetime.now().strftime('%d/%m/%Y %H:%M')}] "
     nova_descricao = (descricao_atual + '\n' + nova_obs).strip()
-    cur.execute('UPDATE cabos SET status=?, descricao=? WHERE id=?', (novo_status, nova_descricao, id))
+    cur.execute('UPDATE cabos SET status=%s, descricao=%s WHERE id=%s', (novo_status, nova_descricao, id))
     conn.commit()
     conn.close()
     registrar_log(session.get('username'), 'reparar_cabo', f'Cabo ID {id} reparado - Status: {novo_status}', 'sucesso')
@@ -2772,7 +2791,7 @@ def criar_patch_panel():
     
     try:
         # Verificar se já existe patch panel com o mesmo nome no andar
-        cur.execute('SELECT id FROM patch_panels WHERE andar = ? AND nome = ?', (dados['andar'], dados['nome']))
+        cur.execute('SELECT id FROM patch_panels WHERE andar = %s AND nome = %s', (dados['andar'], dados['nome']))
         if cur.fetchone():
             return jsonify({'erro': f'Já existe um patch panel com o nome "{dados["nome"]}" no {dados["andar"]}º andar!'}), 400
         
@@ -2796,7 +2815,7 @@ def criar_patch_panel():
         andar_base = 20 + dados['andar']
         
         # Contar quantos patch panels já existem no andar
-        cur.execute('SELECT COUNT(*) FROM patch_panels WHERE andar = ?', (dados['andar'],))
+        cur.execute('SELECT COUNT(*) FROM patch_panels WHERE andar = %s', (dados['andar'],))
         count = cur.fetchone()[0]
         
         # Gerar código sequencial
@@ -2805,7 +2824,7 @@ def criar_patch_panel():
         # Inserir patch panel
         cur.execute('''
             INSERT INTO patch_panels (codigo, nome, andar, prefixo_keystone, porta_inicial, num_portas, status, descricao)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         ''', (codigo, dados['nome'], dados['andar'], dados['prefixo_keystone'], 1, dados.get('num_portas', 500), dados.get('status', 'ativo'), dados.get('descricao')))
         
         patch_panel_id = cur.lastrowid
@@ -2833,7 +2852,7 @@ def criar_patch_panel():
             numero_porta = i + 1
             cur.execute('''
                 INSERT INTO patch_panel_portas (patch_panel_id, numero_porta)
-                VALUES (?, ?)
+                VALUES (%s, %s)
             ''', (patch_panel_id, numero_porta))
         
         conn.commit()
@@ -2946,7 +2965,7 @@ def listar_patch_panels_por_andar(andar):
         cur.execute('''
             SELECT pp.id, pp.codigo, pp.nome, pp.andar, pp.porta_inicial, pp.num_portas, pp.status, pp.descricao, pp.data_criacao
             FROM patch_panels pp
-            WHERE pp.andar = ?
+            WHERE pp.andar = %s
             ORDER BY pp.nome
         ''', (andar,))
         
@@ -2990,12 +3009,12 @@ def atualizar_patch_panel(id):
     
     try:
         # Verificar se já existe outro patch panel com o mesmo nome no andar
-        cur.execute('SELECT id FROM patch_panels WHERE andar = ? AND nome = ? AND id != ?', (dados['andar'], dados['nome'], id))
+        cur.execute('SELECT id FROM patch_panels WHERE andar = %s AND nome = %s AND id != %s', (dados['andar'], dados['nome'], id))
         if cur.fetchone():
             return jsonify({'erro': f'Já existe um patch panel com o nome "{dados["nome"]}" no {dados["andar"]}º andar!'}), 400
         
         # Buscar dados atuais do patch panel
-        cur.execute('SELECT porta_inicial, num_portas FROM patch_panels WHERE id = ?', (id,))
+        cur.execute('SELECT porta_inicial, num_portas FROM patch_panels WHERE id = %s', (id,))
         dados_atuais = cur.fetchone()
         
         if not dados_atuais:
@@ -3012,28 +3031,28 @@ def atualizar_patch_panel(id):
         # Atualizar patch panel
         cur.execute('''
             UPDATE patch_panels 
-            SET nome = ?, andar = ?, porta_inicial = ?, num_portas = ?, status = ?, descricao = ?
-            WHERE id = ?
+            SET nome = %s, andar = %s, porta_inicial = %s, num_portas = %s, status = %s, descricao = %s
+            WHERE id = %s
         ''', (dados['nome'], dados['andar'], porta_inicial_nova, num_portas_nova, dados.get('status', 'ativo'), dados.get('descricao'), id))
         
         # Se houve mudança na numeração, recriar as portas
         if recriar_portas:
             # Verificar se há conexões ativas
-            cur.execute('SELECT COUNT(*) FROM patch_panel_portas WHERE patch_panel_id = ? AND equipamento_id IS NOT NULL', (id,))
+            cur.execute('SELECT COUNT(*) FROM patch_panel_portas WHERE patch_panel_id = %s AND equipamento_id IS NOT NULL', (id,))
             conexoes_ativas = cur.fetchone()[0]
             
             if conexoes_ativas > 0:
                 return jsonify({'erro': f'Não é possível alterar a numeração. Existem {conexoes_ativas} conexões ativas.'}), 400
             
             # Excluir portas existentes
-            cur.execute('DELETE FROM patch_panel_portas WHERE patch_panel_id = ?', (id,))
+            cur.execute('DELETE FROM patch_panel_portas WHERE patch_panel_id = %s', (id,))
             
             # Criar novas portas com a nova numeração
             for i in range(num_portas_nova):
                 numero_porta = porta_inicial_nova + i
                 cur.execute('''
                     INSERT INTO patch_panel_portas (patch_panel_id, numero_porta)
-                    VALUES (?, ?)
+                    VALUES (%s, %s)
                 ''', (id, numero_porta))
         
         conn.commit()
@@ -3067,17 +3086,17 @@ def excluir_patch_panel(id):
     
     try:
         # Verificar se há conexões ativas
-        cur.execute('SELECT COUNT(*) FROM patch_panel_portas WHERE patch_panel_id = ? AND equipamento_id IS NOT NULL', (id,))
+        cur.execute('SELECT COUNT(*) FROM patch_panel_portas WHERE patch_panel_id = %s AND equipamento_id IS NOT NULL', (id,))
         conexoes_ativas = cur.fetchone()[0]
         
         if conexoes_ativas > 0:
             return jsonify({'mensagem': f'Não é possível excluir o patch panel. Existem {conexoes_ativas} conexões ativas.'}), 400
         
         # Excluir portas do patch panel
-        cur.execute('DELETE FROM patch_panel_portas WHERE patch_panel_id = ?', (id,))
+        cur.execute('DELETE FROM patch_panel_portas WHERE patch_panel_id = %s', (id,))
         
         # Excluir patch panel
-        cur.execute('DELETE FROM patch_panels WHERE id = ?', (id,))
+        cur.execute('DELETE FROM patch_panels WHERE id = %s', (id,))
         
         conn.commit()
         
@@ -3114,7 +3133,7 @@ def atualizar_mapeamento_porta(id):
         switch_id = None
         porta_switch = None
         # Manter o status atual se tem equipamento conectado, senão 'livre'
-        cur.execute('SELECT equipamento_id FROM patch_panel_portas WHERE id = ?', (id,))
+        cur.execute('SELECT equipamento_id FROM patch_panel_portas WHERE id = %s', (id,))
         result = cur.fetchone()
         if result and result[0]:
             status = 'ocupada'  # Mantém ocupada se tem equipamento
@@ -3126,7 +3145,7 @@ def atualizar_mapeamento_porta(id):
             return jsonify({'erro': 'Switch ID e Porta Switch são obrigatórios para mapeamento'}), 400
         
         # Verificar se a porta tem equipamento conectado
-        cur.execute('SELECT equipamento_id FROM patch_panel_portas WHERE id = ?', (id,))
+        cur.execute('SELECT equipamento_id FROM patch_panel_portas WHERE id = %s', (id,))
         result = cur.fetchone()
         if result and result[0]:
             status = 'ocupada'  # Se tem equipamento, fica ocupada
@@ -3135,15 +3154,15 @@ def atualizar_mapeamento_porta(id):
     
     try:
         # Verificar se a porta existe
-        cur.execute('SELECT id FROM patch_panel_portas WHERE id = ?', (id,))
+        cur.execute('SELECT id FROM patch_panel_portas WHERE id = %s', (id,))
         if not cur.fetchone():
             return jsonify({'erro': 'Porta do patch panel não encontrada'}), 404
         
         # Atualizar mapeamento
         cur.execute('''
             UPDATE patch_panel_portas 
-            SET switch_id = ?, porta_switch = ?, status = ?
-            WHERE id = ?
+            SET switch_id = %s, porta_switch = %s, status = %s
+            WHERE id = %s
         ''', (switch_id, porta_switch, status, id))
         
         # Atualizar status da porta do switch
@@ -3151,12 +3170,12 @@ def atualizar_mapeamento_porta(id):
             cur.execute('''
                 UPDATE switch_portas 
                 SET status = 'mapeada'
-                WHERE switch_id = ? AND numero_porta = ?
+                WHERE switch_id = %s AND numero_porta = %s
             ''', (switch_id, porta_switch))
         else:
             # Se está removendo o mapeamento, buscar o switch_id e porta_switch antigos
             cur.execute('''
-                SELECT switch_id, porta_switch FROM patch_panel_portas WHERE id = ?
+                SELECT switch_id, porta_switch FROM patch_panel_portas WHERE id = %s
             ''', (id,))
             old_mapping = cur.fetchone()
             
@@ -3165,7 +3184,7 @@ def atualizar_mapeamento_porta(id):
                 cur.execute('''
                     UPDATE switch_portas 
                     SET status = 'livre'
-                    WHERE switch_id = ? AND numero_porta = ? AND id NOT IN (
+                    WHERE switch_id = %s AND numero_porta = %s AND id NOT IN (
                         SELECT porta_id FROM conexoes WHERE porta_id IS NOT NULL
                     )
                 ''', (old_mapping[0], old_mapping[1]))
@@ -3208,7 +3227,7 @@ def listar_portas_patch_panel(id):
             LEFT JOIN patch_panels pp ON ppp.patch_panel_id = pp.id
             LEFT JOIN switches s ON ppp.switch_id = s.id
             LEFT JOIN salas sal ON e.sala_id = sal.id
-            WHERE ppp.patch_panel_id = ?
+            WHERE ppp.patch_panel_id = %s
             ORDER BY ppp.numero_porta
         ''', (id,))
         
@@ -3255,7 +3274,7 @@ def conectar_equipamento_patch_panel(id):
     
     try:
         # Verificar se a porta existe e está livre
-        cur.execute('SELECT id, status FROM patch_panel_portas WHERE id = ?', (id,))
+        cur.execute('SELECT id, status FROM patch_panel_portas WHERE id = %s', (id,))
         porta = cur.fetchone()
         if not porta:
             return jsonify({'erro': 'Porta do patch panel não encontrada'}), 404
@@ -3264,7 +3283,7 @@ def conectar_equipamento_patch_panel(id):
             return jsonify({'erro': 'Porta já tem equipamento conectado'}), 400
         
         # Verificar se o equipamento existe
-        cur.execute('SELECT id, nome FROM equipamentos WHERE id = ?', (equipamento_id,))
+        cur.execute('SELECT id, nome FROM equipamentos WHERE id = %s', (equipamento_id,))
         equipamento = cur.fetchone()
         if not equipamento:
             return jsonify({'erro': 'Equipamento não encontrado'}), 404
@@ -3272,8 +3291,8 @@ def conectar_equipamento_patch_panel(id):
         # Conectar equipamento à porta
         cur.execute('''
             UPDATE patch_panel_portas 
-            SET equipamento_id = ?, status = 'ocupada'
-            WHERE id = ?
+            SET equipamento_id = %s, status = 'ocupada'
+            WHERE id = %s
         ''', (equipamento_id, id))
         
         # Atualizar keystone no equipamento
@@ -3283,9 +3302,9 @@ def conectar_equipamento_patch_panel(id):
                 SELECT pp.prefixo_keystone || '-' || printf('%04d', ppp.numero_porta)
                 FROM patch_panel_portas ppp
                 JOIN patch_panels pp ON ppp.patch_panel_id = pp.id
-                WHERE ppp.id = ?
+                WHERE ppp.id = %s
             )
-            WHERE id = ?
+            WHERE id = %s
         ''', (id, equipamento_id))
         
         conn.commit()
@@ -3317,7 +3336,7 @@ def desconectar_equipamento_patch_panel(id):
     
     try:
         # Verificar se a porta existe e tem equipamento conectado
-        cur.execute('SELECT id, equipamento_id, status FROM patch_panel_portas WHERE id = ?', (id,))
+        cur.execute('SELECT id, equipamento_id, status FROM patch_panel_portas WHERE id = %s', (id,))
         porta = cur.fetchone()
         if not porta:
             return jsonify({'erro': 'Porta do patch panel não encontrada'}), 404
@@ -3326,13 +3345,13 @@ def desconectar_equipamento_patch_panel(id):
             return jsonify({'erro': 'Nenhum equipamento conectado a esta porta'}), 400
         
         # Obter nome do equipamento para o log
-        cur.execute('SELECT nome FROM equipamentos WHERE id = ?', (porta[1],))
+        cur.execute('SELECT nome FROM equipamentos WHERE id = %s', (porta[1],))
         equipamento_result = cur.fetchone()
         equipamento_nome = equipamento_result[0] if equipamento_result else 'Desconhecido'
         
         # Desconectar equipamento da porta
         # Verificar se a porta ainda está mapeada para um switch
-        cur.execute('SELECT switch_id FROM patch_panel_portas WHERE id = ?', (id,))
+        cur.execute('SELECT switch_id FROM patch_panel_portas WHERE id = %s', (id,))
         switch_result = cur.fetchone()
         
         if switch_result and switch_result[0]:
@@ -3344,12 +3363,12 @@ def desconectar_equipamento_patch_panel(id):
         
         cur.execute('''
             UPDATE patch_panel_portas 
-            SET equipamento_id = NULL, status = ?
-            WHERE id = ?
+            SET equipamento_id = NULL, status = %s
+            WHERE id = %s
         ''', (novo_status, id))
         
         # Limpar keystone do equipamento
-        cur.execute('UPDATE equipamentos SET keystone = NULL WHERE id = ?', (porta[1],))
+        cur.execute('UPDATE equipamentos SET keystone = NULL WHERE id = %s', (porta[1],))
         
         conn.commit()
         
@@ -3380,7 +3399,7 @@ def desconectar_porta_switch(id):
     
     try:
         # Verificar se a porta existe
-        cur.execute('SELECT id, status FROM switch_portas WHERE id = ?', (id,))
+        cur.execute('SELECT id, status FROM switch_portas WHERE id = %s', (id,))
         porta = cur.fetchone()
         if not porta:
             return jsonify({'erro': 'Porta do switch não encontrada'}), 404
@@ -3390,8 +3409,8 @@ def desconectar_porta_switch(id):
             # Buscar qual porta do patch panel está mapeada para esta porta do switch
             cur.execute('''
                 SELECT id, equipamento_id FROM patch_panel_portas 
-                WHERE switch_id = (SELECT switch_id FROM switch_portas WHERE id = ?)
-                AND porta_switch = (SELECT numero_porta FROM switch_portas WHERE id = ?)
+                WHERE switch_id = (SELECT switch_id FROM switch_portas WHERE id = %s)
+                AND porta_switch = (SELECT numero_porta FROM switch_portas WHERE id = %s)
             ''', (id, id))
             
             patch_panel_porta = cur.fetchone()
@@ -3409,17 +3428,17 @@ def desconectar_porta_switch(id):
                 # Desmapear a porta do patch panel (remover apenas o mapeamento com switch)
                 cur.execute('''
                     UPDATE patch_panel_portas 
-                    SET switch_id = NULL, porta_switch = NULL, status = ?
-                    WHERE id = ?
+                    SET switch_id = NULL, porta_switch = NULL, status = %s
+                    WHERE id = %s
                 ''', (novo_status, porta_patch_id))
         
         # Se a porta tem equipamento conectado diretamente, desconectar
         elif porta[1] == 'ocupada':
             # Buscar e remover conexão
-            cur.execute('DELETE FROM conexoes WHERE porta_id = ?', (id,))
+            cur.execute('DELETE FROM conexoes WHERE porta_id = %s', (id,))
         
         # Marcar porta como livre
-        cur.execute('UPDATE switch_portas SET status = ? WHERE id = ?', ('livre', id))
+        cur.execute('UPDATE switch_portas SET status = %s WHERE id = %s', ('livre', id))
         
         conn.commit()
         
@@ -3454,7 +3473,7 @@ def listar_salas_por_andar(andar):
         cur.execute('''
             SELECT id, nome
             FROM salas
-            WHERE nome LIKE ? OR nome LIKE ?
+            WHERE nome LIKE %s OR nome LIKE %s
             ORDER BY nome
         ''', (f'%{andar}%', f'%{andar}º%'))
         
@@ -3487,7 +3506,7 @@ def get_patch_panel(id):
         cursor.execute("""
             SELECT id, codigo, nome, andar, porta_inicial, num_portas, status, descricao, data_criacao
             FROM patch_panels 
-            WHERE id = ?
+            WHERE id = %s
         """, (id,))
         
         row = cursor.fetchone()
@@ -3525,7 +3544,7 @@ def get_patch_panel(id):
                    s.nome as sala_nome
             FROM patch_panels pp
             LEFT JOIN salas s ON pp.sala_id = s.id
-            WHERE pp.id = ?
+            WHERE pp.id = %s
         ''', (id,))
         
         row = cur.fetchone()
@@ -3548,7 +3567,7 @@ def get_patch_panel(id):
                    e.nome as equipamento_nome
             FROM patch_panel_portas ppp
             LEFT JOIN equipamentos e ON ppp.equipamento_id = e.id
-            WHERE ppp.patch_panel_id = ?
+            WHERE ppp.patch_panel_id = %s
             ORDER BY ppp.numero_porta
         ''', (id,))
         
@@ -3593,7 +3612,7 @@ def get_equipamento_patch_panel_info(equipamento_id):
             LEFT JOIN salas s ON e.sala_id = s.id
             LEFT JOIN patch_panel_portas ppp ON e.id = ppp.equipamento_id
             LEFT JOIN patch_panels pp ON ppp.patch_panel_id = pp.id
-            WHERE e.id = ?
+            WHERE e.id = %s
         ''', (equipamento_id,))
         
         row = cur.fetchone()
@@ -3645,7 +3664,7 @@ def debug_equipamento(equipamento_id):
             SELECT e.id, e.nome, e.tipo, e.sala_id, s.nome as sala_nome
             FROM equipamentos e
             LEFT JOIN salas s ON e.sala_id = s.id
-            WHERE e.id = ?
+            WHERE e.id = %s
         ''', (equipamento_id,))
         
         row = cur.fetchone()
@@ -3657,7 +3676,7 @@ def debug_equipamento(equipamento_id):
             SELECT ppp.id, ppp.numero_porta, ppp.status, pp.nome as patch_panel_nome
             FROM patch_panel_portas ppp
             LEFT JOIN patch_panels pp ON ppp.patch_panel_id = pp.id
-            WHERE ppp.equipamento_id = ?
+            WHERE ppp.equipamento_id = %s
         ''', (equipamento_id,))
         
         patch_panel_info = cur.fetchone()
