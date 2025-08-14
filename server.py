@@ -764,7 +764,8 @@ def criar_switch():
 
 @app.route('/switches', methods=['GET'])
 @login_required
-def listar_switches():            conn = get_postgres_connection()
+def listar_switches():
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Verificar se a tabela switches existe, se não, criar
@@ -788,7 +789,8 @@ def listar_switches():            conn = get_postgres_connection()
 
 @app.route('/switches/<int:id>', methods=['GET'])
 @login_required
-def get_switch(id):            conn = get_postgres_connection()
+def get_switch(id):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     cur.execute('SELECT id, nome, marca, modelo, data_criacao FROM switches WHERE id=%s', (id,))
@@ -899,7 +901,8 @@ def criar_porta_switch():
 
 @app.route('/switch-portas/<int:switch_id>', methods=['GET'])
 @login_required
-def listar_portas_switch(switch_id):            conn = get_postgres_connection()
+def listar_portas_switch(switch_id):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Criar tabela se não existir
@@ -1079,7 +1082,8 @@ def criar_conexao():
 
 @app.route('/conexoes/<int:conexao_id>', methods=['DELETE'])
 @admin_required
-def remover_conexao(conexao_id):            conn = get_postgres_connection()
+def remover_conexao(conexao_id):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Buscar a conexão
@@ -1110,7 +1114,8 @@ def remover_conexao(conexao_id):            conn = get_postgres_connection()
 
 @app.route('/conexoes', methods=['GET'])
 @login_required
-def listar_conexoes():            conn = get_postgres_connection()
+def listar_conexoes():
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     cur.execute('''
@@ -1199,7 +1204,8 @@ def ver_switch_html():
 
 @app.route('/switches/<int:id>', methods=['DELETE'])
 @admin_required
-def excluir_switch(id):            conn = get_postgres_connection()
+def excluir_switch(id):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     # Buscar dados do switch
     cur.execute('SELECT nome, marca, modelo FROM switches WHERE id=%s', (id,))
@@ -1330,7 +1336,8 @@ def gerenciar_portas_patch_panel_html():
 
 @app.route('/ping-equipamentos', methods=['POST'])
 @login_required
-def ping_equipamentos():            conn = get_postgres_connection()
+def ping_equipamentos():
+    conn = get_postgres_connection()
     cur = conn.cursor()
     # Busca todos os equipamentos com IP cadastrado
     cur.execute("""
@@ -1361,7 +1368,8 @@ def ping_equipamentos():            conn = get_postgres_connection()
 
 @app.route('/ping-logs')
 @login_required
-def ping_logs():            conn = get_postgres_connection()
+def ping_logs():
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('''
         SELECT p.nome_equipamento, p.ip, p.sucesso, p.timestamp, s.nome as sala_nome, e.id as equipamento_id
@@ -1402,7 +1410,8 @@ def ping_equipamentos_html():
 
 @app.route('/ping-logs', methods=['DELETE'])
 @admin_required
-def limpar_ping_logs():            conn = get_postgres_connection()
+def limpar_ping_logs():
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('DELETE FROM ping_logs')
     conn.commit()
@@ -1411,7 +1420,8 @@ def limpar_ping_logs():            conn = get_postgres_connection()
 
 @app.route('/empresa_atual')
 @login_required
-def empresa_atual():            conn = get_postgres_connection()
+def empresa_atual():
+    conn = get_postgres_connection()
     cur = conn.cursor()
     # Removido - tabela empresas não existe mais no banco unificado
     row = cur.fetchone()
@@ -1466,7 +1476,8 @@ def equipamentos_imagens():
 
 @app.route('/api/salas', methods=['GET'])
 @login_required
-def api_salas():            conn = get_postgres_connection()
+def api_salas():
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT id, nome FROM salas')
     salas = [{'id': row[0], 'nome': row[1]} for row in cur.fetchall()]
@@ -1505,7 +1516,8 @@ def salvar_layout_sala(sala_id):            layout = request.get_json()
 
 @app.route('/api/salas/<int:sala_id>/layout', methods=['GET'])
 @login_required
-def obter_layout_sala(sala_id):            conn = get_postgres_connection()
+def obter_layout_sala(sala_id):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT layout_json FROM sala_layouts WHERE sala_id=%s', (sala_id,))
     row = cur.fetchone()
@@ -1516,7 +1528,8 @@ def obter_layout_sala(sala_id):            conn = get_postgres_connection()
 
 @app.route('/api/salas/<int:sala_id>/conexoes-reais', methods=['GET'])
 @login_required
-def obter_conexoes_reais_sala(sala_id):            conn = get_postgres_connection()
+def obter_conexoes_reais_sala(sala_id):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Buscar conexões de cabos ativas na sala
@@ -1563,7 +1576,8 @@ def obter_conexoes_reais_sala(sala_id):            conn = get_postgres_connectio
 
 @app.route('/api/salas/<int:sala_id>/layout-hibrido', methods=['GET'])
 @login_required
-def obter_layout_hibrido_sala(sala_id):            conn = get_postgres_connection()
+def obter_layout_hibrido_sala(sala_id):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Buscar layout manual
@@ -1652,7 +1666,8 @@ def visualizar_layout_html():
 
 @app.route('/api/salas-com-layout', methods=['GET'])
 @login_required
-def salas_com_layout():            conn = get_postgres_connection()
+def salas_com_layout():
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('''
         SELECT s.id, s.nome
@@ -1670,7 +1685,8 @@ def visualizar_switch_sala_html():
 
 @app.route('/api/salas/<int:sala_id>/switches-usados')
 @login_required
-def switches_usados_sala(sala_id):            conn = get_postgres_connection()
+def switches_usados_sala(sala_id):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Buscar switches que têm conexão com equipamentos da sala específica
@@ -2026,7 +2042,8 @@ def config_master_html():
 
 @app.route('/api/salas/<int:id>', methods=['GET'])
 @login_required
-def api_get_sala(id):            conn = get_postgres_connection()
+def api_get_sala(id):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT id, nome, tipo, descricao, foto, fotos, andar_id FROM salas WHERE id=%s', (id,))
     row = cur.fetchone()
@@ -2148,7 +2165,8 @@ def listar_cabos():            # Parâmetros de filtro
 
 @app.route('/cabos/<int:id>', methods=['GET'])
 @login_required
-def get_cabo(id):            conn = get_postgres_connection()
+def get_cabo(id):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     cur.execute('''
@@ -2227,7 +2245,8 @@ def atualizar_cabo(id):
 
 @app.route('/cabos/<int:id>', methods=['DELETE'])
 @admin_required
-def excluir_cabo(id):            conn = get_postgres_connection()
+def excluir_cabo(id):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Verificar se o cabo está conectado
@@ -2249,7 +2268,8 @@ def excluir_cabo(id):            conn = get_postgres_connection()
 
 @app.route('/tipos-cabos', methods=['GET'])
 @login_required
-def tipos_cabos():            conn = get_postgres_connection()
+def tipos_cabos():
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT nome, descricao, icone FROM tipos_cabos ORDER BY nome')
     rows = cur.fetchall()
@@ -2305,7 +2325,8 @@ def criar_conexao_cabo():
 
 @app.route('/conexoes-cabos', methods=['GET'])
 @login_required
-def listar_conexoes_cabos():            conn = get_postgres_connection()
+def listar_conexoes_cabos():
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     cur.execute('''
@@ -2355,7 +2376,8 @@ def listar_conexoes_cabos():            conn = get_postgres_connection()
 
 @app.route('/conexoes-cabos/<int:id>', methods=['DELETE'])
 @tecnico_required
-def desconectar_cabo(id):            conn = get_postgres_connection()
+def desconectar_cabo(id):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     cur.execute('UPDATE conexoes_cabos SET data_desconexao = CURRENT_TIMESTAMP WHERE id = %s', (id,))
@@ -2371,7 +2393,8 @@ def desconectar_cabo(id):            conn = get_postgres_connection()
 
 @app.route('/conexoes-cabos/sala/<int:sala_id>', methods=['GET'])
 @login_required
-def cabos_por_sala(sala_id):            conn = get_postgres_connection()
+def cabos_por_sala(sala_id):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Buscar conexões diretas de cabos (excluindo conexões que vão para patch panels)
@@ -2651,7 +2674,8 @@ def criar_patch_panel():
 
 @app.route('/patch-panels', methods=['GET'])
 @login_required
-def listar_patch_panels():            conn = get_postgres_connection()
+def listar_patch_panels():
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -2689,7 +2713,8 @@ def listar_patch_panels():            conn = get_postgres_connection()
 
 @app.route('/patch-panels/validar-portas', methods=['GET'])
 @login_required
-def validar_portas_patch_panel():            conn = get_postgres_connection()
+def validar_portas_patch_panel():
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -2720,7 +2745,8 @@ def validar_portas_patch_panel():            conn = get_postgres_connection()
 
 @app.route('/patch-panels/andar/<int:andar>', methods=['GET'])
 @login_required
-def listar_patch_panels_por_andar(andar):            conn = get_postgres_connection()
+def listar_patch_panels_por_andar(andar):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -2833,7 +2859,8 @@ def atualizar_patch_panel(id):            dados = request.get_json()
 
 @app.route('/patch-panels/<int:id>', methods=['DELETE'])
 @login_required
-def excluir_patch_panel(id):            conn = get_postgres_connection()
+def excluir_patch_panel(id):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -2955,7 +2982,8 @@ def atualizar_mapeamento_porta(id):            dados = request.get_json()
 
 @app.route('/patch-panels/<int:id>/portas', methods=['GET'])
 @login_required
-def listar_portas_patch_panel(id):            conn = get_postgres_connection()
+def listar_portas_patch_panel(id):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -3063,7 +3091,8 @@ def conectar_equipamento_patch_panel(id):            dados = request.get_json()
 
 @app.route('/patch-panel-portas/<int:id>/desconectar-equipamento', methods=['PUT'])
 @login_required
-def desconectar_equipamento_patch_panel(id):            conn = get_postgres_connection()
+def desconectar_equipamento_patch_panel(id):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -3121,7 +3150,8 @@ def desconectar_equipamento_patch_panel(id):            conn = get_postgres_conn
 
 @app.route('/switch-portas/<int:id>/desconectar', methods=['PUT'])
 @login_required
-def desconectar_porta_switch(id):            conn = get_postgres_connection()
+def desconectar_porta_switch(id):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -3186,7 +3216,8 @@ def desconectar_porta_switch(id):            conn = get_postgres_connection()
 
 @app.route('/salas/andar/<int:andar>', methods=['GET'])
 @login_required
-def listar_salas_por_andar(andar):            conn = get_postgres_connection()
+def listar_salas_por_andar(andar):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
