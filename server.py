@@ -1620,8 +1620,8 @@ def obter_layout_hibrido_sala():
         # resultado['conns'] = layout_manual.get('conns', [])
     
     # Função para definir cor baseada no tipo de cabo
-    def get_cor_por_tipo_cabo():
-    cores = {
+    def get_cor_por_tipo_cabo(tipo_cabo):
+        cores = {
             'HDMI': '#e74c3c',      # Vermelho
             'VGA': '#3498db',       # Azul
             'USB': '#f39c12',       # Laranja
@@ -1710,8 +1710,8 @@ def switches_usados_sala():
     switches_rows = cur.fetchall()
     switches = {}
     
-    def extrair_numero_switch():
-    import re
+    def extrair_numero_switch(nome):
+        import re
         match = re.search(r'Switch\s*(\d+)', nome, re.IGNORECASE)
         if match:
             return int(match.group(1))
@@ -1927,11 +1927,11 @@ def switches_usados_sala():
     result = list(switches.values())
     return jsonify(result)
 
-def master_required():
+def master_required(f):
     from functools import wraps
     @wraps(f)
-    def decorated_function():
-    if session.get('nivel') != 'master':
+    def decorated_function(*args, **kwargs):
+        if session.get('nivel') != 'master':
             return jsonify({'erro': 'Acesso restrito ao master'}), 403
         return f(*args, **kwargs)
     return decorated_function
@@ -3256,40 +3256,8 @@ def listar_salas_por_andar():
 
 @app.route('/patch-panels/<int:id>', methods=['GET'])
 @login_required
-def get_patch_panel():
-    try:            return jsonify({'status': 'erro', 'mensagem': 'Banco de dados não selecionado'}), 400
-        
-        conn = get_postgres_connection()
-        cursor = conn.cursor()
-        
-        cursor.execute("""
-            SELECT id, codigo, nome, andar, porta_inicial, num_portas, status, descricao, data_criacao
-            FROM patch_panels 
-            WHERE id = %s
-        """, (id,))
-        
-        row = cursor.fetchone()
-        if not row:
-            return jsonify({'status': 'erro', 'mensagem': 'Patch panel não encontrado'}), 404
-        
-        patch_panel = {
-            'id': row[0],
-            'codigo': row[1],
-            'nome': row[2],
-            'andar': row[3],
-            'porta_inicial': row[4],
-            'num_portas': row[5],
-            'status': row[6],
-            'descricao': row[7],
-            'data_criacao': row[8],
-            'porta_final': row[4] + row[5] - 1
-        }
-        
-        conn.close()
-        return jsonify(patch_panel)
-        
-    except Exception as e:
-        return jsonify({'status': 'erro', 'mensagem': str(e)}), 500            conn = get_postgres_connection()
+def get_patch_panel(id):
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -3347,10 +3315,11 @@ def get_patch_panel():
 
 @app.route('/equipamentos/<int:equipamento_id>/patch-panel-info', methods=['GET'])
 @login_required
-def get_equipamento_patch_panel_info():
-    try:        conn = get_postgres_connection()
-        cur = conn.cursor()
-        
+def get_equipamento_patch_panel_info(equipamento_id):
+    conn = get_postgres_connection()
+    cur = conn.cursor()
+    
+    try:
         # Buscar informações do equipamento e sua conexão com patch panel
         cur.execute('''
             SELECT e.id, e.nome, e.tipo, e.sala_id,
@@ -3388,11 +3357,13 @@ def get_equipamento_patch_panel_info():
             'patch_panel_info': patch_panel_info
         }
         
-        conn.close()
         return jsonify(equipamento_info)
         
     except Exception as e:
         return jsonify({'erro': f'Erro ao buscar informações do equipamento: {str(e)}'}), 500
+    
+    finally:
+        conn.close()
 
 
 
@@ -3400,9 +3371,10 @@ def get_equipamento_patch_panel_info():
 @login_required
 def debug_equipamento(equipamento_id):
     """Endpoint para debug de equipamento"""
-    try:        conn = get_postgres_connection()
-        cur = conn.cursor()
-        
+    conn = get_postgres_connection()
+    cur = conn.cursor()
+    
+    try:
         # Buscar informações detalhadas do equipamento
         cur.execute('''
             SELECT e.id, e.nome, e.tipo, e.sala_id, s.nome as sala_nome
@@ -3436,11 +3408,13 @@ def debug_equipamento(equipamento_id):
             'patch_panel': patch_panel_info
         }
         
-        conn.close()
         return jsonify(debug_info)
         
     except Exception as e:
         return jsonify({'erro': f'Erro ao buscar debug: {str(e)}'}), 500
+    
+    finally:
+        conn.close()
 
 @app.route('/conectar-cabo-estoque.html')
 @tecnico_required
