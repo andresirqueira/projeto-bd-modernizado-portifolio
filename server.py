@@ -94,30 +94,15 @@ def login():
         conn.close()
         return jsonify({'status': 'erro', 'mensagem': 'Usuário ou senha inválidos'}), 401
     user_id, nivel, nome = user
-    cur.execute('''
-        SELECT e.id, e.nome, e.db_file
-        FROM empresas e
-        JOIN usuario_empresas ue ON ue.empresa_id = e.id
-        WHERE ue.usuario_id = %s
-    ''', (user_id,))
-    empresas = [{'id': row[0], 'nome': row[1], 'db_file': row[2]} for row in cur.fetchall()]
     conn.close()
     session['user_id'] = user_id
     session['nivel'] = nivel
     session['username'] = dados['username']
     session['nome'] = nome
-    if nivel == 'master':
-        return jsonify({'status': 'ok', 'redirect': '/config-master.html'})
-    return jsonify({'status': 'ok', 'empresas': empresas})
-
-@app.route('/escolher_empresa', methods=['POST'])
-def escolher_empresa():
-    dados = request.json
-    if not dados or 'db_file' not in dados:
-        return jsonify({'erro': 'Dados ausentes ou inválidos!'}), 400
-    db_file = dados.get('db_file')
-    session['db'] = db_file
+    # Para banco unificado, sempre redireciona para o painel
     return jsonify({'status': 'ok', 'redirect': '/painel.html'})
+
+
 
 @app.route('/logout')
 def logout():
