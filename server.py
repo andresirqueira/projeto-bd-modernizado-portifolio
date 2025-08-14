@@ -1,5 +1,4 @@
 import os
-import sqlite3
 import json
 import psycopg2
 from psycopg2.extras import RealDictCursor
@@ -219,10 +218,7 @@ def detalhes_sala_html():
 @app.route('/salas', methods=['GET'])
 @login_required
 def listar_salas():
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('''
         SELECT s.id, s.nome, s.tipo, s.descricao, s.foto, s.fotos, s.andar_id, a.titulo as andar
@@ -242,10 +238,7 @@ def criar_sala():
     dados = request.json
     if not dados:
         return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     # Verificação de nome duplicado (case-insensitive)
     nome = dados['nome']
@@ -278,10 +271,7 @@ def criar_sala():
 @app.route('/salas/<int:id>', methods=['GET'])
 @login_required
 def get_sala(id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT id, nome, tipo, descricao, foto, fotos, andar_id FROM salas WHERE id=%s', (id,))
     row = cur.fetchone()
@@ -297,10 +287,7 @@ def atualizar_sala(id):
     if not dados:
         registrar_log(session.get('username', 'desconhecido'), 'ATUALIZAR_SALA', f'Sala ID={id}: Dados JSON inválidos', 'erro')
         return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Busca equipamentos atualmente vinculados à sala
@@ -372,10 +359,7 @@ def atualizar_sala(id):
 @app.route('/salas/<int:id>', methods=['DELETE'])
 @admin_required
 def excluir_sala(id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT nome FROM salas WHERE id=%s', (id,))
     row = cur.fetchone()
@@ -431,17 +415,10 @@ def criar_sala_com_equipamentos():
             equipamentos = json.loads(request.form['equipamentos'])
         except Exception:
             equipamentos = []
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+    
+    conn = get_postgres_connection()
     cur = conn.cursor()
     # Verificação de nome duplicado (case-insensitive)
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
-    cur = conn.cursor()
     cur.execute('SELECT 1 FROM salas WHERE LOWER(nome) = LOWER(%s)', (nome,))
     if cur.fetchone():
         conn.close()
@@ -506,14 +483,11 @@ def criar_equipamento():
     dados = request.json
     if not dados:
         return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     tipo = (dados.get('tipo') or '').strip().lower().replace(' ', '-').replace('ç','c').replace('ã','a').replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace('â','a').replace('ê','e').replace('ô','o').replace('õ','o').replace('ü','u').replace('ñ','n')
     marca = (dados.get('marca') or '').strip().lower().replace(' ', '-').replace('ç','c').replace('ã','a').replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace('â','a').replace('ê','e').replace('ô','o').replace('õ','o').replace('ü','u').replace('ñ','n')
     modelo = (dados.get('modelo') or '').strip().lower().replace(' ', '-').replace('ç','c').replace('ã','a').replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace('â','a').replace('ê','e').replace('ô','o').replace('õ','o').replace('ü','u').replace('ñ','n')
     caminho_foto = f'img/{tipo}-{marca}-{modelo}.png' if tipo and marca and modelo else None
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('''
         INSERT INTO equipamentos (nome, tipo, marca, modelo, descricao, foto, icone, sala_id)
@@ -548,11 +522,7 @@ def listar_equipamentos():
     sala_id = request.args.get('sala_id')
     conectaveis = request.args.get('conectaveis')
     disponiveis = request.args.get('disponiveis')
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
-    conn.row_factory = sqlite3.Row
+    conn = get_postgres_connection()
     cur = conn.cursor()
     if conectaveis == '1':
         cur.execute('''
@@ -629,14 +599,11 @@ def atualizar_equipamento(id):
     dados = request.json
     if not dados:
         return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     tipo = (dados.get('tipo') or '').strip().lower().replace(' ', '-').replace('ç','c').replace('ã','a').replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace('â','a').replace('ê','e').replace('ô','o').replace('õ','o').replace('ü','u').replace('ñ','n')
     marca = (dados.get('marca') or '').strip().lower().replace(' ', '-').replace('ç','c').replace('ã','a').replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace('â','a').replace('ê','e').replace('ô','o').replace('õ','o').replace('ü','u').replace('ñ','n')
     modelo = (dados.get('modelo') or '').strip().lower().replace(' ', '-').replace('ç','c').replace('ã','a').replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace('â','a').replace('ê','e').replace('ô','o').replace('õ','o').replace('ü','u').replace('ñ','n')
     caminho_foto = f'img/{tipo}-{marca}-{modelo}.png' if tipo and marca and modelo else None
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('''
         UPDATE equipamentos SET nome=%s, tipo=%s, marca=%s, modelo=%s, descricao=%s, foto=%s, icone=%s
@@ -668,10 +635,7 @@ def atualizar_equipamento(id):
 @app.route('/equipamentos/<int:id>', methods=['GET'])
 @login_required
 def get_equipamento(id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT id, nome, tipo, marca, modelo, descricao, foto, icone, sala_id FROM equipamentos WHERE id=%s', (id,))
     row = cur.fetchone()
@@ -698,10 +662,7 @@ def get_equipamento(id):
 @app.route('/equipamentos/<int:id>', methods=['DELETE'])
 @admin_required
 def excluir_equipamento(id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT nome, tipo, marca, modelo FROM equipamentos WHERE id=%s', (id,))
     row = cur.fetchone()
@@ -718,10 +679,7 @@ def excluir_equipamento(id):
 @app.route('/tipos-equipamento')
 @login_required
 def tipos_equipamento():
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT DISTINCT tipo FROM equipamentos WHERE tipo IS NOT NULL AND tipo != ""')
     tipos = [row[0] for row in cur.fetchall()]
@@ -732,10 +690,7 @@ def tipos_equipamento():
 @login_required
 def marcas_equipamento():
     tipo = request.args.get('tipo')
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT DISTINCT marca FROM equipamentos WHERE tipo=%s AND marca IS NOT NULL AND marca != ""', (tipo,))
     marcas = [row[0] for row in cur.fetchall()]
@@ -747,10 +702,7 @@ def marcas_equipamento():
 def modelos_equipamento():
     tipo = request.args.get('tipo')
     marca = request.args.get('marca')
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT DISTINCT modelo FROM equipamentos WHERE tipo=%s AND marca=%s AND modelo IS NOT NULL AND modelo != ""', (tipo, marca))
     modelos = [row[0] for row in cur.fetchall()]
@@ -783,10 +735,7 @@ def criar_switch():
     if not dados:
         registrar_log(session.get('username', 'desconhecido'), 'CRIAR_SWITCH', 'Dados JSON inválidos', 'erro')
         return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('''
         CREATE TABLE IF NOT EXISTS switches (
@@ -815,11 +764,7 @@ def criar_switch():
 
 @app.route('/switches', methods=['GET'])
 @login_required
-def listar_switches():
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+def listar_switches():            conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Verificar se a tabela switches existe, se não, criar
@@ -843,11 +788,7 @@ def listar_switches():
 
 @app.route('/switches/<int:id>', methods=['GET'])
 @login_required
-def get_switch(id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+def get_switch(id):            conn = get_postgres_connection()
     cur = conn.cursor()
     
     cur.execute('SELECT id, nome, marca, modelo, data_criacao FROM switches WHERE id=%s', (id,))
@@ -875,11 +816,7 @@ def atualizar_switch(id):
     if not dados:
         registrar_log(session.get('username', 'desconhecido'), 'ATUALIZAR_SWITCH', f'Switch ID={id}: Dados JSON inválidos', 'erro')
         return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
-    
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Verificar se o switch existe
@@ -921,11 +858,7 @@ def criar_porta_switch():
     dados = request.json
     if not dados:
         return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
-    
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Criar tabela de portas se não existir
@@ -966,11 +899,7 @@ def criar_porta_switch():
 
 @app.route('/switch-portas/<int:switch_id>', methods=['GET'])
 @login_required
-def listar_portas_switch(switch_id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+def listar_portas_switch(switch_id):            conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Criar tabela se não existir
@@ -1092,11 +1021,7 @@ def criar_conexao():
     if not dados:
         registrar_log(session.get('username', 'desconhecido'), 'CRIAR_CONEXAO', 'Dados JSON inválidos', 'erro')
         return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
-    
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Criar tabela de conexões se não existir
@@ -1154,11 +1079,7 @@ def criar_conexao():
 
 @app.route('/conexoes/<int:conexao_id>', methods=['DELETE'])
 @admin_required
-def remover_conexao(conexao_id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+def remover_conexao(conexao_id):            conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Buscar a conexão
@@ -1189,11 +1110,7 @@ def remover_conexao(conexao_id):
 
 @app.route('/conexoes', methods=['GET'])
 @login_required
-def listar_conexoes():
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+def listar_conexoes():            conn = get_postgres_connection()
     cur = conn.cursor()
     
     cur.execute('''
@@ -1282,11 +1199,7 @@ def ver_switch_html():
 
 @app.route('/switches/<int:id>', methods=['DELETE'])
 @admin_required
-def excluir_switch(id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+def excluir_switch(id):            conn = get_postgres_connection()
     cur = conn.cursor()
     # Buscar dados do switch
     cur.execute('SELECT nome, marca, modelo FROM switches WHERE id=%s', (id,))
@@ -1316,11 +1229,7 @@ def excluir_switch(id):
 @admin_required
 def atualizar_defeito_equipamento(id):
     dados = request.get_json()
-    defeito = 1 if dados.get('defeito') else 0
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+    defeito = 1 if dados.get('defeito') else 0            conn = get_postgres_connection()
     cur = conn.cursor()
     # Se marcar como defeito, desvincula da sala
     if defeito:
@@ -1421,11 +1330,7 @@ def gerenciar_portas_patch_panel_html():
 
 @app.route('/ping-equipamentos', methods=['POST'])
 @login_required
-def ping_equipamentos():
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+def ping_equipamentos():            conn = get_postgres_connection()
     cur = conn.cursor()
     # Busca todos os equipamentos com IP cadastrado
     cur.execute("""
@@ -1456,11 +1361,7 @@ def ping_equipamentos():
 
 @app.route('/ping-logs')
 @login_required
-def ping_logs():
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+def ping_logs():            conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('''
         SELECT p.nome_equipamento, p.ip, p.sucesso, p.timestamp, s.nome as sala_nome, e.id as equipamento_id
@@ -1501,11 +1402,7 @@ def ping_equipamentos_html():
 
 @app.route('/ping-logs', methods=['DELETE'])
 @admin_required
-def limpar_ping_logs():
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+def limpar_ping_logs():            conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('DELETE FROM ping_logs')
     conn.commit()
@@ -1514,13 +1411,9 @@ def limpar_ping_logs():
 
 @app.route('/empresa_atual')
 @login_required
-def empresa_atual():
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = get_postgres_connection()
+def empresa_atual():            conn = get_postgres_connection()
     cur = conn.cursor()
-    cur.execute('SELECT nome, logo FROM empresas WHERE db_file=%s', (db_file,))
+    # Removido - tabela empresas não existe mais no banco unificado
     row = cur.fetchone()
     conn.close()
     if row:
@@ -1533,11 +1426,7 @@ def upload_foto_sala():
         return jsonify({'status': 'erro', 'mensagem': 'Nenhum arquivo enviado'})
     file = request.files['foto']
     if not file.filename:
-        return jsonify({'status': 'erro', 'mensagem': 'Nome de arquivo vazio'})
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'status': 'erro', 'mensagem': 'Nenhuma empresa selecionada!'})
-    empresa_dir = os.path.splitext(os.path.basename(db_file))[0]
+    # Removido - não necessário no banco unificado
     pasta = os.path.join('static', 'img', 'fotos-salas', empresa_dir)
     os.makedirs(pasta, exist_ok=True)
     filename = cast(str, file.filename)
@@ -1546,11 +1435,8 @@ def upload_foto_sala():
     return jsonify({'status': 'ok', 'caminho': f'static/img/fotos-salas/{empresa_dir}/{filename}'})
 
 @app.route('/fotos-salas')
-def fotos_salas():
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'imagens': []})
-    empresa_dir = os.path.splitext(os.path.basename(db_file))[0]
+def fotos_salas():        return jsonify({'imagens': []})
+    # Removido - não necessário no banco unificado
     pasta = os.path.join('static', 'img', 'fotos-salas', empresa_dir)
     if not os.path.exists(pasta):
         return jsonify({'imagens': []})
@@ -1580,11 +1466,7 @@ def equipamentos_imagens():
 
 @app.route('/api/salas', methods=['GET'])
 @login_required
-def api_salas():
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+def api_salas():            conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT id, nome FROM salas')
     salas = [{'id': row[0], 'nome': row[1]} for row in cur.fetchall()]
@@ -1593,14 +1475,10 @@ def api_salas():
 
 @app.route('/api/salas/<int:sala_id>/layout', methods=['POST'])
 @login_required
-def salvar_layout_sala(sala_id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    layout = request.get_json()
+def salvar_layout_sala(sala_id):            layout = request.get_json()
     if not layout:
         return jsonify({'erro': 'JSON ausente ou inválido'}), 400
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     # Cria a tabela se não existir
     cur.execute('''
@@ -1627,11 +1505,7 @@ def salvar_layout_sala(sala_id):
 
 @app.route('/api/salas/<int:sala_id>/layout', methods=['GET'])
 @login_required
-def obter_layout_sala(sala_id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+def obter_layout_sala(sala_id):            conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT layout_json FROM sala_layouts WHERE sala_id=%s', (sala_id,))
     row = cur.fetchone()
@@ -1642,12 +1516,7 @@ def obter_layout_sala(sala_id):
 
 @app.route('/api/salas/<int:sala_id>/conexoes-reais', methods=['GET'])
 @login_required
-def obter_conexoes_reais_sala(sala_id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    conn = sqlite3.connect(db_file)
+def obter_conexoes_reais_sala(sala_id):            conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Buscar conexões de cabos ativas na sala
@@ -1694,12 +1563,7 @@ def obter_conexoes_reais_sala(sala_id):
 
 @app.route('/api/salas/<int:sala_id>/layout-hibrido', methods=['GET'])
 @login_required
-def obter_layout_hibrido_sala(sala_id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    conn = sqlite3.connect(db_file)
+def obter_layout_hibrido_sala(sala_id):            conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Buscar layout manual
@@ -1788,11 +1652,7 @@ def visualizar_layout_html():
 
 @app.route('/api/salas-com-layout', methods=['GET'])
 @login_required
-def salas_com_layout():
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+def salas_com_layout():            conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('''
         SELECT s.id, s.nome
@@ -1810,12 +1670,7 @@ def visualizar_switch_sala_html():
 
 @app.route('/api/salas/<int:sala_id>/switches-usados')
 @login_required
-def switches_usados_sala(sala_id):
-
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+def switches_usados_sala(sala_id):            conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Buscar switches que têm conexão com equipamentos da sala específica
@@ -2171,11 +2026,7 @@ def config_master_html():
 
 @app.route('/api/salas/<int:id>', methods=['GET'])
 @login_required
-def api_get_sala(id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
+def api_get_sala(id):            conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT id, nome, tipo, descricao, foto, fotos, andar_id FROM salas WHERE id=%s', (id,))
     row = cur.fetchone()
@@ -2198,15 +2049,11 @@ def criar_cabo():
     if not dados:
         return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
     
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
     # Validar campos obrigatórios
     if not dados.get('codigo_unico') or not dados.get('tipo'):
         return jsonify({'status': 'erro', 'mensagem': 'Código único e tipo são obrigatórios'}), 400
     
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -2239,17 +2086,12 @@ def criar_cabo():
 
 @app.route('/cabos', methods=['GET'])
 @login_required
-def listar_cabos():
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    # Parâmetros de filtro
+def listar_cabos():            # Parâmetros de filtro
     status = request.args.get('status')
     tipo = request.args.get('tipo')
     conectado = request.args.get('conectado')  # 'true' para conectados, 'false' para em estoque
     
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     query = '''
@@ -2306,12 +2148,7 @@ def listar_cabos():
 
 @app.route('/cabos/<int:id>', methods=['GET'])
 @login_required
-def get_cabo(id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    conn = sqlite3.connect(db_file)
+def get_cabo(id):            conn = get_postgres_connection()
     cur = conn.cursor()
     
     cur.execute('''
@@ -2353,11 +2190,7 @@ def atualizar_cabo(id):
     if not dados:
         return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
     
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -2394,12 +2227,7 @@ def atualizar_cabo(id):
 
 @app.route('/cabos/<int:id>', methods=['DELETE'])
 @admin_required
-def excluir_cabo(id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    conn = sqlite3.connect(db_file)
+def excluir_cabo(id):            conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Verificar se o cabo está conectado
@@ -2421,12 +2249,7 @@ def excluir_cabo(id):
 
 @app.route('/tipos-cabos', methods=['GET'])
 @login_required
-def tipos_cabos():
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    conn = sqlite3.connect(db_file)
+def tipos_cabos():            conn = get_postgres_connection()
     cur = conn.cursor()
     cur.execute('SELECT nome, descricao, icone FROM tipos_cabos ORDER BY nome')
     rows = cur.fetchall()
@@ -2442,15 +2265,11 @@ def criar_conexao_cabo():
     if not dados:
         return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
     
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
     # Validar campos obrigatórios
     if not dados.get('cabo_id') or not dados.get('equipamento_origem_id'):
         return jsonify({'status': 'erro', 'mensagem': 'cabo_id e equipamento_origem_id são obrigatórios'}), 400
     
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -2486,12 +2305,7 @@ def criar_conexao_cabo():
 
 @app.route('/conexoes-cabos', methods=['GET'])
 @login_required
-def listar_conexoes_cabos():
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    conn = sqlite3.connect(db_file)
+def listar_conexoes_cabos():            conn = get_postgres_connection()
     cur = conn.cursor()
     
     cur.execute('''
@@ -2541,12 +2355,7 @@ def listar_conexoes_cabos():
 
 @app.route('/conexoes-cabos/<int:id>', methods=['DELETE'])
 @tecnico_required
-def desconectar_cabo(id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    conn = sqlite3.connect(db_file)
+def desconectar_cabo(id):            conn = get_postgres_connection()
     cur = conn.cursor()
     
     cur.execute('UPDATE conexoes_cabos SET data_desconexao = CURRENT_TIMESTAMP WHERE id = %s', (id,))
@@ -2562,12 +2371,7 @@ def desconectar_cabo(id):
 
 @app.route('/conexoes-cabos/sala/<int:sala_id>', methods=['GET'])
 @login_required
-def cabos_por_sala(sala_id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    conn = sqlite3.connect(db_file)
+def cabos_por_sala(sala_id):            conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Buscar conexões diretas de cabos (excluindo conexões que vão para patch panels)
@@ -2704,13 +2508,9 @@ def exportar_dados_html():
 
 @app.route('/cabos/<int:id>/defeito', methods=['POST'])
 @admin_required
-def marcar_cabo_defeito(id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    dados = request.json or {}
+def marcar_cabo_defeito(id):            dados = request.json or {}
     motivo = dados.get('motivo', 'Substituição automática')
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     # Buscar descricao atual
     cur.execute('SELECT descricao FROM cabos WHERE id=%s', (id,))
@@ -2729,16 +2529,12 @@ def marcar_cabo_defeito(id):
 
 @app.route('/cabos/<int:id>/reparar', methods=['POST'])
 @admin_required
-def reparar_cabo(id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    dados = request.json or {}
+def reparar_cabo(id):            dados = request.json or {}
     novo_status = dados.get('status', 'funcionando')
     justificativa = dados.get('justificativa', 'Reparação realizada')
     if novo_status not in ['funcionando', 'em_estoque']:
         return jsonify({'status': 'erro', 'mensagem': 'Status inválido. Use "funcionando" ou "em_estoque"'}), 400
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     # Verificar se o cabo existe e está com defeito
     cur.execute('SELECT status, descricao FROM cabos WHERE id=%s', (id,))
@@ -2767,11 +2563,7 @@ def criar_patch_panel():
     if not dados:
         return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
     
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -2859,12 +2651,7 @@ def criar_patch_panel():
 
 @app.route('/patch-panels', methods=['GET'])
 @login_required
-def listar_patch_panels():
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    conn = sqlite3.connect(db_file)
+def listar_patch_panels():            conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -2902,12 +2689,7 @@ def listar_patch_panels():
 
 @app.route('/patch-panels/validar-portas', methods=['GET'])
 @login_required
-def validar_portas_patch_panel():
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    conn = sqlite3.connect(db_file)
+def validar_portas_patch_panel():            conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -2938,12 +2720,7 @@ def validar_portas_patch_panel():
 
 @app.route('/patch-panels/andar/<int:andar>', methods=['GET'])
 @login_required
-def listar_patch_panels_por_andar(andar):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    conn = sqlite3.connect(db_file)
+def listar_patch_panels_por_andar(andar):            conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -2982,14 +2759,9 @@ def listar_patch_panels_por_andar(andar):
 
 @app.route('/patch-panels/<int:id>', methods=['PUT'])
 @login_required
-def atualizar_patch_panel(id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+def atualizar_patch_panel(id):            dados = request.get_json()
     
-    dados = request.get_json()
-    
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -3061,12 +2833,7 @@ def atualizar_patch_panel(id):
 
 @app.route('/patch-panels/<int:id>', methods=['DELETE'])
 @login_required
-def excluir_patch_panel(id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    conn = sqlite3.connect(db_file)
+def excluir_patch_panel(id):            conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -3099,18 +2866,13 @@ def excluir_patch_panel(id):
 
 @app.route('/patch-panel-portas/<int:id>', methods=['PUT'])
 @login_required
-def atualizar_mapeamento_porta(id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    dados = request.get_json()
+def atualizar_mapeamento_porta(id):            dados = request.get_json()
     
     # Validar dados
     switch_id = dados.get('switch_id')
     porta_switch = dados.get('porta_switch')
     
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     # Se ambos os valores são None ou vazios, limpar o mapeamento
@@ -3193,12 +2955,7 @@ def atualizar_mapeamento_porta(id):
 
 @app.route('/patch-panels/<int:id>/portas', methods=['GET'])
 @login_required
-def listar_portas_patch_panel(id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    conn = sqlite3.connect(db_file)
+def listar_portas_patch_panel(id):            conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -3243,18 +3000,13 @@ def listar_portas_patch_panel(id):
 
 @app.route('/patch-panel-portas/<int:id>/conectar-equipamento', methods=['PUT'])
 @login_required
-def conectar_equipamento_patch_panel(id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    dados = request.get_json()
+def conectar_equipamento_patch_panel(id):            dados = request.get_json()
     equipamento_id = dados.get('equipamento_id')
     
     if not equipamento_id:
         return jsonify({'erro': 'ID do equipamento é obrigatório'}), 400
     
-    conn = sqlite3.connect(db_file)
+    conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -3311,12 +3063,7 @@ def conectar_equipamento_patch_panel(id):
 
 @app.route('/patch-panel-portas/<int:id>/desconectar-equipamento', methods=['PUT'])
 @login_required
-def desconectar_equipamento_patch_panel(id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    conn = sqlite3.connect(db_file)
+def desconectar_equipamento_patch_panel(id):            conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -3374,12 +3121,7 @@ def desconectar_equipamento_patch_panel(id):
 
 @app.route('/switch-portas/<int:id>/desconectar', methods=['PUT'])
 @login_required
-def desconectar_porta_switch(id):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    conn = sqlite3.connect(db_file)
+def desconectar_porta_switch(id):            conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -3444,12 +3186,7 @@ def desconectar_porta_switch(id):
 
 @app.route('/salas/andar/<int:andar>', methods=['GET'])
 @login_required
-def listar_salas_por_andar(andar):
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    conn = sqlite3.connect(db_file)
+def listar_salas_por_andar(andar):            conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -3480,12 +3217,9 @@ def listar_salas_por_andar(andar):
 @app.route('/patch-panels/<int:id>', methods=['GET'])
 @login_required
 def get_patch_panel(id):
-    try:
-        db_file = session.get('db')
-        if not db_file:
-            return jsonify({'status': 'erro', 'mensagem': 'Banco de dados não selecionado'}), 400
+    try:            return jsonify({'status': 'erro', 'mensagem': 'Banco de dados não selecionado'}), 400
         
-        conn = sqlite3.connect(db_file)
+        conn = get_postgres_connection()
         cursor = conn.cursor()
         
         cursor.execute("""
@@ -3515,12 +3249,7 @@ def get_patch_panel(id):
         return jsonify(patch_panel)
         
     except Exception as e:
-        return jsonify({'status': 'erro', 'mensagem': str(e)}), 500
-    db_file = session.get('db')
-    if not db_file:
-        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    
-    conn = sqlite3.connect(db_file)
+        return jsonify({'status': 'erro', 'mensagem': str(e)}), 500            conn = get_postgres_connection()
     cur = conn.cursor()
     
     try:
@@ -3579,12 +3308,7 @@ def get_patch_panel(id):
 @app.route('/equipamentos/<int:equipamento_id>/patch-panel-info', methods=['GET'])
 @login_required
 def get_equipamento_patch_panel_info(equipamento_id):
-    try:
-        db_file = session.get('db')
-        if not db_file:
-            return jsonify({'erro': 'Banco de dados não selecionado'}), 400
-        
-        conn = sqlite3.connect(db_file)
+    try:        conn = get_postgres_connection()
         cur = conn.cursor()
         
         # Buscar informações do equipamento e sua conexão com patch panel
@@ -3636,12 +3360,7 @@ def get_equipamento_patch_panel_info(equipamento_id):
 @login_required
 def debug_equipamento(equipamento_id):
     """Endpoint para debug de equipamento"""
-    try:
-        db_file = session.get('db')
-        if not db_file:
-            return jsonify({'erro': 'Banco de dados não selecionado'}), 400
-        
-        conn = sqlite3.connect(db_file)
+    try:        conn = get_postgres_connection()
         cur = conn.cursor()
         
         # Buscar informações detalhadas do equipamento
