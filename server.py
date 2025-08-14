@@ -5,7 +5,7 @@ from psycopg.rows import dict_row
 # Configuração PostgreSQL
 POSTGRES_CONFIG = {
     'host': os.getenv('POSTGRES_HOST', 'localhost'),
-    'database': os.getenv('POSTGRES_DB', 'portfolio_unified'),
+    'dbname': os.getenv('POSTGRES_DB', 'portfolio_unified'),
     'user': os.getenv('POSTGRES_USER', 'postgres'),
     'password': os.getenv('POSTGRES_PASSWORD', ''),
     'port': os.getenv('POSTGRES_PORT', '5432')
