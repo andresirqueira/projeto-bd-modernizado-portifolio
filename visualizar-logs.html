@@ -32,7 +32,7 @@
 
 <body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
     <div class="relative w-full max-w-7xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
-        <button onclick="window.location.href='config-admin.html'" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+        <button onclick="voltarPainelConfig()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
             <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
         </button>
         <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
@@ -71,11 +71,48 @@
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Filtrar por Ação:</label>
                 <select id="filtroAcao" onchange="filtrarLogs()" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
                     <option value="">Todas as ações</option>
+                    <!-- Autenticação -->
+                    <option value="LOGIN">Login</option>
+                    <option value="LOGOUT">Logout</option>
+                    <option value="ESCOLHER_EMPRESA">Escolher Empresa</option>
+                    <!-- Salas -->
+                    <option value="CRIAR_SALA">Criar Sala</option>
+                    <option value="ATUALIZAR_SALA">Atualizar Sala</option>
+                    <option value="EXCLUIR_SALA">Excluir Sala</option>
+                    <!-- Equipamentos -->
+                    <option value="CRIAR_EQUIPAMENTO">Criar Equipamento</option>
+                    <option value="ATUALIZAR_EQUIPAMENTO">Atualizar Equipamento</option>
+                    <option value="EXCLUIR_EQUIPAMENTO">Excluir Equipamento</option>
+                    <!-- Switches -->
                     <option value="CRIAR_SWITCH">Criar Switch</option>
                     <option value="ATUALIZAR_SWITCH">Atualizar Switch</option>
+                    <option value="EXCLUIR_SWITCH">Excluir Switch</option>
+                    <!-- Patch Panels -->
+                    <option value="CRIAR_PATCH_PANEL">Criar Patch Panel</option>
+                    <option value="ATUALIZAR_PATCH_PANEL">Atualizar Patch Panel</option>
+                    <option value="EXCLUIR_PATCH_PANEL">Excluir Patch Panel</option>
+                    <!-- Conexões -->
                     <option value="CRIAR_CONEXAO">Criar Conexão</option>
                     <option value="REMOVER_CONEXAO">Remover Conexão</option>
-                    <option value="ATUALIZAR_SALA">Atualizar Sala</option>
+                    <option value="CONECTAR_EQUIPAMENTO_PATCH_PANEL">Conectar Equipamento</option>
+                    <option value="DESCONECTAR_EQUIPAMENTO_PATCH_PANEL">Desconectar Equipamento</option>
+                    <!-- Cabos -->
+                    <option value="criar_cabo">Criar Cabo</option>
+                    <option value="atualizar_cabo">Atualizar Cabo</option>
+                    <option value="excluir_cabo">Excluir Cabo</option>
+                    <option value="criar_conexao_cabo">Criar Conexão de Cabo</option>
+                    <option value="desconectar_cabo">Desconectar Cabo</option>
+                    <!-- Exportação -->
+                    <option value="EXPORTAR_SALAS">Exportar Salas</option>
+                    <option value="EXPORTAR_EQUIPAMENTOS">Exportar Equipamentos</option>
+                    <option value="EXPORTAR_IPS_MACS">Exportar IPs/MACs</option>
+                    <option value="EXPORTAR_SWITCHES">Exportar Switches</option>
+                    <option value="EXPORTAR_INVENTARIO_COMPLETO">Exportar Inventário Completo</option>
+                    <!-- Sistema -->
+                    <option value="EXECUTAR_PING">Executar Ping</option>
+                    <option value="LIMPAR_PING_LOGS">Limpar Logs de Ping</option>
+                    <option value="UPLOAD_FOTO_SALA">Upload de Foto</option>
+                    <option value="LIMPAR_LOGS">Limpar Logs</option>
                 </select>
             </div>
             
@@ -258,6 +295,19 @@
 
         // Atualizar logs automaticamente a cada 30 segundos
         setInterval(carregarLogs, 30000);
+
+        // Voltar ao painel de configuração
+        function voltarPainelConfig() {
+            fetch('/perfil').then(resp => resp.json()).then(perfil => {
+                if (perfil.nivel === 'admin') {
+                    window.location.href = 'config-admin.html';
+                } else if (perfil.nivel === 'tecnico') {
+                    window.location.href = 'config-tecnico.html';
+                } else {
+                    window.location.href = 'config-usuario.html';
+                }
+            });
+        }
 
         window.addEventListener('DOMContentLoaded', function() {
             fetch('/empresa_atual')

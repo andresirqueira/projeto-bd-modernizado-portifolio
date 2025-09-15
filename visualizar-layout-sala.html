@@ -60,15 +60,50 @@
             pointer-events: none;
             transition: all 0.3s ease;
             backdrop-filter: blur(8px);
-            width: 120px !important;
-            height: 90px !important;
+            width: 100px !important;
+            height: 100px !important;
         }
         
-        .text-instance {
-            width: 100px !important;
-            height: 25px !important;
-            background: rgba(0,0,0,0.7) !important;
-            border: 1px solid rgba(255,255,255,0.3) !important;
+        .equip-instance.keystone {
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 4px;
+            background: rgba(138, 74, 226, 0.2) !important;
+            border-color: rgba(138, 74, 226, 0.8) !important;
+        }
+        
+        .equip-instance.equipment {
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 4px;
+        }
+        
+        .equip-instance.text-element {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: #007bff !important;
+            color: #333 !important;
+            font-weight: bold !important;
+            font-size: 12px !important;
+            text-align: center !important;
+            padding: 8px !important;
+            word-wrap: break-word !important;
+            overflow-wrap: break-word !important;
+            line-height: 1.3 !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+            backdrop-filter: blur(8px) !important;
+        }
+        
+        .equip-instance.text-element:hover {
+            background: rgba(255, 255, 255, 1) !important;
+            border-color: #0056b3 !important;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.5) !important;
+        }
+        
+        /* Estilos para elementos de texto dentro dos cards */
+        .equip-instance .text-div {
+            background: rgba(0,0,0,0.3);
+            border-radius: 4px;
+            margin-top: 2px;
         }
         .equip-instance:hover {
             transform: scale(1.02);
@@ -85,7 +120,8 @@
             max-width: 100%;
             max-height: 100%;
         }
-        .text-instance span {
+        /* Estilos para texto dentro dos cards */
+        .equip-instance .text-div {
             font-weight: bold;
             font-family: inherit;
             pointer-events: none;
@@ -143,6 +179,11 @@
         </div>
         <div class="flex-1 flex flex-col items-center justify-center space-y-4">
             <div id="salaTitulo" class="text-lg font-semibold text-gray-700 dark:text-gray-300 text-center">Sala</div>
+            <div id="editLayoutContainer" class="hidden">
+                <button id="btnEditarLayout" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-3 rounded-lg transition-colors text-sm">
+                    <i class="fas fa-edit mr-1"></i>Editar layout
+                </button>
+            </div>
             
             <!-- Status atual -->
             <div id="statusAtual" class="text-sm text-gray-500 dark:text-gray-400 text-center px-4">
@@ -164,14 +205,31 @@
                  <button id="btnResetZoom" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition-colors">
                      <i class="fas fa-expand-arrows-alt mr-2"></i>Resetar Zoom
                  </button>
+                 
+                                   <!-- Informação sobre modo de visualização -->
+                  <div class="w-full px-4 space-y-3 mt-4">
+                      <div class="text-sm font-semibold text-gray-700 dark:text-gray-300 text-center">Conexões</div>
+                      <div class="text-xs text-gray-500 dark:text-gray-400 text-center px-2">
+                          <i class="fas fa-network-wired mr-1"></i>Modo Distribuído Ativo
+                      </div>
+                  </div>
             </div>
         </div>
     </div>
-    <div id="mainCanvas" style="position:relative; min-height:600px; min-width:800px;">
+    <div id="mainCanvas" style="position:relative; min-height:800px; min-width:1200px;">
         <svg id="svg-connections" style="position:absolute; left:0; top:0; width:100%; height:100%; pointer-events:none; z-index:0;"></svg>
     </div>
     <script>
     let sala_id_atual = null;
+         let distributedConnections = true; // Modo de visualização distribuída
+     
+     console.log('Variável distributedConnections inicializada como:', distributedConnections);
+     
+     // Forçar o modo distribuído como padrão
+     if (distributedConnections === undefined || distributedConnections === null) {
+         distributedConnections = true;
+         console.log('Forçando distributedConnections como true');
+     }
     
     function getSalaIdFromUrl() {
         const params = new URLSearchParams(window.location.search);
@@ -206,6 +264,8 @@
     function atualizarStatus(mensagem) {
         document.getElementById('statusAtual').innerText = mensagem;
     }
+
+         
     
     
     
@@ -217,111 +277,174 @@
         const conns = [];
         
         // Configurações de visualização
-        const cellSize = 120; // Tamanho de cada "célula" na visualização
-        const spacing = 140; // Espaçamento entre equipamentos (reduzido para o novo tamanho)
-        const startX = 300;
-        const startY = -100; // Movido para cima
+        const cellSize = 100; // Tamanho de cada "célula" na visualização
+        const spacing = 102; // Espaçamento entre equipamentos (100px + 2px gap)
+        const startX = 200;
+        const startY = 50; // Ajustado para mostrar a primeira linha
         
-        // Converte equipamentos da grade para posições absolutas
+        // Converte equipamentos e textos da grade para posições absolutas
         if (layoutGrade.equipment && layoutGrade.equipment.length > 0) {
             layoutGrade.equipment.forEach((equip, index) => {
                 // Calcula posição baseada na grade
                 const x = startX + equip.col * spacing;
                 const y = startY + equip.row * spacing;
                 
-                // Tamanho padronizado para todos os equipamentos
-                const largura = 120;
-                const altura = 90;
+                // Tamanho padronizado para todos os elementos
+                const largura = 100;
+                const altura = 100;
                 
-                                                 // Determina imagem baseada no tipo de equipamento
-                let imgSrc = equip.src;
-                const nome = equip.name.toLowerCase();
-                const isAdaptador = nome.includes('adaptador') || nome.includes('adapter');
-                let isKeystone = (equip.isKeystone || nome.includes('keystone') || nome.includes('pt')) && !isAdaptador;
-                
-                if (!imgSrc) {
-                    if (isKeystone) {
-                        imgSrc = null; // Keystones usarão ícone
-                    } else if (nome.includes('switch') || nome.includes('sw')) {
-                        imgSrc = 'static/img/equipamentos/switch-cisco.png';
-                    } else if (nome.includes('tv') || nome.includes('tela')) {
-                        imgSrc = 'static/img/equipamentos/tv-lg.png';
-                    } else if (nome.includes('camera') || nome.includes('câmera')) {
-                        imgSrc = 'static/img/equipamentos/camera-logitech.png';
-                    } else if (nome.includes('microfone') || nome.includes('mic')) {
-                        imgSrc = 'static/img/equipamentos/microfone-logitech.png';
-                    } else if (nome.includes('speaker') || nome.includes('alto-falante')) {
-                        imgSrc = 'static/img/equipamentos/speaker-logitech.png';
-                    } else if (nome.includes('hub')) {
-                        imgSrc = 'static/img/equipamentos/hub-logitech.png';
-                    } else if (nome.includes('painel') || nome.includes('panel')) {
-                        imgSrc = 'static/img/equipamentos/painel-crestron.png';
-                    } else if (nome.includes('tap')) {
-                        imgSrc = 'static/img/equipamentos/tap-logitech.png';
-                    } else if (nome.includes('chromebox') || nome.includes('pc')) {
-                        imgSrc = 'static/img/equipamentos/pc-ctl.png';
-                    } else if (nome.includes('poe')) {
-                        imgSrc = 'static/img/poe-logitech-kit-cat5e.png';
-                    } else if (nome.includes('dongle')) {
-                        imgSrc = 'static/img/dongle-logitech-logitech.png';
-                    } else if (nome.includes('sensor') || nome.includes('presença')) {
-                        imgSrc = 'static/img/sensor-crestron-cen-odt-c-poe.png';
-                    } else if (nome.includes('meetup')) {
-                        imgSrc = 'static/img/meetup-logitech-meetup.png';
-                    } else if (nome.includes('adaptador') || nome.includes('adapter')) {
-                        // Usar imagem específica do adaptador se disponível, senão usar uma genérica
-                        if (nome.includes('hdmi') && nome.includes('mesa')) {
-                            imgSrc = 'static/img/adaptador-kramer-hdmi-f-to-hdmi-f.png';
-                        } else if (nome.includes('kramer') && nome.includes('hdmi')) {
-                            imgSrc = 'static/img/adaptador-kramer-hdmi-f-to-hdmi-f.png';
-                        } else if (nome.includes('dante') && nome.includes('analog') && nome.includes('input')) {
-                            imgSrc = 'static/img/avio-dante-1ch-analog-input-adapter.png';
-                        } else if (nome.includes('dante') && nome.includes('analog') && nome.includes('output')) {
-                            imgSrc = 'static/img/avio-dante-1ch-analog-output-adapter.png';
-                        } else if (nome.includes('dante') && nome.includes('2ch') && nome.includes('analog') && nome.includes('output')) {
-                            imgSrc = 'static/img/avio-dante-2ch-analog-output-adapter.png';
-                        } else if (nome.includes('dante') && nome.includes('2ch') && nome.includes('usb')) {
-                            imgSrc = 'static/img/avio-dante-2ch-usb-io-adapter.png';
+                // Verifica se é um elemento de texto
+                if (equip.isText || equip.type === 'text') {
+                    // É um elemento de texto
+                    items.push({
+                        type: 'text',
+                        id: `text_${index}`,
+                        x: x,
+                        y: y,
+                        w: largura,
+                        h: altura,
+                        content: equip.content || equip.name || '',
+                        nome: equip.content || equip.name || ''
+                    });
+                } else {
+                    // É um equipamento
+                    // Determina imagem baseada no tipo de equipamento
+                    let imgSrc = equip.src;
+                    const nome = equip.name.toLowerCase();
+                    const isAdaptador = nome.includes('adaptador') || nome.includes('adapter');
+                    
+                    // LÓGICA CORRIGIDA: Equipamentos com "receptor" NÃO são keystones
+                    const isReceptor = nome.includes('receptor');
+                    const isKeystoneOriginal = equip.isKeystone;
+                    const hasKeystoneInName = nome.includes('keystone') || nome.includes('pt');
+                    
+                    // Um equipamento é keystone APENAS se:
+                    // 1. Foi explicitamente marcado como keystone NO LAYOUT E
+                    // 2. NÃO é um adaptador E
+                    // 3. NÃO é um receptor
+                    let isKeystone = isKeystoneOriginal && !isAdaptador && !isReceptor;
+                    
+                    // Log para debug
+                    console.log(`🔍 Análise de keystone para "${equip.name}":`);
+                    console.log(`  - Nome: ${equip.name}`);
+                    console.log(`  - isKeystoneOriginal: ${isKeystoneOriginal}`);
+                    console.log(`  - isAdaptador: ${isAdaptador}`);
+                    console.log(`  - isReceptor: ${isReceptor}`);
+                    console.log(`  - hasKeystoneInName: ${hasKeystoneInName}`);
+                    console.log(`  - Resultado final isKeystone: ${isKeystone}`);
+                    
+                    if (!imgSrc) {
+                        if (isKeystone) {
+                            imgSrc = null; // Keystones usarão ícone
+                        } else if (nome.includes('switch') || nome.includes('sw')) {
+                            imgSrc = 'static/img/equipamentos/switch-cisco.png';
+                        } else if (nome.includes('tv') || nome.includes('tela')) {
+                            imgSrc = 'static/img/equipamentos/tv-lg.png';
+                        } else if (nome.includes('camera') || nome.includes('câmera')) {
+                            imgSrc = 'static/img/equipamentos/camera-logitech.png';
+                        } else if (nome.includes('receptor') && nome.includes('microfone')) {
+                            // Receptor de microfone - usar imagem específica
+                            imgSrc = 'static/img/receptor-shure-ulxd4q.png';
+                        } else if (nome.includes('microfone') || nome.includes('mic')) {
+                            imgSrc = 'static/img/microfone-logitech-rally-mic-pod.png';
+                        } else if (nome.includes('speaker') || nome.includes('alto-falante')) {
+                            imgSrc = 'static/img/equipamentos/speaker-logitech.png';
+                        } else if (nome.includes('hub')) {
+                            imgSrc = 'static/img/equipamentos/hub-logitech.png';
+                        } else if (nome.includes('painel') || nome.includes('panel')) {
+                            // Diferencia entre Painel Agenda e Painel de Controle
+                            if (nome.toLowerCase().includes('agenda')) {
+                                imgSrc = 'static/img/painel-crestron-tsw-770-b-s.png';
+                            } else if (nome.toLowerCase().includes('controle') || nome.toLowerCase().includes('control')) {
+                                imgSrc = 'static/img/painel-crestron-outro.png';
+                            } else {
+                                // Padrão para painéis genéricos
+                                imgSrc = 'static/img/painel-crestron-tsw-770-b-s.png';
+                            }
+                        } else if (nome.includes('tap')) {
+                            imgSrc = 'static/img/equipamentos/tap-logitech.png';
+                        } else if (nome.includes('chromebox') || nome.includes('pc')) {
+                            imgSrc = 'static/img/equipamentos/pc-ctl.png';
+                        } else if (nome.includes('poe')) {
+                            imgSrc = 'static/img/poe-logitech-kit-cat5e.png';
+                        } else if (nome.includes('dongle')) {
+                            imgSrc = 'static/img/dongle-logitech-logitech.png';
+                        } else if (nome.includes('sensor') || nome.includes('presença')) {
+                            imgSrc = 'static/img/sensor-crestron-cen-odt-c-poe.png';
+                        } else if (nome.includes('meetup')) {
+                            imgSrc = 'static/img/meetup-logitech-meetup.png';
+                        } else if (nome.includes('adaptador') || nome.includes('adapter')) {
+                            // Usar imagem específica do adaptador se disponível, senão usar uma genérica
+                            if (nome.includes('hdmi') && nome.includes('mesa')) {
+                                imgSrc = 'static/img/adaptador-kramer-hdmi-f-to-hdmi-f.png';
+                            } else if (nome.includes('kramer') && nome.includes('hdmi')) {
+                                imgSrc = 'static/img/adaptador-kramer-hdmi-f-to-hdmi-f.png';
+                            } else if (nome.includes('dante') && nome.includes('analog') && nome.includes('input')) {
+                                imgSrc = 'static/img/avio-dante-1ch-analog-input-adapter.png';
+                            } else if (nome.includes('dante') && nome.includes('analog') && nome.includes('output')) {
+                                imgSrc = 'static/img/avio-dante-1ch-analog-output-adapter.png';
+                            } else if (nome.includes('dante') && nome.includes('2ch') && nome.includes('analog') && nome.includes('output')) {
+                                imgSrc = 'static/img/avio-dante-2ch-analog-output-adapter.png';
+                            } else if (nome.includes('dante') && nome.includes('2ch') && nome.includes('usb')) {
+                                imgSrc = 'static/img/avio-dante-2ch-usb-io-adapter.png';
+                            } else {
+                                // Adaptador genérico - usar o primeiro disponível
+                                imgSrc = 'static/img/adaptador-kramer-hdmi-f-to-hdmi-f.png';
+                            }
                         } else {
-                            // Adaptador genérico - usar o primeiro disponível
-                            imgSrc = 'static/img/adaptador-kramer-hdmi-f-to-hdmi-f.png';
+                            imgSrc = 'static/img/equipamentos/pc-ctl.png';
                         }
-                    } else {
-                        imgSrc = 'static/img/equipamentos/pc-ctl.png';
                     }
+                     
+                    // Adiciona equipamento
+                    items.push({
+                        type: 'equip',
+                        id: `equip_${index}`,
+                        x: x,
+                        y: y,
+                        w: largura,
+                        h: altura,
+                        img: imgSrc,
+                        nome: equip.name,
+                        isKeystone: isKeystone
+                    });
                 }
-                 
-                                 // Adiciona equipamento
-                items.push({
-                    type: 'equip',
-                    id: `equip_${index}`,
-                    x: x,
-                    y: y,
-                    w: largura,
-                    h: altura,
-                    img: imgSrc,
-                    nome: equip.name,
-                    isKeystone: isKeystone
-                });
-                
-                // Adiciona texto do nome
-                items.push({
-                    type: 'text',
-                    id: `text_${index}`,
-                    x: x + (largura - 100) / 2, // Centraliza o texto em relação ao equipamento
-                    y: y + altura + 5,
-                    w: 100,
-                    h: 25,
-                    text: equip.name,
-                    color: '#ffffff',
-                    fontSize: '11px'
-                });
             });
         }
         
         // Converte conexões
         if (layoutGrade.connections && layoutGrade.connections.length > 0) {
+            console.log('Conexões originais do layout:', layoutGrade.connections);
+            
+            // Remover conexões duplicadas ANTES de converter
+            const uniqueConnections = [];
+            const seenConnections = new Set();
+            
             layoutGrade.connections.forEach((conn, index) => {
+                // Criar chave única para cada conexão (considerando direção E nome do cabo)
+                const connKey = `${conn.from.row}-${conn.from.col}-${conn.to.row}-${conn.to.col}-${conn.cableInfo}`;
+                const reverseKey = `${conn.to.row}-${conn.to.col}-${conn.from.row}-${conn.from.col}-${conn.cableInfo}`;
+                
+                // Se já vimos esta conexão exata (mesma direção E mesmo nome de cabo), pular
+                if (seenConnections.has(connKey) || seenConnections.has(reverseKey)) {
+                    console.log(`Pulando conexão duplicada ${index}:`, conn);
+                    return;
+                }
+                
+                // Marcar como vista e adicionar à lista única
+                seenConnections.add(connKey);
+                seenConnections.add(reverseKey);
+                uniqueConnections.push(conn);
+            });
+            
+            console.log(`Conexões originais: ${layoutGrade.connections.length}, Conexões únicas: ${uniqueConnections.length}`);
+            
+            if (uniqueConnections.length < layoutGrade.connections.length) {
+                console.log('✅ Duplicatas removidas com sucesso!');
+            }
+            
+            // Converter apenas conexões únicas
+            uniqueConnections.forEach((conn, index) => {
                 // Encontra os índices dos equipamentos conectados
                 const fromIndex = layoutGrade.equipment.findIndex(e => 
                     e.row === conn.from.row && e.col === conn.from.col
@@ -349,6 +472,70 @@
         return { items, conns };
     }
     
+    // Função para calcular pontos de conexão distribuídos
+    function calculateDistributedConnectionPoints(from, to, connectionIndex, totalConnections) {
+        console.log(`calculateDistributedConnectionPoints: index=${connectionIndex}, total=${totalConnections}, distributed=${distributedConnections}`);
+        
+                 // Usar diretamente a variável global
+         const effectiveDistributedState = distributedConnections;
+        console.log(`Estado efetivo usado: ${effectiveDistributedState}`);
+        
+        // Calcula posições dos centros dos equipamentos
+        const centerX1 = from.offsetLeft + from.offsetWidth/2;
+        const centerY1 = from.offsetTop + from.offsetHeight/2;
+        const centerX2 = to.offsetLeft + to.offsetWidth/2;
+        const centerY2 = to.offsetTop + to.offsetHeight/2;
+        
+        console.log(`Centros: (${centerX1},${centerY1}) -> (${centerX2},${centerY2})`);
+
+        // Se há apenas uma conexão, sempre usar pontos centrais
+        if (totalConnections <= 1) {
+            return {
+                x1: centerX1,
+                y1: centerY1,
+                x2: centerX2,
+                y2: centerY2
+            };
+        }
+        
+        
+
+        // Calcular offset baseado no número de conexões
+        const maxOffset = Math.min(from.offsetWidth, from.offsetHeight) * 0.3; // 30% do tamanho do equipamento
+        const offset = (maxOffset * (connectionIndex - (totalConnections - 1) / 2)) / totalConnections;
+        
+        console.log(`Offset calculado: maxOffset=${maxOffset}, offset=${offset}, connectionIndex=${connectionIndex}`);
+
+        // Calcular direção da conexão
+        const dx = centerX2 - centerX1;
+        const dy = centerY2 - centerY1;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance === 0) {
+            console.log('Distância zero, retornando pontos centrais');
+            return {
+                x1: centerX1,
+                y1: centerY1,
+                x2: centerX2,
+                y2: centerY2
+            };
+        }
+
+        // Calcular vetor perpendicular para distribuir as conexões
+        const perpX = -dy / distance;
+        const perpY = dx / distance;
+
+        // Aplicar offset perpendicular
+        const x1 = centerX1 + perpX * offset;
+        const y1 = centerY1 + perpY * offset;
+        const x2 = centerX2 + perpX * offset;
+        const y2 = centerY2 + perpY * offset;
+
+        console.log(`Pontos distribuídos calculados: (${x1},${y1}) -> (${x2},${y2})`);
+        
+        return { x1, y1, x2, y2 };
+    }
+
     // Função para definir cor baseada no tipo de cabo
     function getCorPorTipoCabo(tipoCabo) {
         console.log('getCorPorTipoCabo chamada com:', tipoCabo);
@@ -418,6 +605,10 @@
          async function carregarLayoutManual() {
         if (!sala_id_atual) return;
         
+                 console.log('carregarLayoutManual: distributedConnections =', distributedConnections);
+         
+
+        
         limparCanvas();
          atualizarStatus('Carregando layout...');
          
@@ -447,13 +638,56 @@
             return;
         }
         
+                 // Verificar se a variável foi alterada
+         if (distributedConnections === false) {
+             console.warn('⚠️ distributedConnections está false em renderizarLayout!');
+             // Forçar como true se estiver false
+             distributedConnections = true;
+             console.log('✅ Forçando distributedConnections como true');
+         }
+         
+         // Preservar o estado da variável distributedConnections
+         const currentDistributedState = distributedConnections;
+         console.log('renderizarLayout: distributedConnections preservado como:', currentDistributedState);
+        
         // Renderiza equipamentos/textos e cria mapa de id
         const idToDiv = {};
         
         if (layout.items && layout.items.length > 0) {
             layout.items.forEach(item => {
                 let div;
-                if (item.type === 'equip') {
+                
+                if (item.type === 'text') {
+                    // Cria elemento de texto
+                    div = document.createElement('div');
+                    div.className = 'equip-instance text-element';
+                    div.style.position = 'absolute';
+                    div.style.left = item.x + 'px';
+                    div.style.top = item.y + 'px';
+                    div.style.width = item.w + 'px';
+                    div.style.height = item.h + 'px';
+                    div.style.background = 'rgba(255, 255, 255, 0.95)';
+                    div.style.border = '2px solid #007bff';
+                    div.style.borderRadius = '8px';
+                    div.style.color = '#333';
+                    div.style.fontWeight = 'bold';
+                    div.style.fontSize = '12px';
+                    div.style.display = 'flex';
+                    div.style.alignItems = 'center';
+                    div.style.justifyContent = 'center';
+                    div.style.textAlign = 'center';
+                    div.style.padding = '8px';
+                    div.style.wordWrap = 'break-word';
+                    div.style.overflowWrap = 'break-word';
+                    div.style.lineHeight = '1.3';
+                    div.style.boxShadow = '0 4px 12px rgba(0,0,0,0.4)';
+                    div.style.backdropFilter = 'blur(8px)';
+                    div.style.pointerEvents = 'none';
+                    div.dataset.id = item.id;
+                    div.textContent = item.content || item.nome || '';
+                    
+                    mainCanvas.appendChild(div);
+                } else if (item.type === 'equip') {
                     div = document.createElement('div');
                     div.className = 'equip-instance';
                     div.style.position = 'absolute';
@@ -467,61 +701,87 @@
                     const isAdaptador = item.nome && (item.nome.toLowerCase().includes('adaptador') || item.nome.toLowerCase().includes('adapter'));
                     
                     if (item.isKeystone && !isAdaptador) {
-                        // Para keystones (exceto adaptadores), cria um ícone
+                        // Para keystones (exceto adaptadores), cria um ícone e texto
+                        div.classList.add('keystone');
+                        
                         const icon = document.createElement('div');
-                        icon.innerHTML = '<i class="fas fa-network-wired" style="font-size: 2em; color: #ffffff;"></i>';
+                        icon.innerHTML = '<i class="fas fa-network-wired" style="font-size: 1.5em; color: #ffffff;"></i>';
                         icon.style.display = 'flex';
                         icon.style.alignItems = 'center';
                         icon.style.justifyContent = 'center';
                         icon.style.width = '100%';
-                        icon.style.height = '100%';
-                        icon.style.fontSize = '24px';
+                        icon.style.height = '60%';
+                        icon.style.fontSize = '20px';
                         icon.style.color = '#ffffff';
                         
+                        // Adiciona texto do nome do keystone
+                        const textDiv = document.createElement('div');
+                        textDiv.className = 'text-div';
+                        textDiv.style.width = '100%';
+                        textDiv.style.height = '40%';
+                        textDiv.style.display = 'flex';
+                        textDiv.style.alignItems = 'center';
+                        textDiv.style.justifyContent = 'center';
+                        textDiv.style.fontSize = '10px';
+                        textDiv.style.color = '#ffffff';
+                        textDiv.style.fontWeight = 'bold';
+                        textDiv.style.textAlign = 'center';
+                        textDiv.style.padding = '2px';
+                        textDiv.style.wordWrap = 'break-word';
+                        textDiv.style.overflowWrap = 'break-word';
+                        textDiv.style.lineHeight = '1.1';
+                        textDiv.textContent = item.nome;
+                        
                         div.appendChild(icon);
+                        div.appendChild(textDiv);
                     } else {
-                        // Para outros equipamentos, cria a imagem
+                        // Para outros equipamentos, cria imagem e texto
+                        div.classList.add('equipment');
+                        
+                        // Container para a imagem
+                        const imgContainer = document.createElement('div');
+                        imgContainer.style.width = '100%';
+                        imgContainer.style.height = '70%';
+                        imgContainer.style.display = 'flex';
+                        imgContainer.style.alignItems = 'center';
+                        imgContainer.style.justifyContent = 'center';
+                        imgContainer.style.padding = '4px';
+                        
                         const img = document.createElement('img');
                         img.src = item.img || 'static/img/equipamentos/pc-ctl.png';
                         img.style.width = '100%';
                         img.style.height = '100%';
                         img.style.objectFit = 'contain';
-                        img.style.borderRadius = '8px';
+                        img.style.borderRadius = '6px';
                         img.onerror = function() {
                             console.warn('Erro ao carregar imagem:', item.img);
                             this.style.display = 'none';
                         };
                         
-                        div.appendChild(img);
+                        imgContainer.appendChild(img);
+                        
+                        // Adiciona texto do nome do equipamento
+                        const textDiv = document.createElement('div');
+                        textDiv.className = 'text-div';
+                        textDiv.style.width = '100%';
+                        textDiv.style.height = '30%';
+                        textDiv.style.display = 'flex';
+                        textDiv.style.alignItems = 'center';
+                        textDiv.style.justifyContent = 'center';
+                        textDiv.style.fontSize = '10px';
+                        textDiv.style.color = '#ffffff';
+                        textDiv.style.fontWeight = 'bold';
+                        textDiv.style.textAlign = 'center';
+                        textDiv.style.padding = '2px';
+                        textDiv.style.wordWrap = 'break-word';
+                        textDiv.style.overflowWrap = 'break-word';
+                        textDiv.style.lineHeight = '1.1';
+                        textDiv.textContent = item.nome;
+                        
+                        div.appendChild(imgContainer);
+                        div.appendChild(textDiv);
                     }
                     
-                    mainCanvas.appendChild(div);
-                    
-                } else if (item.type === 'text') {
-                    div = document.createElement('div');
-                    div.className = 'equip-instance text-instance';
-                    div.style.position = 'absolute';
-                    div.style.left = item.x + 'px';
-                    div.style.top = item.y + 'px';
-                    div.style.width = item.w + 'px';
-                    div.style.height = item.h + 'px';
-                    div.dataset.id = item.id;
-                    div.style.display = 'flex';
-                    div.style.alignItems = 'center';
-                    div.style.justifyContent = 'center';
-                    div.style.textAlign = 'center';
-                    div.style.padding = '2px';
-                    
-                    const span = document.createElement('span');
-                    span.textContent = item.text;
-                    span.style.color = item.color;
-                    span.style.fontSize = item.fontSize;
-                    span.style.fontWeight = 'bold';
-                    span.style.lineHeight = '1.2';
-                    span.style.wordWrap = 'break-word';
-                    span.style.overflowWrap = 'break-word';
-                    span.style.maxWidth = '100%';
-                    div.appendChild(span);
                     mainCanvas.appendChild(div);
                 }
                 
@@ -536,98 +796,159 @@
             console.log('Iniciando renderização de conexões...');
             console.log('Layout.conns:', layout.conns);
             console.log('idToDiv keys:', Object.keys(idToDiv));
+            console.log('distributedConnections na renderizarConexoes:', distributedConnections);
+            console.log('Estado preservado:', currentDistributedState);
+            
+                         // Usar diretamente a variável global
+             const effectiveDistributedState = distributedConnections;
+            console.log('Estado efetivo a ser usado:', effectiveDistributedState);
             
             if (layout.conns && layout.conns.length > 0) {
                 console.log('Renderizando', layout.conns.length, 'conexões...');
                 
-                layout.conns.forEach((conn, index) => {
-                    console.log(`Processando conexão ${index + 1}:`, conn);
-                    const from = idToDiv[conn.fromId];
-                    const to = idToDiv[conn.toId];
+                // Como já removemos duplicatas na conversão, podemos renderizar diretamente
+                console.log('Renderizando conexões únicas...');
+                console.log('Modo distribuído ativo:', effectiveDistributedState);
+                
+                // Criar grupos apenas para conexões que realmente têm múltiplas entradas
+                const connectionGroups = {};
+                
+                console.log('Conexões antes do agrupamento:', layout.conns);
+                
+                                 layout.conns.forEach((conn, index) => {
+                     // Criar chave apenas para equipamentos (sem nome do cabo) para agrupar conexões entre os mesmos equipamentos
+                     const key = `${conn.fromId}-${conn.toId}`;
+                     const reverseKey = `${conn.toId}-${conn.fromId}`;
+                     
+                     // Usar sempre a mesma chave para conexões entre os mesmos equipamentos
+                     let groupKey = key;
+                     if (connectionGroups[reverseKey] && !connectionGroups[key]) {
+                         groupKey = reverseKey;
+                     }
+                     
+                     if (!connectionGroups[groupKey]) {
+                         connectionGroups[groupKey] = [];
+                     }
+                     
+                     connectionGroups[groupKey].push({ ...conn, originalIndex: index });
+                     
+                     console.log(`Conexão ${index}: ${conn.fromId} -> ${conn.toId} (${conn.name}) adicionada ao grupo ${groupKey}`);
+                 });
+                
+                console.log('Grupos de conexões criados:', connectionGroups);
+                console.log('Modo distribuído ativo:', effectiveDistributedState);
+                
+                console.log('Grupos de conexões criados:', connectionGroups);
+
+                // Renderizar conexões agrupadas
+                Object.values(connectionGroups).forEach((group, groupIndex) => {
+                    const totalConnections = group.length;
                     
-                    console.log(`  fromId: ${conn.fromId}, from:`, from);
-                    console.log(`  toId: ${conn.toId}, to:`, to);
+                    console.log(`Grupo ${groupIndex + 1}: ${totalConnections} conexões, Modo distribuído: ${effectiveDistributedState}`);
+                    console.log(`Conexões no grupo:`, group.map(c => `${c.fromId} -> ${c.toId} (${c.name})`));
                     
-                    if (from && to) {
-                        try {
-                            // Calcula posições dos centros dos equipamentos
-                            const x1 = from.offsetLeft + from.offsetWidth/2;
-                            const y1 = from.offsetTop + from.offsetHeight/2;
-                            const x2 = to.offsetLeft + to.offsetWidth/2;
-                            const y2 = to.offsetTop + to.offsetHeight/2;
-                            
-                            // Cria o caminho SVG com arco mais suave
-                            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                            const dx = Math.abs(x2 - x1) * 0.2;
-                            const dy = Math.abs(y2 - y1) * 0.2;
-                            
-                            // Cria um arco mais suave e visível
-                            path.setAttribute('d', `M${x1},${y1} C${x1+dx},${y1-dy} ${x2-dx},${y2+dy} ${x2},${y2}`);
-                            path.setAttribute('stroke', conn.color || '#9E9E9E');
-                            path.setAttribute('stroke-width', conn.is_real ? '5' : '3');
-                            path.setAttribute('fill', 'none');
-                            path.setAttribute('opacity', '0.85');
-                            
-                            // Adiciona estilo tracejado para todas as conexões (visual de desenho técnico)
-                            path.setAttribute('stroke-dasharray', '6,4');
-                            
-                            if (conn.is_real) {
-                                path.setAttribute('title', `Cabo: ${conn.codigo_cabo}\nTipo: ${conn.tipo_cabo}\nDe: ${conn.equipamento_origem || 'N/A'}\nPara: ${conn.equipamento_destino || 'N/A'}\nPorta Origem: ${conn.porta_origem || 'N/A'}\nPorta Destino: ${conn.porta_destino || 'N/A'}`);
-                            } else {
-                                path.setAttribute('title', `Cabo: ${conn.name || 'N/A'}`);
-                            }
-                            
-                            svgEl.appendChild(path);
-                            
-                            // Adiciona texto da conexão com melhor legibilidade
-                            if (conn.name || conn.label) {
-                                const labelText = conn.name || conn.label;
-                                 const textX = (x1+x2)/2;
-                                 const textY = (y1+y2)/2 - 15; // Posiciona acima da linha
+                    group.forEach((conn, connectionIndex) => {
+                        console.log(`Processando conexão ${connectionIndex + 1} de ${totalConnections} no grupo ${groupIndex + 1}:`, conn);
+                        const from = idToDiv[conn.fromId];
+                        const to = idToDiv[conn.toId];
+                        
+                        console.log(`  fromId: ${conn.fromId}, from:`, from);
+                        console.log(`  toId: ${conn.toId}, to:`, to);
+                        
+                        if (from && to) {
+                            try {
+                                                                 // Calcular pontos distribuídos
+                                 const points = calculateDistributedConnectionPoints(from, to, connectionIndex + 1, totalConnections);
                                 
-                                 // Cria um fundo escuro para melhor contraste
-                                const textBg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-                                 textBg.setAttribute('x', textX - 40);
-                                 textBg.setAttribute('y', textY - 8);
-                                 textBg.setAttribute('width', 80);
-                                 textBg.setAttribute('height', 16);
-                                 textBg.setAttribute('fill', 'rgba(0,0,0,0.8)');
-                                textBg.setAttribute('rx', '4');
-                                 textBg.setAttribute('opacity', '0.9');
-                                svgEl.appendChild(textBg);
+                                console.log(`  Modo distribuído: ${effectiveDistributedState}, Total conexões: ${totalConnections}, Índice: ${connectionIndex + 1}`);
+                                console.log(`  Pontos distribuídos: (${points.x1},${points.y1}) -> (${points.x2},${points.y2})`);
                                 
-                                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                                 text.setAttribute('x', textX);
-                                 text.setAttribute('y', textY + 4);
-                                 text.setAttribute('fill', '#FFFFFF');
-                                text.setAttribute('font-size', '11');
-                                text.setAttribute('font-family', 'Arial, sans-serif');
-                                text.setAttribute('text-anchor', 'middle');
-                                text.setAttribute('font-weight', 'bold');
-                                 text.setAttribute('letter-spacing', '0.3');
-                                text.textContent = labelText;
+                                // Cria o caminho SVG com arco mais suave
+                                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                                
+                                                                 // Para múltiplas conexões, usar linha reta para melhor visualização
+                                 if (totalConnections > 1) {
+                                     path.setAttribute('d', `M${points.x1},${points.y1} L${points.x2},${points.y2}`);
+                                 } else {
+                                     // Para conexão única, usar arco suave
+                                     const dx = Math.abs(points.x2 - points.x1) * 0.2;
+                                     const dy = Math.abs(points.y2 - points.y1) * 0.2;
+                                     path.setAttribute('d', `M${points.x1},${points.y1} C${points.x1+dx},${points.y1-dy} ${points.x2-dx},${points.y2+dy} ${points.x2},${points.y2}`);
+                                 }
+                                path.setAttribute('stroke', conn.color || '#9E9E9E');
+                                path.setAttribute('stroke-width', conn.is_real ? '5' : '3');
+                                path.setAttribute('fill', 'none');
+                                path.setAttribute('opacity', '0.85');
+                                
+                                // Adiciona estilo tracejado para todas as conexões (visual de desenho técnico)
+                                path.setAttribute('stroke-dasharray', '6,4');
                                 
                                 if (conn.is_real) {
-                                    text.setAttribute('title', `Cabo: ${conn.codigo_cabo}\nTipo: ${conn.tipo_cabo}\nDe: ${conn.equipamento_origem || 'N/A'}\nPara: ${conn.equipamento_destino || 'N/A'}\nPorta Origem: ${conn.porta_origem || 'N/A'}\nPorta Destino: ${conn.porta_destino || 'N/A'}`);
-                                    textBg.setAttribute('title', `Cabo: ${conn.codigo_cabo}\nTipo: ${conn.tipo_cabo}\nDe: ${conn.equipamento_origem || 'N/A'}\nPara: ${conn.equipamento_destino || 'N/A'}\nPorta Origem: ${conn.porta_origem || 'N/A'}\nPorta Destino: ${conn.porta_destino || 'N/A'}`);
+                                    path.setAttribute('title', `Cabo: ${conn.codigo_cabo}\nTipo: ${conn.tipo_cabo}\nDe: ${conn.equipamento_origem || 'N/A'}\nPara: ${conn.equipamento_destino || 'N/A'}\nPorta Origem: ${conn.porta_origem || 'N/A'}\nPorta Destino: ${conn.porta_destino || 'N/A'}`);
+                                } else {
+                                    path.setAttribute('title', `Cabo: ${conn.name || 'N/A'}`);
                                 }
                                 
-                                svgEl.appendChild(text);
+                                svgEl.appendChild(path);
+                                
+                                // Adiciona texto da conexão com melhor legibilidade e posicionamento distribuído
+                                if (conn.name || conn.label) {
+                                    const labelText = conn.name || conn.label;
+                                    const textX = (points.x1 + points.x2) / 2;
+                                    let textY = (points.y1 + points.y2) / 2 - 15; // Posiciona acima da linha
+                                    
+                                                                         // Se há múltiplas conexões, ajustar posição do texto
+                                     if (totalConnections > 1) {
+                                         const textOffset = 20 * (connectionIndex - (totalConnections - 1) / 2);
+                                         textY += textOffset;
+                                     }
+                                    
+                                    // Cria um fundo escuro para melhor contraste
+                                    const textBg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                                    textBg.setAttribute('x', textX - 40);
+                                    textBg.setAttribute('y', textY - 8);
+                                    textBg.setAttribute('width', 80);
+                                    textBg.setAttribute('height', 16);
+                                    textBg.setAttribute('fill', 'rgba(0,0,0,0.8)');
+                                    textBg.setAttribute('rx', '4');
+                                    textBg.setAttribute('opacity', '0.9');
+                                    svgEl.appendChild(textBg);
+                                    
+                                    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                                    text.setAttribute('x', textX);
+                                    text.setAttribute('y', textY + 4);
+                                    text.setAttribute('fill', '#FFFFFF');
+                                    text.setAttribute('font-size', '11');
+                                    text.setAttribute('font-family', 'Arial, sans-serif');
+                                    text.setAttribute('text-anchor', 'middle');
+                                    text.setAttribute('font-weight', 'bold');
+                                    text.setAttribute('letter-spacing', '0.3');
+                                    text.textContent = labelText;
+                                    
+                                    if (conn.is_real) {
+                                        text.setAttribute('title', `Cabo: ${conn.codigo_cabo}\nTipo: ${conn.tipo_cabo}\nDe: ${conn.equipamento_origem || 'N/A'}\nPara: ${conn.equipamento_destino || 'N/A'}\nPorta Origem: ${conn.porta_origem || 'N/A'}\nPorta Destino: ${conn.porta_destino || 'N/A'}`);
+                                        textBg.setAttribute('title', `Cabo: ${conn.codigo_cabo}\nTipo: ${conn.tipo_cabo}\nDe: ${conn.equipamento_origem || 'N/A'}\nPara: ${conn.equipamento_destino || 'N/A'}\nPorta Origem: ${conn.porta_origem || 'N/A'}\nPorta Destino: ${conn.porta_destino || 'N/A'}`);
+                                    }
+                                    
+                                    svgEl.appendChild(text);
+                                }
+                                
+                                                                 
+                                
+                                console.log(`Conexão ${connectionIndex + 1} do grupo ${groupIndex + 1} renderizada: ${conn.fromId} -> ${conn.toId}`);
+                                
+                            } catch (error) {
+                                console.error('Erro ao renderizar conexão:', error, conn);
                             }
-                            
-                            console.log(`Conexão ${index + 1} renderizada: ${conn.fromId} -> ${conn.toId}`);
-                            
-                        } catch (error) {
-                            console.error('Erro ao renderizar conexão:', error, conn);
+                        } else {
+                            console.warn(`Conexão ${connectionIndex + 1} do grupo ${groupIndex + 1} não pode ser renderizada:`, {
+                                fromId: conn.fromId,
+                                toId: conn.toId,
+                                fromExists: !!from,
+                                toExists: !!to
+                            });
                         }
-                    } else {
-                        console.warn(`Conexão ${index + 1} não pode ser renderizada:`, {
-                            fromId: conn.fromId,
-                            toId: conn.toId,
-                            fromExists: !!from,
-                            toExists: !!to
-                        });
-                    }
+                    });
                 });
             }
         }
@@ -693,9 +1014,11 @@
          const btnResetZoom = document.getElementById('btnResetZoom');
          const mainCanvas = document.getElementById('mainCanvas');
          
-         btnZoomIn.addEventListener('click', zoomIn);
-         btnZoomOut.addEventListener('click', zoomOut);
-         btnResetZoom.addEventListener('click', resetZoom);
+                 btnZoomIn.addEventListener('click', zoomIn);
+        btnZoomOut.addEventListener('click', zoomOut);
+        btnResetZoom.addEventListener('click', resetZoom);
+        
+        
          
          // Pan com mouse quando zoomado
          mainCanvas.addEventListener('mousedown', function(e) {
@@ -759,6 +1082,21 @@
             document.getElementById('mainCanvas').innerHTML = '<div style="color:#e74c3c;font-size:1.3em;text-align:center;margin-top:80px;">Sala não informada na URL.</div>';
             atualizarStatus('Sala não informada');
         }
+        // Verifica perfil para mostrar botão de editar
+        fetch('/perfil')
+            .then(resp => resp.json())
+            .then(perfil => {
+                if (perfil && (perfil.nivel === 'admin' || perfil.nivel === 'tecnico')) {
+                    const cont = document.getElementById('editLayoutContainer');
+                    if (cont) cont.classList.remove('hidden');
+                    const btn = document.getElementById('btnEditarLayout');
+                    if (btn) btn.onclick = function(){
+                        const url = `conexoes-equipamentos.html?sala_id=${encodeURIComponent(sala_id_atual)}`;
+                        window.location.href = url;
+                    };
+                }
+            })
+            .catch(() => {});
     })();
     </script>
     <script src="static/js/logo-manager.js"></script>

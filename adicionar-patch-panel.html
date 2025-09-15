@@ -275,9 +275,17 @@
             document.getElementById('nome_patch_panel').focus();
         }
 
-        // Voltar ao config admin
+        // Voltar ao painel de configuração
         function voltarConfigAdmin() {
-            window.location.href = 'config-admin.html';
+            fetch('/perfil').then(resp => resp.json()).then(perfil => {
+                if (perfil.nivel === 'admin') {
+                    window.location.href = 'config-admin.html';
+                } else if (perfil.nivel === 'tecnico') {
+                    window.location.href = 'config-tecnico.html';
+                } else {
+                    window.location.href = 'config-usuario.html';
+                }
+            });
         }
 
         // Inicialização

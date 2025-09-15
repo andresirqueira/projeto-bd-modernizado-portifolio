@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "nome": "Sala Teste",
+    "tipo": "Escritório",
+    "descricao": "Sala de teste para modo JSON",
+    "foto": "/static/img/fotos-salas/empresa_1/sala-teste.png",
+    "fotos": null,
+    "andar_id": "7",
+    "data_criacao": "2025-09-15T15:23:03.276874"
+  },
+  {
+    "id": 2,
+    "nome": "Sala Teste 02",
+    "tipo": "Escritório",
+    "descricao": "",
+    "foto": "/static/img/fotos-salas/empresa_1/sala-teste.png",
+    "fotos": null,
+    "andar_id": 1,
+    "data_criacao": "2025-09-15T15:35:41.560664"
+  }
+]

@@ -283,10 +283,10 @@
             }
         }
 
-        // Renderizar conexões
+        // Renderizar conexões agrupadas por sala
         function renderizarConexoes(lista) {
             const container = document.getElementById('conexoes-container');
-            
+
             if (lista.length === 0) {
                 container.innerHTML = `
                     <div class="text-center py-12">
@@ -297,62 +297,94 @@
                 return;
             }
 
-            let html = '';
+            // Agrupar por sala
+            const gruposPorSala = {};
             lista.forEach(conexao => {
+                const sala = conexao.sala_nome || 'Sem Sala';
+                if (!gruposPorSala[sala]) gruposPorSala[sala] = [];
+                gruposPorSala[sala].push(conexao);
+            });
+
+            // Ordenar salas alfabeticamente
+            const salasOrdenadas = Object.keys(gruposPorSala).sort((a, b) => a.localeCompare(b));
+
+            // Construir HTML por grupo de sala (com recolher/expandir)
+            let html = '';
+            salasOrdenadas.forEach((salaNome, idx) => {
+                const conexoesSala = gruposPorSala[salaNome];
+                const contentId = `section-content-${idx}`;
                 html += `
-                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="flex items-center gap-3">
-                                <i class="fas fa-link text-2xl text-indigo-500"></i>
-                                <div>
-                                    <h3 class="font-bold text-lg text-gray-800 dark:text-white">${conexao.codigo_unico}</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">${conexao.tipo}</p>
+                    <section class="mb-6">
+                        <button type="button" onclick="toggleSalaSection('${contentId}')" class="w-full flex items-center justify-between mb-3 group">
+                            <h2 class="text-left text-lg font-bold text-gray-800 dark:text-gray-100 flex items-center">
+                                <i class="fas fa-building text-indigo-500 mr-2"></i>${salaNome}
+                            </h2>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs px-2 py-1 rounded bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300">${conexoesSala.length} conexão(ões)</span>
+                                <i class="fas fa-chevron-up text-gray-500 group-hover:text-gray-700 dark:text-gray-400 dark:group-hover:text-gray-200" id="icon-${contentId}"></i>
+                            </div>
+                        </button>
+                        <div id="${contentId}" class="space-y-4" style="display:none">
+                            ${conexoesSala.map(conexao => `
+                                <div class=\"bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6\">
+                                    <div class=\"flex items-center justify-between mb-4\">
+                                        <div class=\"flex items-center gap-3\">
+                                            <i class=\"fas fa-link text-2xl text-indigo-500\"></i>
+                                            <div>
+                                                <h3 class=\"font-bold text-lg text-gray-800 dark:text-white\">${conexao.codigo_unico}</h3>
+                                                <p class=\"text-sm text-gray-600 dark:text-gray-400\">${conexao.tipo}</p>
+                                            </div>
+                                        </div>
+                                        <div class=\"flex gap-2\">
+                                            <button onclick=\"desconectarCabo(${conexao.id})\" class=\"bg-red-500 hover:bg-red-600 text-white text-sm py-2 px-3 rounded transition-colors\">
+                                                <i class=\"fas fa-unlink mr-1\"></i>Desconectar
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class=\"grid grid-cols-1 md:grid-cols-2 gap-4\">
+                                        <div class=\"bg-gray-50 dark:bg-gray-700 rounded-lg p-4\">
+                                            <h4 class=\"font-semibold text-gray-800 dark:text-white mb-2\">
+                                                <i class=\"fas fa-arrow-right text-green-500 mr-2\"></i>Origem
+                                            </h4>
+                                            <p class=\"text-sm text-gray-600 dark:text-gray-400\">
+                                                <strong>Equipamento:</strong> ${conexao.equipamento_origem_nome}<br>
+                                                <strong>Porta:</strong> ${conexao.porta_origem || 'Não especificada'}
+                                            </p>
+                                        </div>
+                                        <div class=\"bg-gray-50 dark:bg-gray-700 rounded-lg p-4\">
+                                            <h4 class=\"font-semibold text-gray-800 dark:text-white mb-2\">
+                                                <i class=\"fas fa-arrow-left text-blue-500 mr-2\"></i>Destino
+                                            </h4>
+                                            ${(conexao.via_patch_panel || (conexao.observacao && conexao.observacao.includes('Conexão via Patch Panel'))) ? `
+                                                <p class="text-sm text-gray-600 dark:text-gray-400">
+                                                    <strong>Rede:</strong> ${conexao.patch_panel_nome || 'Patch Panel'}<br>
+                                                    <strong>Porta:</strong> ${conexao.patch_panel_porta || conexao.porta_destino || 'Não especificada'}
+                                                </p>
+                                            ` : `
+                                                <p class="text-sm text-gray-600 dark:text-gray-400">
+                                                    <strong>Equipamento:</strong> ${conexao.equipamento_destino_nome}<br>
+                                                    <strong>Porta:</strong> ${conexao.porta_destino || 'Não especificada'}
+                                                </p>
+                                            `}
+                                        </div>
+                                    </div>
+                                    <div class=\"mt-4 pt-4 border-t border-gray-200 dark:border-gray-700\">
+                                        <div class=\"flex justify-between items-center text-sm text-gray-600 dark:text-gray-400\">
+                                            <div>
+                                                ${conexao.observacao ? `<strong>Obs:</strong> ${conexao.observacao}` : ''}
+                                            </div>
+                                            <div>
+                                                <strong>Conectado em:</strong> ${new Date(conexao.data_conexao).toLocaleDateString('pt-BR')}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="flex gap-2">
-                                <button onclick="desconectarCabo(${conexao.id})" class="bg-red-500 hover:bg-red-600 text-white text-sm py-2 px-3 rounded transition-colors">
-                                    <i class="fas fa-unlink mr-1"></i>Desconectar
-                                </button>
-                            </div>
+                            `).join('')}
                         </div>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                                <h4 class="font-semibold text-gray-800 dark:text-white mb-2">
-                                    <i class="fas fa-arrow-right text-green-500 mr-2"></i>Origem
-                                </h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">
-                                    <strong>Equipamento:</strong> ${conexao.equipamento_origem_nome}<br>
-                                    <strong>Porta:</strong> ${conexao.porta_origem || 'Não especificada'}
-                                </p>
-                            </div>
-                            
-                            <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                                <h4 class="font-semibold text-gray-800 dark:text-white mb-2">
-                                    <i class="fas fa-arrow-left text-blue-500 mr-2"></i>Destino
-                                </h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">
-                                    <strong>Equipamento:</strong> ${conexao.equipamento_destino_nome}<br>
-                                    <strong>Porta:</strong> ${conexao.porta_destino || 'Não especificada'}
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                            <div class="flex justify-between items-center text-sm text-gray-600 dark:text-gray-400">
-                                <div>
-                                    <strong>Sala:</strong> ${conexao.sala_nome || 'Não especificada'}
-                                    ${conexao.observacao ? `<br><strong>Obs:</strong> ${conexao.observacao}` : ''}
-                                </div>
-                                <div>
-                                    <strong>Conectado em:</strong> ${new Date(conexao.data_conexao).toLocaleDateString('pt-BR')}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </section>
                 `;
             });
-            
+
             container.innerHTML = html;
         }
 
@@ -389,6 +421,19 @@
             
             // Ativar tab
             document.getElementById(`tab-${aba}`).classList.add('border-indigo-500', 'text-indigo-600', 'dark:text-indigo-400');
+        }
+
+        // Toggle seção por sala
+        function toggleSalaSection(contentId) {
+            const el = document.getElementById(contentId);
+            const icon = document.getElementById(`icon-${contentId}`);
+            if (!el) return;
+            const isHidden = el.style.display === 'none';
+            el.style.display = isHidden ? 'block' : 'none';
+            if (icon) {
+                icon.classList.toggle('fa-chevron-down', isHidden);
+                icon.classList.toggle('fa-chevron-up', !isHidden);
+            }
         }
 
         // Aplicar filtro por sala

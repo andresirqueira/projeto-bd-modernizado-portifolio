@@ -397,7 +397,18 @@
 
         // Mostrar modal de sucesso
         function mostrarModalSucesso() {
-            document.getElementById('modalSucesso').classList.remove('hidden');
+            // Verificar se está em um iframe (modal)
+            if (window.parent !== window) {
+                // Enviar mensagem para a página pai para fechar o modal
+                window.parent.postMessage({
+                    action: 'closeModal',
+                    success: true,
+                    type: 'excluir'
+                }, '*');
+            } else {
+                // Comportamento normal se não estiver em modal
+                document.getElementById('modalSucesso').classList.remove('hidden');
+            }
         }
 
         // Fechar modal de sucesso
@@ -514,9 +525,26 @@
             aplicarFiltros();
         });
 
+        // Verificar se há cabo_id na URL para pré-selecionar
+        function verificarCaboPreSelecionado() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const caboId = urlParams.get('cabo_id');
+            const codigo = urlParams.get('codigo');
+            
+            if (caboId) {
+                // Aguardar carregamento dos dados e então selecionar o cabo
+                setTimeout(() => {
+                    selecionarCaboParaExcluir(parseInt(caboId));
+                }, 1000);
+            }
+        }
+
         // Inicialização
         window.addEventListener('DOMContentLoaded', function() {
             carregarCabos();
+            
+            // Verificar se há cabo pré-selecionado
+            verificarCaboPreSelecionado();
             
             // Carregar logo da empresa
             fetch('/empresa_atual')

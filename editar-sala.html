@@ -9,6 +9,8 @@
       tailwind.config = { darkMode: 'class' };
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="static/css/tour.css">
+    <script src="static/js/tour.js"></script>
     <link rel="icon" type="image/png" href="static/img/favicon-lapis.png">
     <script>
       function toggleDarkMode() {
@@ -38,6 +40,11 @@
         <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
         <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
             <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        
+        <!-- Botão Tour -->
+        <button onclick="iniciarTour()" class="absolute top-4 left-28 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 rounded-full p-2 transition-colors" title="Ajuda - Iniciar tour da página">
+            <i class="fas fa-question text-sm"></i>
         </button>
         <div class="text-center mt-8 mb-8">
             <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
@@ -135,6 +142,15 @@
         <div class="msg text-center mt-4 text-lg font-semibold" id="msg"></div>
     </div>
     <script>
+        // Função para iniciar o tour do sistema
+        function iniciarTour() {
+            if (window.sistemaTour) {
+                window.sistemaTour.iniciarTour('editar-sala');
+            } else {
+                alert('Sistema de tour não carregado. Recarregue a página.');
+            }
+        }
+
         // Pega o ID da sala da URL
         const params = new URLSearchParams(window.location.search);
         const salaId = params.get('id');
@@ -148,6 +164,13 @@
             const resp = await fetch('/salas');
             todasSalas = await resp.json();
             renderizarCardsSalas(todasSalas);
+            // Se veio um id na URL, selecionar automaticamente a sala para edição
+            if (salaId) {
+                const salaAuto = todasSalas.find(s => String(s.id) === String(salaId));
+                if (salaAuto) {
+                    selecionarSalaCard(salaAuto);
+                }
+            }
         }
 
         // Aplicar filtro por status

@@ -95,6 +95,22 @@
                 </select>
             </div>
 
+            <div class="space-y-2">
+                <label for="andar" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Andar:</label>
+                <select id="andar" name="andar" disabled class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600 disabled:bg-gray-100 dark:disabled:bg-gray-700 disabled:cursor-not-allowed">
+                    <option value="">Selecione o andar (opcional)</option>
+                </select>
+                <small class="text-gray-500 dark:text-gray-400">Opcional: vincular switch a um andar específico</small>
+            </div>
+
+            <div class="space-y-2">
+                <label for="idf_responsavel" class="block text-sm font-medium text-gray-700 dark:text-gray-300">IDF Responsável:</label>
+                <select id="idf_responsavel" name="idf_responsavel" disabled class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600 disabled:bg-gray-100 dark:disabled:bg-gray-700 disabled:cursor-not-allowed">
+                    <option value="">Selecione o IDF responsável (opcional)</option>
+                </select>
+                <small class="text-gray-500 dark:text-gray-400">Opcional: vincular switch a um IDF específico</small>
+            </div>
+
             <div class="pt-4">
                 <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-800 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:bg-gray-400 dark:disabled:bg-gray-600 disabled:cursor-not-allowed" id="btnSalvar" disabled>
                     <i class="fas fa-save"></i> Salvar Alterações
@@ -257,6 +273,42 @@
             }
         }
 
+        // Carregar andares
+        async function carregarAndares() {
+            try {
+                const response = await fetch('/andares');
+                const andares = await response.json();
+                const andarSelect = document.getElementById('andar');
+                
+                andares.forEach(andar => {
+                    const option = document.createElement('option');
+                    option.value = andar.id;
+                    option.textContent = andar.titulo;
+                    andarSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar andares:', error);
+            }
+        }
+
+        // Carregar IDFs
+        async function carregarIDFs() {
+            try {
+                const response = await fetch('/idfs');
+                const idfs = await response.json();
+                const idfSelect = document.getElementById('idf_responsavel');
+                
+                idfs.forEach(idf => {
+                    const option = document.createElement('option');
+                    option.value = idf.id;
+                    option.textContent = `${idf.nome} (${idf.andar_titulo})`;
+                    idfSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar IDFs:', error);
+            }
+        }
+
         // Carregar dados do switch selecionado
         async function carregarSwitch() {
             const switchId = document.getElementById('switchSelect').value;
@@ -265,6 +317,8 @@
             const marcaSelect = document.getElementById('marca');
             const modeloSelect = document.getElementById('modelo');
             const nomeInput = document.getElementById('nome');
+            const andarSelect = document.getElementById('andar');
+            const idfSelect = document.getElementById('idf_responsavel');
             
             if (!switchId) {
                 switchAtual = null;
@@ -276,6 +330,8 @@
                 nomeInput.disabled = true;
                 marcaSelect.disabled = true;
                 modeloSelect.disabled = true;
+                andarSelect.disabled = true;
+                idfSelect.disabled = true;
                 return;
             }
 
@@ -293,6 +349,8 @@
                     nomeInput.disabled = false;
                     marcaSelect.disabled = false;
                     modeloSelect.disabled = false;
+                    andarSelect.disabled = false;
+                    idfSelect.disabled = false;
                 } else {
                     mostrarMensagem(switch_data.mensagem || 'Erro ao carregar switch', 'error');
                 }
@@ -316,6 +374,22 @@
             // Selecionar o modelo imediatamente após atualizar os modelos
             const modeloSelect = document.getElementById('modelo');
             modeloSelect.value = switch_data.modelo || '';
+
+            // Preencher andar e IDF
+            const andarSelect = document.getElementById('andar');
+            const idfSelect = document.getElementById('idf_responsavel');
+            
+            if (switch_data.andar_id !== null && switch_data.andar_id !== undefined) {
+                andarSelect.value = switch_data.andar_id;
+            } else {
+                andarSelect.value = '';
+            }
+            
+            if (switch_data.idf_responsavel_id !== null && switch_data.idf_responsavel_id !== undefined) {
+                idfSelect.value = switch_data.idf_responsavel_id;
+            } else {
+                idfSelect.value = '';
+            }
         }
 
         // Mostrar informações do switch
@@ -343,15 +417,21 @@
             const nomeInput = document.getElementById('nome');
             const marcaSelect = document.getElementById('marca');
             const modeloSelect = document.getElementById('modelo');
+            const andarSelect = document.getElementById('andar');
+            const idfSelect = document.getElementById('idf_responsavel');
             
             nomeInput.value = '';
             marcaSelect.value = '';
             modeloSelect.innerHTML = '<option value="">Selecione a marca primeiro</option>';
+            andarSelect.value = '';
+            idfSelect.value = '';
             
             // Desabilitar campos
             nomeInput.disabled = true;
             marcaSelect.disabled = true;
             modeloSelect.disabled = true;
+            andarSelect.disabled = true;
+            idfSelect.disabled = true;
         }
 
         // Mostrar mensagem
@@ -398,7 +478,9 @@
             const dados = {
                 nome: document.getElementById('nome').value,
                 marca: document.getElementById('marca').value,
-                modelo: document.getElementById('modelo').value
+                modelo: document.getElementById('modelo').value,
+                andar_id: document.getElementById('andar').value || null,
+                idf_responsavel_id: document.getElementById('idf_responsavel').value || null
             };
 
             try {
@@ -437,8 +519,10 @@
             });
         }
 
-        // Carregar switches ao iniciar a página
+        // Carregar dados ao iniciar a página
         carregarSwitches();
+        carregarAndares();
+        carregarIDFs();
 
         window.addEventListener('DOMContentLoaded', function() {
             fetch('/empresa_atual')

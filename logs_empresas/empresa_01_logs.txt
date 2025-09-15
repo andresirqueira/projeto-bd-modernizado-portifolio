@@ -1,0 +1,33 @@
+[2025-08-21 10:51:46] Usuario: admin_01 | Acao: LIMPAR_LOGS | Detalhes: Todos os logs foram limpos | Status: sucesso
+[2025-08-22 08:05:32] Usuario: admin_01 | Acao: UPLOAD_LOGO_EMPRESA | Detalhes: Logo logo.png enviado para empresa empresa_01 | Status: sucesso
+[2025-08-22 08:07:21] Usuario: admin_01 | Acao: UPLOAD_FOTO_SALA | Detalhes: Foto sala-teste.png enviada para empresa empresa_01 | Status: sucesso
+[2025-08-22 08:07:27] Usuario: admin_01 | Acao: UPLOAD_FOTO_SALA | Detalhes: Foto sala-teste2.png enviada para empresa empresa_01 | Status: sucesso
+[2025-08-22 08:11:38] Usuario: admin_01 | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=2, Nome=Sala Teste 1 (via formulário) | Status: sucesso
+[2025-08-22 08:12:32] Usuario: admin_01 | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=2, Nome=Sala Teste 01, Equipamentos desatrelados=0, Equipamentos vinculados=0 | Status: sucesso
+[2025-08-22 08:15:01] Usuario: admin_01 | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=3, Nome=Sala Teste 02 (via formulário) | Status: sucesso
+[2025-08-22 08:16:29] Usuario: admin_01 | Acao: EXCLUIR_SALA | Detalhes: Sala excluída: ID=3, Nome=Sala Teste 02 | Status: sucesso
+[2025-08-22 08:21:27] Usuario: admin_01 | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=1, Nome=TV, Tipo=TV, Marca=LG, Modelo=55UN731C0SC | Status: sucesso
+[2025-08-22 08:23:49] Usuario: admin_01 | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=2, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=CTL-1000 | Status: sucesso
+[2025-08-22 08:24:11] Usuario: admin_01 | Acao: EXCLUIR_EQUIPAMENTO | Detalhes: Equipamento excluído: ID=2, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=CTL-1000 | Status: sucesso
+[2025-08-22 08:26:38] Usuario: admin_01 | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=3, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-08-22 08:33:47] Usuario: admin_01 | Acao: REMOVER_LOGO_EMPRESA | Detalhes: Logo removido da empresa empresa_01 | Status: sucesso
+[2025-08-22 08:34:00] Usuario: admin_01 | Acao: UPLOAD_LOGO_EMPRESA | Detalhes: Logo logo.png enviado para empresa empresa_01 | Status: sucesso
+[2025-08-22 09:15:41] Usuario: admin_01 | Acao: REMOVER_LOGO_EMPRESA | Detalhes: Logo removido da empresa empresa_01 | Status: sucesso
+[2025-08-22 09:16:49] Usuario: admin_01 | Acao: EXCLUIR_SALA | Detalhes: Sala excluída: ID=2, Nome=Sala Teste 01 | Status: sucesso
+[2025-08-22 09:17:10] Usuario: admin_01 | Acao: EXCLUIR_EQUIPAMENTO | Detalhes: Equipamento excluído: ID=1, Nome=TV, Tipo=TV, Marca=LG, Modelo=55UN731C0SC | Status: sucesso
+[2025-08-22 09:17:12] Usuario: admin_01 | Acao: EXCLUIR_EQUIPAMENTO | Detalhes: Equipamento excluído: ID=3, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-08-22 11:02:13] Usuario: admin_01 | Acao: EXCLUIR_FOTO_SALA | Detalhes: Foto sala-teste.png excluída da empresa empresa_01 | Status: sucesso
+[2025-08-22 11:02:15] Usuario: admin_01 | Acao: EXCLUIR_FOTO_SALA | Detalhes: Foto sala-teste2.png excluída da empresa empresa_01 | Status: sucesso
+[2025-08-22 11:35:47] Usuario: admin_01 | Acao: UPLOAD_LOGO_EMPRESA | Detalhes: Logo logo.png enviado para empresa empresa_01 | Status: sucesso
+[2025-08-22 11:35:54] Usuario: admin_01 | Acao: REMOVER_LOGO_EMPRESA | Detalhes: Logo removido da empresa empresa_01 | Status: sucesso
+[2025-08-22 11:42:01] Usuario: admin_01 | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=4, Nome=Sala Teste (via formulário) | Status: sucesso
+[2025-08-22 11:42:16] Usuario: admin_01 | Acao: UPLOAD_FOTO_SALA | Detalhes: Foto sala-teste.png enviada para empresa empresa_01 | Status: sucesso
+[2025-08-22 11:42:25] Usuario: admin_01 | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=4, Nome=Sala Teste, Equipamentos desatrelados=0, Equipamentos vinculados=0 | Status: sucesso
+[2025-08-22 11:59:28] Usuario: admin_01 | Acao: EXCLUIR_SALA | Detalhes: Sala excluída: ID=4, Nome=Sala Teste | Status: sucesso
+[2025-08-22 12:00:38] Usuario: admin_01 | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=5, Nome=Sala Teste (via formulário) | Status: sucesso
+[2025-08-22 12:14:51] Usuario: admin_01 | Acao: EXCLUIR_SALA | Detalhes: Sala excluída: ID=5, Nome=Sala Teste | Status: sucesso
+[2025-08-22 12:16:47] Usuario: admin_01 | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=6, Nome=Sala Teste (via formulário) | Status: sucesso
+[2025-08-22 12:17:25] Usuario: admin_01 | Acao: EXCLUIR_SALA | Detalhes: Sala excluída: ID=6, Nome=Sala Teste | Status: sucesso
+[2025-08-22 12:18:12] Usuario: admin_01 | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=7, Nome=Sala Teste (via formulário) | Status: sucesso
+[2025-08-22 12:19:00] Usuario: admin_01 | Acao: EXCLUIR_SALA | Detalhes: Sala excluída: ID=7, Nome=Sala Teste | Status: sucesso
+[2025-08-22 12:20:24] Usuario: admin_01 | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=8, Nome=Sala Tetse (via formulário) | Status: sucesso

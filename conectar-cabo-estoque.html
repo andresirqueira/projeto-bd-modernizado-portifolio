@@ -314,13 +314,13 @@
                 <div class="text-center">
                     <i class="fas fa-check-circle text-6xl text-green-500 mb-4"></i>
                     <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Cabo Conectado!</h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-6">O cabo foi conectado com sucesso.</p>
+                    <p class="text-gray-600 dark:text-gray-300 mb-2">O cabo foi conectado com sucesso.</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">
+                        Redirecionando para o estoque em <span id="countdown" class="font-bold text-indigo-600 dark:text-indigo-400">3</span> segundos...
+                    </p>
                     <div class="flex gap-3">
-                        <button onclick="fecharModal()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
-                            OK
-                        </button>
-                        <button onclick="voltarCabosEstoque()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
-                            Voltar ao Estoque
+                        <button onclick="fecharModal()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                            <i class="fas fa-arrow-left mr-2"></i>Voltar ao Estoque
                         </button>
                     </div>
                 </div>
@@ -358,12 +358,30 @@
                 // Preencher informações do cabo
                 const infoDiv = document.getElementById('infoCabo');
                 infoDiv.innerHTML = `
-                    <div><strong>Código:</strong> ${caboInfo.codigo_unico}</div>
-                    <div><strong>Tipo:</strong> ${caboInfo.tipo || 'Não informado'}</div>
-                    <div><strong>Comprimento:</strong> ${caboInfo.comprimento ? caboInfo.comprimento + 'm' : 'Não informado'}</div>
-                    <div><strong>Marca:</strong> ${caboInfo.marca || 'Não informado'}</div>
-                    <div><strong>Modelo:</strong> ${caboInfo.modelo || 'Não informado'}</div>
-                    <div><strong>Status:</strong> <span class="px-2 py-1 rounded text-xs ${caboInfo.status === 'funcionando' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">${caboInfo.status === 'funcionando' ? 'Funcionando' : 'Com Defeito'}</span></div>
+                    <div class="flex justify-between items-center py-2 border-b border-blue-200 dark:border-blue-700 last:border-b-0">
+                        <span class="font-semibold text-blue-700 dark:text-blue-300">Código:</span>
+                        <span class="text-blue-800 dark:text-blue-200 font-mono">${caboInfo.codigo_unico}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-blue-200 dark:border-blue-700 last:border-b-0">
+                        <span class="font-semibold text-blue-700 dark:text-blue-300">Tipo:</span>
+                        <span class="text-blue-800 dark:text-blue-200">${caboInfo.tipo || 'Não informado'}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-blue-200 dark:border-blue-700 last:border-b-0">
+                        <span class="font-semibold text-blue-700 dark:text-blue-300">Comprimento:</span>
+                        <span class="text-blue-800 dark:text-blue-200">${caboInfo.comprimento ? caboInfo.comprimento + 'm' : 'Não informado'}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-blue-200 dark:border-blue-700 last:border-b-0">
+                        <span class="font-semibold text-blue-700 dark:text-blue-300">Marca:</span>
+                        <span class="text-blue-800 dark:text-blue-200">${caboInfo.marca || 'Não informado'}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-blue-200 dark:border-blue-700 last:border-b-0">
+                        <span class="font-semibold text-blue-700 dark:text-blue-300">Modelo:</span>
+                        <span class="text-blue-800 dark:text-blue-200">${caboInfo.modelo || 'Não informado'}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2">
+                        <span class="font-semibold text-blue-700 dark:text-blue-300">Status:</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-medium ${caboInfo.status === 'funcionando' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'}">${caboInfo.status === 'funcionando' ? 'Funcionando' : 'Com Defeito'}</span>
+                    </div>
                 `;
             } catch (error) {
                 console.error('Erro ao carregar informações do cabo:', error);
@@ -456,13 +474,24 @@
             // Limpar select atual
             select.innerHTML = '<option value="">Selecione o equipamento...</option>';
             
-            // Filtrar equipamentos que correspondem ao termo de busca
-            const equipamentosFiltrados = equipamentos.filter(eq => {
-                const nome = eq.nome.toLowerCase();
-                const tipo = eq.tipo.toLowerCase();
-                const sala = (eq.sala_nome || 'Sem Sala').toLowerCase();
-                return nome.includes(termo) || tipo.includes(termo) || sala.includes(termo);
-            });
+            let equipamentosFiltrados;
+            
+            // Verificar se o termo de busca é "sem sala"
+            if (termo === 'sem sala' || termo === 'sem_sala') {
+                // Para "sem sala", mostrar apenas Ponto Usuário USB e Ponto Usuário HDMI
+                equipamentosFiltrados = equipamentos.filter(eq => 
+                    eq.nome.toLowerCase().includes('ponto usuário usb') || 
+                    eq.nome.toLowerCase().includes('ponto usuário hdmi')
+                );
+            } else {
+                // Filtrar equipamentos que correspondem ao termo de busca
+                equipamentosFiltrados = equipamentos.filter(eq => {
+                    const nome = eq.nome.toLowerCase();
+                    const tipo = eq.tipo.toLowerCase();
+                    const sala = (eq.sala_nome || 'Sem Sala').toLowerCase();
+                    return nome.includes(termo) || tipo.includes(termo) || sala.includes(termo);
+                });
+            }
             
             // Agrupar equipamentos filtrados por sala
             const equipamentosPorSala = {};
@@ -501,7 +530,7 @@
             if (equipamentosFiltrados.length === 0) {
                 const option = document.createElement('option');
                 option.value = "";
-                option.textContent = "Nenhum equipamento encontrado";
+                option.textContent = termo === 'sem sala' || termo === 'sem_sala' ? "Nenhum Ponto Usuário encontrado" : "Nenhum equipamento encontrado";
                 option.disabled = true;
                 select.appendChild(option);
             }
@@ -789,6 +818,24 @@
                     throw new Error(error.mensagem || 'Erro ao conectar cabo');
                 }
 
+                // Resetar formulário
+                document.getElementById('formConexao').reset();
+                
+                // Limpar campos de busca
+                document.getElementById('busca_origem').value = '';
+                document.getElementById('busca_destino').value = '';
+                document.getElementById('busca_rede').value = '';
+                
+                // Restaurar selects de equipamentos
+                if (window.equipamentosOriginais) {
+                    document.getElementById('equipamento_origem').innerHTML = window.equipamentosOriginais.equipOrigem;
+                    document.getElementById('equipamento_destino').innerHTML = window.equipamentosOriginais.equipDestino;
+                    document.getElementById('equipamento_rede').innerHTML = window.equipamentosOriginais.equipRede;
+                }
+                
+                // Resetar visual dos cards de radio
+                updateRadioCards('direta');
+                
                 // Mostrar modal de sucesso
                 mostrarModalSucesso();
                 
@@ -801,11 +848,38 @@
         // Mostrar modal de sucesso
         function mostrarModalSucesso() {
             document.getElementById('modalSucesso').classList.remove('hidden');
+            
+            // Contagem regressiva
+            let countdown = 3;
+            const countdownElement = document.getElementById('countdown');
+            
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                countdownElement.textContent = countdown;
+                
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    const params = new URLSearchParams(window.location.search);
+                    const redirect = params.get('redirect');
+                    if (redirect) {
+                        window.location.href = redirect;
+                    } else {
+                        voltarCabosEstoque();
+                    }
+                }
+            }, 1000);
         }
 
-        // Fechar modal
+        // Fechar modal e voltar ao estoque
         function fecharModal() {
             document.getElementById('modalSucesso').classList.add('hidden');
+            const params = new URLSearchParams(window.location.search);
+            const redirect = params.get('redirect');
+            if (redirect) {
+                window.location.href = redirect;
+            } else {
+                voltarCabosEstoque();
+            }
         }
 
         // Voltar aos cabos em estoque

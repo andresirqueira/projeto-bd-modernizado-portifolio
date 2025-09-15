@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar IDF</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="static/img/favicon-lapis.png">
+</head>
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+  <div class="relative w-full max-w-3xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+    <button onclick="voltarGerenciar()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+      <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+    </button>
+    <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+    <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+      <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+    </button>
+
+    <div class="text-center mt-8 mb-8">
+      <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+        <i class="fas fa-edit text-indigo-600 dark:text-indigo-400 mr-3"></i>
+        Editar IDF
+      </h1>
+      <p class="text-gray-600 dark:text-gray-300">Atualize as informações do IDF selecionado</p>
+    </div>
+
+    <form id="formEditarIDF" class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nome</label>
+          <input id="nome" type="text" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Andar</label>
+          <select id="andar_id" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+            <option value="">Selecione um andar</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Descrição</label>
+        <textarea id="descricao" rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white dark:border-gray-600"></textarea>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Status</label>
+          <select id="status" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+            <option value="ativo">Ativo</option>
+            <option value="inativo">Inativo</option>
+            <option value="manutencao">Em Manutenção</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Foto (URL já enviada)</label>
+          <input id="foto" type="text" placeholder="Cole a URL da imagem ou deixe em branco" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-4 pt-4">
+        <button type="button" onclick="voltarGerenciar()" class="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-lg transition-colors">
+          Cancelar
+        </button>
+        <button type="submit" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors">
+          Salvar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function toggleDarkMode(){
+      if(document.documentElement.classList.contains('dark')){document.documentElement.classList.remove('dark');localStorage.setItem('theme','light');}
+      else{document.documentElement.classList.add('dark');localStorage.setItem('theme','dark');}
+    }
+    if(localStorage.getItem('theme')==='dark'){document.documentElement.classList.add('dark');}
+
+    function voltarGerenciar(){window.location.href='gerenciar-idfs.html';}
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const idfId = urlParams.get('id');
+
+    async function carregarAndares(){
+      const resp = await fetch('/andares');
+      const lista = await resp.json();
+      const sel = document.getElementById('andar_id');
+      sel.innerHTML = '<option value="">Selecione um andar</option>';
+      lista.forEach(a=>{const o=document.createElement('option');o.value=a.id;o.textContent=a.titulo;sel.appendChild(o);});
+    }
+
+    async function carregarIDF(){
+      const resp = await fetch('/idfs/'+idfId);
+      if(!resp.ok){alert('IDF não encontrado');voltarGerenciar();return;}
+      const idf = await resp.json();
+      document.getElementById('nome').value = idf.nome || '';
+      document.getElementById('andar_id').value = idf.andar_id || '';
+      document.getElementById('descricao').value = idf.descricao || '';
+      document.getElementById('status').value = idf.status || 'ativo';
+      document.getElementById('foto').value = idf.foto || '';
+    }
+
+    document.getElementById('formEditarIDF').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const dados = {
+        nome: document.getElementById('nome').value,
+        andar_id: document.getElementById('andar_id').value,
+        descricao: document.getElementById('descricao').value,
+        status: document.getElementById('status').value,
+        foto: document.getElementById('foto').value
+      };
+      const resp = await fetch('/idfs/'+idfId,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(dados)});
+      const json = await resp.json();
+      if(json.status==='ok'){alert('IDF atualizado com sucesso!');voltarGerenciar();}
+      else{alert('Erro: '+(json.mensagem||'Falha ao atualizar'));}
+    });
+
+    (async function init(){
+      if(!idfId){alert('ID do IDF não informado');return;}
+      await carregarAndares();
+      await carregarIDF();
+      fetch('/empresa_atual').then(r=>r.json()).then(data=>{const el=document.getElementById('empresa-logada');if(data.logo){el.innerHTML=`<img src="${data.logo}" alt="Logo" style="max-height:40px;max-width:120px;object-fit:contain;">`}});
+    })();
+  </script>
+</body>
+</html>
+
+

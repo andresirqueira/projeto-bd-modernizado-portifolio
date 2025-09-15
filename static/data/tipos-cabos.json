@@ -1,0 +1,350 @@
+[
+  {
+    "nome": "USB-A para USB-B",
+    "descricao": "Cabo USB tipo A para tipo B (printer)",
+    "icone": "fas fa-usb",
+    "categoria": "dados"
+  },
+  {
+    "nome": "USB-A para USB-C",
+    "descricao": "Cabo USB tipo A para tipo C",
+    "icone": "fas fa-usb",
+    "categoria": "dados"
+  },
+  {
+    "nome": "USB-C para USB-C",
+    "descricao": "Cabo USB tipo C para tipo C",
+    "icone": "fas fa-usb",
+    "categoria": "dados"
+  },
+  {
+    "nome": "USB-A para Micro-USB",
+    "descricao": "Cabo USB tipo A para Micro-USB",
+    "icone": "fas fa-usb",
+    "categoria": "dados"
+  },
+  {
+    "nome": "USB-C para Micro-USB",
+    "descricao": "Cabo USB tipo C para Micro-USB",
+    "icone": "fas fa-usb",
+    "categoria": "dados"
+  },
+  {
+    "nome": "USB-A para Mini-USB",
+    "descricao": "Cabo USB tipo A para Mini-USB",
+    "icone": "fas fa-usb",
+    "categoria": "dados"
+  },
+  {
+    "nome": "HDMI Standard",
+    "descricao": "Cabo HDMI Standard (1.4)",
+    "icone": "fas fa-tv",
+    "categoria": "audio-video"
+  },
+  {
+    "nome": "HDMI High Speed",
+    "descricao": "Cabo HDMI High Speed (2.0)",
+    "icone": "fas fa-tv",
+    "categoria": "audio-video"
+  },
+  {
+    "nome": "HDMI Ultra High Speed",
+    "descricao": "Cabo HDMI Ultra High Speed (2.1)",
+    "icone": "fas fa-tv",
+    "categoria": "audio-video"
+  },
+  {
+    "nome": "Mini HDMI",
+    "descricao": "Cabo Mini HDMI",
+    "icone": "fas fa-tv",
+    "categoria": "audio-video"
+  },
+  {
+    "nome": "Micro HDMI",
+    "descricao": "Cabo Micro HDMI",
+    "icone": "fas fa-tv",
+    "categoria": "audio-video"
+  },
+  {
+    "nome": "DVI-D",
+    "descricao": "Cabo DVI Digital",
+    "icone": "fas fa-desktop",
+    "categoria": "audio-video"
+  },
+  {
+    "nome": "DVI-I",
+    "descricao": "Cabo DVI Integrado (Digital + Analógico)",
+    "icone": "fas fa-desktop",
+    "categoria": "audio-video"
+  },
+  {
+    "nome": "DVI-A",
+    "descricao": "Cabo DVI Analógico",
+    "icone": "fas fa-desktop",
+    "categoria": "audio-video"
+  },
+  {
+    "nome": "VGA 15-pin",
+    "descricao": "Cabo VGA 15 pinos",
+    "icone": "fas fa-desktop",
+    "categoria": "audio-video"
+  },
+  {
+    "nome": "DisplayPort 1.2",
+    "descricao": "Cabo DisplayPort versão 1.2",
+    "icone": "fas fa-monitor",
+    "categoria": "audio-video"
+  },
+  {
+    "nome": "Coaxial RG6",
+    "descricao": "Cabo coaxial RG6 para instalações residenciais e comerciais",
+    "icone": "fas fa-broadcast-tower",
+    "categoria": "coaxial"
+  },
+  {
+    "nome": "Coaxial RG11",
+    "descricao": "Cabo coaxial RG11 para longas distâncias e instalações profissionais",
+    "icone": "fas fa-satellite-dish",
+    "categoria": "coaxial"
+  },
+  {
+    "nome": "Coaxial RG59",
+    "descricao": "Cabo coaxial RG59 para curtas distâncias e instalações domésticas",
+    "icone": "fas fa-antenna",
+    "categoria": "coaxial"
+  },
+  {
+    "nome": "Coaxial RG213",
+    "descricao": "Cabo coaxial RG213 para instalações profissionais de alta qualidade",
+    "icone": "fas fa-network-wired",
+    "categoria": "coaxial"
+  },
+  {
+    "nome": "Ethernet",
+    "descricao": "Cabo de rede Ethernet para transmissão de dados",
+    "icone": "fas fa-network-wired",
+    "categoria": "rede"
+  },
+  {
+    "nome": "Ethernet Cat5e",
+    "descricao": "Cabo de rede Ethernet Cat5e para transmissão de dados",
+    "icone": "fas fa-network-wired",
+    "categoria": "rede"
+  },
+  {
+    "nome": "Ethernet Cat6",
+    "descricao": "Cabo de rede Ethernet Cat6 para transmissão de dados de alta velocidade",
+    "icone": "fas fa-network-wired",
+    "categoria": "rede"
+  },
+  {
+    "nome": "Ethernet Cat6a",
+    "descricao": "Cabo de rede Ethernet Cat6a para transmissão de dados de alta velocidade",
+    "icone": "fas fa-network-wired",
+    "categoria": "rede"
+  },
+  {
+    "nome": "Ethernet Cat7",
+    "descricao": "Cabo de rede Ethernet Cat7 para transmissão de dados de alta velocidade",
+    "icone": "fas fa-network-wired",
+    "categoria": "rede"
+  },
+  {
+    "nome": "Ethernet Cat8",
+    "descricao": "Cabo de rede Ethernet Cat8 para transmissão de dados de alta velocidade",
+    "icone": "fas fa-network-wired",
+    "categoria": "rede"
+  },
+  {
+    "nome": "RJ45",
+    "descricao": "Cabo de rede RJ45 para conexões Ethernet",
+    "icone": "fas fa-network-wired",
+    "categoria": "rede"
+  },
+  {
+    "nome": "LAN",
+    "descricao": "Cabo de rede LAN para conexões locais",
+    "icone": "fas fa-network-wired",
+    "categoria": "rede"
+  },
+  {
+    "nome": "UTP",
+    "descricao": "Cabo de rede UTP (Unshielded Twisted Pair)",
+    "icone": "fas fa-network-wired",
+    "categoria": "rede"
+  },
+  {
+    "nome": "STP",
+    "descricao": "Cabo de rede STP (Shielded Twisted Pair)",
+    "icone": "fas fa-network-wired",
+    "categoria": "rede"
+  },
+  {
+    "nome": "FTP",
+    "descricao": "Cabo de rede FTP (Foiled Twisted Pair)",
+    "icone": "fas fa-network-wired",
+    "categoria": "rede"
+  },
+  {
+    "nome": "SFP",
+    "descricao": "Cabo de rede SFP para conexões de alta velocidade",
+    "icone": "fas fa-network-wired",
+    "categoria": "rede"
+  },
+  {
+    "nome": "Patch Cord",
+    "descricao": "Cabo patch cord para conexões de rede",
+    "icone": "fas fa-network-wired",
+    "categoria": "rede"
+  },
+  {
+    "nome": "Cabo de rede",
+    "descricao": "Cabo de rede genérico para transmissão de dados",
+    "icone": "fas fa-network-wired",
+    "categoria": "rede"
+  },
+  {
+    "nome": "Cabo de dados",
+    "descricao": "Cabo de dados para transmissão de informações",
+    "icone": "fas fa-network-wired",
+    "categoria": "rede"
+  },
+  {
+    "nome": "Fibra Óptica",
+    "descricao": "Cabo de fibra óptica para transmissão de dados de alta velocidade",
+    "icone": "fas fa-lightbulb",
+    "categoria": "fibra"
+  },
+  {
+    "nome": "Fibra Óptica Multimodo",
+    "descricao": "Cabo de fibra óptica multimodo para transmissão de dados de alta velocidade",
+    "icone": "fas fa-lightbulb",
+    "categoria": "fibra"
+  },
+  {
+    "nome": "Fibra Óptica Monomodo",
+    "descricao": "Cabo de fibra óptica monomodo para transmissão de dados de alta velocidade",
+    "icone": "fas fa-lightbulb",
+    "categoria": "fibra"
+  },
+  {
+    "nome": "Audio RCA",
+    "descricao": "Cabo de áudio RCA para transmissão de sinal analógico",
+    "icone": "fas fa-volume-up",
+    "categoria": "audio"
+  },
+  {
+    "nome": "Audio XLR",
+    "descricao": "Cabo de áudio XLR para equipamentos profissionais",
+    "icone": "fas fa-microphone",
+    "categoria": "audio"
+  },
+  {
+    "nome": "Audio Bornes",
+    "descricao": "Cabo de áudio para caixas de som com bornes/terminais de parafuso",
+    "icone": "fas fa-volume-up",
+    "categoria": "audio"
+  },
+  {
+    "nome": "Jack 3.5mm para 6.35mm",
+    "descricao": "Cabo de áudio Jack 3.5mm para 6.35mm",
+    "icone": "fas fa-volume-up",
+    "categoria": "audio"
+  },
+  {
+    "nome": "Jack 6.35mm para 6.35mm",
+    "descricao": "Cabo de áudio Jack 6.35mm para 6.35mm",
+    "icone": "fas fa-volume-up",
+    "categoria": "audio"
+  },
+  {
+    "nome": "Thunderbolt",
+    "descricao": "Cabo Thunderbolt para transmissão de dados de alta velocidade",
+    "icone": "fas fa-bolt",
+    "categoria": "dados"
+  },
+  {
+    "nome": "SATA",
+    "descricao": "Cabo SATA para conexão de dispositivos de armazenamento",
+    "icone": "fas fa-hdd",
+    "categoria": "dados"
+  },
+  {
+    "nome": "Power",
+    "descricao": "Cabo de alimentação para fornecimento de energia",
+    "icone": "fas fa-plug",
+    "categoria": "energia"
+  },
+  {
+    "nome": "Power IEC C13",
+    "descricao": "Cabo de alimentação IEC C13 para equipamentos eletrônicos",
+    "icone": "fas fa-plug",
+    "categoria": "energia"
+  },
+  {
+    "nome": "Power IEC C14",
+    "descricao": "Cabo de alimentação IEC C14 para equipamentos eletrônicos",
+    "icone": "fas fa-plug",
+    "categoria": "energia"
+  },
+  {
+    "nome": "Power NEMA 5-15",
+    "descricao": "Cabo de alimentação NEMA 5-15 para equipamentos norte-americanos",
+    "icone": "fas fa-plug",
+    "categoria": "energia"
+  },
+  {
+    "nome": "Power NEMA 5-20",
+    "descricao": "Cabo de alimentação NEMA 5-20 para equipamentos norte-americanos",
+    "icone": "fas fa-plug",
+    "categoria": "energia"
+  },
+  {
+    "nome": "Power DC 5.5x2.1mm",
+    "descricao": "Cabo de alimentação DC 5.5x2.1mm para equipamentos portáteis",
+    "icone": "fas fa-plug",
+    "categoria": "energia"
+  },
+  {
+    "nome": "Power DC 5.5x2.5mm",
+    "descricao": "Cabo de alimentação DC 5.5x2.5mm para equipamentos portáteis",
+    "icone": "fas fa-plug",
+    "categoria": "energia"
+  },
+  {
+    "nome": "Power DC 3.5x1.35mm",
+    "descricao": "Cabo de alimentação DC 3.5x1.35mm para equipamentos portáteis",
+    "icone": "fas fa-plug",
+    "categoria": "energia"
+  },
+  {
+    "nome": "Serial",
+    "descricao": "Cabo serial para transmissão de dados em série",
+    "icone": "fas fa-exchange-alt",
+    "categoria": "dados"
+  },
+  {
+    "nome": "Parallel",
+    "descricao": "Cabo paralelo para transmissão de dados em paralelo",
+    "icone": "fas fa-arrows-alt-h",
+    "categoria": "dados"
+  },
+  {
+    "nome": "SCSI",
+    "descricao": "Cabo SCSI para conexão de dispositivos de alta velocidade",
+    "icone": "fas fa-server",
+    "categoria": "dados"
+  },
+  {
+    "nome": "FireWire",
+    "descricao": "Cabo FireWire para transmissão de dados de alta velocidade",
+    "icone": "fas fa-fire",
+    "categoria": "dados"
+  },
+  {
+    "nome": "Outro",
+    "descricao": "Outro tipo de cabo não especificado",
+    "icone": "fas fa-cable",
+    "categoria": "outros"
+  }
+]

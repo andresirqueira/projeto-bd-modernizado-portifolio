@@ -174,6 +174,15 @@
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
                     <option value="">Selecione o tipo...</option>
                 </select>
+                <!-- Mensagem informativa para patch panel -->
+                <div id="avisoPatchPanel" class="hidden mt-2 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-info-circle text-blue-600 dark:text-blue-400 mr-2"></i>
+                        <span class="text-sm text-blue-800 dark:text-blue-200">
+                            <strong>Via Patch Panel:</strong> Apenas cabos Ethernet são permitidos para conexões via patch panel.
+                        </span>
+                    </div>
+                </div>
             </div>
 
             <!-- Seção de Conexão Direta -->
@@ -531,13 +540,20 @@
                 : 'Selecione o equipamento...';
             select.innerHTML = `<option value="">${placeholderText}</option>`;
             
-            // Filtrar equipamentos da sala selecionada
-            const equipamentosFiltrados = equipamentos.filter(eq => eq.sala_id == salaId);
+            let equipamentosFiltrados;
+            
+            if (salaId === 'sem_sala') {
+                // Filtrar equipamentos sem sala (sala_id é null ou undefined)
+                equipamentosFiltrados = equipamentos.filter(eq => !eq.sala_id || eq.sala_id === null);
+            } else {
+                // Filtrar equipamentos da sala selecionada
+                equipamentosFiltrados = equipamentos.filter(eq => eq.sala_id == salaId);
+            }
             
             if (equipamentosFiltrados.length === 0) {
                 const option = document.createElement('option');
                 option.value = "";
-                option.textContent = "Nenhum equipamento nesta sala";
+                option.textContent = salaId === 'sem_sala' ? "Nenhum equipamento sem sala" : "Nenhum equipamento nesta sala";
                 option.disabled = true;
                 select.appendChild(option);
                 return;
@@ -633,10 +649,10 @@
                 const filtroDestino = document.getElementById('filtro_sala_destino');
                 const filtroRede = document.getElementById('filtro_sala_rede');
                 
-                // Limpar e adicionar opção "Todas as salas"
-                filtroOrigem.innerHTML = '<option value="">Todas as salas</option>';
-                filtroDestino.innerHTML = '<option value="">Todas as salas</option>';
-                filtroRede.innerHTML = '<option value="">Todas as salas</option>';
+                // Limpar e adicionar opções
+                filtroOrigem.innerHTML = '<option value="">Todas as salas</option><option value="sem_sala">Sem sala</option>';
+                filtroDestino.innerHTML = '<option value="">Todas as salas</option><option value="sem_sala">Sem sala</option>';
+                filtroRede.innerHTML = '<option value="">Todas as salas</option><option value="sem_sala">Sem sala</option>';
                 
                 // Ordenar salas por nome
                 salas.sort((a, b) => a.nome.localeCompare(b.nome));
@@ -830,6 +846,7 @@
             const secaoConexaoDireta = document.getElementById('secaoConexaoDireta');
             const secaoPatchPanel = document.getElementById('secaoPatchPanel');
             const selectedValue = document.querySelector('input[name="tipo_conexao"]:checked').value;
+            const avisoPatchPanel = document.getElementById('avisoPatchPanel');
 
             // Atualizar visual dos cards
             updateRadioCards(selectedValue);
@@ -837,9 +854,75 @@
             if (selectedValue === 'patch_panel') {
                 secaoConexaoDireta.classList.add('hidden');
                 secaoPatchPanel.classList.remove('hidden');
+                // Filtrar tipos de cabo para mostrar apenas Ethernet
+                filtrarTiposCabosParaPatchPanel();
+                // Mostrar mensagem informativa
+                avisoPatchPanel.classList.remove('hidden');
             } else {
                 secaoConexaoDireta.classList.remove('hidden');
                 secaoPatchPanel.classList.add('hidden');
+                // Mostrar todos os tipos de cabo
+                restaurarTodosTiposCabos();
+                // Ocultar mensagem informativa
+                avisoPatchPanel.classList.add('hidden');
+            }
+        }
+
+        // Função para filtrar tipos de cabo para patch panel (apenas Ethernet)
+        function filtrarTiposCabosParaPatchPanel() {
+            const selectTipo = document.getElementById('tipo');
+            const tipoAtual = selectTipo.value;
+            
+            selectTipo.innerHTML = '<option value="">Selecione o tipo...</option>';
+            
+            // Filtrar apenas cabos Ethernet
+            const tiposEthernet = tiposCabos.filter(tipo => 
+                tipo.nome.toLowerCase().includes('ethernet') || 
+                tipo.nome.toLowerCase().includes('cat') ||
+                tipo.nome.toLowerCase().includes('rj45') ||
+                tipo.nome.toLowerCase().includes('lan') ||
+                tipo.nome.toLowerCase().includes('rede') ||
+                tipo.nome.toLowerCase().includes('utp') ||
+                tipo.nome.toLowerCase().includes('stp') ||
+                tipo.nome.toLowerCase().includes('ftp') ||
+                tipo.nome.toLowerCase().includes('sfp') ||
+                tipo.nome.toLowerCase().includes('patch cord') ||
+                tipo.nome.toLowerCase().includes('patch cord') ||
+                tipo.nome.toLowerCase().includes('cabo de rede') ||
+                tipo.nome.toLowerCase().includes('cabo de dados')
+            );
+            
+            tiposEthernet.forEach(tipo => {
+                const option = document.createElement('option');
+                option.value = tipo.nome;
+                option.textContent = `${tipo.nome} - ${tipo.descricao}`;
+                selectTipo.appendChild(option);
+            });
+            
+            // Se o tipo atual não é Ethernet, limpar a seleção
+            if (tipoAtual && !tiposEthernet.find(t => t.nome === tipoAtual)) {
+                selectTipo.value = '';
+                document.getElementById('codigo_unico').value = '';
+            }
+        }
+
+        // Função para restaurar todos os tipos de cabo
+        function restaurarTodosTiposCabos() {
+            const selectTipo = document.getElementById('tipo');
+            const tipoAtual = selectTipo.value;
+            
+            selectTipo.innerHTML = '<option value="">Selecione o tipo...</option>';
+            
+            tiposCabos.forEach(tipo => {
+                const option = document.createElement('option');
+                option.value = tipo.nome;
+                option.textContent = `${tipo.nome} - ${tipo.descricao}`;
+                selectTipo.appendChild(option);
+            });
+            
+            // Restaurar seleção anterior se ainda existir
+            if (tipoAtual && tiposCabos.find(t => t.nome === tipoAtual)) {
+                selectTipo.value = tipoAtual;
             }
         }
 
@@ -917,7 +1000,31 @@
                  const patchPanel = formData.get('patch_panel');
                  const portaPatchPanel = formData.get('porta_patch_panel');
                  
-                                 if (!equipRede) {
+                 // Validar se o tipo de cabo é Ethernet para conexão via patch panel
+                 const tipoCabo = formData.get('tipo');
+                 const isEthernet = tipoCabo && (
+                     tipoCabo.toLowerCase().includes('ethernet') || 
+                     tipoCabo.toLowerCase().includes('cat') ||
+                     tipoCabo.toLowerCase().includes('rj45') ||
+                     tipoCabo.toLowerCase().includes('lan') ||
+                     tipoCabo.toLowerCase().includes('rede') ||
+                     tipoCabo.toLowerCase().includes('utp') ||
+                     tipoCabo.toLowerCase().includes('stp') ||
+                     tipoCabo.toLowerCase().includes('ftp') ||
+                     tipoCabo.toLowerCase().includes('sfp') ||
+                     tipoCabo.toLowerCase().includes('patch cord') ||
+                     tipoCabo.toLowerCase().includes('cabo de rede') ||
+                     tipoCabo.toLowerCase().includes('cabo de dados')
+                 );
+                 
+                 if (!isEthernet) {
+                     alert('Para conexões via patch panel, apenas cabos Ethernet são permitidos. Selecione um tipo de cabo Ethernet.');
+                     const tipoElement = document.getElementById('tipo');
+                     if (tipoElement) tipoElement.focus();
+                     return;
+                 }
+                 
+                 if (!equipRede) {
                     alert('Selecione o equipamento de rede para conexão via patch panel');
                     const equipRedeElement = document.getElementById('equipamento_rede');
                     if (equipRedeElement) equipRedeElement.focus();
@@ -1067,33 +1174,95 @@
              });
          }
 
-        // Verificar se é uma substituição de cabo
-        function verificarSubstituicao() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const isSubstituicao = urlParams.get('substituicao') === 'true';
-            
-            if (isSubstituicao) {
-                const infoSubstituicao = localStorage.getItem('substituicao_cabo');
-                if (infoSubstituicao) {
-                    const dados = JSON.parse(infoSubstituicao);
-                    
-                    // Atualizar título e subtítulo
-                    document.getElementById('tituloPagina').textContent = 'Substituir Cabo';
-                    document.getElementById('subtituloPagina').textContent = 'Adicione o novo cabo para substituir o anterior';
-                    document.getElementById('infoSubstituicao').classList.remove('hidden');
-                    
-                    // Preencher tipo de cabo automaticamente e gerar código
-                    setTimeout(() => {
-                        const tipoSelect = document.getElementById('tipo');
-                        if (tipoSelect) {
-                            tipoSelect.value = dados.tipo_cabo;
-                            // Gerar código único automaticamente
-                            atualizarCodigoUnico();
-                        }
-                    }, 500);
-                }
-            }
-        }
+                 // Verificar se é uma substituição de cabo ou se há sala_id na URL
+         function verificarSubstituicao() {
+             const urlParams = new URLSearchParams(window.location.search);
+             const isSubstituicao = urlParams.get('substituicao') === 'true';
+             const salaId = urlParams.get('sala_id');
+             
+             if (isSubstituicao) {
+                 const infoSubstituicao = localStorage.getItem('substituicao_cabo');
+                 if (infoSubstituicao) {
+                     const dados = JSON.parse(infoSubstituicao);
+                     
+                     // Atualizar título e subtítulo
+                     document.getElementById('tituloPagina').textContent = 'Substituir Cabo';
+                     document.getElementById('subtituloPagina').textContent = 'Adicione o novo cabo para substituir o anterior';
+                     document.getElementById('infoSubstituicao').classList.remove('hidden');
+                     
+                     // Preencher tipo de cabo automaticamente e gerar código
+                     setTimeout(() => {
+                         const tipoSelect = document.getElementById('tipo');
+                         if (tipoSelect) {
+                             tipoSelect.value = dados.tipo_cabo;
+                             // Gerar código único automaticamente
+                             atualizarCodigoUnico();
+                         }
+                     }, 500);
+                 }
+             }
+             
+             // Se há sala_id na URL, pré-selecionar mas permitir alteração
+             if (salaId) {
+                 setTimeout(() => {
+                     // Pré-selecionar filtros de sala para equipamentos
+                     const filtroOrigem = document.getElementById('filtro_sala_origem');
+                     const filtroDestino = document.getElementById('filtro_sala_destino');
+                     const filtroRede = document.getElementById('filtro_sala_rede');
+                     
+                     if (filtroOrigem) {
+                         filtroOrigem.value = salaId;
+                         filtroOrigem.classList.add('bg-blue-50', 'dark:bg-blue-900/20', 'border-blue-300', 'dark:border-blue-600');
+                         filtrarEquipamentosPorSala('equipamento_origem', salaId);
+                     }
+                     if (filtroDestino) {
+                         filtroDestino.value = salaId;
+                         filtroDestino.classList.add('bg-blue-50', 'dark:bg-blue-900/20', 'border-blue-300', 'dark:border-blue-600');
+                         filtrarEquipamentosPorSala('equipamento_destino', salaId);
+                     }
+                     if (filtroRede) {
+                         filtroRede.value = salaId;
+                         filtroRede.classList.add('bg-blue-50', 'dark:bg-blue-900/20', 'border-blue-300', 'dark:border-blue-600');
+                         filtrarEquipamentosPorSala('equipamento_rede', salaId);
+                     }
+                     
+                     // Adicionar indicador visual de sala sugerida
+                     adicionarIndicadorSalaSugerida(salaId);
+                 }, 1000); // Aguardar carregamento dos equipamentos
+             }
+         }
+         
+         // Função para adicionar indicador visual de sala sugerida
+         function adicionarIndicadorSalaSugerida(salaId) {
+             // Buscar nome da sala
+             fetch('/salas')
+                 .then(response => response.json())
+                 .then(salas => {
+                     const sala = salas.find(s => s.id == salaId);
+                     if (sala) {
+                         // Adicionar aviso visual acima dos filtros
+                         const avisoDiv = document.createElement('div');
+                         avisoDiv.className = 'mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg';
+                         avisoDiv.innerHTML = `
+                             <div class="flex items-center">
+                                 <i class="fas fa-lightbulb text-blue-600 dark:text-blue-400 mr-2"></i>
+                                 <span class="text-sm text-blue-800 dark:text-blue-200">
+                                     <strong>Sala sugerida:</strong> ${sala.nome} - Esta sala foi pré-selecionada, mas você pode alterar se necessário.
+                                 </span>
+                             </div>
+                         `;
+                         
+                         // Inserir o aviso antes do primeiro filtro
+                         const primeiroFiltro = document.querySelector('[id^="filtro_sala_"]');
+                         if (primeiroFiltro) {
+                             primeiroFiltro.parentElement.parentElement.insertBefore(avisoDiv, primeiroFiltro.parentElement);
+                         }
+                     }
+                 })
+                 .catch(error => {
+                     console.error('Erro ao buscar nome da sala:', error);
+                 });
+         }
 
         // Modificar função de sucesso para incluir conexão automática
         async function adicionarCaboComConexao(dadosCabo) {
@@ -1238,29 +1407,36 @@
                          }
                      }
                      
-                     // Se não for substituição ou erro na conexão, perguntar ao usuário
-                     const querVerCabos = confirm('Cabo adicionado com sucesso! Deseja visualizar os cabos da sala ou retornar ao painel administrativo?');
-                     if (querVerCabos) {
-                         // Buscar informações do equipamento para obter a sala
-                         let salaId = null;
-                         if (dadosCabo.equipamento_origem_id) {
-                             const equipamentoResponse = await fetch(`/equipamentos/${dadosCabo.equipamento_origem_id}`);
-                             const equipamentoInfo = await equipamentoResponse.json();
-                             salaId = equipamentoInfo.sala_id;
-                         } else if (dadosCabo.equipamento_rede_id) {
-                             const equipamentoResponse = await fetch(`/equipamentos/${dadosCabo.equipamento_rede_id}`);
-                             const equipamentoInfo = await equipamentoResponse.json();
-                             salaId = equipamentoInfo.sala_id;
-                         }
-                         
-                         if (salaId) {
-                             window.location.href = `detalhes-cabos-sala.html?id=${salaId}`;
-                         } else {
-                             window.location.href = 'config-admin.html';
-                         }
-                     } else {
-                         window.location.href = 'config-admin.html';
-                     }
+                                           // Se não for substituição ou erro na conexão, verificar se está em iframe (modal)
+                      if (window.parent && window.parent !== window) {
+                          // Está em iframe (modal), fechar modal e recarregar página pai
+                          alert('Cabo adicionado com sucesso!');
+                          window.parent.postMessage({ action: 'closeModal', success: true }, '*');
+                      } else {
+                          // Está na página normal, perguntar ao usuário
+                          const querVerCabos = confirm('Cabo adicionado com sucesso! Deseja visualizar os cabos da sala ou retornar ao painel administrativo?');
+                          if (querVerCabos) {
+                              // Buscar informações do equipamento para obter a sala
+                              let salaId = null;
+                              if (dadosCabo.equipamento_origem_id) {
+                                  const equipamentoResponse = await fetch(`/equipamentos/${dadosCabo.equipamento_origem_id}`);
+                                  const equipamentoInfo = await equipamentoResponse.json();
+                                  salaId = equipamentoInfo.sala_id;
+                              } else if (dadosCabo.equipamento_rede_id) {
+                                  const equipamentoResponse = await fetch(`/equipamentos/${dadosCabo.equipamento_rede_id}`);
+                                  const equipamentoInfo = await equipamentoResponse.json();
+                                  salaId = equipamentoInfo.sala_id;
+                              }
+                              
+                              if (salaId) {
+                                  window.location.href = `detalhes-cabos-sala.html?id=${salaId}`;
+                              } else {
+                                  window.location.href = 'config-admin.html';
+                              }
+                          } else {
+                              window.location.href = 'config-admin.html';
+                          }
+                      }
                 } else {
                     console.error('Erro na resposta do servidor:', resultCabo);
                     alert(`Erro: ${resultCabo.mensagem}`);

@@ -9,6 +9,8 @@
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/png" href="static/img/favicon-lixeira.png">
+    <link rel="stylesheet" href="static/css/tour.css">
+    <script src="static/js/tour.js"></script>
     <script>
       function toggleDarkMode() {
         if (document.documentElement.classList.contains('dark')) {
@@ -37,6 +39,9 @@
         <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
             <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
         </button>
+        <button onclick="iniciarTour()" class="absolute top-4 left-28 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 rounded-full p-2 transition-colors" title="Ajuda - Iniciar tour da página">
+            <i class="fas fa-question text-sm"></i>
+        </button>
         <div class="text-center mt-8 mb-8">
             <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
                 <i class="fas fa-trash text-indigo-600 dark:text-indigo-400 mr-3"></i>
@@ -63,16 +68,26 @@
             <div id="resultadosInfo" class="text-xs text-indigo-600 dark:text-indigo-400 text-center font-medium"></div>
             <div id="cardsSalasContainer" class="flex flex-wrap gap-6 justify-center"></div>
         </div>
-        <div class="msg text-center mt-4 text-lg font-semibold" id="msg"></div>
+        <div class="msg text-center mt-4 text-lg font-semibold text-green-600 dark:text-green-400" id="msg"></div>
     </div>
     <script>
     let todasSalas = [];
     let filtroAtivo = null; // Para controlar qual filtro está ativo
+    const params = new URLSearchParams(window.location.search);
+    const salaIdParam = params.get('id');
     
     async function carregarSalas() {
         const resp = await fetch('/salas');
         const salas = await resp.json();
         todasSalas = salas;
+        if (salaIdParam) {
+            const salaSelecionada = salas.find(s => String(s.id) === String(salaIdParam));
+            if (salaSelecionada) {
+                renderizarConfirmacaoExclusao(salaSelecionada);
+                atualizarIndicadorResultados([salaSelecionada], '');
+                return;
+            }
+        }
         renderizarCards(salas);
         renderizarResumo(salas);
     }
@@ -191,6 +206,32 @@
         container.innerHTML = html;
         renderizarResumo(todasSalas);
     }
+
+    function renderizarConfirmacaoExclusao(sala) {
+        const container = document.getElementById('cardsSalasContainer');
+        let html = '';
+        html += `<div class='bg-gray-100 dark:bg-gray-800 rounded-xl shadow-xl p-8 w-full max-w-2xl'>`;
+        html += `<div class='flex items-start gap-4'>`;
+        if (sala.foto) {
+            html += `<img src='${sala.foto.startsWith('img/') ? 'static/' + sala.foto : sala.foto}' alt='${sala.nome || ''}' class='rounded-md object-cover w-40 h-24'>`;
+        }
+        html += `<div class='flex-1'>`;
+        html += `<div class='font-bold text-2xl text-gray-800 dark:text-white mb-1'>${sala.nome || 'Sala'}</div>`;
+        if (sala.tipo) html += `<div class='text-sm text-gray-600 dark:text-gray-300 mb-1'>Tipo: ${sala.tipo}</div>`;
+        if (sala.descricao) html += `<div class='text-sm text-gray-600 dark:text-gray-300'>${sala.descricao}</div>`;
+        html += `</div>`;
+        html += `</div>`;
+        html += `<div class='mt-6 p-4 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-700'>`;
+        html += `<i class='fas fa-exclamation-triangle mr-2'></i>`;
+        html += `Tem certeza que deseja excluir esta sala? Esta ação não pode ser desfeita.`;
+        html += `</div>`;
+        html += `<div class='mt-6 flex justify-end gap-3'>`;
+        html += `<button class='px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-100 transition' onclick="window.location.href='detalhes-sala.html?id=${sala.id}'">Cancelar</button>`;
+        html += `<button class='px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white transition' onclick='excluirSala(${sala.id})'><i class="fas fa-trash-alt mr-2"></i>Excluir</button>`;
+        html += `</div>`;
+        html += `</div>`;
+        container.innerHTML = html;
+    }
     document.addEventListener('DOMContentLoaded', function() {
         // Filtro de salas avançado
         const filtro = document.getElementById('filtroSala');
@@ -246,14 +287,36 @@
         const resp = await fetch(`/salas/${id}`, { method: 'DELETE' });
         const json = await resp.json();
         if (json.status === 'ok') {
-            btn.closest('.bg-gray-100, .dark\:bg-gray-800').remove();
-            document.getElementById('msg').innerText = 'Sala excluída com sucesso!';
+            const msgDiv = document.getElementById('msg');
+            if (btn && btn.closest) {
+                const card = btn.closest('.bg-gray-100, .dark\\:bg-gray-800');
+                if (card) card.remove();
+                msgDiv.className = 'msg text-center mt-4 text-lg font-semibold text-green-600 dark:text-green-400';
+                msgDiv.innerText = 'Sala excluída com sucesso!';
+                
+                // Atualizar a lista de salas e contadores após exclusão
+                await carregarSalas();
+            } else {
+                msgDiv.className = 'msg text-center mt-4 text-lg font-semibold text-green-600 dark:text-green-400';
+                msgDiv.innerText = 'Sala excluída com sucesso!';
+                setTimeout(() => { window.location.href = 'ver-salas.html'; }, 800);
+            }
         } else {
-            document.getElementById('msg').innerText = 'Erro ao excluir sala!';
+            const msgDiv = document.getElementById('msg');
+            msgDiv.className = 'msg text-center mt-4 text-lg font-semibold text-red-600 dark:text-red-400';
+            msgDiv.innerText = 'Erro ao excluir sala!';
         }
     }
 
     carregarSalas();
+    
+    function iniciarTour() {
+        if (window.sistemaTour) {
+            window.sistemaTour.iniciarTour('excluir-sala');
+        } else {
+            alert('Sistema de tour não carregado. Recarregue a página.');
+        }
+    }
     </script>
     <script src="static/js/logo-manager.js"></script>
     </body>

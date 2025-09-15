@@ -174,12 +174,15 @@
     }
     function renderCards() {
       const tipos = {};
-      let funcionando = 0, defeito = 0, rede = 0;
+      let funcionando = 0, defeito = 0, indisponivel = 0, rede = 0;
       equipamentos.forEach(eq => {
         if (!tipos[eq.tipo]) tipos[eq.tipo] = 0;
         tipos[eq.tipo]++;
-        if (eq.defeito === 1 || eq.defeito === true || eq.defeito === '1') {
+        const defeitoValue = parseInt(eq.defeito) || 0;
+        if (defeitoValue === 1) {
           defeito++;
+        } else if (defeitoValue === 2) {
+          indisponivel++;
         } else {
           funcionando++;
         }
@@ -219,6 +222,14 @@
           value: defeito,
           desc: 'Equipamentos com defeito',
           bg: 'from-red-500 to-pink-500'
+        },
+        {
+          icon: 'fa-exclamation-triangle',
+          iconBg: 'fa-ban',
+          title: 'Indisponíveis',
+          value: indisponivel,
+          desc: 'Equipamentos enviados para outra unidade',
+          bg: 'from-orange-500 to-yellow-500'
         },
         {
           icon: 'fa-plug',

@@ -10,7 +10,9 @@
       tailwind.config = { darkMode: 'class' };
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="static/css/tour.css">
     <link rel="icon" type="image/png" href="static/img/favicon-mais.png">
+    <script src="static/js/tour.js"></script>
     <script>
       function toggleDarkMode() {
         if (document.documentElement.classList.contains('dark')) {
@@ -40,10 +42,13 @@
         <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
             <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
         </button>
+        <button onclick="iniciarTour()" class="absolute top-4 left-28 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 rounded-full p-2 transition-colors" title="Ajuda - Iniciar tour da página">
+            <i class="fas fa-question text-sm"></i>
+        </button>
         <div class="text-center mt-8 mb-8">
             <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
                 <i class="fas fa-plus text-indigo-600 dark:text-indigo-400 mr-3"></i>
-                Cadastrar Sala e Equipamentos
+                Adicionar Sala
             </h1>
             <p class="text-gray-600 dark:text-gray-300">Cadastre uma nova sala e vincule equipamentos</p>
         </div>
@@ -63,9 +68,8 @@
             <label for="andar_id" class="text-gray-700 dark:text-gray-200">Andar ID:</label>
             <select id="andar_id" name="andar_id" required class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white">
                 <option value="">Selecione...</option>
-                <script>for (let i = 0; i < 200; i++) { document.write(`<option value='${i}'>${i}</option>`); }</script>
             </select>
-            <label for="equipamentosSemSala" class="text-gray-700 dark:text-gray-200">Equipamentos sem sala:</label>
+            <label for="equipamentosSemSala" class="text-gray-700 dark:text-gray-200">Equipamentos em estoque:</label>
             <div class="overflow-x-auto"><div id="equipamentosSemSalaTabela" class="mb-4"></div></div>
             <div class="flex justify-center mt-4">
                 <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-8 rounded-lg shadow flex items-center gap-2 transition-colors text-lg">
@@ -73,22 +77,33 @@
                 </button>
             </div>
         </form>
-        <div class="msg text-center mt-4 text-lg font-semibold" id="msg"></div>
+        <div class="msg text-center mt-4 text-lg font-semibold text-green-600 dark:text-green-400" id="msg"></div>
     </div>
     <script>
         async function carregarEquipamentosSemSala() {
-            const resp = await fetch('/equipamentos?sala_id=null');
-            const equipamentos = await resp.json();
-            const tabelaDiv = document.getElementById('equipamentosSemSalaTabela');
-            tabelaDiv.innerHTML = '';
-            if (equipamentos.length === 0) {
-                tabelaDiv.innerHTML = '<em>Nenhum equipamento disponível.</em>';
-                return;
+            try {
+                console.log('Carregando equipamentos disponíveis...');
+                const resp = await fetch('/equipamentos-disponiveis');
+                const equipamentos = await resp.json();
+                console.log('Equipamentos recebidos:', equipamentos);
+                
+                const tabelaDiv = document.getElementById('equipamentosSemSalaTabela');
+                tabelaDiv.innerHTML = '';
+                
+                if (equipamentos.length === 0) {
+                    tabelaDiv.innerHTML = '<em class="text-gray-600 dark:text-gray-300">Nenhum equipamento disponível.</em>';
+                    return;
+                }
+                renderTabelaEquipamentos(equipamentos);
+            } catch (error) {
+                console.error('Erro ao carregar equipamentos:', error);
+                const tabelaDiv = document.getElementById('equipamentosSemSalaTabela');
+                tabelaDiv.innerHTML = '<em class="text-red-600 dark:text-red-400">Erro ao carregar equipamentos.</em>';
             }
-            renderTabelaEquipamentos(equipamentos);
         }
 
         function renderTabelaEquipamentos(equipamentos) {
+            const tabelaDiv = document.getElementById('equipamentosSemSalaTabela');
             let html = `<table class="tabela-equipamentos" style="min-width:1200px;width:100%;border-collapse:collapse;background:#2c3e50;color:#eee;">
                 <thead>
                     <tr>
@@ -112,7 +127,7 @@
                     </tr>
                 </thead>
                 <tbody>`;
-            equipamentos.filter(eq => eq.defeito !== 1 && eq.defeito !== '1' && eq.defeito !== true).forEach(eq => {
+            equipamentos.forEach(eq => {
                 const serie = (eq.dados && eq.dados.serie) ? eq.dados.serie : '';
                 const partnumber = (eq.dados && eq.dados.partnumber) ? eq.dados.partnumber : '';
                 const tamanho = (eq.dados && eq.dados.tamanho) ? eq.dados.tamanho : '';
@@ -144,13 +159,18 @@
             const msgDiv = document.getElementById('msg');
             if (json.status === 'ok') {
                 msgDiv.innerText = 'Sala cadastrada com sucesso!';
-                msgDiv.className = 'msg text-center mt-4 text-lg font-semibold text-green-600';
+                msgDiv.className = 'msg text-center mt-4 text-lg font-semibold text-green-600 dark:text-green-400';
                 form.reset();
+                
+                // Limpar o preview da imagem
+                const preview = document.getElementById('foto-preview-container');
+                preview.innerHTML = "<span style='color:#aaa;'>Sem foto cadastrada</span>";
+                
                 document.getElementById('equipamentosSemSalaTabela').innerHTML = '';
                 carregarEquipamentosSemSala();
             } else {
                 msgDiv.innerText = json.mensagem || 'Erro ao cadastrar!';
-                msgDiv.className = 'msg text-center mt-4 text-lg font-semibold text-red-600';
+                msgDiv.className = 'msg text-center mt-4 text-lg font-semibold text-red-600 dark:text-red-400';
             }
         };
 
@@ -160,6 +180,16 @@
                 .then(data => {
                     LogoManager.loadEmpresaLogo(data);
                 });
+            
+            // Preencher opções do select de andar
+            const andarSelect = document.getElementById('andar_id');
+            for (let i = 0; i < 200; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                andarSelect.appendChild(option);
+            }
+            
             // Carregar imagens já enviadas para o select
             async function carregarFotosExistentes() {
                 const resp = await fetch('/fotos-salas');
@@ -183,6 +213,15 @@
                 }
             });
         });
+        
+        // Função para iniciar o tour da página
+        function iniciarTour() {
+            if (window.sistemaTour) {
+                window.sistemaTour.iniciarTour('adicionar-sala');
+            } else {
+                alert('Sistema de tour não carregado. Recarregue a página.');
+            }
+        }
     </script>
     <script src="static/js/logo-manager.js"></script>
     </body>

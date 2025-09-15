@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Logo da Empresa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/estilo-gerenciar-logo-empresa.css">
+    <link rel="stylesheet" href="static/css/tour.css">
+    <link rel="icon" type="image/png" href="static/img/favicon-engrenagem.png">
+    <script src="static/js/tour.js"></script>
+    <script>
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateEmpresaLogo();
+        }
+        
+        function updateEmpresaLogo() {
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    const empresaDiv = document.getElementById('empresa-logada');
+                    if (data.logo) {
+                        const isDark = document.documentElement.classList.contains('dark');
+                        const bgClass = isDark ? 'dark:bg-transparent' : 'bg-gray-800';
+                        empresaDiv.className = `absolute top-4 right-4 text-indigo-500 font-bold ${bgClass} rounded-lg p-2`;
+                        empresaDiv.innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                    } else if (data.nome) {
+                        const isDark = document.documentElement.classList.contains('dark');
+                        const bgClass = isDark ? 'dark:bg-transparent' : 'bg-gray-800';
+                        empresaDiv.className = `absolute top-4 right-4 text-indigo-500 font-bold ${bgClass} rounded-lg p-2`;
+                        empresaDiv.innerHTML = `<i class="fas fa-building text-xl text-indigo-500 dark:text-indigo-400"></i>`;
+                    }
+                });
+        }
+        
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-2xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarPainelConfig()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        
+        <!-- Botão Tour -->
+        <button onclick="iniciarTour()" class="absolute top-4 left-28 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 rounded-full p-2 transition-colors" title="Ajuda - Iniciar tour da página">
+            <i class="fas fa-question text-sm"></i>
+        </button>
+        
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-white text-center mb-8 mt-8">
+            <i class="fas fa-image text-indigo-600 dark:text-indigo-400 mr-3"></i>
+            Gerenciar Logo da Empresa
+        </h1>
+        
+        <div class="info-box dark:bg-blue-900/20">
+            <p class="text-sm">
+                <i class="fas fa-info-circle mr-2"></i>
+                <strong>Importante:</strong> O logo será exibido no painel principal e em todas as páginas do sistema. 
+                Formatos aceitos: PNG, JPG, JPEG, GIF, SVG. Tamanho recomendado: máximo 200KB.
+            </p>
+        </div>
+        
+        <form id="formUpload" enctype="multipart/form-data" class="upload-form flex flex-col md:flex-row gap-4 items-center justify-center mb-6">
+            <div class="file-input-wrapper">
+                <input type="file" id="inputLogo" name="logo" accept="image/*" required>
+                <label for="inputLogo" class="file-input-label">
+                    <i class="fas fa-image mr-2"></i> Selecionar Logo
+                </label>
+            </div>
+            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg shadow flex items-center gap-2 transition-colors text-base">
+                <i class="fas fa-upload"></i> Enviar
+            </button>
+        </form>
+        
+        <div class="status-message text-center mb-4 text-lg font-semibold hidden" id="msgUpload"></div>
+        
+        <h2 class="text-xl font-bold text-gray-700 dark:text-gray-200 mt-8 mb-4">Logo Atual</h2>
+        <div id="logoAtual" class="logo-container dark:bg-gray-800 mb-6">
+            <div class="text-center">
+                <div class="no-logo-placeholder">
+                    <i class="fas fa-building text-4xl text-gray-400 dark:text-gray-500"></i>
+                </div>
+                <p class="no-logo-text">Nenhum logo definido</p>
+            </div>
+        </div>
+        
+        <div class="text-center space-y-3">
+            <button id="btnRemoverLogo" onclick="removerLogo()" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-lg shadow flex items-center gap-2 transition-colors mx-auto" style="display: none;">
+                <i class="fas fa-trash-alt"></i> Remover Logo
+            </button>
+            <div>
+                <button onclick="voltarPainelConfig()" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg shadow flex items-center gap-2 transition-colors mx-auto">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Carregar logo atual
+        async function carregarLogoAtual() {
+            try {
+                const resp = await fetch('/empresa_atual');
+                const data = await resp.json();
+                
+                const logoDiv = document.getElementById('logoAtual');
+                const btnRemoverLogo = document.getElementById('btnRemoverLogo');
+                
+                if (data.logo) {
+                    logoDiv.innerHTML = `
+                        <div class="text-center fade-in">
+                            <img src="${data.logo}" alt="Logo da empresa" class="logo-preview">
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Logo atual da empresa</p>
+                        </div>
+                    `;
+                    btnRemoverLogo.style.display = 'inline-flex';
+                } else {
+                    logoDiv.innerHTML = `
+                        <div class="text-center">
+                            <div class="no-logo-placeholder">
+                                <i class="fas fa-building text-6xl text-gray-400 dark:text-gray-500 mb-4"></i>
+                            </div>
+                            <p class="no-logo-text text-gray-500 dark:text-gray-400">Nenhum logo definido</p>
+                            <p class="text-xs text-gray-400 dark:text-gray-500 mt-2">Será exibido um ícone genérico</p>
+                        </div>
+                    `;
+                    btnRemoverLogo.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar logo:', error);
+            }
+        }
+
+        // Upload do logo
+        document.getElementById('formUpload').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            const fileInput = document.getElementById('inputLogo');
+            const msgDiv = document.getElementById('msgUpload');
+            
+            if (!fileInput.files[0]) {
+                msgDiv.className = 'status-message error text-center mb-4 text-lg font-semibold';
+                msgDiv.innerHTML = 'Selecione um arquivo';
+                msgDiv.classList.remove('hidden');
+                return;
+            }
+            
+            formData.append('logo', fileInput.files[0]);
+            
+            msgDiv.className = 'status-message info text-center mb-4 text-lg font-semibold';
+            msgDiv.innerHTML = 'Enviando...';
+            msgDiv.classList.remove('hidden');
+            
+            try {
+                const resp = await fetch('/upload-logo-empresa', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await resp.json();
+                
+                if (data.status === 'ok') {
+                    msgDiv.className = 'status-message success text-center mb-4 text-lg font-semibold';
+                    msgDiv.innerHTML = 'Logo enviado com sucesso!';
+                    fileInput.value = '';
+                    carregarLogoAtual();
+                } else {
+                    msgDiv.className = 'status-message error text-center mb-4 text-lg font-semibold';
+                    msgDiv.innerHTML = `Erro: ${data.mensagem}`;
+                }
+            } catch (error) {
+                console.error('Erro no upload:', error);
+                msgDiv.className = 'status-message error text-center mb-4 text-lg font-semibold';
+                msgDiv.innerHTML = 'Erro ao enviar arquivo';
+            }
+        });
+
+        // Remover logo da empresa
+        async function removerLogo() {
+            if (!confirm('Tem certeza que deseja remover o logo da empresa? Será exibido um ícone genérico.')) {
+                return;
+            }
+            
+            const msgDiv = document.getElementById('msgUpload');
+            msgDiv.className = 'status-message info text-center mb-4 text-lg font-semibold';
+            msgDiv.innerHTML = 'Removendo logo...';
+            msgDiv.classList.remove('hidden');
+            
+            try {
+                const resp = await fetch('/remover-logo-empresa', {
+                    method: 'DELETE'
+                });
+                
+                const data = await resp.json();
+                
+                if (data.status === 'ok') {
+                    msgDiv.className = 'status-message success text-center mb-4 text-lg font-semibold';
+                    msgDiv.innerHTML = 'Logo removido com sucesso!';
+                    carregarLogoAtual();
+                    updateEmpresaLogo();
+                } else {
+                    msgDiv.className = 'status-message error text-center mb-4 text-lg font-semibold';
+                    msgDiv.innerHTML = `Erro: ${data.mensagem}`;
+                }
+            } catch (error) {
+                console.error('Erro ao remover logo:', error);
+                msgDiv.className = 'status-message error text-center mb-4 text-lg font-semibold';
+                msgDiv.innerHTML = 'Erro ao remover logo';
+            }
+        }
+
+        // Voltar ao painel de configuração
+        function voltarPainelConfig() {
+            fetch('/perfil').then(resp => resp.json()).then(perfil => {
+                if (perfil.nivel === 'admin') {
+                    window.location.href = 'config-admin.html';
+                } else if (perfil.nivel === 'tecnico') {
+                    window.location.href = 'config-tecnico.html';
+                } else {
+                    window.location.href = 'config-usuario.html';
+                }
+            });
+        }
+
+        // Função para iniciar o tour do sistema
+        function iniciarTour() {
+            if (window.sistemaTour) {
+                window.sistemaTour.iniciarTour('gerenciar-logo-empresa');
+            } else {
+                alert('Sistema de tour não carregado. Recarregue a página.');
+            }
+        }
+
+        // Carregar logo ao iniciar
+        carregarLogoAtual();
+        
+        // Carregar logo da empresa no cabeçalho
+        window.addEventListener('DOMContentLoaded', function() {
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    const empresaDiv = document.getElementById('empresa-logada');
+                    if (data.logo) {
+                        const isDark = document.documentElement.classList.contains('dark');
+                        const bgClass = isDark ? 'dark:bg-transparent' : 'bg-gray-800';
+                        empresaDiv.className = `absolute top-4 right-4 text-indigo-500 font-bold ${bgClass} rounded-lg p-2`;
+                        empresaDiv.innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                    } else if (data.nome) {
+                        const isDark = document.documentElement.classList.contains('dark');
+                        const bgClass = isDark ? 'dark:bg-transparent' : 'bg-gray-800';
+                        empresaDiv.className = `absolute top-4 right-4 text-indigo-500 font-bold ${bgClass} rounded-lg p-2`;
+                        empresaDiv.innerHTML = `<i class="fas fa-building text-xl text-indigo-500 dark:text-indigo-400"></i>`;
+                    }
+                });
+        });
+    </script>
+</body>
+
+</html>

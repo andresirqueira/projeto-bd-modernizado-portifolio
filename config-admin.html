@@ -9,7 +9,9 @@
       tailwind.config = { darkMode: 'class' };
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="static/css/tour.css">
     <link rel="icon" type="image/png" href="static/img/favicon-engrenagem.png">
+    <script src="static/js/tour.js"></script>
     <script>
       // Dark mode toggle
       function toggleDarkMode() {
@@ -57,6 +59,11 @@
             <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
         </button>
         
+        <!-- Botão Tour -->
+        <button onclick="iniciarTour()" class="absolute top-4 left-28 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 rounded-full p-2 transition-colors" title="Ajuda - Iniciar tour do sistema">
+            <i class="fas fa-question text-sm"></i>
+        </button>
+        
         <div class="text-center mt-8 mb-8">
             <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
                 <i class="fas fa-user-shield text-indigo-600 dark:text-indigo-400 mr-3"></i>
@@ -87,6 +94,10 @@
                 <button onclick="window.location.href='upload-fotos-salas.html'" class="w-32 h-32 m-0 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                     <i class="fas fa-upload text-2xl"></i>
                     <span class="text-sm text-center">Upload Fotos</span>
+                </button>
+                <button onclick="window.location.href='gerenciar-logo-empresa.html'" class="w-32 h-32 m-0 bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-image text-2xl"></i>
+                    <span class="text-sm text-center">Logo da Empresa</span>
                 </button>
             </div>
             
@@ -193,6 +204,10 @@
                     <i class="fas fa-plug text-2xl"></i>
                     <span class="text-sm text-center">Gerenciar Portas</span>
                 </button>
+                <button onclick="window.location.href='gerenciar-idfs.html'" class="w-32 h-32 m-0 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                    <i class="fas fa-server text-2xl"></i>
+                    <span class="text-sm text-center">Gerenciar IDFs</span>
+                </button>
              </div>
             
             <!-- Linha 6: Sistema e Logs + Sair -->
@@ -205,10 +220,10 @@
                     <i class="fas fa-clipboard-list text-2xl"></i>
                     <span class="text-sm text-center">Visualizar Logs</span>
                 </button>
-                <button onclick="window.location.href='ping-equipamentos.html'" class="w-32 h-32 m-0 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
+                <!-- <button onclick="window.location.href='ping-equipamentos.html'" class="w-32 h-32 m-0 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                     <i class="fas fa-wifi text-2xl"></i>
                     <span class="text-sm text-center">Testar (Ping)</span>
-                </button>
+                </button> -->
                 <button onclick="window.location.href='conexoes-equipamentos.html'" class="w-32 h-32 m-0 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                     <i class="fas fa-project-diagram text-2xl"></i>
                     <span class="text-sm text-center">Conexões de Equipamentos</span>
@@ -231,6 +246,15 @@
          function logout() {
              fetch('/logout').then(() => window.location.href = '/login.html');
          }
+
+        // Função para iniciar o tour do sistema
+        function iniciarTour() {
+            if (window.sistemaTour) {
+                window.sistemaTour.iniciarTour('config-admin');
+            } else {
+                alert('Sistema de tour não carregado. Recarregue a página.');
+            }
+        }
 
         window.addEventListener('DOMContentLoaded', function() {
             fetch('/empresa_atual')

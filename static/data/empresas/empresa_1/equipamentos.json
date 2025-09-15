@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "nome": "TV",
+    "tipo": "TV",
+    "marca": "LG",
+    "modelo": "32LM621CBSB",
+    "descricao": "",
+    "foto": "img/tv-lg-32lm621cbsb.png",
+    "icone": null,
+    "sala_id": 1,
+    "defeito": 0,
+    "dados": {
+      "firmware": "",
+      "serie": "tes123456",
+      "ip1": "",
+      "mac1": "",
+      "ip2": "",
+      "mac2": "",
+      "partnumber": "",
+      "tamanho": "32"
+    }
+  },
+  {
+    "id": 2,
+    "nome": "Chromebox",
+    "tipo": "PC",
+    "marca": "CTL",
+    "modelo": "Outro",
+    "descricao": "",
+    "foto": "img/pc-ctl-outro.png",
+    "icone": null,
+    "sala_id": "1",
+    "defeito": 0,
+    "dados": {
+      "partnumber": "",
+      "tamanho": "",
+      "firmware": "",
+      "serie": "",
+      "ip1": "1.2.3.456",
+      "mac1": "",
+      "ip2": "",
+      "mac2": ""
+    }
+  },
+  {
+    "id": 3,
+    "nome": "Fonte Tap",
+    "tipo": "Fonte",
+    "marca": "Logitech",
+    "modelo": "TAP",
+    "descricao": "- Input: 100-240V AC 50/60Hz 1.5A - Output: +12.0V DC 2.0A 24.0W",
+    "foto": "img/fonte-logitech-tap.png",
+    "icone": null,
+    "sala_id": 1,
+    "defeito": 0,
+    "dados": {
+      "partnumber": "",
+      "tamanho": "",
+      "firmware": "",
+      "serie": "",
+      "ip1": "",
+      "mac1": "",
+      "ip2": "",
+      "mac2": ""
+    }
+  }
+]

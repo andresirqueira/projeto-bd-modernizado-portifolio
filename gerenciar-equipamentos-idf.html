@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciar Equipamentos do IDF</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' };</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="static/img/favicon-cogs.png">
+  <script>
+    function toggleDarkMode(){
+      if(document.documentElement.classList.contains('dark')){document.documentElement.classList.remove('dark');localStorage.setItem('theme','light');}
+      else{document.documentElement.classList.add('dark');localStorage.setItem('theme','dark');}
+      updateEmpresaLogo();
+    }
+    if(localStorage.getItem('theme')==='dark'){document.documentElement.classList.add('dark');}
+    function updateEmpresaLogo(){const el=document.getElementById('empresa-logada');if(!el) return;const isDark=document.documentElement.classList.contains('dark');el.className=`absolute top-4 right-4 text-indigo-500 font-bold ${isDark? 'dark:bg-transparent':'bg-gray-800'} rounded-lg p-2`;}
+  </script>
+</head>
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+  <div class="relative w-full max-w-7xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+    <button onclick="voltar()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+      <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+    </button>
+    <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+    <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+      <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+    </button>
+
+    <div class="text-center mt-8 mb-8">
+      <h1 id="page-title" class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+        <i class="fas fa-video text-indigo-600 dark:text-indigo-400 mr-3"></i>
+        Gerenciar Equipamentos A/V IDF
+      </h1>
+      <p class="text-gray-600 dark:text-gray-300">Adicione, visualize e remova equipamentos de áudio e vídeo do IDF</p>
+    </div>
+
+    <div class="flex flex-wrap gap-3 mb-6 justify-end">
+      <button class="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2" onclick="abrirModalAdicionarEquipamento()">
+        <i class="fas fa-plus"></i> Adicionar Equipamento
+      </button>
+    </div>
+
+    <div id="loading" class="text-center py-8 text-gray-600 dark:text-gray-300">
+      <i class="fas fa-spinner fa-spin text-2xl"></i>
+      <p class="mt-2">Carregando equipamentos...</p>
+    </div>
+
+    <div id="equipamentos-container" class="space-y-4" style="display:none;"></div>
+
+    <div id="empty-state" class="text-center py-16" style="display:none;">
+      <i class="fas fa-video text-gray-400 text-4xl mb-4"></i>
+      <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Nenhum equipamento A/V encontrado</h3>
+      <p class="text-gray-600 dark:text-gray-300">Adicione equipamentos de áudio e vídeo ao IDF para começar a gerenciar a infraestrutura A/V.</p>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modalAdicionarEquipamento" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+    <div class="flex items-center justify-center min-h-screen p-4">
+      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-lg p-6">
+        <div class="flex justify-between items-center mb-4 pb-2 border-b border-gray-200 dark:border-gray-700">
+          <h2 class="text-xl font-bold text-gray-800 dark:text-white"><i class="fas fa-plus-circle text-indigo-600 dark:text-indigo-400 mr-2"></i>Adicionar Equipamento</h2>
+          <button class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" onclick="fecharModalAdicionarEquipamento()"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <form id="formAdicionarEquipamento" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Selecione um equipamento</label>
+            <div id="equipamentos-disponiveis" class="max-h-64 overflow-y-auto space-y-2">
+              <div class="text-center py-4 text-gray-500 dark:text-gray-400"><i class="fas fa-spinner fa-spin"></i> Carregando equipamentos...</div>
+            </div>
+          </div>
+          <div>
+            <label for="funcao" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Função no IDF *</label>
+            <select id="funcao" name="funcao" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white">
+              <option value="">Selecione a função</option>
+              <option value="amplificador">Amplificador</option>
+              <option value="mixer">Mixer de Áudio</option>
+              <option value="processador_audio">Processador de Áudio</option>
+              <option value="distribuidor_video">Distribuidor de Vídeo</option>
+              <option value="matrix_video">Matrix de Vídeo</option>
+              <option value="conversor_video">Conversor de Vídeo</option>
+              <option value="extensor_hdmi">Extensor HDMI</option>
+              <option value="receptor_ir">Receptor IR</option>
+              <option value="controlador_av">Controlador A/V</option>
+              <option value="ups">UPS</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+          <div>
+            <label for="posicao_rack" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Posição no Rack</label>
+            <input id="posicao_rack" type="text" placeholder="Ex: 1U, 2U, 3U..." class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white">
+          </div>
+          <div class="flex justify-end gap-3 pt-2">
+            <button type="button" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg text-gray-800 dark:text-gray-200" onclick="fecharModalAdicionarEquipamento()">Cancelar</button>
+            <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-800 text-white rounded-lg"><i class="fas fa-plus mr-1"></i>Adicionar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+    <script>
+        let idfId = null;
+        let idfData = null;
+        let equipamentosDisponiveis = [];
+        let equipamentoSelecionado = null;
+
+        // Obter ID do IDF da URL
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            idfId = urlParams.get('id');
+            
+            if (idfId) {
+                carregarDetalhesIDF();
+                carregarEquipamentosDisponiveis();
+            } else {
+                alert('ID do IDF não fornecido');
+                window.location.href = 'gerenciar-idfs.html';
+            }
+        });
+
+        // Carregar detalhes do IDF
+        async function carregarDetalhesIDF() {
+            try {
+                const response = await fetch(`/idfs/${idfId}`);
+                if (response.ok) {
+                    idfData = await response.json();
+                    document.getElementById('page-title').innerHTML = `<i class="fas fa-video text-indigo-600 dark:text-indigo-400 mr-3"></i>Equipamentos A/V - ${idfData.nome}`;
+                    carregarEquipamentosIDF();
+                } else {
+                    alert('Erro ao carregar detalhes do IDF');
+                    window.location.href = 'gerenciar-idfs.html';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar detalhes do IDF:', error);
+                alert('Erro ao carregar detalhes do IDF');
+            }
+        }
+
+        // Carregar equipamentos do IDF
+        async function carregarEquipamentosIDF() {
+            try {
+                const response = await fetch(`/idfs/${idfId}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    exibirEquipamentos(data.equipamentos || []);
+                } else {
+                    console.error('Erro ao carregar equipamentos do IDF');
+                }
+            } catch (error) {
+                console.error('Erro ao carregar equipamentos do IDF:', error);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        // Carregar equipamentos disponíveis
+        async function carregarEquipamentosDisponiveis() {
+            try {
+                const response = await fetch(`/idfs/${idfId}/equipamentos-disponiveis`);
+                if (response.ok) {
+                    equipamentosDisponiveis = await response.json();
+                    exibirEquipamentosDisponiveis();
+                } else {
+                    console.error('Erro ao carregar equipamentos disponíveis');
+                }
+            } catch (error) {
+                console.error('Erro ao carregar equipamentos disponíveis:', error);
+            }
+        }
+
+        // Exibir equipamentos disponíveis
+        function exibirEquipamentosDisponiveis() {
+            const container = document.getElementById('equipamentos-disponiveis');
+            
+            if (equipamentosDisponiveis.length === 0) {
+                container.innerHTML = '<p style="color: #666; text-align: center;">Nenhum equipamento disponível</p>';
+                return;
+            }
+            
+            // Separar equipamentos por tipo
+            const equipamentosExclusivos = equipamentosDisponiveis.filter(eq => eq.tipo_disponivel === 'exclusivo');
+            const equipamentosSalas = equipamentosDisponiveis.filter(eq => eq.tipo_disponivel === 'sala');
+            
+            let html = '';
+            
+            if (equipamentosExclusivos.length > 0) {
+                html += '<div class="mb-4"><h4 class="font-semibold text-gray-800 dark:text-white mb-2"><i class="fas fa-server text-blue-500 mr-2"></i>Equipamentos Exclusivos do IDF</h4>';
+                html += equipamentosExclusivos.map(eq => `
+                    <div class="equipamento-option p-3 border border-gray-200 dark:border-gray-600 rounded-lg mb-2 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700" onclick="selecionarEquipamento(${eq.id}, 'exclusivo')">
+                        <div class="font-semibold text-gray-800 dark:text-white">${eq.nome}</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-300">${eq.marca} ${eq.modelo} - ${eq.tipo}</div>
+                        <div class="text-xs text-blue-600 dark:text-blue-400 mt-1"><i class="fas fa-info-circle mr-1"></i>Equipamento exclusivo do IDF</div>
+                    </div>
+                `).join('');
+                html += '</div>';
+            }
+            
+            if (equipamentosSalas.length > 0) {
+                html += '<div class="mb-4"><h4 class="font-semibold text-gray-800 dark:text-white mb-2"><i class="fas fa-door-open text-green-500 mr-2"></i>Equipamentos de Salas (Alocados no IDF)</h4>';
+                html += equipamentosSalas.map(eq => `
+                    <div class="equipamento-option p-3 border border-gray-200 dark:border-gray-600 rounded-lg mb-2 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700" onclick="selecionarEquipamento(${eq.id}, 'sala', ${eq.sala_id})">
+                        <div class="font-semibold text-gray-800 dark:text-white">${eq.nome}</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-300">${eq.marca} ${eq.modelo} - ${eq.tipo}</div>
+                        <div class="text-xs text-green-600 dark:text-green-400 mt-1"><i class="fas fa-home mr-1"></i>Pertence à sala: ${eq.sala_nome}</div>
+                    </div>
+                `).join('');
+                html += '</div>';
+            }
+            
+            container.innerHTML = html;
+        }
+
+        // Selecionar equipamento
+        function selecionarEquipamento(equipamentoId, tipoAlocacao, salaOrigemId = null) {
+            // Remover seleção anterior
+            document.querySelectorAll('.equipamento-option').forEach(el => {
+                el.classList.remove('selected', 'bg-blue-100', 'dark:bg-blue-900', 'border-blue-500');
+            });
+            
+            // Adicionar seleção atual
+            const selectedElement = event.target.closest('.equipamento-option');
+            selectedElement.classList.add('selected', 'bg-blue-100', 'dark:bg-blue-900', 'border-blue-500');
+            
+            equipamentoSelecionado = {
+                id: equipamentoId,
+                tipo_alocacao: tipoAlocacao,
+                sala_origem_id: salaOrigemId
+            };
+        }
+
+        // Exibir equipamentos do IDF
+        function exibirEquipamentos(equipamentos) {
+            const container = document.getElementById('equipamentos-container');
+            const emptyState = document.getElementById('empty-state');
+            
+            if (equipamentos.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            container.style.display = 'block';
+            emptyState.style.display = 'none';
+            
+            container.innerHTML = equipamentos.map(eq => `
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">${eq.nome}</h3>
+                                <span class="px-2 py-1 rounded-full text-xs font-medium ${eq.tipo_alocacao === 'exclusivo' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'}">
+                                    ${eq.tipo_alocacao === 'exclusivo' ? 'Exclusivo IDF' : 'Alocado de Sala'}
+                                </span>
+                            </div>
+                            ${eq.sala_origem_nome ? `<div class="text-sm text-gray-600 dark:text-gray-300 mb-2"><i class="fas fa-home mr-1"></i>Sala de origem: ${eq.sala_origem_nome}</div>` : ''}
+                            <div class="text-sm text-gray-600 dark:text-gray-300">
+                                <strong>Marca:</strong> ${eq.marca || 'N/A'} • 
+                                <strong>Modelo:</strong> ${eq.modelo || 'N/A'} • 
+                                <strong>Tipo:</strong> ${eq.tipo || 'N/A'}
+                            </div>
+                            ${eq.funcao ? `<div class="text-sm text-gray-600 dark:text-gray-300 mt-1"><strong>Função:</strong> ${eq.funcao}</div>` : ''}
+                            ${eq.posicao_rack ? `<div class="text-sm text-gray-600 dark:text-gray-300 mt-1"><strong>Posição no Rack:</strong> ${eq.posicao_rack}</div>` : ''}
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <a href="ver-equipamento.html?id=${eq.id}" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                            <i class="fas fa-eye"></i> Ver Detalhes
+                        </a>
+                        <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2" onclick="removerEquipamento(${eq.id}, '${eq.nome}')">
+                            <i class="fas fa-trash"></i> Remover
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Abrir modal para adicionar equipamento
+        function abrirModalAdicionarEquipamento() {
+            document.getElementById('modalAdicionarEquipamento').style.display = 'block';
+            equipamentoSelecionado = null;
+            document.getElementById('formAdicionarEquipamento').reset();
+            
+            // Remover seleções
+            document.querySelectorAll('.equipamento-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+        }
+
+        // Fechar modal
+        function fecharModalAdicionarEquipamento() {
+            document.getElementById('modalAdicionarEquipamento').style.display = 'none';
+        }
+
+        // Adicionar equipamento ao IDF
+        document.getElementById('formAdicionarEquipamento').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (!equipamentoSelecionado) {
+                alert('Selecione um equipamento');
+                return;
+            }
+            
+            const formData = new FormData(e.target);
+            const dados = {
+                equipamento_id: equipamentoSelecionado.id,
+                funcao: formData.get('funcao'),
+                posicao_rack: formData.get('posicao_rack'),
+                tipo_alocacao: equipamentoSelecionado.tipo_alocacao,
+                sala_origem_id: equipamentoSelecionado.sala_origem_id
+            };
+            
+            try {
+                const response = await fetch(`/idfs/${idfId}/equipamentos`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                });
+                
+                const result = await response.json();
+                
+                if (result.status === 'ok') {
+                    alert('Equipamento adicionado com sucesso!');
+                    fecharModalAdicionarEquipamento();
+                    carregarDetalhesIDF();
+                    carregarEquipamentosDisponiveis();
+                } else {
+                    alert('Erro ao adicionar equipamento: ' + result.mensagem);
+                }
+            } catch (error) {
+                console.error('Erro ao adicionar equipamento:', error);
+                alert('Erro ao adicionar equipamento. Tente novamente.');
+            }
+        });
+
+        // Remover equipamento do IDF
+        function removerEquipamento(equipamentoId, nome) {
+            if (confirm(`Tem certeza que deseja remover o equipamento "${nome}" deste IDF?`)) {
+                // Implementar remoção
+                alert('Funcionalidade de remoção será implementada em breve.');
+            }
+        }
+
+        // Voltar para detalhes do IDF
+        function voltar() {
+            if (idfId) {
+                window.location.href = `detalhes-idf.html?id=${idfId}`;
+            } else {
+                window.history.back();
+            }
+        }
+
+        // Fechar modal ao clicar fora dele
+        window.onclick = function(event) {
+            const modal = document.getElementById('modalAdicionarEquipamento');
+            if (event.target === modal) {
+                fecharModalAdicionarEquipamento();
+            }
+        }
+    </script>
+</body>
+</html>

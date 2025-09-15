@@ -1,0 +1,1 @@
+[2025-08-22 08:04:44] Usuario: admin-02 | Acao: UPLOAD_LOGO_EMPRESA | Detalhes: Logo logo.png enviado para empresa empresa_02 | Status: sucesso

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar IDFs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="static/img/favicon-lista.png">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+      
+      function updateEmpresaLogo() {
+        const empresaDiv = document.getElementById('empresa-logada');
+        if (empresaDiv && empresaDiv.querySelector('img')) {
+          const isDark = document.documentElement.classList.contains('dark');
+          const bgClass = isDark ? 'dark:bg-transparent' : 'bg-gray-800';
+          empresaDiv.className = `absolute top-4 right-4 text-indigo-500 font-bold ${bgClass} rounded-lg p-2`;
+        }
+      }
+      
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-7xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarPainelConfig()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        
+        <div class="text-center mt-8 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+                <i class="fas fa-server text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                Gerenciar IDFs
+            </h1>
+            <p class="text-gray-600 dark:text-gray-300">Gerencie os Intermediate Distribution Frames (IDFs) do sistema</p>
+        </div>
+        
+        <div class="mb-6 flex justify-center">
+            <button onclick="abrirModalCriarIDF()" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow flex items-center gap-2 transition-colors">
+                <i class="fas fa-plus"></i> Novo IDF
+            </button>
+        </div>
+            <div id="loading" class="text-center py-8">
+                <i class="fas fa-spinner fa-spin text-2xl text-gray-600 dark:text-gray-300"></i>
+                <p class="mt-2 text-gray-600 dark:text-gray-300">Carregando IDFs...</p>
+            </div>
+            
+            <div id="idfs-container" style="display: none;">
+                <!-- IDFs serão carregados aqui -->
+            </div>
+            
+            <div id="empty-state" class="text-center py-12" style="display: none;">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Nenhum IDF encontrado</h3>
+                <p class="text-gray-600 dark:text-gray-300">Comece criando seu primeiro IDF para gerenciar a infraestrutura de rede.</p>
+            </div>
+    </div>
+
+    <!-- Modal para criar IDF -->
+    <div id="modalCriarIDF" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-8 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-white">
+                    <i class="fas fa-server text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                    Criar Novo IDF
+                </h2>
+                <button onclick="fecharModalCriarIDF()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="formCriarIDF" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="nome" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Nome do IDF *
+                        </label>
+                        <input type="text" id="nome" name="nome" required 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                               placeholder="Ex: IDF 1º Andar">
+                    </div>
+                    
+                    <div>
+                        <label for="andar_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Andar *
+                        </label>
+                        <select id="andar_id" name="andar_id" required 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                            <option value="">Selecione um andar</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="descricao" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Descrição
+                    </label>
+                    <textarea id="descricao" name="descricao" rows="4"
+                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                              placeholder="Descreva o IDF, sua localização e função na infraestrutura..."></textarea>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Foto do IDF
+                        </label>
+                        <div>
+                            <button type="button" onclick="abrirSeletorImagens()" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-600 dark:text-white text-left transition-colors">
+                                <i class="fas fa-images mr-2"></i>Selecionar imagem
+                            </button>
+                            <div id="imagemSelecionada" class="mt-3 hidden">
+                                <img id="previewImagem" src="" alt="Preview" class="w-full h-32 object-cover rounded-lg border">
+                                <button type="button" onclick="removerImagemSelecionada()" 
+                                        class="mt-2 text-red-500 hover:text-red-700 text-sm">
+                                    <i class="fas fa-times mr-1"></i>Remover imagem
+                                </button>
+                            </div>
+                            <input type="hidden" id="foto" name="foto">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Status
+                        </label>
+                        <select id="status" name="status" 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                            <option value="manutencao">Em Manutenção</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                    <div class="flex items-start">
+                        <i class="fas fa-info-circle text-blue-500 dark:text-blue-400 mt-1 mr-3"></i>
+                        <div class="text-sm text-blue-700 dark:text-blue-300">
+                            <p class="font-medium mb-1">O que é um IDF?</p>
+                            <p>Um IDF (Intermediate Distribution Frame) é um ponto de distribuição intermediário na infraestrutura de rede, onde equipamentos como switches, patch panels e servidores são organizados para atender múltiplas salas de um andar.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end gap-4 pt-6 border-t border-gray-200 dark:border-gray-700">
+                    <button type="button" onclick="fecharModalCriarIDF()" 
+                            class="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-lg transition-colors">
+                        <i class="fas fa-times mr-2"></i>Cancelar
+                    </button>
+                    <button type="submit" 
+                            class="px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-colors">
+                        <i class="fas fa-save mr-2"></i>Criar IDF
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para seleção de imagens -->
+    <div id="modalSeletorImagens" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100] hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 w-full max-w-4xl mx-4 max-h-[80vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white">
+                    <i class="fas fa-images text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                    Selecionar Imagem
+                </h3>
+                <button onclick="fecharSeletorImagens()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div id="galeriaImagens" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div class="text-center py-8">
+                    <i class="fas fa-spinner fa-spin text-2xl text-gray-400"></i>
+                    <p class="mt-2 text-gray-500">Carregando imagens...</p>
+                </div>
+            </div>
+            
+            <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <button onclick="fecharSeletorImagens()" 
+                        class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-lg transition-colors">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let idfs = [];
+        let andares = [];
+
+        // Carregar dados iniciais
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarAndares();
+            carregarIDFs();
+        });
+
+        // Carregar andares para o select
+        async function carregarAndares() {
+            try {
+                const response = await fetch('/andares');
+                if (response.ok) {
+                    andares = await response.json();
+                    const select = document.getElementById('andar_id');
+                    select.innerHTML = '<option value="">Selecione um andar</option>';
+                    
+                    if (andares.length === 0) {
+                        const option = document.createElement('option');
+                        option.value = '';
+                        option.textContent = 'Nenhum andar encontrado';
+                        option.disabled = true;
+                        select.appendChild(option);
+                    } else {
+                        andares.forEach(andar => {
+                            const option = document.createElement('option');
+                            option.value = andar.id;
+                            option.textContent = andar.titulo;
+                            select.appendChild(option);
+                        });
+                    }
+                } else {
+                    console.error('Erro na resposta:', response.status);
+                    const select = document.getElementById('andar_id');
+                    select.innerHTML = '<option value="">Erro ao carregar andares</option>';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar andares:', error);
+                const select = document.getElementById('andar_id');
+                select.innerHTML = '<option value="">Erro ao carregar andares</option>';
+            }
+        }
+
+        // Carregar IDFs
+        async function carregarIDFs() {
+            try {
+                const response = await fetch('/idfs');
+                if (response.ok) {
+                    idfs = await response.json();
+                    exibirIDFs();
+                } else {
+                    console.error('Erro ao carregar IDFs');
+                }
+            } catch (error) {
+                console.error('Erro ao carregar IDFs:', error);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        // Exibir IDFs na tela
+        function exibirIDFs() {
+            const container = document.getElementById('idfs-container');
+            const emptyState = document.getElementById('empty-state');
+            
+            if (idfs.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            container.style.display = 'block';
+            emptyState.style.display = 'none';
+            
+            container.innerHTML = idfs.map(idf => `
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 mb-6 shadow-lg border-l-4 border-blue-500">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <div class="text-xl font-bold text-gray-800 dark:text-white">${idf.nome}</div>
+                            <div class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-sm text-gray-600 dark:text-gray-300">${idf.andar_nome || 'Andar não definido'}</div>
+                        </div>
+                        <div>
+                            <span class="px-3 py-1 rounded-full text-xs font-medium ${idf.status === 'ativo' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : idf.status === 'inativo' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'}">
+                                ${idf.status}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    ${idf.descricao ? `<p class="text-gray-600 dark:text-gray-300 mb-4">${idf.descricao}</p>` : ''}
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div class="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">${idf.equipamentos ? idf.equipamentos.length : 0}</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-300">Equipamentos</div>
+                        </div>
+                        <div class="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div class="text-2xl font-bold text-green-600 dark:text-green-400">${idf.conexoes_salas ? idf.conexoes_salas.length : 0}</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-300">Conexões</div>
+                        </div>
+                        <div class="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div class="text-2xl font-bold text-purple-600 dark:text-purple-400">${typeof idf.switches_count === 'number' ? idf.switches_count : 0}</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-300">Switches</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-2">
+                        <a href="detalhes-idf.html?id=${idf.id}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                            <i class="fas fa-eye"></i> Ver Detalhes
+                        </a>
+                        <a href="editar-idf.html?id=${idf.id}" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                            <i class="fas fa-edit"></i> Editar
+                        </a>
+                        <button onclick="gerenciarEquipamentos(${idf.id})" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                            <i class="fas fa-cogs"></i> Equipamentos
+                        </button>
+                        <button onclick="gerenciarConexoes(${idf.id})" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                            <i class="fas fa-network-wired"></i> Conexões
+                        </button>
+                        <button onclick="excluirIDF(${idf.id}, '${idf.nome}')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                            <i class="fas fa-trash"></i> Excluir
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Abrir modal para criar IDF
+        function abrirModalCriarIDF() {
+            document.getElementById('modalCriarIDF').classList.remove('hidden');
+        }
+
+        // Fechar modal
+        function fecharModalCriarIDF() {
+            document.getElementById('modalCriarIDF').classList.add('hidden');
+            document.getElementById('formCriarIDF').reset();
+            // Limpar imagem selecionada
+            document.getElementById('imagemSelecionada').classList.add('hidden');
+        }
+
+        // Criar IDF
+        document.getElementById('formCriarIDF').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const dados = Object.fromEntries(formData.entries());
+            
+            try {
+                const response = await fetch('/idfs', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                });
+                
+                const result = await response.json();
+                
+                if (result.status === 'ok') {
+                    alert('IDF criado com sucesso!');
+                    fecharModalCriarIDF();
+                    carregarIDFs();
+                } else {
+                    alert('Erro ao criar IDF: ' + result.mensagem);
+                }
+            } catch (error) {
+                console.error('Erro ao criar IDF:', error);
+                alert('Erro ao criar IDF. Tente novamente.');
+            }
+        });
+
+        // Gerenciar equipamentos do IDF
+        function gerenciarEquipamentos(idfId) {
+            window.location.href = `gerenciar-equipamentos-idf.html?id=${idfId}`;
+        }
+
+        // Gerenciar conexões do IDF
+        function gerenciarConexoes(idfId) {
+            window.location.href = `gerenciar-conexoes-idf.html?id=${idfId}`;
+        }
+
+        // Excluir IDF
+        function excluirIDF(id, nome) {
+            if (confirm(`Tem certeza que deseja excluir o IDF "${nome}"?\n\nEsta ação não pode ser desfeita.`)) {
+                // Implementar exclusão
+                alert('Funcionalidade de exclusão será implementada em breve.');
+            }
+        }
+
+        // Fechar modal ao clicar fora dele
+        window.onclick = function(event) {
+            const modal = document.getElementById('modalCriarIDF');
+            const modalSeletor = document.getElementById('modalSeletorImagens');
+            if (event.target === modal) {
+                fecharModalCriarIDF();
+            }
+            if (event.target === modalSeletor) {
+                fecharSeletorImagens();
+            }
+        }
+
+        // Funções para seleção de imagens
+        function abrirSeletorImagens() {
+            document.getElementById('modalSeletorImagens').classList.remove('hidden');
+            carregarImagensDisponiveis();
+        }
+
+        function fecharSeletorImagens() {
+            document.getElementById('modalSeletorImagens').classList.add('hidden');
+        }
+
+        async function carregarImagensDisponiveis() {
+            try {
+                const response = await fetch('/fotos-salas');
+                if (response.ok) {
+                    const data = await response.json();
+                    exibirImagensDisponiveis(data.imagens || []);
+                } else {
+                    document.getElementById('galeriaImagens').innerHTML = 
+                        '<div class="col-span-full text-center py-8 text-gray-500">Erro ao carregar imagens</div>';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar imagens:', error);
+                document.getElementById('galeriaImagens').innerHTML = 
+                    '<div class="col-span-full text-center py-8 text-gray-500">Erro ao carregar imagens</div>';
+            }
+        }
+
+        function exibirImagensDisponiveis(imagens) {
+            const container = document.getElementById('galeriaImagens');
+            
+            if (imagens.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-8">
+                        <i class="fas fa-image text-4xl text-gray-400 mb-4"></i>
+                        <p class="text-gray-500">Nenhuma imagem encontrada</p>
+                        <p class="text-sm text-gray-400 mt-2">Faça upload de imagens em "Upload Fotos" primeiro</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = imagens.map(imagem => {
+                // Extrair nome do arquivo da URL
+                const nomeArquivo = imagem.split('/').pop();
+                return `
+                    <div class="relative group cursor-pointer" onclick="selecionarImagem('${imagem}')">
+                        <img src="${imagem}" alt="Imagem" class="w-full h-32 object-cover rounded-lg border-2 border-transparent group-hover:border-indigo-500 transition-colors">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 rounded-lg transition-all flex items-center justify-center">
+                            <i class="fas fa-check-circle text-white text-2xl opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white text-xs p-2 rounded-b-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                            <p class="truncate" title="${nomeArquivo}">${nomeArquivo}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function selecionarImagem(urlImagem) {
+            // Atualizar o campo hidden de foto com a URL selecionada
+            document.getElementById('foto').value = urlImagem;
+            
+            // Mostrar preview da imagem selecionada
+            const previewDiv = document.getElementById('imagemSelecionada');
+            const previewImg = document.getElementById('previewImagem');
+            
+            previewImg.src = urlImagem;
+            previewDiv.classList.remove('hidden');
+            
+            // Fechar o modal seletor
+            fecharSeletorImagens();
+        }
+
+        function removerImagemSelecionada() {
+            // Limpar o campo de foto
+            document.getElementById('foto').value = '';
+            
+            // Esconder o preview
+            document.getElementById('imagemSelecionada').classList.add('hidden');
+        }
+        
+        // Função para voltar ao painel de configuração
+        function voltarPainelConfig() {
+            window.location.href = 'config-admin.html';
+        }
+        
+        // Carregar logo da empresa
+        window.addEventListener('DOMContentLoaded', function() {
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    const empresaDiv = document.getElementById('empresa-logada');
+                    if (data.logo) {
+                        const isDark = document.documentElement.classList.contains('dark');
+                        const bgClass = isDark ? 'dark:bg-transparent' : 'bg-gray-800';
+                        empresaDiv.className = `absolute top-4 right-4 text-indigo-500 font-bold ${bgClass} rounded-lg p-2`;
+                        empresaDiv.innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                    } else if (data.nome) {
+                        empresaDiv.innerText = 'Empresa: ' + data.nome;
+                    }
+                });
+        });
+    </script>
+</body>
+</html>

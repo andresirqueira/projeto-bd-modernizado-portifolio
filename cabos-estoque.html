@@ -129,6 +129,63 @@
         </div>
     </div>
 
+    <!-- Modal de Exclusão -->
+    <div id="modalExclusao" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 w-full max-w-md mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
+                    <i class="fas fa-trash text-red-500 mr-2"></i>
+                    Excluir Cabo
+                </h3>
+                <button onclick="fecharModalExclusao()" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="mb-4">
+                <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">
+                    Excluindo cabo: <strong id="codigoCaboExclusao" class="text-gray-800 dark:text-white"></strong>
+                </p>
+                
+                <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4 mb-4">
+                    <div class="flex items-start">
+                        <i class="fas fa-exclamation-triangle text-yellow-500 mt-1 mr-3"></i>
+                        <div>
+                            <h4 class="text-sm font-medium text-yellow-800 dark:text-yellow-200 mb-2">Atenção!</h4>
+                            <p class="text-sm text-yellow-700 dark:text-yellow-300">
+                                Esta ação irá:
+                            </p>
+                            <ul class="text-sm text-yellow-700 dark:text-yellow-300 mt-2 list-disc list-inside">
+                                <li>Excluir permanentemente o cabo do sistema</li>
+                                <li>Liberar o código único para uso em novos cabos</li>
+                                <li>Remover todas as conexões associadas</li>
+                            </ul>
+                            <p class="text-sm font-medium text-yellow-800 dark:text-yellow-200 mt-2">
+                                Esta ação não pode ser desfeita!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Motivo da Exclusão:
+                    </label>
+                    <textarea id="motivoExclusao" rows="3" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Descreva o motivo da exclusão..."></textarea>
+                </div>
+            </div>
+            
+            <div class="flex gap-3">
+                <button onclick="confirmarExclusao()" class="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg transition-colors">
+                    <i class="fas fa-trash mr-2"></i>Confirmar Exclusão
+                </button>
+                <button onclick="fecharModalExclusao()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition-colors">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         let cabos = [];
         let filtroStatusAtivo = 'todos';
@@ -223,12 +280,18 @@
                                 <button onclick="editarCabo(${cabo.id})" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white text-xs py-2 px-3 rounded transition-colors">
                                     <i class="fas fa-edit mr-1"></i>Editar
                                 </button>
+                                <button onclick="excluirCabo(${cabo.id}, '${cabo.codigo_unico}')" class="flex-1 bg-red-500 hover:bg-red-600 text-white text-xs py-2 px-3 rounded transition-colors">
+                                    <i class="fas fa-trash mr-1"></i>Excluir
+                                </button>
                                 ` : `
                                 <button onclick="repararCabo(${cabo.id}, '${cabo.codigo_unico}')" class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white text-xs py-2 px-3 rounded transition-colors">
                                     <i class="fas fa-wrench mr-1"></i>Reparar
                                 </button>
                                 <button onclick="editarCabo(${cabo.id})" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white text-xs py-2 px-3 rounded transition-colors">
                                     <i class="fas fa-edit mr-1"></i>Editar
+                                </button>
+                                <button onclick="excluirCabo(${cabo.id}, '${cabo.codigo_unico}')" class="flex-1 bg-red-500 hover:bg-red-600 text-white text-xs py-2 px-3 rounded transition-colors">
+                                    <i class="fas fa-trash mr-1"></i>Excluir
                                 </button>
                                 `}
                             </div>
@@ -336,8 +399,10 @@
 
         // Conectar cabo
         function conectarCabo(id) {
-            // Redirecionar para página de conexão
-            window.location.href = `conectar-cabo-estoque.html?cabo_id=${id}`;
+            const params = new URLSearchParams(window.location.search);
+            const redirect = params.get('redirect');
+            const suffix = redirect ? `&redirect=${encodeURIComponent(redirect)}` : '';
+            window.location.href = `conectar-cabo-estoque.html?cabo_id=${id}${suffix}`;
         }
 
         // Editar cabo
@@ -400,6 +465,57 @@
             }
         }
 
+        // Variáveis para exclusão
+        let caboExclusaoId = null;
+
+        // Abrir modal de exclusão
+        function excluirCabo(id, codigo) {
+            caboExclusaoId = id;
+            document.getElementById('codigoCaboExclusao').textContent = codigo;
+            document.getElementById('motivoExclusao').value = '';
+            document.getElementById('modalExclusao').classList.remove('hidden');
+        }
+
+        // Fechar modal de exclusão
+        function fecharModalExclusao() {
+            document.getElementById('modalExclusao').classList.add('hidden');
+            caboExclusaoId = null;
+        }
+
+        // Confirmar exclusão
+        async function confirmarExclusao() {
+            if (!caboExclusaoId) return;
+
+            const motivo = document.getElementById('motivoExclusao').value.trim();
+
+            if (!motivo) {
+                alert('Por favor, informe o motivo da exclusão.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/cabos/${caboExclusaoId}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        motivo: motivo
+                    })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.mensagem || 'Erro ao excluir cabo');
+                }
+
+                alert('Cabo excluído com sucesso! O código foi liberado para novo uso.');
+                fecharModalExclusao();
+                carregarCabosEstoque(); // Recarregar dados
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro ao excluir cabo: ' + error.message);
+            }
+        }
+
         // Voltar ao painel de configuração
         function voltarPainelConfig() {
             fetch('/perfil').then(resp => resp.json()).then(perfil => {
@@ -429,6 +545,18 @@
                 .then(data => {
                     LogoManager.loadEmpresaLogo(data);
                 });
+            // Mostrar indicação de retorno, se houver redirect
+            const params = new URLSearchParams(window.location.search);
+            const redirect = params.get('redirect');
+            if (redirect) {
+                const resumo = document.getElementById('resumoEstoque');
+                if (resumo) {
+                    const info = document.createElement('div');
+                    info.className = 'flex items-center gap-2 bg-orange-600 dark:bg-orange-800 text-white px-5 py-3 rounded-lg shadow';
+                    info.innerHTML = '<i class="fas fa-door-open"></i><span>Retornar para a sala após conectar</span>';
+                    resumo.appendChild(info);
+                }
+            }
         });
     </script>
     <script src="static/js/logo-manager.js"></script>

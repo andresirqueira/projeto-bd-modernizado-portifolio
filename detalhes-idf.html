@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes do IDF</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: 'class' };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="static/img/favicon-lista.png">
+    <script>
+      function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        // Atualizar logo da empresa quando o tema mudar
+        updateEmpresaLogo();
+      }
+      
+      function updateEmpresaLogo() {
+        const empresaDiv = document.getElementById('empresa-logada');
+        if (empresaDiv && empresaDiv.querySelector('img')) {
+          const isDark = document.documentElement.classList.contains('dark');
+          const bgClass = isDark ? 'dark:bg-transparent' : 'bg-gray-800';
+          empresaDiv.className = `absolute top-4 right-4 text-indigo-500 font-bold ${bgClass} rounded-lg p-2`;
+        }
+      }
+      
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <div class="relative w-full max-w-7xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
+        <button onclick="voltarGerenciarIDFs()" class="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors" title="Voltar">
+            <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
+        </button>
+        <div id="empresa-logada" class="absolute top-4 right-4 text-indigo-500 font-bold bg-gray-800 dark:bg-transparent rounded-lg p-2"></div>
+        <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
+            <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
+        </button>
+        
+        <div class="text-center mt-8 mb-8">
+            <h1 id="idf-title" class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+                <i class="fas fa-server text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                Detalhes do IDF
+            </h1>
+        </div>
+            <div id="loading" class="text-center py-8">
+                <i class="fas fa-spinner fa-spin text-2xl text-gray-600 dark:text-gray-300"></i>
+                <p class="mt-2 text-gray-600 dark:text-gray-300">Carregando detalhes do IDF...</p>
+            </div>
+            
+            <div id="idf-content" style="display: none;">
+                <!-- Conteúdo do IDF será carregado aqui -->
+            </div>
+    </div>
+
+    <script>
+        let idfId = null;
+        let idfData = null;
+
+        // Obter ID do IDF da URL
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            idfId = urlParams.get('id');
+            
+            if (idfId) {
+                carregarDetalhesIDF();
+            } else {
+                alert('ID do IDF não fornecido');
+                window.location.href = 'gerenciar-idfs.html';
+            }
+        });
+
+        // Carregar detalhes do IDF
+        async function carregarDetalhesIDF() {
+            try {
+                const response = await fetch(`/idfs/${idfId}`);
+                if (response.ok) {
+                    idfData = await response.json();
+                    exibirDetalhesIDF();
+                } else {
+                    alert('Erro ao carregar detalhes do IDF');
+                    window.location.href = 'gerenciar-idfs.html';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar detalhes do IDF:', error);
+                alert('Erro ao carregar detalhes do IDF');
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        // Exibir detalhes do IDF
+        function exibirDetalhesIDF() {
+            document.getElementById('idf-title').innerHTML = `
+                <i class="fas fa-server text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                IDF: ${idfData.nome}
+            `;
+            
+            const content = document.getElementById('idf-content');
+            content.style.display = 'block';
+            
+            content.innerHTML = `
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 mb-6 shadow-lg">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">${idfData.nome}</h2>
+                            <p class="text-gray-600 dark:text-gray-300">${idfData.andar_nome || 'Andar não definido'}</p>
+                        </div>
+                        <span class="px-3 py-1 rounded-full text-xs font-medium ${idfData.status === 'ativo' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : idfData.status === 'inativo' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'}">
+                            ${idfData.status}
+                        </span>
+                    </div>
+                    ${idfData.descricao ? `<p class="text-gray-600 dark:text-gray-300">${idfData.descricao}</p>` : ''}
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-cogs text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-white">
+                                Equipamentos (${idfData.equipamentos ? idfData.equipamentos.length : 0})
+                            </h3>
+                        </div>
+                        <div id="equipamentos-list" class="space-y-3">
+                            ${idfData.equipamentos && idfData.equipamentos.length > 0 
+                                ? idfData.equipamentos.map(eq => `
+                                    <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                        <div class="flex-1">
+                                            <div class="font-semibold text-gray-800 dark:text-white">${eq.nome}</div>
+                                            <div class="text-sm text-gray-600 dark:text-gray-300">${eq.marca} ${eq.modelo} - ${eq.tipo}</div>
+                                        </div>
+                                        <span class="bg-blue-500 text-white px-2 py-1 rounded-full text-xs">${eq.funcao || 'N/A'}</span>
+                                    </div>
+                                `).join('')
+                                : '<div class="text-center py-8 text-gray-500"><p>Nenhum equipamento cadastrado</p></div>'
+                            }
+                        </div>
+                        <div class="mt-4">
+                            <a href="gerenciar-equipamentos-idf.html?id=${idfData.id}" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                                <i class="fas fa-plus"></i> Gerenciar Equipamentos
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-network-wired text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-white">
+                                Conexões com Salas (${idfData.conexoes_salas ? idfData.conexoes_salas.length : 0})
+                            </h3>
+                        </div>
+                        <div id="conexoes-list" class="space-y-3">
+                            ${idfData.conexoes_salas && idfData.conexoes_salas.length > 0 
+                                ? idfData.conexoes_salas.map(conexao => `
+                                    <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                        <div class="flex-1">
+                                            <div class="font-semibold text-gray-800 dark:text-white">${conexao.sala_nome}</div>
+                                            <div class="text-sm text-gray-600 dark:text-gray-300">${conexao.capacidade || 'N/A'} - ${conexao.status}</div>
+                                        </div>
+                                        <span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs">${conexao.tipo_conexao || 'N/A'}</span>
+                                    </div>
+                                `).join('')
+                                : '<div class="text-center py-8 text-gray-500"><p>Nenhuma conexão cadastrada</p></div>'
+                            }
+                        </div>
+                        <div class="mt-4">
+                            <a href="gerenciar-conexoes-idf.html?id=${idfData.id}" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                                <i class="fas fa-plus"></i> Gerenciar Conexões
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-ethernet text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                        <h3 class="text-lg font-bold text-gray-800 dark:text-white">Switches do Andar</h3>
+                    </div>
+                    <div id="switches-list">
+                        <div class="text-center py-8">
+                            <i class="fas fa-spinner fa-spin text-2xl text-gray-400"></i>
+                            <p class="mt-2 text-gray-500">Carregando switches...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg mt-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-server text-indigo-600 dark:text-indigo-400 mr-3"></i>
+                        <h3 class="text-lg font-bold text-gray-800 dark:text-white">Patch Panels do Andar</h3>
+                    </div>
+                    <div id="patchpanels-list">
+                        <div class="text-center py-8">
+                            <i class="fas fa-spinner fa-spin text-2xl text-gray-400"></i>
+                            <p class="mt-2 text-gray-500">Carregando patch panels...</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Carregar switches do andar
+            carregarSwitchesAndar();
+            // Carregar patch panels do andar
+            carregarPatchPanelsAndar();
+        }
+
+        // Carregar switches do andar
+        async function carregarSwitchesAndar() {
+            try {
+                const response = await fetch(`/idfs/${idfId}/switches-andar`);
+                if (response.ok) {
+                    const switches = await response.json();
+                    exibirSwitches(switches);
+                } else {
+                    document.getElementById('switches-list').innerHTML = 
+                        '<div class="empty-state"><p>Erro ao carregar switches</p></div>';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar switches:', error);
+                document.getElementById('switches-list').innerHTML = 
+                    '<div class="empty-state"><p>Erro ao carregar switches</p></div>';
+            }
+        }
+
+        // Exibir switches
+        function exibirSwitches(switches) {
+            const container = document.getElementById('switches-list');
+            
+            if (switches.length === 0) {
+                container.innerHTML = '<div class="text-center py-8 text-gray-500"><p>Nenhum switch encontrado neste andar</p></div>';
+                return;
+            }
+            
+            container.innerHTML = switches.map(switch_item => {
+                const percentualOcupacao = switch_item.total_portas > 0 
+                    ? (switch_item.portas_ocupadas / switch_item.total_portas) * 100 
+                    : 0;
+                
+                let barColor = 'bg-green-500';
+                if (percentualOcupacao > 80) barColor = 'bg-red-500';
+                else if (percentualOcupacao > 60) barColor = 'bg-yellow-500';
+                
+                return `
+                    <div class="flex justify-between items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg mb-3">
+                        <div class="flex-1 pr-4">
+                            <div class="font-semibold text-gray-800 dark:text-white mb-1">${switch_item.nome}</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-300">${switch_item.marca} ${switch_item.modelo}</div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="text-right">
+                                <div class="text-sm font-medium text-gray-800 dark:text-white mb-2">
+                                    ${switch_item.portas_ocupadas}/${switch_item.total_portas} portas
+                                </div>
+                                <div class="w-24 h-2 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden mb-1">
+                                    <div class="h-full ${barColor} transition-all duration-300" style="width: ${percentualOcupacao}%"></div>
+                                </div>
+                                <div class="text-xs text-gray-600 dark:text-gray-300">
+                                    ${switch_item.portas_livres} livres
+                                </div>
+                            </div>
+                            <button class="bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-800 text-white px-3 py-2 rounded-lg transition-colors text-sm"
+                                    onclick="window.location.href='visualizar-switch-sala.html?switchId=${switch_item.id}'">
+                                Ver Portas
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Carregar patch panels do andar
+        async function carregarPatchPanelsAndar() {
+            try {
+                const response = await fetch(`/patch-panels/andar/${idfData.andar_id}`);
+                if (response.ok) {
+                    const pps = await response.json();
+                    exibirPatchPanels(pps);
+                } else {
+                    document.getElementById('patchpanels-list').innerHTML = '<div class="text-center py-8 text-gray-500"><p>Erro ao carregar patch panels</p></div>';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar patch panels:', error);
+                document.getElementById('patchpanels-list').innerHTML = '<div class="text-center py-8 text-gray-500"><p>Erro ao carregar patch panels</p></div>';
+            }
+        }
+
+        // Exibir patch panels
+        function exibirPatchPanels(patchPanels) {
+            const container = document.getElementById('patchpanels-list');
+            if (!patchPanels || patchPanels.length === 0) {
+                container.innerHTML = '<div class="text-center py-8 text-gray-500"><p>Nenhum patch panel encontrado neste andar</p></div>';
+                return;
+            }
+            container.innerHTML = patchPanels.map(pp => {
+                const percentualOcupacao = pp.total_portas > 0 
+                    ? (pp.portas_ocupadas / pp.total_portas) * 100 
+                    : 0;
+                
+                let barColor = 'bg-green-500';
+                if (percentualOcupacao > 80) barColor = 'bg-red-500';
+                else if (percentualOcupacao > 60) barColor = 'bg-yellow-500';
+                
+                return `
+                    <div class="flex justify-between items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg mb-3">
+                        <div class="flex-1 pr-4">
+                            <div class="font-semibold text-gray-800 dark:text-white mb-1">${pp.nome}</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-300">Código: ${pp.codigo || '-'} • Portas: ${pp.porta_inicial}-${pp.porta_final}</div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="text-right">
+                                <div class="text-sm font-medium text-gray-800 dark:text-white mb-2">
+                                    ${pp.portas_ocupadas}/${pp.total_portas} portas
+                                </div>
+                                <div class="w-24 h-2 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden mb-1">
+                                    <div class="h-full ${barColor} transition-all duration-300" style="width: ${percentualOcupacao}%"></div>
+                                </div>
+                                <div class="text-xs text-gray-600 dark:text-gray-300">
+                                    ${pp.portas_livres} livres
+                                </div>
+                            </div>
+                            <span class="px-2 py-1 rounded-full text-xs font-semibold ${pp.status === 'ativo' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-gray-200 text-gray-700 dark:bg-gray-600 dark:text-gray-100'}">${pp.status || 'N/A'}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Função para voltar ao gerenciar IDFs
+        function voltarGerenciarIDFs() {
+            window.location.href = 'gerenciar-idfs.html';
+        }
+        
+        // Carregar logo da empresa
+        window.addEventListener('DOMContentLoaded', function() {
+            fetch('/empresa_atual')
+                .then(resp => resp.json())
+                .then(data => {
+                    const empresaDiv = document.getElementById('empresa-logada');
+                    if (data.logo) {
+                        const isDark = document.documentElement.classList.contains('dark');
+                        const bgClass = isDark ? 'dark:bg-transparent' : 'bg-gray-800';
+                        empresaDiv.className = `absolute top-4 right-4 text-indigo-500 font-bold ${bgClass} rounded-lg p-2`;
+                        empresaDiv.innerHTML = `<img src="${data.logo}" alt="Logo da empresa" style="max-height:40px;max-width:120px;object-fit:contain;">`;
+                    } else if (data.nome) {
+                        empresaDiv.innerText = 'Empresa: ' + data.nome;
+                    }
+                });
+        });
+    </script>
+</body>
+</html>

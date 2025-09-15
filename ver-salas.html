@@ -9,6 +9,8 @@
       tailwind.config = { darkMode: 'class' };
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="static/css/tour.css">
+    <script src="static/js/tour.js"></script>
     <script>
       function toggleDarkMode() {
         if (document.documentElement.classList.contains('dark')) {
@@ -37,6 +39,9 @@
         <button onclick="toggleDarkMode()" class="absolute top-4 left-16 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
             <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
         </button>
+        <button onclick="iniciarTour()" class="absolute top-4 left-28 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 rounded-full p-2 transition-colors" title="Ajuda - Iniciar tour da página">
+            <i class="fas fa-question text-sm"></i>
+        </button>
         <div class="text-center mt-8 mb-8">
             <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">
                 <i class="fas fa-eye text-indigo-600 dark:text-indigo-400 mr-3"></i>
@@ -62,6 +67,41 @@
             </div>
             <div id="resultadosInfo" class="text-xs text-indigo-600 dark:text-indigo-400 text-center font-medium"></div>
             <div id="cardsSalasContainer" class="flex flex-wrap gap-6 justify-center"></div>
+        </div>
+    </div>
+    <!-- Modal Adicionar Sala -->
+    <div id="modalAddSala" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;" class="flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-900 rounded-xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-auto">
+            <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+                <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">Adicionar Sala</h3>
+                <button id="addSala-fechar" class="px-3 py-1.5 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600">Fechar</button>
+            </div>
+            <form id="formAddSala" enctype="multipart/form-data" class="p-4 grid grid-cols-1 gap-3">
+                <label class="text-gray-700 dark:text-white">Nome da Sala:</label>
+                <input type="text" name="nome" required class="px-3 py-2 rounded border dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                <label class="text-gray-700 dark:text-white">Tipo:</label>
+                <input type="text" name="tipo" class="px-3 py-2 rounded border dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                <label class="text-gray-700 dark:text-white">Descrição:</label>
+                <textarea name="descricao" class="px-3 py-2 rounded border dark:bg-gray-800 dark:text-white dark:border-gray-600"></textarea>
+                <div id="addSala-fotoPreview" class="mb-2"></div>
+                <label class="text-gray-700 dark:text-white">Escolher imagem já enviada:</label>
+                <select id="addSala-fotoExistente" name="foto" class="px-3 py-2 rounded border dark:bg-gray-800 dark:text-white dark:border-gray-600 mb-2"></select>
+                <div class="mb-2 text-yellow-500 text-sm">
+                    Se a foto desejada não estiver aqui, <a href="upload-fotos-salas.html" class="text-blue-400 underline">faça o upload na tela Upload Fotos</a>.
+                </div>
+                <label class="text-gray-700 dark:text-white">Andar ID:</label>
+                <select name="andar_id" class="px-3 py-2 rounded border dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                    <option value="">Selecione...</option>
+                    <script>for (let i = 0; i < 200; i++) { document.write(`<option value='${i}'>${i}</option>`); }</script>
+                </select>
+                <label class="text-gray-700 dark:text-white">Equipamentos em estoque:</label>
+                <div class="overflow-x-auto"><div id="addSala-equipTabela" class="mb-2"></div></div>
+                <div class="flex justify-end gap-2 mt-2">
+                    <span id="addSala-msg" class="mr-auto text-sm"></span>
+                    <button type="button" id="addSala-cancelar" class="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 rounded bg-green-600 hover:bg-green-700 text-white">Cadastrar</button>
+                </div>
+            </form>
         </div>
     </div>
     <script>
@@ -178,6 +218,19 @@
         const termoBusca = document.getElementById('filtroSala').value.trim().toLowerCase();
         
         let html = '';
+        
+        // Adicionar card "Adicionar Sala" se o usuário for admin
+        const perfil = JSON.parse(localStorage.getItem('perfil') || '{}');
+        if (perfil.nivel === 'admin') {
+            html += `<div class='bg-gradient-to-br from-green-400 to-green-600 dark:from-green-600 dark:to-green-800 rounded-xl shadow-lg p-6 flex flex-col items-center justify-center w-72 min-h-[220px] mb-4 cursor-pointer hover:from-green-500 hover:to-green-700 dark:hover:from-green-700 dark:hover:to-green-900 transition-all duration-300 transform hover:scale-105' onclick='abrirModalAddSala()' title='Adicionar Nova Sala'>`;
+            html += `<div class='text-white text-center'>`;
+            html += `<i class='fas fa-plus-circle text-6xl mb-4'></i>`;
+            html += `<div class='font-bold text-xl mb-2'>Adicionar Sala</div>`;
+            html += `<div class='text-sm opacity-90'>Clique para criar uma nova sala</div>`;
+            html += `</div>`;
+            html += `</div>`;
+        }
+        
         salas.forEach(sala => {
             const cardId = `equipamentos_sala_${sala.id}`;
             
@@ -280,8 +333,22 @@
             renderCardsSalas(filtrados);
             atualizarIndicadorResultados(filtrados, termo);
         });
+
+        // Buscar perfil primeiro e só então renderizar as salas
+        fetch('/perfil')
+            .then(resp => resp.json())
+            .then(perfil => {
+                localStorage.setItem('perfil', JSON.stringify(perfil));
+                carregarSalas();
+                // Bind modal Add Sala
+                inicializarModalAddSala();
+            })
+            .catch(() => {
+                // Em caso de erro, ainda assim tenta carregar as salas
+                carregarSalas();
+            });
     });
-    carregarSalas();
+    // Removido carregarSalas() imediato para evitar condição de corrida com o perfil
 
     function voltarPainelConfig() {
         fetch('/perfil').then(resp => resp.json()).then(perfil => {
@@ -302,6 +369,86 @@
                 LogoManager.loadEmpresaLogo(data);
             });
     });
+
+    // --- Modal Adicionar Sala ---
+    function abrirModalAddSala(){
+        const m = document.getElementById('modalAddSala');
+        if (m) m.style.display = 'flex';
+        // limpar
+        const f = document.getElementById('formAddSala');
+        if (f) f.reset();
+        carregarFotosExistentesAddSala();
+        carregarEquipSemSalaAddSala();
+    }
+    function fecharModalAddSala(){ const m = document.getElementById('modalAddSala'); if (m) m.style.display = 'none'; }
+    async function carregarFotosExistentesAddSala(){
+        const select = document.getElementById('addSala-fotoExistente');
+        if (!select) return;
+        try {
+            const resp = await fetch('/fotos-salas');
+            const data = await resp.json();
+            select.innerHTML = '<option value="">Nenhuma</option>';
+            (data.imagens||[]).forEach(url => { const nome = url.split('/').pop(); select.innerHTML += `<option value="${url}">${nome}</option>`; });
+        } catch {}
+    }
+    async function carregarEquipSemSalaAddSala(){
+        const tabelaDiv = document.getElementById('addSala-equipTabela');
+        if (!tabelaDiv) return;
+        tabelaDiv.innerHTML = '<em>Carregando...</em>';
+        const resp = await fetch('/equipamentos-disponiveis');
+        const equipamentos = await resp.json();
+        if (!equipamentos.length) { tabelaDiv.innerHTML = '<em class="text-gray-600 dark:text-gray-300">Nenhum equipamento disponível.</em>'; return; }
+        let html = `<table class="tabela-equipamentos" style="min-width:900px;width:100%;border-collapse:collapse;background:#2c3e50;color:#eee;">`+
+                   `<thead><tr><th></th><th>Nome</th><th>Tipo</th><th>Marca</th><th>Modelo</th><th>Série</th></tr></thead><tbody>`;
+        equipamentos.forEach(eq => {
+            const serie = (eq.dados && eq.dados.serie) ? eq.dados.serie : '';
+            html += `<tr><td style="text-align:center"><input type='checkbox' value='${eq.id}' class='addSala-eq-cb'></td>`+
+                    `<td>${eq.nome||''}</td><td>${eq.tipo||''}</td><td>${eq.marca||''}</td><td>${eq.modelo||''}</td><td>${serie}</td></tr>`;
+        });
+        html += '</tbody></table>';
+        tabelaDiv.innerHTML = html;
+    }
+    function inicializarModalAddSala(){
+        const fechar = document.getElementById('addSala-fechar');
+        if (fechar) fechar.onclick = fecharModalAddSala;
+        const cancelar = document.getElementById('addSala-cancelar');
+        if (cancelar) cancelar.onclick = fecharModalAddSala;
+        const form = document.getElementById('formAddSala');
+        if (form) form.onsubmit = async function(e){
+            e.preventDefault();
+            const formData = new FormData(form);
+            // equipamentos selecionados
+            const selecionados = Array.from(document.querySelectorAll('.addSala-eq-cb:checked')).map(cb => cb.value);
+            selecionados.forEach(id => formData.append('equipamentos_ids[]', id));
+            const resp = await fetch('/adicionar-sala', { method: 'POST', body: formData });
+            const json = await resp.json();
+            const msg = document.getElementById('addSala-msg');
+            if (json.status === 'ok') {
+                msg.textContent = 'Sala cadastrada com sucesso!';
+                msg.className = 'text-green-500 font-semibold';
+                fecharModalAddSala();
+                carregarSalas();
+            } else {
+                msg.textContent = (json && json.mensagem) || 'Erro ao cadastrar!';
+                msg.className = 'text-red-500 font-semibold';
+            }
+        };
+        const selectFoto = document.getElementById('addSala-fotoExistente');
+        if (selectFoto) selectFoto.addEventListener('change', function(){
+            const url = this.value; const preview = document.getElementById('addSala-fotoPreview');
+            if (url) { preview.innerHTML = `<img src='${url}' alt='Foto da sala' style='max-width:180px;max-height:90px;object-fit:cover;border-radius:6px;'>`; }
+            else { preview.innerHTML = "<span style='color:#aaa;'>Sem foto cadastrada</span>"; }
+        });
+    }
+    
+    // Função para iniciar o tour da página
+    function iniciarTour() {
+        if (window.sistemaTour) {
+            window.sistemaTour.iniciarTour('ver-salas');
+        } else {
+            alert('Sistema de tour não carregado. Recarregue a página.');
+        }
+    }
     </script>
     <script src="static/js/logo-manager.js"></script>
     </body>

@@ -327,6 +327,11 @@
       max-height: 85px;
     }
 
+    .equipment-slot img[src*="fonte-logitech-tap"] {
+      max-width: 70px;
+      max-height: 70px;
+    }
+
     .equipment-slot img[src*="meetup"] {
       max-width: 90px;
       max-height: 90px;
@@ -759,6 +764,59 @@
       background: rgba(74, 144, 226, 0.15);
       border-color: #5aa0f2;
     }
+
+    /* Estilos para elementos de texto */
+    .text-element {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      text-align: center;
+      user-select: none;
+      position: relative;
+      z-index: 25;
+      cursor: grab;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid #007bff;
+      color: #333;
+      font-weight: bold;
+      font-size: 12px;
+      word-break: break-word;
+      line-height: 1.3;
+      transition: all 0.2s;
+    }
+
+    .text-element:hover {
+      background: rgba(255, 255, 255, 1);
+      border-color: #0056b3;
+      box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+    }
+
+    .text-element.dragging {
+      opacity: 0.7;
+      z-index: 30;
+    }
+
+    .text-element.editing {
+      background: rgba(255, 255, 255, 1);
+      border-color: #28a745;
+      box-shadow: 0 0 8px rgba(40, 167, 69, 0.5);
+    }
+
+    .grid-cell.text-occupied {
+      background: rgba(0, 123, 255, 0.1);
+      border-color: #007bff;
+      cursor: grab;
+      z-index: 15;
+    }
+
+    .grid-cell.text-occupied:hover {
+      background: rgba(0, 123, 255, 0.15);
+      border-color: #0056b3;
+    }
   </style>
 </head>
 
@@ -788,8 +846,11 @@
           <button id="btnConnectMode" class="control-group button" style="width: 100%; margin-bottom: 5px;">
             🔗 Conectar
           </button>
-          <button id="btnRemoveMode" class="control-group button" style="width: 100%; margin-bottom: 10px;">
+          <button id="btnRemoveMode" class="control-group button" style="width: 100%; margin-bottom: 5px;">
             🗑️ Remover
+          </button>
+          <button id="btnTextMode" class="control-group button" style="width: 100%; margin-bottom: 10px;">
+            📝 Texto
           </button>
         </div>
         
@@ -798,10 +859,13 @@
           <button id="btnLoadRealData" class="control-group button warning" style="width: 100%; margin-bottom: 5px;">
             🔍 Dados Reais
           </button>
-          <button id="btnLoadKeystones" class="control-group button info" style="width: 100%; margin-bottom: 5px;">
-            🔌 Keystones
-          </button>
-
+        </div>
+        
+        <div class="control-group" style="margin-bottom: 15px;">
+          <label style="color: #ccc; font-size: 11px; margin-bottom: 8px; display: block;">Visualização:</label>
+          <div style="color: #fff; font-size: 12px; background: rgba(255,255,255,0.1); padding: 8px; border-radius: 4px; text-align: center;">
+            🔗 Modo Distribuído Ativo
+          </div>
         </div>
         
         <div class="control-group" style="margin-bottom: 15px;">
@@ -816,7 +880,7 @@
         
         <div class="control-group" style="margin-top: 20px; border-top: 1px solid #444; padding-top: 15px;">
           <button id="btnSair" class="control-group button" style="width: 100%; background: #6c757d;">
-            🚪 Sair
+            🔄 Voltar à Seleção
           </button>
         </div>
       </div>
@@ -826,9 +890,16 @@
         <h3 style="color: #ffd700; margin-bottom: 20px; font-size: 14px; text-align: center;">ℹ️ Informações</h3>
         
         <div class="control-group" style="margin-bottom: 15px;">
+          <label style="color: #ccc; font-size: 11px; margin-bottom: 8px; display: block;">Sala Atual:</label>
+          <div id="currentSalaNameDisplay" style="color: #fff; font-size: 12px; background: rgba(255,255,255,0.1); padding: 8px; border-radius: 4px; text-align: center; min-height: 20px;">
+            Nenhuma sala selecionada
+          </div>
+        </div>
+        
+        <div class="control-group" style="margin-bottom: 15px;">
           <label style="color: #ccc; font-size: 11px; margin-bottom: 8px; display: block;">Grade:</label>
           <div style="color: #fff; font-size: 12px; background: rgba(255,255,255,0.1); padding: 8px; border-radius: 4px; text-align: center;">
-            12 x 12 células
+            15 x 15 células
           </div>
         </div>
         
@@ -903,19 +974,21 @@
     </div>
   </div>
 
-  <script src="/static/js/equipment-images-map.js"></script>
+  <script src="/static/js/equipment-images-map.js?v=1.2"></script>
   <script>
     // Estado global
     let gridData = {
-      rows: 12,
-      cols: 12,
+      rows: 15,
+      cols: 20,
       selectedEquipment: null,
       connections: [],
       currentSalaId: null,
       connectionMode: false,
       connectionStart: null,
       removeMode: false,
+      textMode: false,
       selectedConnection: null,
+      distributedConnections: true, // Novo: modo de visualização distribuída
       dragState: {
         isDragging: false,
         draggedElement: null,
@@ -938,8 +1011,10 @@
     const btnPlaceMode = document.getElementById('btnPlaceMode');
     const btnConnectMode = document.getElementById('btnConnectMode');
     const btnRemoveMode = document.getElementById('btnRemoveMode');
+    const btnTextMode = document.getElementById('btnTextMode');
     const btnLoadRealData = document.getElementById('btnLoadRealData');
-    const btnLoadKeystones = document.getElementById('btnLoadKeystones');
+    // Botão de modo distribuído removido - modo sempre ativo
+
     const btnSair = document.getElementById('btnSair');
     const statusBar = document.getElementById('statusBar');
     const statusInfo = document.getElementById('statusInfo');
@@ -1063,22 +1138,37 @@
       const existingConnections = [...gridData.connections];
       
       // Coletar equipamentos existentes
-      document.querySelectorAll('.grid-cell.occupied').forEach(cell => {
+      document.querySelectorAll('.grid-cell.occupied, .grid-cell.text-occupied').forEach(cell => {
         const row = parseInt(cell.dataset.row);
         const col = parseInt(cell.dataset.col);
         const img = cell.querySelector('img');
         const name = cell.querySelector('.name').textContent;
+        const textElement = cell.querySelector('.text-element');
         const isKeystone = cell.classList.contains('keystone');
+        const isText = cell.classList.contains('text-occupied');
         const keystone = isKeystone ? cell.dataset.keystone : null;
         
-        existingEquipment.push({
-          row: row,
-          col: col,
-          src: img ? img.src : null,
-          name: name,
-          isKeystone: isKeystone,
-          keystone: keystone
-        });
+        if (isText) {
+          // É um elemento de texto
+          existingEquipment.push({
+            row: row,
+            col: col,
+            type: 'text',
+            content: textElement ? textElement.textContent.trim() : '',
+            isText: true
+          });
+        } else {
+          // É um equipamento
+          existingEquipment.push({
+            row: row,
+            col: col,
+            src: img ? img.src : null,
+            name: name ? name.textContent : '',
+            isKeystone: isKeystone,
+            keystone: keystone,
+            type: 'equipment'
+          });
+        }
       });
       
       // Limpar container
@@ -1169,7 +1259,21 @@
         if (item.row < gridData.rows && item.col < gridData.cols) {
           const cell = document.querySelector(`[data-row="${item.row}"][data-col="${item.col}"]`);
           if (cell) {
-            if (item.isKeystone) {
+            if (item.isText) {
+              // Restaurar elemento de texto
+              cell.innerHTML = `
+                <div class="text-element">
+                  ${item.content || ''}
+                </div>
+              `;
+              cell.classList.add('text-occupied');
+              
+              // Torna o texto arrastável
+              const textElement = cell.querySelector('.text-element');
+              if (textElement) {
+                makeTextDraggable(textElement);
+              }
+            } else if (item.isKeystone) {
               // Restaurar keystone
               cell.innerHTML = `
                 <div class="equipment-slot keystone-slot">
@@ -1190,10 +1294,12 @@
               cell.classList.add('occupied');
             }
             
-            // Torna o equipamento arrastável
-            const equipmentSlot = cell.querySelector('.equipment-slot');
-            if (equipmentSlot) {
-              makeEquipmentDraggable(equipmentSlot);
+            // Torna o equipamento arrastável (se não for texto)
+            if (!item.isText) {
+              const equipmentSlot = cell.querySelector('.equipment-slot');
+              if (equipmentSlot) {
+                makeEquipmentDraggable(equipmentSlot);
+              }
             }
             restoredEquipment++;
           }
@@ -1288,6 +1394,11 @@
       
       if (gridData.connectionMode) {
         handleConnectionClick(cell, row, col);
+        return;
+      }
+      
+      if (gridData.textMode) {
+        handleTextClick(cell, row, col);
         return;
       }
       
@@ -1463,6 +1574,14 @@
         if (confirm(`Remover equipamento "${name}" desta posição?`)) {
           removeEquipment(cell, row, col);
         }
+      } else if (cell.classList.contains('text-occupied')) {
+        const textElement = cell.querySelector('.text-element');
+        const text = textElement ? textElement.textContent.trim() : 'Texto';
+        if (confirm(`Remover texto "${text}" desta posição?`)) {
+          cell.innerHTML = '';
+          cell.classList.remove('text-occupied');
+          updateStatus(`Texto "${text}" removido`);
+        }
       }
     }
 
@@ -1472,7 +1591,7 @@
       
       // Remove equipamento da célula
       cell.innerHTML = '';
-      cell.classList.remove('occupied', 'keystone');
+      cell.classList.remove('occupied', 'keystone', 'text-occupied');
       delete cell.dataset.keystone;
       
       // Remove conexões relacionadas
@@ -1570,12 +1689,25 @@
         fromName: fromName,
         toName: toName,
         cableInfo: cableInfo,
-        id: Date.now()
+        id: `manual_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
       };
 
-      gridData.connections.push(connection);
-      drawConnection(connection);
-      updateStatus(`Conexão criada: ${fromName} → ${toName} (${cableInfo})`);
+      console.log(`🔗 Criando conexão manual:`);
+      console.log(`  - FROM: ${fromName} (${from.row},${from.col})`);
+      console.log(`  - TO: ${toName} (${to.row},${to.col})`);
+      console.log(`  - CableInfo: ${cableInfo}`);
+      console.log(`  - Connection object:`, connection);
+
+      // Verificar se a conexão já existe antes de adicionar
+      if (!connectionExists(connection, gridData.connections)) {
+        gridData.connections.push(connection);
+        console.log(`✅ Conexão adicionada ao array. Total: ${gridData.connections.length}`);
+        drawConnection(connection);
+        updateStatus(`Conexão criada: ${fromName} → ${toName} (${cableInfo})`);
+      } else {
+        console.log(`⚠️ Conexão duplicada ignorada`);
+        updateStatus(`Conexão duplicada ignorada: ${fromName} → ${toName} (${cableInfo})`);
+      }
     }
 
     // Redesenhar todas as conexões - otimizada
@@ -1617,12 +1749,22 @@
       const connections = gridData.connections;
       let drawnConnections = 0;
       
+      console.log(`🔄 Redesenhando ${connections.length} conexões...`);
+      
       for (let i = 0; i < connections.length; i++) {
+        const connection = connections[i];
+        console.log(`\n--- Redesenhando conexão ${i + 1}/${connections.length} ---`);
+        console.log(`  - ID: ${connection.id}`);
+        console.log(`  - FROM: ${connection.fromName} (${connection.from.row},${connection.from.col})`);
+        console.log(`  - TO: ${connection.toName} (${connection.to.row},${connection.to.col})`);
+        console.log(`  - CableInfo: ${connection.cableInfo}`);
+        
         try {
-          drawConnection(connections[i]);
+          drawConnection(connection);
           drawnConnections++;
+          console.log(`  - ✅ Conexão redesenhada com sucesso`);
         } catch (error) {
-          console.error(`Erro ao desenhar conexão ${i}:`, error);
+          console.error(`  - ❌ Erro ao redesenhar conexão ${i}:`, error);
         }
       }
       
@@ -1686,11 +1828,80 @@
       return '#9E9E9E';
     }
 
-    // Função para desenhar conexão - otimizada
+    // Função para calcular pontos de conexão distribuídos
+    function calculateDistributedConnectionPoints(fromCell, toCell, connectionIndex, totalConnections) {
+      // Usar offsetLeft/offsetTop para coordenadas relativas ao container
+      const centerX1 = fromCell.offsetLeft + fromCell.offsetWidth / 2;
+      const centerY1 = fromCell.offsetTop + fromCell.offsetHeight / 2;
+      const centerX2 = toCell.offsetLeft + toCell.offsetWidth / 2;
+      const centerY2 = toCell.offsetTop + toCell.offsetHeight / 2;
+
+      console.log(`Centros: (${centerX1},${centerY1}) -> (${centerX2},${centerY2})`);
+      console.log(`  - fromCell (origem): (${centerX1},${centerY1})`);
+      console.log(`  - toCell (destino): (${centerX2},${centerY2})`);
+      console.log(`  - fromCell.offsetLeft: ${fromCell.offsetLeft}, fromCell.offsetTop: ${fromCell.offsetTop}`);
+      console.log(`  - toCell.offsetLeft: ${toCell.offsetLeft}, toCell.offsetTop: ${toCell.offsetTop}`);
+
+      // Se há apenas uma conexão, usar pontos centrais
+      if (totalConnections <= 1) {
+        console.log(`  - Conexão única: usando pontos centrais`);
+        console.log(`  - x1,y1 (origem): (${centerX1},${centerY1}) - deve ser fromCell`);
+        console.log(`  - x2,y2 (destino): (${centerX2},${centerY2}) - deve ser toCell`);
+        
+        return {
+          x1: centerX1,
+          y1: centerY1,
+          x2: centerX2,
+          y2: centerY2
+        };
+      }
+
+      // Calcular offset baseado no número de conexões
+      const maxOffset = Math.min(fromCell.offsetWidth, fromCell.offsetHeight) * 0.2; // 20% do tamanho da célula
+      const offset = (maxOffset * (connectionIndex - (totalConnections - 1) / 2)) / totalConnections;
+
+      // Calcular direção da conexão
+      const dx = centerX2 - centerX1;
+      const dy = centerY2 - centerY1;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance === 0) {
+        return {
+          x1: centerX1,
+          y1: centerY1,
+          x2: centerX2,
+          y2: centerY2
+        };
+      }
+
+      // Calcular vetor perpendicular para distribuir as conexões
+      const perpX = -dy / distance;
+      const perpY = dx / distance;
+
+            // Aplicar offset perpendicular
+      const x1 = centerX1 + perpX * offset;
+      const y1 = centerY1 + perpY * offset;
+      const x2 = centerX2 + perpX * offset;
+      const y2 = centerY2 + perpY * offset;
+      
+      console.log(`  Modo distribuído: ${gridData.distributedConnections}, Total conexões: ${totalConnections}, Índice: ${connectionIndex}`);
+      console.log(`  Pontos distribuídos: (${x1},${y1}) -> (${x2},${y2})`);
+      console.log(`  - x1,y1 (origem): (${x1},${y1}) - deve ser fromCell`);
+      console.log(`  - x2,y2 (destino): (${x2},${y2}) - deve ser toCell`);
+      console.log(`  - centerX1,centerY1 (fromCell): (${centerX1},${centerY1})`);
+      console.log(`  - centerX2,centerY2 (toCell): (${centerX2},${centerY2})`);
+
+      return { x1, y1, x2, y2 };
+    }
+
+    // Função para desenhar conexão - otimizada com distribuição
     function drawConnection(connection) {
       console.log(`drawConnection chamada para: ${connection.fromName} → ${connection.toName}`);
       console.log('Dados da conexão:', connection);
+      console.log(`  - FROM: row=${connection.from.row}, col=${connection.from.col}, nome=${connection.fromName}`);
+      console.log(`  - TO: row=${connection.to.row}, col=${connection.to.col}, nome=${connection.toName}`);
       
+      // Buscar células na ordem CORRETA: origem -> destino
       const fromCell = document.querySelector(`[data-row="${connection.from.row}"][data-col="${connection.from.col}"]`);
       const toCell = document.querySelector(`[data-row="${connection.to.row}"][data-col="${connection.to.col}"]`);
       
@@ -1699,19 +1910,73 @@
       
       if (!fromCell || !toCell) {
         console.warn('Células de conexão não encontradas:', connection);
+        if (!fromCell) console.warn(`  - Célula origem não encontrada: row=${connection.from.row}, col=${connection.from.col}`);
+        if (!toCell) console.warn(`  - Célula destino não encontrada: row=${connection.to.row}, col=${connection.to.col}`);
         return;
       }
 
-      const fromRect = fromCell.getBoundingClientRect();
-      const toRect = toCell.getBoundingClientRect();
-      const containerRect = gridContainer.getBoundingClientRect();
+      // Verificar se as células contêm os equipamentos corretos
+      const fromName = fromCell.querySelector('.name')?.textContent || 'Sem nome';
+      const toName = toCell.querySelector('.name')?.textContent || 'Sem nome';
+      
+      console.log(`Verificação de nomes:`);
+      console.log(`  - Célula origem (${connection.from.row},${connection.from.col}): "${fromName}"`);
+      console.log(`  - Célula destino (${connection.to.row},${connection.to.col}): "${toName}"`);
+      console.log(`  - Esperado origem: "${connection.fromName}"`);
+      console.log(`  - Esperado destino: "${connection.toName}"`);
+      
+      // Verificar se os nomes correspondem (com tolerância para variações)
+      const fromNameMatch = fromName.toLowerCase().includes(connection.fromName.toLowerCase()) || 
+                           connection.fromName.toLowerCase().includes(fromName.toLowerCase());
+      const toNameMatch = toName.toLowerCase().includes(connection.toName.toLowerCase()) || 
+                         connection.toName.toLowerCase().includes(toName.toLowerCase());
+      
+      if (!fromNameMatch || !toNameMatch) {
+        console.warn(`⚠️ Nomes não correspondem:`);
+        if (!fromNameMatch) console.warn(`  - Origem: esperado "${connection.fromName}", encontrado "${fromName}"`);
+        if (!toNameMatch) console.warn(`  - Destino: esperado "${connection.toName}", encontrado "${toName}"`);
+        console.warn(`  - Continuando mesmo assim...`);
+      }
 
-      const x1 = fromRect.left + fromRect.width / 2 - containerRect.left;
-      const y1 = fromRect.top + fromRect.height / 2 - containerRect.top;
-      const x2 = toRect.left + toRect.width / 2 - containerRect.left;
-      const y2 = toRect.top + toRect.height / 2 - containerRect.top;
+      // Contar conexões entre os mesmos equipamentos (incluindo a atual)
+      const sameConnections = gridData.connections.filter(conn => 
+        (conn.from.row === connection.from.row && conn.from.col === connection.from.col &&
+         conn.to.row === connection.to.row && conn.to.col === connection.to.col) ||
+        (conn.from.row === connection.to.row && conn.from.col === connection.to.col &&
+         conn.to.row === connection.from.row && conn.to.col === connection.from.col)
+      );
 
-      console.log(`Coordenadas da conexão: (${x1},${y1}) → (${x2},${y2})`);
+      // Encontrar índice desta conexão específica
+      const connectionIndex = sameConnections.findIndex(conn => conn.id === connection.id);
+      const totalConnections = sameConnections.length;
+
+      console.log(`🔍 ANÁLISE DE CONEXÕES MÚLTIPLAS:`);
+      console.log(`  - Conexão atual ID: ${connection.id}`);
+      console.log(`  - CableInfo: ${connection.cableInfo}`);
+      console.log(`  - Total de conexões entre os mesmos equipamentos: ${totalConnections}`);
+      console.log(`  - Índice desta conexão: ${connectionIndex + 1}`);
+      console.log(`  - Todas as conexões no gridData: ${gridData.connections.length}`);
+      
+      // Debug: mostrar todas as conexões entre os mesmos equipamentos
+      sameConnections.forEach((conn, idx) => {
+        console.log(`    ${idx + 1}. ID: ${conn.id}, CableInfo: ${conn.cableInfo}, FROM: ${conn.fromName}, TO: ${conn.toName}`);
+      });
+
+      console.log(`Conexão ${connectionIndex + 1} de ${totalConnections} entre os mesmos equipamentos`);
+      console.log('Modo distribuído ativo:', gridData.distributedConnections);
+      console.log('Todas as conexões:', gridData.connections);
+      console.log('Conexões entre os mesmos equipamentos:', sameConnections);
+
+      // Calcular pontos distribuídos - IMPORTANTE: fromCell é origem, toCell é destino
+      console.log(`🔍 Calculando pontos para conexão:`);
+      console.log(`  - fromCell (origem): ${connection.fromName} em (${connection.from.row},${connection.from.col})`);
+      console.log(`  - toCell (destino): ${connection.toName} em (${connection.to.row},${connection.to.col})`);
+      
+      const points = calculateDistributedConnectionPoints(fromCell, toCell, connectionIndex + 1, totalConnections);
+
+      console.log(`Coordenadas da conexão distribuída: (${points.x1},${points.y1}) → (${points.x2},${points.y2})`);
+      console.log(`  - Ponto 1 (origem): (${points.x1},${points.y1}) - Equipamento: ${connection.fromName}`);
+      console.log(`  - Ponto 2 (destino): (${points.x2},${points.y2}) - Equipamento: ${connection.toName}`);
 
       // Usar o SVG dentro do grid-container
       const svg = document.getElementById('svg-connections');
@@ -1725,14 +1990,28 @@
       // Determinar cor do cabo
       const cableColor = getCableColor(connection.cableInfo);
       
-      // Criar path para a conexão
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      path.setAttribute('d', `M${x1},${y1} L${x2},${y2}`);
+      // Criar path para a conexão com curva suave se houver múltiplas conexões
+      let pathData;
+      if (totalConnections > 1 && gridData.distributedConnections) {
+        // Usar linha reta para conexões múltiplas no modo distribuído
+        pathData = `M${points.x1},${points.y1} L${points.x2},${points.y2}`;
+        console.log(`Modo distribuído: usando linha reta para ${totalConnections} conexões`);
+        console.log(`  - Path SVG: M${points.x1},${points.y1} L${points.x2},${points.y2}`);
+        console.log(`  - Direção: (${points.x1},${points.y1}) → (${points.x2},${points.y2})`);
+      } else {
+        // Linha reta para conexão única ou modo agrupado
+        pathData = `M${points.x1},${points.y1} L${points.x2},${points.y2}`;
+        console.log(`Modo agrupado ou conexão única: usando linha reta`);
+        console.log(`  - Path SVG: M${points.x1},${points.y1} L${points.x2},${points.y2}`);
+        console.log(`  - Direção: (${points.x1},${points.y1}) → (${points.x2},${points.y2})`);
+      }
+
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', pathData);
       path.setAttribute('stroke', cableColor);
       path.setAttribute('stroke-width', '2');
       path.setAttribute('stroke-dasharray', '5,5');
-        path.setAttribute('fill', 'none');
-      // path.setAttribute('marker-end', 'url(#arrowhead)'); // Removido para não mostrar seta
+      path.setAttribute('fill', 'none');
       path.dataset.connectionId = connection.id;
       
       // Adicionar evento de clique para remover conexão
@@ -1761,15 +2040,31 @@
       svg.appendChild(path);
       console.log('Path adicionado ao SVG');
 
-      // Criar label do cabo como elemento SVG
-          const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      text.setAttribute('x', (x1 + x2) / 2);
-      text.setAttribute('y', (y1 + y2) / 2 - 5);
-          text.setAttribute('text-anchor', 'middle');
+      // Criar label do cabo como elemento SVG com posicionamento inteligente
+      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      
+      // Calcular posição do texto com offset para evitar sobreposição
+      let textX = (points.x1 + points.x2) / 2;
+      let textY = (points.y1 + points.y2) / 2 - 5;
+      
+      console.log(`📝 Posicionando texto do cabo:`);
+      console.log(`  - Posição central: (${textX},${textY})`);
+      console.log(`  - Texto: "${connection.cableInfo}"`);
+      
+      // Se há múltiplas conexões e modo distribuído, ajustar posição do texto
+      if (totalConnections > 1 && gridData.distributedConnections) {
+        const textOffset = 15 * (connectionIndex - (totalConnections - 1) / 2);
+        textY += textOffset;
+        console.log(`  - Offset aplicado: ${textOffset}, nova posição Y: ${textY}`);
+      }
+      
+      text.setAttribute('x', textX);
+      text.setAttribute('y', textY);
+      text.setAttribute('text-anchor', 'middle');
       text.setAttribute('font-size', '10px');
-          text.setAttribute('font-family', 'Arial, sans-serif');
+      text.setAttribute('font-family', 'Arial, sans-serif');
       text.setAttribute('fill', '#333');
-          text.setAttribute('pointer-events', 'none');
+      text.setAttribute('pointer-events', 'none');
       text.textContent = connection.cableInfo;
       
       // Adicionar fundo ao texto
@@ -1786,10 +2081,49 @@
       background.setAttribute('pointer-events', 'none');
       
       svg.appendChild(background);
-          svg.appendChild(text);
+      svg.appendChild(text);
+      
+      // Se há muitas conexões entre os mesmos equipamentos e modo agrupado, adicionar indicador visual
+      if (totalConnections >= 3 && connectionIndex === 0 && !gridData.distributedConnections) {
+        // Criar um indicador de múltiplas conexões
+        const summaryText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        const summaryX = (points.x1 + points.x2) / 2;
+        const summaryY = (points.y1 + points.y2) / 2 + 25;
+        
+        summaryText.setAttribute('x', summaryX);
+        summaryText.setAttribute('y', summaryY);
+        summaryText.setAttribute('text-anchor', 'middle');
+        summaryText.setAttribute('font-size', '9px');
+        summaryText.setAttribute('font-family', 'Arial, sans-serif');
+        summaryText.setAttribute('fill', '#666');
+        summaryText.setAttribute('pointer-events', 'none');
+        summaryText.setAttribute('font-weight', 'bold');
+        summaryText.textContent = `${totalConnections} conexões`;
+        
+        // Adicionar fundo ao texto de resumo
+        const summaryBBox = summaryText.getBBox();
+        const summaryBackground = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        summaryBackground.setAttribute('x', summaryBBox.x - 3);
+        summaryBackground.setAttribute('y', summaryBBox.y - 1);
+        summaryBackground.setAttribute('width', summaryBBox.width + 6);
+        summaryBackground.setAttribute('height', summaryBBox.height + 2);
+        summaryBackground.setAttribute('fill', 'rgba(255, 255, 255, 0.8)');
+        summaryBackground.setAttribute('stroke', '#666');
+        summaryBackground.setAttribute('stroke-width', '0.5');
+        summaryBackground.setAttribute('rx', '3');
+        summaryBackground.setAttribute('pointer-events', 'none');
+        
+        svg.appendChild(summaryBackground);
+        svg.appendChild(summaryText);
+      }
       
       console.log(`✅ Conexão desenhada com sucesso: ${connection.fromName} → ${connection.toName}`);
-        }
+      console.log(`  - Direção: (${points.x1},${points.y1}) → (${points.x2},${points.y2})`);
+      console.log(`  - Equipamentos: ${connection.fromName} → ${connection.toName}`);
+      console.log(`  - Path SVG criado: ${pathData}`);
+      console.log(`  - Texto do cabo posicionado em: (${textX},${textY})`);
+      console.log(`  - Cor do cabo: ${cableColor}`);
+    }
 
     // Manipular clique direito (remover equipamento)
     function handleCellRightClick(cell, row, col) {
@@ -1838,23 +2172,38 @@
         };
         
         // Coleta equipamentos posicionados
-        document.querySelectorAll('.grid-cell.occupied').forEach(cell => {
+        document.querySelectorAll('.grid-cell.occupied, .grid-cell.text-occupied').forEach(cell => {
           const row = parseInt(cell.dataset.row);
           const col = parseInt(cell.dataset.col);
           const img = cell.querySelector('img');
-          const name = cell.querySelector('.name').textContent;
+          const name = cell.querySelector('.name');
+          const textElement = cell.querySelector('.text-element');
           
           // Verificar se é um keystone
           const isKeystone = cell.classList.contains('keystone');
+          const isText = cell.classList.contains('text-occupied');
           
-          layout.equipment.push({
-            row: row,
-            col: col,
-            src: img ? img.src : null,
-            name: name,
-            isKeystone: isKeystone,
-            keystone: isKeystone ? cell.dataset.keystone : null
-          });
+          if (isText) {
+            // É um elemento de texto
+            layout.equipment.push({
+              row: row,
+              col: col,
+              type: 'text',
+              content: textElement ? textElement.textContent.trim() : '',
+              isText: true
+            });
+          } else {
+            // É um equipamento
+            layout.equipment.push({
+              row: row,
+              col: col,
+              src: img ? img.src : null,
+              name: name ? name.textContent : '',
+              isKeystone: isKeystone,
+              keystone: isKeystone ? cell.dataset.keystone : null,
+              type: 'equipment'
+            });
+          }
         });
         
         console.log('Layout a ser salvo:', layout);
@@ -1886,6 +2235,23 @@
       try {
         updateStatus('Carregando layout...');
         
+        // Buscar informações da sala
+        let salaName = `Sala ${salaId}`;
+        try {
+          const salaResponse = await fetch(`/api/salas/${salaId}`);
+          if (salaResponse.ok) {
+            const salaData = await salaResponse.json();
+            console.log('Dados da sala recebidos:', salaData); // Debug
+            salaName = salaData.nome || salaName;
+            console.log('Nome da sala definido como:', salaName); // Debug
+          }
+        } catch (error) {
+          console.warn('Não foi possível buscar informações da sala:', error);
+        }
+        
+        // Atualizar display da sala atual
+        updateCurrentSalaDisplay(salaName);
+        
         const response = await fetch(`/api/salas/${salaId}/layout`);
         if (!response.ok) {
           updateStatus('Nenhum layout encontrado para esta sala');
@@ -1910,7 +2276,21 @@
           layout.equipment.forEach(item => {
             const cell = document.querySelector(`[data-row="${item.row}"][data-col="${item.col}"]`);
             if (cell) {
-              if (item.isKeystone) {
+              if (item.isText) {
+                // É um elemento de texto
+                cell.innerHTML = `
+                  <div class="text-element">
+                    ${item.content || ''}
+                  </div>
+                `;
+                cell.classList.add('text-occupied');
+                
+                // Torna o texto arrastável
+                const textElement = cell.querySelector('.text-element');
+                if (textElement) {
+                  makeTextDraggable(textElement);
+                }
+              } else if (item.isKeystone) {
                 // É um keystone
                 cell.innerHTML = `
                   <div class="equipment-slot keystone-slot">
@@ -1932,22 +2312,38 @@
                 cell.classList.add('occupied');
               }
               
-              // Torna o equipamento arrastável
-              const equipmentSlot = cell.querySelector('.equipment-slot');
-              if (equipmentSlot) {
-                makeEquipmentDraggable(equipmentSlot);
+              // Torna o equipamento arrastável (se não for texto)
+              if (!item.isText) {
+                const equipmentSlot = cell.querySelector('.equipment-slot');
+                if (equipmentSlot) {
+                  makeEquipmentDraggable(equipmentSlot);
+                }
               }
             }
           });
           
-          console.log(`${layout.equipment.length} equipamentos posicionados`);
+          console.log(`${layout.equipment.length} elementos posicionados`);
         }
         
         // Carrega conexões
-        gridData.connections = layout.connections || [];
+        const rawConnections = layout.connections || [];
+        console.log('Conexões carregadas do layout:', rawConnections);
+        
+        // Para o modo distribuído, manter todas as conexões (incluindo múltiplas entre os mesmos equipamentos)
+        gridData.connections = rawConnections;
+        console.log('Conexões carregadas no gridData:', gridData.connections);
+        
+        // Garantir que o modo distribuído está ativo
+        gridData.distributedConnections = true;
+        console.log('✅ Modo distribuído ativado ao carregar layout');
+        
+        if (rawConnections.length > 0) {
+          console.log(`✅ ${rawConnections.length} conexões carregadas do layout`);
+        }
         
         // Sempre redesenhar conexões após carregar layout
         setTimeout(() => {
+          console.log('=== REDESENHANDO CONEXÕES APÓS CARREGAR LAYOUT ===');
           redrawAllConnections();
         }, 100);
         
@@ -2015,31 +2411,56 @@
     // Limpar tudo
     function clearAll() {
       if (confirm('Tem certeza que deseja limpar todo o layout?')) {
-        const cells = document.querySelectorAll('.grid-cell');
-        if (cells.length > 0) {
-          cells.forEach(cell => {
-            cell.innerHTML = '';
-            cell.classList.remove('occupied', 'selected', 'connectable', 'removable', 'keystone');
-            delete cell.dataset.keystone;
-          });
+        clearAllWithoutConfirmation();
+      }
+    }
+
+    // Limpar tudo sem confirmação
+    function clearAllWithoutConfirmation() {
+      const cells = document.querySelectorAll('.grid-cell');
+      if (cells.length > 0) {
+        cells.forEach(cell => {
+          cell.innerHTML = '';
+          cell.classList.remove('occupied', 'selected', 'connectable', 'removable', 'keystone', 'text-occupied');
+          delete cell.dataset.keystone;
+        });
+      }
+      
+      gridData.connections = [];
+      gridData.connectionStart = null;
+      gridData.selectedConnection = null;
+      
+      // Limpar seleção de equipamento
+      equipmentSelect.value = '';
+      equipmentPreview.classList.add('hidden');
+      gridData.selectedEquipment = null;
+      
+      // Só redesenha se o SVG existir
+      const svg = document.getElementById('svg-connections');
+      if (svg) {
+        redrawAllConnections();
+      }
+      
+      updateStatus('Layout limpo');
+      
+      // Limpar display da sala atual
+      updateCurrentSalaDisplay(null);
+    }
+
+    // Função para atualizar o display da sala atual
+    function updateCurrentSalaDisplay(salaName) {
+      console.log('updateCurrentSalaDisplay chamada com:', salaName); // Debug
+      const displayElement = document.getElementById('currentSalaNameDisplay');
+      console.log('Elemento encontrado:', displayElement); // Debug
+      if (displayElement) {
+        if (salaName) {
+          displayElement.textContent = salaName;
+          console.log('Nome da sala definido no elemento:', displayElement.textContent); // Debug
+        } else {
+          displayElement.textContent = 'Nenhuma sala selecionada';
         }
-        
-        gridData.connections = [];
-        gridData.connectionStart = null;
-        gridData.selectedConnection = null;
-        
-        // Limpar seleção de equipamento
-        equipmentSelect.value = '';
-        equipmentPreview.classList.add('hidden');
-        gridData.selectedEquipment = null;
-        
-        // Só redesenha se o SVG existir
-        const svg = document.getElementById('svg-connections');
-        if (svg) {
-          redrawAllConnections();
-        }
-        
-        updateStatus('Layout limpo');
+      } else {
+        console.error('Elemento currentSalaNameDisplay não encontrado!'); // Debug
       }
     }
 
@@ -2145,6 +2566,9 @@
         updateStatus(`Novo layout iniciado para ${modalState.selectedSala.nome || `Sala ${modalState.selectedSala.id}`}`);
       }
       
+      // Atualizar display da sala atual
+      updateCurrentSalaDisplay(modalState.selectedSala.nome || `Sala ${modalState.selectedSala.id}`);
+      
       initialModal.style.display = 'none';
     }
 
@@ -2177,27 +2601,50 @@
       
       // Pega o conteúdo do equipamento
       const equipmentSlot = fromCell.querySelector('.equipment-slot');
-      if (!equipmentSlot) return;
+      const textElement = fromCell.querySelector('.text-element');
       
-      const equipmentName = equipmentSlot.querySelector('.name').textContent;
+      if (!equipmentSlot && !textElement) return;
       
-      // Verificar se é um keystone (tem ícone) ou equipamento normal (tem imagem)
-      const equipmentImg = equipmentSlot.querySelector('img');
-      const isKeystone = fromCell.classList.contains('keystone');
-      const keystoneData = isKeystone ? fromCell.dataset.keystone : null;
+      let elementName = '';
+      let isKeystone = false;
+      let isText = false;
+      let keystoneData = null;
+      
+      if (equipmentSlot) {
+        // É um equipamento
+        elementName = equipmentSlot.querySelector('.name').textContent;
+        isKeystone = fromCell.classList.contains('keystone');
+        keystoneData = isKeystone ? fromCell.dataset.keystone : null;
+      } else if (textElement) {
+        // É um texto
+        elementName = textElement.textContent.trim();
+        isText = true;
+      }
       
       // Remove da célula original
       fromCell.innerHTML = '';
-      fromCell.classList.remove('occupied', 'keystone');
+      fromCell.classList.remove('occupied', 'keystone', 'text-occupied');
       delete fromCell.dataset.keystone;
       
       // Adiciona na nova célula
-      if (isKeystone) {
+      if (isText) {
+        // É um texto
+        toCell.innerHTML = `
+          <div class="text-element">
+            ${elementName}
+          </div>
+        `;
+        toCell.classList.add('text-occupied');
+        
+        // Torna o texto arrastável
+        const newTextElement = toCell.querySelector('.text-element');
+        makeTextDraggable(newTextElement);
+      } else if (isKeystone) {
         // É um keystone - usar estrutura de keystone
         toCell.innerHTML = `
           <div class="equipment-slot keystone-slot">
             <div class="keystone-icon">🔌</div>
-            <div class="name">${equipmentName}</div>
+            <div class="name">${elementName}</div>
           </div>
         `;
         toCell.classList.add('occupied', 'keystone');
@@ -2206,23 +2653,32 @@
         }
       } else {
         // É um equipamento normal - usar estrutura com imagem
+        const equipmentImg = equipmentSlot.querySelector('img');
         toCell.innerHTML = `
           <div class="equipment-slot">
-            <img src="${equipmentImg ? equipmentImg.src : ''}" alt="${equipmentName}">
-            <div class="name">${equipmentName}</div>
+            <img src="${equipmentImg ? equipmentImg.src : ''}" alt="${elementName}">
+            <div class="name">${elementName}</div>
           </div>
         `;
         toCell.classList.add('occupied');
       }
       
-      // Torna o novo equipamento arrastável
-      const newEquipmentSlot = toCell.querySelector('.equipment-slot');
-      makeEquipmentDraggable(newEquipmentSlot);
+      // Torna o novo elemento arrastável
+      const newElement = toCell.querySelector('.equipment-slot, .text-element');
+      if (newElement) {
+        if (isText) {
+          makeTextDraggable(newElement);
+        } else {
+          makeEquipmentDraggable(newElement);
+        }
+      }
       
-      // Atualiza conexões
-      updateConnectionsAfterMove(fromRow, fromCol, toRow, toCol, equipmentName);
+      // Atualiza conexões (apenas para equipamentos)
+      if (!isText) {
+        updateConnectionsAfterMove(fromRow, fromCol, toRow, toCol, elementName);
+      }
       
-      updateStatus(`${isKeystone ? 'Keystone' : 'Equipamento'} "${equipmentName}" movido`);
+      updateStatus(`${isText ? 'Texto' : isKeystone ? 'Keystone' : 'Equipamento'} "${elementName}" movido`);
     }
 
     // Função para lidar com drop - otimizada
@@ -2239,7 +2695,7 @@
       const originalCol = gridData.dragState.originalCol;
       
       // Se a célula de destino está ocupada, não permite o drop
-      if (cell.classList.contains('occupied') && cell !== originalCell) {
+      if ((cell.classList.contains('occupied') || cell.classList.contains('text-occupied')) && cell !== originalCell) {
         return;
       }
       
@@ -2248,7 +2704,7 @@
         return;
       }
       
-      // Move o equipamento
+      // Move o equipamento ou texto
       moveEquipment(originalRow, originalCol, row, col);
     }
 
@@ -2265,7 +2721,7 @@
       if (gridData.connectionMode || gridData.removeMode) return;
       
       e.preventDefault();
-      if (!cell.classList.contains('occupied') || cell === gridData.dragState.originalCell) {
+      if (!cell.classList.contains('occupied') && !cell.classList.contains('text-occupied') || cell === gridData.dragState.originalCell) {
         cell.classList.add('drag-over');
       }
     }
@@ -2275,6 +2731,84 @@
       if (gridData.connectionMode || gridData.removeMode) return;
       
       cell.classList.remove('drag-over');
+    }
+
+    // Função para verificar se uma conexão já existe (evita duplicação)
+    function connectionExists(connection, existingConnections) {
+      const connKey = `${connection.from.row}-${connection.from.col}-${connection.to.row}-${connection.to.col}`;
+      const reverseKey = `${connection.to.row}-${connection.to.col}-${connection.from.row}-${connection.from.col}`;
+      
+      console.log(`🔍 Verificando se conexão já existe:`);
+      console.log(`  - Nova conexão: ${connection.fromName} (${connection.from.row},${connection.from.col}) → ${connection.toName} (${connection.to.row},${connection.to.col})`);
+      console.log(`  - Chave: ${connKey}`);
+      console.log(`  - Chave reversa: ${reverseKey}`);
+      console.log(`  - Total de conexões existentes: ${existingConnections.length}`);
+      
+      const exists = existingConnections.some(existing => {
+        const existingKey = `${existing.from.row}-${existing.from.col}-${existing.to.row}-${existing.to.col}`;
+        const existingReverseKey = `${existing.to.row}-${existing.to.col}-${existing.from.row}-${existing.from.col}`;
+        
+        const matches = existingKey === connKey || existingKey === reverseKey || 
+                       existingReverseKey === connKey || existingReverseKey === reverseKey;
+        
+        if (matches) {
+          console.log(`  - ⚠️ Conexão duplicada encontrada: ${existing.fromName} (${existing.from.row},${connection.from.col}) → ${existing.toName} (${connection.to.row},${connection.to.col})`);
+        }
+        
+        return matches;
+      });
+      
+      console.log(`  - Resultado: ${exists ? 'EXISTE' : 'NÃO EXISTE'}`);
+      return exists;
+    }
+    
+    // Função para calcular pontos de conexão distribuídos
+    function calculateDistributedConnectionPoints(from, to, connectionIndex, totalConnections) {
+      // Calcula posições dos centros dos equipamentos
+      const centerX1 = from.offsetLeft + from.offsetWidth/2;
+      const centerY1 = from.offsetTop + from.offsetHeight/2;
+      const centerX2 = to.offsetLeft + to.offsetWidth/2;
+      const centerY2 = to.offsetTop + to.offsetHeight/2;
+      
+      // Se há apenas uma conexão, sempre usar pontos centrais
+      if (totalConnections <= 1) {
+        return {
+          x1: centerX1,
+          y1: centerY1,
+          x2: centerX2,
+          y2: centerY2
+        };
+      }
+      
+      // Calcular offset baseado no número de conexões
+      const maxOffset = Math.min(from.offsetWidth, from.offsetHeight) * 0.3; // 30% do tamanho do equipamento
+      const offset = (maxOffset * (connectionIndex - (totalConnections - 1) / 2)) / totalConnections;
+      
+      // Calcular direção da conexão
+      const dx = centerX2 - centerX1;
+      const dy = centerY2 - centerY1;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      
+      if (distance === 0) {
+        return {
+          x1: centerX1,
+          y1: centerY1,
+          x2: centerX2,
+          y2: centerY2
+        };
+      }
+      
+      // Calcular vetor perpendicular para distribuir as conexões
+      const perpX = -dy / distance;
+      const perpY = dx / distance;
+      
+      // Aplicar offset perpendicular
+      const x1 = centerX1 + perpX * offset;
+      const y1 = centerY1 + perpY * offset;
+      const x2 = centerX2 + perpX * offset;
+      const y2 = centerY2 + perpY * offset;
+      
+      return { x1, y1, x2, y2 };
     }
 
     // Função para carregar dados reais da sala
@@ -2363,6 +2897,30 @@
         try {
           conexoes = JSON.parse(conexoesText);
           console.log('✅ Conexões reais da sala (JSON válido):', conexoes);
+          // Garantir que todos os equipamentos referenciados nas conexões existam em todosEquipamentos,
+          // mesmo que estejam ocultos em outras listagens (ex.: Ponto Usuário HDMI/USB)
+          try {
+            const idsReferenciados = new Set();
+            conexoes.forEach(c => {
+              if (c.equipamento_origem_id) idsReferenciados.add(c.equipamento_origem_id);
+              if (c.equipamento_destino_id) idsReferenciados.add(c.equipamento_destino_id);
+            });
+
+            const idsJaCarregados = new Set(todosEquipamentos.map(e => e.id));
+            const idsFaltantes = Array.from(idsReferenciados).filter(id => !idsJaCarregados.has(id));
+
+            if (idsFaltantes.length > 0) {
+              console.log('🔁 Buscando equipamentos faltantes referenciados nas conexões:', idsFaltantes);
+              const fetched = await Promise.all(idsFaltantes.map(id => fetch(`/equipamentos/${id}`).then(r => r.ok ? r.json() : null).catch(() => null)));
+              fetched.filter(Boolean).forEach(eq => {
+                // Inserir no array base para que seja posicionado/renderizado e usado nas buscas
+                todosEquipamentos.push(eq);
+              });
+              console.log('✅ Equipamentos faltantes adicionados ao contexto:', fetched.filter(Boolean));
+            }
+          } catch (e) {
+            console.warn('Não foi possível garantir todos os equipamentos referenciados:', e);
+          }
           
           // Filtrar conexões que envolvem equipamentos em estoque
           const conexoesComEstoque = conexoes.filter(conexao => {
@@ -2376,8 +2934,8 @@
           
           if (conexoesComEstoque.length > 0) {
             console.log('✅ Conexões com equipamentos em estoque encontradas:', conexoesComEstoque);
-            // Adicionar essas conexões ao array de conexões
-            conexoes = [...conexoes, ...conexoesComEstoque];
+            // NOTA: Não adicionar novamente ao array para evitar duplicação
+            // As conexões com estoque já estão incluídas no array original
           }
           
         } catch (error) {
@@ -2508,8 +3066,55 @@
         });
         console.log('=== FIM DA VERIFICAÇÃO ===');
         
-        // Limpar grade atual
+        // Limpar grade atual e conexões existentes
         clearAll();
+        
+        // Limpar array de conexões para evitar duplicações
+        gridData.connections = [];
+        console.log('✅ Array de conexões limpo para evitar duplicações');
+        
+        // Forçar modo distribuído
+        gridData.distributedConnections = true;
+        console.log('✅ Modo distribuído forçado como true');
+        
+        // Função para verificar se uma conexão já existe (evita duplicação)
+        function connectionExists(connection, existingConnections) {
+          const connKey = `${connection.from.row}-${connection.from.col}-${connection.to.row}-${connection.to.col}`;
+          const reverseKey = `${connection.to.row}-${connection.to.col}-${connection.from.row}-${connection.from.col}`;
+          
+          console.log(`🔍 Verificando se conexão já existe (loadRealData):`);
+          console.log(`  - Nova conexão: ${connection.fromName} (${connection.from.row},${connection.from.col}) → ${connection.toName} (${connection.to.row},${connection.to.col})`);
+          console.log(`  - CableInfo: ${connection.cableInfo}`);
+          console.log(`  - Chave: ${connKey}`);
+          console.log(`  - Chave reversa: ${reverseKey}`);
+          console.log(`  - Total de conexões existentes: ${existingConnections.length}`);
+          
+          // Verificar se é uma conexão EXATAMENTE igual (mesma posição E mesmo cableInfo)
+          const exists = existingConnections.some(existing => {
+            const existingKey = `${existing.from.row}-${existing.from.col}-${existing.to.row}-${existing.to.col}`;
+            const existingReverseKey = `${existing.to.row}-${existing.to.col}-${existing.from.row}-${existing.from.col}`;
+            
+            const samePosition = existingKey === connKey || existingKey === reverseKey || 
+                               existingReverseKey === connKey || existingReverseKey === reverseKey;
+            
+            // Se a posição é a mesma, verificar se o cableInfo também é o mesmo
+            if (samePosition) {
+              const sameCable = existing.cableInfo === connection.cableInfo;
+              console.log(`  - ⚠️ Posição igual encontrada: ${existing.fromName} → ${existing.toName}`);
+              console.log(`  - CableInfo existente: ${existing.cableInfo}`);
+              console.log(`  - CableInfo novo: ${connection.cableInfo}`);
+              console.log(`  - Mesmo cabo: ${sameCable}`);
+              
+              // Só considerar duplicada se for EXATAMENTE igual (mesma posição E mesmo cabo)
+              return sameCable;
+            }
+            
+            return false;
+          });
+          
+          console.log(`  - Resultado: ${exists ? 'EXISTE (duplicada)' : 'NÃO EXISTE (nova)'}`);
+          return exists;
+        }
         
         // Verificar se a grade existe
         const cells = document.querySelectorAll('.grid-cell');
@@ -2548,6 +3153,9 @@
               console.log('Nome do equipamento:', equip.nome);
               console.log('Nome em lowercase:', equip.nome ? equip.nome.toLowerCase() : 'null');
               console.log('Tipo do equipamento:', equip.tipo);
+              console.log('ID do equipamento:', equip.id);
+              console.log('Sala do equipamento:', equip.sala_id);
+              console.log('Posição na grade:', `(${row},${col})`);
               console.log('========================');
               
               // Usar o sistema de mapeamento inteligente para encontrar a imagem
@@ -2655,8 +3263,14 @@
                 id: Date.now() + Math.random()
               };
               
-              gridData.connections.push(connection);
-              drawConnection(connection);
+              // Verificar se a conexão já existe antes de adicionar
+              if (!connectionExists(connection, gridData.connections)) {
+                gridData.connections.push(connection);
+                drawConnection(connection);
+                console.log(`✅ Conexão criada: ${fromEquip.nome} → ${toEquip.nome} (${connection.cableInfo})`);
+              } else {
+                console.log(`⚠️ Conexão duplicada ignorada: ${fromEquip.nome} → ${toEquip.nome} (${connection.cableInfo})`);
+              }
             }
           }
         });
@@ -2820,14 +3434,19 @@
                 fromName: equipSelecionado.nome,
                 toName: keystone.keystone,
                 cableInfo: cableInfo,
-                id: Date.now() + Math.random()
+                id: `keystone_${Date.now()}_${Math.random().toString(36).substr(2, 9)}_${keystone.porta_id || 'unknown'}`
               };
               
               console.log(`  - Connection object:`, connection);
               
-              gridData.connections.push(connection);
-              drawConnection(connection);
-              console.log(`✅ Conexão criada com sucesso: ${equipSelecionado.nome} → ${keystone.keystone} (${cableInfo})`);
+              // Verificar se a conexão já existe antes de adicionar
+              if (!connectionExists(connection, gridData.connections)) {
+                gridData.connections.push(connection);
+                drawConnection(connection);
+                console.log(`✅ Conexão criada com sucesso: ${equipSelecionado.nome} → ${keystone.keystone} (${cableInfo})`);
+              } else {
+                console.log(`⚠️ Conexão duplicada ignorada: ${equipSelecionado.nome} → ${keystone.keystone} (${cableInfo})`);
+              }
             } else {
               console.warn(`❌ Não foi possível criar conexão para keystone ${keystone.keystone}:`);
               if (!equipCell) console.warn(`  - Célula do equipamento ${equipSelecionado.nome} não encontrada`);
@@ -2840,6 +3459,120 @@
         
         console.log('=== FIM DAS CONEXÕES ENTRE EQUIPAMENTOS E KEYSTONES ===');
         
+        // Criar conexões entre equipamentos da sala (baseado nas conexões reais)
+        console.log('=== CRIANDO CONEXÕES ENTRE EQUIPAMENTOS DA SALA ===');
+        console.log('Conexões reais disponíveis:', conexoes);
+        
+        // Filtrar conexões que são entre equipamentos da sala (não keystones)
+        const conexoesEntreEquipamentos = conexoes.filter(conexao => {
+          // Usar todosEquipamentos (inclui itens ocultos em outras listagens, ex.: Ponto Usuário)
+          const equipOrigem = todosEquipamentos.find(e => e.id === conexao.equipamento_origem_id);
+          const equipDestino = todosEquipamentos.find(e => e.id === conexao.equipamento_destino_id);
+          
+          // Incluir apenas conexões entre equipamentos (não keystones)
+          const isEquipamentoSala = equipOrigem && equipDestino && 
+                                   equipOrigem.sala_id == gridData.currentSalaId && 
+                                   equipDestino.sala_id == gridData.currentSalaId;
+          
+          if (isEquipamentoSala) {
+            console.log(`✅ Conexão incluída: ${equipOrigem.nome} (ID:${equipOrigem.id}) → ${equipDestino.nome} (ID:${equipDestino.id})`);
+          }
+          
+          return isEquipamentoSala;
+        });
+        
+        console.log('Conexões entre equipamentos filtradas:', conexoesEntreEquipamentos);
+        console.log('Equipamentos da sala:', equipamentos.filter(e => e.sala_id == gridData.currentSalaId));
+        
+        console.log('Conexões entre equipamentos da sala:', conexoesEntreEquipamentos);
+        
+        for (const conexao of conexoesEntreEquipamentos) {
+          const equipOrigem = equipamentos.find(e => e.id === conexao.equipamento_origem_id);
+          const equipDestino = equipamentos.find(e => e.id === conexao.equipamento_destino_id);
+          
+          if (equipOrigem && equipDestino) {
+            console.log(`\n--- Processando conexão: ${equipOrigem.nome} → ${equipDestino.nome} ---`);
+            console.log(`  - Conexão ID: ${conexao.id}`);
+            console.log(`  - Equipamento Origem: ${equipOrigem.nome} (ID: ${equipOrigem.id}, Sala: ${equipOrigem.sala_id})`);
+            console.log(`  - Equipamento Destino: ${equipDestino.nome} (ID: ${equipDestino.id}, Sala: ${equipDestino.sala_id})`);
+            console.log(`  - Porta Origem: ${conexao.porta_origem}`);
+            console.log(`  - Porta Destino: ${conexao.porta_destino}`);
+            console.log(`  - Tipo Cabo: ${conexao.tipo_cabo}`);
+            console.log(`  - Código Cabo: ${conexao.codigo_cabo}`);
+            
+            const equipOrigemCell = findEquipmentCell(equipOrigem.nome);
+            const equipDestinoCell = findEquipmentCell(equipDestino.nome);
+            
+            console.log(`🔍 Buscando células dos equipamentos:`);
+            console.log(`  - Equipamento Origem: ${equipOrigem.nome}`);
+            console.log(`  - Célula Origem encontrada:`, equipOrigemCell);
+            console.log(`  - Equipamento Destino: ${equipDestino.nome}`);
+            console.log(`  - Célula Destino encontrada:`, equipDestinoCell);
+            
+            if (equipOrigemCell && equipDestinoCell) {
+              const fromRow = parseInt(equipOrigemCell.dataset.row);
+              const fromCol = parseInt(equipOrigemCell.dataset.col);
+              const toRow = parseInt(equipDestinoCell.dataset.row);
+              const toCol = parseInt(equipDestinoCell.dataset.col);
+              
+              console.log(`📍 Coordenadas extraídas:`);
+              console.log(`  - FROM (${equipOrigem.nome}): row=${fromRow}, col=${fromCol}`);
+              console.log(`  - TO (${equipDestino.nome}): row=${toRow}, col=${toCol}`);
+              console.log(`Posições: ${equipOrigem.nome}(${fromRow},${fromCol}) → ${equipDestino.nome}(${toRow},${toCol})`);
+              
+              const connection = {
+                from: { row: fromRow, col: fromCol },
+                to: { row: toRow, col: toCol },
+                fromName: equipOrigem.nome,
+                toName: equipDestino.nome,
+                cableInfo: conexao.codigo_cabo || conexao.nome_cabo || `${conexao.tipo_cabo || 'Cabo'}-${conexao.id}`,
+                id: `conn_${Date.now()}_${Math.random().toString(36).substr(2, 9)}_${conexao.id || 'unknown'}`
+              };
+              
+              console.log(`Connection object:`, connection);
+              console.log(`  - FROM: ${equipOrigem.nome} (${fromRow},${fromCol})`);
+              console.log(`  - TO: ${equipDestino.nome} (${toRow},${toCol})`);
+              console.log(`  - Direção: ${equipOrigem.nome} → ${equipDestino.nome}`);
+              
+              // Verificar se a conexão já existe antes de adicionar
+              console.log(`🔍 VERIFICAÇÃO ANTES DE ADICIONAR CONEXÃO:`);
+              console.log(`  - Nova conexão: ${equipOrigem.nome} → ${equipDestino.nome}`);
+              console.log(`  - CableInfo: ${connection.cableInfo}`);
+              console.log(`  - ID: ${connection.id}`);
+              console.log(`  - Posições: (${fromRow},${fromCol}) → (${toRow},${toCol})`);
+              
+              const connectionExistsResult = connectionExists(connection, gridData.connections);
+              console.log(`  - Resultado da verificação: ${connectionExistsResult ? 'EXISTE' : 'NÃO EXISTE'}`);
+              
+              if (!connectionExistsResult) {
+                gridData.connections.push(connection);
+                console.log(`✅ Conexão adicionada ao array: ${equipOrigem.nome} → ${equipDestino.nome} (${connection.cableInfo})`);
+                console.log(`  - Total de conexões no array: ${gridData.connections.length}`);
+                console.log(`  - Array atualizado:`, gridData.connections);
+                
+                // Desenhar a conexão
+                drawConnection(connection);
+                console.log(`✅ Conexão criada com sucesso: ${equipOrigem.nome} → ${equipDestino.nome} (${connection.cableInfo})`);
+              } else {
+                console.log(`⚠️ Conexão duplicada ignorada: ${equipOrigem.nome} → ${equipDestino.nome} (${connection.cableInfo})`);
+                console.log(`  - Motivo: Posição e CableInfo idênticos`);
+              }
+            } else {
+              console.warn(`❌ Não foi possível criar conexão entre ${equipOrigem.nome} e ${equipDestino.nome}:`);
+              if (!equipOrigemCell) console.warn(`  - Célula do equipamento origem ${equipOrigem.nome} não encontrada`);
+              if (!equipDestinoCell) console.warn(`  - Célula do equipamento destino ${equipDestino.nome} não encontrada`);
+            }
+          }
+        }
+        
+        console.log('=== FIM DAS CONEXÕES ENTRE EQUIPAMENTOS DA SALA ===');
+        
+        // COMENTADO: Criação automática de conexões de teste removida para evitar conexões falsas
+        // Se não há conexões reais, o sistema deve mostrar apenas os equipamentos sem conexões
+        if (conexoesEntreEquipamentos.length === 0) {
+          console.log('ℹ️ Nenhuma conexão real encontrada na sala. Mostrando apenas equipamentos sem conexões.');
+        }
+        
         await Promise.all(connectionPromises);
         
         // Contar conexões de keystones criadas
@@ -2848,10 +3581,19 @@
           return equip && findEquipmentCell(equip.nome) && findEquipmentCell(keystone.keystone);
         }).length;
         
+        // Contar conexões entre equipamentos criadas
+        const equipamentosConnections = conexoesEntreEquipamentos.length;
+        
         // Contar equipamentos em estoque incluídos
         const equipamentosEstoqueIncluidos = equipamentosComConexoes.filter(e => e.sala_id === null).length;
         
-        updateStatus(`Dados reais carregados: ${equipCount} equipamentos (${equipamentosEstoqueIncluidos} em estoque), ${keystoneCount} keystones, ${conexoes.length} conexões e ${keystoneConnections} conexões de keystones`);
+        // Aguardar um pouco para garantir que os equipamentos foram posicionados
+        setTimeout(() => {
+          console.log('=== REDESENHANDO CONEXÕES APÓS CARREGAMENTO DE DADOS REAIS ===');
+          redrawAllConnections();
+        }, 500);
+        
+        updateStatus(`Dados reais carregados: ${equipCount} equipamentos (${equipamentosEstoqueIncluidos} em estoque), ${keystoneCount} keystones, ${conexoes.length} conexões reais, ${keystoneConnections} conexões de keystones e ${equipamentosConnections} conexões entre equipamentos`);
         
       } catch (error) {
         console.error('Erro ao carregar dados reais:', error);
@@ -2864,6 +3606,8 @@
     async function findEquipmentImage(equipmentType, equipmentName = '', equipmentMarca = '', equipmentModelo = '') {
       try {
         console.log('🔍 findEquipmentImage procurando por:', equipmentType, equipmentName, equipmentMarca, equipmentModelo);
+        console.log('🔍 Tipo em lowercase:', equipmentType ? equipmentType.toLowerCase() : 'null');
+        console.log('🔍 Nome em lowercase:', equipmentName ? equipmentName.toLowerCase() : 'null');
         
         // Usar o novo sistema de mapeamento inteligente
         const mappedImage = findEquipmentImageByType(equipmentType, equipmentName, equipmentMarca, equipmentModelo);
@@ -2903,6 +3647,46 @@
     
     
 
+    // Função para calcular similaridade entre dois nomes
+    function calculateNameSimilarity(name1, name2) {
+      const words1 = name1.toLowerCase().split(/\s+/);
+      const words2 = name2.toLowerCase().split(/\s+/);
+      
+      let totalSimilarity = 0;
+      let comparisons = 0;
+      
+      for (const word1 of words1) {
+        if (word1.length < 3) continue; // Ignorar palavras muito curtas
+        
+        let bestMatch = 0;
+        for (const word2 of words2) {
+          if (word2.length < 3) continue;
+          
+          // Calcular similaridade entre palavras
+          let similarity = 0;
+          if (word1 === word2) {
+            similarity = 100;
+          } else if (word1.includes(word2) || word2.includes(word1)) {
+            similarity = Math.max(word1.length, word2.length) / Math.min(word1.length, word2.length) * 100;
+          } else {
+            // Calcular similaridade por caracteres comuns
+            let commonChars = 0;
+            for (let i = 0; i < Math.min(word1.length, word2.length); i++) {
+              if (word1[i] === word2[i]) commonChars++;
+            }
+            similarity = (commonChars / Math.max(word1.length, word2.length)) * 100;
+          }
+          
+          bestMatch = Math.max(bestMatch, similarity);
+        }
+        
+        totalSimilarity += bestMatch;
+        comparisons++;
+      }
+      
+      return comparisons > 0 ? totalSimilarity / comparisons : 0;
+    }
+
     // Função para encontrar célula onde está um equipamento
     function findEquipmentCell(equipmentName) {
       console.log(`findEquipmentCell procurando por: "${equipmentName}"`);
@@ -2910,18 +3694,154 @@
       const cells = document.querySelectorAll('.grid-cell.occupied');
       console.log(`Células ocupadas encontradas: ${cells.length}`);
       
+      // Primeira tentativa: busca exata (mais específica)
       for (const cell of cells) {
         const name = cell.querySelector('.name').textContent;
-        console.log(`Verificando célula com nome: "${name}"`);
+        const row = cell.dataset.row;
+        const col = cell.dataset.col;
         
-        if (name.toLowerCase().includes(equipmentName.toLowerCase()) || 
-            equipmentName.toLowerCase().includes(name.toLowerCase())) {
-          console.log(`Equipamento "${equipmentName}" encontrado na célula com nome "${name}"`);
+        if (name === equipmentName) {
+          console.log(`✅ EQUIPAMENTO ENCONTRADO - BUSCA EXATA na célula (${row},${col})`);
+          console.log(`  - Nome procurado: "${equipmentName}"`);
+          console.log(`  - Nome encontrado: "${name}"`);
+          console.log(`  - Posição: (${row},${col})`);
           return cell;
         }
       }
       
-      console.warn(`Equipamento "${equipmentName}" não encontrado`);
+      // Segunda tentativa: busca por prefixo (para casos como "Receptor Microfone 01")
+      for (const cell of cells) {
+        const name = cell.querySelector('.name').textContent;
+        const row = cell.dataset.row;
+        const col = cell.dataset.col;
+        
+        // Verificar se o nome procurado é um prefixo do nome encontrado
+        if (equipmentName.toLowerCase().startsWith(name.toLowerCase()) || 
+            name.toLowerCase().startsWith(equipmentName.toLowerCase())) {
+          console.log(`✅ EQUIPAMENTO ENCONTRADO - BUSCA POR PREFIXO na célula (${row},${col})`);
+          console.log(`  - Nome procurado: "${equipmentName}"`);
+          console.log(`  - Nome encontrado: "${name}"`);
+          console.log(`  - Posição: (${row},${col})`);
+          return cell;
+        }
+      }
+      
+      // Terceira tentativa: busca por palavras-chave específicas (mais restritiva)
+      for (const cell of cells) {
+        const name = cell.querySelector('.name').textContent;
+        const row = cell.dataset.row;
+        const col = cell.dataset.col;
+        
+        // Dividir nomes em palavras para comparação mais precisa
+        const searchWords = equipmentName.toLowerCase().split(/\s+/);
+        const nameWords = name.toLowerCase().split(/\s+/);
+        
+        // Verificar se pelo menos 2 palavras-chave coincidem
+        let matchingWords = 0;
+        for (const searchWord of searchWords) {
+          if (searchWord.length > 2) { // Ignorar palavras muito curtas
+            for (const nameWord of nameWords) {
+              if (nameWord.includes(searchWord) || searchWord.includes(nameWord)) {
+                matchingWords++;
+                break;
+              }
+            }
+          }
+        }
+        
+                  // Verificação adicional: evitar confusão entre equipamentos similares
+          if (matchingWords >= 2) {
+            // Verificar se não há confusão entre "Microfone" e "Receptor Microfone"
+            const isSearchingForReceptor = equipmentName.toLowerCase().includes('receptor');
+            const isFoundMicrofone = name.toLowerCase().includes('microfone') && !name.toLowerCase().includes('receptor');
+            
+            if (isSearchingForReceptor && isFoundMicrofone) {
+              console.log(`⚠️ CONFLITO DETECTADO: Procurando por receptor mas encontrou microfone`);
+              console.log(`  - Nome procurado: "${equipmentName}" (contém 'receptor')`);
+              console.log(`  - Nome encontrado: "${name}" (contém 'microfone' mas não 'receptor')`);
+              console.log(`  - Continuando busca...`);
+              continue; // Pular esta célula e continuar procurando
+            }
+            
+            // Verificar se não há confusão entre "Antena" e outros equipamentos
+            const isSearchingForAntena = equipmentName.toLowerCase().includes('antena');
+            const isFoundAntena = name.toLowerCase().includes('antena');
+            
+            if (isSearchingForAntena && !isFoundAntena) {
+              console.log(`⚠️ CONFLITO DETECTADO: Procurando por antena mas encontrou outro equipamento`);
+              console.log(`  - Nome procurado: "${equipmentName}" (contém 'antena')`);
+              console.log(`  - Nome encontrado: "${name}" (não contém 'antena')`);
+              console.log(`  - Continuando busca...`);
+              continue; // Pular esta célula e continuar procurando
+            }
+            
+            console.log(`✅ EQUIPAMENTO ENCONTRADO - BUSCA POR PALAVRAS-CHAVE na célula (${row},${col})`);
+            console.log(`  - Nome procurado: "${equipmentName}"`);
+            console.log(`  - Nome encontrado: "${name}"`);
+            console.log(`  - Palavras coincidentes: ${matchingWords}`);
+            console.log(`  - Posição: (${row},${col})`);
+            return cell;
+          }
+      }
+      
+      // Quarta tentativa: busca genérica (fallback) - COM VERIFICAÇÕES ADICIONAIS
+      for (const cell of cells) {
+        const name = cell.querySelector('.name').textContent;
+        const row = cell.dataset.row;
+        const col = cell.dataset.col;
+        console.log(`Verificando célula (${row},${col}) com nome: "${name}"`);
+        
+        if (name.toLowerCase().includes(equipmentName.toLowerCase()) || 
+            equipmentName.toLowerCase().includes(name.toLowerCase())) {
+          
+          // Verificações de segurança para evitar confusões
+          const isSearchingForReceptor = equipmentName.toLowerCase().includes('receptor');
+          const isFoundMicrofone = name.toLowerCase().includes('microfone') && !name.toLowerCase().includes('receptor');
+          const isSearchingForAntena = equipmentName.toLowerCase().includes('antena');
+          const isFoundAntena = name.toLowerCase().includes('antena');
+          
+          // Se está procurando por receptor, não aceitar microfone
+          if (isSearchingForReceptor && isFoundMicrofone) {
+            console.log(`❌ CONFLITO CRÍTICO: Procurando por receptor mas encontrou microfone`);
+            console.log(`  - Nome procurado: "${equipmentName}" (contém 'receptor')`);
+            console.log(`  - Nome encontrado: "${name}" (contém 'microfone' mas não 'receptor')`);
+            console.log(`  - Rejeitando esta célula`);
+            continue;
+          }
+          
+          // Se está procurando por antena, não aceitar outros equipamentos
+          if (isSearchingForAntena && !isFoundAntena) {
+            console.log(`❌ CONFLITO CRÍTICO: Procurando por antena mas encontrou outro equipamento`);
+            console.log(`  - Nome procurado: "${equipmentName}" (contém 'antena')`);
+            console.log(`  - Nome encontrado: "${name}" (não contém 'antena')`);
+            console.log(`  - Rejeitando esta célula`);
+            continue;
+          }
+          
+          // Verificação final: calcular similaridade entre nomes
+          const similarity = calculateNameSimilarity(equipmentName, name);
+          console.log(`  - Similaridade entre nomes: ${similarity.toFixed(2)}%`);
+          
+          // Se a similaridade for muito baixa, rejeitar
+          if (similarity < 60) {
+            console.log(`❌ SIMILARIDADE MUITO BAIXA: Rejeitando célula`);
+            console.log(`  - Nome procurado: "${equipmentName}"`);
+            console.log(`  - Nome encontrado: "${name}"`);
+            console.log(`  - Similaridade: ${similarity.toFixed(2)}% < 60%`);
+            continue;
+          }
+          
+          console.log(`⚠️ EQUIPAMENTO ENCONTRADO - BUSCA GENÉRICA na célula (${row},${col})`);
+          console.log(`  - Nome procurado: "${equipmentName}"`);
+          console.log(`  - Nome encontrado: "${name}"`);
+          console.log(`  - Posição: (${row},${col})`);
+          console.log(`  - Similaridade: ${similarity.toFixed(2)}%`);
+          console.log(`  - ⚠️ ATENÇÃO: Esta busca pode não ser precisa!`);
+          return cell;
+        }
+      }
+      
+      console.warn(`❌ Equipamento "${equipmentName}" não encontrado`);
       return null;
     }
 
@@ -2952,10 +3872,12 @@
     btnPlaceMode.addEventListener('click', () => {
       gridData.connectionMode = false;
       gridData.removeMode = false;
+      gridData.textMode = false;
       gridData.connectionStart = null;
       btnPlaceMode.classList.add('active');
       btnConnectMode.classList.remove('active');
       btnRemoveMode.classList.remove('active');
+      btnTextMode.classList.remove('active');
       
       // Limpa seleções
       document.querySelectorAll('.grid-cell.selected, .grid-cell.connectable, .grid-cell.removable').forEach(cell => {
@@ -2974,9 +3896,11 @@
     btnConnectMode.addEventListener('click', () => {
       gridData.connectionMode = true;
       gridData.removeMode = false;
+      gridData.textMode = false;
       btnConnectMode.classList.add('active');
       btnPlaceMode.classList.remove('active');
       btnRemoveMode.classList.remove('active');
+      btnTextMode.classList.remove('active');
       
       // Limpa seleções de remoção
       document.querySelectorAll('.grid-cell.removable').forEach(cell => {
@@ -3000,10 +3924,12 @@
     btnRemoveMode.addEventListener('click', () => {
       gridData.removeMode = true;
       gridData.connectionMode = false;
+      gridData.textMode = false;
       gridData.connectionStart = null;
       btnRemoveMode.classList.add('active');
       btnPlaceMode.classList.remove('active');
       btnConnectMode.classList.remove('active');
+      btnTextMode.classList.remove('active');
       
       // Limpa seleções de conexão
       document.querySelectorAll('.grid-cell.selected, .grid-cell.connectable').forEach(cell => {
@@ -3024,17 +3950,57 @@
       updateStatus('Modo: Remover equipamentos (clique nos equipamentos para remover)');
     });
 
+    btnTextMode.addEventListener('click', () => {
+      gridData.textMode = true;
+      gridData.connectionMode = false;
+      gridData.removeMode = false;
+      gridData.connectionStart = null;
+      btnTextMode.classList.add('active');
+      btnPlaceMode.classList.remove('active');
+      btnConnectMode.classList.remove('active');
+      btnRemoveMode.classList.remove('active');
+      
+      // Limpa seleções de outros modos
+      document.querySelectorAll('.grid-cell.selected, .grid-cell.connectable, .grid-cell.removable').forEach(cell => {
+        cell.classList.remove('selected', 'connectable', 'removable');
+      });
+      
+      // Remove classe remove-mode do container
+      gridContainer.classList.remove('remove-mode');
+      
+      // Limpar seleção de equipamento no modo texto
+      equipmentSelect.value = '';
+      equipmentPreview.classList.add('hidden');
+      gridData.selectedEquipment = null;
+      
+      // Desabilitar seleção de equipamentos
+      equipmentSelect.disabled = true;
+      
+      updateStatus('Modo: Adicionar/Editar texto (clique em uma célula para adicionar texto)');
+    });
+
     btnLoadRealData.addEventListener('click', showLoadRealDataModal);
 
-    btnLoadKeystones.addEventListener('click', () => {
-      loadKeystonesToGrid();
-    });
+    // Modo distribuído sempre ativo - sem necessidade de alternância
+    console.log('✅ Modo distribuído sempre ativo em conexoes-equipamentos.html');
+
+
     
 
 
     btnSair.addEventListener('click', () => {
-      if (confirm('Tem certeza que deseja sair? As alterações não salvas serão perdidas.')) {
-        window.location.href = 'config-admin.html';
+      if (confirm('Tem certeza que deseja voltar à seleção de layout? As alterações não salvas serão perdidas.')) {
+        // Limpar dados atuais
+        gridData.currentSalaId = null;
+        gridData.connections = [];
+        gridData.connectionStart = null;
+        gridData.selectedEquipment = null;
+        
+        // Limpar grade sem confirmação
+        clearAllWithoutConfirmation();
+        
+        // Mostrar modal inicial
+        showInitialModal();
       }
     });
 
@@ -3085,7 +4051,15 @@
 
     btnConfirm.addEventListener('click', confirmAction);
     btnCancel.addEventListener('click', () => {
-      window.location.href = 'config-admin.html';
+      fetch('/perfil').then(resp => resp.json()).then(perfil => {
+        if (perfil.nivel === 'admin') {
+          window.location.href = 'config-admin.html';
+        } else if (perfil.nivel === 'tecnico') {
+          window.location.href = 'config-tecnico.html';
+        } else {
+          window.location.href = 'config-usuario.html';
+        }
+      });
     });
 
     // Event listener para mudança na seleção de sala
@@ -3105,6 +4079,8 @@
     document.addEventListener('DOMContentLoaded', () => {
       loadEquipment();
       createGrid();
+      
+      // Modo distribuído sempre ativo - sem necessidade de inicialização de botão
       
       // Verificar se há sala_id na URL
       const params = new URLSearchParams(window.location.search);
@@ -3250,74 +4226,119 @@
       }
     }
 
-
-
-    // Função para carregar keystones da sala na grade
-    async function loadKeystonesToGrid() {
-      if (!gridData.currentSalaId) {
-        alert('Nenhuma sala selecionada! Selecione uma sala primeiro.');
-        return;
-      }
-
-      try {
-        updateStatus('Carregando keystones da sala...');
-        console.log('Sala ID:', gridData.currentSalaId);
-        
-        // Buscar equipamentos da sala
-        const equipResponse = await fetch(`/equipamentos?sala_id=${gridData.currentSalaId}`);
-        if (!equipResponse.ok) {
-          throw new Error('Erro ao carregar equipamentos da sala');
+    // Função para lidar com clique para texto - otimizada
+    function handleTextClick(cell, row, col) {
+      if (cell.classList.contains('text-occupied')) {
+        // Se já tem texto, permite editar
+        const textElement = cell.querySelector('.text-element');
+        if (textElement) {
+          editTextElement(textElement);
         }
-        const equipamentos = await equipResponse.json();
-        
-        console.log('Equipamentos da sala:', equipamentos);
-        
-        // Buscar keystones dos equipamentos da sala (portas dos patch panels)
-        const keystonesEquipamentos = await loadKeystonesFromEquipamentos(equipamentos);
-        
-        console.log('Keystones encontrados:', keystonesEquipamentos);
-        
-        if (keystonesEquipamentos.length === 0) {
-          updateStatus('Nenhum keystone encontrado para os equipamentos desta sala');
-          alert(`Nenhum keystone encontrado para os equipamentos desta sala.\n\nEquipamentos da sala: ${equipamentos.length}\nKeystones encontrados: 0\n\nVerifique se os equipamentos estão conectados a portas de patch panels.`);
-          return;
-        }
-        
-        // Verificar se a grade existe
-        const cells = document.querySelectorAll('.grid-cell');
-        if (cells.length === 0) {
-          throw new Error('Grade não encontrada. Atualize a grade primeiro.');
-        }
-        
-        let keystoneCount = 0;
-        
-        // Posicionar keystones
-        for (let row = 0; row < gridData.rows && keystoneCount < keystonesEquipamentos.length; row++) {
-          for (let col = 0; col < gridData.cols && keystoneCount < keystonesEquipamentos.length; col++) {
-            const keystone = keystonesEquipamentos[keystoneCount];
-            const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-            
-            if (cell && !cell.classList.contains('occupied')) {
-              createKeystoneVisual(keystone.keystone, row, col);
-              keystoneCount++;
-            }
-          }
-        }
-        
-        if (keystoneCount === 0) {
-          updateStatus('Não foi possível posicionar keystones - grade cheia');
-          alert('Não foi possível posicionar keystones. A grade pode estar cheia.');
-          return;
-        }
-        
-        updateStatus(`${keystoneCount} keystones da sala carregados`);
-        
-      } catch (error) {
-        console.error('Erro ao carregar keystones da sala:', error);
-        updateStatus(`Erro ao carregar keystones: ${error.message}`);
-        alert(`Erro ao carregar keystones: ${error.message}`);
+      } else {
+        // Se não tem texto, permite adicionar
+        addTextElement(cell, row, col);
       }
     }
+
+    // Função para adicionar elemento de texto
+    function addTextElement(cell, row, col) {
+      const text = prompt('Digite o texto da observação:');
+      if (text === null || text.trim() === '') {
+        return;
+      }
+      
+      const textContent = text.trim();
+      
+      cell.innerHTML = `
+        <div class="text-element">
+          ${textContent}
+        </div>
+      `;
+      
+      cell.classList.add('text-occupied');
+      
+      // Torna o texto arrastável
+      const textElement = cell.querySelector('.text-element');
+      makeTextDraggable(textElement);
+      
+      updateStatus(`Texto adicionado: "${textContent}"`);
+    }
+
+    // Função para editar elemento de texto
+    function editTextElement(textElement) {
+      const currentText = textElement.textContent.trim();
+      const newText = prompt('Editar texto:', currentText);
+      
+      if (newText === null) {
+        return;
+      }
+      
+      const textContent = newText.trim();
+      if (textContent === '') {
+        // Se o texto ficou vazio, remover o elemento
+        const cell = textElement.closest('.grid-cell');
+        if (cell) {
+          cell.innerHTML = '';
+          cell.classList.remove('text-occupied');
+          updateStatus('Texto removido');
+        }
+        return;
+      }
+      
+      textElement.textContent = textContent;
+      textElement.classList.add('editing');
+      
+      // Remove a classe de edição após um tempo
+      setTimeout(() => {
+        textElement.classList.remove('editing');
+      }, 1000);
+      
+      updateStatus(`Texto editado: "${textContent}"`);
+    }
+
+    // Função para tornar texto arrastável
+    function makeTextDraggable(textElement) {
+      textElement.draggable = true;
+      
+      textElement.addEventListener('dragstart', (e) => {
+        if (gridData.connectionMode || gridData.removeMode) {
+          e.preventDefault();
+          return;
+        }
+        
+        gridData.dragState.isDragging = true;
+        gridData.dragState.draggedElement = textElement;
+        gridData.dragState.originalCell = textElement.closest('.grid-cell');
+        gridData.dragState.originalRow = parseInt(gridData.dragState.originalCell.dataset.row);
+        gridData.dragState.originalCol = parseInt(gridData.dragState.originalCell.dataset.col);
+        gridData.dragState.dragStartTime = Date.now();
+        
+        textElement.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', 'text');
+        
+        console.log('Iniciando arrasto de texto:', gridData.dragState.originalRow, gridData.dragState.originalCol);
+      });
+      
+      textElement.addEventListener('dragend', (e) => {
+        gridData.dragState.isDragging = false;
+        gridData.dragState.draggedElement = null;
+        gridData.dragState.originalCell = null;
+        gridData.dragState.originalRow = null;
+        gridData.dragState.originalCol = null;
+        gridData.dragState.dragStartTime = null;
+        
+        textElement.classList.remove('dragging');
+        
+        // Remove destaque de todas as células
+        document.querySelectorAll('.grid-cell.drag-over').forEach(cell => {
+          cell.classList.remove('drag-over');
+        });
+        
+        console.log('Finalizando arrasto de texto');
+      });
+    }
+
   </script>
 </body>
 

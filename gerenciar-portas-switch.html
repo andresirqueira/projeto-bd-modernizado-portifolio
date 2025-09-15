@@ -10,6 +10,35 @@
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/png" href="static/img/favicon-lista.png">
+    <style>
+        /* Estilos para os grupos do select */
+        optgroup {
+            font-weight: bold;
+            color: #374151;
+            background-color: #f3f4f6;
+        }
+        
+        .dark optgroup {
+            color: #d1d5db;
+            background-color: #374151;
+        }
+        
+        option {
+            font-weight: normal;
+            padding-left: 1rem;
+        }
+        
+        /* Melhorar aparência do select */
+        select optgroup {
+            font-size: 0.875rem;
+            padding: 0.5rem;
+        }
+        
+        select option {
+            font-size: 0.875rem;
+            padding: 0.25rem 0.5rem;
+        }
+    </style>
     <script>
       function toggleDarkMode() {
         if (document.documentElement.classList.contains('dark')) {
@@ -60,6 +89,9 @@
                 <button id="btnConectarEquipamento" onclick="abrirModalConectarEquipamento()" class="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white px-6 py-2 rounded-lg transition-colors flex items-center gap-2" style="display:none;">
                     <i class="fas fa-link"></i> CONECTAR EQUIPAMENTO
                 </button>
+                <button id="btnGerenciarPortas" onclick="abrirModalGerenciarPortas()" class="bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 text-white px-6 py-2 rounded-lg transition-colors flex items-center gap-2" style="display:none;">
+                    <i class="fas fa-cogs"></i> GERENCIAR PORTAS
+                </button>
             </div>
         </div>
 
@@ -99,6 +131,27 @@
         </div>
     </div>
 
+    <!-- Modal para criar porta manual -->
+    <div id="modalCriarPortaManual" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 w-full max-w-md mx-4">
+            <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Criar Porta Manual</h2>
+            <form id="formCriarPortaManual" class="space-y-4">
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Número da Porta:</label>
+                    <input type="number" id="numeroPortaManual" required min="1" max="100" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600" placeholder="Ex: 1, 2, 3...">
+                </div>
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descrição:</label>
+                    <input type="text" id="descricaoPortaManual" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600" placeholder="Ex: Porta de Acesso, Uplink, etc.">
+                </div>
+                <div class="flex gap-3 pt-4">
+                    <button type="button" onclick="fecharModal()" class="flex-1 bg-gray-500 hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors">Cancelar</button>
+                    <button type="submit" class="flex-1 bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white px-4 py-2 rounded-lg transition-colors">Criar Porta</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Modal para conectar equipamento diretamente -->
     <div id="modalConectarEquipamento" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 w-full max-w-md mx-4">
@@ -123,6 +176,89 @@
         </div>
     </div>
 
+    <!-- Modal para gerenciar portas do switch -->
+    <div id="modalGerenciarPortas" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
+            <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Gerenciar Portas do Switch</h2>
+            
+            <!-- Informações do switch -->
+            <div id="infoSwitch" class="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <h3 class="font-semibold text-gray-800 dark:text-white mb-2">Informações do Switch</h3>
+                <div id="detalhesSwitch" class="text-sm text-gray-600 dark:text-gray-400">
+                    <!-- Detalhes serão carregados aqui -->
+                </div>
+            </div>
+
+            <!-- Estatísticas das portas -->
+            <div id="estatisticasPortas" class="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                <h3 class="font-semibold text-blue-800 dark:text-blue-200 mb-2">Estatísticas das Portas</h3>
+                <div id="detalhesEstatisticas" class="text-sm text-blue-600 dark:text-blue-300">
+                    <!-- Estatísticas serão carregadas aqui -->
+                </div>
+            </div>
+
+            <!-- Opções de gerenciamento -->
+            <div class="space-y-4">
+                <div class="p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-700">
+                    <h3 class="font-semibold text-yellow-800 dark:text-yellow-200 mb-3">⚠️ Recriar Portas (Atenção!)</h3>
+                    <p class="text-sm text-yellow-700 dark:text-yellow-300 mb-3">
+                        Esta opção irá <strong>remover todas as portas existentes</strong> e criar novas portas com o número especificado. 
+                        <strong>Todas as conexões e mapeamentos serão perdidos!</strong>
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input type="number" id="novoNumeroPortas" min="1" max="100" value="24" class="flex-1 px-3 py-2 rounded-lg border border-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:bg-gray-800 dark:text-white dark:border-yellow-600" placeholder="Número de portas">
+                        <button onclick="recriarPortas()" class="bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white px-6 py-2 rounded-lg transition-colors flex items-center gap-2">
+                            <i class="fas fa-trash-alt"></i> Recriar Portas
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-700">
+                    <h3 class="font-semibold text-green-800 dark:text-green-200 mb-3">➕ Adicionar Mais Portas</h3>
+                    <p class="text-sm text-green-700 dark:text-green-300 mb-3">
+                        Adicionar novas portas mantendo as existentes. Útil para expandir a capacidade do switch.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input type="number" id="portasAdicionais" min="1" max="50" value="1" class="flex-1 px-3 py-2 rounded-lg border border-green-300 focus:outline-none focus:ring-2 focus:ring-green-400 dark:bg-gray-800 dark:text-white dark:border-green-600" placeholder="Quantas portas adicionar">
+                        <button onclick="adicionarPortas()" class="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white px-6 py-2 rounded-lg transition-colors flex items-center gap-2">
+                            <i class="fas fa-plus"></i> Adicionar Portas
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-700">
+                    <h3 class="font-semibold text-blue-800 dark:text-blue-200 mb-3">🔧 Editar Portas Individuais</h3>
+                    <p class="text-sm text-blue-700 dark:text-blue-300 mb-3">
+                        Editar descrições ou remover portas específicas.
+                    </p>
+                    <button onclick="abrirModalEditarPortaIndividual()" class="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-6 py-2 rounded-lg transition-colors flex items-center justify-center gap-2">
+                        <i class="fas fa-edit"></i> Editar Portas Individuais
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex gap-3 pt-6">
+                <button type="button" onclick="fecharModal()" class="flex-1 bg-gray-500 hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar porta individual -->
+    <div id="modalEditarPortaIndividual" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+            <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Editar Portas Individuais</h2>
+            
+            <div id="listaPortasEdicao" class="space-y-3 mb-6">
+                <!-- Lista de portas para edição será carregada aqui -->
+            </div>
+
+            <div class="flex gap-3 pt-4">
+                <button type="button" onclick="fecharModal()" class="flex-1 bg-gray-500 hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors">Fechar</button>
+                <button onclick="salvarEdicoesPortas()" class="flex-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-4 py-2 rounded-lg transition-colors">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         let switchAtual = null;
         let portaSelecionada = null;
@@ -135,12 +271,82 @@
                 const switches = await resp.json();
                 const select = document.getElementById('switchSelect');
                 select.innerHTML = '<option value="">Selecione um switch...</option>';
+                
+                // Agrupar switches por andar
+                const switchesPorAndar = {};
+                
                 switches.forEach(switch_ => {
-                    const opt = document.createElement('option');
-                    opt.value = switch_.id;
-                    opt.textContent = `${switch_.nome} (${switch_.marca} ${switch_.modelo})`;
-                    select.appendChild(opt);
+                    // Extrair andar do nome do switch
+                    const andarMatch = switch_.nome.match(/(\d+)\s*Andar/i);
+                    const andar = andarMatch ? parseInt(andarMatch[1]) : 0;
+                    
+                    // Verificar se é explicitamente do térreo
+                    const isTerreo = switch_.nome.match(/(0\s*Andar|Térreo|Terreo)/i);
+                    const andarFinal = isTerreo ? 0 : andar;
+                    
+                    if (!switchesPorAndar[andarFinal]) {
+                        switchesPorAndar[andarFinal] = [];
+                    }
+                    switchesPorAndar[andarFinal].push(switch_);
                 });
+                
+                // Se não houver switches com andar especificado, criar grupo "Outros"
+                if (switchesPorAndar[0] && switchesPorAndar[0].length > 0) {
+                    // Verificar se são switches sem andar ou se realmente são do térreo
+                    const switchesSemAndar = switchesPorAndar[0].filter(switch_ => {
+                        return !switch_.nome.match(/(\d+)\s*Andar|Térreo|Terreo/i);
+                    });
+                    
+                    if (switchesSemAndar.length > 0) {
+                        switchesPorAndar['outros'] = switchesSemAndar;
+                        switchesPorAndar[0] = switchesPorAndar[0].filter(switch_ => {
+                            return switch_.nome.match(/(\d+)\s*Andar|Térreo|Terreo/i);
+                        });
+                    }
+                }
+                
+                // Ordenar andares e criar grupos
+                const andaresOrdenados = Object.keys(switchesPorAndar).filter(key => key !== 'outros').sort((a, b) => parseInt(a) - parseInt(b));
+                
+                // Adicionar grupos de andares
+                andaresOrdenados.forEach(andar => {
+                    const andarNum = parseInt(andar);
+                    const andarTexto = andarNum === 0 ? 'Térreo' : `${andarNum}º Andar`;
+                    
+                    // Criar optgroup para o andar
+                    const optgroup = document.createElement('optgroup');
+                    optgroup.label = `🏢 ${andarTexto}`;
+                    optgroup.className = 'font-semibold text-gray-700 dark:text-gray-300';
+                    
+                    // Adicionar switches do andar
+                    switchesPorAndar[andar].forEach(switch_ => {
+                        const opt = document.createElement('option');
+                        opt.value = switch_.id;
+                        opt.textContent = `${switch_.nome} (${switch_.marca} ${switch_.modelo})`;
+                        opt.className = 'ml-4 text-gray-600 dark:text-gray-400';
+                        optgroup.appendChild(opt);
+                    });
+                    
+                    select.appendChild(optgroup);
+                });
+                
+                // Adicionar grupo "Outros" se existir
+                if (switchesPorAndar['outros'] && switchesPorAndar['outros'].length > 0) {
+                    const optgroup = document.createElement('optgroup');
+                    optgroup.label = `🔧 Outros`;
+                    optgroup.className = 'font-semibold text-gray-700 dark:text-gray-300';
+                    
+                    switchesPorAndar['outros'].forEach(switch_ => {
+                        const opt = document.createElement('option');
+                        opt.value = switch_.id;
+                        opt.textContent = `${switch_.nome} (${switch_.marca} ${switch_.modelo})`;
+                        opt.className = 'ml-4 text-gray-600 dark:text-gray-400';
+                        optgroup.appendChild(opt);
+                    });
+                    
+                    select.appendChild(optgroup);
+                }
+                
                 select.value = "";
                 carregarPortas();
             } catch (error) {
@@ -163,13 +369,16 @@
             const switchId = document.getElementById('switchSelect').value;
             const btnMapear = document.getElementById('btnMapearPatchPanel');
             const btnConectar = document.getElementById('btnConectarEquipamento');
+            const btnGerenciar = document.getElementById('btnGerenciarPortas');
             
             if (switchId) {
                 btnMapear.style.display = 'block';
                 btnConectar.style.display = 'block';
+                btnGerenciar.style.display = 'block';
             } else {
                 btnMapear.style.display = 'none';
                 btnConectar.style.display = 'none';
+                btnGerenciar.style.display = 'none';
             }
             
             if (!switchId) {
@@ -196,7 +405,18 @@
                     grid.innerHTML = `
                         <div class="col-span-full text-center py-8 bg-gray-50 dark:bg-gray-800 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600">
                             <p class="text-gray-600 dark:text-gray-400 mb-4 text-lg">Nenhuma porta configurada para este switch.</p>
-                            <p class="text-gray-500 dark:text-gray-500 text-sm">Configure as portas primeiro.</p>
+                            <p class="text-gray-500 dark:text-gray-500 text-sm mb-4">Este switch não possui portas configuradas. Você pode criar portas padrão automaticamente ou configurá-las manualmente.</p>
+                            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                                <button onclick="criarPortasPadrao()" class="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
+                                    <i class="fas fa-magic"></i> Criar Portas Padrão
+                                </button>
+                                <button onclick="abrirModalCriarPortaManual()" class="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
+                                    <i class="fas fa-plus"></i> Criar Porta Manual
+                                </button>
+                                <button onclick="abrirModalGerenciarPortas()" class="bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
+                                    <i class="fas fa-cogs"></i> Gerenciar Portas
+                                </button>
+                            </div>
                         </div>
                     `;
                     return;
@@ -269,6 +489,9 @@
                      <button class="w-full bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2" onclick="conectarEquipamento(${porta.id}, ${porta.numero_porta})">
                          <i class="fas fa-link"></i> Conectar Equipamento
                      </button>
+                     <button class="w-full bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 text-white px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2" onclick="editarPorta(${porta.id}, ${porta.numero_porta}, '${porta.descricao}')">
+                         <i class="fas fa-edit"></i> Editar Porta
+                     </button>
                  </div>
              `;
 
@@ -327,15 +550,45 @@
              document.getElementById('patchPanelSelect').innerHTML = '<option value="">Selecione um patch panel...</option>';
              document.getElementById('portaPatchPanelSelect').innerHTML = '<option value="">Selecione a porta...</option>';
              
-             // Carregar patch panels
-             const patchPanelSelect = document.getElementById('patchPanelSelect');
-             patchPanels.forEach(pp => {
-                 const opt = document.createElement('option');
-                 opt.value = pp.id;
-                 const andarTexto = pp.andar === 0 ? 'Térreo' : `${pp.andar}º Andar`;
-                 opt.textContent = `${pp.nome} (${pp.codigo} - ${andarTexto})`;
-                 patchPanelSelect.appendChild(opt);
-             });
+                              // Carregar patch panels
+                 const patchPanelSelect = document.getElementById('patchPanelSelect');
+                 patchPanelSelect.innerHTML = '<option value="">Selecione um patch panel...</option>';
+                 
+                 // Agrupar patch panels por andar
+                 const patchPanelsPorAndar = {};
+                 
+                 patchPanels.forEach(pp => {
+                     const andar = pp.andar;
+                     if (!patchPanelsPorAndar[andar]) {
+                         patchPanelsPorAndar[andar] = [];
+                     }
+                     patchPanelsPorAndar[andar].push(pp);
+                 });
+                 
+                 // Ordenar andares e criar grupos
+                 const andaresOrdenados = Object.keys(patchPanelsPorAndar).sort((a, b) => parseInt(a) - parseInt(b));
+                 
+                 // Adicionar grupos de andares
+                 andaresOrdenados.forEach(andar => {
+                     const andarNum = parseInt(andar);
+                     const andarTexto = andarNum === 0 ? 'Térreo' : `${andarNum}º Andar`;
+                     
+                     // Criar optgroup para o andar
+                     const optgroup = document.createElement('optgroup');
+                     optgroup.label = `🏢 ${andarTexto}`;
+                     optgroup.className = 'font-semibold text-gray-700 dark:text-gray-300';
+                     
+                     // Adicionar patch panels do andar
+                     patchPanelsPorAndar[andar].forEach(pp => {
+                         const opt = document.createElement('option');
+                         opt.value = pp.id;
+                         opt.textContent = `${pp.nome} (${pp.codigo})`;
+                         opt.className = 'ml-4 text-gray-600 dark:text-gray-400';
+                         optgroup.appendChild(opt);
+                     });
+                     
+                     patchPanelSelect.appendChild(optgroup);
+                 });
              
              document.getElementById('modalMapearPatchPanel').classList.remove('hidden');
          }
@@ -361,7 +614,13 @@
                         const option = document.createElement('option');
                         option.value = porta.id;
                         const keystone = `${porta.prefixo_keystone}-${porta.numero_porta.toString().padStart(4, '0')}`;
-                        const statusText = porta.equipamento_nome ? ` - ${porta.equipamento_nome}` : '';
+                        let statusText = '';
+                        if (porta.equipamento_nome) {
+                            statusText = ` - ${porta.equipamento_nome}`;
+                            if (porta.sala_nome) {
+                                statusText += ` (Sala: ${porta.sala_nome})`;
+                            }
+                        }
                         option.textContent = `Porta ${porta.numero_porta} (${keystone})${statusText}`;
                         portaSelect.appendChild(option);
                     }
@@ -379,21 +638,49 @@
              document.getElementById('portaEquipamentoNumero').value = `Porta ${numeroPorta}`;
              document.getElementById('equipamentoSelect').innerHTML = '<option value="">Selecione um equipamento...</option>';
              
-             // Carregar equipamentos disponíveis
-             try {
-                 const resp = await fetch('/equipamentos?conectaveis=1');
-                 const equipamentos = await resp.json();
-                 const select = document.getElementById('equipamentoSelect');
-                 
-                 equipamentos.forEach(eq => {
-                     const opt = document.createElement('option');
-                     opt.value = eq.id;
-                     opt.textContent = `${eq.nome} (${eq.tipo}) - Sala: ${eq.sala_nome}`;
-                     select.appendChild(opt);
-                 });
-             } catch (error) {
-                 console.error('Erro ao carregar equipamentos:', error);
-             }
+                              // Carregar equipamentos disponíveis
+                 try {
+                     const resp = await fetch('/equipamentos?conectaveis=1');
+                     const equipamentos = await resp.json();
+                     const select = document.getElementById('equipamentoSelect');
+                     
+                     select.innerHTML = '<option value="">Selecione um equipamento...</option>';
+                     
+                     // Agrupar equipamentos por sala
+                     const equipamentosPorSala = {};
+                     
+                     equipamentos.forEach(eq => {
+                         const salaNome = eq.sala_nome || 'Sem Sala';
+                         if (!equipamentosPorSala[salaNome]) {
+                             equipamentosPorSala[salaNome] = [];
+                         }
+                         equipamentosPorSala[salaNome].push(eq);
+                     });
+                     
+                     // Ordenar salas alfabeticamente
+                     const salasOrdenadas = Object.keys(equipamentosPorSala).sort();
+                     
+                     // Adicionar grupos de salas
+                     salasOrdenadas.forEach(salaNome => {
+                         // Criar optgroup para a sala
+                         const optgroup = document.createElement('optgroup');
+                         optgroup.label = `🏠 ${salaNome}`;
+                         optgroup.className = 'font-semibold text-gray-700 dark:text-gray-300';
+                         
+                         // Adicionar equipamentos da sala
+                         equipamentosPorSala[salaNome].forEach(eq => {
+                             const opt = document.createElement('option');
+                             opt.value = eq.id;
+                             opt.textContent = `${eq.nome} (${eq.tipo})`;
+                             opt.className = 'ml-4 text-gray-600 dark:text-gray-400';
+                             optgroup.appendChild(opt);
+                         });
+                         
+                         select.appendChild(optgroup);
+                     });
+                 } catch (error) {
+                     console.error('Erro ao carregar equipamentos:', error);
+                 }
              
              document.getElementById('modalConectarEquipamento').classList.remove('hidden');
          }
@@ -468,6 +755,9 @@
         function fecharModal() {
             document.getElementById('modalMapearPatchPanel').classList.add('hidden');
             document.getElementById('modalConectarEquipamento').classList.add('hidden');
+            document.getElementById('modalCriarPortaManual').classList.add('hidden');
+            document.getElementById('modalGerenciarPortas').classList.add('hidden');
+            document.getElementById('modalEditarPortaIndividual').classList.add('hidden');
         }
 
         // Mostrar mensagem
@@ -556,9 +846,393 @@
             }
         };
 
+        // Função para criar portas padrão automaticamente
+        async function criarPortasPadrao() {
+            if (!switchAtual) {
+                mostrarMensagem('Nenhum switch selecionado', 'error');
+                return;
+            }
+
+            if (!confirm('Deseja criar portas padrão para este switch? Isso criará automaticamente portas baseadas no modelo do switch.')) {
+                return;
+            }
+
+            try {
+                mostrarMensagem('Criando portas padrão...', 'info');
+                
+                const resp = await fetch(`/switch-portas/${switchAtual}/criar-portas-padrao`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                const json = await resp.json();
+                
+                if (resp.ok) {
+                    mostrarMensagem(json.mensagem, 'success');
+                    // Recarregar portas após criação
+                    setTimeout(() => {
+                        carregarPortas();
+                    }, 1000);
+                } else {
+                    mostrarMensagem(json.mensagem || 'Erro ao criar portas padrão', 'error');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                mostrarMensagem('Erro ao criar portas padrão', 'error');
+            }
+        }
+
+        // Função para abrir modal de criar porta manual
+        function abrirModalCriarPortaManual() {
+            document.getElementById('modalCriarPortaManual').classList.remove('hidden');
+            // Limpar campos
+            document.getElementById('numeroPortaManual').value = '';
+            document.getElementById('descricaoPortaManual').value = '';
+        }
+
+        // Processar formulário de criar porta manual
+        document.getElementById('formCriarPortaManual').onsubmit = async function(e) {
+            e.preventDefault();
+            
+            const numeroPorta = document.getElementById('numeroPortaManual').value;
+            const descricao = document.getElementById('descricaoPortaManual').value;
+
+            if (!numeroPorta) {
+                mostrarMensagem('Informe o número da porta', 'error');
+                return;
+            }
+
+            try {
+                const resp = await fetch('/switch-portas', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        switch_id: parseInt(switchAtual),
+                        numero_porta: parseInt(numeroPorta),
+                        descricao: descricao || `Porta ${numeroPorta}`
+                    })
+                });
+
+                const json = await resp.json();
+                
+                if (resp.ok) {
+                    mostrarMensagem('Porta criada com sucesso!', 'success');
+                    fecharModal();
+                    carregarPortas();
+                } else {
+                    mostrarMensagem(json.mensagem || 'Erro ao criar porta', 'error');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                mostrarMensagem('Erro ao criar porta', 'error');
+            }
+        }
+
+        // Função para mostrar mensagens
+        function mostrarMensagem(texto, tipo) {
+            const msgDiv = document.getElementById('msg');
+            msgDiv.textContent = texto;
+            
+            // Remover classes anteriores
+            msgDiv.className = 'mt-6 p-4 rounded-lg text-center font-medium';
+            
+            // Adicionar classe baseada no tipo
+            switch (tipo) {
+                case 'success':
+                    msgDiv.className += ' bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300';
+                    break;
+                case 'error':
+                    msgDiv.className += ' bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300';
+                    break;
+                case 'info':
+                    msgDiv.className += ' bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300';
+                    break;
+                default:
+                    msgDiv.className += ' bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300';
+            }
+            
+            // Auto-hide após 5 segundos
+            setTimeout(() => {
+                msgDiv.textContent = '';
+                msgDiv.className = 'mt-6 p-4 rounded-lg text-center font-medium';
+            }, 5000);
+        }
+
+        // Função para abrir modal de gerenciar portas
+        async function abrirModalGerenciarPortas() {
+            if (!switchAtual) {
+                mostrarMensagem('Nenhum switch selecionado', 'error');
+                return;
+            }
+
+            try {
+                // Carregar informações do switch
+                const respSwitch = await fetch(`/switches/${switchAtual}`);
+                const switchInfo = await respSwitch.json();
+                
+                if (respSwitch.ok) {
+                    document.getElementById('detalhesSwitch').innerHTML = `
+                        <div><strong>Nome:</strong> ${switchInfo.nome}</div>
+                        <div><strong>Marca:</strong> ${switchInfo.marca}</div>
+                        <div><strong>Modelo:</strong> ${switchInfo.modelo}</div>
+                        <div><strong>Sala:</strong> ${switchInfo.sala || 'Não especificada'}</div>
+                    `;
+                }
+
+                // Carregar estatísticas das portas
+                const respPortas = await fetch(`/switch-portas/${switchAtual}`);
+                const portas = await respPortas.json();
+                
+                if (respPortas.ok) {
+                    const totalPortas = portas.length;
+                    const portasLivres = portas.filter(p => p.status === 'livre').length;
+                    const portasOcupadas = totalPortas - portasLivres;
+                    
+                    document.getElementById('detalhesEstatisticas').innerHTML = `
+                        <div><strong>Total de Portas:</strong> ${totalPortas}</div>
+                        <div><strong>Portas Livres:</strong> ${portasLivres}</div>
+                        <div><strong>Portas Ocupadas:</strong> ${portasOcupadas}</div>
+                        <div><strong>Taxa de Ocupação:</strong> ${totalPortas > 0 ? Math.round((portasOcupadas / totalPortas) * 100) : 0}%</div>
+                    `;
+
+                    // Definir valor padrão para recriar portas
+                    document.getElementById('novoNumeroPortas').value = totalPortas;
+                }
+
+                document.getElementById('modalGerenciarPortas').classList.remove('hidden');
+            } catch (error) {
+                console.error('Erro ao abrir modal de gerenciar portas:', error);
+                mostrarMensagem('Erro ao carregar informações do switch', 'error');
+            }
+        }
+
+        // Função para recriar portas (remover todas e criar novas)
+        async function recriarPortas() {
+            if (!switchAtual) {
+                mostrarMensagem('Nenhum switch selecionado', 'error');
+                return;
+            }
+
+            const novoNumero = parseInt(document.getElementById('novoNumeroPortas').value);
+            if (!novoNumero || novoNumero < 1 || novoNumero > 100) {
+                mostrarMensagem('Número de portas inválido', 'error');
+                return;
+            }
+
+            if (!confirm(`⚠️ ATENÇÃO! Esta ação irá:\n\n1. Remover TODAS as portas existentes\n2. Perder TODAS as conexões e mapeamentos\n3. Criar ${novoNumero} novas portas\n\nTem certeza que deseja continuar?`)) {
+                return;
+            }
+
+            try {
+                mostrarMensagem('Recriando portas...', 'info');
+                
+                const resp = await fetch(`/switch-portas/${switchAtual}/recriar-portas`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ numero_portas: novoNumero })
+                });
+
+                const json = await resp.json();
+                
+                if (resp.ok) {
+                    mostrarMensagem(json.mensagem, 'success');
+                    fecharModal();
+                    // Recarregar portas após recriação
+                    setTimeout(() => {
+                        carregarPortas();
+                    }, 1000);
+                } else {
+                    mostrarMensagem(json.mensagem || 'Erro ao recriar portas', 'error');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                mostrarMensagem('Erro ao recriar portas', 'error');
+            }
+        }
+
+        // Função para adicionar mais portas
+        async function adicionarPortas() {
+            if (!switchAtual) {
+                mostrarMensagem('Nenhum switch selecionado', 'error');
+                return;
+            }
+
+            const portasAdicionais = parseInt(document.getElementById('portasAdicionais').value);
+            if (!portasAdicionais || portasAdicionais < 1 || portasAdicionais > 50) {
+                mostrarMensagem('Número de portas inválido', 'error');
+                return;
+            }
+
+            try {
+                mostrarMensagem('Adicionando portas...', 'info');
+                
+                const resp = await fetch(`/switch-portas/${switchAtual}/adicionar-portas`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ numero_portas: portasAdicionais })
+                });
+
+                const json = await resp.json();
+                
+                if (resp.ok) {
+                    mostrarMensagem(json.mensagem, 'success');
+                    fecharModal();
+                    // Recarregar portas após adição
+                    setTimeout(() => {
+                        carregarPortas();
+                    }, 1000);
+                } else {
+                    mostrarMensagem(json.mensagem || 'Erro ao adicionar portas', 'error');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                mostrarMensagem('Erro ao adicionar portas', 'error');
+            }
+        }
+
+        // Função para abrir modal de editar porta individual
+        async function abrirModalEditarPortaIndividual() {
+            if (!switchAtual) {
+                mostrarMensagem('Nenhum switch selecionado', 'error');
+                return;
+            }
+
+            try {
+                const resp = await fetch(`/switch-portas/${switchAtual}`);
+                const portas = await resp.json();
+                
+                if (resp.ok) {
+                    const listaPortas = document.getElementById('listaPortasEdicao');
+                    listaPortas.innerHTML = '';
+
+                    portas.forEach(porta => {
+                        const portaDiv = document.createElement('div');
+                        portaDiv.className = 'p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600';
+                        portaDiv.innerHTML = `
+                            <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+                                <div class="flex-1">
+                                    <div class="font-medium text-gray-800 dark:text-white">Porta ${porta.numero_porta}</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400">${porta.descricao}</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-500">Status: ${porta.status}</div>
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <input type="text" 
+                                           id="desc_${porta.id}" 
+                                           value="${porta.descricao}" 
+                                           class="px-3 py-1 text-sm rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+                                           placeholder="Nova descrição">
+                                    <button onclick="removerPorta(${porta.id})" 
+                                            class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors">
+                                        <i class="fas fa-trash"></i> Remover
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        listaPortas.appendChild(portaDiv);
+                    });
+
+                    document.getElementById('modalEditarPortaIndividual').classList.remove('hidden');
+                } else {
+                    mostrarMensagem('Erro ao carregar portas para edição', 'error');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                mostrarMensagem('Erro ao carregar portas para edição', 'error');
+            }
+        }
+
+        // Função para remover porta individual
+        async function removerPorta(portaId) {
+            if (!confirm('Tem certeza que deseja remover esta porta? Todas as conexões serão perdidas.')) {
+                return;
+            }
+
+            try {
+                const resp = await fetch(`/switch-portas/${portaId}`, {
+                    method: 'DELETE'
+                });
+
+                if (resp.ok) {
+                    mostrarMensagem('Porta removida com sucesso!', 'success');
+                    // Recarregar modal de edição
+                    abrirModalEditarPortaIndividual();
+                } else {
+                    const json = await resp.json();
+                    mostrarMensagem(json.mensagem || 'Erro ao remover porta', 'error');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                mostrarMensagem('Erro ao remover porta', 'error');
+            }
+        }
+
+        // Função para salvar edições das portas
+        async function salvarEdicoesPortas() {
+            try {
+                const portasParaEditar = [];
+                const portas = document.querySelectorAll('#listaPortasEdicao > div');
+                
+                portas.forEach(portaDiv => {
+                    const portaId = portaDiv.querySelector('input[id^="desc_"]').id.replace('desc_', '');
+                    const novaDescricao = portaDiv.querySelector('input[id^="desc_"]').value;
+                    
+                    if (novaDescricao.trim()) {
+                        portasParaEditar.push({
+                            id: portaId,
+                            descricao: novaDescricao.trim()
+                        });
+                    }
+                });
+
+                if (portasParaEditar.length === 0) {
+                    mostrarMensagem('Nenhuma alteração para salvar', 'info');
+                    return;
+                }
+
+                // Salvar cada porta editada
+                for (const porta of portasParaEditar) {
+                    const resp = await fetch(`/switch-portas/${porta.id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ descricao: porta.descricao })
+                    });
+
+                    if (!resp.ok) {
+                        const json = await resp.json();
+                        throw new Error(json.mensagem || 'Erro ao salvar porta');
+                    }
+                }
+
+                mostrarMensagem('Alterações salvas com sucesso!', 'success');
+                fecharModal();
+                // Recarregar portas
+                setTimeout(() => {
+                    carregarPortas();
+                }, 1000);
+            } catch (error) {
+                console.error('Erro:', error);
+                mostrarMensagem(`Erro ao salvar alterações: ${error.message}`, 'error');
+            }
+        }
+
+        // Função para editar porta individual (chamada pelo botão no card)
+        function editarPorta(portaId, numeroPorta, descricao) {
+            // Abrir modal de edição individual
+            abrirModalEditarPortaIndividual();
+            
+            // Focar na porta específica
+            setTimeout(() => {
+                const input = document.getElementById(`desc_${portaId}`);
+                if (input) {
+                    input.focus();
+                    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 300);
+        }
+
         // Fechar modal ao clicar fora
         window.onclick = function(event) {
-            const modals = document.querySelectorAll('#modalMapearPatchPanel, #modalConectarEquipamento');
+            const modals = document.querySelectorAll('#modalMapearPatchPanel, #modalConectarEquipamento, #modalCriarPortaManual, #modalGerenciarPortas, #modalEditarPortaIndividual');
             modals.forEach(modal => {
                 if (event.target === modal) {
                     modal.classList.add('hidden');

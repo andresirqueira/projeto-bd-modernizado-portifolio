@@ -10,6 +10,35 @@
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/png" href="static/img/favicon-lapis.png">
+    <style>
+        /* Estilos para os grupos do select */
+        optgroup {
+            font-weight: bold;
+            color: #374151;
+            background-color: #f3f4f6;
+        }
+        
+        .dark optgroup {
+            color: #d1d5db;
+            background-color: #374151;
+        }
+        
+        option {
+            font-weight: normal;
+            padding-left: 1rem;
+        }
+        
+        /* Melhorar aparência do select */
+        select optgroup {
+            font-size: 0.875rem;
+            padding: 0.5rem;
+        }
+        
+        select option {
+            font-size: 0.875rem;
+            padding: 0.25rem 0.5rem;
+        }
+    </style>
     <script>
       function toggleDarkMode() {
         if (document.documentElement.classList.contains('dark')) {
@@ -49,14 +78,9 @@
 
         <div class="mb-6">
             <label for="patchPanelSelect" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Selecione o Patch Panel:</label>
-            <div class="flex flex-col sm:flex-row gap-4">
-                <select id="patchPanelSelect" onchange="carregarPortas()" class="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
-                    <option value="">Selecione um patch panel...</option>
-                </select>
-                <button id="btnConectarEquipamento" onclick="abrirModalConectarEquipamento()" class="bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-800 text-white px-6 py-2 rounded-lg transition-colors flex items-center gap-2" style="display:none;">
-                    <i class="fas fa-link"></i> CONECTAR EQUIPAMENTO
-                </button>
-            </div>
+            <select id="patchPanelSelect" onchange="carregarPortas()" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                <option value="">Selecione um patch panel...</option>
+            </select>
         </div>
 
         <div id="portasGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -105,13 +129,43 @@
                 patchPanels = await resp.json();
                 const select = document.getElementById('patchPanelSelect');
                 select.innerHTML = '<option value="">Selecione um patch panel...</option>';
+                
+                // Agrupar patch panels por andar
+                const patchPanelsPorAndar = {};
+                
                 patchPanels.forEach(pp => {
-                    const opt = document.createElement('option');
-                    opt.value = pp.id;
-                    const andarTexto = pp.andar === 0 ? 'Térreo' : `${pp.andar}º Andar`;
-                    opt.textContent = `${pp.nome} (${pp.codigo} - ${andarTexto})`;
-                    select.appendChild(opt);
+                    const andar = pp.andar;
+                    if (!patchPanelsPorAndar[andar]) {
+                        patchPanelsPorAndar[andar] = [];
+                    }
+                    patchPanelsPorAndar[andar].push(pp);
                 });
+                
+                // Ordenar andares e criar grupos
+                const andaresOrdenados = Object.keys(patchPanelsPorAndar).sort((a, b) => parseInt(a) - parseInt(b));
+                
+                // Adicionar grupos de andares
+                andaresOrdenados.forEach(andar => {
+                    const andarNum = parseInt(andar);
+                    const andarTexto = andarNum === 0 ? 'Térreo' : `${andarNum}º Andar`;
+                    
+                    // Criar optgroup para o andar
+                    const optgroup = document.createElement('optgroup');
+                    optgroup.label = `🏢 ${andarTexto}`;
+                    optgroup.className = 'font-semibold text-gray-700 dark:text-gray-300';
+                    
+                    // Adicionar patch panels do andar
+                    patchPanelsPorAndar[andar].forEach(pp => {
+                        const opt = document.createElement('option');
+                        opt.value = pp.id;
+                        opt.textContent = `${pp.nome} (${pp.codigo})`;
+                        opt.className = 'ml-4 text-gray-600 dark:text-gray-400';
+                        optgroup.appendChild(opt);
+                    });
+                    
+                    select.appendChild(optgroup);
+                });
+                
                 select.value = "";
                 carregarPortas();
             } catch (error) {
@@ -122,13 +176,6 @@
         // Carregar portas do patch panel selecionado
         async function carregarPortas() {
             const patchPanelId = document.getElementById('patchPanelSelect').value;
-            const btnConectar = document.getElementById('btnConectarEquipamento');
-            
-            if (patchPanelId) {
-                btnConectar.style.display = 'block';
-            } else {
-                btnConectar.style.display = 'none';
-            }
             
             if (!patchPanelId) {
                 document.getElementById('portasGrid').innerHTML = '<div class="col-span-full text-center text-gray-500 dark:text-gray-400 py-8">Selecione um patch panel para ver suas portas</div>';
@@ -280,11 +327,38 @@
                 const select = document.getElementById('equipamentoSelect');
                 
                 select.innerHTML = '<option value="">Selecione um equipamento...</option>';
+                
+                // Agrupar equipamentos por sala
+                const equipamentosPorSala = {};
+                
                 equipamentos.forEach(eq => {
-                    const opt = document.createElement('option');
-                    opt.value = eq.id;
-                    opt.textContent = `${eq.nome} (${eq.tipo}) - Sala: ${eq.sala_nome}`;
-                    select.appendChild(opt);
+                    const salaNome = eq.sala_nome || 'Sem Sala';
+                    if (!equipamentosPorSala[salaNome]) {
+                        equipamentosPorSala[salaNome] = [];
+                    }
+                    equipamentosPorSala[salaNome].push(eq);
+                });
+                
+                // Ordenar salas alfabeticamente
+                const salasOrdenadas = Object.keys(equipamentosPorSala).sort();
+                
+                // Adicionar grupos de salas
+                salasOrdenadas.forEach(salaNome => {
+                    // Criar optgroup para a sala
+                    const optgroup = document.createElement('optgroup');
+                    optgroup.label = `🏠 ${salaNome}`;
+                    optgroup.className = 'font-semibold text-gray-700 dark:text-gray-300';
+                    
+                    // Adicionar equipamentos da sala
+                    equipamentosPorSala[salaNome].forEach(eq => {
+                        const opt = document.createElement('option');
+                        opt.value = eq.id;
+                        opt.textContent = `${eq.nome} (${eq.tipo})`;
+                        opt.className = 'ml-4 text-gray-600 dark:text-gray-400';
+                        optgroup.appendChild(opt);
+                    });
+                    
+                    select.appendChild(optgroup);
                 });
             } catch (error) {
                 console.error('Erro ao carregar equipamentos:', error);
@@ -317,14 +391,7 @@
             }
         }
 
-        // Abrir modal para conectar equipamento
-        function abrirModalConectarEquipamento() {
-            if (!patchPanelAtual) {
-                alert('Selecione um patch panel primeiro!');
-                return;
-            }
-            alert('Selecione uma porta livre para conectar um equipamento');
-        }
+
 
         // Fechar modais
         function fecharModal() {

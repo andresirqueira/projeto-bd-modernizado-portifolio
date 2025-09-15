@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "nome": "Empresa 01",
+    "logo": "/static/img/logos-empresas/empresa_1/logo.png",
+    "db_file": "json:empresa_1"
+  },
+  {
+    "id": 2,
+    "nome": "Empresa 02",
+    "logo": "static/img/empresa-02/logo-empresa-02.png",
+    "db_file": "json:empresa_2"
+  }
+]

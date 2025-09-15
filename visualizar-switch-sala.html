@@ -10,6 +10,7 @@
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="static/js/logo-manager.js"></script>
+    <script src="static/js/equipment-images-map.js"></script>
     <link rel="icon" type="image/png" href="static/img/favicon-olho.png">
     <script>
         function toggleDarkMode() {
@@ -32,113 +33,328 @@
         .port-card {
             transition: all 0.3s ease;
             position: relative;
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            border-radius: 8px;
-            border: 2px solid transparent;
+            border-radius: 4px;
+            border: 2px solid #374151;
+            background: #1f2937;
+            color: #f3f4f6;
+            font-size: 0.7rem;
+            font-weight: bold;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+        
+        .port-card::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            background: #6b7280;
+            border-radius: 50%;
+            border: 1px solid #374151;
+            z-index: 11;
+        }
+        
+        .port-card::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: #4b5563;
+            border-radius: 50%;
+            z-index: 11;
         }
         
         .port-card.sala-especifica {
             cursor: pointer;
             border: 3px solid #fbbf24;
             box-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
+            background: linear-gradient(135deg, #92400e 0%, #b45309 100%) !important;
+            color: #fef3c7 !important;
         }
         
         .port-card.sala-especifica:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(251, 191, 36, 0.8);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(251, 191, 36, 0.8);
+            background: linear-gradient(135deg, #b45309 0%, #d97706 100%) !important;
+            color: #fef3c7 !important;
+            z-index: 15;
         }
         
         .port-card.sala-especifica.selected {
             border: 3px solid #10b981;
             box-shadow: 0 0 20px rgba(16, 185, 129, 0.8);
-            transform: translateY(-3px);
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #065f46 0%, #047857 100%);
         }
         
         .port-card.ocupada {
-            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
             border-color: #dc2626;
-            color: #dc2626;
-        }
-        
-        .port-card.mapeada {
-            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-            border-color: #2563eb;
-            color: #2563eb;
-        }
-
-        .port-card.livre {
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-            border-color: #059669;
-            color: #059669;
-        }
-        
-        .dark .port-card.ocupada {
-            background: linear-gradient(135deg, #450a0a 0%, #7f1d1d 100%);
             color: #fca5a5;
         }
         
-        .dark .port-card.mapeada {
-            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+        .port-card.mapeada {
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+            border-color: #3b82f6;
             color: #93c5fd;
         }
-        
-        .dark .port-card.livre {
-            background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+
+        .port-card.livre {
+            background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+            border-color: #10b981;
             color: #86efac;
+        }
+        
+        .port-card.ocupada::before {
+            background: #dc2626;
+            box-shadow: 0 0 8px rgba(220, 38, 38, 0.8);
+            z-index: 12;
+        }
+        
+        .port-card.mapeada::before {
+            background: #3b82f6;
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.8);
+            z-index: 12;
+        }
+        
+        .port-card.livre::before {
+            background: #10b981;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+            z-index: 12;
+        }
+        
+        .port-card.sala-especifica::before {
+            background: #f59e0b !important;
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.8) !important;
+            z-index: 12;
         }
         
         /* Painel de informações removido - agora é um painel fixo */
         
         .switch-card {
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-        
-        .dark .switch-card {
             background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-            border: 1px solid #374151;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-        }
-        
-        .status-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            padding: 2px 6px;
+            border: 2px solid #374151;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), inset 0 1px 3px rgba(255, 255, 255, 0.1);
             border-radius: 12px;
-            font-size: 10px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            position: relative;
         }
         
-        .status-badge.ocupada {
+        .switch-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+            border-radius: 10px 10px 0 0;
+            border-bottom: 1px solid #6b7280;
+        }
+        
+        .switch-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 15px;
+            background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+            border-radius: 0 0 10px 10px;
+            border-top: 1px solid #374151;
+        }
+        
+        .switch-header {
+            background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+            border-bottom: 1px solid #6b7280;
+            padding: 15px 20px;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .switch-body {
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .ports-container {
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            border: 1px solid #4b5563;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+        
+
+        
+        /* Parafusos decorativos nos cantos */
+        .ports-container::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, #6b7280 20%, #6b7280 80%, transparent 100%);
+            z-index: 2;
+        }
+        
+        .ports-container::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, #6b7280 20%, #6b7280 80%, transparent 100%);
+            z-index: 2;
+        }
+        
+        /* Parafusos nos cantos */
+        .ports-container .flex:first-child::before {
+            content: '●';
+            position: absolute;
+            top: -15px;
+            left: 10px;
+            color: #6b7280;
+            font-size: 8px;
+            z-index: 3;
+        }
+        
+        .ports-container .flex:first-child::after {
+            content: '●';
+            position: absolute;
+            top: -15px;
+            right: 10px;
+            color: #6b7280;
+            font-size: 8px;
+            z-index: 3;
+        }
+        
+        .ports-container .flex:last-child::before {
+            content: '●';
+            position: absolute;
+            bottom: -15px;
+            left: 10px;
+            color: #6b7280;
+            font-size: 8px;
+            z-index: 3;
+        }
+        
+        .ports-container .flex:last-child::after {
+            content: '●';
+            position: absolute;
+            bottom: -15px;
+            right: 10px;
+            color: #6b7280;
+            font-size: 8px;
+            z-index: 3;
+        }
+        
+
+        
+        /* Legenda de status */
+        .legenda-status {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .legenda-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .legenda-item.ocupada {
+            background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
+            border: 1px solid #dc2626;
+        }
+        
+        .legenda-item.mapeada {
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+            border: 1px solid #3b82f6;
+        }
+        
+        .legenda-item.livre {
+            background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+            border: 1px solid #10b981;
+        }
+        
+        .legenda-item.sala-especifica {
+            background: linear-gradient(135deg, #92400e 0%, #b45309 100%);
+            border: 1px solid #f59e0b;
+        }
+        
+        .legenda-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .legenda-dot.ocupada {
             background: #dc2626;
-            color: white;
+            box-shadow: 0 0 8px rgba(220, 38, 38, 0.8);
         }
         
-        .status-badge.mapeada {
-            background: #2563eb;
-            color: white;
+        .legenda-dot.mapeada {
+            background: #3b82f6;
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.8);
         }
         
-        .status-badge.livre {
-            background: #059669;
-            color: white;
+        .legenda-dot.livre {
+            background: #10b981;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+        }
+        
+        .legenda-dot.sala-especifica {
+            background: #f59e0b;
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.8);
         }
         
         .info-item {
             background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
             border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 12px;
-            transition: all 0.2s ease;
+            border-radius: 8px;
+            padding: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .info-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         
         .dark .info-item {
@@ -147,12 +363,141 @@
         }
         
         .info-item:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .info-item:hover::before {
+            opacity: 1;
         }
         
         .dark .info-item:hover {
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .equipamento-image {
+            width: 100%;
+            height: 120px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #e2e8f0;
+            display: block;
+        }
+        
+        .dark .equipamento-image {
+            background: linear-gradient(135deg, #334155 0%, #475569 100%);
+            border-color: #475569;
+        }
+        
+        .equipamento-image[src*="outro-outro-outro"] {
+            background: linear-gradient(135deg, #f3f4f6 0%, #d1d5db 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .dark .equipamento-image[src*="outro-outro-outro"] {
+            background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+            color: #9ca3af;
+        }
+        
+        .dark .equipamento-fallback {
+            background: linear-gradient(135deg, #374151 0%, #4b5563 100%) !important;
+            border-color: #475569 !important;
+        }
+        
+        .dark .equipamento-fallback i {
+            color: #6b7280 !important;
+        }
+        
+        .dark .equipamento-icon-container {
+            background: linear-gradient(135deg, #374151 0%, #4b5563 100%) !important;
+            border-color: #475569 !important;
+        }
+        
+        .dark .equipamento-icon-container i {
+            color: #9ca3af !important;
+        }
+        
+        .dark .equipamento-image {
+            background: linear-gradient(135deg, #374151 0%, #4b5563 100%) !important;
+            border-color: #475569 !important;
+        }
+        
+        /* Estilos para o painel de informações */
+        #infoPanel {
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 #f1f5f9;
+        }
+        
+        #infoPanel::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        #infoPanel::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 3px;
+        }
+        
+        #infoPanel::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        
+        #infoPanel::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        .dark #infoPanel {
+            scrollbar-color: #475569 #1e293b;
+        }
+        
+        .dark #infoPanel::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        
+        .dark #infoPanel::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+        
+        .dark #infoPanel::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-indicator.ocupada {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+        }
+        
+        .status-indicator.mapeada {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+        
+        .status-indicator.livre {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
         }
         
         .info-label {
@@ -221,6 +566,141 @@
             margin-top: 8px;
             box-shadow: 0 3px 8px rgba(251, 191, 36, 0.3);
         }
+        
+        /* Estilos para simular LEDs de status */
+        .port-card::before {
+            transition: all 0.3s ease;
+        }
+        
+        .port-card:hover::before {
+            box-shadow: 0 0 12px currentColor;
+        }
+        
+        /* Efeito de profundidade para as portas */
+        .port-card {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .port-card:hover {
+            transform: translateY(-1px) scale(1.05);
+            z-index: 15;
+        }
+        
+        /* Linha de separação entre as duas linhas de portas */
+        .ports-container .flex:first-child::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 10px;
+            right: 10px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, #6b7280 20%, #6b7280 80%, transparent 100%);
+            z-index: 5;
+        }
+        
+        /* Linha de LEDs de status */
+        .leds-row {
+            position: relative;
+            margin-top: 0px;
+            padding: 10px 5px;
+            background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+            border: 1px solid #374151;
+            border-radius: 4px;
+            height: 40px;
+            overflow: hidden;
+        }
+        
+        .led-pair {
+            display: flex;
+            gap: 2px;
+            align-items: center;
+        }
+        
+        .led-indicator {
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            background: transparent;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .led-indicator::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-bottom: 8px solid currentColor;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .led-indicator::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 8px solid currentColor;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        /* LED ativo - porta ocupada e comunicando */
+        .led-indicator.active {
+            animation: blink 2s infinite;
+        }
+        
+        /* LED inativo - porta livre ou mapeada */
+        .led-indicator.inactive {
+            opacity: 0.3;
+        }
+        
+        /* Triângulo para cima (portas ímpares) */
+        .led-indicator.triangle-up::before {
+            opacity: 1;
+            color: #10b981;
+        }
+        
+        /* Triângulo para baixo (portas pares) */
+        .led-indicator.triangle-down::after {
+            opacity: 1;
+            color: #10b981;
+        }
+        
+        /* Animação de piscar para LEDs ativos */
+        .led-indicator.active.triangle-up::before {
+            animation: blink 2s infinite;
+        }
+        
+        .led-indicator.active.triangle-down::after {
+            animation: blink 2s infinite;
+        }
+        
+        @keyframes blink {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+   
+            100% {
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 
@@ -244,37 +724,9 @@
             <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">Visualização das portas de switch utilizadas pelos equipamentos da sala selecionada</p>
         </div>
 
-        <!-- Controles -->
-        <div class="flex flex-wrap gap-3 mb-6 justify-center">
-            <button id="btnZoomIn" class="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white px-4 py-2 rounded-full transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105">
-                <i class="fas fa-search-plus mr-2"></i>Zoom +
-            </button>
-            <button id="btnZoomOut" class="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white px-4 py-2 rounded-full transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105">
-                <i class="fas fa-search-minus mr-2"></i>Zoom -
-            </button>
-            <button id="btnReset" class="bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white px-4 py-2 rounded-full transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105">
-                <i class="fas fa-undo mr-2"></i>Reset
-            </button>
-        </div>
 
-        <!-- Filtros -->
-        <div class="flex flex-wrap gap-3 mb-8 justify-center">
-            <button id="btnFiltroTodos" class="filtro-btn ativo bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white px-5 py-2 rounded-full transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105">
-                <i class="fas fa-list mr-2"></i>Todos
-            </button>
-            
-            <button id="btnFiltroLivres" class="filtro-btn bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-5 py-2 rounded-full transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105">
-                <i class="fas fa-check-circle mr-2"></i>Livres
-            </button>
-            
-            <button id="btnFiltroOcupadas" class="filtro-btn bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-5 py-2 rounded-full transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105">
-                <i class="fas fa-times-circle mr-2"></i>Ocupadas
-            </button>
-            
-            <button id="btnFiltroMapeadas" class="filtro-btn bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-5 py-2 rounded-full transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105">
-                <i class="fas fa-plug mr-2"></i>Mapeadas
-            </button>
-        </div>
+
+
 
         <!-- Container dos Switches -->
         <div id="switchesContainer" class="space-y-8"></div>
@@ -292,8 +744,8 @@
         </div>
 
         <!-- Painel de Informações da Porta -->
-        <div id="infoPanel" class="fixed top-8 right-8 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-6 w-80 z-50 transition-all duration-300 opacity-0 pointer-events-none transform translate-x-full">
-            <div class="flex justify-between items-center mb-4">
+        <div id="infoPanel" class="fixed top-8 right-8 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-4 w-80 overflow-y-auto transition-all duration-300 opacity-0 pointer-events-none" style="z-index: 9999; transform: translateX(100%); max-height: calc(100vh - 4rem);">
+            <div class="flex justify-between items-center mb-3">
                 <div class="flex items-center gap-2">
                     <div class="w-2 h-2 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full"></div>
                     <h3 class="text-lg font-bold text-gray-800 dark:text-white">Detalhes da Porta</h3>
@@ -302,7 +754,7 @@
                     <i class="fas fa-times text-gray-600 dark:text-gray-300 text-sm"></i>
                 </button>
             </div>
-            <div id="infoPanelContent" class="space-y-4">
+            <div id="infoPanelContent" class="space-y-2">
                 <!-- Conteúdo será preenchido dinamicamente -->
             </div>
         </div>
@@ -310,33 +762,41 @@
 
     <script>
         let switchesData = [];
-        let currentFilter = 'todos';
-        let currentZoom = 1;
 
         // Carregar dados dos switches
         async function carregarSwitches() {
             try {
                 const urlParams = new URLSearchParams(window.location.search);
                 const salaId = urlParams.get('sala_id');
-                
-                if (!salaId) {
-                    throw new Error('ID da sala não fornecido');
-                }
+                const switchId = urlParams.get('switchId');
 
-                console.log('Carregando switches para sala:', salaId);
-                const response = await fetch(`/api/salas/${salaId}/switches-usados`);
-                console.log('Response status:', response.status);
-                console.log('Response headers:', response.headers);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                if (salaId) {
+                    const response = await fetch(`/api/salas/${salaId}/switches-usados`);
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    switchesData = await response.json();
+                } else if (switchId) {
+                    // Carregar um único switch por ID, com o mesmo formato esperado
+                    const [swResp, portasResp] = await Promise.all([
+                        fetch(`/switches/${switchId}`),
+                        fetch(`/switch-portas/${switchId}`)
+                    ]);
+                    if (!swResp.ok) throw new Error('Switch não encontrado');
+                    const sw = await swResp.json();
+                    const portasApi = await portasResp.json();
+                    const portas = (portasApi || []).map(p => ({
+                        numero: p.numero_porta || p.numero || 0,
+                        status: p.status,
+                        equipamento_info: p.equipamento_info,
+                        patch_panel_info: p.patch_panel_info,
+                        sala_especifica: false
+                    }));
+                    switchesData = [{ id: sw.id, nome: sw.nome, marca: sw.marca, modelo: sw.modelo, portas }];
+                    // Atualizar título
+                    const titulo = document.getElementById('switchTitulo');
+                    if (titulo) titulo.innerHTML = '<i class="fas fa-network-wired text-indigo-600 dark:text-indigo-400 mr-3"></i> Visualizar Switch';
+                } else {
+                    throw new Error('Parâmetros ausentes: informe sala_id ou switchId');
                 }
-                
-                const switches = await response.json();
-                console.log('Switches carregados:', switches);
-                console.log('Tipo de dados:', typeof switches);
-                console.log('É array?', Array.isArray(switches));
-                switchesData = switches;
                 renderizarSwitches();
                 
                 document.getElementById('loading').classList.add('hidden');
@@ -349,14 +809,10 @@
 
         // Renderizar switches
         function renderizarSwitches() {
-            console.log('Renderizando switches...');
-            console.log('switchesData:', switchesData);
-            
             const container = document.getElementById('switchesContainer');
             container.innerHTML = '';
 
             if (switchesData.length === 0) {
-                console.log('Nenhum switch encontrado, mostrando mensagem');
                 container.innerHTML = `
                     <div class="text-center py-12">
                         <i class="fas fa-network-wired text-gray-400 text-4xl mb-4"></i>
@@ -379,24 +835,26 @@
 
                 // Criar elemento do switch
         function criarSwitchElement(switchData) {
-            console.log('Criando elemento para switch:', switchData);
-            
             const switchDiv = document.createElement('div');
-            switchDiv.className = 'switch-card rounded-xl overflow-hidden mb-8';
+            switchDiv.className = 'switch-card mb-8';
             
             const portas = switchData.portas || [];
-            console.log('Portas do switch:', portas);
             
             const portasLivres = portas.filter(p => p.status === 'livre').length;
             const portasOcupadas = portas.filter(p => p.status === 'ocupada').length;
             const portasMapeadas = portas.filter(p => p.status === 'mapeada').length;
 
+            // Organizar portas em duas linhas (como switch real)
+            // Portas ímpares na primeira linha, pares na segunda linha
+            const portasLinha1 = portas.filter((_, index) => index % 2 === 0); // Índices 0, 2, 4, 6...
+            const portasLinha2 = portas.filter((_, index) => index % 2 === 1); // Índices 1, 3, 5, 7...
+
             switchDiv.innerHTML = `
-                <div class="p-6">
-                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
+                <div class="switch-header">
+                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                         <div class="flex-grow">
-                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">${switchData.nome}</h3>
-                            <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                            <h3 class="text-2xl font-bold text-white mb-2">${switchData.nome}</h3>
+                            <div class="text-sm text-gray-300 space-y-1">
                                 <div><strong>Marca:</strong> ${switchData.marca || 'N/A'}</div>
                                 <div><strong>Modelo:</strong> ${switchData.modelo || 'N/A'}</div>
                                 <div><strong>Total de Portas:</strong> ${portas.length}</div>
@@ -424,10 +882,57 @@
                             </div>
                         </div>
                     </div>
-                    
-                                         <div class="ports-grid grid grid-cols-6 md:grid-cols-8 lg:grid-cols-12 xl:grid-cols-16 gap-3 relative p-6" style="transform: scale(${currentZoom}); transform-origin: top left; z-index: 1;">
-                        ${portas.map(porta => criarPortaElement(porta, switchData.nome)).join('')}
+                </div>
+                
+                <div class="switch-body">
+                    <!-- Legenda de Status -->
+                    <div class="legenda-status">
+                        <div class="legenda-item livre">
+                            <div class="legenda-dot livre"></div>
+                            <span>Livre</span>
+                        </div>
+                        <div class="legenda-item ocupada">
+                            <div class="legenda-dot ocupada"></div>
+                            <span>Ocupada</span>
+                        </div>
+                        <div class="legenda-item mapeada">
+                            <div class="legenda-dot mapeada"></div>
+                            <span>Mapeada</span>
+                        </div>
+                        <div class="legenda-item sala-especifica">
+                            <div class="legenda-dot sala-especifica"></div>
+                            <span>Sala Atual</span>
+                        </div>
                     </div>
+                    
+                                         <div class="ports-container">
+                         <div class="ports-grid" style="transform-origin: top left;">
+                             <!-- Linha 1 de portas -->
+                             <div class="flex justify-center gap-2 mb-4">
+                                 ${portasLinha1.map(porta => criarPortaElement(porta, switchData.nome)).join('')}
+                             </div>
+                             
+                             <!-- Linha 2 de portas -->
+                             <div class="flex justify-center gap-2 mb-2">
+                                 ${portasLinha2.map(porta => criarPortaElement(porta, switchData.nome)).join('')}
+                             </div>
+                             
+                             <!-- Linha 3 de portas invisíveis com LEDs dentro -->
+                             <div class="flex justify-center gap-2">
+                                 ${Array.from({length: Math.ceil(portas.length / 2)}, (_, index) => {
+                                     const porta1 = portas[index * 2];
+                                     const porta2 = portas[index * 2 + 1];
+                                     
+                                     const led1 = criarLedElement(porta1);
+                                     const led2 = porta2 ? criarLedElement(porta2) : '';
+                                     
+                                     return criarPortaInvisivelComLedsElement(porta1, led1, led2);
+                                 }).join('')}
+                             </div>
+                         </div>
+                     </div>
+                     
+
                 </div>
             `;
 
@@ -502,7 +1007,7 @@
                         </div>
                         <div class="info-row">
                             <span class="label">Porta PP:</span>
-                            <span class="value">${porta.patch_panel_info.porta_patch_panel}</span>
+                            <span class="value">${(porta.patch_panel_info.prefixo_keystone || (porta.patch_panel_info.keystone ? porta.patch_panel_info.keystone.split('-')[0] : 'PP'))}-${porta.patch_panel_info.porta_patch_panel.toString().padStart(4, '0')}</span>
                         </div>
                 `;
                 
@@ -578,49 +1083,52 @@
                      data-porta="${porta.numero}" 
                      data-sala-especifica="${porta.sala_especifica}"
                      data-porta-data='${JSON.stringify(porta)}'>
-                    <div class="status-badge ${statusClass}">${statusText}</div>
                     <div class="text-center">
-                        <div class="port-number text-sm font-bold mb-1">${porta.numero.toString().padStart(2, '0')}</div>
-                        ${porta.sala_especifica ? '<div class="text-yellow-500 text-lg">🌟</div>' : ''}
+                        <div class="port-number text-xs font-bold">${porta.numero.toString().padStart(2, '0')}</div>
                     </div>
                 </div>
             `;
             
-            return portElement;
-        }
+                         return portElement;
+         }
+         
+         // Criar elemento LED
+         function criarLedElement(porta) {
+             // LED acende verde apenas se a porta estiver ocupada
+             const ledClass = porta.status === 'ocupada' ? 'active' : 'inactive';
+             const title = `Porta ${porta.numero.toString().padStart(2, '0')} - ${porta.status === 'ocupada' ? 'Ocupada e comunicando' : 'Livre/Mapeada'}`;
+             
+             // Alternar direção do triângulo baseado no número da porta
+             // Portas ímpares (1,3,5...) = triângulo para cima
+             // Portas pares (2,4,6...) = triângulo para baixo
+             const isOdd = porta.numero % 2 === 1;
+             const triangleDirection = isOdd ? 'triangle-up' : 'triangle-down';
+             
+             const ledElement = `
+                 <div class="led-indicator ${ledClass} ${triangleDirection}" 
+                      title="${title}">
+                 </div>
+             `;
+             
+             return ledElement;
+         }
+         
+         // Criar elemento de porta invisível com LEDs dentro
+         function criarPortaInvisivelComLedsElement(porta, led1, led2) {
+             const portElement = `
+                 <div style="width: 60px; height: 40px; position: relative; display: flex; align-items: center; justify-content: center;">
+                     <div class="led-pair" style="position: absolute; top: 25%; left: 50%; transform: translate(-50%, -50%);">
+                         ${led1}${led2}
+                     </div>
+                 </div>
+             `;
+             
+             return portElement;
+         }
 
-        // Filtros
-        function aplicarFiltro(filtro) {
-            currentFilter = filtro;
-            
-            // Atualizar botões
-            document.querySelectorAll('.filtro-btn').forEach(btn => {
-                btn.classList.remove('ativo');
-                btn.classList.remove('from-indigo-500', 'to-indigo-600', 'hover:from-indigo-600', 'hover:to-indigo-700');
-                btn.classList.add('from-gray-500', 'to-gray-600', 'hover:from-gray-600', 'hover:to-gray-700');
-            });
-            
-            const btnAtivo = document.getElementById(`btnFiltro${filtro.charAt(0).toUpperCase() + filtro.slice(1)}`);
-            if (btnAtivo) {
-                btnAtivo.classList.add('ativo', 'from-indigo-500', 'to-indigo-600', 'hover:from-indigo-600', 'hover:to-indigo-700');
-                btnAtivo.classList.remove('from-gray-500', 'to-gray-600', 'hover:from-gray-600', 'hover:to-gray-700');
-            }
 
-            // Aplicar filtro nas portas
-            document.querySelectorAll('.port-card').forEach(card => {
-                const status = card.dataset.status;
-                const shouldShow = filtro === 'todos' || status === filtro;
-                card.style.display = shouldShow ? 'block' : 'none';
-            });
-        }
 
-        // Zoom
-        function aplicarZoom(zoom) {
-            currentZoom = Math.max(0.5, Math.min(2, zoom));
-            document.querySelectorAll('.ports-grid').forEach(grid => {
-                grid.style.transform = `scale(${currentZoom})`;
-            });
-        }
+
 
         // Gerenciar painel de informações
         function setupInfoPanel() {
@@ -646,8 +1154,18 @@
                     // Criar conteúdo do painel
                     let content = `
                         <div class="info-item">
-                            <div class="info-label">Porta</div>
-                            <div class="info-value font-bold">${portaData.numero.toString().padStart(2, '0')}</div>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="info-label">Porta</div>
+                                <div class="status-indicator ${portaData.status}">
+                                    <i class="fas ${portaData.status === 'ocupada' ? 'fa-times-circle' : portaData.status === 'mapeada' ? 'fa-plug' : 'fa-check-circle'}"></i>
+                                    ${portaData.status.toUpperCase()}
+                                </div>
+                            </div>
+                            <div class="info-value font-bold text-xl">${portaData.numero.toString().padStart(2, '0')}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Sala</div>
+                            <div class="info-value font-semibold">${portaData.equipamento_info?.sala_nome || portaData.patch_panel_info?.equipamento?.sala_nome || 'N/A'}</div>
                         </div>
                         <div class="info-item">
                             <div class="info-label">Switch</div>
@@ -656,18 +1174,52 @@
                     `;
                     
                     if (portaData.equipamento_info) {
+                        // Equipamento conectado diretamente ao switch
+                        
+                        // Determinar imagem baseada no tipo de equipamento usando a função especializada
+                        const equipamentoNome = portaData.equipamento_info.nome;
+                        const equipamentoTipo = portaData.equipamento_info.tipo;
+                        const equipamentoMarca = portaData.equipamento_info.marca;
+                        const equipamentoModelo = portaData.equipamento_info.modelo || '';
+                        
+                        let imagePath = findEquipmentImageByType(equipamentoTipo, equipamentoNome, equipamentoMarca, equipamentoModelo);
+                        
+                        // Fallback para ícone se não encontrar imagem
+                        let iconClass = 'fas fa-cube';
+                        if (equipamentoNome.includes('camera') || equipamentoNome.includes('câmera')) {
+                            iconClass = 'fas fa-video';
+                        } else if (equipamentoNome.includes('microfone') || equipamentoNome.includes('mic')) {
+                            iconClass = 'fas fa-microphone';
+                        } else if (equipamentoNome.includes('tv') || equipamentoNome.includes('monitor')) {
+                            iconClass = 'fas fa-tv';
+                        } else if (equipamentoNome.includes('projetor')) {
+                            iconClass = 'fas fa-projector';
+                        } else if (equipamentoNome.includes('pc') || equipamentoNome.includes('computador') || equipamentoNome.includes('chromebox')) {
+                            iconClass = 'fas fa-desktop';
+                        } else if (equipamentoNome.includes('painel')) {
+                            iconClass = 'fas fa-tablet-alt';
+                        }
+                        
                         content += `
                             <div class="info-item">
+                                <div class="equipamento-icon-container" style="width: 100%; height: 80px; background: linear-gradient(135deg, #f3f4f6 0%, #d1d5db 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; border: 1px solid #e2e8f0;">
+                                    ${imagePath ? 
+                                        `<img src="${imagePath}" alt="${portaData.equipamento_info.nome}" style="max-width: 100%; max-height: 100%; object-fit: contain;">` :
+                                        `<i class="${iconClass} text-4xl text-gray-500"></i>`
+                                    }
+                                </div>
                                 <div class="info-label">Equipamento</div>
-                                <div class="info-value font-semibold">${portaData.equipamento_info.nome}</div>
+                                <div class="info-value font-semibold text-base">${portaData.equipamento_info.nome}</div>
                             </div>
-                            <div class="info-item">
-                                <div class="info-label">Tipo</div>
-                                <div class="info-value">${portaData.equipamento_info.tipo || 'N/A'}</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-label">Marca</div>
-                                <div class="info-value">${portaData.equipamento_info.marca || 'N/A'}</div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="info-item">
+                                    <div class="info-label">Tipo</div>
+                                    <div class="info-value">${portaData.equipamento_info.tipo || 'N/A'}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Marca</div>
+                                    <div class="info-value">${portaData.equipamento_info.marca || 'N/A'}</div>
+                                </div>
                             </div>
                             <div class="info-item">
                                 <div class="info-label">IP Principal</div>
@@ -700,16 +1252,100 @@
                             `;
                         }
                         
+                        // Sala já aparece no topo do painel
+                        
+                    } else if (portaData.patch_panel_info && portaData.patch_panel_info.equipamento) {
+                        // Adicionar informações do patch panel primeiro
                         content += `
                             <div class="info-item">
-                                <div class="info-label">Sala</div>
-                                <div class="info-value">${portaData.equipamento_info.sala_nome || 'N/A'}</div>
+                                <div class="info-label">Patch Panel</div>
+                                <div class="info-value font-semibold">${portaData.patch_panel_info.nome}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Porta Patch Panel</div>
+                                <div class="info-value">${(portaData.patch_panel_info.prefixo_keystone || (portaData.patch_panel_info.keystone ? portaData.patch_panel_info.keystone.split('-')[0] : 'PP'))}-${portaData.patch_panel_info.porta_patch_panel.toString().padStart(4, '0')}</div>
                             </div>
                         `;
                         
-                        if (portaData.sala_especifica) {
-                            content += `<div class="sala-badge">🌟 Equipamento da Sala Atual</div>`;
+                        // Determinar imagem baseada no tipo de equipamento usando a função especializada
+                        const equipamentoNome = portaData.patch_panel_info.equipamento.nome;
+                        const equipamentoTipo = portaData.patch_panel_info.equipamento.tipo;
+                        const equipamentoMarca = portaData.patch_panel_info.equipamento.marca;
+                        const equipamentoModelo = portaData.patch_panel_info.equipamento.modelo || '';
+                        
+                        let imagePath = findEquipmentImageByType(equipamentoTipo, equipamentoNome, equipamentoMarca, equipamentoModelo);
+                        
+                        // Fallback para ícone se não encontrar imagem
+                        let iconClass = 'fas fa-cube';
+                        if (equipamentoNome.includes('camera') || equipamentoNome.includes('câmera')) {
+                            iconClass = 'fas fa-video';
+                        } else if (equipamentoNome.includes('microfone') || equipamentoNome.includes('mic')) {
+                            iconClass = 'fas fa-microphone';
+                        } else if (equipamentoNome.includes('tv') || equipamentoNome.includes('monitor')) {
+                            iconClass = 'fas fa-tv';
+                        } else if (equipamentoNome.includes('projetor')) {
+                            iconClass = 'fas fa-projector';
+                        } else if (equipamentoNome.includes('pc') || equipamentoNome.includes('computador') || equipamentoNome.includes('chromebox')) {
+                            iconClass = 'fas fa-desktop';
+                        } else if (equipamentoNome.includes('painel')) {
+                            iconClass = 'fas fa-tablet-alt';
                         }
+                        
+                        content += `
+                            <div class="info-item">
+                                <div class="equipamento-icon-container" style="width: 100%; height: 80px; background: linear-gradient(135deg, #f3f4f6 0%, #d1d5db 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; border: 1px solid #e2e8f0;">
+                                    ${imagePath ? 
+                                        `<img src="${imagePath}" alt="${portaData.patch_panel_info.equipamento.nome}" style="max-width: 100%; max-height: 100%; object-fit: contain;">` :
+                                        `<i class="${iconClass} text-4xl text-gray-500"></i>`
+                                    }
+                                </div>
+                                <div class="info-label">Equipamento</div>
+                                <div class="info-value font-semibold text-base">${portaData.patch_panel_info.equipamento.nome}</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="info-item">
+                                    <div class="info-label">Tipo</div>
+                                    <div class="info-value">${portaData.patch_panel_info.equipamento.tipo || 'N/A'}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Marca</div>
+                                    <div class="info-value">${portaData.patch_panel_info.equipamento.marca || 'N/A'}</div>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">IP Principal</div>
+                                <div class="info-value font-mono text-sm">${portaData.patch_panel_info.equipamento.ip1 || 'N/A'}</div>
+                            </div>
+                        `;
+                        
+                        if (portaData.patch_panel_info.equipamento.ip2) {
+                            content += `
+                                <div class="info-item">
+                                    <div class="info-label">IP Secundário</div>
+                                    <div class="info-value font-mono text-sm">${portaData.patch_panel_info.equipamento.ip2}</div>
+                                </div>
+                            `;
+                        }
+                        
+                        content += `
+                            <div class="info-item">
+                                <div class="info-label">MAC Principal</div>
+                                <div class="info-value font-mono text-sm">${portaData.patch_panel_info.equipamento.mac1 || 'N/A'}</div>
+                            </div>
+                        `;
+                        
+                        if (portaData.patch_panel_info.equipamento.mac2) {
+                            content += `
+                                <div class="info-item">
+                                    <div class="info-label">MAC Secundário</div>
+                                    <div class="info-value font-mono text-sm">${portaData.patch_panel_info.equipamento.mac2}</div>
+                                </div>
+                            `;
+                        }
+                        
+                        // Sala já aparece no topo do painel
+                        
+                        // Removido o badge "Equipamento da Sala Atual" conforme solicitado
                         
                     } else if (portaData.patch_panel_info) {
                         content += `
@@ -719,7 +1355,7 @@
                             </div>
                             <div class="info-item">
                                 <div class="info-label">Porta Patch Panel</div>
-                                <div class="info-value">${portaData.patch_panel_info.porta_patch_panel}</div>
+                                <div class="info-value">${(portaData.patch_panel_info.prefixo_keystone || (portaData.patch_panel_info.keystone ? portaData.patch_panel_info.keystone.split('-')[0] : 'PP'))}-${portaData.patch_panel_info.porta_patch_panel.toString().padStart(4, '0')}</div>
                             </div>
                         `;
                         
@@ -768,16 +1404,7 @@
                                 `;
                             }
                             
-                            content += `
-                                <div class="info-item">
-                                    <div class="info-label">Sala</div>
-                                    <div class="info-value">${portaData.patch_panel_info.equipamento.sala_nome || 'N/A'}</div>
-                                </div>
-                            `;
-                            
-                            if (portaData.sala_especifica) {
-                                content += `<div class="sala-badge">🌟 Equipamento da Sala Atual</div>`;
-                            }
+                            // Sala já aparece no topo do painel
                             
                         } else {
                             content += `
@@ -804,6 +1431,18 @@
                     infoPanel.style.opacity = '1';
                     infoPanel.style.pointerEvents = 'auto';
                     infoPanel.style.transform = 'translateX(0)';
+                    
+                    // Ajustar posição se necessário
+                    setTimeout(() => {
+                        const panelRect = infoPanel.getBoundingClientRect();
+                        const viewportHeight = window.innerHeight;
+                        
+                        if (panelRect.bottom > viewportHeight - 20) {
+                            // Se o painel ultrapassa a tela, ajustar para baixo
+                            const newTop = Math.max(20, viewportHeight - panelRect.height - 20);
+                            infoPanel.style.top = newTop + 'px';
+                        }
+                    }, 100);
                 });
             });
             
@@ -811,7 +1450,9 @@
             closeInfoPanel.addEventListener('click', () => {
                 infoPanel.style.opacity = '0';
                 infoPanel.style.pointerEvents = 'none';
-                infoPanel.style.transform = 'translateX(full)';
+                infoPanel.style.transform = 'translateX(100%)';
+                // Resetar posição
+                infoPanel.style.top = '2rem';
                 document.querySelectorAll('.port-card.selected').forEach(card => {
                     card.classList.remove('selected');
                 });
@@ -822,7 +1463,9 @@
                 if (!infoPanel.contains(e.target) && !e.target.closest('.port-card.sala-especifica')) {
                     infoPanel.style.opacity = '0';
                     infoPanel.style.pointerEvents = 'none';
-                    infoPanel.style.transform = 'translateX(full)';
+                    infoPanel.style.transform = 'translateX(100%)';
+                    // Resetar posição
+                    infoPanel.style.top = '2rem';
                     document.querySelectorAll('.port-card.selected').forEach(card => {
                         card.classList.remove('selected');
                     });
@@ -841,22 +1484,10 @@
                     LogoManager.loadEmpresaLogo(data);
                 });
 
-            // Filtros
-            document.getElementById('btnFiltroTodos').addEventListener('click', () => aplicarFiltro('todos'));
-            document.getElementById('btnFiltroLivres').addEventListener('click', () => aplicarFiltro('livre'));
-            document.getElementById('btnFiltroOcupadas').addEventListener('click', () => aplicarFiltro('ocupada'));
-            document.getElementById('btnFiltroMapeadas').addEventListener('click', () => aplicarFiltro('mapeada'));
 
-            // Zoom
-            document.getElementById('btnZoomIn').addEventListener('click', () => aplicarZoom(currentZoom + 0.1));
-            document.getElementById('btnZoomOut').addEventListener('click', () => aplicarZoom(currentZoom - 0.1));
-            document.getElementById('btnReset').addEventListener('click', () => {
-                currentZoom = 1;
-                aplicarZoom(1);
-                aplicarFiltro('todos');
-            });
+
+
         });
     </script>
 </body>
-</html>
 </html>

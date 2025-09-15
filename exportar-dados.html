@@ -131,6 +131,25 @@
             }, 3000);
         }
 
+        // Função para registrar logs de exportação
+        async function registrarLogExportacao(acao, detalhes, status = 'sucesso') {
+            try {
+                await fetch('/log-exportacao', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        acao: acao,
+                        detalhes: detalhes,
+                        status: status
+                    })
+                });
+            } catch (error) {
+                console.error('Erro ao registrar log de exportação:', error);
+            }
+        }
+
         function downloadCSV(csvContent, filename) {
             // Adiciona BOM UTF-8 para compatibilidade com Excel
             const BOM = '\uFEFF';
@@ -158,9 +177,11 @@
                 });
                 
                 downloadCSV(csv, 'salas.csv');
+                await registrarLogExportacao('EXPORTAR_SALAS', `Exportação de ${salas.length} salas para CSV`, 'sucesso');
                 mostrarMensagem('Exportação de salas concluída!', 'success');
             } catch (error) {
                 console.error('Erro ao exportar salas:', error);
+                await registrarLogExportacao('EXPORTAR_SALAS', `Erro ao exportar salas: ${error.message}`, 'erro');
                 mostrarMensagem('Erro ao exportar salas', 'error');
             }
         }
@@ -176,9 +197,11 @@
                 });
                 
                 downloadCSV(csv, 'equipamentos.csv');
+                await registrarLogExportacao('EXPORTAR_EQUIPAMENTOS', `Exportação de ${equipamentos.length} equipamentos para CSV`, 'sucesso');
                 mostrarMensagem('Exportação de equipamentos concluída!', 'success');
             } catch (error) {
                 console.error('Erro ao exportar equipamentos:', error);
+                await registrarLogExportacao('EXPORTAR_EQUIPAMENTOS', `Erro ao exportar equipamentos: ${error.message}`, 'erro');
                 mostrarMensagem('Erro ao exportar equipamentos', 'error');
             }
         }
@@ -189,8 +212,10 @@
                 const equipamentos = await resp.json();
 
                 let csv = 'Equipamento;Tipo;Sala;IP 1;MAC 1;IP 2;MAC 2\n';
+                let equipamentosComRede = 0;
                 equipamentos.forEach(eq => {
                     if (eq.dados?.ip1 || eq.dados?.mac1 || eq.dados?.ip2 || eq.dados?.mac2) {
+                        equipamentosComRede++;
                         const nome = eq.nome || '';
                         const tipo = eq.tipo || '';
                         const sala = eq.sala_nome || '';
@@ -203,9 +228,11 @@
                 });
 
                 downloadCSV(csv, 'ips_macs.csv');
+                await registrarLogExportacao('EXPORTAR_IPS_MACS', `Exportação de ${equipamentosComRede} equipamentos com dados de rede para CSV`, 'sucesso');
                 mostrarMensagem('Exportação de IPs e MACs concluída!', 'success');
             } catch (error) {
                 console.error('Erro ao exportar IPs e MACs:', error);
+                await registrarLogExportacao('EXPORTAR_IPS_MACS', `Erro ao exportar IPs e MACs: ${error.message}`, 'erro');
                 mostrarMensagem('Erro ao exportar IPs e MACs', 'error');
             }
         }
@@ -216,9 +243,11 @@
                 const switches = await resp.json();
                 
                 let csv = 'Switch;Marca;Modelo;Porta;Status;Descrição;Equipamento;Sala Equipamento\n';
+                let totalPortas = 0;
                 for (const sw of switches) {
                     const respPortas = await fetch(`/switch-portas/${sw.id}`);
                     const portas = await respPortas.json();
+                    totalPortas += portas.length;
                     portas.forEach(porta => {
                         let equipamento = '';
                         let salaEquip = '';
@@ -230,9 +259,11 @@
                     });
                 }
                 downloadCSV(csv, 'switches.csv');
+                await registrarLogExportacao('EXPORTAR_SWITCHES', `Exportação de ${switches.length} switches com ${totalPortas} portas para CSV`, 'sucesso');
                 mostrarMensagem('Exportação de switches concluída!', 'success');
             } catch (error) {
                 console.error('Erro ao exportar switches:', error);
+                await registrarLogExportacao('EXPORTAR_SWITCHES', `Erro ao exportar switches: ${error.message}`, 'erro');
                 mostrarMensagem('Erro ao exportar switches', 'error');
             }
         }
@@ -284,9 +315,11 @@
                 }
                 
                 downloadCSV(csv, 'inventario_completo.csv');
+                await registrarLogExportacao('EXPORTAR_INVENTARIO_COMPLETO', `Exportação completa: ${salas.length} salas, ${equipamentos.length} equipamentos, ${switches.length} switches`, 'sucesso');
                 mostrarMensagem('Exportação do inventário completo concluída!', 'success');
             } catch (error) {
                 console.error('Erro ao exportar inventário completo:', error);
+                await registrarLogExportacao('EXPORTAR_INVENTARIO_COMPLETO', `Erro ao exportar inventário completo: ${error.message}`, 'erro');
                 mostrarMensagem('Erro ao exportar inventário completo', 'error');
             }
         }

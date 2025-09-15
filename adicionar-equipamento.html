@@ -50,11 +50,11 @@
         </div>
         <form id="formEquipamento" class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="md:col-span-2">
-                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Nome:</label>
+                <label class="block text-gray-700 dark:text-white font-semibold mb-2">Nome:</label>
                 <input type="text" name="nome" required class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
             </div>
             <div>
-                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Tipo:</label>
+                <label class="block text-gray-700 dark:text-white font-semibold mb-2">Tipo:</label>
                 <select name="tipo" id="tipo" required class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
                     <option value="">Selecione...</option>
                     <option value="Projetor">Projetor</option>
@@ -81,59 +81,62 @@
                     <option value="Receptor">Receptor</option>
                     <option value="Poe">Injetor Poe</option>
                     <option value="Adaptador">Adaptador</option>
+                    <option value="Fonte">Fonte</option>
+                    <option value="Controladora">Controladora</option>
+                    <option value="Splitter">Splitter</option>
                     <option value="Outro">Outro</option>
                 </select>
             </div>
             <div>
-                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Marca:</label>
+                <label class="block text-gray-700 dark:text-white font-semibold mb-2">Marca:</label>
                 <select name="marca" id="marca" required class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
                     <option value="">Selecione o tipo primeiro</option>
                 </select>
             </div>
             <div>
-                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Modelo:</label>
+                <label class="block text-gray-700 dark:text-white font-semibold mb-2">Modelo:</label>
                 <select name="modelo" id="modelo" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
                     <option value="">Selecione a marca primeiro</option>
                 </select>
             </div>
             <div>
-                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Part Number:</label>
+                <label class="block text-gray-700 dark:text-white font-semibold mb-2">Part Number:</label>
                 <input type="text" name="partnumber" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
             </div>
             <div>
-                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Tamanho:</label>
+                <label class="block text-gray-700 dark:text-white font-semibold mb-2">Tamanho:</label>
                 <input type="text" name="tamanho" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
             </div>
             <div class="md:col-span-2">
-                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Descrição:</label>
+                <label class="block text-gray-700 dark:text-white font-semibold mb-2">Descrição:</label>
                 <input type="text" name="descricao" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
             </div>
             <div>
-                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Firmware:</label>
+                <label class="block text-gray-700 dark:text-white font-semibold mb-2">Firmware:</label>
                 <input type="text" name="firmware" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
             </div>
             <div>
-                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Número de Série:</label>
+                <label class="block text-gray-700 dark:text-white font-semibold mb-2">Número de Série:</label>
                 <input type="text" name="serie" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
             </div>
             <div>
-                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">IP 1:</label>
+                <label class="block text-gray-700 dark:text-white font-semibold mb-2">IP 1:</label>
                 <input type="text" name="ip1" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
             </div>
             <div>
-                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">MAC 1:</label>
+                <label class="block text-gray-700 dark:text-white font-semibold mb-2">MAC 1:</label>
                 <input type="text" name="mac1" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
             </div>
             <div>
-                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">IP 2:</label>
+                <label class="block text-gray-700 dark:text-white font-semibold mb-2">IP 2:</label>
                 <input type="text" name="ip2" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
             </div>
             <div>
-                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">MAC 2:</label>
+                <label class="block text-gray-700 dark:text-white font-semibold mb-2">MAC 2:</label>
                 <input type="text" name="mac2" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
             </div>
             <div class="md:col-span-2">
-                <label class="block text-gray-700 dark:text-gray-200 font-semibold mb-2">Sala:</label>
+                <label class="block text-gray-700 dark:text-white font-semibold mb-2">Sala:</label>
                 <select name="sala_id" id="sala_id" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
                     <option value="">Sem sala</option>
                 </select>
@@ -147,7 +150,7 @@
         <div class="msg text-center mt-6 text-lg font-semibold" id="msg"></div>
     </div>
     <script>
-        // Carregar salas para o select
+        // Carregar salas para o select (pré-seleciona se vier sala_id na URL)
         async function carregarSalas() {
             const resp = await fetch('/salas');
             const salas = await resp.json();
@@ -158,6 +161,11 @@
                 opt.textContent = sala.nome;
                 select.appendChild(opt);
             });
+            const params = new URLSearchParams(window.location.search);
+            const salaIdParam = params.get('sala_id');
+            if (salaIdParam) {
+                select.value = salaIdParam;
+            }
         }
         carregarSalas();
 
@@ -176,17 +184,20 @@
             Hub: ["Logitech", "Outro"],
             Clickshare: ["Barco", "Outro"],
             AVIO: ["Dante", "Outro"],
-            Extensores: ["Extron", "Outro"],
+            Extensores: ["Extron", "Kramer","Outro"],
             Dongle: ["Logitech", "Outro"],
             "Tela Led": ["LG", "Leyard", "Outro"],
-            Switcher: ["Kramer", "Outro"],
+            Switcher: ["Kramer", "Extron", "Outro"],
             Serial: ["Controlart", "Outro"],
             Antena: ["Shure", "Outro"],
             Mixer: ["Shure", "Outro"],
             Amplificador: ["QSC", "Outro"],
             Receptor: ["Shure", "Outro"],
             Poe: ["Logitech", "Outro"],
-            Adaptador: ["Kramer", "Outro"],
+            Adaptador: ["Kramer", "Generico","Outro"],
+            Fonte: ["Logitech", "Universal", "Outro"],
+            Controladora: ["LG", "Leyard", "Nova Star", "Outro"],
+            Splitter: ["Logitech", "Outro"],
             Outro: ["Outro"]
         };
 
@@ -203,7 +214,7 @@
             },
             "Tela Led": {
                 LG: ["LG", "Outro"],
-                Leyard: ["Leyard", "Outro"],
+                Leyard: ["MGS Series", "Outro"],
                 Outro: ["Outro"]
             },
             Tap: {
@@ -248,7 +259,7 @@
                 Outro: ["Outro"]
             },
             Hub: {
-                Logitech: ["Display", "Table", "Outro"],
+                Logitech: ["Display", "Table","Mic Pod","Outro"],
                 Outro: ["Outro"]
             },
             Clickshare: {
@@ -260,7 +271,8 @@
                 Outro: ["Outro"]
             },
             Extensores: {
-                Extron: ["DTP HDMI 230 Tx", "USB EXTENDER Plus T", "Outro"],
+                Extron: ["DTP HDMI 230 Tx", "USB EXTENDER Plus T", "USB EXTENDER Plus R", "Outro"],
+                Kramer: ["PT571", "Outro"],
                 Outro: ["Outro"]
             },
             Dongle: {
@@ -274,6 +286,8 @@
             },
             Switcher: {
                 Kramer: ["HDMI VS-211H2", "Outro"],
+                Extron: ["SW2 USB", "Outro"],
+                RGBlink: ["X1PRO-E", "Outro"],
                 Outro: ["Outro"]
             },
             Serial: {
@@ -301,7 +315,23 @@
             },
             Adaptador: {
                 Kramer: ["HDMI F to HDMI F", "Outro"],
+                Generico: ["USBA to HDMI", "Outro"],
                 Outro: ["USBA F to USBA F","Outro"]
+            },
+            Fonte: {
+                Logitech: ["TAP","Table Hub","Display Hub", "Meetup","Rally Camera", "Outro"],
+                Universal: ["Chromebox", "Outro"],
+                Outro: ["Outro"]
+            },
+            Controladora: {
+                LG: ["xxxxx", "Outro"],
+                Leyard: ["SM700-1", "Outro"],
+                "Nova Star": ["MCTRL700", "Outro"],
+                Outro: ["Outro"]
+            },
+            Splitter: {
+                Logitech: ["Rally Camera Power Splitter", "Outro"],
+                Outro: ["Outro"]
             },
             Outro: {
                 Outro: ["Outro"]

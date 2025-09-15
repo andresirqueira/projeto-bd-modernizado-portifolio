@@ -9,6 +9,35 @@
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/png" href="static/img/favicon-lupa.png">
+    <style>
+        /* Estilos para os grupos do select */
+        optgroup {
+            font-weight: bold;
+            color: #374151;
+            background-color: #f3f4f6;
+        }
+        
+        .dark optgroup {
+            color: #d1d5db;
+            background-color: #374151;
+        }
+        
+        option {
+            font-weight: normal;
+            padding-left: 1rem;
+        }
+        
+        /* Melhorar aparência do select */
+        select optgroup {
+            font-size: 0.875rem;
+            padding: 0.5rem;
+        }
+        
+        select option {
+            font-size: 0.875rem;
+            padding: 0.25rem 0.5rem;
+        }
+    </style>
     <script>
       function toggleDarkMode() {
         if (document.documentElement.classList.contains('dark')) {
@@ -85,7 +114,7 @@
                     <i class="fas fa-bolt mr-2"></i>Power
                 </button>
             </div>
-            <div class="flex gap-2">
+            <div class="flex gap-2 items-center">
                 <input type="text" id="busca-cabo" placeholder="Buscar cabo..." class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 <button onclick="limparBusca()" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors">
                     <i class="fas fa-times mr-2"></i>Limpar
@@ -123,7 +152,23 @@
         </div>
 
         <!-- Lista de Cabos -->
-        <div id="cabos-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div id="cabos-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+            <!-- Card Adicionar Cabo (apenas para admin/tecnico) -->
+            <div id="cardAddCabo" style="display:none" class="bg-gradient-to-br from-green-400 to-green-600 dark:from-green-600 dark:to-green-800 rounded-xl shadow-lg p-6 flex items-center justify-center w-72 min-h-[220px] mb-4 cursor-pointer hover:from-green-500 hover:to-green-700 dark:hover:from-green-700 dark:hover:to-green-900 transition-all duration-300 transform hover:scale-105" onclick="abrirModalAddCabo()" title="Adicionar Novo Cabo">
+                <div class="text-white text-center flex flex-col items-center justify-center w-full h-full">
+                    <i class="fas fa-plus-circle text-6xl mb-4"></i>
+                    <div class="font-bold text-xl mb-2">Adicionar Cabo</div>
+                    <div class="text-sm opacity-90">Clique para adicionar um novo cabo à sala</div>
+                </div>
+            </div>
+            <!-- Card Adicionar do Estoque (apenas para admin/tecnico) -->
+            <div id="cardAddDoEstoque" style="display:none" class="bg-gradient-to-br from-orange-400 to-orange-600 dark:from-orange-600 dark:to-orange-800 rounded-xl shadow-lg p-6 flex items-center justify-center w-72 min-h-[220px] mb-4 cursor-pointer hover:from-orange-500 hover:to-orange-700 dark:hover:from-orange-700 dark:hover:to-orange-900 transition-all duration-300 transform hover:scale-105" onclick="irParaEstoqueComRedirect()" title="Adicionar cabo existente do estoque">
+                <div class="text-white text-center flex flex-col items-center justify-center w-full h-full">
+                    <i class="fas fa-box-open text-6xl mb-4"></i>
+                    <div class="font-bold text-xl mb-2">Adicionar do estoque</div>
+                    <div class="text-sm opacity-90">Escolha um cabo em estoque e conecte nesta sala</div>
+                </div>
+            </div>
             <!-- Os cabos serão carregados aqui dinamicamente -->
         </div>
 
@@ -132,6 +177,404 @@
             <i class="fas fa-plug text-6xl text-gray-400 mb-4"></i>
             <h3 class="text-xl font-semibold text-gray-600 dark:text-gray-400 mb-2">Nenhum cabo encontrado</h3>
             <p class="text-gray-500 dark:text-gray-500">Esta sala não possui cabos conectados.</p>
+        </div>
+    </div>
+    <!-- Modal Adicionar Cabo -->
+    <div id="modalAddCabo" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;" class="flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-900 rounded-xl shadow-2xl w-full max-w-5xl max-h-[95vh] overflow-auto">
+            <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+                <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">
+                    <i class="fas fa-plug text-indigo-600 dark:text-indigo-400 mr-2"></i>Adicionar Cabo
+                </h3>
+                <button id="fecharModalAddCabo" class="px-3 py-1.5 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600">Fechar</button>
+            </div>
+            <div class="p-6">
+                <form id="formCaboModal" class="space-y-6">
+                    <!-- Tipo de Conexão -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <i class="fas fa-project-diagram mr-2"></i>Tipo de Conexão *
+                        </label>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Escolha como o cabo será conectado no sistema</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Conexão Direta -->
+                            <label class="relative cursor-pointer">
+                                <input type="radio" name="tipo_conexao" value="direta" checked onchange="toggleTipoConexaoModal()" class="sr-only">
+                                <div class="border-2 border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg p-4 transition-all duration-200 hover:border-indigo-300 dark:hover:border-indigo-500 bg-white dark:bg-gray-800">
+                                    <div class="flex items-center mb-3">
+                                        <div class="w-5 h-5 border-2 border-indigo-500 rounded-full mr-3 flex items-center justify-center">
+                                            <div class="w-3 h-3 bg-indigo-600 rounded-full"></div>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <i class="fas fa-exchange-alt text-indigo-600 dark:text-indigo-400 mr-2"></i>
+                                            <span class="font-medium text-gray-900 dark:text-white">Conexão Direta</span>
+                                        </div>
+                                    </div>
+                                    <div class="ml-8">
+                                        <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">Equipamento ↔ Equipamento</p>
+                                        <div class="flex items-center justify-center space-x-2 text-xs text-gray-500 dark:text-gray-400">
+                                            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">Equip. A</span>
+                                            <i class="fas fa-arrow-right"></i>
+                                            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">Equip. B</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <!-- Conexão via Patch Panel -->
+                            <label class="relative cursor-pointer">
+                                <input type="radio" name="tipo_conexao" value="patch_panel" onchange="toggleTipoConexaoModal()" class="sr-only">
+                                <div class="border-2 border-gray-200 dark:border-gray-600 rounded-lg p-4 transition-all duration-200 hover:border-indigo-300 dark:hover:border-indigo-500 bg-white dark:bg-gray-800">
+                                    <div class="flex items-center mb-3">
+                                        <div class="w-5 h-5 border-2 border-gray-300 dark:border-gray-500 rounded-full mr-3 flex items-center justify-center">
+                                            <div class="w-3 h-3 bg-gray-300 dark:bg-gray-500 rounded-full"></div>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <i class="fas fa-th text-indigo-600 dark:text-indigo-400 mr-2"></i>
+                                            <span class="font-medium text-gray-900 dark:text-white">Via Patch Panel</span>
+                                        </div>
+                                    </div>
+                                    <div class="ml-8">
+                                        <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">Equipamento → Patch Panel (conectado ao switch)</p>
+                                        <div class="flex items-center justify-center space-x-1 text-xs text-gray-500 dark:text-gray-400">
+                                            <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">Equip.</span>
+                                            <i class="fas fa-arrow-right"></i>
+                                            <span class="bg-blue-100 dark:bg-blue-900 px-2 py-1 rounded">Patch Panel</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Código Único -->
+                    <div>
+                        <label for="codigo_unico_modal" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <i class="fas fa-barcode mr-2"></i>Código Único *
+                        </label>
+                        <div class="flex gap-2">
+                            <input type="text" id="codigo_unico_modal" name="codigo_unico" required readonly
+                                   class="flex-1 px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                                   placeholder="Será gerado automaticamente">
+                            <button type="button" onclick="gerarNovoCodigoModal()" class="px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors" title="Gerar novo código">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Código gerado automaticamente baseado no tipo de cabo</p>
+                    </div>
+
+                    <!-- Tipo de Cabo -->
+                    <div>
+                        <label for="tipo_modal" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <i class="fas fa-tag mr-2"></i>Tipo de Cabo *
+                        </label>
+                        <select id="tipo_modal" name="tipo" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                            <option value="">Selecione o tipo...</option>
+                        </select>
+                        <!-- Mensagem informativa para patch panel -->
+                        <div id="avisoPatchPanelModal" class="hidden mt-2 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fas fa-info-circle text-blue-600 dark:text-blue-400 mr-2"></i>
+                                <span class="text-sm text-blue-800 dark:text-blue-200">
+                                    <strong>Via Patch Panel:</strong> Apenas cabos Ethernet são permitidos para conexões via patch panel.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Seção de Conexão Direta -->
+                    <div id="secaoConexaoDiretaModal">
+                        <!-- Equipamento Origem -->
+                        <div>
+                            <label for="equipamento_origem_modal" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <i class="fas fa-plug mr-2"></i>Equipamento Origem *
+                            </label>
+                            <!-- Filtro por sala para equipamento origem -->
+                            <div class="mb-2">
+                                <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                                    <i class="fas fa-filter mr-1"></i>Filtrar por sala:
+                                </label>
+                                <select id="filtro_sala_origem_modal" onchange="filtrarEquipamentosPorSalaModal('equipamento_origem_modal', this.value)"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600 text-sm">
+                                    <option value="">Todas as salas</option>
+                                </select>
+                            </div>
+                            <select id="equipamento_origem_modal" name="equipamento_origem"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                                <option value="">Selecione o equipamento...</option>
+                            </select>
+                        </div>
+
+                        <!-- Equipamento Destino -->
+                        <div>
+                            <label for="equipamento_destino_modal" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <i class="fas fa-plug mr-2"></i>Equipamento Destino *
+                            </label>
+                            <!-- Filtro por sala para equipamento destino -->
+                            <div class="mb-2">
+                                <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                                    <i class="fas fa-filter mr-1"></i>Filtrar por sala:
+                                </label>
+                                <select id="filtro_sala_destino_modal" onchange="filtrarEquipamentosPorSalaModal('equipamento_destino_modal', this.value)"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600 text-sm">
+                                    <option value="">Todas as salas</option>
+                                </select>
+                            </div>
+                            <select id="equipamento_destino_modal" name="equipamento_destino"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                                <option value="">Selecione o equipamento...</option>
+                            </select>
+                        </div>
+
+                        <!-- Porta Origem -->
+                        <div>
+                            <label for="porta_origem_modal" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <i class="fas fa-hashtag mr-2"></i>Porta Origem
+                            </label>
+                            <input type="text" id="porta_origem_modal" name="porta_origem"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                                   placeholder="Ex: HDMI 1, USB 2, Ethernet 1, etc.">
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Porta do equipamento origem (opcional)</p>
+                        </div>
+
+                        <!-- Porta Destino -->
+                        <div>
+                            <label for="porta_destino_modal" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <i class="fas fa-hashtag mr-2"></i>Porta Destino
+                            </label>
+                            <input type="text" id="porta_destino_modal" name="porta_destino"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                                   placeholder="Ex: HDMI 1, USB 2, Ethernet 1, etc.">
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Porta do equipamento destino (opcional)</p>
+                        </div>
+                    </div>
+
+                    <!-- Seção de Conexão via Patch Panel -->
+                    <div id="secaoPatchPanelModal" class="hidden space-y-4">
+                        <div class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fas fa-info-circle text-blue-600 dark:text-blue-400 mr-2"></i>
+                                <p class="text-sm text-blue-700 dark:text-blue-300">
+                                    <strong>Dica:</strong> Selecione o equipamento primeiro para carregar automaticamente todas as informações do patch panel. Se o equipamento não estiver conectado a nenhum patch panel, você verá uma mensagem informativa.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Equipamento -->
+                        <div>
+                            <label for="equipamento_rede_modal" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <i class="fas fa-network-wired mr-2"></i>Equipamento de Rede *
+                            </label>
+                            <!-- Filtro de sala para equipamento rede -->
+                            <div class="mb-2">
+                                <label for="filtro_sala_rede_modal" class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                                    <i class="fas fa-filter mr-1"></i>Filtrar por sala
+                                </label>
+                                <select id="filtro_sala_rede_modal" onchange="filtrarEquipamentosPorSalaModal('equipamento_rede_modal', this.value)"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600 text-sm">
+                                    <option value="">Todas as salas</option>
+                                </select>
+                            </div>
+                            <select id="equipamento_rede_modal" name="equipamento_rede" onchange="carregarInfoPatchPanelModal()"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                                <option value="">Selecione o equipamento (sensor, painel, etc.)...</option>
+                            </select>
+                        </div>
+
+                        <!-- Andar -->
+                        <div>
+                            <label for="andar_patch_panel_modal" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <i class="fas fa-building mr-2"></i>Andar *
+                            </label>
+                            <select id="andar_patch_panel_modal" name="andar_patch_panel" onchange="carregarPatchPanelAndarModal()"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                                <option value="">Selecione o andar...</option>
+                                <option value="0">Térreo</option>
+                                <option value="1">1º Andar</option>
+                                <option value="2">2º Andar</option>
+                                <option value="3">3º Andar</option>
+                            </select>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Será preenchido automaticamente ao selecionar o equipamento</p>
+                        </div>
+
+                        <!-- Patch Panel do Andar -->
+                        <div>
+                            <label for="patch_panel_modal" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <i class="fas fa-th mr-2"></i>Patch Panel do Andar *
+                            </label>
+                            <select id="patch_panel_modal" name="patch_panel" onchange="carregarPortasPatchPanelModal()"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                                <option value="">Selecione o patch panel...</option>
+                            </select>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Será preenchido automaticamente ao selecionar o equipamento</p>
+                        </div>
+
+                        <!-- Porta do Patch Panel (Keystone) -->
+                        <div>
+                            <label for="porta_patch_panel_modal" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <i class="fas fa-hashtag mr-2"></i>Porta Ocupada do Patch Panel *
+                            </label>
+                            <select id="porta_patch_panel_modal" name="porta_patch_panel"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                                <option value="">Selecione a porta...</option>
+                            </select>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Será preenchido automaticamente ao selecionar o equipamento</p>
+                        </div>
+                    </div>
+
+                    <!-- Comprimento -->
+                    <div>
+                        <label for="comprimento_modal" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <i class="fas fa-ruler mr-2"></i>Comprimento (metros)
+                        </label>
+                        <input type="number" id="comprimento_modal" name="comprimento" min="0.1" step="0.1"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                               placeholder="Ex: 2.5">
+                    </div>
+
+                    <!-- Marca -->
+                    <div>
+                        <label for="marca_modal" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <i class="fas fa-industry mr-2"></i>Marca
+                        </label>
+                        <input type="text" id="marca_modal" name="marca"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                               placeholder="Ex: Belkin, AmazonBasics, etc.">
+                    </div>
+
+                    <!-- Modelo -->
+                    <div>
+                        <label for="modelo_modal" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <i class="fas fa-cube mr-2"></i>Modelo
+                        </label>
+                        <input type="text" id="modelo_modal" name="modelo"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                               placeholder="Ex: Ultra HD, Premium, etc.">
+                    </div>
+
+                    <!-- Status -->
+                    <div>
+                        <label for="status_modal" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <i class="fas fa-check-circle mr-2"></i>Status
+                        </label>
+                        <select id="status_modal" name="status"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                            <option value="funcionando">Funcionando</option>
+                            <option value="defeito">Com Defeito</option>
+                        </select>
+                    </div>
+
+                    <!-- Descrição -->
+                    <div>
+                        <label for="descricao_modal" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <i class="fas fa-align-left mr-2"></i>Descrição
+                        </label>
+                        <textarea id="descricao_modal" name="descricao" rows="3"
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                                  placeholder="Descrição adicional do cabo..."></textarea>
+                    </div>
+
+                    <!-- Botões -->
+                    <div class="flex gap-4 pt-6">
+                        <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                            <i class="fas fa-save mr-2"></i>Salvar Cabo
+                        </button>
+                        <button type="button" onclick="limparFormularioModal()" class="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg transition-colors">
+                            <i class="fas fa-eraser mr-2"></i>Limpar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar Cabo -->
+    <div id="modalEditarCabo" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;" class="flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-900 rounded-xl shadow-2xl w-full max-w-3xl max-h-[85vh] overflow-auto">
+            <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+                <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">
+                    <i class="fas fa-edit text-blue-500 mr-2"></i>Editar Cabo
+                </h3>
+                <button id="fecharModalEditarCabo" class="px-3 py-1.5 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600">Fechar</button>
+            </div>
+            <form id="formEditarCabo" class="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <input type="hidden" id="edit-cabo-id">
+                <div class="sm:col-span-2">
+                    <label class="block text-sm mb-1 text-gray-700 dark:text-white">Código Único</label>
+                    <input id="edit-codigo-unico" type="text" class="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 bg-gray-100 dark:bg-gray-700 cursor-not-allowed" readonly>
+                </div>
+                <div>
+                    <label class="block text-sm mb-1 text-gray-700 dark:text-white">Tipo de Cabo</label>
+                    <select id="edit-tipo-cabo" class="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100" required>
+                        <option value="">Selecione...</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm mb-1 text-gray-700 dark:text-white">Comprimento (metros)</label>
+                    <input id="edit-comprimento" type="number" step="0.1" class="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100">
+                </div>
+                <div>
+                    <label class="block text-sm mb-1 text-gray-700 dark:text-white">Marca</label>
+                    <input id="edit-marca" type="text" class="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100">
+                </div>
+                <div>
+                    <label class="block text-sm mb-1 text-gray-700 dark:text-white">Modelo</label>
+                    <input id="edit-modelo" type="text" class="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100">
+                </div>
+                <div>
+                    <label class="block text-sm mb-1 text-gray-700 dark:text-white">Status</label>
+                    <select id="edit-status" class="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100" required>
+                        <option value="funcionando">Funcionando</option>
+                        <option value="defeito">Com Defeito</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm mb-1 text-gray-700 dark:text-white">Equipamento Origem</label>
+                    <select id="edit-equipamento-origem" class="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100">
+                        <option value="">Selecione um equipamento...</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm mb-1 text-gray-700 dark:text-white">Equipamento Destino</label>
+                    <select id="edit-equipamento-destino" class="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100">
+                        <option value="">Selecione um equipamento...</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm mb-1 text-gray-700 dark:text-white">Porta Origem</label>
+                    <input id="edit-porta-origem" type="text" class="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100" placeholder="Ex: Porta 1, HDMI 1, etc.">
+                </div>
+                <div>
+                    <label class="block text-sm mb-1 text-gray-700 dark:text-white">Porta Destino</label>
+                    <input id="edit-porta-destino" type="text" class="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100" placeholder="Ex: Porta 2, HDMI 2, etc.">
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="block text-sm mb-1 text-gray-700 dark:text-white">Descrição</label>
+                    <textarea id="edit-descricao" rows="3" class="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"></textarea>
+                </div>
+                <div class="sm:col-span-2 flex justify-end gap-2 pt-2">
+                    <button type="button" id="cancelarEditarCabo" class="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Excluir Cabo -->
+    <div id="modalExcluirCabo" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;" class="flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-900 rounded-xl shadow-2xl w-full max-w-lg">
+            <div class="p-5">
+                <div class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">
+                    <i class="fas fa-trash text-red-500 mr-2"></i>Confirmar exclusão
+                </div>
+                <div id="delCaboAviso" class="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-line max-h-64 overflow-auto text-left mb-4">
+                    Tem certeza que deseja excluir este cabo? Esta ação não pode ser desfeita.
+                </div>
+                                     <div class="flex justify-end gap-2">
+                         <button id="cancelarDelCabo" class="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100">Cancelar</button>
+                         <button id="confirmarDelCabo" class="px-4 py-2 rounded bg-red-600 hover:bg-red-700 text-white">Excluir</button>
+                     </div>
+            </div>
         </div>
     </div>
 
@@ -147,6 +590,12 @@
         return params.get('id');
     }
 
+    function irParaEstoqueComRedirect() {
+        const salaId = getIdFromUrl();
+        const redirect = encodeURIComponent(`detalhes-cabos-sala.html?id=${salaId}`);
+        window.location.href = `cabos-estoque.html?redirect=${redirect}`;
+    }
+
 
 
     async function carregarCabosSala() {
@@ -158,6 +607,7 @@
             if (!response.ok) throw new Error('Erro ao carregar cabos');
             
             cabosData = await response.json();
+            
             atualizarEstatisticas();
             renderizarCabos();
         } catch (error) {
@@ -186,16 +636,24 @@
         `;
     }
 
-        function renderizarCabos() {
+    function renderizarCabos() {
         const container = document.getElementById('cabos-container');
         const cabosFiltrados = filtrarCabos();
 
+        // Salvar os cards de ação (Adicionar novo e Adicionar do estoque)
+        const cardAddCabo = document.getElementById('cardAddCabo');
+        const cardAddDoEstoque = document.getElementById('cardAddDoEstoque');
+        const headerCardsHTML = [cardAddCabo, cardAddDoEstoque]
+            .filter(Boolean)
+            .map(el => el.outerHTML)
+            .join('');
+
         if (cabosFiltrados.length === 0) {
-            container.innerHTML = '';
+            container.innerHTML = headerCardsHTML;
             document.getElementById('sem-cabos').classList.remove('hidden');
         } else {
             document.getElementById('sem-cabos').classList.add('hidden');
-            container.innerHTML = cabosFiltrados.map(cabo => `
+            container.innerHTML = headerCardsHTML + cabosFiltrados.map(cabo => `
                 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border-l-4 ${getBorderColor(cabo.tipo_cabo)} ${!cabo.ativo ? 'opacity-60' : ''}">
                     <div class="flex justify-between items-start mb-4">
                         <div class="flex items-center">
@@ -241,25 +699,39 @@
                         ` : ''}
                         
                         <!-- Botões de Ação (apenas para admin/tecnico) -->
-                        <div class="mt-4 flex gap-2" id="botoes-acoes-${cabo.id}" style="display: none;">
+                        <div class="mt-3 flex gap-1 justify-between" id="botoes-acoes-${cabo.id}" style="display: none;">
                             ${cabo.ativo ? `
-                            <button onclick="substituirCabo(${cabo.id}, '${cabo.codigo_cabo}', '${cabo.tipo_cabo}', '${cabo.equipamento_origem}', '${cabo.equipamento_destino}', '${cabo.porta_origem}', '${cabo.porta_destino}')" class="flex-1 px-3 py-2 bg-yellow-500 hover:bg-yellow-600 text-white text-xs rounded-lg transition-colors">
-                                <i class="fas fa-exchange-alt mr-1"></i>Substituir
+                            <button onclick="substituirCabo(${cabo.id}, '${cabo.codigo_cabo}', '${cabo.tipo_cabo}', '${cabo.equipamento_origem}', '${cabo.equipamento_destino}', '${cabo.porta_origem}', '${cabo.porta_destino}')" class="flex-1 px-1.5 py-1 rounded-md border border-yellow-300/60 dark:border-yellow-600 text-xs text-yellow-700 dark:text-yellow-300 bg-yellow-50/70 dark:bg-yellow-900/20 hover:bg-yellow-100 dark:hover:bg-yellow-900/40 transition-colors flex items-center justify-center gap-0.5" title="Substituir cabo">
+                                <i class="fas fa-exchange-alt text-xs"></i>
+                                <span class="text-xs">Substituir</span>
                             </button>
-                            <button onclick="desconectarCabo(${cabo.id})" class="flex-1 px-3 py-2 bg-red-500 hover:bg-red-600 text-white text-xs rounded-lg transition-colors">
-                                <i class="fas fa-unlink mr-1"></i>Desconectar
+                            <button onclick="desconectarCabo(${cabo.id})" class="flex-1 px-1.5 py-1 rounded-md border border-red-200 dark:border-red-700 text-xs text-red-600 dark:text-red-300 bg-red-50/70 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors flex items-center justify-center gap-0.5" title="Desconectar cabo">
+                                <i class="fas fa-unlink text-xs"></i>
+                                <span class="text-xs">Desconectar</span>
                             </button>
                             ` : `
-                            <button onclick="reconectarCabo(${cabo.id})" class="flex-1 px-3 py-2 bg-green-500 hover:bg-green-600 text-white text-xs rounded-lg transition-colors">
-                                <i class="fas fa-link mr-1"></i>Reconectar
+                            <button onclick="reconectarCabo(${cabo.id})" class="flex-1 px-1.5 py-1 rounded-md border border-green-300/60 dark:border-green-600 text-xs text-green-700 dark:text-green-300 bg-green-50/70 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/40 transition-colors flex items-center justify-center gap-0.5" title="Reconectar cabo">
+                                <i class="fas fa-link text-xs"></i>
+                                <span class="text-xs">Reconectar</span>
                             </button>
+                            <div class="flex-1"></div>
                             `}
+                            
+                            <!-- Botões Editar e Excluir Cabo -->
+                            <button onclick="abrirModalEditarCabo(${cabo.cabo_id})" class="flex-1 px-1.5 py-1 rounded-md border border-gray-300/60 dark:border-gray-600 text-xs text-gray-700 dark:text-gray-200 bg-gray-100/60 dark:bg-gray-800/60 hover:bg-indigo-50 dark:hover:bg-indigo-900 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors flex items-center justify-center gap-0.5" title="Editar cabo">
+                                <i class="fas fa-edit text-xs"></i>
+                                <span class="text-xs">Editar</span>
+                            </button>
+                            <button onclick="abrirModalExcluirCabo(${cabo.cabo_id}, '${cabo.codigo_cabo}')" class="flex-1 px-1.5 py-1 rounded-md border border-red-200 dark:border-red-700 text-xs text-red-600 dark:text-red-300 bg-red-50/70 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors flex items-center justify-center gap-0.5" title="Excluir cabo">
+                                <i class="fas fa-trash text-xs"></i>
+                                <span class="text-xs">Excluir</span>
+                            </button>
                         </div>
                     </div>
                 </div>
             `).join('');
             
-            // Mostrar botões apenas para admin/tecnico
+            // Mostrar botões e cards apenas para admin/tecnico
             if (userLevel === 'admin' || userLevel === 'tecnico') {
                 cabosFiltrados.forEach(cabo => {
                     const botoesElement = document.getElementById(`botoes-acoes-${cabo.id}`);
@@ -267,6 +739,12 @@
                         botoesElement.style.display = 'flex';
                     }
                 });
+                
+                // Reconfigurar eventos de clique dos cards de ação
+                const cardNovo = document.getElementById('cardAddCabo');
+                if (cardNovo) cardNovo.onclick = function() { abrirModalAddCabo(); };
+                const cardEstoque = document.getElementById('cardAddDoEstoque');
+                if (cardEstoque) cardEstoque.onclick = function() { irParaEstoqueComRedirect(); };
             }
         }
 
@@ -274,7 +752,7 @@
     }
 
     function filtrarCabos() {
-        return cabosData.filter(cabo => {
+        const cabosFiltrados = cabosData.filter(cabo => {
             const passaFiltro = filtroAtual === 'todos' || cabo.tipo_cabo.includes(filtroAtual);
             const passaBusca = !buscaAtual || 
                 cabo.codigo_cabo.toLowerCase().includes(buscaAtual.toLowerCase()) ||
@@ -288,6 +766,8 @@
             
             return passaFiltro && passaBusca && passaStatus;
         });
+        
+        return cabosFiltrados;
     }
 
     function aplicarFiltroTipo(tipo) {
@@ -507,13 +987,1254 @@
         }
     }
 
-    // Carregar dados quando a página carregar
-    window.addEventListener('DOMContentLoaded', async function() {
-        // Primeiro verificar perfil do usuário
-        await verificarPerfilUsuario();
+            // Carregar dados quando a página carregar
+        window.addEventListener('DOMContentLoaded', async function() {
+            // Primeiro verificar perfil do usuário
+            await verificarPerfilUsuario();
+            // Mostrar cards de ação para admin/tecnico
+            if (userLevel === 'admin' || userLevel === 'tecnico') {
+                const cardNovo = document.getElementById('cardAddCabo');
+                if (cardNovo) cardNovo.style.display = 'block';
+                const cardEstoque = document.getElementById('cardAddDoEstoque');
+                if (cardEstoque) cardEstoque.style.display = 'block';
+                const fechar = document.getElementById('fecharModalAddCabo');
+                if (fechar) fechar.onclick = () => { document.getElementById('modalAddCabo').style.display = 'none'; };
+            }
         
+        // Função para abrir modal de adicionar cabo
+        window.abrirModalAddCabo = async function() {
+            const m = document.getElementById('modalAddCabo');
+            const salaId = getIdFromUrl();
+            
+            console.log('🔄 Abrindo modal de adicionar cabo...');
+            
+            // Recarregar dados dos cabos existentes para garantir códigos atualizados
+            console.log('📋 Recarregando dados dos cabos existentes...');
+            await carregarCabosExistentesModal();
+            
+            // Limpar formulário
+            limparFormularioModal();
+            
+            // Pré-selecionar sala atual se disponível
+            if (salaId) {
+                setTimeout(() => {
+                    // Pré-selecionar filtros de sala para equipamentos
+                    const filtroOrigem = document.getElementById('filtro_sala_origem_modal');
+                    const filtroDestino = document.getElementById('filtro_sala_destino_modal');
+                    const filtroRede = document.getElementById('filtro_sala_rede_modal');
+                    
+                    if (filtroOrigem) {
+                        filtroOrigem.value = salaId;
+                        filtroOrigem.classList.add('bg-blue-50', 'dark:bg-blue-900/20', 'border-blue-300', 'dark:border-blue-600');
+                        filtrarEquipamentosPorSalaModal('equipamento_origem_modal', salaId);
+                    }
+                    if (filtroDestino) {
+                        filtroDestino.value = salaId;
+                        filtroDestino.classList.add('bg-blue-50', 'dark:bg-blue-900/20', 'border-blue-300', 'dark:border-blue-600');
+                        filtrarEquipamentosPorSalaModal('equipamento_destino_modal', salaId);
+                    }
+                    if (filtroRede) {
+                        filtroRede.value = salaId;
+                        filtroRede.classList.add('bg-blue-50', 'dark:bg-blue-900/20', 'border-blue-300', 'dark:border-blue-600');
+                        filtrarEquipamentosPorSalaModal('equipamento_rede_modal', salaId);
+                    }
+                }, 500);
+            }
+            
+            m.style.display = 'flex';
+            console.log('✅ Modal aberto com dados atualizados');
+        };
+
+        // Funções para abrir modais de editar e excluir cabo (escopo global)
+        window.abrirModalEditarCabo = async function(caboId) {
+            try {
+                // Primeiro carregar tipos de cabo e equipamentos
+                await Promise.all([
+                    carregarTiposCabos(),
+                    carregarEquipamentosParaEdicao()
+                ]);
+                
+                // Depois carregar dados do cabo
+                const response = await fetch(`/cabos/${caboId}`);
+                if (!response.ok) throw new Error('Erro ao carregar dados do cabo');
+                
+                const cabo = await response.json();
+                
+                // Buscar informações da conexão para obter as portas e equipamentos
+                const conexaoResponse = await fetch(`/conexoes-cabos?cabo_id=${caboId}`);
+                let portaOrigem = '';
+                let portaDestino = '';
+                let equipamentoOrigemId = '';
+                let equipamentoDestinoId = '';
+                
+                if (conexaoResponse.ok) {
+                    const conexoes = await conexaoResponse.json();
+                    if (conexoes.length > 0) {
+                        // Usar a primeira conexão encontrada
+                        const conexao = conexoes[0];
+                        portaOrigem = conexao.porta_origem || '';
+                        portaDestino = conexao.porta_destino || '';
+                        equipamentoOrigemId = conexao.equipamento_origem_id || '';
+                        equipamentoDestinoId = conexao.equipamento_destino_id || '';
+                    }
+                }
+                
+                // Preencher formulário
+                document.getElementById('edit-cabo-id').value = cabo.id;
+                document.getElementById('edit-codigo-unico').value = cabo.codigo_unico;
+                document.getElementById('edit-tipo-cabo').value = cabo.tipo;
+                document.getElementById('edit-comprimento').value = cabo.comprimento || '';
+                document.getElementById('edit-marca').value = cabo.marca || '';
+                document.getElementById('edit-modelo').value = cabo.modelo || '';
+                document.getElementById('edit-status').value = cabo.status;
+                document.getElementById('edit-equipamento-origem').value = equipamentoOrigemId;
+                document.getElementById('edit-equipamento-destino').value = equipamentoDestinoId;
+                document.getElementById('edit-porta-origem').value = portaOrigem;
+                document.getElementById('edit-porta-destino').value = portaDestino;
+                document.getElementById('edit-descricao').value = cabo.descricao || '';
+                
+                // Abrir modal
+                document.getElementById('modalEditarCabo').style.display = 'flex';
+            } catch (error) {
+                console.error('Erro ao abrir modal de editar:', error);
+                alert('Erro ao carregar dados do cabo');
+            }
+        };
+
+        window.abrirModalExcluirCabo = async function(caboId, codigoCabo) {
+            try {
+                // Buscar informações do cabo
+                const response = await fetch(`/cabos/${caboId}`);
+                if (!response.ok) throw new Error('Erro ao carregar dados do cabo');
+                
+                const cabo = await response.json();
+                
+                // Verificar se o cabo está conectado
+                const conexaoResponse = await fetch(`/conexoes-cabos?cabo_id=${caboId}`);
+                const conexoes = await conexaoResponse.json();
+                
+                let aviso = `Tem certeza que deseja excluir o cabo "${cabo.codigo_unico}"?\n\n`;
+                
+                if (conexoes.length > 0) {
+                    if (conexoes.length > 10) {
+                        aviso += `⚠️ ATENÇÃO: Este cabo está atualmente conectado em ${conexoes.length} local(is)!\n\n`;
+                        aviso += `Isso parece ser um número anormalmente alto de conexões. Verifique se há dados duplicados no sistema.\n\n`;
+                        aviso += `Primeiras 10 conexões:\n\n`;
+                        conexoes.slice(0, 10).forEach(conexao => {
+                            aviso += `• ${conexao.equipamento_origem_nome || 'N/A'} → ${conexao.equipamento_destino_nome || 'N/A'}\n`;
+                            aviso += `  Portas: ${conexao.porta_origem || 'N/A'} → ${conexao.porta_destino || 'N/A'}\n`;
+                            aviso += `  Sala: ${conexao.sala_nome || 'N/A'}\n\n`;
+                        });
+                        aviso += `... e mais ${conexoes.length - 10} conexões.\n\n`;
+                    } else {
+                        aviso += `⚠️ ATENÇÃO: Este cabo está atualmente conectado em ${conexoes.length} local(is):\n\n`;
+                        conexoes.forEach(conexao => {
+                            aviso += `• ${conexao.equipamento_origem_nome || 'N/A'} → ${conexao.equipamento_destino_nome || 'N/A'}\n`;
+                            aviso += `  Portas: ${conexao.porta_origem || 'N/A'} → ${conexao.porta_destino || 'N/A'}\n`;
+                            aviso += `  Sala: ${conexao.sala_nome || 'N/A'}\n\n`;
+                        });
+                    }
+                    aviso += `A exclusão irá desconectar automaticamente todas as conexões.\n\n`;
+                }
+                
+                aviso += `Esta ação não pode ser desfeita e irá:\n`;
+                aviso += `• Remover permanentemente o cabo do sistema\n`;
+                aviso += `• Desconectar todas as conexões ativas\n`;
+                aviso += `• Perder todo o histórico de uso`;
+                
+                // Atualizar o aviso no modal
+                document.getElementById('delCaboAviso').textContent = aviso;
+                
+                                   // Armazenar o ID do cabo para uso na confirmação
+                   document.getElementById('confirmarDelCabo').setAttribute('data-cabo-id', caboId);
+                   
+                   // Abrir modal
+                   document.getElementById('modalExcluirCabo').style.display = 'flex';
+            } catch (error) {
+                console.error('Erro ao abrir modal de excluir:', error);
+                alert('Erro ao carregar dados do cabo');
+            }
+        };
+
+        // Variáveis globais para o modal
+        let tiposCabosModal = [];
+        let cabosExistentesModal = [];
+        let equipamentosModal = [];
+        let salasModal = [];
+
+        // Carregar tipos de cabos para o modal
+        window.carregarTiposCabosModal = async function() {
+            try {
+                const response = await fetch('/tipos-cabos');
+                tiposCabosModal = await response.json();
+                
+                const selectTipo = document.getElementById('tipo_modal');
+                selectTipo.innerHTML = '<option value="">Selecione o tipo...</option>';
+                
+                tiposCabosModal.forEach(tipo => {
+                    const option = document.createElement('option');
+                    option.value = tipo.nome;
+                    option.textContent = `${tipo.nome} - ${tipo.descricao}`;
+                    selectTipo.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar tipos de cabos:', error);
+            }
+        }
+
+        // Carregar cabos existentes para verificar códigos
+        window.carregarCabosExistentesModal = async function() {
+            try {
+                console.log('📡 Carregando cabos existentes do servidor...');
+                const response = await fetch('/cabos');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                cabosExistentesModal = await response.json();
+                console.log('✅ Cabos existentes carregados:', cabosExistentesModal.length, 'cabos');
+                
+                // Log dos últimos 5 códigos para debug
+                const ultimosCodigos = cabosExistentesModal
+                    .filter(cabo => cabo.codigo_unico)
+                    .map(cabo => cabo.codigo_unico)
+                    .sort()
+                    .slice(-5);
+                console.log('🔍 Últimos códigos encontrados:', ultimosCodigos);
+                
+            } catch (error) {
+                console.error('❌ Erro ao carregar cabos existentes:', error);
+                // Em caso de erro, manter array vazio para evitar problemas
+                cabosExistentesModal = [];
+            }
+        }
+
+        // Carregar equipamentos para o modal
+        window.carregarEquipamentosModal = async function() {
+            try {
+                const response = await fetch('/equipamentos');
+                equipamentosModal = await response.json();
+                
+                // Preencher selects de equipamentos
+                const equipOrigem = document.getElementById('equipamento_origem_modal');
+                const equipDestino = document.getElementById('equipamento_destino_modal');
+                const equipRede = document.getElementById('equipamento_rede_modal');
+                
+                equipOrigem.innerHTML = '<option value="">Selecione o equipamento...</option>';
+                equipDestino.innerHTML = '<option value="">Selecione o equipamento...</option>';
+                equipRede.innerHTML = '<option value="">Selecione o equipamento (sensor, painel, etc.)...</option>';
+                
+                // Agrupar equipamentos por sala
+                const equipamentosPorSala = {};
+                equipamentosModal.forEach(eq => {
+                    const salaNome = eq.sala_nome || 'Sem Sala';
+                    if (!equipamentosPorSala[salaNome]) {
+                        equipamentosPorSala[salaNome] = [];
+                    }
+                    equipamentosPorSala[salaNome].push(eq);
+                });
+                
+                // Função para criar optgroups
+                function criarOptgroups(select) {
+                    // Ordenar salas alfabeticamente
+                    const salasOrdenadas = Object.keys(equipamentosPorSala).sort();
+                    
+                    salasOrdenadas.forEach(salaNome => {
+                        const equipamentosSala = equipamentosPorSala[salaNome];
+                        
+                        // Criar optgroup
+                        const optgroup = document.createElement('optgroup');
+                        optgroup.label = salaNome;
+                        
+                        // Ordenar equipamentos por nome
+                        equipamentosSala.sort((a, b) => a.nome.localeCompare(b.nome));
+                        
+                        equipamentosSala.forEach(eq => {
+                            const option = document.createElement('option');
+                            option.value = eq.id;
+                            option.textContent = `${eq.nome} (${eq.tipo})`;
+                            optgroup.appendChild(option);
+                        });
+                        
+                        select.appendChild(optgroup);
+                    });
+                }
+                
+                // Aplicar optgroups em todos os selects
+                criarOptgroups(equipOrigem);
+                criarOptgroups(equipDestino);
+                criarOptgroups(equipRede);
+                
+                // Armazenar dados originais para filtragem
+                window.equipamentosOriginaisModal = {
+                    equipOrigem: equipOrigem.innerHTML,
+                    equipDestino: equipDestino.innerHTML,
+                    equipRede: equipRede.innerHTML
+                };
+                
+                // Carregar salas para os filtros
+                await carregarSalasParaFiltrosModal();
+                
+            } catch (error) {
+                console.error('Erro ao carregar equipamentos:', error);
+            }
+        }
+
+        // Carregar salas para os filtros do modal
+        window.carregarSalasParaFiltrosModal = async function() {
+            try {
+                const response = await fetch('/salas');
+                salasModal = await response.json();
+                
+                // Preencher filtros de sala
+                const filtroOrigem = document.getElementById('filtro_sala_origem_modal');
+                const filtroDestino = document.getElementById('filtro_sala_destino_modal');
+                const filtroRede = document.getElementById('filtro_sala_rede_modal');
+                
+                // Limpar e adicionar opções
+                filtroOrigem.innerHTML = '<option value="">Todas as salas</option><option value="sem_sala">Sem sala</option>';
+                filtroDestino.innerHTML = '<option value="">Todas as salas</option><option value="sem_sala">Sem sala</option>';
+                filtroRede.innerHTML = '<option value="">Todas as salas</option><option value="sem_sala">Sem sala</option>';
+                
+                // Ordenar salas por nome
+                salasModal.sort((a, b) => a.nome.localeCompare(b.nome));
+                
+                // Adicionar salas aos filtros
+                salasModal.forEach(sala => {
+                    const optionOrigem = document.createElement('option');
+                    optionOrigem.value = sala.id;
+                    optionOrigem.textContent = sala.nome;
+                    filtroOrigem.appendChild(optionOrigem);
+                    
+                    const optionDestino = document.createElement('option');
+                    optionDestino.value = sala.id;
+                    optionDestino.textContent = sala.nome;
+                    filtroDestino.appendChild(optionDestino);
+                    
+                    const optionRede = document.createElement('option');
+                    optionRede.value = sala.id;
+                    optionRede.textContent = sala.nome;
+                    filtroRede.appendChild(optionRede);
+                });
+                
+            } catch (error) {
+                console.error('Erro ao carregar salas para filtros:', error);
+            }
+        }
+
+        // Função para filtrar equipamentos por sala no modal
+        window.filtrarEquipamentosPorSalaModal = function(selectId, salaId) {
+            const select = document.getElementById(selectId);
+            
+            if (!salaId) {
+                // Se nenhuma sala selecionada, restaurar dados originais
+                if (window.equipamentosOriginaisModal && window.equipamentosOriginaisModal[selectId]) {
+                    select.innerHTML = window.equipamentosOriginaisModal[selectId];
+                }
+                return;
+            }
+            
+            // Limpar select atual
+            const placeholderText = selectId === 'equipamento_rede_modal' 
+                ? 'Selecione o equipamento (sensor, painel, etc.)...' 
+                : 'Selecione o equipamento...';
+            select.innerHTML = `<option value="">${placeholderText}</option>`;
+            
+            let equipamentosFiltrados;
+            
+            if (salaId === 'sem_sala') {
+                // Para "Sem sala", mostrar apenas Ponto Usuário USB e Ponto Usuário HDMI
+                equipamentosFiltrados = equipamentosModal.filter(eq => 
+                    eq.nome.toLowerCase().includes('ponto usuário usb') || 
+                    eq.nome.toLowerCase().includes('ponto usuário hdmi')
+                );
+            } else {
+                // Filtrar equipamentos da sala selecionada
+                equipamentosFiltrados = equipamentosModal.filter(eq => eq.sala_id == salaId);
+            }
+            
+            if (equipamentosFiltrados.length === 0) {
+                const option = document.createElement('option');
+                option.value = "";
+                option.textContent = salaId === 'sem_sala' ? "Nenhum Ponto Usuário encontrado" : "Nenhum equipamento nesta sala";
+                option.disabled = true;
+                select.appendChild(option);
+                return;
+            }
+            
+            // Ordenar equipamentos por nome
+            equipamentosFiltrados.sort((a, b) => a.nome.localeCompare(b.nome));
+            
+            // Adicionar equipamentos filtrados
+            equipamentosFiltrados.forEach(eq => {
+                const option = document.createElement('option');
+                option.value = eq.id;
+                option.textContent = `${eq.nome} (${eq.tipo})`;
+                select.appendChild(option);
+            });
+        }
+
+        // Gerar código único baseado no tipo de cabo para o modal
+        window.gerarCodigoUnicoModal = async function(tipoCabo) {
+            if (!tipoCabo) {
+                console.log('⚠️ Tipo de cabo não fornecido para geração de código');
+                return '';
+            }
+            
+            console.log('🔢 Gerando código único para tipo:', tipoCabo);
+            console.log('📊 Total de cabos existentes carregados:', cabosExistentesModal.length);
+            
+            // Obter prefixo do tipo de cabo (primeiras 3 letras maiúsculas)
+            const prefixo = tipoCabo.toUpperCase().replace(/[^A-Z]/g, '').substring(0, 3);
+            console.log('🏷️ Prefixo gerado:', prefixo);
+            
+            // Buscar o próximo número disponível para este tipo
+            const codigosDoTipo = cabosExistentesModal
+                .filter(cabo => cabo.codigo_unico && cabo.codigo_unico.startsWith(prefixo))
+                .map(cabo => {
+                    const match = cabo.codigo_unico.match(new RegExp(`^${prefixo}-(\\d+)$`));
+                    return match ? parseInt(match[1]) : 0;
+                })
+                .sort((a, b) => b - a);
+            
+            console.log('🔍 Códigos encontrados para o prefixo:', codigosDoTipo);
+            
+            const proximoNumero = codigosDoTipo.length > 0 ? codigosDoTipo[0] + 1 : 1;
+            const codigoGerado = `${prefixo}-${proximoNumero.toString().padStart(3, '0')}`;
+            
+            console.log('✅ Código único gerado:', codigoGerado);
+            return codigoGerado;
+        }
+
+        // Gerar novo código manualmente no modal
+        window.gerarNovoCodigoModal = async function() {
+            const tipoCabo = document.getElementById('tipo_modal').value;
+            if (!tipoCabo) {
+                alert('Selecione primeiro o tipo de cabo');
+                return;
+            }
+            
+            console.log('🔄 Gerando novo código manualmente para tipo:', tipoCabo);
+            
+            try {
+                // Recarregar dados dos cabos existentes antes de gerar o código
+                console.log('🔄 Recarregando dados dos cabos existentes...');
+                await carregarCabosExistentesModal();
+                
+                const novoCodigo = await gerarCodigoUnicoModal(tipoCabo);
+                document.getElementById('codigo_unico_modal').value = novoCodigo;
+                console.log('✅ Novo código gerado manualmente:', novoCodigo);
+            } catch (error) {
+                console.error('❌ Erro ao gerar novo código:', error);
+                alert('Erro ao gerar novo código. Tente novamente.');
+            }
+        }
+
+        // Atualizar código quando tipo de cabo mudar no modal
+        window.atualizarCodigoUnicoModal = async function() {
+            const tipoCabo = document.getElementById('tipo_modal').value;
+            console.log('🔄 Atualizando código único para tipo:', tipoCabo);
+            
+            if (tipoCabo) {
+                try {
+                    // Recarregar dados dos cabos existentes antes de gerar o código
+                    console.log('🔄 Recarregando dados dos cabos existentes...');
+                    await carregarCabosExistentesModal();
+                    
+                    const codigo = await gerarCodigoUnicoModal(tipoCabo);
+                    document.getElementById('codigo_unico_modal').value = codigo;
+                    console.log('✅ Código único atualizado no campo:', codigo);
+                } catch (error) {
+                    console.error('❌ Erro ao atualizar código único:', error);
+                    document.getElementById('codigo_unico_modal').value = '';
+                }
+            } else {
+                document.getElementById('codigo_unico_modal').value = '';
+                console.log('🧹 Campo de código único limpo (sem tipo selecionado)');
+            }
+        }
+
+        // Função para alternar entre conexão direta e via Patch Panel no modal
+        window.toggleTipoConexaoModal = function() {
+            const secaoConexaoDireta = document.getElementById('secaoConexaoDiretaModal');
+            const secaoPatchPanel = document.getElementById('secaoPatchPanelModal');
+            const selectedValue = document.querySelector('input[name="tipo_conexao"]:checked').value;
+            const avisoPatchPanel = document.getElementById('avisoPatchPanelModal');
+
+            // Atualizar visual dos cards
+            updateRadioCardsModal(selectedValue);
+
+            if (selectedValue === 'patch_panel') {
+                secaoConexaoDireta.classList.add('hidden');
+                secaoPatchPanel.classList.remove('hidden');
+                // Filtrar tipos de cabo para mostrar apenas Ethernet
+                filtrarTiposCabosParaPatchPanelModal();
+                // Mostrar mensagem informativa
+                avisoPatchPanel.classList.remove('hidden');
+            } else {
+                secaoConexaoDireta.classList.remove('hidden');
+                secaoPatchPanel.classList.add('hidden');
+                // Mostrar todos os tipos de cabo
+                restaurarTodosTiposCabosModal();
+                // Ocultar mensagem informativa
+                avisoPatchPanel.classList.add('hidden');
+            }
+        }
+
+        // Função para filtrar tipos de cabo para patch panel (apenas Ethernet) no modal
+        window.filtrarTiposCabosParaPatchPanelModal = function() {
+            const selectTipo = document.getElementById('tipo_modal');
+            const tipoAtual = selectTipo.value;
+            
+            selectTipo.innerHTML = '<option value="">Selecione o tipo...</option>';
+            
+            // Filtrar apenas cabos Ethernet
+            const tiposEthernet = tiposCabosModal.filter(tipo => 
+                tipo.nome.toLowerCase().includes('ethernet') || 
+                tipo.nome.toLowerCase().includes('cat') ||
+                tipo.nome.toLowerCase().includes('rj45') ||
+                tipo.nome.toLowerCase().includes('lan') ||
+                tipo.nome.toLowerCase().includes('rede') ||
+                tipo.nome.toLowerCase().includes('utp') ||
+                tipo.nome.toLowerCase().includes('stp') ||
+                tipo.nome.toLowerCase().includes('ftp') ||
+                tipo.nome.toLowerCase().includes('sfp') ||
+                tipo.nome.toLowerCase().includes('patch cord') ||
+                tipo.nome.toLowerCase().includes('cabo de rede') ||
+                tipo.nome.toLowerCase().includes('cabo de dados')
+            );
+            
+            tiposEthernet.forEach(tipo => {
+                const option = document.createElement('option');
+                option.value = tipo.nome;
+                option.textContent = `${tipo.nome} - ${tipo.descricao}`;
+                selectTipo.appendChild(option);
+            });
+            
+            // Se o tipo atual não é Ethernet, limpar a seleção
+            if (tipoAtual && !tiposEthernet.find(t => t.nome === tipoAtual)) {
+                selectTipo.value = '';
+                document.getElementById('codigo_unico_modal').value = '';
+            }
+        }
+
+        // Função para restaurar todos os tipos de cabo no modal
+        window.restaurarTodosTiposCabosModal = function() {
+            const selectTipo = document.getElementById('tipo_modal');
+            const tipoAtual = selectTipo.value;
+            
+            selectTipo.innerHTML = '<option value="">Selecione o tipo...</option>';
+            
+            tiposCabosModal.forEach(tipo => {
+                const option = document.createElement('option');
+                option.value = tipo.nome;
+                option.textContent = `${tipo.nome} - ${tipo.descricao}`;
+                selectTipo.appendChild(option);
+            });
+            
+            // Restaurar seleção anterior se ainda existir
+            if (tipoAtual && tiposCabosModal.find(t => t.nome === tipoAtual)) {
+                selectTipo.value = tipoAtual;
+            }
+        }
+
+        // Função para atualizar o visual dos cards de radio no modal
+        window.updateRadioCardsModal = function(selectedValue) {
+            const cards = document.querySelectorAll('input[name="tipo_conexao"]');
+            
+            cards.forEach((card) => {
+                const cardDiv = card.closest('label').querySelector('div');
+                const radioDot = cardDiv.querySelector('.w-3.h-3');
+                
+                if (card.value === selectedValue) {
+                    cardDiv.classList.add('border-indigo-500', 'bg-indigo-50', 'dark:bg-indigo-900/20');
+                    cardDiv.classList.remove('border-gray-200', 'dark:border-gray-600');
+                    radioDot.classList.add('bg-indigo-600');
+                    radioDot.classList.remove('bg-gray-300', 'dark:bg-gray-500');
+                } else {
+                    cardDiv.classList.remove('border-indigo-500', 'bg-indigo-50', 'dark:bg-indigo-900/20');
+                    cardDiv.classList.add('border-gray-200', 'dark:border-gray-600');
+                    radioDot.classList.remove('bg-indigo-600');
+                    radioDot.classList.add('bg-gray-300', 'dark:bg-gray-500');
+                }
+            });
+        }
+
+        // Carregar patch panels por andar no modal
+        window.carregarPatchPanelAndarModal = async function() {
+            const andar = document.getElementById('andar_patch_panel_modal').value;
+            if (!andar) {
+                document.getElementById('patch_panel_modal').innerHTML = '<option value="">Selecione o patch panel...</option>';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/patch-panels/andar/${andar}`);
+                const patchPanelsAndar = await response.json();
+                
+                const patchPanelSelect = document.getElementById('patch_panel_modal');
+                patchPanelSelect.innerHTML = '<option value="">Selecione o patch panel...</option>';
+                
+                patchPanelsAndar.forEach(pp => {
+                    const option = document.createElement('option');
+                    option.value = pp.id;
+                    option.textContent = `${pp.nome} (${pp.num_portas} portas)`;
+                    patchPanelSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar patch panels do andar:', error);
+            }
+        }
+
+        // Carregar informações do patch panel baseado no equipamento selecionado no modal
+        window.carregarInfoPatchPanelModal = async function() {
+            const equipamentoId = document.getElementById('equipamento_rede_modal').value;
+            if (!equipamentoId) {
+                // Limpar campos se nenhum equipamento estiver selecionado
+                document.getElementById('andar_patch_panel_modal').value = '';
+                document.getElementById('patch_panel_modal').innerHTML = '<option value="">Selecione o patch panel...</option>';
+                document.getElementById('porta_patch_panel_modal').innerHTML = '<option value="">Selecione a porta...</option>';
+                return;
+            }
+            
+            try {
+                // Buscar informações do equipamento e sua conexão com patch panel
+                const response = await fetch(`/equipamentos/${equipamentoId}/patch-panel-info`);
+                const info = await response.json();
+                
+                if (info.patch_panel_info) {
+                    // Preencher andar
+                    document.getElementById('andar_patch_panel_modal').value = info.patch_panel_info.andar;
+                    
+                    // Carregar patch panels do andar
+                    await carregarPatchPanelAndarModal();
+                    
+                    // Selecionar o patch panel correto
+                    document.getElementById('patch_panel_modal').value = info.patch_panel_info.patch_panel_id;
+                    
+                    // Carregar e selecionar a porta correta
+                    await carregarPortasPatchPanelModal();
+                    document.getElementById('porta_patch_panel_modal').value = info.patch_panel_info.porta_numero;
+                    
+                    // Mostrar mensagem de sucesso
+                    mostrarMensagemInfoModal('Informações do patch panel carregadas automaticamente!', 'success');
+                } else {
+                    mostrarMensagemInfoModal('Este equipamento não está conectado a nenhum patch panel.', 'warning');
+                }
+            } catch (error) {
+                console.error('Erro ao carregar informações do patch panel:', error);
+                mostrarMensagemInfoModal('Erro ao carregar informações do patch panel.', 'error');
+            }
+        }
+
+        // Carregar portas do patch panel (apenas ocupadas) no modal
+        window.carregarPortasPatchPanelModal = async function() {
+            const patchPanelId = document.getElementById('patch_panel_modal').value;
+            if (!patchPanelId) {
+                document.getElementById('porta_patch_panel_modal').innerHTML = '<option value="">Selecione a porta...</option>';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/patch-panels/${patchPanelId}/portas`);
+                const portas = await response.json();
+                
+                const portaSelect = document.getElementById('porta_patch_panel_modal');
+                portaSelect.innerHTML = '<option value="">Selecione a porta...</option>';
+                
+                // Filtrar apenas portas ocupadas
+                const portasOcupadas = portas.filter(porta => porta.status === 'ocupada');
+                
+                if (portasOcupadas.length === 0) {
+                    portaSelect.innerHTML = '<option value="">Nenhuma porta ocupada encontrada</option>';
+                    return;
+                }
+                
+                portasOcupadas.forEach(porta => {
+                    const option = document.createElement('option');
+                    option.value = porta.numero_porta;
+                    
+                    option.textContent = `Porta ${porta.numero_porta} - ${porta.equipamento_nome} (${porta.sala_nome || 'Sem sala'})`;
+                    portaSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar portas do patch panel:', error);
+            }
+        }
+
+        // Mostrar mensagem informativa no modal
+        window.mostrarMensagemInfoModal = function(mensagem, tipo) {
+            // Remover mensagem anterior se existir
+            const mensagemAnterior = document.getElementById('mensagemInfoModal');
+            if (mensagemAnterior) {
+                mensagemAnterior.remove();
+            }
+            
+            // Criar nova mensagem
+            const mensagemDiv = document.createElement('div');
+            mensagemDiv.id = 'mensagemInfoModal';
+            
+            let classes = 'fixed top-20 right-4 p-4 rounded-lg shadow-lg z-50 max-w-sm';
+            let icone = '';
+            
+            switch (tipo) {
+                case 'success':
+                    classes += ' bg-green-100 border border-green-400 text-green-700 dark:bg-green-900/20 dark:border-green-800 dark:text-green-300';
+                    icone = 'fas fa-check-circle';
+                    break;
+                case 'warning':
+                    classes += ' bg-yellow-100 border border-yellow-400 text-yellow-700 dark:bg-yellow-900/20 dark:border-yellow-800 dark:text-yellow-300';
+                    icone = 'fas fa-exclamation-triangle';
+                    break;
+                case 'error':
+                    classes += ' bg-red-100 border border-red-400 text-red-700 dark:bg-red-900/20 dark:border-red-800 dark:text-red-300';
+                    icone = 'fas fa-times-circle';
+                    break;
+            }
+            
+            mensagemDiv.className = classes;
+            mensagemDiv.innerHTML = `
+                <div class="flex items-center">
+                    <i class="${icone} mr-2"></i>
+                    <span>${mensagem}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-auto text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(mensagemDiv);
+            
+            // Remover automaticamente após 5 segundos
+            setTimeout(() => {
+                if (mensagemDiv.parentElement) {
+                    mensagemDiv.remove();
+                }
+            }, 5000);
+        }
+
+        // Limpar formulário do modal
+        window.limparFormularioModal = function() {
+            const form = document.getElementById('formCaboModal');
+            
+            if (form) {
+                form.reset();
+            }
+            
+            // Resetar a opção de tipo de conexão para direta ao limpar
+            const radioDireta = document.querySelector('input[name="tipo_conexao"][value="direta"]');
+            
+            if (radioDireta) {
+                radioDireta.checked = true;
+            }
+            
+            // Limpar campo de código único
+            const codigoField = document.getElementById('codigo_unico_modal');
+            if (codigoField) {
+                codigoField.value = '';
+            }
+            
+            toggleTipoConexaoModal(); // Aplicar a mudança de visibilidade
+            console.log('🧹 Formulário do modal limpo');
+        }
+
+        // Adicionar cabo com conexão automática no modal
+        window.adicionarCaboComConexaoModal = async function(dadosCabo) {
+            try {
+                console.log('Função adicionarCaboComConexaoModal chamada!');
+                console.log('Iniciando adicionarCaboComConexaoModal com dados:', dadosCabo);
+                
+                // Primeiro, adicionar o cabo
+                console.log('Enviando requisição para /cabos...');
+                console.log('Dados sendo enviados:', JSON.stringify(dadosCabo, null, 2));
+                
+                const responseCabo = await fetch('/cabos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dadosCabo)
+                });
+
+                console.log('Resposta recebida:', responseCabo.status, responseCabo.statusText);
+                
+                if (!responseCabo.ok) {
+                    console.error('Erro HTTP:', responseCabo.status, responseCabo.statusText);
+                    alert('Erro HTTP: ' + responseCabo.status + ' - ' + responseCabo.statusText);
+                    return;
+                }
+                
+                const resultCabo = await responseCabo.json();
+                console.log('Resultado da criação do cabo:', resultCabo);
+                console.log('Resposta do servidor:', resultCabo);
+                
+                if (resultCabo.status === 'ok') {
+                    // Se for conexão via patch panel, conectar automaticamente
+                    if (dadosCabo.tipo_conexao === 'patch_panel') {
+                        console.log('Criando conexão automática para cabo via patch panel...');
+                        
+                        // Buscar informações do equipamento para obter a sala
+                        const equipamentoResponse = await fetch(`/equipamentos/${dadosCabo.equipamento_rede_id}`);
+                        const equipamentoInfo = await equipamentoResponse.json();
+                        
+                        if (equipamentoInfo.sala_id) {
+                            const dadosConexao = {
+                                cabo_id: resultCabo.cabo_id,
+                                equipamento_origem_id: dadosCabo.equipamento_rede_id, // Equipamento (ex: Painel Agenda)
+                                equipamento_destino_id: dadosCabo.patch_panel_id, // Patch Panel
+                                porta_origem: null, // Porta do equipamento (se aplicável)
+                                porta_destino: dadosCabo.porta_patch_panel, // Porta do patch panel
+                                sala_id: equipamentoInfo.sala_id,
+                                observacao: `Conexão via Patch Panel - Porta ${dadosCabo.porta_patch_panel} - ${new Date().toLocaleString('pt-BR')}`
+                            };
+                           
+                           const responseConexao = await fetch('/conexoes-cabos', {
+                               method: 'POST',
+                               headers: {
+                                   'Content-Type': 'application/json'
+                               },
+                               body: JSON.stringify(dadosConexao)
+                           });
+                           
+                           if (responseConexao.ok) {
+                               console.log('Conexão via patch panel criada com sucesso!');
+                           } else {
+                               console.error('Erro ao criar conexão via patch panel:', responseConexao.statusText);
+                           }
+                       }
+                   }
+                   
+                   // Se for conexão direta, conectar automaticamente
+                   if (dadosCabo.tipo_conexao === 'direta') {
+                       console.log('Criando conexão automática para cabo direto...');
+                       
+                       // Buscar informações do equipamento origem para obter a sala
+                       const equipamentoResponse = await fetch(`/equipamentos/${dadosCabo.equipamento_origem_id}`);
+                       const equipamentoInfo = await equipamentoResponse.json();
+                       
+                       if (equipamentoInfo.sala_id) {
+                           const dadosConexao = {
+                               cabo_id: resultCabo.cabo_id,
+                               equipamento_origem_id: dadosCabo.equipamento_origem_id,
+                               equipamento_destino_id: dadosCabo.equipamento_destino_id,
+                               porta_origem: dadosCabo.porta_origem || null, // Porta do equipamento origem
+                               porta_destino: dadosCabo.porta_destino || null, // Porta do equipamento destino
+                               sala_id: equipamentoInfo.sala_id,
+                               observacao: `Conexão Direta - ${new Date().toLocaleString('pt-BR')}`
+                           };
+                           
+                           const responseConexao = await fetch('/conexoes-cabos', {
+                               method: 'POST',
+                               headers: {
+                                   'Content-Type': 'application/json'
+                               },
+                               body: JSON.stringify(dadosConexao)
+                           });
+                           
+                           if (responseConexao.ok) {
+                               console.log('Conexão direta criada com sucesso!');
+                           } else {
+                               console.error('Erro ao criar conexão direta:', responseConexao.statusText);
+                           }
+                       }
+                   }
+                   
+                   // Fechar modal e recarregar dados
+                   alert('Cabo adicionado com sucesso!');
+                   document.getElementById('modalAddCabo').style.display = 'none';
+                   carregarCabosSala();
+                } else {
+                    console.error('Erro na resposta do servidor:', resultCabo);
+                    alert(`Erro: ${resultCabo.mensagem}`);
+                }
+            } catch (error) {
+                console.error('Erro ao adicionar cabo:', error);
+                alert('Erro ao adicionar cabo. Tente novamente.');
+            }
+        }
+
+        // Função para excluir cabo
+        async function excluirCabo(caboId) {
+            try {
+                const response = await fetch(`/cabos/${caboId}`, {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+                
+                if (result.status === 'ok') {
+                    // Fechar modal
+                    document.getElementById('modalExcluirCabo').style.display = 'none';
+                    // Recarregar dados
+                    carregarCabosSala();
+                    alert('Cabo excluído com sucesso!');
+                } else {
+                    alert(`Erro: ${result.mensagem}`);
+                }
+            } catch (error) {
+                console.error('Erro ao excluir cabo:', error);
+                alert('Erro ao excluir cabo. Tente novamente.');
+            }
+        }
+
+        // Função para carregar tipos de cabo
+        async function carregarTiposCabos() {
+            try {
+                const response = await fetch('/tipos-cabos');
+                const tipos = await response.json();
+                
+                const select = document.getElementById('edit-tipo-cabo');
+                select.innerHTML = '<option value="">Selecione...</option>';
+                
+                tipos.forEach(tipo => {
+                    const option = document.createElement('option');
+                    option.value = tipo.nome; // Usar o nome como valor
+                    option.textContent = tipo.nome; // Usar o nome como texto
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar tipos de cabo:', error);
+            }
+        }
+
+        // Função para carregar equipamentos da sala atual
+        async function carregarEquipamentosParaEdicao() {
+            try {
+                const salaId = getIdFromUrl();
+                if (!salaId) {
+                    console.error('ID da sala não encontrado na URL');
+                    return;
+                }
+                
+                // Buscar equipamentos da sala específica
+                const response = await fetch(`/equipamentos?sala_id=${salaId}`);
+                const equipamentos = await response.json();
+                
+                const selectOrigem = document.getElementById('edit-equipamento-origem');
+                const selectDestino = document.getElementById('edit-equipamento-destino');
+                
+                // Limpar selects
+                selectOrigem.innerHTML = '<option value="">Selecione um equipamento...</option>';
+                selectDestino.innerHTML = '<option value="">Selecione um equipamento...</option>';
+                
+                // Se não há equipamentos na sala, mostrar mensagem
+                if (equipamentos.length === 0) {
+                    selectOrigem.innerHTML = '<option value="">Nenhum equipamento encontrado nesta sala</option>';
+                    selectDestino.innerHTML = '<option value="">Nenhum equipamento encontrado nesta sala</option>';
+                    return;
+                }
+                
+                // Criar optgroup para a sala atual
+                function criarOptgroup(select) {
+                    const optgroup = document.createElement('optgroup');
+                    optgroup.label = `🏠 Equipamentos da Sala`;
+                    optgroup.className = 'font-semibold text-gray-700 dark:text-gray-300';
+                    
+                    // Adicionar equipamentos da sala
+                    equipamentos.forEach(eq => {
+                        const opt = document.createElement('option');
+                        opt.value = eq.id;
+                        opt.textContent = `${eq.nome} (${eq.tipo})`;
+                        opt.className = 'ml-4 text-gray-600 dark:text-gray-400';
+                        optgroup.appendChild(opt);
+                    });
+                    
+                    select.appendChild(optgroup);
+                }
+                
+                // Aplicar aos dois selects
+                criarOptgroup(selectOrigem);
+                criarOptgroup(selectDestino);
+                
+            } catch (error) {
+                console.error('Erro ao carregar equipamentos da sala:', error);
+                // Em caso de erro, mostrar mensagem nos selects
+                const selectOrigem = document.getElementById('edit-equipamento-origem');
+                const selectDestino = document.getElementById('edit-equipamento-destino');
+                selectOrigem.innerHTML = '<option value="">Erro ao carregar equipamentos</option>';
+                selectDestino.innerHTML = '<option value="">Erro ao carregar equipamentos</option>';
+            }
+        }
+
+        // Processar formulário de editar cabo
+        document.getElementById('formEditarCabo').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const caboId = document.getElementById('edit-cabo-id').value;
+            const equipamentoOrigemId = document.getElementById('edit-equipamento-origem').value;
+            const equipamentoDestinoId = document.getElementById('edit-equipamento-destino').value;
+            const portaOrigem = document.getElementById('edit-porta-origem').value;
+            const portaDestino = document.getElementById('edit-porta-destino').value;
+            
+            const dados = {
+                codigo_unico: document.getElementById('edit-codigo-unico').value,
+                tipo: document.getElementById('edit-tipo-cabo').value,
+                comprimento: document.getElementById('edit-comprimento').value ? parseFloat(document.getElementById('edit-comprimento').value) : null,
+                marca: document.getElementById('edit-marca').value,
+                modelo: document.getElementById('edit-modelo').value,
+                status: document.getElementById('edit-status').value,
+                descricao: document.getElementById('edit-descricao').value
+            };
+
+            try {
+                // Primeiro atualizar o cabo
+                const response = await fetch(`/cabos/${caboId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                });
+
+                const result = await response.json();
+                
+                if (result.status === 'ok') {
+                    // Sempre tentar atualizar a conexão
+                    const conexaoResponse = await fetch(`/conexoes-cabos?cabo_id=${caboId}`);
+                    
+                    if (conexaoResponse.ok) {
+                        const conexoes = await conexaoResponse.json();
+                        
+                        if (conexoes.length > 0) {
+                            // Encontrar a conexão que corresponde ao cabo correto
+                            const conexao = conexoes.find(c => c.cabo_id == caboId) || conexoes[0];
+                            
+                            // Verificar se há alterações reais (convertendo para string para comparação)
+                            const temAlteracoes = 
+                                String(equipamentoOrigemId) !== String(conexao.equipamento_origem_id) ||
+                                String(equipamentoDestinoId) !== String(conexao.equipamento_destino_id) ||
+                                String(portaOrigem) !== String(conexao.porta_origem) ||
+                                String(portaDestino) !== String(conexao.porta_destino);
+                            
+                            const dadosConexao = {
+                                equipamento_origem_id: equipamentoOrigemId !== '' ? equipamentoOrigemId : conexao.equipamento_origem_id,
+                                equipamento_destino_id: equipamentoDestinoId !== '' ? equipamentoDestinoId : conexao.equipamento_destino_id,
+                                porta_origem: portaOrigem !== '' ? portaOrigem : conexao.porta_origem,
+                                porta_destino: portaDestino !== '' ? portaDestino : conexao.porta_destino
+                            };
+                            
+                            // Sempre atualizar se há valores nos campos de equipamento
+                            const deveAtualizar = temAlteracoes || equipamentoOrigemId !== '' || equipamentoDestinoId !== '';
+                            
+                            // Atualizar a conexão
+                            const updateConexaoResponse = await fetch(`/conexoes-cabos/${conexao.id}`, {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(dadosConexao)
+                            });
+                            
+                            if (!updateConexaoResponse.ok) {
+                                const errorData = await updateConexaoResponse.json();
+                                console.error('Erro ao atualizar dados da conexão:', errorData);
+                                alert(`Erro ao atualizar conexão: ${errorData.mensagem || 'Erro desconhecido'}`);
+                                return; // Parar aqui se houve erro
+                            }
+                        } else {
+                            alert('Nenhuma conexão encontrada para este cabo');
+                            return;
+                        }
+                    } else {
+                        alert('Erro ao buscar conexões do cabo');
+                        return;
+                    }
+                    
+                    // Fechar modal
+                    document.getElementById('modalEditarCabo').style.display = 'none';
+                    // Recarregar dados
+                    await carregarCabosSala();
+                    alert('Cabo atualizado com sucesso!');
+                } else {
+                    alert(`Erro: ${result.mensagem}`);
+                }
+            } catch (error) {
+                console.error('Erro ao atualizar cabo:', error);
+                alert('Erro ao atualizar cabo. Tente novamente.');
+            }
+        });
+
+        // Configurar botões de fechar dos modais
+        document.getElementById('fecharModalEditarCabo').onclick = function() {
+            document.getElementById('modalEditarCabo').style.display = 'none';
+        };
+
+        document.getElementById('cancelarEditarCabo').onclick = function() {
+            document.getElementById('modalEditarCabo').style.display = 'none';
+        };
+
+        // Configurar botões do modal de excluir cabo
+        document.getElementById('cancelarDelCabo').onclick = function() {
+            document.getElementById('modalExcluirCabo').style.display = 'none';
+        };
+
+        document.getElementById('confirmarDelCabo').onclick = function() {
+            const caboId = this.getAttribute('data-cabo-id');
+            if (caboId) {
+                excluirCabo(caboId);
+            }
+        };
+
+
+        
+        // Processar formulário de adicionar cabo no modal
+        document.getElementById('formCaboModal').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            console.log('Formulário modal submetido! Verificando dados...');
+            
+            const formData = new FormData(this);
+            const codigoUnico = formData.get('codigo_unico');
+            const tipo = formData.get('tipo');
+            const tipoConexao = formData.get('tipo_conexao');
+            
+            console.log('Dados básicos:', { codigoUnico, tipo, tipoConexao });
+            
+            // Verificar se o código único foi gerado
+            if (!codigoUnico) {
+                console.log('❌ Erro: Código único não gerado');
+                alert('Selecione o tipo de cabo para gerar o código único automaticamente');
+                const tipoElement = document.getElementById('tipo_modal');
+                if (tipoElement) tipoElement.focus();
+                return;
+            }
+            
+            // Verificar se o código único tem o formato correto
+            const codigoPattern = /^[A-Z]{3}-\d{3}$/;
+            if (!codigoPattern.test(codigoUnico)) {
+                console.log('❌ Erro: Código único com formato inválido:', codigoUnico);
+                alert('Código único com formato inválido. Clique no botão de atualizar para gerar um novo código.');
+                const codigoElement = document.getElementById('codigo_unico_modal');
+                if (codigoElement) codigoElement.focus();
+                return;
+            }
+            
+            console.log('✅ Código único validado:', codigoUnico);
+             
+             // Validar campos obrigatórios baseado no tipo de conexão
+             if (tipoConexao === 'direta') {
+                 const equipOrigem = formData.get('equipamento_origem');
+                 const equipDestino = formData.get('equipamento_destino');
+                 
+                 if (!equipOrigem) {
+                    alert('Selecione o equipamento origem para conexão direta');
+                    const equipOrigemElement = document.getElementById('equipamento_origem_modal');
+                    if (equipOrigemElement) equipOrigemElement.focus();
+                    return;
+                }
+                
+                if (!equipDestino) {
+                    alert('Selecione o equipamento destino para conexão direta');
+                    const equipDestinoElement = document.getElementById('equipamento_destino_modal');
+                    if (equipDestinoElement) equipDestinoElement.focus();
+                    return;
+                }
+                 
+                 if (equipOrigem === equipDestino) {
+                     alert('O equipamento origem e destino não podem ser o mesmo');
+                     return;
+                 }
+             } else if (tipoConexao === 'patch_panel') {
+                 const equipRede = formData.get('equipamento_rede');
+                 const patchPanel = formData.get('patch_panel');
+                 const portaPatchPanel = formData.get('porta_patch_panel');
+                 
+                 // Validar se o tipo de cabo é Ethernet para conexão via patch panel
+                 const tipoCabo = formData.get('tipo');
+                 const isEthernet = tipoCabo && (
+                     tipoCabo.toLowerCase().includes('ethernet') || 
+                     tipoCabo.toLowerCase().includes('cat') ||
+                     tipoCabo.toLowerCase().includes('rj45') ||
+                     tipoCabo.toLowerCase().includes('lan') ||
+                     tipoCabo.toLowerCase().includes('rede') ||
+                     tipoCabo.toLowerCase().includes('utp') ||
+                     tipoCabo.toLowerCase().includes('stp') ||
+                     tipoCabo.toLowerCase().includes('ftp') ||
+                     tipoCabo.toLowerCase().includes('sfp') ||
+                     tipoCabo.toLowerCase().includes('patch cord') ||
+                     tipoCabo.toLowerCase().includes('cabo de rede') ||
+                     tipoCabo.toLowerCase().includes('cabo de dados')
+                 );
+                 
+                 if (!isEthernet) {
+                     alert('Para conexões via patch panel, apenas cabos Ethernet são permitidos. Selecione um tipo de cabo Ethernet.');
+                     const tipoElement = document.getElementById('tipo_modal');
+                     if (tipoElement) tipoElement.focus();
+                     return;
+                 }
+                 
+                 if (!equipRede) {
+                    alert('Selecione o equipamento de rede para conexão via patch panel');
+                    const equipRedeElement = document.getElementById('equipamento_rede_modal');
+                    if (equipRedeElement) equipRedeElement.focus();
+                    return;
+                }
+                
+                if (!patchPanel) {
+                    alert('Selecione o patch panel para conexão via patch panel');
+                    const patchPanelElement = document.getElementById('patch_panel_modal');
+                    if (patchPanelElement) patchPanelElement.focus();
+                    return;
+                }
+                
+                if (!portaPatchPanel) {
+                    alert('Selecione a porta do patch panel para conexão via patch panel');
+                    const portaPatchPanelElement = document.getElementById('porta_patch_panel_modal');
+                    if (portaPatchPanelElement) portaPatchPanelElement.focus();
+                    return;
+                }
+             }
+            
+            const dados = {
+                codigo_unico: codigoUnico,
+                tipo: tipo,
+                tipo_conexao: tipoConexao,
+                comprimento: formData.get('comprimento') ? parseFloat(formData.get('comprimento')) : null,
+                marca: formData.get('marca'),
+                modelo: formData.get('modelo'),
+                descricao: formData.get('descricao'),
+                status: formData.get('status')
+            };
+
+            // Adicionar dados específicos baseado no tipo de conexão
+            if (tipoConexao === 'direta') {
+                dados.equipamento_origem_id = parseInt(formData.get('equipamento_origem'));
+                dados.equipamento_destino_id = parseInt(formData.get('equipamento_destino'));
+                dados.porta_origem = formData.get('porta_origem') || null;
+                dados.porta_destino = formData.get('porta_destino') || null;
+                console.log('Conexão direta - equipamentos:', { origem: dados.equipamento_origem_id, destino: dados.equipamento_destino_id, porta_origem: dados.porta_origem, porta_destino: dados.porta_destino });
+            } else if (tipoConexao === 'patch_panel') {
+                dados.equipamento_rede_id = parseInt(formData.get('equipamento_rede'));
+                dados.patch_panel_id = parseInt(formData.get('patch_panel'));
+                dados.porta_patch_panel = parseInt(formData.get('porta_patch_panel'));
+                console.log('Conexão via patch panel:', { equipamento_rede: dados.equipamento_rede_id, patch_panel: dados.patch_panel_id, porta: dados.porta_patch_panel });
+            }
+
+            console.log('Dados completos a serem enviados:', dados);
+
+            try {
+                // Usar a função que inclui conexão automática
+                await adicionarCaboComConexaoModal(dados);
+            } catch (error) {
+                console.error('Erro durante o processamento:', error);
+                alert('Erro ao processar o formulário: ' + error.message);
+            }
+        });
+
         // Depois carregar dados
         carregarCabosSala();
+        
+        // Carregar dados para o modal
+        carregarTiposCabosModal();
+        carregarCabosExistentesModal();
+        carregarEquipamentosModal();
+        
+        // Inicializar visual dos cards de radio do modal
+        updateRadioCardsModal('direta');
+        
+        // Adicionar evento de mudança no tipo de cabo do modal
+        document.getElementById('tipo_modal').addEventListener('change', atualizarCodigoUnicoModal);
         
         fetch('/empresa_atual')
             .then(resp => resp.json())

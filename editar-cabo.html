@@ -156,15 +156,7 @@
                           placeholder="Descrição adicional do cabo..."></textarea>
             </div>
 
-            <!-- Foto -->
-            <div>
-                <label for="foto" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    <i class="fas fa-camera mr-2"></i>Foto do Cabo
-                </label>
-                <input type="file" id="foto" name="foto" accept="image/*"
-                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white dark:border-gray-600">
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Opcional: nova foto do cabo para identificação visual</p>
-            </div>
+
 
             <!-- Botões -->
             <div class="flex gap-4 pt-6">
@@ -391,12 +383,7 @@
                 status: formData.get('status')
             };
 
-            // Processar foto se fornecida
-            const fotoFile = formData.get('foto');
-            if (fotoFile && fotoFile.size > 0) {
-                // Aqui você pode implementar upload de foto
-                dados.foto = fotoFile.name;
-            }
+
 
             try {
                 const response = await fetch(`/cabos/${caboId}`, {
@@ -452,7 +439,18 @@
 
         // Mostrar modal de sucesso
         function mostrarModalSucesso() {
-            document.getElementById('modalSucesso').classList.remove('hidden');
+            // Verificar se está em um iframe (modal)
+            if (window.parent !== window) {
+                // Enviar mensagem para a página pai para fechar o modal
+                window.parent.postMessage({
+                    action: 'closeModal',
+                    success: true,
+                    type: 'editar'
+                }, '*');
+            } else {
+                // Comportamento normal se não estiver em modal
+                document.getElementById('modalSucesso').classList.remove('hidden');
+            }
         }
 
         // Fechar modal
@@ -563,10 +561,26 @@
             aplicarFiltros();
         });
 
+        // Verificar se há cabo_id na URL para pré-selecionar
+        function verificarCaboPreSelecionado() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const caboId = urlParams.get('cabo_id');
+            
+            if (caboId) {
+                // Aguardar carregamento dos dados e então selecionar o cabo
+                setTimeout(() => {
+                    selecionarCaboParaEditar(parseInt(caboId));
+                }, 1000);
+            }
+        }
+
         // Inicialização
         window.addEventListener('DOMContentLoaded', function() {
             carregarTiposCabos();
             carregarCabos();
+            
+            // Verificar se há cabo pré-selecionado
+            verificarCaboPreSelecionado();
             
             // Carregar logo da empresa
             fetch('/empresa_atual')

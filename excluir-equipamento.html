@@ -70,6 +70,8 @@
     let equipamentos = [];
     let salasMap = {};
     let filtroAtivo = null; // Para controlar qual filtro está ativo
+    const params = new URLSearchParams(window.location.search);
+    const equipamentoIdParam = params.get('id');
     // Carrega todas as salas para mapear id -> nome
     fetch('/salas')
         .then(resp => resp.json())
@@ -84,8 +86,42 @@
             .then(resp => resp.json())
             .then(data => {
                 equipamentos = data;
+                if (equipamentoIdParam) {
+                    const eq = equipamentos.find(e => String(e.id) === String(equipamentoIdParam));
+                    if (eq) {
+                        renderizarConfirmacaoExclusao(eq);
+                        atualizarIndicadorResultados([eq], '');
+                        return;
+                    }
+                }
                 renderizarEquipamentos(data);
             });
+    }
+    function renderizarConfirmacaoExclusao(eq) {
+        const container = document.getElementById('tabelaEquipamentosContainer');
+        let html = '';
+        html += `<div class='bg-white dark:bg-gray-800 rounded-xl shadow-xl p-8 w-full max-w-2xl mx-auto'>`;
+        html += `<div class='flex items-start gap-4'>`;
+        if (eq.foto) {
+            html += `<img src='${eq.foto.startsWith('img/') ? 'static/' + eq.foto : eq.foto}' alt='${eq.nome || ''}' class='rounded-md object-cover w-40 h-24'>`;
+        }
+        html += `<div class='flex-1'>`;
+        html += `<div class='font-bold text-2xl text-gray-800 dark:text-white mb-1'>${eq.nome || 'Equipamento'}</div>`;
+        html += `<div class='text-sm text-gray-600 dark:text-gray-300 mb-1'>Tipo: ${eq.tipo || '-'}</div>`;
+        html += `<div class='text-sm text-gray-600 dark:text-gray-300 mb-1'>Marca: ${eq.marca || '-'}</div>`;
+        if (eq.dados?.serie) html += `<div class='text-sm text-gray-600 dark:text-gray-300'>Série: ${eq.dados.serie}</div>`;
+        html += `</div>`;
+        html += `</div>`;
+        html += `<div class='mt-6 p-4 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-700'>`;
+        html += `<i class='fas fa-exclamation-triangle mr-2'></i>`;
+        html += `Tem certeza que deseja excluir este equipamento? Esta ação não pode ser desfeita.`;
+        html += `</div>`;
+        html += `<div class='mt-6 flex justify-end gap-3'>`;
+        html += `<button class='px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-100 transition' onclick="window.history.back()">Cancelar</button>`;
+        html += `<button class='px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white transition' onclick='excluirEquipamento(${eq.id})'><i class="fas fa-trash-alt mr-2"></i>Excluir</button>`;
+        html += `</div>`;
+        html += `</div>`;
+        container.innerHTML = html;
     }
     
     function aplicarFiltro(tipo) {
@@ -315,10 +351,19 @@
         });
         const json = await resp.json();
         if (json.status === 'ok') {
-            btn.closest('.card-equipamento').remove();
-            document.getElementById('msg').innerText = 'Equipamento excluído com sucesso!';
+            const msgDiv = document.getElementById('msg');
+            msgDiv.innerText = 'Equipamento excluído com sucesso!';
+            msgDiv.className = 'msg text-center mt-6 text-lg font-semibold text-green-600 dark:text-green-400';
+            
+            // Recarregar a lista de equipamentos após exclusão
+            setTimeout(() => {
+                carregarEquipamentos();
+                msgDiv.innerText = '';
+                msgDiv.className = 'msg text-center mt-6 text-lg font-semibold';
+            }, 1500);
         } else {
             document.getElementById('msg').innerText = 'Erro ao excluir!';
+            document.getElementById('msg').className = 'msg text-center mt-6 text-lg font-semibold text-red-600 dark:text-red-400';
         }
     }
     </script>

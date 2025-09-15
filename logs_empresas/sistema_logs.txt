@@ -1,0 +1,1310 @@
+[2025-08-13 16:18:15] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-13 16:18:22] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-13 16:18:22] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-13 16:26:22] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-13 16:27:18] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-13 16:49:23] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-14 11:54:35] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-14 11:54:35] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-14 15:20:01] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-14 15:20:10] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-14 15:20:10] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-14 15:23:06] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-14 15:23:06] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-18 07:48:44] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-18 07:48:44] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-18 07:54:05] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=17 | Status: sucesso
+[2025-08-18 07:55:04] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=18 | Status: sucesso
+[2025-08-18 08:26:42] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-082 criado | Status: sucesso
+[2025-08-18 08:26:42] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 166 criada | Status: sucesso
+[2025-08-18 08:27:26] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-083 criado | Status: sucesso
+[2025-08-18 08:27:26] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 167 criada | Status: sucesso
+[2025-08-18 08:27:53] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-084 criado | Status: sucesso
+[2025-08-18 08:27:53] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 168 criada | Status: sucesso
+[2025-08-18 08:29:11] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-18 08:29:20] Usuario: tecnico_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: tecnico, Nome: Técnico WH | Status: sucesso
+[2025-08-18 08:29:20] Usuario: tecnico_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-18 08:30:41] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-18 08:30:41] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-18 09:13:32] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-18 09:13:39] Usuario: usuario_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: usuario, Nome: Usuário WH | Status: sucesso
+[2025-08-18 09:13:39] Usuario: usuario_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-18 09:14:23] Usuario: usuario_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: usuario, Nome: Usuário WH | Status: sucesso
+[2025-08-18 09:14:28] Usuario: tecnico_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: tecnico, Nome: Técnico WH | Status: sucesso
+[2025-08-18 09:14:28] Usuario: tecnico_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-18 09:16:27] Usuario: tecnico_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: tecnico, Nome: Técnico WH | Status: sucesso
+[2025-08-18 09:16:32] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-18 09:16:32] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-18 09:16:50] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-18 09:16:57] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-18 09:16:57] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-18 09:30:35] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-18 09:30:41] Usuario: tecnico_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: tecnico, Nome: Técnico WH | Status: sucesso
+[2025-08-18 09:30:41] Usuario: tecnico_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-18 09:30:57] Usuario: tecnico_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: tecnico, Nome: Técnico WH | Status: sucesso
+[2025-08-18 09:31:04] Usuario: usuario_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: usuario, Nome: Usuário WH | Status: sucesso
+[2025-08-18 09:31:04] Usuario: usuario_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-18 09:31:13] Usuario: usuario_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: usuario, Nome: Usuário WH | Status: sucesso
+[2025-08-18 09:31:19] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-18 09:31:19] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-18 09:34:26] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-18 09:34:37] Usuario: usuario_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: usuario, Nome: Usuário WH | Status: sucesso
+[2025-08-18 09:34:37] Usuario: usuario_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-18 09:34:44] Usuario: usuario_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: usuario, Nome: Usuário WH | Status: sucesso
+[2025-08-18 09:34:50] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-18 09:34:50] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-18 11:41:17] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-18 12:08:28] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-030 criado | Status: sucesso
+[2025-08-18 12:08:28] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 169 criada | Status: sucesso
+[2025-08-18 12:11:20] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-031 criado | Status: sucesso
+[2025-08-18 12:11:20] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 170 criada | Status: sucesso
+[2025-08-18 12:15:28] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-032 criado | Status: sucesso
+[2025-08-18 12:15:28] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 171 criada | Status: sucesso
+[2025-08-18 12:16:21] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-036 criado | Status: sucesso
+[2025-08-18 12:16:21] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 172 criada | Status: sucesso
+[2025-08-18 12:17:12] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-085 criado | Status: sucesso
+[2025-08-18 12:17:12] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 173 criada | Status: sucesso
+[2025-08-18 12:25:59] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-18 12:26:07] Usuario: usuario_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: usuario, Nome: Usuário WH | Status: sucesso
+[2025-08-18 12:26:07] Usuario: usuario_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-18 12:26:51] Usuario: usuario_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: usuario, Nome: Usuário WH | Status: sucesso
+[2025-08-18 12:26:58] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-18 12:26:58] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-18 12:54:59] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-037 criado | Status: sucesso
+[2025-08-18 12:54:59] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 174 criada | Status: sucesso
+[2025-08-18 13:04:13] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 176 desconectada | Status: sucesso
+[2025-08-18 15:09:05] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 171 desconectada | Status: sucesso
+[2025-08-18 15:11:33] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 169 criada | Status: sucesso
+[2025-08-18 15:13:56] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=22 | Status: sucesso
+[2025-08-18 15:22:18] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-038 criado | Status: sucesso
+[2025-08-18 15:22:18] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 175 criada | Status: sucesso
+[2025-08-18 15:22:50] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-039 criado | Status: sucesso
+[2025-08-18 15:22:50] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 176 criada | Status: sucesso
+[2025-08-18 15:43:02] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=22 | Status: sucesso
+[2025-08-18 15:43:33] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=22 | Status: sucesso
+[2025-08-18 15:49:34] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=22 | Status: sucesso
+[2025-08-19 08:21:59] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-19 08:21:59] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-19 08:48:51] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=22 | Status: sucesso
+[2025-08-19 08:49:01] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=22 | Status: sucesso
+[2025-08-19 08:49:03] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=22 | Status: sucesso
+[2025-08-19 08:50:16] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=22 | Status: sucesso
+[2025-08-19 10:03:54] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=22 | Status: sucesso
+[2025-08-19 10:05:18] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=22 | Status: sucesso
+[2025-08-19 10:07:15] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=22 | Status: sucesso
+[2025-08-19 10:08:26] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=22 | Status: sucesso
+[2025-08-19 11:05:07] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=22 | Status: sucesso
+[2025-08-19 11:13:50] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-19 11:30:01] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=1 | Status: sucesso
+[2025-08-19 11:50:00] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=4 | Status: sucesso
+[2025-08-19 12:03:02] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=5 | Status: sucesso
+[2025-08-19 12:04:02] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=5 | Status: sucesso
+[2025-08-19 12:06:05] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=5 | Status: sucesso
+[2025-08-19 12:07:15] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=5 | Status: sucesso
+[2025-08-19 12:09:27] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=5 | Status: sucesso
+[2025-08-19 12:53:49] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=6 | Status: sucesso
+[2025-08-19 13:00:06] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=7 | Status: sucesso
+[2025-08-19 13:01:09] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=7 | Status: sucesso
+[2025-08-19 14:14:03] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=8 | Status: sucesso
+[2025-08-19 14:31:22] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=9 | Status: sucesso
+[2025-08-19 14:38:13] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=13 | Status: sucesso
+[2025-08-19 14:41:57] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=14 | Status: sucesso
+[2025-08-19 14:43:03] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=14 | Status: sucesso
+[2025-08-19 14:46:45] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=21 | Status: sucesso
+[2025-08-19 14:47:37] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-19 14:47:55] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: empresa_01 | Status: erro
+[2025-08-19 14:48:11] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: empresa_01 | Status: erro
+[2025-08-19 14:48:13] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: empresa_01 | Status: erro
+[2025-08-19 14:48:38] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: admin_01 | Status: erro
+[2025-08-19 14:49:07] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: admin_empresa_01 | Status: erro
+[2025-08-19 14:49:12] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: empresa_01 | Status: erro
+[2025-08-19 14:49:13] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: empresa_01 | Status: erro
+[2025-08-19 14:49:24] Usuario: master | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: master, Nome: Master Admin | Status: sucesso
+[2025-08-19 14:50:37] Usuario: master | Acao: LOGOUT | Detalhes: Logout realizado - Nível: master, Nome: Master Admin | Status: sucesso
+[2025-08-19 14:50:46] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: admin_01	 | Status: erro
+[2025-08-19 14:50:55] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: admin_01	 | Status: erro
+[2025-08-19 14:51:09] Usuario: master | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: master, Nome: Master Admin | Status: sucesso
+[2025-08-19 14:52:53] Usuario: master | Acao: LOGOUT | Detalhes: Logout realizado - Nível: master, Nome: Master Admin | Status: sucesso
+[2025-08-19 14:53:05] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: andre_sirqueira | Status: erro
+[2025-08-19 14:53:09] Usuario: andre_sirqueira | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Andre Sirqueira | Status: sucesso
+[2025-08-19 14:53:09] Usuario: andre_sirqueira | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_01.db | Status: sucesso
+[2025-08-19 14:54:08] Usuario: andre_sirqueira | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Andre Sirqueira | Status: sucesso
+[2025-08-19 14:54:14] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-19 14:54:14] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-19 15:12:08] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-086 criado | Status: sucesso
+[2025-08-19 15:12:08] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 177 criada | Status: sucesso
+[2025-08-19 15:12:30] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-087 criado | Status: sucesso
+[2025-08-19 15:12:30] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 178 criada | Status: sucesso
+[2025-08-19 15:12:45] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-088 criado | Status: sucesso
+[2025-08-19 15:12:45] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 179 criada | Status: sucesso
+[2025-08-19 15:14:01] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-089 criado | Status: sucesso
+[2025-08-19 15:14:01] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 180 criada | Status: sucesso
+[2025-08-19 15:15:27] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-033 criado | Status: sucesso
+[2025-08-19 15:15:27] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 181 criada | Status: sucesso
+[2025-08-19 15:16:23] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-034 criado | Status: sucesso
+[2025-08-19 15:16:23] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 182 criada | Status: sucesso
+[2025-08-19 15:16:55] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-040 criado | Status: sucesso
+[2025-08-19 15:16:55] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 183 criada | Status: sucesso
+[2025-08-19 15:19:58] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-035 criado | Status: sucesso
+[2025-08-19 15:19:58] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 184 criada | Status: sucesso
+[2025-08-19 15:20:35] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-036 criado | Status: sucesso
+[2025-08-19 15:20:36] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 185 criada | Status: sucesso
+[2025-08-19 15:25:54] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=22 | Status: sucesso
+[2025-08-19 15:27:19] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=22 | Status: sucesso
+[2025-08-19 15:53:09] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-037 criado | Status: sucesso
+[2025-08-19 15:53:09] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 186 criada | Status: sucesso
+[2025-08-19 15:53:57] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-038 criado | Status: sucesso
+[2025-08-19 15:53:57] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 187 criada | Status: sucesso
+[2025-08-19 15:54:29] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-039 criado | Status: sucesso
+[2025-08-19 15:54:29] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 188 criada | Status: sucesso
+[2025-08-19 15:54:57] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-041 criado | Status: sucesso
+[2025-08-19 15:54:57] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 189 criada | Status: sucesso
+[2025-08-19 15:55:23] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-042 criado | Status: sucesso
+[2025-08-19 15:55:23] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 190 criada | Status: sucesso
+[2025-08-19 16:01:45] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=23 | Status: sucesso
+[2025-08-19 16:03:08] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=23 | Status: sucesso
+[2025-08-20 08:01:59] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-20 08:01:59] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-20 08:42:08] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-090 criado | Status: sucesso
+[2025-08-20 08:42:08] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 191 criada | Status: sucesso
+[2025-08-20 08:43:08] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=24 | Status: sucesso
+[2025-08-20 08:44:17] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-091 criado | Status: sucesso
+[2025-08-20 08:44:17] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 192 criada | Status: sucesso
+[2025-08-20 08:44:40] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-092 criado | Status: sucesso
+[2025-08-20 08:44:40] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 193 criada | Status: sucesso
+[2025-08-20 08:49:14] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-040 criado | Status: sucesso
+[2025-08-20 08:49:14] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 194 criada | Status: sucesso
+[2025-08-20 08:50:03] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-041 criado | Status: sucesso
+[2025-08-20 08:50:03] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 195 criada | Status: sucesso
+[2025-08-20 08:50:52] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-042 criado | Status: sucesso
+[2025-08-20 08:50:52] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 196 criada | Status: sucesso
+[2025-08-20 08:51:24] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-043 criado | Status: sucesso
+[2025-08-20 08:51:25] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 197 criada | Status: sucesso
+[2025-08-20 08:51:57] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-093 criado | Status: sucesso
+[2025-08-20 08:51:57] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 198 criada | Status: sucesso
+[2025-08-20 08:54:13] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-044 criado | Status: sucesso
+[2025-08-20 08:54:14] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 199 criada | Status: sucesso
+[2025-08-20 08:54:43] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-045 criado | Status: sucesso
+[2025-08-20 08:54:43] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 200 criada | Status: sucesso
+[2025-08-20 08:55:43] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-043 criado | Status: sucesso
+[2025-08-20 08:55:43] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 201 criada | Status: sucesso
+[2025-08-20 08:56:28] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-044 criado | Status: sucesso
+[2025-08-20 08:56:28] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 202 criada | Status: sucesso
+[2025-08-20 08:59:26] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=24 | Status: sucesso
+[2025-08-20 09:00:23] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=24 | Status: sucesso
+[2025-08-20 09:01:14] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=24 | Status: sucesso
+[2025-08-20 09:37:26] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-094 criado | Status: sucesso
+[2025-08-20 09:37:26] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 203 criada | Status: sucesso
+[2025-08-20 09:37:43] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-095 criado | Status: sucesso
+[2025-08-20 09:37:43] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 204 criada | Status: sucesso
+[2025-08-20 09:37:56] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-096 criado | Status: sucesso
+[2025-08-20 09:37:56] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 205 criada | Status: sucesso
+[2025-08-20 09:38:45] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=25 | Status: sucesso
+[2025-08-20 09:51:53] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=25 | Status: sucesso
+[2025-08-20 14:11:43] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=24 | Status: sucesso
+[2025-08-20 14:13:39] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=24 | Status: sucesso
+[2025-08-20 14:14:56] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-097 criado | Status: sucesso
+[2025-08-20 14:14:56] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 206 criada | Status: sucesso
+[2025-08-20 14:15:24] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-098 criado | Status: sucesso
+[2025-08-20 14:15:24] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 207 criada | Status: sucesso
+[2025-08-20 14:15:38] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-099 criado | Status: sucesso
+[2025-08-20 14:15:38] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 208 criada | Status: sucesso
+[2025-08-20 14:19:11] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-045 criado | Status: sucesso
+[2025-08-20 14:19:11] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 209 criada | Status: sucesso
+[2025-08-20 14:20:02] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-046 criado | Status: sucesso
+[2025-08-20 14:20:02] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 210 criada | Status: sucesso
+[2025-08-20 14:20:53] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 36 atualizado | Status: sucesso
+[2025-08-20 14:22:05] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 36 atualizado | Status: sucesso
+[2025-08-20 14:24:14] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 184 atualizado | Status: sucesso
+[2025-08-20 14:24:39] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 184 atualizado | Status: sucesso
+[2025-08-20 14:25:03] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 184 atualizado | Status: sucesso
+[2025-08-20 14:26:51] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 184 atualizado | Status: sucesso
+[2025-08-20 14:26:51] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 187 atualizada | Status: sucesso
+[2025-08-20 14:28:37] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 187 atualizado | Status: sucesso
+[2025-08-20 14:28:37] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 190 atualizada | Status: sucesso
+[2025-08-20 14:29:29] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 201 atualizado | Status: sucesso
+[2025-08-20 14:29:29] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 204 atualizada | Status: sucesso
+[2025-08-20 14:31:45] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-047 criado | Status: sucesso
+[2025-08-20 14:31:45] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 211 criada | Status: sucesso
+[2025-08-20 14:32:49] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-048 criado | Status: sucesso
+[2025-08-20 14:32:49] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 212 criada | Status: sucesso
+[2025-08-20 14:33:41] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-049 criado | Status: sucesso
+[2025-08-20 14:33:41] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 213 criada | Status: sucesso
+[2025-08-20 14:34:39] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-046 criado | Status: sucesso
+[2025-08-20 14:34:39] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 214 criada | Status: sucesso
+[2025-08-20 14:35:55] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-047 criado | Status: sucesso
+[2025-08-20 14:35:56] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 215 criada | Status: sucesso
+[2025-08-20 14:36:33] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-048 criado | Status: sucesso
+[2025-08-20 14:36:34] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 216 criada | Status: sucesso
+[2025-08-20 14:36:59] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-100 criado | Status: sucesso
+[2025-08-20 14:36:59] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 217 criada | Status: sucesso
+[2025-08-20 14:40:05] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=26 | Status: sucesso
+[2025-08-20 15:23:31] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-101 criado | Status: sucesso
+[2025-08-20 15:23:31] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 218 criada | Status: sucesso
+[2025-08-20 15:23:53] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-102 criado | Status: sucesso
+[2025-08-20 15:23:53] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 219 criada | Status: sucesso
+[2025-08-20 15:24:37] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-103 criado | Status: sucesso
+[2025-08-20 15:24:37] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 220 criada | Status: sucesso
+[2025-08-20 15:26:02] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-104 criado | Status: sucesso
+[2025-08-20 15:26:02] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 221 criada | Status: sucesso
+[2025-08-20 15:26:19] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-105 criado | Status: sucesso
+[2025-08-20 15:26:19] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 222 criada | Status: sucesso
+[2025-08-20 15:26:45] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-106 criado | Status: sucesso
+[2025-08-20 15:26:45] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 223 criada | Status: sucesso
+[2025-08-20 15:27:12] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-107 criado | Status: sucesso
+[2025-08-20 15:27:12] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 224 criada | Status: sucesso
+[2025-08-20 15:27:33] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-108 criado | Status: sucesso
+[2025-08-20 15:27:33] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 225 criada | Status: sucesso
+[2025-08-20 15:28:11] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-109 criado | Status: sucesso
+[2025-08-20 15:28:11] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 226 criada | Status: sucesso
+[2025-08-20 15:28:23] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-110 criado | Status: sucesso
+[2025-08-20 15:28:23] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 227 criada | Status: sucesso
+[2025-08-20 15:28:41] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-111 criado | Status: sucesso
+[2025-08-20 15:28:41] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 228 criada | Status: sucesso
+[2025-08-20 16:09:43] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-050 criado | Status: sucesso
+[2025-08-20 16:09:43] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 229 criada | Status: sucesso
+[2025-08-20 16:10:24] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-051 criado | Status: sucesso
+[2025-08-20 16:10:24] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 230 criada | Status: sucesso
+[2025-08-20 16:11:14] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 232 desconectada | Status: sucesso
+[2025-08-20 16:11:26] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 233 desconectada | Status: sucesso
+[2025-08-20 16:23:36] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-052 criado | Status: sucesso
+[2025-08-20 16:23:36] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 231 criada | Status: sucesso
+[2025-08-20 16:26:02] Usuario: admin_wh | Acao: excluir_cabo | Detalhes: Cabo ID 230 excluído | Status: sucesso
+[2025-08-20 16:27:03] Usuario: admin_wh | Acao: excluir_cabo | Detalhes: Cabo ID 229 excluído | Status: sucesso
+[2025-08-20 16:27:14] Usuario: admin_wh | Acao: excluir_cabo | Detalhes: Cabo ID 174 excluído | Status: sucesso
+[2025-08-20 16:28:33] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-053 criado | Status: sucesso
+[2025-08-20 16:28:33] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 232 criada | Status: sucesso
+[2025-08-20 16:29:24] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-054 criado | Status: sucesso
+[2025-08-20 16:29:24] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 233 criada | Status: sucesso
+[2025-08-20 16:32:05] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-055 criado | Status: sucesso
+[2025-08-20 16:32:05] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 234 criada | Status: sucesso
+[2025-08-20 16:32:28] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-056 criado | Status: sucesso
+[2025-08-20 16:32:28] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 235 criada | Status: sucesso
+[2025-08-20 16:32:58] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-049 criado | Status: sucesso
+[2025-08-20 16:32:58] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 236 criada | Status: sucesso
+[2025-08-20 16:33:52] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-050 criado | Status: sucesso
+[2025-08-20 16:33:52] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 237 criada | Status: sucesso
+[2025-08-20 16:34:33] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-051 criado | Status: sucesso
+[2025-08-20 16:34:33] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 238 criada | Status: sucesso
+[2025-08-20 16:34:57] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-052 criado | Status: sucesso
+[2025-08-20 16:34:57] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 239 criada | Status: sucesso
+[2025-08-20 16:35:23] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-053 criado | Status: sucesso
+[2025-08-20 16:35:23] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 240 criada | Status: sucesso
+[2025-08-20 16:35:46] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-054 criado | Status: sucesso
+[2025-08-20 16:35:46] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 241 criada | Status: sucesso
+[2025-08-20 16:39:14] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 235 desconectada | Status: sucesso
+[2025-08-20 16:40:29] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-057 criado | Status: sucesso
+[2025-08-20 16:40:29] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 242 criada | Status: sucesso
+[2025-08-20 16:47:43] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=27 | Status: sucesso
+[2025-08-21 08:11:49] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-21 08:11:49] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-21 08:18:45] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=27 | Status: sucesso
+[2025-08-21 08:19:57] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=27 | Status: sucesso
+[2025-08-21 08:20:49] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=27 | Status: sucesso
+[2025-08-21 08:43:54] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-112 criado | Status: sucesso
+[2025-08-21 08:43:54] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 243 criada | Status: sucesso
+[2025-08-21 08:44:15] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-113 criado | Status: sucesso
+[2025-08-21 08:44:15] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 244 criada | Status: sucesso
+[2025-08-21 08:44:37] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-114 criado | Status: sucesso
+[2025-08-21 08:44:37] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 245 criada | Status: sucesso
+[2025-08-21 08:45:36] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-058 criado | Status: sucesso
+[2025-08-21 08:45:36] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 246 criada | Status: sucesso
+[2025-08-21 08:46:19] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-059 criado | Status: sucesso
+[2025-08-21 08:46:19] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 247 criada | Status: sucesso
+[2025-08-21 08:47:31] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-060 criado | Status: sucesso
+[2025-08-21 08:47:31] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 248 criada | Status: sucesso
+[2025-08-21 08:48:35] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-061 criado | Status: sucesso
+[2025-08-21 08:48:35] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 249 criada | Status: sucesso
+[2025-08-21 08:49:14] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-062 criado | Status: sucesso
+[2025-08-21 08:49:14] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 250 criada | Status: sucesso
+[2025-08-21 08:49:57] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-115 criado | Status: sucesso
+[2025-08-21 08:49:57] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 251 criada | Status: sucesso
+[2025-08-21 08:50:16] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-055 criado | Status: sucesso
+[2025-08-21 08:50:16] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 252 criada | Status: sucesso
+[2025-08-21 08:50:47] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-056 criado | Status: sucesso
+[2025-08-21 08:50:47] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 253 criada | Status: sucesso
+[2025-08-21 08:51:19] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-057 criado | Status: sucesso
+[2025-08-21 08:51:19] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 254 criada | Status: sucesso
+[2025-08-21 09:07:37] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=28 | Status: sucesso
+[2025-08-21 09:08:41] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-21 09:08:53] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: empresa_01 | Status: erro
+[2025-08-21 09:09:18] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: master | Status: erro
+[2025-08-21 09:09:23] Usuario: master | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: master, Nome: Master Admin | Status: sucesso
+[2025-08-21 09:10:11] Usuario: master | Acao: LOGOUT | Detalhes: Logout realizado - Nível: master, Nome: Master Admin | Status: sucesso
+[2025-08-21 09:10:22] Usuario: admin_01 | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-21 09:10:25] Usuario: admin_01 | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada:  | Status: sucesso
+[2025-08-21 09:11:15] Usuario: admin_01 | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-21 09:11:22] Usuario: master | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: master, Nome: Master Admin | Status: sucesso
+[2025-08-21 09:11:59] Usuario: master | Acao: LOGOUT | Detalhes: Logout realizado - Nível: master, Nome: Master Admin | Status: sucesso
+[2025-08-21 09:12:09] Usuario: admin_01 | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-21 09:12:09] Usuario: admin_01 | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_01.db | Status: sucesso
+[2025-08-21 09:22:15] Usuario: admin_01 | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-21 09:22:38] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-21 09:22:38] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-21 09:30:51] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-21 09:31:04] Usuario: admin_01 | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-21 09:31:04] Usuario: admin_01 | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_01.db | Status: sucesso
+[2025-08-21 09:34:45] Usuario: admin_01 | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-21 09:34:54] Usuario: tecnico_01 | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: tecnico, Nome: Técnico 01 | Status: sucesso
+[2025-08-21 09:34:54] Usuario: tecnico_01 | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_01.db | Status: sucesso
+[2025-08-21 09:36:51] Usuario: tecnico_01 | Acao: LOGOUT | Detalhes: Logout realizado - Nível: tecnico, Nome: Técnico 01 | Status: sucesso
+[2025-08-21 09:37:01] Usuario: usuario_01 | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: usuario, Nome: Usuário 01 | Status: sucesso
+[2025-08-21 09:37:06] Usuario: usuario_01 | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_01.db | Status: sucesso
+[2025-08-21 09:37:23] Usuario: usuario_01 | Acao: LOGOUT | Detalhes: Logout realizado - Nível: usuario, Nome: Usuário 01 | Status: sucesso
+[2025-08-21 09:39:21] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-21 09:39:21] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-21 09:39:36] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-21 09:39:46] Usuario: tecnico_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: tecnico, Nome: Técnico WH | Status: sucesso
+[2025-08-21 09:39:46] Usuario: tecnico_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-21 09:40:37] Usuario: tecnico_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: tecnico, Nome: Técnico WH | Status: sucesso
+[2025-08-21 09:40:37] Usuario: tecnico_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-21 09:41:53] Usuario: tecnico_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: tecnico, Nome: Técnico WH | Status: sucesso
+[2025-08-21 09:41:53] Usuario: tecnico_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-21 09:48:54] Usuario: tecnico_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: tecnico, Nome: Técnico WH | Status: sucesso
+[2025-08-21 09:49:05] Usuario: usuario_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: usuario, Nome: Usuário WH | Status: sucesso
+[2025-08-21 09:49:05] Usuario: usuario_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-21 10:13:01] Usuario: usuario_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: usuario, Nome: Usuário WH | Status: sucesso
+[2025-08-21 10:13:07] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-21 10:13:07] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-21 10:41:17] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-21 10:41:49] Usuario: admin_01 | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-21 10:41:49] Usuario: admin_01 | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_01.db | Status: sucesso
+[2025-08-21 10:42:16] Usuario: admin_01 | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-21 10:51:09] Usuario: admin_01 | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-21 10:51:09] Usuario: admin_01 | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_01.db | Status: sucesso
+[2025-08-21 10:54:24] Usuario: admin_01 | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-21 10:54:36] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-21 10:54:36] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-21 12:36:37] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-116 criado | Status: sucesso
+[2025-08-21 12:36:37] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 255 criada | Status: sucesso
+[2025-08-21 12:36:54] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-117 criado | Status: sucesso
+[2025-08-21 12:36:54] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 256 criada | Status: sucesso
+[2025-08-21 12:37:12] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-118 criado | Status: sucesso
+[2025-08-21 12:37:12] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 257 criada | Status: sucesso
+[2025-08-21 12:37:48] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-119 criado | Status: sucesso
+[2025-08-21 12:37:48] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 258 criada | Status: sucesso
+[2025-08-21 12:38:50] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-063 criado | Status: sucesso
+[2025-08-21 12:38:50] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 259 criada | Status: sucesso
+[2025-08-21 12:39:36] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-064 criado | Status: sucesso
+[2025-08-21 12:39:36] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 260 criada | Status: sucesso
+[2025-08-21 12:40:55] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-065 criado | Status: sucesso
+[2025-08-21 12:40:55] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 261 criada | Status: sucesso
+[2025-08-21 12:41:47] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-066 criado | Status: sucesso
+[2025-08-21 12:41:47] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 262 criada | Status: sucesso
+[2025-08-21 12:42:47] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-067 criado | Status: sucesso
+[2025-08-21 12:42:47] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 263 criada | Status: sucesso
+[2025-08-21 12:43:18] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-058 criado | Status: sucesso
+[2025-08-21 12:43:18] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 264 criada | Status: sucesso
+[2025-08-21 12:43:55] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-059 criado | Status: sucesso
+[2025-08-21 12:43:56] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 265 criada | Status: sucesso
+[2025-08-21 12:44:29] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-060 criado | Status: sucesso
+[2025-08-21 12:44:29] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 266 criada | Status: sucesso
+[2025-08-21 12:51:07] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=29 | Status: sucesso
+[2025-08-21 14:28:28] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-120 criado | Status: sucesso
+[2025-08-21 14:28:28] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 267 criada | Status: sucesso
+[2025-08-21 14:29:10] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-068 criado | Status: sucesso
+[2025-08-21 14:29:10] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 268 criada | Status: sucesso
+[2025-08-21 14:29:42] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-069 criado | Status: sucesso
+[2025-08-21 14:29:42] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 269 criada | Status: sucesso
+[2025-08-21 14:30:07] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-061 criado | Status: sucesso
+[2025-08-21 14:30:07] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 270 criada | Status: sucesso
+[2025-08-21 14:30:42] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-062 criado | Status: sucesso
+[2025-08-21 14:30:42] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 271 criada | Status: sucesso
+[2025-08-21 14:31:21] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-063 criado | Status: sucesso
+[2025-08-21 14:31:21] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 272 criada | Status: sucesso
+[2025-08-21 14:33:24] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=30 | Status: sucesso
+[2025-08-21 14:51:51] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-121 criado | Status: sucesso
+[2025-08-21 14:51:51] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 273 criada | Status: sucesso
+[2025-08-21 14:53:29] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-064 criado | Status: sucesso
+[2025-08-21 14:53:29] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 274 criada | Status: sucesso
+[2025-08-21 14:53:57] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=31 | Status: sucesso
+[2025-08-21 15:09:40] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-122 criado | Status: sucesso
+[2025-08-21 15:09:40] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 275 criada | Status: sucesso
+[2025-08-21 15:10:24] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-065 criado | Status: sucesso
+[2025-08-21 15:10:24] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 276 criada | Status: sucesso
+[2025-08-21 15:10:43] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=32 | Status: sucesso
+[2025-08-21 15:11:19] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-123 criado | Status: sucesso
+[2025-08-21 15:11:19] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 277 criada | Status: sucesso
+[2025-08-21 15:11:47] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-066 criado | Status: sucesso
+[2025-08-21 15:11:47] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 278 criada | Status: sucesso
+[2025-08-21 15:12:09] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=33 | Status: sucesso
+[2025-08-21 15:12:59] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=33 | Status: sucesso
+[2025-08-22 07:53:05] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-22 07:53:05] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-22 07:53:48] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-22 07:54:03] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: admin_01 | Status: erro
+[2025-08-22 07:54:10] Usuario: admin_01 | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-22 07:54:10] Usuario: admin_01 | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_01.db | Status: sucesso
+[2025-08-22 07:55:27] Usuario: admin_01 | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-22 07:56:32] Usuario: admin_01 | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-22 07:56:32] Usuario: admin_01 | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_01.db | Status: sucesso
+[2025-08-22 07:57:47] Usuario: admin_01 | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-22 07:58:18] Usuario: tecnico_01 | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: tecnico, Nome: Técnico 01 | Status: sucesso
+[2025-08-22 07:58:18] Usuario: tecnico_01 | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_01.db | Status: sucesso
+[2025-08-22 07:58:27] Usuario: tecnico_01 | Acao: LOGOUT | Detalhes: Logout realizado - Nível: tecnico, Nome: Técnico 01 | Status: sucesso
+[2025-08-22 07:58:51] Usuario: tecnico_01 | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: tecnico, Nome: Técnico 01 | Status: sucesso
+[2025-08-22 07:58:51] Usuario: tecnico_01 | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_01.db | Status: sucesso
+[2025-08-22 07:59:18] Usuario: tecnico_01 | Acao: LOGOUT | Detalhes: Logout realizado - Nível: tecnico, Nome: Técnico 01 | Status: sucesso
+[2025-08-22 07:59:33] Usuario: usuario_01 | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: usuario, Nome: Usuário 01 | Status: sucesso
+[2025-08-22 07:59:37] Usuario: usuario_01 | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_01.db | Status: sucesso
+[2025-08-22 07:59:40] Usuario: usuario_01 | Acao: LOGOUT | Detalhes: Logout realizado - Nível: usuario, Nome: Usuário 01 | Status: sucesso
+[2025-08-22 07:59:49] Usuario: master | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: master, Nome: Master Admin | Status: sucesso
+[2025-08-22 08:00:20] Usuario: master | Acao: LOGOUT | Detalhes: Logout realizado - Nível: master, Nome: Master Admin | Status: sucesso
+[2025-08-22 08:00:26] Usuario: usuario_01 | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: usuario, Nome: Usuário 01 | Status: sucesso
+[2025-08-22 08:00:26] Usuario: usuario_01 | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_01.db | Status: sucesso
+[2025-08-22 08:00:34] Usuario: usuario_01 | Acao: LOGOUT | Detalhes: Logout realizado - Nível: usuario, Nome: Usuário 01 | Status: sucesso
+[2025-08-22 08:00:55] Usuario: usuario_01 | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: usuario, Nome: Usuário 01 | Status: sucesso
+[2025-08-22 08:00:55] Usuario: usuario_01 | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_01.db | Status: sucesso
+[2025-08-22 08:01:22] Usuario: usuario_01 | Acao: LOGOUT | Detalhes: Logout realizado - Nível: usuario, Nome: Usuário 01 | Status: sucesso
+[2025-08-22 08:01:34] Usuario: admin_01 | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-22 08:01:34] Usuario: admin_01 | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_01.db | Status: sucesso
+[2025-08-22 08:02:33] Usuario: admin_01 | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-22 08:02:44] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: admin_02 | Status: erro
+[2025-08-22 08:02:53] Usuario: master | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: master, Nome: Master Admin | Status: sucesso
+[2025-08-22 08:03:28] Usuario: master | Acao: LOGOUT | Detalhes: Logout realizado - Nível: master, Nome: Master Admin | Status: sucesso
+[2025-08-22 08:03:43] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: admin_02 | Status: erro
+[2025-08-22 08:03:55] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: admin_02 | Status: erro
+[2025-08-22 08:04:04] Usuario: master | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: master, Nome: Master Admin | Status: sucesso
+[2025-08-22 08:04:18] Usuario: master | Acao: LOGOUT | Detalhes: Logout realizado - Nível: master, Nome: Master Admin | Status: sucesso
+[2025-08-22 08:04:29] Usuario: admin-02 | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: admin 02 | Status: sucesso
+[2025-08-22 08:04:29] Usuario: admin-02 | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_02.db | Status: sucesso
+[2025-08-22 08:04:50] Usuario: admin-02 | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: admin 02 | Status: sucesso
+[2025-08-22 08:04:59] Usuario: admin_01 | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-22 08:04:59] Usuario: admin_01 | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_01.db | Status: sucesso
+[2025-08-22 09:55:44] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-22 09:55:44] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-22 10:38:29] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-22 10:38:39] Usuario: admin_01 | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-22 10:38:39] Usuario: admin_01 | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_01.db | Status: sucesso
+[2025-08-25 07:50:40] Usuario: admin_01 | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-25 07:50:40] Usuario: admin_01 | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_01.db | Status: sucesso
+[2025-08-25 08:06:36] Usuario: admin_01 | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin 01 | Status: sucesso
+[2025-08-25 08:06:44] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-25 08:06:44] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-25 08:41:46] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-124 criado | Status: sucesso
+[2025-08-25 08:41:46] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 279 criada | Status: sucesso
+[2025-08-25 08:42:02] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-125 criado | Status: sucesso
+[2025-08-25 08:42:02] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 280 criada | Status: sucesso
+[2025-08-25 08:42:17] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-126 criado | Status: sucesso
+[2025-08-25 08:42:17] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 281 criada | Status: sucesso
+[2025-08-25 08:43:15] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-070 criado | Status: sucesso
+[2025-08-25 08:43:15] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 282 criada | Status: sucesso
+[2025-08-25 08:44:09] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-071 criado | Status: sucesso
+[2025-08-25 08:44:09] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 283 criada | Status: sucesso
+[2025-08-25 08:44:37] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-067 criado | Status: sucesso
+[2025-08-25 08:44:37] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 284 criada | Status: sucesso
+[2025-08-25 08:45:29] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-068 criado | Status: sucesso
+[2025-08-25 08:45:29] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 285 criada | Status: sucesso
+[2025-08-25 08:46:00] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-069 criado | Status: sucesso
+[2025-08-25 08:46:00] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 286 criada | Status: sucesso
+[2025-08-25 08:47:55] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=34 | Status: sucesso
+[2025-08-25 09:56:06] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-127 criado | Status: sucesso
+[2025-08-25 09:56:06] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 287 criada | Status: sucesso
+[2025-08-25 09:56:26] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-128 criado | Status: sucesso
+[2025-08-25 09:56:26] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 288 criada | Status: sucesso
+[2025-08-25 09:56:48] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-129 criado | Status: sucesso
+[2025-08-25 09:56:48] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 289 criada | Status: sucesso
+[2025-08-25 10:07:32] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-072 criado | Status: sucesso
+[2025-08-25 10:07:32] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 290 criada | Status: sucesso
+[2025-08-25 10:08:11] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-073 criado | Status: sucesso
+[2025-08-25 10:08:11] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 291 criada | Status: sucesso
+[2025-08-25 10:08:37] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-070 criado | Status: sucesso
+[2025-08-25 10:08:37] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 292 criada | Status: sucesso
+[2025-08-25 10:09:01] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-071 criado | Status: sucesso
+[2025-08-25 10:09:01] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 293 criada | Status: sucesso
+[2025-08-25 10:09:41] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-072 criado | Status: sucesso
+[2025-08-25 10:09:41] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 294 criada | Status: sucesso
+[2025-08-25 10:12:42] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=35 | Status: sucesso
+[2025-08-25 10:39:09] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-130 criado | Status: sucesso
+[2025-08-25 10:39:09] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 295 criada | Status: sucesso
+[2025-08-25 10:39:23] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-131 criado | Status: sucesso
+[2025-08-25 10:39:23] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 296 criada | Status: sucesso
+[2025-08-25 10:39:42] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-132 criado | Status: sucesso
+[2025-08-25 10:39:42] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 297 criada | Status: sucesso
+[2025-08-25 10:40:25] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-074 criado | Status: sucesso
+[2025-08-25 10:40:25] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 298 criada | Status: sucesso
+[2025-08-25 10:40:52] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-075 criado | Status: sucesso
+[2025-08-25 10:40:52] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 299 criada | Status: sucesso
+[2025-08-25 10:41:32] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-073 criado | Status: sucesso
+[2025-08-25 10:41:32] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 300 criada | Status: sucesso
+[2025-08-25 10:41:55] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-074 criado | Status: sucesso
+[2025-08-25 10:41:55] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 301 criada | Status: sucesso
+[2025-08-25 10:42:27] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-075 criado | Status: sucesso
+[2025-08-25 10:42:27] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 302 criada | Status: sucesso
+[2025-08-25 10:43:44] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=36 | Status: sucesso
+[2025-08-25 10:52:43] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-133 criado | Status: sucesso
+[2025-08-25 10:52:43] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 303 criada | Status: sucesso
+[2025-08-25 10:53:19] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-076 criado | Status: sucesso
+[2025-08-25 10:53:19] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 304 criada | Status: sucesso
+[2025-08-25 10:54:18] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-077 criado | Status: sucesso
+[2025-08-25 10:54:18] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 305 criada | Status: sucesso
+[2025-08-25 10:54:40] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-076 criado | Status: sucesso
+[2025-08-25 10:54:40] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 306 criada | Status: sucesso
+[2025-08-25 10:55:00] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-077 criado | Status: sucesso
+[2025-08-25 10:55:00] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 307 criada | Status: sucesso
+[2025-08-25 10:55:39] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-078 criado | Status: sucesso
+[2025-08-25 10:55:39] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 308 criada | Status: sucesso
+[2025-08-25 11:01:25] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 306 atualizado | Status: sucesso
+[2025-08-25 11:01:25] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 309 atualizada | Status: sucesso
+[2025-08-25 11:02:04] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 306 atualizado | Status: sucesso
+[2025-08-25 11:02:04] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 309 atualizada | Status: sucesso
+[2025-08-25 11:03:00] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 306 atualizado | Status: sucesso
+[2025-08-25 11:03:00] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 309 atualizada | Status: sucesso
+[2025-08-25 11:04:35] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 306 atualizado | Status: sucesso
+[2025-08-25 11:04:35] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 309 atualizada | Status: sucesso
+[2025-08-25 11:08:16] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 306 atualizado | Status: sucesso
+[2025-08-25 11:08:16] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 309 atualizada | Status: sucesso
+[2025-08-25 11:10:47] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 306 atualizado | Status: sucesso
+[2025-08-25 11:10:47] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 309 atualizada | Status: sucesso
+[2025-08-25 11:11:11] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 306 atualizado | Status: sucesso
+[2025-08-25 11:11:11] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 309 atualizada | Status: sucesso
+[2025-08-25 11:14:39] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 306 atualizado | Status: sucesso
+[2025-08-25 11:14:39] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 309 atualizada | Status: sucesso
+[2025-08-25 11:15:00] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 306 atualizado | Status: sucesso
+[2025-08-25 11:15:00] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 309 atualizada | Status: sucesso
+[2025-08-25 11:17:44] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 306 atualizado | Status: sucesso
+[2025-08-25 11:17:44] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 309 atualizada | Status: sucesso
+[2025-08-25 11:19:31] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 306 atualizado | Status: sucesso
+[2025-08-25 11:19:31] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 309 atualizada | Status: sucesso
+[2025-08-25 11:20:09] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 306 atualizado | Status: sucesso
+[2025-08-25 11:20:09] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 309 atualizada | Status: sucesso
+[2025-08-25 11:20:47] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 306 atualizado | Status: sucesso
+[2025-08-25 11:20:47] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 309 atualizada | Status: sucesso
+[2025-08-25 11:21:23] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 306 atualizado | Status: sucesso
+[2025-08-25 11:21:23] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 309 atualizada | Status: sucesso
+[2025-08-25 11:23:58] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 306 atualizado | Status: sucesso
+[2025-08-25 11:23:58] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 309 atualizada | Status: sucesso
+[2025-08-25 11:24:19] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 306 atualizado | Status: sucesso
+[2025-08-25 11:24:19] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 309 atualizada | Status: sucesso
+[2025-08-25 11:25:16] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=37 | Status: sucesso
+[2025-08-25 11:38:40] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-134 criado | Status: sucesso
+[2025-08-25 11:38:40] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 309 criada | Status: sucesso
+[2025-08-25 11:39:09] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-079 criado | Status: sucesso
+[2025-08-25 11:39:09] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 310 criada | Status: sucesso
+[2025-08-25 11:39:37] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=38 | Status: sucesso
+[2025-08-25 11:46:23] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-135 criado | Status: sucesso
+[2025-08-25 11:46:23] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 311 criada | Status: sucesso
+[2025-08-25 11:46:47] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-080 criado | Status: sucesso
+[2025-08-25 11:46:47] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 312 criada | Status: sucesso
+[2025-08-25 11:47:09] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=39 | Status: sucesso
+[2025-08-25 11:51:40] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-136 criado | Status: sucesso
+[2025-08-25 11:51:40] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 313 criada | Status: sucesso
+[2025-08-25 11:52:08] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-081 criado | Status: sucesso
+[2025-08-25 11:52:08] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 314 criada | Status: sucesso
+[2025-08-25 11:52:34] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=40 | Status: sucesso
+[2025-08-25 11:55:35] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-137 criado | Status: sucesso
+[2025-08-25 11:55:35] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 315 criada | Status: sucesso
+[2025-08-25 11:55:53] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-082 criado | Status: sucesso
+[2025-08-25 11:55:54] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 316 criada | Status: sucesso
+[2025-08-25 11:56:10] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=41 | Status: sucesso
+[2025-08-25 12:07:21] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-138 criado | Status: sucesso
+[2025-08-25 12:07:21] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 317 criada | Status: sucesso
+[2025-08-25 12:07:40] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-139 criado | Status: sucesso
+[2025-08-25 12:07:40] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 318 criada | Status: sucesso
+[2025-08-25 12:07:49] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-140 criado | Status: sucesso
+[2025-08-25 12:07:50] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 319 criada | Status: sucesso
+[2025-08-25 12:08:35] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-078 criado | Status: sucesso
+[2025-08-25 12:08:35] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 320 criada | Status: sucesso
+[2025-08-25 12:09:24] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-079 criado | Status: sucesso
+[2025-08-25 12:09:24] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 321 criada | Status: sucesso
+[2025-08-25 12:10:21] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-083 criado | Status: sucesso
+[2025-08-25 12:10:21] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 322 criada | Status: sucesso
+[2025-08-25 12:10:53] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-084 criado | Status: sucesso
+[2025-08-25 12:10:53] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 323 criada | Status: sucesso
+[2025-08-25 12:11:32] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-085 criado | Status: sucesso
+[2025-08-25 12:11:32] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 324 criada | Status: sucesso
+[2025-08-25 12:13:22] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=42 | Status: sucesso
+[2025-08-25 12:30:12] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-141 criado | Status: sucesso
+[2025-08-25 12:30:12] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 325 criada | Status: sucesso
+[2025-08-25 12:31:44] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-080 criado | Status: sucesso
+[2025-08-25 12:31:44] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 326 criada | Status: sucesso
+[2025-08-25 12:32:11] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-081 criado | Status: sucesso
+[2025-08-25 12:32:11] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 327 criada | Status: sucesso
+[2025-08-25 12:32:38] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-086 criado | Status: sucesso
+[2025-08-25 12:32:38] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 328 criada | Status: sucesso
+[2025-08-25 12:34:51] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-087 criado | Status: sucesso
+[2025-08-25 12:34:51] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 329 criada | Status: sucesso
+[2025-08-25 12:35:16] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-088 criado | Status: sucesso
+[2025-08-25 12:35:16] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 330 criada | Status: sucesso
+[2025-08-25 12:36:03] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=43 | Status: sucesso
+[2025-08-25 14:28:08] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-142 criado | Status: sucesso
+[2025-08-25 14:28:08] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 331 criada | Status: sucesso
+[2025-08-25 14:28:28] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-143 criado | Status: sucesso
+[2025-08-25 14:28:28] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 332 criada | Status: sucesso
+[2025-08-25 14:28:59] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-144 criado | Status: sucesso
+[2025-08-25 14:28:59] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 333 criada | Status: sucesso
+[2025-08-25 14:31:06] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-145 criado | Status: sucesso
+[2025-08-25 14:31:06] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 334 criada | Status: sucesso
+[2025-08-25 14:33:52] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-082 criado | Status: sucesso
+[2025-08-25 14:33:52] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 335 criada | Status: sucesso
+[2025-08-25 14:34:48] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-083 criado | Status: sucesso
+[2025-08-25 14:34:48] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 336 criada | Status: sucesso
+[2025-08-25 14:35:30] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-084 criado | Status: sucesso
+[2025-08-25 14:35:30] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 337 criada | Status: sucesso
+[2025-08-25 14:47:25] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-085 criado | Status: sucesso
+[2025-08-25 14:47:25] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 338 criada | Status: sucesso
+[2025-08-25 14:47:58] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-086 criado | Status: sucesso
+[2025-08-25 14:47:58] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 339 criada | Status: sucesso
+[2025-08-25 14:48:36] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-089 criado | Status: sucesso
+[2025-08-25 14:48:36] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 340 criada | Status: sucesso
+[2025-08-25 14:49:07] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-090 criado | Status: sucesso
+[2025-08-25 14:49:07] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 341 criada | Status: sucesso
+[2025-08-25 14:49:36] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-091 criado | Status: sucesso
+[2025-08-25 14:49:36] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 342 criada | Status: sucesso
+[2025-08-25 14:55:33] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=44 | Status: sucesso
+[2025-08-25 15:00:55] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-146 criado | Status: sucesso
+[2025-08-25 15:00:55] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 343 criada | Status: sucesso
+[2025-08-25 15:01:26] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-092 criado | Status: sucesso
+[2025-08-25 15:01:26] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 344 criada | Status: sucesso
+[2025-08-25 15:01:54] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=45 | Status: sucesso
+[2025-08-25 15:08:38] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-147 criado | Status: sucesso
+[2025-08-25 15:08:38] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 345 criada | Status: sucesso
+[2025-08-25 15:08:48] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-148 criado | Status: sucesso
+[2025-08-25 15:08:48] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 346 criada | Status: sucesso
+[2025-08-25 15:08:59] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-149 criado | Status: sucesso
+[2025-08-25 15:08:59] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 347 criada | Status: sucesso
+[2025-08-25 15:09:26] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-087 criado | Status: sucesso
+[2025-08-25 15:09:26] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 348 criada | Status: sucesso
+[2025-08-25 15:10:13] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-088 criado | Status: sucesso
+[2025-08-25 15:10:13] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 349 criada | Status: sucesso
+[2025-08-25 15:10:59] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-093 criado | Status: sucesso
+[2025-08-25 15:10:59] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 350 criada | Status: sucesso
+[2025-08-25 15:11:24] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-094 criado | Status: sucesso
+[2025-08-25 15:11:24] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 351 criada | Status: sucesso
+[2025-08-25 15:11:48] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-095 criado | Status: sucesso
+[2025-08-25 15:11:48] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 352 criada | Status: sucesso
+[2025-08-25 15:13:12] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=46 | Status: sucesso
+[2025-08-25 15:18:42] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-150 criado | Status: sucesso
+[2025-08-25 15:18:42] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 353 criada | Status: sucesso
+[2025-08-25 15:20:07] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-096 criado | Status: sucesso
+[2025-08-25 15:20:07] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 354 criada | Status: sucesso
+[2025-08-25 15:20:33] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=47 | Status: sucesso
+[2025-08-25 15:20:42] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=47 | Status: sucesso
+[2025-08-25 15:23:23] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-151 criado | Status: sucesso
+[2025-08-25 15:23:23] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 355 criada | Status: sucesso
+[2025-08-25 15:23:46] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-097 criado | Status: sucesso
+[2025-08-25 15:23:47] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 356 criada | Status: sucesso
+[2025-08-25 15:24:12] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=48 | Status: sucesso
+[2025-08-25 15:36:33] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-152 criado | Status: sucesso
+[2025-08-25 15:36:33] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 357 criada | Status: sucesso
+[2025-08-25 15:37:02] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-098 criado | Status: sucesso
+[2025-08-25 15:37:02] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 358 criada | Status: sucesso
+[2025-08-25 15:37:31] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=49 | Status: sucesso
+[2025-08-25 15:40:03] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-153 criado | Status: sucesso
+[2025-08-25 15:40:03] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 359 criada | Status: sucesso
+[2025-08-25 15:40:19] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-099 criado | Status: sucesso
+[2025-08-25 15:40:19] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 360 criada | Status: sucesso
+[2025-08-25 15:40:40] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=50 | Status: sucesso
+[2025-08-25 15:42:14] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-154 criado | Status: sucesso
+[2025-08-25 15:42:15] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 361 criada | Status: sucesso
+[2025-08-25 15:42:35] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-100 criado | Status: sucesso
+[2025-08-25 15:42:35] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 362 criada | Status: sucesso
+[2025-08-25 15:42:54] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=51 | Status: sucesso
+[2025-08-25 15:47:23] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-155 criado | Status: sucesso
+[2025-08-25 15:47:23] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 363 criada | Status: sucesso
+[2025-08-25 15:49:43] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-101 criado | Status: sucesso
+[2025-08-25 15:49:43] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 364 criada | Status: sucesso
+[2025-08-25 15:50:19] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-089 criado | Status: sucesso
+[2025-08-25 15:50:19] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 365 criada | Status: sucesso
+[2025-08-25 15:50:42] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-090 criado | Status: sucesso
+[2025-08-25 15:50:42] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 366 criada | Status: sucesso
+[2025-08-25 15:53:25] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-102 criado | Status: sucesso
+[2025-08-25 15:53:25] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 367 criada | Status: sucesso
+[2025-08-25 15:54:33] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=52 | Status: sucesso
+[2025-08-25 15:57:19] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-156 criado | Status: sucesso
+[2025-08-25 15:57:19] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 368 criada | Status: sucesso
+[2025-08-25 15:57:55] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-091 criado | Status: sucesso
+[2025-08-25 15:57:56] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 369 criada | Status: sucesso
+[2025-08-25 15:58:26] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-092 criado | Status: sucesso
+[2025-08-25 15:58:26] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 370 criada | Status: sucesso
+[2025-08-25 15:58:48] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-103 criado | Status: sucesso
+[2025-08-25 15:58:48] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 371 criada | Status: sucesso
+[2025-08-25 15:59:14] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-104 criado | Status: sucesso
+[2025-08-25 15:59:14] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 372 criada | Status: sucesso
+[2025-08-25 16:02:09] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=53 | Status: sucesso
+[2025-08-25 16:05:19] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-157 criado | Status: sucesso
+[2025-08-25 16:05:19] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 373 criada | Status: sucesso
+[2025-08-25 16:05:57] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-093 criado | Status: sucesso
+[2025-08-25 16:05:57] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 374 criada | Status: sucesso
+[2025-08-25 16:07:52] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-094 criado | Status: sucesso
+[2025-08-25 16:07:52] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 375 criada | Status: sucesso
+[2025-08-25 16:08:14] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-105 criado | Status: sucesso
+[2025-08-25 16:08:14] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 376 criada | Status: sucesso
+[2025-08-25 16:08:36] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-106 criado | Status: sucesso
+[2025-08-25 16:08:36] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 377 criada | Status: sucesso
+[2025-08-25 16:10:13] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=54 | Status: sucesso
+[2025-08-25 16:13:15] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-158 criado | Status: sucesso
+[2025-08-25 16:13:15] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 378 criada | Status: sucesso
+[2025-08-25 16:13:39] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-095 criado | Status: sucesso
+[2025-08-25 16:13:39] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 379 criada | Status: sucesso
+[2025-08-25 16:14:13] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-096 criado | Status: sucesso
+[2025-08-25 16:14:13] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 380 criada | Status: sucesso
+[2025-08-25 16:14:57] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-107 criado | Status: sucesso
+[2025-08-25 16:14:57] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 381 criada | Status: sucesso
+[2025-08-25 16:15:19] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-108 criado | Status: sucesso
+[2025-08-25 16:15:20] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 382 criada | Status: sucesso
+[2025-08-25 16:16:29] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=55 | Status: sucesso
+[2025-08-25 16:19:05] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-159 criado | Status: sucesso
+[2025-08-25 16:19:05] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 383 criada | Status: sucesso
+[2025-08-25 16:19:33] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-097 criado | Status: sucesso
+[2025-08-25 16:19:33] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 384 criada | Status: sucesso
+[2025-08-25 16:19:58] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-098 criado | Status: sucesso
+[2025-08-25 16:19:58] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 385 criada | Status: sucesso
+[2025-08-25 16:20:21] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-109 criado | Status: sucesso
+[2025-08-25 16:20:21] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 386 criada | Status: sucesso
+[2025-08-25 16:20:47] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-110 criado | Status: sucesso
+[2025-08-25 16:20:47] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 387 criada | Status: sucesso
+[2025-08-25 16:21:33] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=56 | Status: sucesso
+[2025-08-25 16:21:55] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=56 | Status: sucesso
+[2025-08-26 08:21:56] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-26 08:21:56] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-26 08:33:42] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-160 criado | Status: sucesso
+[2025-08-26 08:33:42] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 388 criada | Status: sucesso
+[2025-08-26 08:33:59] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-161 criado | Status: sucesso
+[2025-08-26 08:33:59] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 389 criada | Status: sucesso
+[2025-08-26 08:34:08] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-162 criado | Status: sucesso
+[2025-08-26 08:34:08] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 390 criada | Status: sucesso
+[2025-08-26 08:34:34] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-163 criado | Status: sucesso
+[2025-08-26 08:34:34] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 391 criada | Status: sucesso
+[2025-08-26 08:37:09] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-111 criado | Status: sucesso
+[2025-08-26 08:37:09] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 392 criada | Status: sucesso
+[2025-08-26 08:37:55] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo DIS-007 criado | Status: sucesso
+[2025-08-26 08:37:55] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 393 criada | Status: sucesso
+[2025-08-26 08:38:31] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo DIS-008 criado | Status: sucesso
+[2025-08-26 08:38:31] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 394 criada | Status: sucesso
+[2025-08-26 08:38:54] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo DIS-009 criado | Status: sucesso
+[2025-08-26 08:38:54] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 395 criada | Status: sucesso
+[2025-08-26 08:39:29] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-112 criado | Status: sucesso
+[2025-08-26 08:39:29] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 396 criada | Status: sucesso
+[2025-08-26 08:39:54] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo DIS-010 criado | Status: sucesso
+[2025-08-26 08:39:54] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 397 criada | Status: sucesso
+[2025-08-26 08:40:18] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo DIS-011 criado | Status: sucesso
+[2025-08-26 08:40:18] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 398 criada | Status: sucesso
+[2025-08-26 08:40:36] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo DIS-012 criado | Status: sucesso
+[2025-08-26 08:40:36] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 399 criada | Status: sucesso
+[2025-08-26 08:43:50] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=59 | Status: sucesso
+[2025-08-26 08:54:29] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-164 criado | Status: sucesso
+[2025-08-26 08:54:29] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 400 criada | Status: sucesso
+[2025-08-26 08:54:46] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-165 criado | Status: sucesso
+[2025-08-26 08:54:46] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 401 criada | Status: sucesso
+[2025-08-26 08:55:14] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-166 criado | Status: sucesso
+[2025-08-26 08:55:14] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 402 criada | Status: sucesso
+[2025-08-26 08:56:39] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-167 criado | Status: sucesso
+[2025-08-26 08:56:39] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 403 criada | Status: sucesso
+[2025-08-26 08:58:38] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-099 criado | Status: sucesso
+[2025-08-26 08:58:38] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 404 criada | Status: sucesso
+[2025-08-26 08:59:41] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-100 criado | Status: sucesso
+[2025-08-26 08:59:41] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 405 criada | Status: sucesso
+[2025-08-26 09:00:20] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-101 criado | Status: sucesso
+[2025-08-26 09:00:20] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 406 criada | Status: sucesso
+[2025-08-26 09:01:00] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-102 criado | Status: sucesso
+[2025-08-26 09:01:00] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 407 criada | Status: sucesso
+[2025-08-26 09:01:37] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-103 criado | Status: sucesso
+[2025-08-26 09:01:37] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 408 criada | Status: sucesso
+[2025-08-26 09:02:06] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-113 criado | Status: sucesso
+[2025-08-26 09:02:06] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 409 criada | Status: sucesso
+[2025-08-26 09:02:34] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-114 criado | Status: sucesso
+[2025-08-26 09:02:34] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 410 criada | Status: sucesso
+[2025-08-26 09:03:07] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-115 criado | Status: sucesso
+[2025-08-26 09:03:07] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 411 criada | Status: sucesso
+[2025-08-26 09:06:20] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=60 | Status: sucesso
+[2025-08-26 09:15:41] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-168 criado | Status: sucesso
+[2025-08-26 09:15:41] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 412 criada | Status: sucesso
+[2025-08-26 09:15:57] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-169 criado | Status: sucesso
+[2025-08-26 09:15:57] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 413 criada | Status: sucesso
+[2025-08-26 09:16:13] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-170 criado | Status: sucesso
+[2025-08-26 09:16:13] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 414 criada | Status: sucesso
+[2025-08-26 09:16:44] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-171 criado | Status: sucesso
+[2025-08-26 09:16:44] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 415 criada | Status: sucesso
+[2025-08-26 09:17:25] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-104 criado | Status: sucesso
+[2025-08-26 09:17:25] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 416 criada | Status: sucesso
+[2025-08-26 09:17:53] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-105 criado | Status: sucesso
+[2025-08-26 09:17:54] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 417 criada | Status: sucesso
+[2025-08-26 09:18:28] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-106 criado | Status: sucesso
+[2025-08-26 09:18:28] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 418 criada | Status: sucesso
+[2025-08-26 09:19:01] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-107 criado | Status: sucesso
+[2025-08-26 09:19:01] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 419 criada | Status: sucesso
+[2025-08-26 09:19:32] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-108 criado | Status: sucesso
+[2025-08-26 09:19:32] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 420 criada | Status: sucesso
+[2025-08-26 09:20:18] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-116 criado | Status: sucesso
+[2025-08-26 09:20:18] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 421 criada | Status: sucesso
+[2025-08-26 09:20:46] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-117 criado | Status: sucesso
+[2025-08-26 09:20:46] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 422 criada | Status: sucesso
+[2025-08-26 09:21:10] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-118 criado | Status: sucesso
+[2025-08-26 09:21:10] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 423 criada | Status: sucesso
+[2025-08-26 09:44:51] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=61 | Status: sucesso
+[2025-08-26 09:45:54] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=61 | Status: sucesso
+[2025-08-26 10:02:57] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-172 criado | Status: sucesso
+[2025-08-26 10:02:57] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 424 criada | Status: sucesso
+[2025-08-26 10:03:25] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-173 criado | Status: sucesso
+[2025-08-26 10:03:25] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 425 criada | Status: sucesso
+[2025-08-26 10:03:42] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-174 criado | Status: sucesso
+[2025-08-26 10:03:42] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 426 criada | Status: sucesso
+[2025-08-26 10:05:24] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-175 criado | Status: sucesso
+[2025-08-26 10:05:24] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 427 criada | Status: sucesso
+[2025-08-26 10:07:09] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-109 criado | Status: sucesso
+[2025-08-26 10:07:09] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 428 criada | Status: sucesso
+[2025-08-26 10:08:04] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-110 criado | Status: sucesso
+[2025-08-26 10:08:04] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 429 criada | Status: sucesso
+[2025-08-26 10:08:37] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-111 criado | Status: sucesso
+[2025-08-26 10:08:37] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 430 criada | Status: sucesso
+[2025-08-26 10:10:05] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-112 criado | Status: sucesso
+[2025-08-26 10:10:05] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 431 criada | Status: sucesso
+[2025-08-26 10:11:39] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-113 criado | Status: sucesso
+[2025-08-26 10:11:39] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 432 criada | Status: sucesso
+[2025-08-26 10:12:12] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-119 criado | Status: sucesso
+[2025-08-26 10:12:12] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 433 criada | Status: sucesso
+[2025-08-26 10:12:53] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-120 criado | Status: sucesso
+[2025-08-26 10:12:53] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 434 criada | Status: sucesso
+[2025-08-26 10:13:35] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-121 criado | Status: sucesso
+[2025-08-26 10:13:35] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 435 criada | Status: sucesso
+[2025-08-26 10:18:47] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=62 | Status: sucesso
+[2025-08-27 10:24:09] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-27 10:24:09] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-27 11:04:49] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-176 criado | Status: sucesso
+[2025-08-27 11:04:50] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 436 criada | Status: sucesso
+[2025-08-27 11:05:09] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-177 criado | Status: sucesso
+[2025-08-27 11:05:09] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 437 criada | Status: sucesso
+[2025-08-27 11:05:29] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-178 criado | Status: sucesso
+[2025-08-27 11:05:29] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 438 criada | Status: sucesso
+[2025-08-27 11:06:13] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-179 criado | Status: sucesso
+[2025-08-27 11:06:13] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 439 criada | Status: sucesso
+[2025-08-27 11:06:35] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-180 criado | Status: sucesso
+[2025-08-27 11:06:35] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 440 criada | Status: sucesso
+[2025-08-27 11:06:51] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-181 criado | Status: sucesso
+[2025-08-27 11:06:51] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 441 criada | Status: sucesso
+[2025-08-27 11:07:01] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-182 criado | Status: sucesso
+[2025-08-27 11:07:01] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 442 criada | Status: sucesso
+[2025-08-27 11:07:14] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-183 criado | Status: sucesso
+[2025-08-27 11:07:14] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 443 criada | Status: sucesso
+[2025-08-27 11:07:32] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-184 criado | Status: sucesso
+[2025-08-27 11:07:32] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 444 criada | Status: sucesso
+[2025-08-27 11:07:49] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-185 criado | Status: sucesso
+[2025-08-27 11:07:49] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 445 criada | Status: sucesso
+[2025-08-27 11:08:02] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-186 criado | Status: sucesso
+[2025-08-27 11:08:02] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 446 criada | Status: sucesso
+[2025-08-27 11:13:53] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-114 criado | Status: sucesso
+[2025-08-27 11:13:53] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 447 criada | Status: sucesso
+[2025-08-27 11:14:46] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-115 criado | Status: sucesso
+[2025-08-27 11:14:46] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 448 criada | Status: sucesso
+[2025-08-27 11:15:20] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-116 criado | Status: sucesso
+[2025-08-27 11:15:21] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 449 criada | Status: sucesso
+[2025-08-27 11:18:15] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-117 criado | Status: sucesso
+[2025-08-27 11:18:15] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 450 criada | Status: sucesso
+[2025-08-27 11:19:12] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-118 criado | Status: sucesso
+[2025-08-27 11:19:13] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 451 criada | Status: sucesso
+[2025-08-27 11:19:56] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-122 criado | Status: sucesso
+[2025-08-27 11:19:56] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 452 criada | Status: sucesso
+[2025-08-27 11:20:34] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-123 criado | Status: sucesso
+[2025-08-27 11:20:34] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 453 criada | Status: sucesso
+[2025-08-27 11:22:49] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-124 criado | Status: sucesso
+[2025-08-27 11:22:49] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 454 criada | Status: sucesso
+[2025-08-27 11:23:22] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-125 criado | Status: sucesso
+[2025-08-27 11:23:22] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 455 criada | Status: sucesso
+[2025-08-27 11:37:54] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=63 | Status: sucesso
+[2025-08-27 11:39:43] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=63 | Status: sucesso
+[2025-08-27 12:43:40] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-187 criado | Status: sucesso
+[2025-08-27 12:43:40] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 456 criada | Status: sucesso
+[2025-08-27 12:44:12] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-188 criado | Status: sucesso
+[2025-08-27 12:44:12] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 457 criada | Status: sucesso
+[2025-08-27 12:44:25] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-189 criado | Status: sucesso
+[2025-08-27 12:44:25] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 458 criada | Status: sucesso
+[2025-08-27 12:44:41] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-190 criado | Status: sucesso
+[2025-08-27 12:44:41] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 459 criada | Status: sucesso
+[2025-08-27 12:44:57] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-191 criado | Status: sucesso
+[2025-08-27 12:44:57] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 460 criada | Status: sucesso
+[2025-08-27 12:45:18] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-192 criado | Status: sucesso
+[2025-08-27 12:45:18] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 461 criada | Status: sucesso
+[2025-08-27 12:45:45] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-193 criado | Status: sucesso
+[2025-08-27 12:45:45] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 462 criada | Status: sucesso
+[2025-08-27 12:45:57] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-194 criado | Status: sucesso
+[2025-08-27 12:45:57] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 463 criada | Status: sucesso
+[2025-08-27 12:46:13] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-195 criado | Status: sucesso
+[2025-08-27 12:46:13] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 464 criada | Status: sucesso
+[2025-08-27 12:49:23] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 467 desconectada | Status: sucesso
+[2025-08-27 12:50:09] Usuario: admin_wh | Acao: excluir_cabo | Detalhes: Cabo ID 464 excluído | Status: sucesso
+[2025-08-27 12:50:48] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-195 criado | Status: sucesso
+[2025-08-27 12:50:48] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 465 criada | Status: sucesso
+[2025-08-27 13:51:01] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-27 13:51:07] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-27 13:51:07] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-27 16:03:12] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-196 criado | Status: sucesso
+[2025-08-27 16:03:12] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 466 criada | Status: sucesso
+[2025-08-27 16:03:22] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-197 criado | Status: sucesso
+[2025-08-27 16:03:22] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 467 criada | Status: sucesso
+[2025-08-27 16:03:33] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-198 criado | Status: sucesso
+[2025-08-27 16:03:33] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 468 criada | Status: sucesso
+[2025-08-27 16:04:28] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-119 criado | Status: sucesso
+[2025-08-27 16:04:28] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 469 criada | Status: sucesso
+[2025-08-27 16:05:11] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-120 criado | Status: sucesso
+[2025-08-27 16:05:11] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 470 criada | Status: sucesso
+[2025-08-27 16:05:44] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-126 criado | Status: sucesso
+[2025-08-27 16:05:44] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 471 criada | Status: sucesso
+[2025-08-27 16:08:00] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-127 criado | Status: sucesso
+[2025-08-27 16:08:00] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 472 criada | Status: sucesso
+[2025-08-27 16:08:25] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-128 criado | Status: sucesso
+[2025-08-27 16:08:25] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 473 criada | Status: sucesso
+[2025-08-27 16:09:29] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=65 | Status: sucesso
+[2025-08-27 16:16:56] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-199 criado | Status: sucesso
+[2025-08-27 16:16:56] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 474 criada | Status: sucesso
+[2025-08-27 16:17:09] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-200 criado | Status: sucesso
+[2025-08-27 16:17:09] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 475 criada | Status: sucesso
+[2025-08-27 16:17:18] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-201 criado | Status: sucesso
+[2025-08-27 16:17:18] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 476 criada | Status: sucesso
+[2025-08-27 16:18:04] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-121 criado | Status: sucesso
+[2025-08-27 16:18:04] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 477 criada | Status: sucesso
+[2025-08-27 16:18:33] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-122 criado | Status: sucesso
+[2025-08-27 16:18:33] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 478 criada | Status: sucesso
+[2025-08-27 16:19:11] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-129 criado | Status: sucesso
+[2025-08-27 16:19:11] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 479 criada | Status: sucesso
+[2025-08-27 16:19:39] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-130 criado | Status: sucesso
+[2025-08-27 16:19:39] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 480 criada | Status: sucesso
+[2025-08-27 16:20:02] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-131 criado | Status: sucesso
+[2025-08-27 16:20:02] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 481 criada | Status: sucesso
+[2025-08-27 16:21:09] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=66 | Status: sucesso
+[2025-08-27 16:24:04] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-202 criado | Status: sucesso
+[2025-08-27 16:24:04] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 482 criada | Status: sucesso
+[2025-08-27 16:24:36] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-132 criado | Status: sucesso
+[2025-08-27 16:24:36] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 483 criada | Status: sucesso
+[2025-08-27 16:25:06] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=67 | Status: sucesso
+[2025-08-27 16:25:30] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=67 | Status: sucesso
+[2025-08-27 16:30:55] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-203 criado | Status: sucesso
+[2025-08-27 16:30:55] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 484 criada | Status: sucesso
+[2025-08-27 16:31:29] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-123 criado | Status: sucesso
+[2025-08-27 16:31:29] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 485 criada | Status: sucesso
+[2025-08-27 16:32:00] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-124 criado | Status: sucesso
+[2025-08-27 16:32:00] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 486 criada | Status: sucesso
+[2025-08-27 16:32:22] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-133 criado | Status: sucesso
+[2025-08-27 16:32:22] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 487 criada | Status: sucesso
+[2025-08-27 16:32:41] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-134 criado | Status: sucesso
+[2025-08-27 16:32:41] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 488 criada | Status: sucesso
+[2025-08-27 16:33:14] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-135 criado | Status: sucesso
+[2025-08-27 16:33:14] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 489 criada | Status: sucesso
+[2025-08-27 16:33:56] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=68 | Status: sucesso
+[2025-08-27 16:36:36] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-204 criado | Status: sucesso
+[2025-08-27 16:36:36] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 490 criada | Status: sucesso
+[2025-08-27 16:37:11] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-136 criado | Status: sucesso
+[2025-08-27 16:37:11] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 491 criada | Status: sucesso
+[2025-08-27 16:37:31] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=69 | Status: sucesso
+[2025-08-28 09:49:38] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-28 09:49:38] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-28 11:08:48] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-137 criado | Status: sucesso
+[2025-08-28 11:08:48] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 492 criada | Status: sucesso
+[2025-08-28 11:09:08] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 492 atualizado | Status: sucesso
+[2025-08-28 11:09:08] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 495 atualizada | Status: sucesso
+[2025-08-28 11:11:27] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo DVI-001 criado | Status: sucesso
+[2025-08-28 11:11:27] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 493 criada | Status: sucesso
+[2025-08-28 11:17:35] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-205 criado | Status: sucesso
+[2025-08-28 11:17:35] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 494 criada | Status: sucesso
+[2025-08-28 11:18:08] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-206 criado | Status: sucesso
+[2025-08-28 11:18:08] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 495 criada | Status: sucesso
+[2025-08-28 11:18:37] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-207 criado | Status: sucesso
+[2025-08-28 11:18:37] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 496 criada | Status: sucesso
+[2025-08-28 11:19:12] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-208 criado | Status: sucesso
+[2025-08-28 11:19:12] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 497 criada | Status: sucesso
+[2025-08-28 11:19:30] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-209 criado | Status: sucesso
+[2025-08-28 11:19:30] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 498 criada | Status: sucesso
+[2025-08-28 11:19:45] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-210 criado | Status: sucesso
+[2025-08-28 11:19:45] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 499 criada | Status: sucesso
+[2025-08-28 11:20:52] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 494 atualizado | Status: sucesso
+[2025-08-28 11:20:52] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 497 atualizada | Status: sucesso
+[2025-08-28 11:21:08] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 495 atualizado | Status: sucesso
+[2025-08-28 11:21:08] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 498 atualizada | Status: sucesso
+[2025-08-28 11:21:18] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 496 atualizado | Status: sucesso
+[2025-08-28 11:21:18] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 499 atualizada | Status: sucesso
+[2025-08-28 11:21:31] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 497 atualizado | Status: sucesso
+[2025-08-28 11:21:31] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 500 atualizada | Status: sucesso
+[2025-08-28 11:21:39] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 498 atualizado | Status: sucesso
+[2025-08-28 11:21:39] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 501 atualizada | Status: sucesso
+[2025-08-28 11:21:54] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 499 atualizado | Status: sucesso
+[2025-08-28 11:21:54] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 502 atualizada | Status: sucesso
+[2025-08-28 11:33:08] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=20 | Status: sucesso
+[2025-08-28 11:47:50] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-138 criado | Status: sucesso
+[2025-08-28 11:47:50] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 500 criada | Status: sucesso
+[2025-08-28 11:49:12] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=20 | Status: sucesso
+[2025-08-29 09:37:21] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-08-29 09:37:21] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-08-29 11:00:30] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-211 criado | Status: sucesso
+[2025-08-29 11:00:30] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 501 criada | Status: sucesso
+[2025-08-29 11:00:59] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-139 criado | Status: sucesso
+[2025-08-29 11:00:59] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 502 criada | Status: sucesso
+[2025-08-29 11:08:14] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=70 | Status: sucesso
+[2025-08-29 11:11:54] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-212 criado | Status: sucesso
+[2025-08-29 11:11:54] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 503 criada | Status: sucesso
+[2025-08-29 11:19:51] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-140 criado | Status: sucesso
+[2025-08-29 11:19:51] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 504 criada | Status: sucesso
+[2025-08-29 11:20:16] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=71 | Status: sucesso
+[2025-08-29 11:31:57] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-213 criado | Status: sucesso
+[2025-08-29 11:31:57] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 505 criada | Status: sucesso
+[2025-08-29 11:32:13] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-141 criado | Status: sucesso
+[2025-08-29 11:32:13] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 506 criada | Status: sucesso
+[2025-08-29 11:32:30] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=72 | Status: sucesso
+[2025-08-29 11:34:20] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-214 criado | Status: sucesso
+[2025-08-29 11:34:20] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 507 criada | Status: sucesso
+[2025-08-29 11:34:36] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-142 criado | Status: sucesso
+[2025-08-29 11:34:36] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 508 criada | Status: sucesso
+[2025-08-29 11:34:55] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=73 | Status: sucesso
+[2025-08-29 11:40:22] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-215 criado | Status: sucesso
+[2025-08-29 11:40:22] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 509 criada | Status: sucesso
+[2025-08-29 13:33:07] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-125 criado | Status: sucesso
+[2025-08-29 13:33:07] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 510 criada | Status: sucesso
+[2025-08-29 13:33:55] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-126 criado | Status: sucesso
+[2025-08-29 13:33:55] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 511 criada | Status: sucesso
+[2025-08-29 13:34:29] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-143 criado | Status: sucesso
+[2025-08-29 13:34:29] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 512 criada | Status: sucesso
+[2025-08-29 13:36:10] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-144 criado | Status: sucesso
+[2025-08-29 13:36:10] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 513 criada | Status: sucesso
+[2025-08-29 13:37:07] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-145 criado | Status: sucesso
+[2025-08-29 13:37:07] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 514 criada | Status: sucesso
+[2025-08-29 13:38:04] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 513 desconectada | Status: sucesso
+[2025-08-29 13:38:57] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 510 criada | Status: sucesso
+[2025-08-29 13:39:57] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=74 | Status: sucesso
+[2025-08-29 15:00:55] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-216 criado | Status: sucesso
+[2025-08-29 15:00:55] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 515 criada | Status: sucesso
+[2025-08-29 15:04:07] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-127 criado | Status: sucesso
+[2025-08-29 15:04:07] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 516 criada | Status: sucesso
+[2025-08-29 15:04:40] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-128 criado | Status: sucesso
+[2025-08-29 15:04:40] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 517 criada | Status: sucesso
+[2025-08-29 15:05:07] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-146 criado | Status: sucesso
+[2025-08-29 15:05:08] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 518 criada | Status: sucesso
+[2025-08-29 15:05:31] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-147 criado | Status: sucesso
+[2025-08-29 15:05:31] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 519 criada | Status: sucesso
+[2025-08-29 15:05:57] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-148 criado | Status: sucesso
+[2025-08-29 15:05:57] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 520 criada | Status: sucesso
+[2025-08-29 15:07:46] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=75 | Status: sucesso
+[2025-08-29 15:40:26] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=20 | Status: sucesso
+[2025-08-29 15:57:39] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-217 criado | Status: sucesso
+[2025-08-29 15:57:39] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 521 criada | Status: sucesso
+[2025-08-29 15:57:48] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-218 criado | Status: sucesso
+[2025-08-29 15:57:48] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 522 criada | Status: sucesso
+[2025-08-29 15:58:00] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-219 criado | Status: sucesso
+[2025-08-29 15:58:00] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 523 criada | Status: sucesso
+[2025-08-29 16:01:33] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-129 criado | Status: sucesso
+[2025-08-29 16:01:33] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 524 criada | Status: sucesso
+[2025-08-29 16:02:50] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-130 criado | Status: sucesso
+[2025-08-29 16:02:50] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 525 criada | Status: sucesso
+[2025-08-29 16:04:17] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-149 criado | Status: sucesso
+[2025-08-29 16:04:17] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 526 criada | Status: sucesso
+[2025-08-29 16:05:00] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-150 criado | Status: sucesso
+[2025-08-29 16:05:01] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 527 criada | Status: sucesso
+[2025-08-29 16:05:26] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-151 criado | Status: sucesso
+[2025-08-29 16:05:26] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 528 criada | Status: sucesso
+[2025-08-29 16:06:39] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=76 | Status: sucesso
+[2025-08-29 16:12:51] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-220 criado | Status: sucesso
+[2025-08-29 16:12:51] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 529 criada | Status: sucesso
+[2025-08-29 16:14:19] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-152 criado | Status: sucesso
+[2025-08-29 16:14:19] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 530 criada | Status: sucesso
+[2025-08-29 16:14:43] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=77 | Status: sucesso
+[2025-08-29 16:21:12] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=77 | Status: sucesso
+[2025-08-29 16:27:22] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-221 criado | Status: sucesso
+[2025-08-29 16:27:22] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 531 criada | Status: sucesso
+[2025-08-29 16:27:40] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-153 criado | Status: sucesso
+[2025-08-29 16:27:40] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 532 criada | Status: sucesso
+[2025-08-29 16:28:00] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=78 | Status: sucesso
+[2025-08-29 16:31:36] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-222 criado | Status: sucesso
+[2025-08-29 16:31:36] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 533 criada | Status: sucesso
+[2025-08-29 16:31:48] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-223 criado | Status: sucesso
+[2025-08-29 16:31:48] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 534 criada | Status: sucesso
+[2025-08-29 16:31:58] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-224 criado | Status: sucesso
+[2025-08-29 16:31:58] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 535 criada | Status: sucesso
+[2025-08-29 16:34:01] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-131 criado | Status: sucesso
+[2025-08-29 16:34:02] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 536 criada | Status: sucesso
+[2025-08-29 16:34:28] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-132 criado | Status: sucesso
+[2025-08-29 16:34:28] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 537 criada | Status: sucesso
+[2025-08-29 16:36:18] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-154 criado | Status: sucesso
+[2025-08-29 16:36:18] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 538 criada | Status: sucesso
+[2025-08-29 16:36:40] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-155 criado | Status: sucesso
+[2025-08-29 16:36:40] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 539 criada | Status: sucesso
+[2025-08-29 16:37:04] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-156 criado | Status: sucesso
+[2025-08-29 16:37:04] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 540 criada | Status: sucesso
+[2025-08-29 16:38:26] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=79 | Status: sucesso
+[2025-09-01 08:27:24] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-09-01 08:27:24] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-09-01 09:14:23] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-225 criado | Status: sucesso
+[2025-09-01 09:14:23] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 541 criada | Status: sucesso
+[2025-09-01 09:14:52] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-133 criado | Status: sucesso
+[2025-09-01 09:14:52] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 542 criada | Status: sucesso
+[2025-09-01 09:15:43] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-134 criado | Status: sucesso
+[2025-09-01 09:15:43] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 543 criada | Status: sucesso
+[2025-09-01 09:17:52] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-157 criado | Status: sucesso
+[2025-09-01 09:17:52] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 544 criada | Status: sucesso
+[2025-09-01 09:18:16] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-158 criado | Status: sucesso
+[2025-09-01 09:18:16] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 545 criada | Status: sucesso
+[2025-09-01 09:18:42] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-159 criado | Status: sucesso
+[2025-09-01 09:18:42] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 546 criada | Status: sucesso
+[2025-09-01 09:25:29] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=80 | Status: sucesso
+[2025-09-01 09:30:30] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-226 criado | Status: sucesso
+[2025-09-01 09:30:30] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 547 criada | Status: sucesso
+[2025-09-01 09:30:46] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-227 criado | Status: sucesso
+[2025-09-01 09:30:46] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 548 criada | Status: sucesso
+[2025-09-01 09:31:11] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-160 criado | Status: sucesso
+[2025-09-01 09:31:11] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 549 criada | Status: sucesso
+[2025-09-01 09:33:27] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 553 desconectada | Status: sucesso
+[2025-09-01 09:34:16] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 549 criada | Status: sucesso
+[2025-09-01 09:36:26] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 554 desconectada | Status: sucesso
+[2025-09-01 09:41:23] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-161 criado | Status: sucesso
+[2025-09-01 09:41:23] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 550 criada | Status: sucesso
+[2025-09-01 09:41:52] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=81 | Status: sucesso
+[2025-09-01 09:42:36] Usuario: admin_wh | Acao: excluir_cabo | Detalhes: Cabo ID 549 excluído | Status: sucesso
+[2025-09-01 09:47:27] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-135 criado | Status: sucesso
+[2025-09-01 09:47:27] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 551 criada | Status: sucesso
+[2025-09-01 09:47:55] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-136 criado | Status: sucesso
+[2025-09-01 09:47:55] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 552 criada | Status: sucesso
+[2025-09-01 09:48:58] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-137 criado | Status: sucesso
+[2025-09-01 09:48:58] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 553 criada | Status: sucesso
+[2025-09-01 09:51:12] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-162 criado | Status: sucesso
+[2025-09-01 09:51:12] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 554 criada | Status: sucesso
+[2025-09-01 09:51:44] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-163 criado | Status: sucesso
+[2025-09-01 09:51:44] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 555 criada | Status: sucesso
+[2025-09-01 09:52:21] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-228 criado | Status: sucesso
+[2025-09-01 09:52:21] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 556 criada | Status: sucesso
+[2025-09-01 09:52:29] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=82 | Status: sucesso
+[2025-09-01 09:56:04] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=82 | Status: sucesso
+[2025-09-01 12:38:02] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-229 criado | Status: sucesso
+[2025-09-01 12:38:02] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 557 criada | Status: sucesso
+[2025-09-01 12:38:20] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-230 criado | Status: sucesso
+[2025-09-01 12:38:20] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 558 criada | Status: sucesso
+[2025-09-01 12:38:31] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-231 criado | Status: sucesso
+[2025-09-01 12:38:31] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 559 criada | Status: sucesso
+[2025-09-01 12:38:46] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-232 criado | Status: sucesso
+[2025-09-01 12:38:46] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 560 criada | Status: sucesso
+[2025-09-01 12:39:00] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-233 criado | Status: sucesso
+[2025-09-01 12:39:01] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 561 criada | Status: sucesso
+[2025-09-01 12:39:16] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-234 criado | Status: sucesso
+[2025-09-01 12:39:16] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 562 criada | Status: sucesso
+[2025-09-01 12:39:31] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-235 criado | Status: sucesso
+[2025-09-01 12:39:31] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 563 criada | Status: sucesso
+[2025-09-01 12:39:50] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-236 criado | Status: sucesso
+[2025-09-01 12:39:50] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 564 criada | Status: sucesso
+[2025-09-01 12:40:27] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-237 criado | Status: sucesso
+[2025-09-01 12:40:27] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 565 criada | Status: sucesso
+[2025-09-01 12:40:44] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-238 criado | Status: sucesso
+[2025-09-01 12:40:44] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 566 criada | Status: sucesso
+[2025-09-02 10:41:01] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-09-02 10:41:01] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-09-03 09:34:20] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-09-03 09:34:20] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-09-03 10:42:01] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-138 criado | Status: sucesso
+[2025-09-03 10:42:01] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 567 criada | Status: sucesso
+[2025-09-03 10:44:15] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-139 criado | Status: sucesso
+[2025-09-03 10:44:15] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 568 criada | Status: sucesso
+[2025-09-03 10:45:02] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-140 criado | Status: sucesso
+[2025-09-03 10:45:02] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 569 criada | Status: sucesso
+[2025-09-03 10:45:40] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-141 criado | Status: sucesso
+[2025-09-03 10:45:40] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 570 criada | Status: sucesso
+[2025-09-03 10:46:12] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-142 criado | Status: sucesso
+[2025-09-03 10:46:12] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 571 criada | Status: sucesso
+[2025-09-03 10:46:41] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-164 criado | Status: sucesso
+[2025-09-03 10:46:41] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 572 criada | Status: sucesso
+[2025-09-03 10:47:11] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-165 criado | Status: sucesso
+[2025-09-03 10:47:11] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 573 criada | Status: sucesso
+[2025-09-03 10:47:29] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-166 criado | Status: sucesso
+[2025-09-03 10:47:29] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 574 criada | Status: sucesso
+[2025-09-03 10:47:52] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-167 criado | Status: sucesso
+[2025-09-03 10:47:52] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 575 criada | Status: sucesso
+[2025-09-03 10:48:27] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-168 criado | Status: sucesso
+[2025-09-03 10:48:27] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 576 criada | Status: sucesso
+[2025-09-03 10:51:59] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=83 | Status: sucesso
+[2025-09-03 10:53:05] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=83 | Status: sucesso
+[2025-09-03 11:28:38] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=83 | Status: sucesso
+[2025-09-03 11:30:01] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=83 | Status: sucesso
+[2025-09-04 07:46:37] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-09-04 07:46:38] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-09-04 10:06:07] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-09-04 10:06:42] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-09-04 10:06:42] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-09-05 07:53:13] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-09-05 07:53:13] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-09-08 08:01:24] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-09-08 08:01:24] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-09-09 10:25:51] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-09-09 10:25:51] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-09-10 07:46:23] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-09-10 07:46:23] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-09-12 08:51:18] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-09-12 08:51:18] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-09-15 08:37:43] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-09-15 08:37:43] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-09-15 08:46:23] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-09-15 08:46:53] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-09-15 08:46:53] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-09-15 08:57:12] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-09-15 08:57:12] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-09-15 09:01:21] Usuario: admin_wh | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-09-15 09:01:21] Usuario: admin_wh | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: empresa_wh.db | Status: sucesso
+[2025-09-15 09:01:23] Usuario: admin_wh | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Admin WH | Status: sucesso
+[2025-09-15 09:02:12] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: andre | Status: erro
+[2025-09-15 09:10:30] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: andre | Status: erro
+[2025-09-15 09:11:50] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: admin | Status: erro
+[2025-09-15 09:13:24] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: admin | Status: erro
+[2025-09-15 09:13:43] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: admin | Status: erro
+[2025-09-15 09:24:41] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: admin | Status: erro
+[2025-09-15 09:25:06] Usuario: andre | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: André | Status: sucesso
+[2025-09-15 09:25:10] Usuario: andre | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 09:25:20] Usuario: andre | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: André | Status: sucesso
+[2025-09-15 09:26:04] Usuario: admin | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: master, Nome: Administrador | Status: sucesso
+[2025-09-15 09:26:08] Usuario: admin | Acao: LOGOUT | Detalhes: Logout realizado - Nível: master, Nome: Administrador | Status: sucesso
+[2025-09-15 09:26:14] Usuario: andre | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: André | Status: sucesso
+[2025-09-15 09:26:18] Usuario: andre | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 09:28:48] Usuario: andre | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: André | Status: sucesso
+[2025-09-15 09:28:55] Usuario: andre | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: André | Status: sucesso
+[2025-09-15 09:28:57] Usuario: andre | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 09:29:31] Usuario: andre | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: André | Status: sucesso
+[2025-09-15 09:29:39] Usuario: andre | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: André | Status: sucesso
+[2025-09-15 09:29:40] Usuario: andre | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 09:29:48] Usuario: andre | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: André | Status: sucesso
+[2025-09-15 09:31:28] Usuario: andre | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: André | Status: sucesso
+[2025-09-15 09:31:29] Usuario: andre | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 09:33:11] Usuario: andre | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: André | Status: sucesso
+[2025-09-15 09:34:27] Usuario: usuario | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Usuário | Status: sucesso
+[2025-09-15 09:34:27] Usuario: usuario | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 09:47:37] Usuario: usuario | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Usuário | Status: sucesso
+[2025-09-15 09:47:37] Usuario: usuario | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 09:53:05] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: admin_wh | Status: erro
+[2025-09-15 09:53:13] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: admin_wh | Status: erro
+[2025-09-15 09:53:55] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: admin_wh | Status: erro
+[2025-09-15 09:54:49] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: usuario_wh | Status: erro
+[2025-09-15 09:55:41] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: admin_wh | Status: erro
+[2025-09-15 10:14:27] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: usuario | Status: erro
+[2025-09-15 10:14:47] Usuario: usuario | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Usuário | Status: sucesso
+[2025-09-15 10:14:47] Usuario: usuario | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 15:08:21] Usuario: admin | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: master, Nome: Administrador | Status: sucesso
+[2025-09-15 15:12:57] Usuario: admin | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: master, Nome: Administrador | Status: sucesso
+[2025-09-15 15:12:59] Usuario: admin | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 15:16:59] Usuario: admin | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: master, Nome: Administrador | Status: sucesso
+[2025-09-15 15:17:01] Usuario: admin | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 15:17:30] Usuario: admin | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: master, Nome: Administrador | Status: sucesso
+[2025-09-15 15:17:32] Usuario: admin | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 15:17:55] Usuario: admin | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: master, Nome: Administrador | Status: sucesso
+[2025-09-15 15:17:57] Usuario: admin | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 15:19:30] Usuario: admin | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: master, Nome: Administrador | Status: sucesso
+[2025-09-15 15:19:32] Usuario: admin | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 15:19:43] Usuario: admin | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: master, Nome: Administrador | Status: sucesso
+[2025-09-15 15:19:45] Usuario: admin | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 15:20:36] Usuario: admin | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: master, Nome: Administrador | Status: sucesso
+[2025-09-15 15:20:38] Usuario: admin | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 15:22:33] Usuario: admin | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: master, Nome: Administrador | Status: sucesso
+[2025-09-15 15:22:35] Usuario: admin | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 15:22:59] Usuario: usuario | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Usuário | Status: sucesso
+[2025-09-15 15:23:01] Usuario: usuario | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 15:29:09] Usuario: usuario | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Usuário | Status: sucesso
+[2025-09-15 15:29:11] Usuario: usuario | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 15:29:39] Usuario: usuario | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Usuário | Status: sucesso
+[2025-09-15 15:29:41] Usuario: usuario | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 15:30:49] Usuario: usuario | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Usuário | Status: sucesso
+[2025-09-15 15:30:51] Usuario: usuario | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 15:31:43] Usuario: usuario | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Usuário | Status: sucesso
+[2025-09-15 15:31:45] Usuario: usuario | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 15:32:26] Usuario: usuario | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Usuário | Status: sucesso
+[2025-09-15 15:32:28] Usuario: usuario | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 15:38:25] Usuario: usuario | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Usuário | Status: sucesso
+[2025-09-15 15:38:27] Usuario: usuario | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 15:38:58] Usuario: usuario | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Usuário | Status: sucesso
+[2025-09-15 15:39:00] Usuario: usuario | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 15:40:41] Usuario: usuario | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Usuário | Status: sucesso
+[2025-09-15 15:40:43] Usuario: usuario | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-15 15:54:41] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: admin | Status: erro
+[2025-09-15 15:54:55] Usuario: sistema | Acao: LOGIN | Detalhes: Tentativa de login falhou para usuário: admin | Status: erro
+[2025-09-15 15:55:16] Usuario: admin | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: master, Nome: Administrador | Status: sucesso
+[2025-09-15 15:55:52] Usuario: admin | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: master, Nome: Administrador | Status: sucesso
+[2025-09-15 15:55:54] Usuario: admin | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso

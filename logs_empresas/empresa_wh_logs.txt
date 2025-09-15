@@ -1,0 +1,1243 @@
+[2025-08-18 08:01:31] Usuario: admin_wh | Acao: EXCLUIR_PATCH_PANEL | Detalhes: Patch Panel ID 12 excluído | Status: sucesso
+[2025-08-18 08:02:42] Usuario: admin_wh | Acao: CRIAR_PATCH_PANEL | Detalhes: Patch Panel criado: Patch Panel 01 - 1 Andar - 500 portas (1-500) | Status: sucesso
+[2025-08-18 08:03:35] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 700 do patch panel | Status: sucesso
+[2025-08-18 08:03:48] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 703 do patch panel | Status: sucesso
+[2025-08-18 08:04:09] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 706 do patch panel | Status: sucesso
+[2025-08-18 08:04:46] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 700 mapeada para Switch 6, Porta 37 | Status: sucesso
+[2025-08-18 08:05:13] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 703 mapeada para Switch 6, Porta 38 | Status: sucesso
+[2025-08-18 08:05:34] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 706 mapeada para Switch 6, Porta 39 | Status: sucesso
+[2025-08-18 10:17:55] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=540, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-18 10:23:22] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=3, Nome=TV, Tipo=TV, Marca=LG, Modelo=50UP751C0SF | Status: sucesso
+[2025-08-18 10:24:51] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=3, Nome=TV, Tipo=TV, Marca=LG, Modelo=50UP751C0SF | Status: sucesso
+[2025-08-18 10:25:59] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=3, Nome=TV, Tipo=TV, Marca=LG, Modelo=50UP751C0SF | Status: sucesso
+[2025-08-18 10:26:16] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=3, Nome=TV, Tipo=TV, Marca=LG, Modelo=50UP751C0SF | Status: sucesso
+[2025-08-18 10:26:22] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=3, Nome=TV, Tipo=TV, Marca=LG, Modelo=50UP751C0SF | Status: sucesso
+[2025-08-18 10:26:28] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=3, Nome=TV, Tipo=TV, Marca=LG, Modelo=50UP751C0SF | Status: sucesso
+[2025-08-18 10:36:53] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=3, Nome=TV, Tipo=TV, Marca=LG, Modelo=50UP751C0SF | Status: sucesso
+[2025-08-18 10:36:59] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=3, Nome=TV, Tipo=TV, Marca=LG, Modelo=50UP751C0SF | Status: sucesso
+[2025-08-18 10:52:19] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=1, Nome=Sala 01, Equipamentos desatrelados=9, Equipamentos vinculados=0 | Status: sucesso
+[2025-08-18 10:52:41] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=1, Nome=Sala 01, Equipamentos desatrelados=0, Equipamentos vinculados=0 | Status: sucesso
+[2025-08-18 11:07:48] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=93, Nome=teste (via formulário) | Status: sucesso
+[2025-08-18 11:08:33] Usuario: admin_wh | Acao: EXCLUIR_SALA | Detalhes: Sala excluída: ID=93, Nome=teste | Status: sucesso
+[2025-08-18 11:11:34] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=1, Nome=Sala 01, Equipamentos desatrelados=0, Equipamentos vinculados=9 | Status: sucesso
+[2025-08-18 15:21:30] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=577, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-18 15:34:00] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=578, Nome=Mic Pod Hub, Tipo=Hub, Marca=Logitech, Modelo=Mic Pod | Status: sucesso
+[2025-08-18 15:53:50] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=578, Nome=Mic Pod Hub, Tipo=Hub, Marca=Logitech, Modelo=Mic Pod | Status: sucesso
+[2025-08-18 16:02:46] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=578, Nome=Mic Pod Hub, Tipo=Hub, Marca=Logitech, Modelo=Mic Pod | Status: sucesso
+[2025-08-18 16:47:59] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=579, Nome=Fonte Alimentação Table Hub, Tipo=Fonte, Marca=Logitech, Modelo=Table Hub | Status: sucesso
+[2025-08-18 16:48:18] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=579, Nome=Fonte Alimentação, Tipo=Fonte, Marca=Logitech, Modelo=Table Hub | Status: sucesso
+[2025-08-18 16:49:40] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=580, Nome=Fonte Alimentação, Tipo=Fonte, Marca=Logitech, Modelo=Display Hub | Status: sucesso
+[2025-08-19 08:29:20] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=579, Nome=Fonte Table Hub, Tipo=Fonte, Marca=Logitech, Modelo=Table Hub | Status: sucesso
+[2025-08-19 08:29:34] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=580, Nome=Fonte Display Hub, Tipo=Fonte, Marca=Logitech, Modelo=Display Hub | Status: sucesso
+[2025-08-19 09:12:21] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=581, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-19 09:56:00] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=582, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-19 11:07:44] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=583, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-19 11:14:43] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=584, Nome=Fonte Meetup, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-19 11:43:45] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=585, Nome=Fonte Meetup, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-19 11:44:13] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=586, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-19 11:45:30] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=587, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-19 11:45:36] Usuario: admin_wh | Acao: EXCLUIR_EQUIPAMENTO | Detalhes: Equipamento excluído: ID=587, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-19 11:45:52] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=586, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-19 11:52:46] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=588, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-19 11:53:06] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=589, Nome=Fonte Alimentação Table Hub, Tipo=Fonte, Marca=Logitech, Modelo=Table Hub | Status: sucesso
+[2025-08-19 11:54:06] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=590, Nome=Fonte Alimentação Display Hub, Tipo=Fonte, Marca=Logitech, Modelo=Display Hub | Status: sucesso
+[2025-08-19 11:58:06] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=589, Nome=Fonte Alimentação Table Hub, Tipo=Fonte, Marca=Logitech, Modelo=Table Hub | Status: sucesso
+[2025-08-19 12:47:31] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=591, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-19 12:48:04] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=592, Nome=Fonte Alimentação Table Hub, Tipo=Fonte, Marca=Logitech, Modelo=Table Hub | Status: sucesso
+[2025-08-19 12:48:55] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=593, Nome=Fonte Alimentação Display Hub, Tipo=Fonte, Marca=Logitech, Modelo=Display Hub | Status: sucesso
+[2025-08-19 12:49:31] Usuario: admin_wh | Acao: EXCLUIR_EQUIPAMENTO | Detalhes: Equipamento excluído: ID=593, Nome=Fonte Alimentação Display Hub, Tipo=Fonte, Marca=Logitech, Modelo=Display Hub | Status: sucesso
+[2025-08-19 12:50:07] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=594, Nome=Fonte Alimentação Display Hub, Tipo=Fonte, Marca=Logitech, Modelo=Display Hub | Status: sucesso
+[2025-08-19 12:56:04] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=595, Nome=Fonte Alimentação Display Hub, Tipo=Fonte, Marca=Logitech, Modelo=Display Hub | Status: sucesso
+[2025-08-19 12:56:40] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=596, Nome=Fonte Alimentação Table Hub, Tipo=Fonte, Marca=Logitech, Modelo=Table Hub | Status: sucesso
+[2025-08-19 12:57:02] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=597, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-19 14:11:53] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=598, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-19 14:12:14] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=599, Nome=Fonte Meetup, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-19 14:28:45] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=600, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-19 14:29:13] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=601, Nome=Fonte Meetup, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-19 14:33:30] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=602, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-19 14:34:03] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=603, Nome=Fonte Alimentação Table Hub, Tipo=Fonte, Marca=Logitech, Modelo=Table Hub | Status: sucesso
+[2025-08-19 14:34:36] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=604, Nome=Fonte Alimentação Display Hub, Tipo=Fonte, Marca=Logitech, Modelo=Display Hub | Status: sucesso
+[2025-08-19 14:39:39] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=605, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-19 14:39:56] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=606, Nome=Fonte Meetup, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-19 15:07:31] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 688 do patch panel | Status: sucesso
+[2025-08-19 15:07:49] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 691 do patch panel | Status: sucesso
+[2025-08-19 15:08:04] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 695 do patch panel | Status: sucesso
+[2025-08-19 15:08:34] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 688 mapeada para Switch 6, Porta 34 | Status: sucesso
+[2025-08-19 15:08:49] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 691 mapeada para Switch 6, Porta 35 | Status: sucesso
+[2025-08-19 15:09:05] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 695 mapeada para Switch 6, Porta 36 | Status: sucesso
+[2025-08-19 15:09:41] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=607, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-19 15:09:56] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=608, Nome=Fonte Alimentação Table Hub, Tipo=Fonte, Marca=Logitech, Modelo=Table Hub | Status: sucesso
+[2025-08-19 15:10:17] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=609, Nome=Fonte Alimentação Display Hub, Tipo=Fonte, Marca=Logitech, Modelo=Display Hub | Status: sucesso
+[2025-08-19 15:10:51] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=610, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-19 15:18:54] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=611, Nome=Adaptador USB mesa, Tipo=Adaptador, Marca=Outro, Modelo=USBA F to USBA F | Status: sucesso
+[2025-08-19 15:51:21] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=612, Nome=Adaptador USB mesa, Tipo=Adaptador, Marca=Outro, Modelo=USBA F to USBA F | Status: sucesso
+[2025-08-19 15:51:47] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=613, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-19 15:58:49] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=614, Nome=Mic Pod Hub, Tipo=Hub, Marca=Logitech, Modelo=Mic Pod | Status: sucesso
+[2025-08-20 08:25:25] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=615, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-20 08:26:28] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=616, Nome=Adaptador USB mesa, Tipo=Adaptador, Marca=Outro, Modelo=USBA F to USBA F | Status: sucesso
+[2025-08-20 08:31:09] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=617, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-20 08:31:35] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=618, Nome=Fonte Alimentação Table Hub, Tipo=Fonte, Marca=Logitech, Modelo=Table Hub | Status: sucesso
+[2025-08-20 08:32:10] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=619, Nome=Fonte Alimentação Display Hub, Tipo=Fonte, Marca=Logitech, Modelo=Display Hub | Status: sucesso
+[2025-08-20 08:37:25] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 682 do patch panel | Status: sucesso
+[2025-08-20 08:37:41] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 683 do patch panel | Status: sucesso
+[2025-08-20 08:38:11] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 687 do patch panel | Status: sucesso
+[2025-08-20 08:38:31] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox desconectado da porta 687 do patch panel | Status: sucesso
+[2025-08-20 08:39:16] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 687 do patch panel | Status: sucesso
+[2025-08-20 08:40:01] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 682 mapeada para Switch 6, Porta 31 | Status: sucesso
+[2025-08-20 08:40:38] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 683 mapeada para Switch 6, Porta 32 | Status: sucesso
+[2025-08-20 08:40:50] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 687 mapeada para Switch 6, Porta 33 | Status: sucesso
+[2025-08-20 09:22:52] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 770 do patch panel | Status: sucesso
+[2025-08-20 09:23:01] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 771 do patch panel | Status: sucesso
+[2025-08-20 09:23:13] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 772 do patch panel | Status: sucesso
+[2025-08-20 09:36:30] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 770 mapeada para Switch 7, Porta 25 | Status: sucesso
+[2025-08-20 09:36:43] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 771 mapeada para Switch 7, Porta 26 | Status: sucesso
+[2025-08-20 09:36:55] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 772 mapeada para Switch 7, Porta 27 | Status: sucesso
+[2025-08-20 10:01:56] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 641 do patch panel | Status: sucesso
+[2025-08-20 10:02:13] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 642 do patch panel | Status: sucesso
+[2025-08-20 10:02:24] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 635 do patch panel | Status: sucesso
+[2025-08-20 10:03:00] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 635 mapeada para Switch 7, Porta 23 | Status: sucesso
+[2025-08-20 10:03:37] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 641 mapeada para Switch 6, Porta 25 | Status: sucesso
+[2025-08-20 10:03:48] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 642 mapeada para Switch 6, Porta 26 | Status: sucesso
+[2025-08-20 14:04:20] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=620, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-20 14:04:36] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=621, Nome=Adaptador USB mesa, Tipo=Adaptador, Marca=Outro, Modelo=USBA F to USBA F | Status: sucesso
+[2025-08-20 14:05:07] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=622, Nome=Mic Pod Hub, Tipo=Hub, Marca=Logitech, Modelo=Mic Pod | Status: sucesso
+[2025-08-20 14:05:26] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=623, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-20 14:05:46] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=624, Nome=Fonte Alimentação Table Hub, Tipo=Fonte, Marca=Logitech, Modelo=Table Hub | Status: sucesso
+[2025-08-20 14:06:08] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=625, Nome=Fonte Alimentação Display Hub, Tipo=Fonte, Marca=Logitech, Modelo=Display Hub | Status: sucesso
+[2025-08-20 14:06:39] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=626, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-20 14:08:22] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=627, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-20 15:05:32] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Microfone MXA 710 conectado à porta 756 do patch panel | Status: sucesso
+[2025-08-20 15:05:44] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 01 conectado à porta 757 do patch panel | Status: sucesso
+[2025-08-20 15:05:54] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 02 conectado à porta 759 do patch panel | Status: sucesso
+[2025-08-20 15:06:03] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 03 conectado à porta 760 do patch panel | Status: sucesso
+[2025-08-20 15:06:24] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Dante AVIO USB conectado à porta 768 do patch panel | Status: sucesso
+[2025-08-20 15:06:39] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 754 do patch panel | Status: sucesso
+[2025-08-20 15:06:49] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel de Controle conectado à porta 755 do patch panel | Status: sucesso
+[2025-08-20 15:07:08] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 758 do patch panel | Status: sucesso
+[2025-08-20 15:07:20] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Clickshare conectado à porta 763 do patch panel | Status: sucesso
+[2025-08-20 15:07:37] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento 7Port serial conectado à porta 766 do patch panel | Status: sucesso
+[2025-08-20 15:07:53] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 767 do patch panel | Status: sucesso
+[2025-08-20 15:08:46] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 756 mapeada para Switch 6, Porta 6 | Status: sucesso
+[2025-08-20 15:09:05] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 757 mapeada para Switch 6, Porta 7 | Status: sucesso
+[2025-08-20 15:09:29] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 759 mapeada para Switch 6, Porta 8 | Status: sucesso
+[2025-08-20 15:10:03] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 760 mapeada para Switch 7, Porta 1 | Status: sucesso
+[2025-08-20 15:10:21] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 768 mapeada para Switch 7, Porta 2 | Status: sucesso
+[2025-08-20 15:16:52] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 754 mapeada para Switch 6, Porta 43 | Status: sucesso
+[2025-08-20 15:17:13] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 755 mapeada para Switch 6, Porta 44 | Status: sucesso
+[2025-08-20 15:17:35] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 758 mapeada para Switch 6, Porta 45 | Status: sucesso
+[2025-08-20 15:17:53] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 763 mapeada para Switch 6, Porta 46 | Status: sucesso
+[2025-08-20 15:18:07] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 766 mapeada para Switch 6, Porta 47 | Status: sucesso
+[2025-08-20 15:18:21] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 767 mapeada para Switch 6, Porta 48 | Status: sucesso
+[2025-08-20 15:54:51] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=628, Nome=Adaptador USB A HDMI, Tipo=Adaptador, Marca=Generico, Modelo=USBA to HDMI | Status: sucesso
+[2025-08-20 16:22:35] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=629, Nome=USB Switcher, Tipo=Switcher, Marca=Extron, Modelo=SW2 USB | Status: sucesso
+[2025-08-20 16:30:56] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=630, Nome=Adaptador USB mesa, Tipo=Adaptador, Marca=Outro, Modelo=USBA F to USBA F | Status: sucesso
+[2025-08-20 16:31:29] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=631, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-21 08:22:39] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=632, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-21 08:23:13] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=633, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-21 08:36:39] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=634, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-21 08:36:58] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=635, Nome=Fonte Alimentação Table Hub, Tipo=Fonte, Marca=Logitech, Modelo=Table Hub | Status: sucesso
+[2025-08-21 08:37:18] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=636, Nome=Fonte Alimentação Display Hub, Tipo=Fonte, Marca=Logitech, Modelo=Display Hub | Status: sucesso
+[2025-08-21 08:37:42] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=637, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-21 08:38:17] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=638, Nome=Adaptador USB mesa, Tipo=Adaptador, Marca=Outro, Modelo=USBA F to USBA F | Status: sucesso
+[2025-08-21 08:38:43] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=639, Nome=Mic Pod Hub, Tipo=Hub, Marca=Logitech, Modelo=Mic Pod | Status: sucesso
+[2025-08-21 08:39:14] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=640, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-21 08:40:37] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 796 do patch panel | Status: sucesso
+[2025-08-21 08:40:47] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 800 do patch panel | Status: sucesso
+[2025-08-21 08:40:58] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 801 do patch panel | Status: sucesso
+[2025-08-21 08:41:25] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 796 mapeada para Switch 7, Porta 44 | Status: sucesso
+[2025-08-21 08:41:39] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 800 mapeada para Switch 7, Porta 45 | Status: sucesso
+[2025-08-21 08:41:51] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 801 mapeada para Switch 7, Porta 46 | Status: sucesso
+[2025-08-21 09:24:05] Usuario: admin_wh | Acao: UPLOAD_LOGO_EMPRESA | Detalhes: Logo wh.png enviado para empresa empresa_wh | Status: sucesso
+[2025-08-21 10:57:43] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=641, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-21 10:57:57] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=642, Nome=Adaptador USB mesa, Tipo=Adaptador, Marca=Outro, Modelo=USBA F to USBA F | Status: sucesso
+[2025-08-21 10:58:22] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=643, Nome=Mic Pod Hub, Tipo=Hub, Marca=Logitech, Modelo=Mic Pod | Status: sucesso
+[2025-08-21 12:33:04] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 625 do patch panel | Status: sucesso
+[2025-08-21 12:33:13] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 628 do patch panel | Status: sucesso
+[2025-08-21 12:33:30] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 631 do patch panel | Status: sucesso
+[2025-08-21 12:33:52] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 625 mapeada para Switch 6, Porta 21 | Status: sucesso
+[2025-08-21 12:34:00] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 628 mapeada para Switch 6, Porta 22 | Status: sucesso
+[2025-08-21 12:34:13] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 631 mapeada para Switch 6, Porta 23 | Status: sucesso
+[2025-08-21 12:47:00] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=644, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-21 12:48:08] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=645, Nome=Fonte Alimentação Table Hub, Tipo=Fonte, Marca=Logitech, Modelo=Table Hub | Status: sucesso
+[2025-08-21 12:48:37] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=646, Nome=Fonte Alimentação Display Hub, Tipo=Fonte, Marca=Logitech, Modelo=Display Hub | Status: sucesso
+[2025-08-21 12:49:01] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=647, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-21 14:26:12] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=648, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-21 14:27:14] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 707 do patch panel | Status: sucesso
+[2025-08-21 14:27:48] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 707 mapeada para Switch 6, Porta 40 | Status: sucesso
+[2025-08-21 14:31:39] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=649, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-21 14:31:55] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=650, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-21 14:32:16] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=651, Nome=Fonte Meetup, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-21 14:36:13] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 774 do patch panel | Status: sucesso
+[2025-08-21 14:36:23] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 775 do patch panel | Status: sucesso
+[2025-08-21 14:36:32] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 776 do patch panel | Status: sucesso
+[2025-08-21 14:40:52] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 774 mapeada para Switch 7, Porta 28 | Status: sucesso
+[2025-08-21 14:41:09] Usuario: admin_wh | Acao: DESCONECTAR_PORTA_SWITCH | Detalhes: Porta 173 do switch desconectada | Status: sucesso
+[2025-08-21 14:41:16] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 774 mapeada para Switch 7, Porta 29 | Status: sucesso
+[2025-08-21 14:41:29] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 775 mapeada para Switch 7, Porta 30 | Status: sucesso
+[2025-08-21 14:41:42] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 776 mapeada para Switch 7, Porta 31 | Status: sucesso
+[2025-08-21 16:12:31] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=652, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-21 16:12:43] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=653, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-21 16:13:27] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=654, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-21 16:13:41] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=655, Nome=Fonte Meetup, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-25 08:38:40] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 791 do patch panel | Status: sucesso
+[2025-08-25 08:38:50] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 792 do patch panel | Status: sucesso
+[2025-08-25 08:39:03] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 795 do patch panel | Status: sucesso
+[2025-08-25 08:40:25] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 791 mapeada para Switch 7, Porta 41 | Status: sucesso
+[2025-08-25 08:40:44] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 792 mapeada para Switch 7, Porta 42 | Status: sucesso
+[2025-08-25 08:40:58] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 795 mapeada para Switch 7, Porta 43 | Status: sucesso
+[2025-08-25 08:49:23] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=656, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-25 08:49:46] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=657, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-25 08:49:59] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=658, Nome=Fonte Meetup, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-25 09:42:42] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=659, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-25 09:51:14] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 802 do patch panel | Status: sucesso
+[2025-08-25 09:51:23] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 803 do patch panel | Status: sucesso
+[2025-08-25 09:51:47] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 804 do patch panel | Status: sucesso
+[2025-08-25 09:52:42] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 802 mapeada para Switch 7, Porta 47 | Status: sucesso
+[2025-08-25 09:52:53] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 803 mapeada para Switch 7, Porta 48 | Status: sucesso
+[2025-08-25 09:53:26] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 804 mapeada para Switch 8, Porta 21 | Status: sucesso
+[2025-08-25 10:21:17] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=660, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-25 10:21:33] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=661, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-25 10:21:56] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=662, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-25 10:22:10] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=663, Nome=Fonte Meetup, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-25 10:27:13] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 808 do patch panel | Status: sucesso
+[2025-08-25 10:27:40] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 809 do patch panel | Status: sucesso
+[2025-08-25 10:27:56] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 810 do patch panel | Status: sucesso
+[2025-08-25 10:35:23] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 808 mapeada para Switch 8, Porta 22 | Status: sucesso
+[2025-08-25 10:35:36] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 809 mapeada para Switch 8, Porta 23 | Status: sucesso
+[2025-08-25 10:36:00] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 810 mapeada para Switch 8, Porta 24 | Status: sucesso
+[2025-08-25 10:49:58] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=664, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-25 10:50:26] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=665, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-25 10:50:51] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=666, Nome=Fonte Meetup, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-25 10:51:03] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=667, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-25 10:51:46] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 814 do patch panel | Status: sucesso
+[2025-08-25 10:52:07] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 814 mapeada para Switch 8, Porta 25 | Status: sucesso
+[2025-08-25 11:37:34] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 815 do patch panel | Status: sucesso
+[2025-08-25 11:38:08] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 815 mapeada para Switch 8, Porta 26 | Status: sucesso
+[2025-08-25 11:45:01] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 816 do patch panel | Status: sucesso
+[2025-08-25 11:45:29] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 816 mapeada para Switch 8, Porta 27 | Status: sucesso
+[2025-08-25 11:49:47] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 819 do patch panel | Status: sucesso
+[2025-08-25 11:50:13] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 819 mapeada para Switch 8, Porta 28 | Status: sucesso
+[2025-08-25 11:54:50] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 779 do patch panel | Status: sucesso
+[2025-08-25 11:55:17] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 779 mapeada para Switch 7, Porta 32 | Status: sucesso
+[2025-08-25 12:02:19] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=668, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-25 12:02:34] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=669, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-25 12:03:02] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=670, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-25 12:03:20] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=671, Nome=Fonte Meetup, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-25 12:04:10] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 680 do patch panel | Status: sucesso
+[2025-08-25 12:04:49] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 789 do patch panel | Status: sucesso
+[2025-08-25 12:05:10] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 790 do patch panel | Status: sucesso
+[2025-08-25 12:06:14] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 680 mapeada para Switch 6, Porta 30 | Status: sucesso
+[2025-08-25 12:06:36] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 789 mapeada para Switch 7, Porta 39 | Status: sucesso
+[2025-08-25 12:06:46] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 790 mapeada para Switch 7, Porta 40 | Status: sucesso
+[2025-08-25 12:14:42] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 681 do patch panel | Status: sucesso
+[2025-08-25 12:15:46] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 681 mapeada para Switch 6, Porta 41 | Status: sucesso
+[2025-08-25 12:33:13] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=672, Nome=Fonte Meetup, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-25 12:33:35] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=673, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-25 12:33:51] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=672, Nome=Fonte Meetup, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-25 12:34:05] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=674, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-25 12:34:25] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=675, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-25 12:44:14] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=676, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-25 12:44:49] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=677, Nome=Adaptador USB mesa, Tipo=Adaptador, Marca=Outro, Modelo=USBA F to USBA F | Status: sucesso
+[2025-08-25 12:48:27] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=678, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-25 12:48:54] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=679, Nome=Fonte Alimentação Table Hub, Tipo=Fonte, Marca=Logitech, Modelo=Table Hub | Status: sucesso
+[2025-08-25 12:49:21] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=680, Nome=Fonte Alimentação Display Hub, Tipo=Fonte, Marca=Logitech, Modelo=Table Hub | Status: sucesso
+[2025-08-25 12:50:54] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=678, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-25 12:52:05] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 643 do patch panel | Status: sucesso
+[2025-08-25 12:52:23] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 646 do patch panel | Status: sucesso
+[2025-08-25 12:52:36] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 647 do patch panel | Status: sucesso
+[2025-08-25 12:53:39] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 643 mapeada para Switch 6, Porta 27 | Status: sucesso
+[2025-08-25 12:53:53] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 646 mapeada para Switch 6, Porta 28 | Status: sucesso
+[2025-08-25 12:54:07] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 647 mapeada para Switch 6, Porta 29 | Status: sucesso
+[2025-08-25 14:59:22] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 634 do patch panel | Status: sucesso
+[2025-08-25 14:59:47] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 634 mapeada para Switch 7, Porta 22 | Status: sucesso
+[2025-08-25 15:04:22] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 633 do patch panel | Status: sucesso
+[2025-08-25 15:04:42] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 874 do patch panel | Status: sucesso
+[2025-08-25 15:04:54] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 875 do patch panel | Status: sucesso
+[2025-08-25 15:05:23] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 633 mapeada para Switch 7, Porta 21 | Status: sucesso
+[2025-08-25 15:05:48] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 874 mapeada para Switch 8, Porta 29 | Status: sucesso
+[2025-08-25 15:06:03] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 875 mapeada para Switch 8, Porta 30 | Status: sucesso
+[2025-08-25 15:07:20] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=681, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-25 15:07:39] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=682, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-25 15:07:46] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=682, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-25 15:08:02] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=683, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-25 15:08:22] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=684, Nome=Fonte Meetup, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-25 15:14:34] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 632 do patch panel | Status: sucesso
+[2025-08-25 15:16:03] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 632 mapeada para Switch 6, Porta 24 | Status: sucesso
+[2025-08-25 15:18:12] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV desconectado da porta 632 do patch panel | Status: sucesso
+[2025-08-25 15:18:22] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 632 do patch panel | Status: sucesso
+[2025-08-25 15:22:17] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 636 do patch panel | Status: sucesso
+[2025-08-25 15:22:40] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 636 mapeada para Switch 7, Porta 24 | Status: sucesso
+[2025-08-25 15:35:16] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 753 do patch panel | Status: sucesso
+[2025-08-25 15:35:34] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 753 mapeada para Switch 6, Porta 42 | Status: sucesso
+[2025-08-25 15:39:10] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 773 do patch panel | Status: sucesso
+[2025-08-25 15:39:37] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 773 mapeada para Switch 7, Porta 28 | Status: sucesso
+[2025-08-25 15:41:24] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 648 do patch panel | Status: sucesso
+[2025-08-25 15:41:48] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 648 mapeada para Switch 8, Porta 34 | Status: sucesso
+[2025-08-25 15:45:54] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 780 do patch panel | Status: sucesso
+[2025-08-25 15:46:22] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 780 mapeada para Switch 7, Porta 34 | Status: sucesso
+[2025-08-25 15:47:55] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=685, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-25 15:48:15] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=686, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-25 15:56:13] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 781 do patch panel | Status: sucesso
+[2025-08-25 15:56:35] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 781 mapeada para Switch 7, Porta 35 | Status: sucesso
+[2025-08-25 16:00:33] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=687, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-25 16:00:54] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=688, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-25 16:03:46] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 782 do patch panel | Status: sucesso
+[2025-08-25 16:04:36] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 782 mapeada para Switch 7, Porta 36 | Status: sucesso
+[2025-08-25 16:09:05] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=689, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-25 16:09:20] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=690, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-25 16:11:42] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 783 do patch panel | Status: sucesso
+[2025-08-25 16:12:11] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 783 mapeada para Switch 7, Porta 37 | Status: sucesso
+[2025-08-25 16:12:44] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=691, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-25 16:12:56] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=692, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-25 16:17:37] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 784 do patch panel | Status: sucesso
+[2025-08-25 16:18:10] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 784 mapeada para Switch 7, Porta 38 | Status: sucesso
+[2025-08-25 16:18:39] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=693, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-25 16:18:50] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=694, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-25 16:36:26] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=695, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-08-25 16:36:32] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=695, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-08-25 16:40:05] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=695, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-08-25 16:41:56] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 785 do patch panel | Status: sucesso
+[2025-08-25 16:42:23] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 785 mapeada para Switch 7, Porta 33 | Status: sucesso
+[2025-08-26 08:30:27] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Dante AVIO Analógico conectado à porta 862 do patch panel | Status: sucesso
+[2025-08-26 08:30:51] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 01 conectado à porta 867 do patch panel | Status: sucesso
+[2025-08-26 08:31:09] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento NUC 02 Direita conectado à porta 863 do patch panel | Status: sucesso
+[2025-08-26 08:31:29] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento NUC 01 Esquerda conectado à porta 697 do patch panel | Status: sucesso
+[2025-08-26 08:32:03] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 862 mapeada para Switch 7, Porta 3 | Status: sucesso
+[2025-08-26 08:32:19] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 867 mapeada para Switch 7, Porta 4 | Status: sucesso
+[2025-08-26 08:32:37] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 863 mapeada para Switch 7, Porta 19 | Status: sucesso
+[2025-08-26 08:32:52] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 697 mapeada para Switch 7, Porta 9 | Status: sucesso
+[2025-08-26 08:47:34] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=696, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-26 08:48:08] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=697, Nome=Adaptador USB mesa, Tipo=Adaptador, Marca=Outro, Modelo=USBA F to USBA F | Status: sucesso
+[2025-08-26 08:48:29] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=698, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-26 08:48:55] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=699, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-26 08:49:29] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=700, Nome=Fonte Alimentação Table Hub, Tipo=Fonte, Marca=Logitech, Modelo=Table Hub | Status: sucesso
+[2025-08-26 08:50:01] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=701, Nome=Fonte Alimentação Display Hub, Tipo=Fonte, Marca=Logitech, Modelo=Display Hub | Status: sucesso
+[2025-08-26 08:51:20] Usuario: admin_wh | Acao: CRIAR_PATCH_PANEL | Detalhes: Patch Panel criado: Patch Panel 01 - 2 Andar - 500 portas (1-500) | Status: sucesso
+[2025-08-26 08:52:05] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 1345 do patch panel | Status: sucesso
+[2025-08-26 08:52:21] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 1348 do patch panel | Status: sucesso
+[2025-08-26 08:52:37] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 1350 do patch panel | Status: sucesso
+[2025-08-26 08:53:10] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1345 mapeada para Switch 11, Porta 29 | Status: sucesso
+[2025-08-26 08:53:26] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1348 mapeada para Switch 11, Porta 30 | Status: sucesso
+[2025-08-26 08:53:38] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1350 mapeada para Switch 11, Porta 31 | Status: sucesso
+[2025-08-26 09:10:05] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 1237 do patch panel | Status: sucesso
+[2025-08-26 09:10:29] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 1238 do patch panel | Status: sucesso
+[2025-08-26 09:10:54] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 1242 do patch panel | Status: sucesso
+[2025-08-26 09:11:23] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1237 mapeada para Switch 9, Porta 34 | Status: sucesso
+[2025-08-26 09:11:37] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1238 mapeada para Switch 9, Porta 35 | Status: sucesso
+[2025-08-26 09:11:50] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1242 mapeada para Switch 9, Porta 36 | Status: sucesso
+[2025-08-26 09:12:59] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=702, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-26 09:13:34] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=703, Nome=Adaptador USB mesa, Tipo=Adaptador, Marca=Outro, Modelo=USBA F to USBA F | Status: sucesso
+[2025-08-26 09:13:50] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=704, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-26 09:14:05] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=705, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-26 09:14:37] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=706, Nome=Fonte Alimentação Table Hub, Tipo=Fonte, Marca=Logitech, Modelo=Table Hub | Status: sucesso
+[2025-08-26 09:14:50] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=707, Nome=Fonte Alimentação Display Hub, Tipo=Fonte, Marca=Logitech, Modelo=Display Hub | Status: sucesso
+[2025-08-26 09:15:07] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=708, Nome=Mic Pod Hub, Tipo=Hub, Marca=Logitech, Modelo=Mic Pod | Status: sucesso
+[2025-08-26 09:56:43] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 1184 do patch panel | Status: sucesso
+[2025-08-26 09:56:57] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 1185 do patch panel | Status: sucesso
+[2025-08-26 09:57:11] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 1189 do patch panel | Status: sucesso
+[2025-08-26 09:57:53] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1184 mapeada para Switch 9, Porta 27 | Status: sucesso
+[2025-08-26 09:58:05] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1185 mapeada para Switch 9, Porta 28 | Status: sucesso
+[2025-08-26 09:58:14] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1189 mapeada para Switch 9, Porta 29 | Status: sucesso
+[2025-08-26 09:59:20] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=709, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-26 09:59:43] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=710, Nome=Adaptador USB mesa, Tipo=Adaptador, Marca=Outro, Modelo=USBA F to USBA F | Status: sucesso
+[2025-08-26 10:00:11] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=711, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-26 10:00:24] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=712, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-26 10:00:54] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=713, Nome=Fonte Alimentação Table Hub, Tipo=Fonte, Marca=Logitech, Modelo=Table Hub | Status: sucesso
+[2025-08-26 10:01:16] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=714, Nome=Fonte Alimentação Display Hub, Tipo=Fonte, Marca=Logitech, Modelo=Display Hub | Status: sucesso
+[2025-08-26 10:15:52] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=715, Nome=Mic Pod Hub, Tipo=Hub, Marca=Logitech, Modelo=Mic Pod | Status: sucesso
+[2025-08-26 11:01:28] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Dante AVIO USB conectado à porta 1288 do patch panel | Status: sucesso
+[2025-08-26 11:01:48] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 03 conectado à porta 1296 do patch panel | Status: sucesso
+[2025-08-26 11:02:01] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Microfone MXA 710 conectado à porta 1297 do patch panel | Status: sucesso
+[2025-08-26 11:02:24] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 01 conectado à porta 1298 do patch panel | Status: sucesso
+[2025-08-26 11:02:37] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 02 conectado à porta 1300 do patch panel | Status: sucesso
+[2025-08-26 11:02:58] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 1286 do patch panel | Status: sucesso
+[2025-08-26 11:03:34] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 1289 do patch panel | Status: sucesso
+[2025-08-26 11:03:49] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento 7Port serial conectado à porta 1290 do patch panel | Status: sucesso
+[2025-08-26 11:04:19] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Clickshare conectado à porta 1294 do patch panel | Status: sucesso
+[2025-08-26 11:04:41] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 1299 do patch panel | Status: sucesso
+[2025-08-26 11:05:00] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel de Controle conectado à porta 1374 do patch panel | Status: sucesso
+[2025-08-26 11:05:38] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1288 mapeada para Switch 10, Porta 7 | Status: sucesso
+[2025-08-26 11:05:55] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1296 mapeada para Switch 10, Porta 8 | Status: sucesso
+[2025-08-26 11:06:16] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1297 mapeada para Switch 10, Porta 9 | Status: sucesso
+[2025-08-26 11:06:31] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1298 mapeada para Switch 10, Porta 10 | Status: sucesso
+[2025-08-26 11:06:51] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1300 mapeada para Switch 10, Porta 11 | Status: sucesso
+[2025-08-26 11:07:09] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1286 mapeada para Switch 10, Porta 27 | Status: sucesso
+[2025-08-26 11:07:34] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1289 mapeada para Switch 10, Porta 29 | Status: sucesso
+[2025-08-26 11:07:53] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1290 mapeada para Switch 10, Porta 30 | Status: sucesso
+[2025-08-26 11:08:05] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1294 mapeada para Switch 10, Porta 31 | Status: sucesso
+[2025-08-26 11:08:16] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1299 mapeada para Switch 10, Porta 32 | Status: sucesso
+[2025-08-26 11:08:55] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1374 mapeada para Switch 11, Porta 40 | Status: sucesso
+[2025-08-26 11:18:37] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=716, Nome=USB Switcher, Tipo=Switcher, Marca=Extron, Modelo=SW2 USB | Status: sucesso
+[2025-08-27 11:17:22] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=717, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-27 11:17:45] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=718, Nome=Adaptador USB mesa, Tipo=Adaptador, Marca=Outro, Modelo=USBA F to USBA F | Status: sucesso
+[2025-08-27 11:23:46] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=719, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-27 11:24:01] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=720, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-27 12:27:30] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Microfone MXA 910 conectado à porta 1244 do patch panel | Status: sucesso
+[2025-08-27 12:27:53] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Dante AVIO USB conectado à porta 1247 do patch panel | Status: sucesso
+[2025-08-27 12:28:19] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 01 conectado à porta 1249 do patch panel | Status: sucesso
+[2025-08-27 12:28:33] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 02 conectado à porta 1250 do patch panel | Status: sucesso
+[2025-08-27 12:29:10] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 03 conectado à porta 1256 do patch panel | Status: sucesso
+[2025-08-27 12:29:53] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 1248 do patch panel | Status: sucesso
+[2025-08-27 12:30:08] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Clickshare conectado à porta 1251 do patch panel | Status: sucesso
+[2025-08-27 12:30:20] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento 7Port serial conectado à porta 1252 do patch panel | Status: sucesso
+[2025-08-27 12:30:30] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 1253 do patch panel | Status: sucesso
+[2025-08-27 12:30:49] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 1257 do patch panel | Status: sucesso
+[2025-08-27 12:31:04] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel de Controle conectado à porta 1258 do patch panel | Status: sucesso
+[2025-08-27 12:32:33] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=721, Nome=Microfone MXA 710, Tipo=Microfone, Marca=Shure, Modelo=MXA710 | Status: sucesso
+[2025-08-27 12:33:08] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Microfone MXA 710 conectado à porta 1400 do patch panel | Status: sucesso
+[2025-08-27 12:33:37] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1244 mapeada para Switch 9, Porta 9 | Status: sucesso
+[2025-08-27 12:33:53] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1247 mapeada para Switch 9, Porta 10 | Status: sucesso
+[2025-08-27 12:34:17] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1249 mapeada para Switch 9, Porta 11 | Status: sucesso
+[2025-08-27 12:34:37] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1250 mapeada para Switch 10, Porta 1 | Status: sucesso
+[2025-08-27 12:34:56] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1256 mapeada para Switch 10, Porta 2 | Status: sucesso
+[2025-08-27 12:35:18] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1400 mapeada para Switch 11, Porta 1 | Status: sucesso
+[2025-08-27 12:35:42] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1248 mapeada para Switch 9, Porta 37 | Status: sucesso
+[2025-08-27 12:36:10] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1251 mapeada para Switch 9, Porta 38 | Status: sucesso
+[2025-08-27 12:36:22] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1252 mapeada para Switch 9, Porta 39 | Status: sucesso
+[2025-08-27 12:36:43] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1253 mapeada para Switch 9, Porta 40 | Status: sucesso
+[2025-08-27 12:37:05] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1257 mapeada para Switch 9, Porta 41 | Status: sucesso
+[2025-08-27 12:37:15] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1258 mapeada para Switch 9, Porta 42 | Status: sucesso
+[2025-08-27 16:00:36] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 1190 do patch panel | Status: sucesso
+[2025-08-27 16:00:51] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 1193 do patch panel | Status: sucesso
+[2025-08-27 16:00:59] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 1194 do patch panel | Status: sucesso
+[2025-08-27 16:01:32] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1190 mapeada para Switch 9, Porta 30 | Status: sucesso
+[2025-08-27 16:01:42] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1193 mapeada para Switch 9, Porta 31 | Status: sucesso
+[2025-08-27 16:01:59] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1194 mapeada para Switch 9, Porta 32 | Status: sucesso
+[2025-08-27 16:06:39] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=722, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-27 16:06:54] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=723, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-27 16:07:10] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=724, Nome=Fonte Meetup, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-27 16:07:26] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=725, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-27 16:13:07] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=726, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-27 16:13:20] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=727, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-27 16:13:33] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=728, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-27 16:13:52] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=729, Nome=Fonte Meetup, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-27 16:15:06] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 1340 do patch panel | Status: sucesso
+[2025-08-27 16:15:20] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 1341 do patch panel | Status: sucesso
+[2025-08-27 16:15:33] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 1344 do patch panel | Status: sucesso
+[2025-08-27 16:16:09] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1340 mapeada para Switch 11, Porta 26 | Status: sucesso
+[2025-08-27 16:16:23] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1341 mapeada para Switch 11, Porta 27 | Status: sucesso
+[2025-08-27 16:16:34] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1344 mapeada para Switch 11, Porta 28 | Status: sucesso
+[2025-08-27 16:22:55] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 1375 do patch panel | Status: sucesso
+[2025-08-27 16:23:23] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1375 mapeada para Switch 11, Porta 41 | Status: sucesso
+[2025-08-27 16:28:02] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=730, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-27 16:28:15] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=731, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-27 16:28:30] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=732, Nome=Fonte Meetup, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-27 16:28:55] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=733, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-27 16:29:55] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 1373 do patch panel | Status: sucesso
+[2025-08-27 16:30:23] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1373 mapeada para Switch 11, Porta 39 | Status: sucesso
+[2025-08-27 16:35:43] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 1320 do patch panel | Status: sucesso
+[2025-08-27 16:36:08] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1320 mapeada para Switch 10, Porta 40 | Status: sucesso
+[2025-08-28 09:56:59] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=734, Nome=Switcher Scaler Video Splicer, Tipo=Switcher, Marca=RGBlink, Modelo=X1PRO-E | Status: sucesso
+[2025-08-28 10:00:29] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=734, Nome=Switcher Scaler Video Splicer, Tipo=Switcher, Marca=RGBlink, Modelo=X1PRO-E | Status: sucesso
+[2025-08-28 10:55:17] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=735, Nome=Controladora MCTRL700 (SM-700-1), Tipo=Controladora, Marca=Nova Star, Modelo=MCTRL700 | Status: sucesso
+[2025-08-28 10:55:53] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=735, Nome=MCTRL700 (SM-700-1), Tipo=Controladora, Marca=Nova Star, Modelo=MCTRL700 | Status: sucesso
+[2025-08-28 10:57:59] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=133, Nome=Tela LED MGS Series, Tipo=Tela Led, Marca=Leyard, Modelo=Leyard | Status: sucesso
+[2025-08-28 11:04:05] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=133, Nome=Tela LED MGS Series, Tipo=Tela Led, Marca=Leyard, Modelo=MGS Series | Status: sucesso
+[2025-08-28 11:29:05] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=734, Nome=Switcher X1PRO-E, Tipo=Switcher, Marca=RGBlink, Modelo=X1PRO-E | Status: sucesso
+[2025-08-29 10:59:38] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 1319 do patch panel | Status: sucesso
+[2025-08-29 11:00:02] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1319 mapeada para Switch 10, Porta 39 | Status: sucesso
+[2025-08-29 11:09:45] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 1316 do patch panel | Status: sucesso
+[2025-08-29 11:10:26] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1316 mapeada para Switch 10, Porta 38 | Status: sucesso
+[2025-08-29 11:31:07] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 1315 do patch panel | Status: sucesso
+[2025-08-29 11:31:33] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1315 mapeada para Switch 10, Porta 37 | Status: sucesso
+[2025-08-29 11:33:20] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 1314 do patch panel | Status: sucesso
+[2025-08-29 11:33:59] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1314 mapeada para Switch 10, Porta 36 | Status: sucesso
+[2025-08-29 11:35:58] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 1287 do patch panel | Status: sucesso
+[2025-08-29 11:36:25] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1287 mapeada para Switch 10, Porta 28 | Status: sucesso
+[2025-08-29 13:35:01] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=736, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-29 13:35:14] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=737, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-29 13:35:30] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=738, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-29 13:35:44] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=739, Nome=Fonte Meetup, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-29 14:01:54] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 1266 do patch panel | Status: sucesso
+[2025-08-29 14:02:41] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1266 mapeada para Switch 9, Porta 43 | Status: sucesso
+[2025-08-29 15:01:28] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=740, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-29 15:02:36] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=741, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-29 15:02:53] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=742, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-29 15:55:34] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 1267 do patch panel | Status: sucesso
+[2025-08-29 15:55:44] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 1268 do patch panel | Status: sucesso
+[2025-08-29 15:56:17] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 1281 do patch panel | Status: sucesso
+[2025-08-29 15:58:21] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=743, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-29 15:58:45] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=744, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-29 15:58:50] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=744, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-29 15:59:08] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=745, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-08-29 15:59:26] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=746, Nome=Fonte Meetup, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-08-29 16:08:57] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 1369 do patch panel | Status: sucesso
+[2025-08-29 16:09:48] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1369 mapeada para Switch 11, Porta 38 | Status: sucesso
+[2025-08-29 16:10:27] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1267 mapeada para Switch 9, Porta 44 | Status: sucesso
+[2025-08-29 16:10:52] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1268 mapeada para Switch 9, Porta 45 | Status: sucesso
+[2025-08-29 16:11:10] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1281 mapeada para Switch 10, Porta 26 | Status: sucesso
+[2025-08-29 16:25:08] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 1368 do patch panel | Status: sucesso
+[2025-08-29 16:25:39] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1368 mapeada para Switch 11, Porta 37 | Status: sucesso
+[2025-08-29 16:29:48] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 1321 do patch panel | Status: sucesso
+[2025-08-29 16:29:57] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 1322 do patch panel | Status: sucesso
+[2025-08-29 16:30:10] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 1323 do patch panel | Status: sucesso
+[2025-08-29 16:30:37] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1321 mapeada para Switch 10, Porta 41 | Status: sucesso
+[2025-08-29 16:30:46] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1322 mapeada para Switch 10, Porta 42 | Status: sucesso
+[2025-08-29 16:30:57] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1323 mapeada para Switch 10, Porta 43 | Status: sucesso
+[2025-08-29 16:32:24] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=747, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-08-29 16:32:40] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=748, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-08-29 16:32:59] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=749, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-09-01 09:04:05] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 1154 do patch panel | Status: sucesso
+[2025-09-01 09:06:52] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1154 mapeada para Switch 10, Porta 24 | Status: sucesso
+[2025-09-01 09:16:27] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=750, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-09-01 09:16:40] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=751, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-09-01 09:16:53] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=752, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-09-01 09:17:06] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=753, Nome=Fonte Meetup, Tipo=Fonte, Marca=Logitech, Modelo=Meetup | Status: sucesso
+[2025-09-01 09:27:33] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 1148 do patch panel | Status: sucesso
+[2025-09-01 09:28:22] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 1152 do patch panel | Status: sucesso
+[2025-09-01 09:29:14] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1148 mapeada para Switch 9, Porta 23 | Status: sucesso
+[2025-09-01 09:29:31] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1149 mapeada para Switch 9, Porta 24 | Status: sucesso
+[2025-09-01 09:29:54] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1152 mapeada para Switch 10, Porta 23 | Status: sucesso
+[2025-09-01 09:38:25] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=458, Nome=TV, Tipo=TV, Marca=LG, Modelo=55UN731C0SC | Status: sucesso
+[2025-09-01 09:44:41] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=754, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-09-01 09:44:54] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=755, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-09-01 09:45:28] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=756, Nome=Fonte Alimentação Table Hub, Tipo=Fonte, Marca=Logitech, Modelo=Table Hub | Status: sucesso
+[2025-09-01 09:45:44] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=757, Nome=Fonte Alimentação Display Hub, Tipo=Fonte, Marca=Logitech, Modelo=Display Hub | Status: sucesso
+[2025-09-01 10:05:56] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Dante AVIO USB conectado à porta 1269 do patch panel | Status: sucesso
+[2025-09-01 10:06:09] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 01 conectado à porta 1277 do patch panel | Status: sucesso
+[2025-09-01 10:06:28] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Microfone MXA 710 conectado à porta 1279 do patch panel | Status: sucesso
+[2025-09-01 10:06:56] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 02 conectado à porta 1280 do patch panel | Status: sucesso
+[2025-09-01 10:07:12] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Sensor de presença conectado à porta 1278 do patch panel | Status: sucesso
+[2025-09-01 10:08:09] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 1378 do patch panel | Status: sucesso
+[2025-09-01 10:08:25] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento 7Port serial conectado à porta 1379 do patch panel | Status: sucesso
+[2025-09-01 10:31:59] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel Agenda conectado à porta 1275 do patch panel | Status: sucesso
+[2025-09-01 10:32:13] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Clickshare conectado à porta 1273 do patch panel | Status: sucesso
+[2025-09-01 10:32:30] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Painel de Controle conectado à porta 1274 do patch panel | Status: sucesso
+[2025-09-01 11:45:18] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1269 mapeada para Switch 10, Porta 3 | Status: sucesso
+[2025-09-01 11:45:36] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1277 mapeada para Switch 10, Porta 4 | Status: sucesso
+[2025-09-01 11:45:52] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1279 mapeada para Switch 10, Porta 5 | Status: sucesso
+[2025-09-01 11:46:03] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1280 mapeada para Switch 10, Porta 6 | Status: sucesso
+[2025-09-01 11:46:35] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1278 mapeada para Switch 10, Porta 25 | Status: sucesso
+[2025-09-01 11:47:11] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1378 mapeada para Switch 11, Porta 42 | Status: sucesso
+[2025-09-01 11:47:24] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1379 mapeada para Switch 11, Porta 43 | Status: sucesso
+[2025-09-01 11:47:51] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1275 mapeada para Switch 9, Porta 48 | Status: sucesso
+[2025-09-01 11:48:19] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1274 mapeada para Switch 9, Porta 47 | Status: sucesso
+[2025-09-01 11:49:53] Usuario: admin_wh | Acao: CRIAR_SWITCH | Detalhes: Switch criado: ID=12, Nome=Switch 06 - 2 Andar, Marca=Cisco, Modelo=Outro | Status: sucesso
+[2025-09-01 11:51:41] Usuario: admin_wh | Acao: ATUALIZAR_SWITCH | Detalhes: Switch atualizado: ID=12, Nome=Switch 06 - 2 Andar, Marca=Cisco, Modelo=Outro | Status: sucesso
+[2025-09-01 11:57:58] Usuario: admin_wh | Acao: CRIAR_PORTAS_PADRAO_SWITCH | Detalhes: Portas padrão criadas para switch ID=12, Nome=Switch 06 - 2 Andar, Portas criadas: 24 | Status: sucesso
+[2025-09-01 11:59:28] Usuario: admin_wh | Acao: EXCLUIR_SWITCH | Detalhes: Switch excluído: ID=12, Nome=Switch 06 - 2 Andar, Marca=Cisco, Modelo=Outro (todas as conexões liberadas) | Status: sucesso
+[2025-09-01 11:59:44] Usuario: admin_wh | Acao: CRIAR_SWITCH | Detalhes: Switch criado: ID=13, Nome=Switch 06 - 2 Andar, Marca=Cisco, Modelo=Outro, Portas criadas: 24 | Status: sucesso
+[2025-09-01 12:08:08] Usuario: admin_wh | Acao: RECRIAR_PORTAS_SWITCH | Detalhes: Portas recriadas para switch ID=13, Nome=Switch 06 - 2 Andar, Portas criadas: 48 | Status: sucesso
+[2025-09-01 12:21:05] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=435, Switch ID=13, Porta 2 | Status: sucesso
+[2025-09-01 12:21:05] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=436, Switch ID=13, Porta 3 | Status: sucesso
+[2025-09-01 12:21:05] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=437, Switch ID=13, Porta 4 | Status: sucesso
+[2025-09-01 12:21:05] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=438, Switch ID=13, Porta 5 | Status: sucesso
+[2025-09-01 12:21:05] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=439, Switch ID=13, Porta 6 | Status: sucesso
+[2025-09-01 12:21:05] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=440, Switch ID=13, Porta 7 | Status: sucesso
+[2025-09-01 12:21:05] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=441, Switch ID=13, Porta 8 | Status: sucesso
+[2025-09-01 12:21:05] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=442, Switch ID=13, Porta 9 | Status: sucesso
+[2025-09-01 12:21:05] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=443, Switch ID=13, Porta 10 | Status: sucesso
+[2025-09-01 12:21:05] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=444, Switch ID=13, Porta 11 | Status: sucesso
+[2025-09-01 12:21:05] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=445, Switch ID=13, Porta 12 | Status: sucesso
+[2025-09-01 12:21:05] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=446, Switch ID=13, Porta 13 | Status: sucesso
+[2025-09-01 12:21:05] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=447, Switch ID=13, Porta 14 | Status: sucesso
+[2025-09-01 12:21:05] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=448, Switch ID=13, Porta 15 | Status: sucesso
+[2025-09-01 12:21:05] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=449, Switch ID=13, Porta 16 | Status: sucesso
+[2025-09-01 12:21:05] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=450, Switch ID=13, Porta 17 | Status: sucesso
+[2025-09-01 12:21:05] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=451, Switch ID=13, Porta 18 | Status: sucesso
+[2025-09-01 12:21:05] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=452, Switch ID=13, Porta 19 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=453, Switch ID=13, Porta 20 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=454, Switch ID=13, Porta 21 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=455, Switch ID=13, Porta 22 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=456, Switch ID=13, Porta 23 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=457, Switch ID=13, Porta 24 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=458, Switch ID=13, Porta 25 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=459, Switch ID=13, Porta 26 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=460, Switch ID=13, Porta 27 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=461, Switch ID=13, Porta 28 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=462, Switch ID=13, Porta 29 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=463, Switch ID=13, Porta 30 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=464, Switch ID=13, Porta 31 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=465, Switch ID=13, Porta 32 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=466, Switch ID=13, Porta 33 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=467, Switch ID=13, Porta 34 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=468, Switch ID=13, Porta 35 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=469, Switch ID=13, Porta 36 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=470, Switch ID=13, Porta 37 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=471, Switch ID=13, Porta 38 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=472, Switch ID=13, Porta 39 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=473, Switch ID=13, Porta 40 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=474, Switch ID=13, Porta 41 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=475, Switch ID=13, Porta 42 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=476, Switch ID=13, Porta 43 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=477, Switch ID=13, Porta 44 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=478, Switch ID=13, Porta 45 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=479, Switch ID=13, Porta 46 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=480, Switch ID=13, Porta 47 | Status: sucesso
+[2025-09-01 12:21:06] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=481, Switch ID=13, Porta 48 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=435, Switch ID=13, Porta 2 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=436, Switch ID=13, Porta 3 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=437, Switch ID=13, Porta 4 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=438, Switch ID=13, Porta 5 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=439, Switch ID=13, Porta 6 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=440, Switch ID=13, Porta 7 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=441, Switch ID=13, Porta 8 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=442, Switch ID=13, Porta 9 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=443, Switch ID=13, Porta 10 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=444, Switch ID=13, Porta 11 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=445, Switch ID=13, Porta 12 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=446, Switch ID=13, Porta 13 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=447, Switch ID=13, Porta 14 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=448, Switch ID=13, Porta 15 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=449, Switch ID=13, Porta 16 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=450, Switch ID=13, Porta 17 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=451, Switch ID=13, Porta 18 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=452, Switch ID=13, Porta 19 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=453, Switch ID=13, Porta 20 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=454, Switch ID=13, Porta 21 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=455, Switch ID=13, Porta 22 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=456, Switch ID=13, Porta 23 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=457, Switch ID=13, Porta 24 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=458, Switch ID=13, Porta 25 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=459, Switch ID=13, Porta 26 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=460, Switch ID=13, Porta 27 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=461, Switch ID=13, Porta 28 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=462, Switch ID=13, Porta 29 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=463, Switch ID=13, Porta 30 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=464, Switch ID=13, Porta 31 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=465, Switch ID=13, Porta 32 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=466, Switch ID=13, Porta 33 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=467, Switch ID=13, Porta 34 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=468, Switch ID=13, Porta 35 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=469, Switch ID=13, Porta 36 | Status: sucesso
+[2025-09-01 12:21:20] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=470, Switch ID=13, Porta 37 | Status: sucesso
+[2025-09-01 12:21:21] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=471, Switch ID=13, Porta 38 | Status: sucesso
+[2025-09-01 12:21:21] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=472, Switch ID=13, Porta 39 | Status: sucesso
+[2025-09-01 12:21:21] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=473, Switch ID=13, Porta 40 | Status: sucesso
+[2025-09-01 12:21:21] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=474, Switch ID=13, Porta 41 | Status: sucesso
+[2025-09-01 12:21:21] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=475, Switch ID=13, Porta 42 | Status: sucesso
+[2025-09-01 12:21:21] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=476, Switch ID=13, Porta 43 | Status: sucesso
+[2025-09-01 12:21:21] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=477, Switch ID=13, Porta 44 | Status: sucesso
+[2025-09-01 12:21:21] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=478, Switch ID=13, Porta 45 | Status: sucesso
+[2025-09-01 12:21:21] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=479, Switch ID=13, Porta 46 | Status: sucesso
+[2025-09-01 12:21:21] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=480, Switch ID=13, Porta 47 | Status: sucesso
+[2025-09-01 12:21:21] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=481, Switch ID=13, Porta 48 | Status: sucesso
+[2025-09-01 12:23:45] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=435, Switch ID=13, Porta 2 | Status: sucesso
+[2025-09-01 12:23:45] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=436, Switch ID=13, Porta 3 | Status: sucesso
+[2025-09-01 12:23:45] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=437, Switch ID=13, Porta 4 | Status: sucesso
+[2025-09-01 12:23:45] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=438, Switch ID=13, Porta 5 | Status: sucesso
+[2025-09-01 12:23:45] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=439, Switch ID=13, Porta 6 | Status: sucesso
+[2025-09-01 12:23:45] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=440, Switch ID=13, Porta 7 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=441, Switch ID=13, Porta 8 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=442, Switch ID=13, Porta 9 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=443, Switch ID=13, Porta 10 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=444, Switch ID=13, Porta 11 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=445, Switch ID=13, Porta 12 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=446, Switch ID=13, Porta 13 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=447, Switch ID=13, Porta 14 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=448, Switch ID=13, Porta 15 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=449, Switch ID=13, Porta 16 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=450, Switch ID=13, Porta 17 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=451, Switch ID=13, Porta 18 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=452, Switch ID=13, Porta 19 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=453, Switch ID=13, Porta 20 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=454, Switch ID=13, Porta 21 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=455, Switch ID=13, Porta 22 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=456, Switch ID=13, Porta 23 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=457, Switch ID=13, Porta 24 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=458, Switch ID=13, Porta 25 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=459, Switch ID=13, Porta 26 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=460, Switch ID=13, Porta 27 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=461, Switch ID=13, Porta 28 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=462, Switch ID=13, Porta 29 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=463, Switch ID=13, Porta 30 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=464, Switch ID=13, Porta 31 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=465, Switch ID=13, Porta 32 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=466, Switch ID=13, Porta 33 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=467, Switch ID=13, Porta 34 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=468, Switch ID=13, Porta 35 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=469, Switch ID=13, Porta 36 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=470, Switch ID=13, Porta 37 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=471, Switch ID=13, Porta 38 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=472, Switch ID=13, Porta 39 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=473, Switch ID=13, Porta 40 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=474, Switch ID=13, Porta 41 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=475, Switch ID=13, Porta 42 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=476, Switch ID=13, Porta 43 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=477, Switch ID=13, Porta 44 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=478, Switch ID=13, Porta 45 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=479, Switch ID=13, Porta 46 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=480, Switch ID=13, Porta 47 | Status: sucesso
+[2025-09-01 12:23:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=481, Switch ID=13, Porta 48 | Status: sucesso
+[2025-09-01 12:24:48] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=435, Switch ID=13, Porta 2 | Status: sucesso
+[2025-09-01 12:24:48] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=436, Switch ID=13, Porta 3 | Status: sucesso
+[2025-09-01 12:24:48] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=437, Switch ID=13, Porta 4 | Status: sucesso
+[2025-09-01 12:24:48] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=438, Switch ID=13, Porta 5 | Status: sucesso
+[2025-09-01 12:24:48] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=439, Switch ID=13, Porta 6 | Status: sucesso
+[2025-09-01 12:24:48] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=440, Switch ID=13, Porta 7 | Status: sucesso
+[2025-09-01 12:24:48] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=441, Switch ID=13, Porta 8 | Status: sucesso
+[2025-09-01 12:24:48] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=442, Switch ID=13, Porta 9 | Status: sucesso
+[2025-09-01 12:24:48] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=443, Switch ID=13, Porta 10 | Status: sucesso
+[2025-09-01 12:24:48] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=444, Switch ID=13, Porta 11 | Status: sucesso
+[2025-09-01 12:24:48] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=445, Switch ID=13, Porta 12 | Status: sucesso
+[2025-09-01 12:24:48] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=446, Switch ID=13, Porta 13 | Status: sucesso
+[2025-09-01 12:24:48] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=447, Switch ID=13, Porta 14 | Status: sucesso
+[2025-09-01 12:24:48] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=448, Switch ID=13, Porta 15 | Status: sucesso
+[2025-09-01 12:24:48] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=449, Switch ID=13, Porta 16 | Status: sucesso
+[2025-09-01 12:24:48] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=450, Switch ID=13, Porta 17 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=451, Switch ID=13, Porta 18 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=452, Switch ID=13, Porta 19 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=453, Switch ID=13, Porta 20 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=454, Switch ID=13, Porta 21 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=455, Switch ID=13, Porta 22 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=456, Switch ID=13, Porta 23 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=457, Switch ID=13, Porta 24 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=458, Switch ID=13, Porta 25 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=459, Switch ID=13, Porta 26 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=460, Switch ID=13, Porta 27 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=461, Switch ID=13, Porta 28 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=462, Switch ID=13, Porta 29 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=463, Switch ID=13, Porta 30 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=464, Switch ID=13, Porta 31 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=465, Switch ID=13, Porta 32 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=466, Switch ID=13, Porta 33 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=467, Switch ID=13, Porta 34 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=468, Switch ID=13, Porta 35 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=469, Switch ID=13, Porta 36 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=470, Switch ID=13, Porta 37 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=471, Switch ID=13, Porta 38 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=472, Switch ID=13, Porta 39 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=473, Switch ID=13, Porta 40 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=474, Switch ID=13, Porta 41 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=475, Switch ID=13, Porta 42 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=476, Switch ID=13, Porta 43 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=477, Switch ID=13, Porta 44 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=478, Switch ID=13, Porta 45 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=479, Switch ID=13, Porta 46 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=480, Switch ID=13, Porta 47 | Status: sucesso
+[2025-09-01 12:24:49] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=481, Switch ID=13, Porta 48 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=435, Switch ID=13, Porta 2 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=436, Switch ID=13, Porta 3 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=437, Switch ID=13, Porta 4 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=438, Switch ID=13, Porta 5 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=439, Switch ID=13, Porta 6 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=440, Switch ID=13, Porta 7 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=441, Switch ID=13, Porta 8 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=442, Switch ID=13, Porta 9 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=443, Switch ID=13, Porta 10 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=444, Switch ID=13, Porta 11 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=445, Switch ID=13, Porta 12 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=446, Switch ID=13, Porta 13 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=447, Switch ID=13, Porta 14 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=448, Switch ID=13, Porta 15 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=449, Switch ID=13, Porta 16 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=450, Switch ID=13, Porta 17 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=451, Switch ID=13, Porta 18 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=452, Switch ID=13, Porta 19 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=453, Switch ID=13, Porta 20 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=454, Switch ID=13, Porta 21 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=455, Switch ID=13, Porta 22 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=456, Switch ID=13, Porta 23 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=457, Switch ID=13, Porta 24 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=458, Switch ID=13, Porta 25 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=459, Switch ID=13, Porta 26 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=460, Switch ID=13, Porta 27 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=461, Switch ID=13, Porta 28 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=462, Switch ID=13, Porta 29 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=463, Switch ID=13, Porta 30 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=464, Switch ID=13, Porta 31 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=465, Switch ID=13, Porta 32 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=466, Switch ID=13, Porta 33 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=467, Switch ID=13, Porta 34 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=468, Switch ID=13, Porta 35 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=469, Switch ID=13, Porta 36 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=470, Switch ID=13, Porta 37 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=471, Switch ID=13, Porta 38 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=472, Switch ID=13, Porta 39 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=473, Switch ID=13, Porta 40 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=474, Switch ID=13, Porta 41 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=475, Switch ID=13, Porta 42 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=476, Switch ID=13, Porta 43 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=477, Switch ID=13, Porta 44 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=478, Switch ID=13, Porta 45 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=479, Switch ID=13, Porta 46 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=480, Switch ID=13, Porta 47 | Status: sucesso
+[2025-09-01 12:25:37] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=481, Switch ID=13, Porta 48 | Status: sucesso
+[2025-09-01 12:26:02] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=435, Switch ID=13, Porta 2 | Status: sucesso
+[2025-09-01 12:26:02] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=436, Switch ID=13, Porta 3 | Status: sucesso
+[2025-09-01 12:26:02] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=437, Switch ID=13, Porta 4 | Status: sucesso
+[2025-09-01 12:26:02] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=438, Switch ID=13, Porta 5 | Status: sucesso
+[2025-09-01 12:26:02] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=439, Switch ID=13, Porta 6 | Status: sucesso
+[2025-09-01 12:26:02] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=440, Switch ID=13, Porta 7 | Status: sucesso
+[2025-09-01 12:26:02] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=441, Switch ID=13, Porta 8 | Status: sucesso
+[2025-09-01 12:26:02] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=442, Switch ID=13, Porta 9 | Status: sucesso
+[2025-09-01 12:26:02] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=443, Switch ID=13, Porta 10 | Status: sucesso
+[2025-09-01 12:26:02] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=444, Switch ID=13, Porta 11 | Status: sucesso
+[2025-09-01 12:26:02] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=445, Switch ID=13, Porta 12 | Status: sucesso
+[2025-09-01 12:26:02] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=446, Switch ID=13, Porta 13 | Status: sucesso
+[2025-09-01 12:26:02] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=447, Switch ID=13, Porta 14 | Status: sucesso
+[2025-09-01 12:26:02] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=448, Switch ID=13, Porta 15 | Status: sucesso
+[2025-09-01 12:26:02] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=449, Switch ID=13, Porta 16 | Status: sucesso
+[2025-09-01 12:26:02] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=450, Switch ID=13, Porta 17 | Status: sucesso
+[2025-09-01 12:26:02] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=451, Switch ID=13, Porta 18 | Status: sucesso
+[2025-09-01 12:26:02] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=452, Switch ID=13, Porta 19 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=453, Switch ID=13, Porta 20 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=454, Switch ID=13, Porta 21 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=455, Switch ID=13, Porta 22 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=456, Switch ID=13, Porta 23 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=457, Switch ID=13, Porta 24 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=458, Switch ID=13, Porta 25 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=459, Switch ID=13, Porta 26 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=460, Switch ID=13, Porta 27 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=461, Switch ID=13, Porta 28 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=462, Switch ID=13, Porta 29 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=463, Switch ID=13, Porta 30 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=464, Switch ID=13, Porta 31 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=465, Switch ID=13, Porta 32 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=466, Switch ID=13, Porta 33 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=467, Switch ID=13, Porta 34 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=468, Switch ID=13, Porta 35 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=469, Switch ID=13, Porta 36 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=470, Switch ID=13, Porta 37 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=471, Switch ID=13, Porta 38 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=472, Switch ID=13, Porta 39 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=473, Switch ID=13, Porta 40 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=474, Switch ID=13, Porta 41 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=475, Switch ID=13, Porta 42 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=476, Switch ID=13, Porta 43 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=477, Switch ID=13, Porta 44 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=478, Switch ID=13, Porta 45 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=479, Switch ID=13, Porta 46 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=480, Switch ID=13, Porta 47 | Status: sucesso
+[2025-09-01 12:26:03] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=481, Switch ID=13, Porta 48 | Status: sucesso
+[2025-09-01 12:26:33] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=434, Switch ID=13, Porta 1 | Status: sucesso
+[2025-09-01 12:26:33] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=435, Switch ID=13, Porta 2 | Status: sucesso
+[2025-09-01 12:26:33] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=436, Switch ID=13, Porta 3 | Status: sucesso
+[2025-09-01 12:26:33] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=437, Switch ID=13, Porta 4 | Status: sucesso
+[2025-09-01 12:26:33] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=438, Switch ID=13, Porta 5 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=439, Switch ID=13, Porta 6 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=440, Switch ID=13, Porta 7 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=441, Switch ID=13, Porta 8 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=442, Switch ID=13, Porta 9 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=443, Switch ID=13, Porta 10 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=444, Switch ID=13, Porta 11 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=445, Switch ID=13, Porta 12 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=446, Switch ID=13, Porta 13 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=447, Switch ID=13, Porta 14 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=448, Switch ID=13, Porta 15 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=449, Switch ID=13, Porta 16 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=450, Switch ID=13, Porta 17 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=451, Switch ID=13, Porta 18 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=452, Switch ID=13, Porta 19 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=453, Switch ID=13, Porta 20 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=454, Switch ID=13, Porta 21 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=455, Switch ID=13, Porta 22 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=456, Switch ID=13, Porta 23 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=457, Switch ID=13, Porta 24 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=458, Switch ID=13, Porta 25 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=459, Switch ID=13, Porta 26 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=460, Switch ID=13, Porta 27 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=461, Switch ID=13, Porta 28 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=462, Switch ID=13, Porta 29 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=463, Switch ID=13, Porta 30 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=464, Switch ID=13, Porta 31 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=465, Switch ID=13, Porta 32 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=466, Switch ID=13, Porta 33 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=467, Switch ID=13, Porta 34 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=468, Switch ID=13, Porta 35 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=469, Switch ID=13, Porta 36 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=470, Switch ID=13, Porta 37 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=471, Switch ID=13, Porta 38 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=472, Switch ID=13, Porta 39 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=473, Switch ID=13, Porta 40 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=474, Switch ID=13, Porta 41 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=475, Switch ID=13, Porta 42 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=476, Switch ID=13, Porta 43 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=477, Switch ID=13, Porta 44 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=478, Switch ID=13, Porta 45 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=479, Switch ID=13, Porta 46 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=480, Switch ID=13, Porta 47 | Status: sucesso
+[2025-09-01 12:26:34] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=481, Switch ID=13, Porta 48 | Status: sucesso
+[2025-09-01 12:27:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=434, Switch ID=13, Porta 1 | Status: sucesso
+[2025-09-01 12:27:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=435, Switch ID=13, Porta 2 | Status: sucesso
+[2025-09-01 12:27:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=436, Switch ID=13, Porta 3 | Status: sucesso
+[2025-09-01 12:27:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=437, Switch ID=13, Porta 4 | Status: sucesso
+[2025-09-01 12:27:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=438, Switch ID=13, Porta 5 | Status: sucesso
+[2025-09-01 12:27:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=439, Switch ID=13, Porta 6 | Status: sucesso
+[2025-09-01 12:27:46] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=440, Switch ID=13, Porta 7 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=441, Switch ID=13, Porta 8 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=442, Switch ID=13, Porta 9 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=443, Switch ID=13, Porta 10 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=444, Switch ID=13, Porta 11 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=445, Switch ID=13, Porta 12 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=446, Switch ID=13, Porta 13 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=447, Switch ID=13, Porta 14 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=448, Switch ID=13, Porta 15 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=449, Switch ID=13, Porta 16 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=450, Switch ID=13, Porta 17 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=451, Switch ID=13, Porta 18 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=452, Switch ID=13, Porta 19 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=453, Switch ID=13, Porta 20 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=454, Switch ID=13, Porta 21 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=455, Switch ID=13, Porta 22 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=456, Switch ID=13, Porta 23 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=457, Switch ID=13, Porta 24 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=458, Switch ID=13, Porta 25 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=459, Switch ID=13, Porta 26 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=460, Switch ID=13, Porta 27 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=461, Switch ID=13, Porta 28 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=462, Switch ID=13, Porta 29 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=463, Switch ID=13, Porta 30 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=464, Switch ID=13, Porta 31 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=465, Switch ID=13, Porta 32 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=466, Switch ID=13, Porta 33 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=467, Switch ID=13, Porta 34 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=468, Switch ID=13, Porta 35 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=469, Switch ID=13, Porta 36 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=470, Switch ID=13, Porta 37 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=471, Switch ID=13, Porta 38 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=472, Switch ID=13, Porta 39 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=473, Switch ID=13, Porta 40 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=474, Switch ID=13, Porta 41 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=475, Switch ID=13, Porta 42 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=476, Switch ID=13, Porta 43 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=477, Switch ID=13, Porta 44 | Status: sucesso
+[2025-09-01 12:27:47] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=478, Switch ID=13, Porta 45 | Status: sucesso
+[2025-09-01 12:27:48] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=479, Switch ID=13, Porta 46 | Status: sucesso
+[2025-09-01 12:27:48] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=480, Switch ID=13, Porta 47 | Status: sucesso
+[2025-09-01 12:27:48] Usuario: admin_wh | Acao: EDITAR_PORTA_SWITCH | Detalhes: Porta editada: ID=481, Switch ID=13, Porta 48 | Status: sucesso
+[2025-09-01 12:28:08] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1273 mapeada para Switch 13, Porta 1 | Status: sucesso
+[2025-09-01 12:35:20] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=758, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-09-01 12:35:50] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=759, Nome=Adaptador USB mesa, Tipo=Adaptador, Marca=Outro, Modelo=USBA F to USBA F | Status: sucesso
+[2025-09-01 12:36:17] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=760, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-09-01 12:36:28] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=761, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-09-03 10:43:43] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=762, Nome=USB Switcher, Tipo=Switcher, Marca=Extron, Modelo=SW2 USB | Status: sucesso
+[2025-09-03 11:35:36] Usuario: teste | Acao: TESTE | Detalhes: Teste manual | Status: sucesso
+[2025-09-03 11:39:39] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=83 | Status: sucesso
+[2025-09-03 12:33:45] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Dante AVIO USB conectado à porta 1363 do patch panel | Status: sucesso
+[2025-09-03 12:36:29] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento ANI 22 conectado à porta 1364 do patch panel | Status: sucesso
+[2025-09-03 12:37:02] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Dante AVIO Analógico conectado à porta 1174 do patch panel | Status: sucesso
+[2025-09-03 12:37:48] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 1362 do patch panel | Status: sucesso
+[2025-09-03 12:38:15] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Projetor conectado à porta 1175 do patch panel | Status: sucesso
+[2025-09-03 12:38:56] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=225, Porta ID=248, Equipamento ID=509 | Status: sucesso
+[2025-09-03 12:39:05] Usuario: admin_wh | Acao: CRIAR_CONEXAO | Detalhes: Conexão criada: ID=226, Porta ID=249, Equipamento ID=510 | Status: sucesso
+[2025-09-03 12:40:01] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1363 mapeada para Switch 11, Porta 2 | Status: sucesso
+[2025-09-03 12:40:38] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1364 mapeada para Switch 11, Porta 3 | Status: sucesso
+[2025-09-03 12:41:04] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1174 mapeada para Switch 11, Porta 11 | Status: sucesso
+[2025-09-03 12:41:36] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1362 mapeada para Switch 11, Porta 34 | Status: sucesso
+[2025-09-03 12:42:40] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1175 mapeada para Switch 9, Porta 26 | Status: sucesso
+[2025-09-03 12:45:26] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-239 criado | Status: sucesso
+[2025-09-03 12:45:26] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 577 criada | Status: sucesso
+[2025-09-03 12:45:42] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-240 criado | Status: sucesso
+[2025-09-03 12:45:42] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 578 criada | Status: sucesso
+[2025-09-03 12:45:58] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-241 criado | Status: sucesso
+[2025-09-03 12:45:58] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 579 criada | Status: sucesso
+[2025-09-03 12:46:16] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-242 criado | Status: sucesso
+[2025-09-03 12:46:16] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 580 criada | Status: sucesso
+[2025-09-03 12:46:31] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-243 criado | Status: sucesso
+[2025-09-03 12:46:31] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 581 criada | Status: sucesso
+[2025-09-03 14:29:59] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo COA-001 criado | Status: sucesso
+[2025-09-03 14:29:59] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 582 criada | Status: sucesso
+[2025-09-03 14:30:27] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo COA-002 criado | Status: sucesso
+[2025-09-03 14:30:28] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 583 criada | Status: sucesso
+[2025-09-03 14:39:04] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 582 atualizado | Status: sucesso
+[2025-09-03 14:39:04] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 587 atualizada | Status: sucesso
+[2025-09-03 15:32:42] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo COA-003 criado | Status: sucesso
+[2025-09-03 15:32:43] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 584 criada | Status: sucesso
+[2025-09-03 15:33:02] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo COA-004 criado | Status: sucesso
+[2025-09-03 15:33:02] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 585 criada | Status: sucesso
+[2025-09-03 15:33:28] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=84 | Status: sucesso
+[2025-09-03 15:40:01] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=84 | Status: sucesso
+[2025-09-03 15:41:17] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=84 | Status: sucesso
+[2025-09-03 15:55:15] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo AUD-001 criado | Status: sucesso
+[2025-09-03 15:55:15] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 586 criada | Status: sucesso
+[2025-09-03 15:55:44] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo AUD-002 criado | Status: sucesso
+[2025-09-03 15:55:44] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 587 criada | Status: sucesso
+[2025-09-03 15:59:17] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=84 | Status: sucesso
+[2025-09-03 16:08:44] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=763, Nome=Splitter Camera, Tipo=Splitter, Marca=Logitech, Modelo=Rally Camera Power Splitter | Status: sucesso
+[2025-09-03 16:13:31] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=763, Nome=Splitter Camera, Tipo=Splitter, Marca=Logitech, Modelo=Rally Camera Power Splitter | Status: sucesso
+[2025-09-03 16:13:44] Usuario: admin_wh | Acao: EXCLUIR_EQUIPAMENTO | Detalhes: Equipamento excluído: ID=763, Nome=Splitter Camera, Tipo=Splitter, Marca=Logitech, Modelo=Rally Camera Power Splitter | Status: sucesso
+[2025-09-03 16:14:19] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=764, Nome=Splitter Camera, Tipo=Splitter, Marca=Logitech, Modelo=Rally Camera Power Splitter | Status: sucesso
+[2025-09-03 16:21:29] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=764, Nome=Splitter Camera 01, Tipo=Splitter, Marca=Logitech, Modelo=Rally Camera Power Splitter | Status: sucesso
+[2025-09-03 16:22:37] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=765, Nome=Splitter Camera 02, Tipo=, Marca=, Modelo= | Status: sucesso
+[2025-09-03 16:23:09] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=765, Nome=Splitter Camera 02, Tipo=Splitter, Marca=Logitech, Modelo=Rally Camera Power Splitter | Status: sucesso
+[2025-09-04 08:34:25] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-143 criado | Status: sucesso
+[2025-09-04 08:34:25] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 588 criada | Status: sucesso
+[2025-09-04 08:36:03] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-144 criado | Status: sucesso
+[2025-09-04 08:36:03] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 589 criada | Status: sucesso
+[2025-09-04 08:36:20] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-145 criado | Status: sucesso
+[2025-09-04 08:36:20] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 590 criada | Status: sucesso
+[2025-09-04 08:54:59] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=766, Nome=Extensor HDMI IN, Tipo=Extensores, Marca=Kramer, Modelo=PT571 | Status: sucesso
+[2025-09-04 08:55:23] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=767, Nome=Extensor HDMI OUT, Tipo=Extensores, Marca=Kramer, Modelo=PT571 | Status: sucesso
+[2025-09-04 09:03:32] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-169 criado | Status: sucesso
+[2025-09-04 09:03:32] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 591 criada | Status: sucesso
+[2025-09-04 09:11:28] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-244 criado | Status: sucesso
+[2025-09-04 09:11:28] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 592 criada | Status: sucesso
+[2025-09-04 09:19:12] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=84 | Status: sucesso
+[2025-09-04 09:32:17] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=84 | Status: sucesso
+[2025-09-04 09:33:49] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=84 | Status: sucesso
+[2025-09-04 09:38:54] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=84 | Status: sucesso
+[2025-09-04 09:52:23] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-170 criado | Status: sucesso
+[2025-09-04 09:52:23] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 593 criada | Status: sucesso
+[2025-09-04 09:53:12] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=768, Nome=Adaptador HDMI mesa, Tipo=Adaptador, Marca=Kramer, Modelo=HDMI F to HDMI F | Status: sucesso
+[2025-09-04 09:53:40] Usuario: admin_wh | Acao: atualizar_cabo | Detalhes: Cabo ID 593 atualizado | Status: sucesso
+[2025-09-04 09:53:40] Usuario: admin_wh | Acao: atualizar_conexao_cabo | Detalhes: Conexão de cabo 598 atualizada | Status: sucesso
+[2025-09-04 09:54:10] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-171 criado | Status: sucesso
+[2025-09-04 09:54:10] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 594 criada | Status: sucesso
+[2025-09-04 11:20:28] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV 01 conectado à porta 1303 do patch panel | Status: sucesso
+[2025-09-04 11:20:48] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV 02 conectado à porta 1390 do patch panel | Status: sucesso
+[2025-09-04 11:21:02] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV 03 conectado à porta 1309 do patch panel | Status: sucesso
+[2025-09-04 11:21:09] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV 04 conectado à porta 1313 do patch panel | Status: sucesso
+[2025-09-04 11:21:21] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV 05 conectado à porta 1324 do patch panel | Status: sucesso
+[2025-09-04 11:21:32] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV 06 conectado à porta 1367 do patch panel | Status: sucesso
+[2025-09-04 11:21:44] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV 07 conectado à porta 1332 do patch panel | Status: sucesso
+[2025-09-04 11:22:04] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV 08 conectado à porta 1366 do patch panel | Status: sucesso
+[2025-09-04 11:22:35] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1303 mapeada para Switch 10, Porta 33 | Status: sucesso
+[2025-09-04 11:22:58] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1309 mapeada para Switch 10, Porta 34 | Status: sucesso
+[2025-09-04 11:23:12] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1313 mapeada para Switch 10, Porta 35 | Status: sucesso
+[2025-09-04 11:23:27] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1324 mapeada para Switch 10, Porta 44 | Status: sucesso
+[2025-09-04 11:23:45] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1332 mapeada para Switch 10, Porta 45 | Status: sucesso
+[2025-09-04 11:24:10] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1390 mapeada para Switch 11, Porta 44 | Status: sucesso
+[2025-09-04 11:24:33] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1367 mapeada para Switch 11, Porta 36 | Status: sucesso
+[2025-09-04 11:24:45] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1366 mapeada para Switch 11, Porta 35 | Status: sucesso
+[2025-09-04 11:37:52] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-245 criado | Status: sucesso
+[2025-09-04 11:37:53] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 595 criada | Status: sucesso
+[2025-09-04 15:49:50] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-246 criado | Status: sucesso
+[2025-09-04 15:49:50] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 596 criada | Status: sucesso
+[2025-09-04 15:51:11] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-247 criado | Status: sucesso
+[2025-09-04 15:51:11] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 597 criada | Status: sucesso
+[2025-09-04 15:51:28] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-248 criado | Status: sucesso
+[2025-09-04 15:51:28] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 598 criada | Status: sucesso
+[2025-09-04 15:52:11] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-249 criado | Status: sucesso
+[2025-09-04 15:52:11] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 599 criada | Status: sucesso
+[2025-09-04 15:59:06] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-250 criado | Status: sucesso
+[2025-09-04 15:59:06] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 600 criada | Status: sucesso
+[2025-09-04 15:59:17] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-251 criado | Status: sucesso
+[2025-09-04 15:59:17] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 601 criada | Status: sucesso
+[2025-09-04 15:59:33] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-252 criado | Status: sucesso
+[2025-09-04 15:59:33] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 602 criada | Status: sucesso
+[2025-09-04 16:02:52] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=85 | Status: sucesso
+[2025-09-04 16:06:28] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=85 | Status: sucesso
+[2025-09-05 08:35:50] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV Esquerda conectado à porta 1155 do patch panel | Status: sucesso
+[2025-09-05 08:36:10] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV Direita conectado à porta 1365 do patch panel | Status: sucesso
+[2025-09-05 08:36:25] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV Vertical conectado à porta 1162 do patch panel | Status: sucesso
+[2025-09-05 08:36:48] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1155 mapeada para Switch 9, Porta 13 | Status: sucesso
+[2025-09-05 08:37:27] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1162 mapeada para Switch 9, Porta 17 | Status: sucesso
+[2025-09-05 08:37:44] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1365 mapeada para Switch 11, Porta 14 | Status: sucesso
+[2025-09-05 08:38:40] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-253 criado | Status: sucesso
+[2025-09-05 08:38:40] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 603 criada | Status: sucesso
+[2025-09-05 08:38:51] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-254 criado | Status: sucesso
+[2025-09-05 08:38:51] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 604 criada | Status: sucesso
+[2025-09-05 08:39:02] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-255 criado | Status: sucesso
+[2025-09-05 08:39:02] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 605 criada | Status: sucesso
+[2025-09-05 08:40:06] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=86 | Status: sucesso
+[2025-09-05 08:42:34] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 1352 do patch panel | Status: sucesso
+[2025-09-05 08:43:30] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 1229 do patch panel | Status: sucesso
+[2025-09-05 08:44:05] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1352 mapeada para Switch 11, Porta 32 | Status: sucesso
+[2025-09-05 08:44:25] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1229 mapeada para Switch 9, Porta 33 | Status: sucesso
+[2025-09-05 08:45:13] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-256 criado | Status: sucesso
+[2025-09-05 08:45:13] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 606 criada | Status: sucesso
+[2025-09-05 08:45:40] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-172 criado | Status: sucesso
+[2025-09-05 08:45:40] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 607 criada | Status: sucesso
+[2025-09-05 08:46:01] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=87 | Status: sucesso
+[2025-09-05 08:46:22] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-257 criado | Status: sucesso
+[2025-09-05 08:46:22] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 608 criada | Status: sucesso
+[2025-09-05 08:46:40] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-173 criado | Status: sucesso
+[2025-09-05 08:46:40] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 609 criada | Status: sucesso
+[2025-09-05 08:47:20] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=88 | Status: sucesso
+[2025-09-05 08:49:22] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 1339 do patch panel | Status: sucesso
+[2025-09-05 08:49:36] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 1338 do patch panel | Status: sucesso
+[2025-09-05 08:49:48] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 1337 do patch panel | Status: sucesso
+[2025-09-05 08:51:53] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1339 mapeada para Switch 11, Porta 25 | Status: sucesso
+[2025-09-05 08:52:26] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1338 mapeada para Switch 10, Porta 48 | Status: sucesso
+[2025-09-05 08:52:38] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1337 mapeada para Switch 10, Porta 47 | Status: sucesso
+[2025-09-05 08:52:49] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1336 mapeada para Switch 10, Porta 46 | Status: sucesso
+[2025-09-05 08:56:30] Usuario: admin_wh | Acao: UPLOAD_FOTO_SALA | Detalhes: Foto hall-elevador-2andar.gif enviada para empresa empresa_wh | Status: sucesso
+[2025-09-05 08:56:53] Usuario: admin_wh | Acao: CRIAR_SALA | Detalhes: Sala criada: ID=94, Nome=Hall Elevador 2 Andar (via formulário) | Status: sucesso
+[2025-09-05 08:57:48] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=769, Nome=TV 01 Vídeo Wall Esquerda, Tipo=TV, Marca=LG, Modelo=Outro | Status: sucesso
+[2025-09-05 08:57:59] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=769, Nome=TV 01 Vídeo Wall Esquerda, Tipo=TV, Marca=LG, Modelo=Outro | Status: sucesso
+[2025-09-05 08:58:22] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=770, Nome=TV 02 Vídeo Wall Esquerda, Tipo=TV, Marca=LG, Modelo=Outro | Status: sucesso
+[2025-09-05 08:58:38] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=771, Nome=TV 03 Vídeo Wall Esquerda, Tipo=TV, Marca=LG, Modelo=Outro | Status: sucesso
+[2025-09-05 08:58:53] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=772, Nome=TV 04 Vídeo Wall Esquerda, Tipo=TV, Marca=LG, Modelo=Outro | Status: sucesso
+[2025-09-05 08:59:10] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=773, Nome=TV 01 Vídeo Wall Direita, Tipo=TV, Marca=LG, Modelo=Outro | Status: sucesso
+[2025-09-05 08:59:26] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=774, Nome=TV 02 Vídeo Wall Direita, Tipo=TV, Marca=LG, Modelo=Outro | Status: sucesso
+[2025-09-05 08:59:41] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=775, Nome=TV 03 Vídeo Wall Direita, Tipo=TV, Marca=LG, Modelo=Outro | Status: sucesso
+[2025-09-05 09:00:00] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=776, Nome=TV 04 Vídeo Wall Direita, Tipo=TV, Marca=LG, Modelo=Outro | Status: sucesso
+[2025-09-05 09:01:38] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=777, Nome=NUC 01 Esquerda, Tipo=PC, Marca=BlueTech, Modelo=BlueTech | Status: sucesso
+[2025-09-05 09:02:28] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=778, Nome=NUC 02 Direita, Tipo=PC, Marca=BlueTech, Modelo=BlueTech | Status: sucesso
+[2025-09-05 09:03:24] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=779, Nome=Dante AVIO Analógico, Tipo=AVIO, Marca=Dante, Modelo=1CH Analog Output Adapter | Status: sucesso
+[2025-09-05 09:04:21] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=780, Nome=Speaker 01, Tipo=Speaker, Marca=Shure, Modelo=MXN5W-C | Status: sucesso
+[2025-09-05 09:05:05] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Dante AVIO Analógico conectado à porta 1181 do patch panel | Status: sucesso
+[2025-09-05 09:05:14] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Speaker 01 conectado à porta 1180 do patch panel | Status: sucesso
+[2025-09-05 09:05:25] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento NUC 02 Direita conectado à porta 1182 do patch panel | Status: sucesso
+[2025-09-05 09:05:40] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento NUC 01 Esquerda conectado à porta 1358 do patch panel | Status: sucesso
+[2025-09-05 09:06:01] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1181 mapeada para Switch 10, Porta 12 | Status: sucesso
+[2025-09-05 09:06:27] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1182 mapeada para Switch 10, Porta 16 | Status: sucesso
+[2025-09-05 09:07:00] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1180 mapeada para Switch 9, Porta 6 | Status: sucesso
+[2025-09-05 09:07:23] Usuario: admin_wh | Acao: MAPEAR_PORTA_PATCH_PANEL | Detalhes: Porta 1358 mapeada para Switch 11, Porta 16 | Status: sucesso
+[2025-09-05 09:08:44] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-258 criado | Status: sucesso
+[2025-09-05 09:08:44] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 610 criada | Status: sucesso
+[2025-09-05 09:08:54] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-259 criado | Status: sucesso
+[2025-09-05 09:08:54] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 611 criada | Status: sucesso
+[2025-09-05 09:09:06] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-260 criado | Status: sucesso
+[2025-09-05 09:09:06] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 612 criada | Status: sucesso
+[2025-09-05 09:09:18] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-261 criado | Status: sucesso
+[2025-09-05 09:09:18] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 613 criada | Status: sucesso
+[2025-09-05 09:11:02] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo DIS-013 criado | Status: sucesso
+[2025-09-05 09:11:02] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 614 criada | Status: sucesso
+[2025-09-05 09:11:25] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo DIS-014 criado | Status: sucesso
+[2025-09-05 09:11:25] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 615 criada | Status: sucesso
+[2025-09-05 09:11:50] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo DIS-015 criado | Status: sucesso
+[2025-09-05 09:11:50] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 616 criada | Status: sucesso
+[2025-09-05 09:12:36] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-174 criado | Status: sucesso
+[2025-09-05 09:12:36] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 617 criada | Status: sucesso
+[2025-09-05 09:13:15] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo DIS-016 criado | Status: sucesso
+[2025-09-05 09:13:15] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 618 criada | Status: sucesso
+[2025-09-05 09:13:32] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo DIS-017 criado | Status: sucesso
+[2025-09-05 09:13:32] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 619 criada | Status: sucesso
+[2025-09-05 09:14:04] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo DIS-018 criado | Status: sucesso
+[2025-09-05 09:14:04] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 620 criada | Status: sucesso
+[2025-09-05 09:14:29] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-175 criado | Status: sucesso
+[2025-09-05 09:14:29] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 621 criada | Status: sucesso
+[2025-09-05 09:16:57] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=94 | Status: sucesso
+[2025-09-05 09:21:02] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=781, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-09-05 09:21:51] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=782, Nome=Câmera, Tipo=Camera, Marca=Jabra, Modelo=Panacast | Status: sucesso
+[2025-09-05 09:23:20] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=783, Nome=Jabra Speak, Tipo=Microfone, Marca=Jabra, Modelo=Jabra Speak | Status: sucesso
+[2025-09-05 09:24:12] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=784, Nome=TV, Tipo=TV, Marca=LG, Modelo=32LM621CBSB | Status: sucesso
+[2025-09-05 09:25:09] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=785, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 09:25:31] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=786, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-09-05 09:25:44] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=787, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-09-05 09:26:58] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox conectado à porta 1336 do patch panel | Status: sucesso
+[2025-09-05 09:27:34] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-262 criado | Status: sucesso
+[2025-09-05 09:27:34] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 622 criada | Status: sucesso
+[2025-09-05 09:28:10] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-146 criado | Status: sucesso
+[2025-09-05 09:28:10] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 623 criada | Status: sucesso
+[2025-09-05 09:28:46] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-147 criado | Status: sucesso
+[2025-09-05 09:28:46] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 624 criada | Status: sucesso
+[2025-09-05 09:29:25] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-176 criado | Status: sucesso
+[2025-09-05 09:29:25] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 625 criada | Status: sucesso
+[2025-09-05 09:30:00] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-177 criado | Status: sucesso
+[2025-09-05 09:30:00] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 626 criada | Status: sucesso
+[2025-09-05 09:31:29] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=92 | Status: sucesso
+[2025-09-05 09:59:54] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=528, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-09-05 10:00:26] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=524, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-09-05 10:00:43] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=524, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-09-05 10:01:03] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=524, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-09-05 10:02:31] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=89, Nome=Outback 01 - 2 Andar, Equipamentos desatrelados=4, Equipamentos vinculados=3 | Status: sucesso
+[2025-09-05 10:04:48] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=89, Nome=Outback 01 - 2 Andar, Equipamentos desatrelados=0, Equipamentos vinculados=4 | Status: sucesso
+[2025-09-05 10:04:54] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=524, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-09-05 10:04:54] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=89, Nome=Outback 01 - 2 Andar, Equipamentos desatrelados=4, Equipamentos vinculados=3 | Status: sucesso
+[2025-09-05 10:04:59] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=525, Nome=Câmera, Tipo=Camera, Marca=Jabra, Modelo=Panacast | Status: sucesso
+[2025-09-05 10:04:59] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=89, Nome=Outback 01 - 2 Andar, Equipamentos desatrelados=3, Equipamentos vinculados=2 | Status: sucesso
+[2025-09-05 10:05:03] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=527, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 10:05:03] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=89, Nome=Outback 01 - 2 Andar, Equipamentos desatrelados=2, Equipamentos vinculados=1 | Status: sucesso
+[2025-09-05 10:05:54] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=528, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-09-05 10:05:54] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=90, Nome=Outback 02 - 2 Andar, Equipamentos desatrelados=5, Equipamentos vinculados=4 | Status: sucesso
+[2025-09-05 10:05:58] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=529, Nome=Câmera, Tipo=Camera, Marca=Jabra, Modelo=Panacast | Status: sucesso
+[2025-09-05 10:05:58] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=90, Nome=Outback 02 - 2 Andar, Equipamentos desatrelados=4, Equipamentos vinculados=3 | Status: sucesso
+[2025-09-05 10:06:01] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=530, Nome=Jabra Speak, Tipo=Microfone, Marca=Jabra, Modelo=Jabra Speak | Status: sucesso
+[2025-09-05 10:06:01] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=90, Nome=Outback 02 - 2 Andar, Equipamentos desatrelados=3, Equipamentos vinculados=2 | Status: sucesso
+[2025-09-05 10:06:04] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=532, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 10:06:04] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=90, Nome=Outback 02 - 2 Andar, Equipamentos desatrelados=2, Equipamentos vinculados=1 | Status: sucesso
+[2025-09-05 10:07:42] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=526, Nome=TV, Tipo=TV, Marca=LG, Modelo=32LM621CBSB | Status: sucesso
+[2025-09-05 10:08:50] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox desconectado da porta 1339 do patch panel | Status: sucesso
+[2025-09-05 10:08:57] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 1339 do patch panel | Status: sucesso
+[2025-09-05 10:09:28] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-263 criado | Status: sucesso
+[2025-09-05 10:09:28] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 627 criada | Status: sucesso
+[2025-09-05 10:10:18] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-178 criado | Status: sucesso
+[2025-09-05 10:10:18] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 628 criada | Status: sucesso
+[2025-09-05 10:10:39] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=89 | Status: sucesso
+[2025-09-05 10:11:12] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox desconectado da porta 1338 do patch panel | Status: sucesso
+[2025-09-05 10:12:22] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=531, Nome=TV, Tipo=TV, Marca=LG, Modelo=32LM621CBSB | Status: sucesso
+[2025-09-05 10:12:54] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 1338 do patch panel | Status: sucesso
+[2025-09-05 10:13:33] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-264 criado | Status: sucesso
+[2025-09-05 10:13:33] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 629 criada | Status: sucesso
+[2025-09-05 10:13:55] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-179 criado | Status: sucesso
+[2025-09-05 10:13:55] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 630 criada | Status: sucesso
+[2025-09-05 10:14:23] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=90 | Status: sucesso
+[2025-09-05 10:17:09] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=788, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-09-05 10:17:27] Usuario: admin_wh | Acao: CRIAR_EQUIPAMENTO | Detalhes: Equipamento criado: ID=789, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-09-05 10:17:48] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-265 criado | Status: sucesso
+[2025-09-05 10:17:48] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 631 criada | Status: sucesso
+[2025-09-05 10:18:23] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-148 criado | Status: sucesso
+[2025-09-05 10:18:23] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 632 criada | Status: sucesso
+[2025-09-05 10:18:48] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo USB-149 criado | Status: sucesso
+[2025-09-05 10:18:48] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 633 criada | Status: sucesso
+[2025-09-05 10:19:29] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-180 criado | Status: sucesso
+[2025-09-05 10:19:29] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 634 criada | Status: sucesso
+[2025-09-05 10:23:41] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo HDM-181 criado | Status: sucesso
+[2025-09-05 10:23:41] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 635 criada | Status: sucesso
+[2025-09-05 10:34:50] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=91 | Status: sucesso
+[2025-09-05 10:36:53] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=695, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 10:36:53] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=57, Nome=Outback 06 - 1 Andar, Equipamentos desatrelados=2, Equipamentos vinculados=1 | Status: sucesso
+[2025-09-05 10:37:44] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=694, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-09-05 10:37:44] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=56, Nome=Outback 05 - 1 Andar, Equipamentos desatrelados=7, Equipamentos vinculados=6 | Status: sucesso
+[2025-09-05 10:37:48] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=693, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-09-05 10:37:48] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=56, Nome=Outback 05 - 1 Andar, Equipamentos desatrelados=6, Equipamentos vinculados=5 | Status: sucesso
+[2025-09-05 10:37:53] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 389 desconectada | Status: sucesso
+[2025-09-05 10:37:53] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 388 desconectada | Status: sucesso
+[2025-09-05 10:37:53] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 387 desconectada | Status: sucesso
+[2025-09-05 10:37:53] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 386 desconectada | Status: sucesso
+[2025-09-05 10:37:53] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=326, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 10:37:53] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=56, Nome=Outback 05 - 1 Andar, Equipamentos desatrelados=5, Equipamentos vinculados=4 | Status: sucesso
+[2025-09-05 10:37:56] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=324, Nome=Jabra Speak, Tipo=Microfone, Marca=Jabra, Modelo=Jabra Speak | Status: sucesso
+[2025-09-05 10:37:56] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=56, Nome=Outback 05 - 1 Andar, Equipamentos desatrelados=4, Equipamentos vinculados=3 | Status: sucesso
+[2025-09-05 10:38:00] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=323, Nome=Câmera, Tipo=Camera, Marca=Jabra, Modelo=Panacast | Status: sucesso
+[2025-09-05 10:38:00] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=56, Nome=Outback 05 - 1 Andar, Equipamentos desatrelados=3, Equipamentos vinculados=2 | Status: sucesso
+[2025-09-05 10:38:03] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 390 desconectada | Status: sucesso
+[2025-09-05 10:38:03] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=322, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-09-05 10:38:03] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=56, Nome=Outback 05 - 1 Andar, Equipamentos desatrelados=2, Equipamentos vinculados=1 | Status: sucesso
+[2025-09-05 10:39:00] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 386 criada | Status: sucesso
+[2025-09-05 10:42:00] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 385 desconectada | Status: sucesso
+[2025-09-05 10:42:00] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 382 desconectada | Status: sucesso
+[2025-09-05 10:42:00] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=317, Nome=Tap, Tipo=Tap, Marca=Logitech, Modelo=Tap USB | Status: sucesso
+[2025-09-05 10:42:00] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=55, Nome=Outback 04 - 1 Andar, Equipamentos desatrelados=7, Equipamentos vinculados=6 | Status: sucesso
+[2025-09-05 10:42:04] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 383 desconectada | Status: sucesso
+[2025-09-05 10:42:04] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=318, Nome=Câmera, Tipo=Camera, Marca=Jabra, Modelo=Panacast | Status: sucesso
+[2025-09-05 10:42:04] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=55, Nome=Outback 04 - 1 Andar, Equipamentos desatrelados=6, Equipamentos vinculados=5 | Status: sucesso
+[2025-09-05 10:42:06] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=319, Nome=Jabra Speak, Tipo=Microfone, Marca=Jabra, Modelo=Jabra Speak | Status: sucesso
+[2025-09-05 10:42:06] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=55, Nome=Outback 04 - 1 Andar, Equipamentos desatrelados=5, Equipamentos vinculados=4 | Status: sucesso
+[2025-09-05 10:42:11] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 384 desconectada | Status: sucesso
+[2025-09-05 10:42:11] Usuario: admin_wh | Acao: desconectar_cabo | Detalhes: Conexão de cabo 381 desconectada | Status: sucesso
+[2025-09-05 10:42:11] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=321, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 10:42:11] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=55, Nome=Outback 04 - 1 Andar, Equipamentos desatrelados=4, Equipamentos vinculados=3 | Status: sucesso
+[2025-09-05 10:42:14] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=691, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-09-05 10:42:14] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=55, Nome=Outback 04 - 1 Andar, Equipamentos desatrelados=3, Equipamentos vinculados=2 | Status: sucesso
+[2025-09-05 10:42:17] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=692, Nome=Fonte Tap, Tipo=Fonte, Marca=Logitech, Modelo=TAP | Status: sucesso
+[2025-09-05 10:42:17] Usuario: admin_wh | Acao: ATUALIZAR_SALA | Detalhes: Sala atualizada: ID=55, Nome=Outback 04 - 1 Andar, Equipamentos desatrelados=2, Equipamentos vinculados=1 | Status: sucesso
+[2025-09-05 10:45:39] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 381 criada | Status: sucesso
+[2025-09-05 10:56:01] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=321, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 10:58:25] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=321, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 10:59:48] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=321, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 11:03:15] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=326, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 11:05:30] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=321, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 11:05:37] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=321, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 11:06:17] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=321, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 11:06:27] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=321, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 11:08:12] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=321, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 11:08:35] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=321, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 11:08:55] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=321, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 11:09:22] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=326, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 11:09:32] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=695, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 11:10:04] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=532, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 11:10:14] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=527, Nome=Chromebox, Tipo=PC, Marca=CTL, Modelo=Outro | Status: sucesso
+[2025-09-05 11:10:50] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=694, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-09-05 11:10:54] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=691, Nome=Fonte Chromebox, Tipo=Fonte, Marca=Universal, Modelo=Chromebox | Status: sucesso
+[2025-09-09 15:30:32] Usuario: admin_wh | Acao: EXPORTAR_IPS_MACS | Detalhes: Exportação de 238 equipamentos com dados de rede para CSV | Status: sucesso
+[2025-09-09 15:30:52] Usuario: admin_wh | Acao: EXPORTAR_EQUIPAMENTOS | Detalhes: Exportação de 779 equipamentos para CSV | Status: sucesso
+[2025-09-10 07:48:24] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 382 criada | Status: sucesso
+[2025-09-10 07:56:16] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=327, Nome=TV, Tipo=TV, Marca=LG, Modelo=32LM621CBSB | Status: sucesso
+[2025-09-10 07:57:26] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox desconectado da porta 785 do patch panel | Status: sucesso
+[2025-09-10 07:57:33] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 785 do patch panel | Status: sucesso
+[2025-09-10 07:58:17] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=57 | Status: sucesso
+[2025-09-10 07:59:20] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=325, Nome=TV, Tipo=TV, Marca=LG, Modelo=32LM621CBSB | Status: sucesso
+[2025-09-10 08:00:35] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox desconectado da porta 784 do patch panel | Status: sucesso
+[2025-09-10 08:00:40] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 784 do patch panel | Status: sucesso
+[2025-09-10 08:01:44] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 378 criada | Status: sucesso
+[2025-09-10 08:02:13] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=56 | Status: sucesso
+[2025-09-10 08:03:10] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 383 criada | Status: sucesso
+[2025-09-10 08:03:32] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=57 | Status: sucesso
+[2025-09-10 08:09:17] Usuario: admin_wh | Acao: ATUALIZAR_EQUIPAMENTO | Detalhes: Equipamento atualizado: ID=320, Nome=TV, Tipo=TV, Marca=LG, Modelo=32LM621CBSB | Status: sucesso
+[2025-09-10 08:09:59] Usuario: admin_wh | Acao: DESCONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento Chromebox desconectado da porta 783 do patch panel | Status: sucesso
+[2025-09-10 08:10:30] Usuario: admin_wh | Acao: CONECTAR_EQUIPAMENTO_PATCH_PANEL | Detalhes: Equipamento TV conectado à porta 783 do patch panel | Status: sucesso
+[2025-09-10 08:11:43] Usuario: admin_wh | Acao: criar_cabo | Detalhes: Cabo ETH-266 criado | Status: sucesso
+[2025-09-10 08:11:43] Usuario: admin_wh | Acao: criar_conexao_cabo | Detalhes: Conexão de cabo 636 criada | Status: sucesso
+[2025-09-10 08:12:07] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=55 | Status: sucesso
+[2025-09-10 08:12:59] Usuario: admin_wh | Acao: salvar_layout | Detalhes: sala_id=55 | Status: sucesso
+[2025-09-10 08:48:26] Usuario: admin_wh | Acao: UPLOAD_FOTO_SALA | Detalhes: Foto idf-terreo.jpg enviada para empresa empresa_wh | Status: sucesso
+[2025-09-10 08:48:36] Usuario: admin_wh | Acao: UPLOAD_FOTO_SALA | Detalhes: Foto idf-2andar.jpg enviada para empresa empresa_wh | Status: sucesso
+[2025-09-10 08:48:52] Usuario: admin_wh | Acao: UPLOAD_FOTO_SALA | Detalhes: Foto idf-1andar.jpg enviada para empresa empresa_wh | Status: sucesso
+[2025-09-10 08:52:18] Usuario: admin_wh | Acao: CRIAR_IDF | Detalhes: IDF criado: ID=1, Nome=IDF - Térreo, Andar=0 | Status: sucesso
+[2025-09-10 09:10:09] Usuario: admin_wh | Acao: ATUALIZAR_SWITCH | Detalhes: Switch atualizado: ID=1, Nome=Switch 01 - Térreo, Marca=Cisco, Modelo=Outro | Status: sucesso
+[2025-09-10 14:16:11] Usuario: admin_wh | Acao: CRIAR_IDF | Detalhes: IDF criado: ID=2, Nome=IDF - 1 Andar, Andar=1 | Status: sucesso
+[2025-09-10 14:19:35] Usuario: admin_wh | Acao: CRIAR_IDF | Detalhes: IDF criado: ID=3, Nome=IDF -2 Andar, Andar=2 | Status: sucesso

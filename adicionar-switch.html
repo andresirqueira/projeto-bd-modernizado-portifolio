@@ -76,6 +76,20 @@
                     <option value="">Selecione a marca primeiro</option>
                 </select>
             </div>
+            <div class="space-y-2">
+                <label for="andar" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Andar:</label>
+                <select name="andar" id="andar" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                    <option value="">Selecione o andar (opcional)</option>
+                </select>
+                <small class="text-gray-500 dark:text-gray-400">Opcional: vincular switch a um andar específico</small>
+            </div>
+            <div class="space-y-2">
+                <label for="idf_responsavel" class="block text-sm font-medium text-gray-700 dark:text-gray-300">IDF Responsável:</label>
+                <select name="idf_responsavel" id="idf_responsavel" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:text-white dark:border-gray-600">
+                    <option value="">Selecione o IDF responsável (opcional)</option>
+                </select>
+                <small class="text-gray-500 dark:text-gray-400">Opcional: vincular switch a um IDF específico</small>
+            </div>
             <div class="pt-4">
                 <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-800 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
                     <i class="fas fa-plus"></i> Adicionar Switch
@@ -208,6 +222,42 @@
             }
         });
 
+        // Carregar andares
+        async function carregarAndares() {
+            try {
+                const response = await fetch('/andares');
+                const andares = await response.json();
+                const andarSelect = document.getElementById('andar');
+                
+                andares.forEach(andar => {
+                    const option = document.createElement('option');
+                    option.value = andar.id;
+                    option.textContent = andar.titulo;
+                    andarSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar andares:', error);
+            }
+        }
+
+        // Carregar IDFs
+        async function carregarIDFs() {
+            try {
+                const response = await fetch('/idfs');
+                const idfs = await response.json();
+                const idfSelect = document.getElementById('idf_responsavel');
+                
+                idfs.forEach(idf => {
+                    const option = document.createElement('option');
+                    option.value = idf.id;
+                    option.textContent = `${idf.nome} (${idf.andar_titulo})`;
+                    idfSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar IDFs:', error);
+            }
+        }
+
         // Envio do formulário
         document.getElementById('formSwitch').onsubmit = async function (e) {
             e.preventDefault();
@@ -231,7 +281,9 @@
             const dados = {
                 nome: nome,
                 marca: form.marca.value,
-                modelo: form.modelo.value
+                modelo: form.modelo.value,
+                andar_id: form.andar.value || null,
+                idf_responsavel_id: form.idf_responsavel.value || null
             };
 
             try {
@@ -270,6 +322,10 @@
                         document.getElementById('empresa-logada').innerText = 'Empresa: ' + data.nome;
                     }
                 });
+            
+            // Carregar dados dos selects
+            carregarAndares();
+            carregarIDFs();
         });
     </script>
     <script src="static/js/logo-manager.js"></script>
