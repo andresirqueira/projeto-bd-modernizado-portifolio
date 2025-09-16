@@ -3703,36 +3703,63 @@ def criar_cabo():
     if not dados.get('codigo_unico') or not dados.get('tipo'):
         return jsonify({'status': 'erro', 'mensagem': 'Código único e tipo são obrigatórios'}), 400
     
-    conn = sqlite3.connect(db_file)
-    cur = conn.cursor()
-    
-    try:
-        cur.execute('''
-            INSERT INTO cabos (codigo_unico, tipo, comprimento, marca, modelo, descricao, foto, status)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (
-            dados['codigo_unico'],
-            dados['tipo'],
-            dados.get('comprimento'),
-            dados.get('marca'),
-            dados.get('modelo'),
-            dados.get('descricao'),
-            dados.get('foto'),
-            dados.get('status', 'funcionando')
-        ))
+    if _is_json_mode(db_file):
+        cabos = _json_read_table(db_file, 'cabos')
         
-        cabo_id = cur.lastrowid
-        conn.commit()
+        # Verificar se código único já existe
+        if any(c.get('codigo_unico') == dados['codigo_unico'] for c in cabos):
+            return jsonify({'status': 'erro', 'mensagem': 'Código único já existe'}), 400
+        
+        cabo_id = _json_next_id(cabos)
+        novo_cabo = {
+            'id': cabo_id,
+            'codigo_unico': dados['codigo_unico'],
+            'tipo': dados['tipo'],
+            'comprimento': dados.get('comprimento'),
+            'marca': dados.get('marca'),
+            'modelo': dados.get('modelo'),
+            'descricao': dados.get('descricao'),
+            'foto': dados.get('foto'),
+            'status': dados.get('status', 'funcionando'),
+            'data_criacao': datetime.now().isoformat(),
+            'data_modificacao': datetime.now().isoformat()
+        }
+        cabos.append(novo_cabo)
+        _json_write_table(db_file, 'cabos', cabos)
         
         registrar_log(session.get('username'), 'criar_cabo', f'Cabo {dados["codigo_unico"]} criado', 'sucesso', db_file)
         return jsonify({'status': 'ok', 'cabo_id': cabo_id})
+    else:
+        conn = sqlite3.connect(db_file)
+        cur = conn.cursor()
         
-    except sqlite3.IntegrityError:
-        return jsonify({'status': 'erro', 'mensagem': 'Código único já existe'}), 400
-    except Exception as e:
-        return jsonify({'status': 'erro', 'mensagem': str(e)}), 500
-    finally:
-        conn.close()
+        try:
+            cur.execute('''
+                INSERT INTO cabos (codigo_unico, tipo, comprimento, marca, modelo, descricao, foto, status)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                dados['codigo_unico'],
+                dados['tipo'],
+                dados.get('comprimento'),
+                dados.get('marca'),
+                dados.get('modelo'),
+                dados.get('descricao'),
+                dados.get('foto'),
+                dados.get('status', 'funcionando')
+            ))
+            
+            cabo_id = cur.lastrowid
+            conn.commit()
+            
+            registrar_log(session.get('username'), 'criar_cabo', f'Cabo {dados["codigo_unico"]} criado', 'sucesso', db_file)
+            return jsonify({'status': 'ok', 'cabo_id': cabo_id})
+            
+        except sqlite3.IntegrityError:
+            return jsonify({'status': 'erro', 'mensagem': 'Código único já existe'}), 400
+        except Exception as e:
+            return jsonify({'status': 'erro', 'mensagem': str(e)}), 500
+        finally:
+            conn.close()
 
 @app.route('/cabos', methods=['GET'])
 @login_required
@@ -3746,60 +3773,118 @@ def listar_cabos():
     tipo = request.args.get('tipo')
     conectado = request.args.get('conectado')  # 'true' para conectados, 'false' para em estoque
     
-    conn = sqlite3.connect(db_file)
-    cur = conn.cursor()
-    
-    query = '''
-        SELECT c.id, c.codigo_unico, c.tipo, c.comprimento, c.marca, c.modelo, 
-               c.descricao, c.foto, c.status, c.data_criacao, c.data_modificacao,
-               tc.descricao as tipo_descricao, tc.icone as tipo_icone,
-               CASE WHEN EXISTS (SELECT 1 FROM conexoes_cabos cc WHERE cc.cabo_id = c.id AND cc.data_desconexao IS NULL) THEN 1 ELSE 0 END as conectado
-        FROM cabos c
-        LEFT JOIN tipos_cabos tc ON c.tipo = tc.nome
-        WHERE 1=1
-    '''
-    params = []
-    
-    if status:
-        query += ' AND c.status = ?'
-        params.append(status)
-    
-    if tipo:
-        query += ' AND c.tipo = ?'
-        params.append(tipo)
-    
-    if conectado == 'true':
-        query += ' AND EXISTS (SELECT 1 FROM conexoes_cabos cc WHERE cc.cabo_id = c.id AND cc.data_desconexao IS NULL)'
-    elif conectado == 'false':
-        query += ' AND NOT EXISTS (SELECT 1 FROM conexoes_cabos cc WHERE cc.cabo_id = c.id AND cc.data_desconexao IS NULL)'
-    
-    query += ' ORDER BY c.codigo_unico'
-    
-    cur.execute(query, params)
-    rows = cur.fetchall()
-    
-    cabos = []
-    for row in rows:
-        cabo = {
-            'id': row[0],
-            'codigo_unico': row[1],
-            'tipo': row[2],
-            'comprimento': row[3],
-            'marca': row[4],
-            'modelo': row[5],
-            'descricao': row[6],
-            'foto': row[7],
-            'status': row[8],
-            'data_criacao': row[9],
-            'data_modificacao': row[10],
-            'tipo_descricao': row[11],
-            'tipo_icone': row[12],
-            'conectado': bool(row[13])
-        }
-        cabos.append(cabo)
-    
-    conn.close()
-    return jsonify(cabos)
+    if _is_json_mode(db_file):
+        cabos = _json_read_table(db_file, 'cabos')
+        conexoes_cabos = _json_read_table(db_file, 'conexoes_cabos')
+        tipos_cabos = _json_read_table(db_file, 'tipos_cabos')
+        
+        # Criar dicionário de tipos para lookup
+        tipos_dict = {t.get('nome'): t for t in tipos_cabos}
+        
+        # Criar dicionário de conexões ativas por cabo
+        conexoes_ativas = {}
+        for cc in conexoes_cabos:
+            if not cc.get('data_desconexao'):
+                cabo_id = cc.get('cabo_id')
+                if cabo_id not in conexoes_ativas:
+                    conexoes_ativas[cabo_id] = []
+                conexoes_ativas[cabo_id].append(cc)
+        
+        resultado = []
+        for cabo in cabos:
+            # Aplicar filtros
+            if status and cabo.get('status') != status:
+                continue
+            if tipo and cabo.get('tipo') != tipo:
+                continue
+            
+            cabo_id = cabo.get('id')
+            is_conectado = cabo_id in conexoes_ativas
+            
+            if conectado == 'true' and not is_conectado:
+                continue
+            if conectado == 'false' and is_conectado:
+                continue
+            
+            # Buscar informações do tipo
+            tipo_info = tipos_dict.get(cabo.get('tipo'), {})
+            
+            cabo_result = {
+                'id': cabo.get('id'),
+                'codigo_unico': cabo.get('codigo_unico'),
+                'tipo': cabo.get('tipo'),
+                'comprimento': cabo.get('comprimento'),
+                'marca': cabo.get('marca'),
+                'modelo': cabo.get('modelo'),
+                'descricao': cabo.get('descricao'),
+                'foto': cabo.get('foto'),
+                'status': cabo.get('status'),
+                'data_criacao': cabo.get('data_criacao'),
+                'data_modificacao': cabo.get('data_modificacao'),
+                'tipo_descricao': tipo_info.get('descricao'),
+                'tipo_icone': tipo_info.get('icone'),
+                'conectado': is_conectado
+            }
+            resultado.append(cabo_result)
+        
+        # Ordenar por código único
+        resultado.sort(key=lambda x: x.get('codigo_unico', ''))
+        return jsonify(resultado)
+    else:
+        conn = sqlite3.connect(db_file)
+        cur = conn.cursor()
+        
+        query = '''
+            SELECT c.id, c.codigo_unico, c.tipo, c.comprimento, c.marca, c.modelo, 
+                   c.descricao, c.foto, c.status, c.data_criacao, c.data_modificacao,
+                   tc.descricao as tipo_descricao, tc.icone as tipo_icone,
+                   CASE WHEN EXISTS (SELECT 1 FROM conexoes_cabos cc WHERE cc.cabo_id = c.id AND cc.data_desconexao IS NULL) THEN 1 ELSE 0 END as conectado
+            FROM cabos c
+            LEFT JOIN tipos_cabos tc ON c.tipo = tc.nome
+            WHERE 1=1
+        '''
+        params = []
+        
+        if status:
+            query += ' AND c.status = ?'
+            params.append(status)
+        
+        if tipo:
+            query += ' AND c.tipo = ?'
+            params.append(tipo)
+        
+        if conectado == 'true':
+            query += ' AND EXISTS (SELECT 1 FROM conexoes_cabos cc WHERE cc.cabo_id = c.id AND cc.data_desconexao IS NULL)'
+        elif conectado == 'false':
+            query += ' AND NOT EXISTS (SELECT 1 FROM conexoes_cabos cc WHERE cc.cabo_id = c.id AND cc.data_desconexao IS NULL)'
+        
+        query += ' ORDER BY c.codigo_unico'
+        
+        cur.execute(query, params)
+        rows = cur.fetchall()
+        
+        cabos = []
+        for row in rows:
+            cabo = {
+                'id': row[0],
+                'codigo_unico': row[1],
+                'tipo': row[2],
+                'comprimento': row[3],
+                'marca': row[4],
+                'modelo': row[5],
+                'descricao': row[6],
+                'foto': row[7],
+                'status': row[8],
+                'data_criacao': row[9],
+                'data_modificacao': row[10],
+                'tipo_descricao': row[11],
+                'tipo_icone': row[12],
+                'conectado': bool(row[13])
+            }
+            cabos.append(cabo)
+        
+        conn.close()
+        return jsonify(cabos)
 
 @app.route('/cabos/<int:id>', methods=['GET'])
 @login_required
@@ -3949,39 +4034,67 @@ def criar_conexao_cabo():
     if not dados.get('cabo_id') or not dados.get('equipamento_origem_id'):
         return jsonify({'status': 'erro', 'mensagem': 'cabo_id e equipamento_origem_id são obrigatórios'}), 400
     
-    conn = sqlite3.connect(db_file)
-    cur = conn.cursor()
-    
-    try:
+    if _is_json_mode(db_file):
+        conexoes_cabos = _json_read_table(db_file, 'conexoes_cabos')
+        
         # Verificar se o cabo já está conectado
-        cur.execute('SELECT COUNT(*) FROM conexoes_cabos WHERE cabo_id = ? AND data_desconexao IS NULL', (dados['cabo_id'],))
-        if cur.fetchone()[0] > 0:
-            return jsonify({'status': 'erro', 'mensagem': 'Cabo já está conectado a outro equipamento'}), 400
+        cabo_id = dados['cabo_id']
+        for cc in conexoes_cabos:
+            if cc.get('cabo_id') == cabo_id and not cc.get('data_desconexao'):
+                return jsonify({'status': 'erro', 'mensagem': 'Cabo já está conectado a outro equipamento'}), 400
         
-        cur.execute('''
-            INSERT INTO conexoes_cabos (cabo_id, equipamento_origem_id, equipamento_destino_id, 
-                                      porta_origem, porta_destino, sala_id, observacao)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        ''', (
-            dados['cabo_id'],
-            dados['equipamento_origem_id'],
-            dados['equipamento_destino_id'],
-            dados.get('porta_origem'),
-            dados.get('porta_destino'),
-            dados.get('sala_id'),
-            dados.get('observacao')
-        ))
-        
-        conexao_id = cur.lastrowid
-        conn.commit()
+        conexao_id = _json_next_id(conexoes_cabos)
+        nova_conexao = {
+            'id': conexao_id,
+            'cabo_id': dados['cabo_id'],
+            'equipamento_origem_id': dados['equipamento_origem_id'],
+            'equipamento_destino_id': dados.get('equipamento_destino_id'),
+            'porta_origem': dados.get('porta_origem'),
+            'porta_destino': dados.get('porta_destino'),
+            'sala_id': dados.get('sala_id'),
+            'observacao': dados.get('observacao'),
+            'data_conexao': datetime.now().isoformat(),
+            'data_desconexao': None
+        }
+        conexoes_cabos.append(nova_conexao)
+        _json_write_table(db_file, 'conexoes_cabos', conexoes_cabos)
         
         registrar_log(session.get('username'), 'criar_conexao_cabo', f'Conexão de cabo {dados["cabo_id"]} criada', 'sucesso', db_file)
         return jsonify({'status': 'ok', 'id': conexao_id})
+    else:
+        conn = sqlite3.connect(db_file)
+        cur = conn.cursor()
         
-    except Exception as e:
-        return jsonify({'status': 'erro', 'mensagem': str(e)}), 500
-    finally:
-        conn.close()
+        try:
+            # Verificar se o cabo já está conectado
+            cur.execute('SELECT COUNT(*) FROM conexoes_cabos WHERE cabo_id = ? AND data_desconexao IS NULL', (dados['cabo_id'],))
+            if cur.fetchone()[0] > 0:
+                return jsonify({'status': 'erro', 'mensagem': 'Cabo já está conectado a outro equipamento'}), 400
+            
+            cur.execute('''
+                INSERT INTO conexoes_cabos (cabo_id, equipamento_origem_id, equipamento_destino_id, 
+                                          porta_origem, porta_destino, sala_id, observacao)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                dados['cabo_id'],
+                dados['equipamento_origem_id'],
+                dados['equipamento_destino_id'],
+                dados.get('porta_origem'),
+                dados.get('porta_destino'),
+                dados.get('sala_id'),
+                dados.get('observacao')
+            ))
+            
+            conexao_id = cur.lastrowid
+            conn.commit()
+            
+            registrar_log(session.get('username'), 'criar_conexao_cabo', f'Conexão de cabo {dados["cabo_id"]} criada', 'sucesso', db_file)
+            return jsonify({'status': 'ok', 'id': conexao_id})
+            
+        except Exception as e:
+            return jsonify({'status': 'erro', 'mensagem': str(e)}), 500
+        finally:
+            conn.close()
 
 @app.route('/conexoes-cabos', methods=['GET'])
 @login_required
