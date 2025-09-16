@@ -3688,40 +3688,112 @@ def switches_usados_sala(sala_id):
         switches = _json_read_table(db_file, 'switches')
         switch_portas = _json_read_table(db_file, 'switch_portas')
         patch_panel_portas = _json_read_table(db_file, 'patch_panel_portas')
+        patch_panels = _json_read_table(db_file, 'patch_panels')
         equipamentos = _json_read_table(db_file, 'equipamentos')
+        salas = _json_read_table(db_file, 'salas')
         conexoes = _json_read_table(db_file, 'conexoes')
-        
-        # Criar dicionários para lookup
+
+        # Dicionários de apoio
         equipamentos_dict = {e.get('id'): e for e in equipamentos}
-        switch_portas_dict = {sp.get('id'): sp for sp in switch_portas}
-        
-        switches_usados = {}
-        
-        # Buscar switches via conexões diretas
-        for conexao in conexoes:
-            if conexao.get('status') == 'ativa':
-                equipamento = equipamentos_dict.get(conexao.get('equipamento_id'))
-                if equipamento and equipamento.get('sala_id') == sala_id:
-                    porta = switch_portas_dict.get(conexao.get('porta_id'))
-                    if porta:
-                        switch_id = porta.get('switch_id')
-                        switch = next((s for s in switches if s.get('id') == switch_id), None)
-                        if switch:
-                            switches_usados[switch_id] = switch
-        
-        # Buscar switches via patch panel
-        for ppp in patch_panel_portas:
-            if ppp.get('equipamento_id'):
-                equipamento = equipamentos_dict.get(ppp.get('equipamento_id'))
-                if equipamento and equipamento.get('sala_id') == sala_id:
-                    switch_id = ppp.get('switch_id')
-                    if switch_id:
-                        switch = next((s for s in switches if s.get('id') == switch_id), None)
-                        if switch:
-                            switches_usados[switch_id] = switch
-        
-        switches_list = list(switches_usados.values())
-        return jsonify(switches_list)
+        salas_dict = {s.get('id'): s for s in salas}
+        patch_panels_dict = {pp.get('id'): pp for pp in patch_panels}
+        switch_portas_by_id = {sp.get('id'): sp for sp in switch_portas}
+        switch_portas_by_switch = {}
+        for sp in switch_portas:
+            switch_portas_by_switch.setdefault(sp.get('switch_id'), []).append(sp)
+
+        # índices rápidos
+        ppp_index = {}
+        for m in patch_panel_portas:
+            key = (m.get('switch_id'), m.get('porta_switch'))
+            ppp_index[key] = m
+        conexao_por_porta = {c.get('porta_id'): c for c in conexoes if c.get('status') == 'ativa'}
+
+        # Identificar switches relevantes pela sala
+        switch_ids_usados = set()
+        # via conexões diretas
+        for c in conexoes:
+            if c.get('status') == 'ativa':
+                eq = equipamentos_dict.get(c.get('equipamento_id'))
+                sp = switch_portas_by_id.get(c.get('porta_id'))
+                if eq and sp and eq.get('sala_id') == sala_id:
+                    switch_ids_usados.add(sp.get('switch_id'))
+        # via patch panel
+        for m in patch_panel_portas:
+            eq = equipamentos_dict.get(m.get('equipamento_id')) if m.get('equipamento_id') else None
+            if eq and eq.get('sala_id') == sala_id and m.get('switch_id'):
+                switch_ids_usados.add(m.get('switch_id'))
+
+        resultado = []
+        for switch_id in sorted(switch_ids_usados):
+            sw = next((s for s in switches if s.get('id') == switch_id), None)
+            if not sw:
+                continue
+            portas_sw = sorted(switch_portas_by_switch.get(switch_id, []), key=lambda x: int(x.get('numero_porta') or 0))
+            portas_render = []
+            for porta in portas_sw:
+                numero = porta.get('numero_porta')
+                status = 'livre'
+                equipamento_info = None
+                patch_panel_info = None
+                sala_especifica = False
+
+                # Primeiro, verificar mapeamento com patch panel
+                mapping = ppp_index.get((switch_id, numero))
+                if mapping:
+                    pp = patch_panels_dict.get(mapping.get('patch_panel_id')) if mapping.get('patch_panel_id') else None
+                    patch_panel_info = {
+                        'nome': (pp or {}).get('nome'),
+                        'porta_patch_panel': mapping.get('numero_porta'),
+                        'prefixo_keystone': (pp or {}).get('prefixo_keystone')
+                    }
+                    if mapping.get('equipamento_id'):
+                        eq = equipamentos_dict.get(mapping.get('equipamento_id'))
+                        if eq:
+                            status = 'ocupada'
+                            sala = salas_dict.get(eq.get('sala_id'))
+                            equipamento_info = {
+                                'nome': eq.get('nome'),
+                                'tipo': eq.get('tipo'),
+                                'marca': eq.get('marca'),
+                                'sala_nome': (sala or {}).get('nome')
+                            }
+                            sala_especifica = (eq.get('sala_id') == sala_id)
+                    else:
+                        status = 'mapeada'
+                else:
+                    # Verificar conexão direta
+                    c = conexao_por_porta.get(porta.get('id'))
+                    if c:
+                        eq = equipamentos_dict.get(c.get('equipamento_id')) if c.get('equipamento_id') else None
+                        if eq:
+                            status = 'ocupada'
+                            sala = salas_dict.get(eq.get('sala_id'))
+                            equipamento_info = {
+                                'nome': eq.get('nome'),
+                                'tipo': eq.get('tipo'),
+                                'marca': eq.get('marca'),
+                                'sala_nome': (sala or {}).get('nome')
+                            }
+                            sala_especifica = (eq.get('sala_id') == sala_id)
+
+                portas_render.append({
+                    'numero': numero,
+                    'status': status,
+                    'equipamento_info': equipamento_info,
+                    'patch_panel_info': patch_panel_info,
+                    'sala_especifica': sala_especifica
+                })
+
+            resultado.append({
+                'id': sw.get('id'),
+                'nome': sw.get('nome'),
+                'marca': sw.get('marca'),
+                'modelo': sw.get('modelo'),
+                'portas': portas_render
+            })
+
+        return jsonify(resultado)
     else:
         conn = sqlite3.connect(db_file)
         cur = conn.cursor()
