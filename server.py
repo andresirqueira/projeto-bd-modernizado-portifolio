@@ -321,6 +321,11 @@ def excluir_equipamento_html():
 def dashboard_sala_html():
     return send_from_directory(os.path.dirname(__file__), 'dashboard-sala.html')
 
+@app.route('/historico-sala.html')
+@login_required
+def historico_sala_html():
+    return send_from_directory(os.path.dirname(__file__), 'historico-sala.html')
+
 @app.route('/ver-equipamento.html')
 @login_required
 def ver_equipamento_html():
