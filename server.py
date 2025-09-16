@@ -4952,42 +4952,82 @@ def migrar_patch_panels():
     if not db_file:
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     
-    conn = sqlite3.connect(db_file)
-    cur = conn.cursor()
-    
-    try:
-        # Buscar patch panels que não têm equipamentos correspondentes
-        cur.execute('''
-            SELECT pp.id, pp.nome, pp.andar, pp.descricao
-            FROM patch_panels pp
-            LEFT JOIN equipamentos e ON e.nome = pp.nome AND e.tipo = 'patch_panel'
-            WHERE e.id IS NULL
-        ''')
+    if _is_json_mode(db_file):
+        patch_panels = _json_read_table(db_file, 'patch_panels')
+        equipamentos = _json_read_table(db_file, 'equipamentos')
         
-        patch_panels_sem_equipamento = cur.fetchall()
+        # Buscar patch panels que não têm equipamentos correspondentes
+        patch_panels_sem_equipamento = []
+        for pp in patch_panels:
+            nome_pp = pp.get('nome')
+            # Verificar se já existe equipamento com mesmo nome e tipo patch_panel
+            if not any(e.get('nome') == nome_pp and e.get('tipo') == 'patch_panel' for e in equipamentos):
+                patch_panels_sem_equipamento.append(pp)
         
         if not patch_panels_sem_equipamento:
             return jsonify({'status': 'ok', 'mensagem': 'Todos os patch panels já têm equipamentos correspondentes'})
         
         # Criar equipamentos para patch panels que não têm
         for pp in patch_panels_sem_equipamento:
-            cur.execute('''
-                INSERT INTO equipamentos (nome, tipo, marca, modelo, descricao, sala_id, status)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            ''', (pp[1], 'patch_panel', 'Patch Panel', 'Patch Panel', pp[3] or f'Patch Panel {pp[1]}', None, 'ativo'))
+            novo_equipamento = {
+                'id': _json_next_id(equipamentos),
+                'nome': pp.get('nome'),
+                'tipo': 'patch_panel',
+                'marca': 'Patch Panel',
+                'modelo': 'Patch Panel',
+                'descricao': pp.get('descricao') or f'Patch Panel {pp.get("nome")}',
+                'sala_id': None,
+                'status': 'ativo',
+                'defeito': 0,
+                'dados': {},
+                'foto': None,
+                'icone': None
+            }
+            equipamentos.append(novo_equipamento)
         
-        conn.commit()
+        _json_write_table(db_file, 'equipamentos', equipamentos)
         
         return jsonify({
             'status': 'ok', 
             'mensagem': f'Migrados {len(patch_panels_sem_equipamento)} patch panels'
         })
+    else:
+        conn = sqlite3.connect(db_file)
+        cur = conn.cursor()
         
-    except Exception as e:
-        conn.rollback()
-        return jsonify({'status': 'erro', 'mensagem': str(e)}), 500
-    finally:
-        conn.close()
+        try:
+            # Buscar patch panels que não têm equipamentos correspondentes
+            cur.execute('''
+                SELECT pp.id, pp.nome, pp.andar, pp.descricao
+                FROM patch_panels pp
+                LEFT JOIN equipamentos e ON e.nome = pp.nome AND e.tipo = 'patch_panel'
+                WHERE e.id IS NULL
+            ''')
+            
+            patch_panels_sem_equipamento = cur.fetchall()
+            
+            if not patch_panels_sem_equipamento:
+                return jsonify({'status': 'ok', 'mensagem': 'Todos os patch panels já têm equipamentos correspondentes'})
+            
+            # Criar equipamentos para patch panels que não têm
+            for pp in patch_panels_sem_equipamento:
+                cur.execute('''
+                    INSERT INTO equipamentos (nome, tipo, marca, modelo, descricao, sala_id, status)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                ''', (pp[1], 'patch_panel', 'Patch Panel', 'Patch Panel', pp[3] or f'Patch Panel {pp[1]}', None, 'ativo'))
+            
+            conn.commit()
+            
+            return jsonify({
+                'status': 'ok', 
+                'mensagem': f'Migrados {len(patch_panels_sem_equipamento)} patch panels'
+            })
+            
+        except Exception as e:
+            conn.rollback()
+            return jsonify({'status': 'erro', 'mensagem': str(e)}), 500
+        finally:
+            conn.close()
 
 @app.route('/patch-panels', methods=['GET'])
 @login_required
@@ -5977,48 +6017,91 @@ def get_equipamento_patch_panel_info(equipamento_id):
         if not db_file:
             return jsonify({'erro': 'Banco de dados não selecionado'}), 400
         
-        conn = sqlite3.connect(db_file)
-        cur = conn.cursor()
-        
-        # Buscar informações do equipamento e sua conexão com patch panel
-        cur.execute('''
-            SELECT e.id, e.nome, e.tipo, e.sala_id,
-                   s.nome as sala_nome,
-                   ppp.patch_panel_id, ppp.numero_porta,
-                   pp.andar, pp.nome as patch_panel_nome
-            FROM equipamentos e
-            LEFT JOIN salas s ON e.sala_id = s.id
-            LEFT JOIN patch_panel_portas ppp ON e.id = ppp.equipamento_id
-            LEFT JOIN patch_panels pp ON ppp.patch_panel_id = pp.id
-            WHERE e.id = ?
-        ''', (equipamento_id,))
-        
-        row = cur.fetchone()
-        if not row:
-            return jsonify({'erro': 'Equipamento não encontrado'}), 404
-        
-        # Se o equipamento está conectado a um patch panel
-        if row[5]:  # patch_panel_id não é None
-            patch_panel_info = {
-                'andar': row[7],
-                'patch_panel_id': row[5],
-                'patch_panel_nome': row[8],
-                'porta_numero': row[6]
+        if _is_json_mode(db_file):
+            equipamentos = _json_read_table(db_file, 'equipamentos')
+            salas = _json_read_table(db_file, 'salas')
+            patch_panel_portas = _json_read_table(db_file, 'patch_panel_portas')
+            patch_panels = _json_read_table(db_file, 'patch_panels')
+            
+            # Buscar equipamento
+            equipamento = next((e for e in equipamentos if e.get('id') == equipamento_id), None)
+            if not equipamento:
+                return jsonify({'erro': 'Equipamento não encontrado'}), 404
+            
+            # Buscar sala
+            sala = next((s for s in salas if s.get('id') == equipamento.get('sala_id')), None)
+            
+            # Buscar conexão com patch panel
+            porta_patch = next((ppp for ppp in patch_panel_portas if ppp.get('equipamento_id') == equipamento_id), None)
+            
+            # Se o equipamento está conectado a um patch panel
+            if porta_patch:
+                patch_panel = next((pp for pp in patch_panels if pp.get('id') == porta_patch.get('patch_panel_id')), None)
+                if patch_panel:
+                    patch_panel_info = {
+                        'andar': patch_panel.get('andar'),
+                        'patch_panel_id': porta_patch.get('patch_panel_id'),
+                        'patch_panel_nome': patch_panel.get('nome'),
+                        'porta_numero': porta_patch.get('numero_porta')
+                    }
+                else:
+                    patch_panel_info = None
+            else:
+                patch_panel_info = None
+            
+            equipamento_info = {
+                'id': equipamento.get('id'),
+                'nome': equipamento.get('nome'),
+                'tipo': equipamento.get('tipo'),
+                'sala_id': equipamento.get('sala_id'),
+                'sala_nome': sala.get('nome') if sala else 'Sem sala',
+                'patch_panel_info': patch_panel_info
             }
+            
+            return jsonify(equipamento_info)
         else:
-            patch_panel_info = None
-        
-        equipamento_info = {
-            'id': row[0],
-            'nome': row[1],
-            'tipo': row[2],
-            'sala_id': row[3],
-            'sala_nome': row[4] or 'Sem sala',
-            'patch_panel_info': patch_panel_info
-        }
-        
-        conn.close()
-        return jsonify(equipamento_info)
+            conn = sqlite3.connect(db_file)
+            cur = conn.cursor()
+            
+            # Buscar informações do equipamento e sua conexão com patch panel
+            cur.execute('''
+                SELECT e.id, e.nome, e.tipo, e.sala_id,
+                       s.nome as sala_nome,
+                       ppp.patch_panel_id, ppp.numero_porta,
+                       pp.andar, pp.nome as patch_panel_nome
+                FROM equipamentos e
+                LEFT JOIN salas s ON e.sala_id = s.id
+                LEFT JOIN patch_panel_portas ppp ON e.id = ppp.equipamento_id
+                LEFT JOIN patch_panels pp ON ppp.patch_panel_id = pp.id
+                WHERE e.id = ?
+            ''', (equipamento_id,))
+            
+            row = cur.fetchone()
+            if not row:
+                return jsonify({'erro': 'Equipamento não encontrado'}), 404
+            
+            # Se o equipamento está conectado a um patch panel
+            if row[5]:  # patch_panel_id não é None
+                patch_panel_info = {
+                    'andar': row[7],
+                    'patch_panel_id': row[5],
+                    'patch_panel_nome': row[8],
+                    'porta_numero': row[6]
+                }
+            else:
+                patch_panel_info = None
+            
+            equipamento_info = {
+                'id': row[0],
+                'nome': row[1],
+                'tipo': row[2],
+                'sala_id': row[3],
+                'sala_nome': row[4] or 'Sem sala',
+                'patch_panel_info': patch_panel_info
+            }
+            
+            conn.close()
+            return jsonify(equipamento_info)
         
     except Exception as e:
         return jsonify({'erro': f'Erro ao buscar informações do equipamento: {str(e)}'}), 500
