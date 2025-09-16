@@ -316,6 +316,11 @@ def editar_equipamento_html():
 def excluir_equipamento_html():
     return send_from_directory(os.path.dirname(__file__), 'excluir-equipamento.html')
 
+@app.route('/dashboard-sala.html')
+@login_required
+def dashboard_sala_html():
+    return send_from_directory(os.path.dirname(__file__), 'dashboard-sala.html')
+
 @app.route('/ver-equipamento.html')
 @login_required
 def ver_equipamento_html():
