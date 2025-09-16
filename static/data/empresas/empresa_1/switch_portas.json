@@ -1,1 +1,170 @@
-[]
+[
+  {
+    "id": 1,
+    "switch_id": 1,
+    "numero_porta": 1,
+    "descricao": "Porta 1 (Uplink/Gerenciamento)",
+    "status": "mapeada"
+  },
+  {
+    "id": 2,
+    "switch_id": 1,
+    "numero_porta": 2,
+    "descricao": "Porta 2 (Uplink/Gerenciamento)",
+    "status": "livre"
+  },
+  {
+    "id": 3,
+    "switch_id": 1,
+    "numero_porta": 3,
+    "descricao": "Porta 3 (Uplink/Gerenciamento)",
+    "status": "livre"
+  },
+  {
+    "id": 4,
+    "switch_id": 1,
+    "numero_porta": 4,
+    "descricao": "Porta 4 (Uplink/Gerenciamento)",
+    "status": "livre"
+  },
+  {
+    "id": 5,
+    "switch_id": 1,
+    "numero_porta": 5,
+    "descricao": "Porta 5 (PoE)",
+    "status": "livre"
+  },
+  {
+    "id": 6,
+    "switch_id": 1,
+    "numero_porta": 6,
+    "descricao": "Porta 6 (PoE)",
+    "status": "livre"
+  },
+  {
+    "id": 7,
+    "switch_id": 1,
+    "numero_porta": 7,
+    "descricao": "Porta 7 (PoE)",
+    "status": "livre"
+  },
+  {
+    "id": 8,
+    "switch_id": 1,
+    "numero_porta": 8,
+    "descricao": "Porta 8 (PoE)",
+    "status": "livre"
+  },
+  {
+    "id": 9,
+    "switch_id": 1,
+    "numero_porta": 9,
+    "descricao": "Porta 9 (Acesso)",
+    "status": "livre"
+  },
+  {
+    "id": 10,
+    "switch_id": 1,
+    "numero_porta": 10,
+    "descricao": "Porta 10 (Acesso)",
+    "status": "livre"
+  },
+  {
+    "id": 11,
+    "switch_id": 1,
+    "numero_porta": 11,
+    "descricao": "Porta 11 (Acesso)",
+    "status": "livre"
+  },
+  {
+    "id": 12,
+    "switch_id": 1,
+    "numero_porta": 12,
+    "descricao": "Porta 12 (Acesso)",
+    "status": "livre"
+  },
+  {
+    "id": 13,
+    "switch_id": 1,
+    "numero_porta": 13,
+    "descricao": "Porta 13 (Acesso)",
+    "status": "livre"
+  },
+  {
+    "id": 14,
+    "switch_id": 1,
+    "numero_porta": 14,
+    "descricao": "Porta 14 (Acesso)",
+    "status": "livre"
+  },
+  {
+    "id": 15,
+    "switch_id": 1,
+    "numero_porta": 15,
+    "descricao": "Porta 15 (Acesso)",
+    "status": "livre"
+  },
+  {
+    "id": 16,
+    "switch_id": 1,
+    "numero_porta": 16,
+    "descricao": "Porta 16 (Acesso)",
+    "status": "livre"
+  },
+  {
+    "id": 17,
+    "switch_id": 1,
+    "numero_porta": 17,
+    "descricao": "Porta 17 (Acesso)",
+    "status": "livre"
+  },
+  {
+    "id": 18,
+    "switch_id": 1,
+    "numero_porta": 18,
+    "descricao": "Porta 18 (Acesso)",
+    "status": "livre"
+  },
+  {
+    "id": 19,
+    "switch_id": 1,
+    "numero_porta": 19,
+    "descricao": "Porta 19 (Acesso)",
+    "status": "livre"
+  },
+  {
+    "id": 20,
+    "switch_id": 1,
+    "numero_porta": 20,
+    "descricao": "Porta 20 (Acesso)",
+    "status": "livre"
+  },
+  {
+    "id": 21,
+    "switch_id": 1,
+    "numero_porta": 21,
+    "descricao": "Porta 21 (Acesso)",
+    "status": "livre"
+  },
+  {
+    "id": 22,
+    "switch_id": 1,
+    "numero_porta": 22,
+    "descricao": "Porta 22 (Acesso)",
+    "status": "livre"
+  },
+  {
+    "id": 23,
+    "switch_id": 1,
+    "numero_porta": 23,
+    "descricao": "Porta 23 (Acesso)",
+    "status": "livre"
+  },
+  {
+    "id": 24,
+    "switch_id": 1,
+    "numero_porta": 24,
+    "descricao": "Porta 24 (Acesso)",
+    "status": "livre"
+  }
+]

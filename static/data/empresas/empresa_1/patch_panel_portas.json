@@ -1,1 +1,5002 @@
-[]
+[
+  {
+    "id": 1,
+    "patch_panel_id": 1,
+    "numero_porta": 1,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 2,
+    "patch_panel_id": 1,
+    "numero_porta": 2,
+    "switch_id": 1,
+    "porta_switch": 1,
+    "status": "ocupada",
+    "equipamento_id": 3,
+    "data_conexao": null
+  },
+  {
+    "id": 3,
+    "patch_panel_id": 1,
+    "numero_porta": 3,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 4,
+    "patch_panel_id": 1,
+    "numero_porta": 4,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 5,
+    "patch_panel_id": 1,
+    "numero_porta": 5,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 6,
+    "patch_panel_id": 1,
+    "numero_porta": 6,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 7,
+    "patch_panel_id": 1,
+    "numero_porta": 7,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 8,
+    "patch_panel_id": 1,
+    "numero_porta": 8,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 9,
+    "patch_panel_id": 1,
+    "numero_porta": 9,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 10,
+    "patch_panel_id": 1,
+    "numero_porta": 10,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 11,
+    "patch_panel_id": 1,
+    "numero_porta": 11,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 12,
+    "patch_panel_id": 1,
+    "numero_porta": 12,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 13,
+    "patch_panel_id": 1,
+    "numero_porta": 13,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 14,
+    "patch_panel_id": 1,
+    "numero_porta": 14,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 15,
+    "patch_panel_id": 1,
+    "numero_porta": 15,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 16,
+    "patch_panel_id": 1,
+    "numero_porta": 16,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 17,
+    "patch_panel_id": 1,
+    "numero_porta": 17,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 18,
+    "patch_panel_id": 1,
+    "numero_porta": 18,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 19,
+    "patch_panel_id": 1,
+    "numero_porta": 19,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 20,
+    "patch_panel_id": 1,
+    "numero_porta": 20,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 21,
+    "patch_panel_id": 1,
+    "numero_porta": 21,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 22,
+    "patch_panel_id": 1,
+    "numero_porta": 22,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 23,
+    "patch_panel_id": 1,
+    "numero_porta": 23,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 24,
+    "patch_panel_id": 1,
+    "numero_porta": 24,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 25,
+    "patch_panel_id": 1,
+    "numero_porta": 25,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 26,
+    "patch_panel_id": 1,
+    "numero_porta": 26,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 27,
+    "patch_panel_id": 1,
+    "numero_porta": 27,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 28,
+    "patch_panel_id": 1,
+    "numero_porta": 28,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 29,
+    "patch_panel_id": 1,
+    "numero_porta": 29,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 30,
+    "patch_panel_id": 1,
+    "numero_porta": 30,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 31,
+    "patch_panel_id": 1,
+    "numero_porta": 31,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 32,
+    "patch_panel_id": 1,
+    "numero_porta": 32,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 33,
+    "patch_panel_id": 1,
+    "numero_porta": 33,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 34,
+    "patch_panel_id": 1,
+    "numero_porta": 34,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 35,
+    "patch_panel_id": 1,
+    "numero_porta": 35,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 36,
+    "patch_panel_id": 1,
+    "numero_porta": 36,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 37,
+    "patch_panel_id": 1,
+    "numero_porta": 37,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 38,
+    "patch_panel_id": 1,
+    "numero_porta": 38,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 39,
+    "patch_panel_id": 1,
+    "numero_porta": 39,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 40,
+    "patch_panel_id": 1,
+    "numero_porta": 40,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 41,
+    "patch_panel_id": 1,
+    "numero_porta": 41,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 42,
+    "patch_panel_id": 1,
+    "numero_porta": 42,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 43,
+    "patch_panel_id": 1,
+    "numero_porta": 43,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 44,
+    "patch_panel_id": 1,
+    "numero_porta": 44,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 45,
+    "patch_panel_id": 1,
+    "numero_porta": 45,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 46,
+    "patch_panel_id": 1,
+    "numero_porta": 46,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 47,
+    "patch_panel_id": 1,
+    "numero_porta": 47,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 48,
+    "patch_panel_id": 1,
+    "numero_porta": 48,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 49,
+    "patch_panel_id": 1,
+    "numero_porta": 49,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 50,
+    "patch_panel_id": 1,
+    "numero_porta": 50,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 51,
+    "patch_panel_id": 1,
+    "numero_porta": 51,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 52,
+    "patch_panel_id": 1,
+    "numero_porta": 52,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 53,
+    "patch_panel_id": 1,
+    "numero_porta": 53,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 54,
+    "patch_panel_id": 1,
+    "numero_porta": 54,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 55,
+    "patch_panel_id": 1,
+    "numero_porta": 55,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 56,
+    "patch_panel_id": 1,
+    "numero_porta": 56,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 57,
+    "patch_panel_id": 1,
+    "numero_porta": 57,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 58,
+    "patch_panel_id": 1,
+    "numero_porta": 58,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 59,
+    "patch_panel_id": 1,
+    "numero_porta": 59,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 60,
+    "patch_panel_id": 1,
+    "numero_porta": 60,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 61,
+    "patch_panel_id": 1,
+    "numero_porta": 61,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 62,
+    "patch_panel_id": 1,
+    "numero_porta": 62,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 63,
+    "patch_panel_id": 1,
+    "numero_porta": 63,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 64,
+    "patch_panel_id": 1,
+    "numero_porta": 64,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 65,
+    "patch_panel_id": 1,
+    "numero_porta": 65,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 66,
+    "patch_panel_id": 1,
+    "numero_porta": 66,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 67,
+    "patch_panel_id": 1,
+    "numero_porta": 67,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 68,
+    "patch_panel_id": 1,
+    "numero_porta": 68,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 69,
+    "patch_panel_id": 1,
+    "numero_porta": 69,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 70,
+    "patch_panel_id": 1,
+    "numero_porta": 70,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 71,
+    "patch_panel_id": 1,
+    "numero_porta": 71,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 72,
+    "patch_panel_id": 1,
+    "numero_porta": 72,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 73,
+    "patch_panel_id": 1,
+    "numero_porta": 73,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 74,
+    "patch_panel_id": 1,
+    "numero_porta": 74,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 75,
+    "patch_panel_id": 1,
+    "numero_porta": 75,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 76,
+    "patch_panel_id": 1,
+    "numero_porta": 76,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 77,
+    "patch_panel_id": 1,
+    "numero_porta": 77,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 78,
+    "patch_panel_id": 1,
+    "numero_porta": 78,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 79,
+    "patch_panel_id": 1,
+    "numero_porta": 79,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 80,
+    "patch_panel_id": 1,
+    "numero_porta": 80,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 81,
+    "patch_panel_id": 1,
+    "numero_porta": 81,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 82,
+    "patch_panel_id": 1,
+    "numero_porta": 82,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 83,
+    "patch_panel_id": 1,
+    "numero_porta": 83,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 84,
+    "patch_panel_id": 1,
+    "numero_porta": 84,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 85,
+    "patch_panel_id": 1,
+    "numero_porta": 85,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 86,
+    "patch_panel_id": 1,
+    "numero_porta": 86,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 87,
+    "patch_panel_id": 1,
+    "numero_porta": 87,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 88,
+    "patch_panel_id": 1,
+    "numero_porta": 88,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 89,
+    "patch_panel_id": 1,
+    "numero_porta": 89,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 90,
+    "patch_panel_id": 1,
+    "numero_porta": 90,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 91,
+    "patch_panel_id": 1,
+    "numero_porta": 91,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 92,
+    "patch_panel_id": 1,
+    "numero_porta": 92,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 93,
+    "patch_panel_id": 1,
+    "numero_porta": 93,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 94,
+    "patch_panel_id": 1,
+    "numero_porta": 94,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 95,
+    "patch_panel_id": 1,
+    "numero_porta": 95,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 96,
+    "patch_panel_id": 1,
+    "numero_porta": 96,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 97,
+    "patch_panel_id": 1,
+    "numero_porta": 97,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 98,
+    "patch_panel_id": 1,
+    "numero_porta": 98,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 99,
+    "patch_panel_id": 1,
+    "numero_porta": 99,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 100,
+    "patch_panel_id": 1,
+    "numero_porta": 100,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 101,
+    "patch_panel_id": 1,
+    "numero_porta": 101,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 102,
+    "patch_panel_id": 1,
+    "numero_porta": 102,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 103,
+    "patch_panel_id": 1,
+    "numero_porta": 103,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 104,
+    "patch_panel_id": 1,
+    "numero_porta": 104,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 105,
+    "patch_panel_id": 1,
+    "numero_porta": 105,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 106,
+    "patch_panel_id": 1,
+    "numero_porta": 106,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 107,
+    "patch_panel_id": 1,
+    "numero_porta": 107,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 108,
+    "patch_panel_id": 1,
+    "numero_porta": 108,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 109,
+    "patch_panel_id": 1,
+    "numero_porta": 109,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 110,
+    "patch_panel_id": 1,
+    "numero_porta": 110,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 111,
+    "patch_panel_id": 1,
+    "numero_porta": 111,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 112,
+    "patch_panel_id": 1,
+    "numero_porta": 112,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 113,
+    "patch_panel_id": 1,
+    "numero_porta": 113,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 114,
+    "patch_panel_id": 1,
+    "numero_porta": 114,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 115,
+    "patch_panel_id": 1,
+    "numero_porta": 115,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 116,
+    "patch_panel_id": 1,
+    "numero_porta": 116,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 117,
+    "patch_panel_id": 1,
+    "numero_porta": 117,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 118,
+    "patch_panel_id": 1,
+    "numero_porta": 118,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 119,
+    "patch_panel_id": 1,
+    "numero_porta": 119,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 120,
+    "patch_panel_id": 1,
+    "numero_porta": 120,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 121,
+    "patch_panel_id": 1,
+    "numero_porta": 121,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 122,
+    "patch_panel_id": 1,
+    "numero_porta": 122,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 123,
+    "patch_panel_id": 1,
+    "numero_porta": 123,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 124,
+    "patch_panel_id": 1,
+    "numero_porta": 124,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 125,
+    "patch_panel_id": 1,
+    "numero_porta": 125,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 126,
+    "patch_panel_id": 1,
+    "numero_porta": 126,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 127,
+    "patch_panel_id": 1,
+    "numero_porta": 127,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 128,
+    "patch_panel_id": 1,
+    "numero_porta": 128,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 129,
+    "patch_panel_id": 1,
+    "numero_porta": 129,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 130,
+    "patch_panel_id": 1,
+    "numero_porta": 130,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 131,
+    "patch_panel_id": 1,
+    "numero_porta": 131,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 132,
+    "patch_panel_id": 1,
+    "numero_porta": 132,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 133,
+    "patch_panel_id": 1,
+    "numero_porta": 133,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 134,
+    "patch_panel_id": 1,
+    "numero_porta": 134,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 135,
+    "patch_panel_id": 1,
+    "numero_porta": 135,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 136,
+    "patch_panel_id": 1,
+    "numero_porta": 136,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 137,
+    "patch_panel_id": 1,
+    "numero_porta": 137,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 138,
+    "patch_panel_id": 1,
+    "numero_porta": 138,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 139,
+    "patch_panel_id": 1,
+    "numero_porta": 139,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 140,
+    "patch_panel_id": 1,
+    "numero_porta": 140,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 141,
+    "patch_panel_id": 1,
+    "numero_porta": 141,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 142,
+    "patch_panel_id": 1,
+    "numero_porta": 142,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 143,
+    "patch_panel_id": 1,
+    "numero_porta": 143,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 144,
+    "patch_panel_id": 1,
+    "numero_porta": 144,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 145,
+    "patch_panel_id": 1,
+    "numero_porta": 145,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 146,
+    "patch_panel_id": 1,
+    "numero_porta": 146,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 147,
+    "patch_panel_id": 1,
+    "numero_porta": 147,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 148,
+    "patch_panel_id": 1,
+    "numero_porta": 148,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 149,
+    "patch_panel_id": 1,
+    "numero_porta": 149,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 150,
+    "patch_panel_id": 1,
+    "numero_porta": 150,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 151,
+    "patch_panel_id": 1,
+    "numero_porta": 151,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 152,
+    "patch_panel_id": 1,
+    "numero_porta": 152,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 153,
+    "patch_panel_id": 1,
+    "numero_porta": 153,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 154,
+    "patch_panel_id": 1,
+    "numero_porta": 154,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 155,
+    "patch_panel_id": 1,
+    "numero_porta": 155,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 156,
+    "patch_panel_id": 1,
+    "numero_porta": 156,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 157,
+    "patch_panel_id": 1,
+    "numero_porta": 157,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 158,
+    "patch_panel_id": 1,
+    "numero_porta": 158,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 159,
+    "patch_panel_id": 1,
+    "numero_porta": 159,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 160,
+    "patch_panel_id": 1,
+    "numero_porta": 160,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 161,
+    "patch_panel_id": 1,
+    "numero_porta": 161,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 162,
+    "patch_panel_id": 1,
+    "numero_porta": 162,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 163,
+    "patch_panel_id": 1,
+    "numero_porta": 163,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 164,
+    "patch_panel_id": 1,
+    "numero_porta": 164,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 165,
+    "patch_panel_id": 1,
+    "numero_porta": 165,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 166,
+    "patch_panel_id": 1,
+    "numero_porta": 166,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 167,
+    "patch_panel_id": 1,
+    "numero_porta": 167,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 168,
+    "patch_panel_id": 1,
+    "numero_porta": 168,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 169,
+    "patch_panel_id": 1,
+    "numero_porta": 169,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 170,
+    "patch_panel_id": 1,
+    "numero_porta": 170,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 171,
+    "patch_panel_id": 1,
+    "numero_porta": 171,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 172,
+    "patch_panel_id": 1,
+    "numero_porta": 172,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 173,
+    "patch_panel_id": 1,
+    "numero_porta": 173,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 174,
+    "patch_panel_id": 1,
+    "numero_porta": 174,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 175,
+    "patch_panel_id": 1,
+    "numero_porta": 175,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 176,
+    "patch_panel_id": 1,
+    "numero_porta": 176,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 177,
+    "patch_panel_id": 1,
+    "numero_porta": 177,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 178,
+    "patch_panel_id": 1,
+    "numero_porta": 178,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 179,
+    "patch_panel_id": 1,
+    "numero_porta": 179,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 180,
+    "patch_panel_id": 1,
+    "numero_porta": 180,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 181,
+    "patch_panel_id": 1,
+    "numero_porta": 181,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 182,
+    "patch_panel_id": 1,
+    "numero_porta": 182,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 183,
+    "patch_panel_id": 1,
+    "numero_porta": 183,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 184,
+    "patch_panel_id": 1,
+    "numero_porta": 184,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 185,
+    "patch_panel_id": 1,
+    "numero_porta": 185,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 186,
+    "patch_panel_id": 1,
+    "numero_porta": 186,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 187,
+    "patch_panel_id": 1,
+    "numero_porta": 187,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 188,
+    "patch_panel_id": 1,
+    "numero_porta": 188,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 189,
+    "patch_panel_id": 1,
+    "numero_porta": 189,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 190,
+    "patch_panel_id": 1,
+    "numero_porta": 190,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 191,
+    "patch_panel_id": 1,
+    "numero_porta": 191,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 192,
+    "patch_panel_id": 1,
+    "numero_porta": 192,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 193,
+    "patch_panel_id": 1,
+    "numero_porta": 193,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 194,
+    "patch_panel_id": 1,
+    "numero_porta": 194,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 195,
+    "patch_panel_id": 1,
+    "numero_porta": 195,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 196,
+    "patch_panel_id": 1,
+    "numero_porta": 196,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 197,
+    "patch_panel_id": 1,
+    "numero_porta": 197,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 198,
+    "patch_panel_id": 1,
+    "numero_porta": 198,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 199,
+    "patch_panel_id": 1,
+    "numero_porta": 199,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 200,
+    "patch_panel_id": 1,
+    "numero_porta": 200,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 201,
+    "patch_panel_id": 1,
+    "numero_porta": 201,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 202,
+    "patch_panel_id": 1,
+    "numero_porta": 202,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 203,
+    "patch_panel_id": 1,
+    "numero_porta": 203,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 204,
+    "patch_panel_id": 1,
+    "numero_porta": 204,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 205,
+    "patch_panel_id": 1,
+    "numero_porta": 205,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 206,
+    "patch_panel_id": 1,
+    "numero_porta": 206,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 207,
+    "patch_panel_id": 1,
+    "numero_porta": 207,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 208,
+    "patch_panel_id": 1,
+    "numero_porta": 208,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 209,
+    "patch_panel_id": 1,
+    "numero_porta": 209,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 210,
+    "patch_panel_id": 1,
+    "numero_porta": 210,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 211,
+    "patch_panel_id": 1,
+    "numero_porta": 211,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 212,
+    "patch_panel_id": 1,
+    "numero_porta": 212,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 213,
+    "patch_panel_id": 1,
+    "numero_porta": 213,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 214,
+    "patch_panel_id": 1,
+    "numero_porta": 214,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 215,
+    "patch_panel_id": 1,
+    "numero_porta": 215,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 216,
+    "patch_panel_id": 1,
+    "numero_porta": 216,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 217,
+    "patch_panel_id": 1,
+    "numero_porta": 217,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 218,
+    "patch_panel_id": 1,
+    "numero_porta": 218,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 219,
+    "patch_panel_id": 1,
+    "numero_porta": 219,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 220,
+    "patch_panel_id": 1,
+    "numero_porta": 220,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 221,
+    "patch_panel_id": 1,
+    "numero_porta": 221,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 222,
+    "patch_panel_id": 1,
+    "numero_porta": 222,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 223,
+    "patch_panel_id": 1,
+    "numero_porta": 223,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 224,
+    "patch_panel_id": 1,
+    "numero_porta": 224,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 225,
+    "patch_panel_id": 1,
+    "numero_porta": 225,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 226,
+    "patch_panel_id": 1,
+    "numero_porta": 226,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 227,
+    "patch_panel_id": 1,
+    "numero_porta": 227,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 228,
+    "patch_panel_id": 1,
+    "numero_porta": 228,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 229,
+    "patch_panel_id": 1,
+    "numero_porta": 229,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 230,
+    "patch_panel_id": 1,
+    "numero_porta": 230,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 231,
+    "patch_panel_id": 1,
+    "numero_porta": 231,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 232,
+    "patch_panel_id": 1,
+    "numero_porta": 232,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 233,
+    "patch_panel_id": 1,
+    "numero_porta": 233,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 234,
+    "patch_panel_id": 1,
+    "numero_porta": 234,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 235,
+    "patch_panel_id": 1,
+    "numero_porta": 235,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 236,
+    "patch_panel_id": 1,
+    "numero_porta": 236,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 237,
+    "patch_panel_id": 1,
+    "numero_porta": 237,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 238,
+    "patch_panel_id": 1,
+    "numero_porta": 238,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 239,
+    "patch_panel_id": 1,
+    "numero_porta": 239,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 240,
+    "patch_panel_id": 1,
+    "numero_porta": 240,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 241,
+    "patch_panel_id": 1,
+    "numero_porta": 241,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 242,
+    "patch_panel_id": 1,
+    "numero_porta": 242,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 243,
+    "patch_panel_id": 1,
+    "numero_porta": 243,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 244,
+    "patch_panel_id": 1,
+    "numero_porta": 244,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 245,
+    "patch_panel_id": 1,
+    "numero_porta": 245,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 246,
+    "patch_panel_id": 1,
+    "numero_porta": 246,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 247,
+    "patch_panel_id": 1,
+    "numero_porta": 247,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 248,
+    "patch_panel_id": 1,
+    "numero_porta": 248,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 249,
+    "patch_panel_id": 1,
+    "numero_porta": 249,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 250,
+    "patch_panel_id": 1,
+    "numero_porta": 250,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 251,
+    "patch_panel_id": 1,
+    "numero_porta": 251,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 252,
+    "patch_panel_id": 1,
+    "numero_porta": 252,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 253,
+    "patch_panel_id": 1,
+    "numero_porta": 253,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 254,
+    "patch_panel_id": 1,
+    "numero_porta": 254,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 255,
+    "patch_panel_id": 1,
+    "numero_porta": 255,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 256,
+    "patch_panel_id": 1,
+    "numero_porta": 256,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 257,
+    "patch_panel_id": 1,
+    "numero_porta": 257,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 258,
+    "patch_panel_id": 1,
+    "numero_porta": 258,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 259,
+    "patch_panel_id": 1,
+    "numero_porta": 259,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 260,
+    "patch_panel_id": 1,
+    "numero_porta": 260,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 261,
+    "patch_panel_id": 1,
+    "numero_porta": 261,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 262,
+    "patch_panel_id": 1,
+    "numero_porta": 262,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 263,
+    "patch_panel_id": 1,
+    "numero_porta": 263,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 264,
+    "patch_panel_id": 1,
+    "numero_porta": 264,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 265,
+    "patch_panel_id": 1,
+    "numero_porta": 265,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 266,
+    "patch_panel_id": 1,
+    "numero_porta": 266,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 267,
+    "patch_panel_id": 1,
+    "numero_porta": 267,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 268,
+    "patch_panel_id": 1,
+    "numero_porta": 268,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 269,
+    "patch_panel_id": 1,
+    "numero_porta": 269,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 270,
+    "patch_panel_id": 1,
+    "numero_porta": 270,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 271,
+    "patch_panel_id": 1,
+    "numero_porta": 271,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 272,
+    "patch_panel_id": 1,
+    "numero_porta": 272,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 273,
+    "patch_panel_id": 1,
+    "numero_porta": 273,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 274,
+    "patch_panel_id": 1,
+    "numero_porta": 274,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 275,
+    "patch_panel_id": 1,
+    "numero_porta": 275,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 276,
+    "patch_panel_id": 1,
+    "numero_porta": 276,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 277,
+    "patch_panel_id": 1,
+    "numero_porta": 277,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 278,
+    "patch_panel_id": 1,
+    "numero_porta": 278,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 279,
+    "patch_panel_id": 1,
+    "numero_porta": 279,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 280,
+    "patch_panel_id": 1,
+    "numero_porta": 280,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 281,
+    "patch_panel_id": 1,
+    "numero_porta": 281,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 282,
+    "patch_panel_id": 1,
+    "numero_porta": 282,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 283,
+    "patch_panel_id": 1,
+    "numero_porta": 283,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 284,
+    "patch_panel_id": 1,
+    "numero_porta": 284,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 285,
+    "patch_panel_id": 1,
+    "numero_porta": 285,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 286,
+    "patch_panel_id": 1,
+    "numero_porta": 286,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 287,
+    "patch_panel_id": 1,
+    "numero_porta": 287,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 288,
+    "patch_panel_id": 1,
+    "numero_porta": 288,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 289,
+    "patch_panel_id": 1,
+    "numero_porta": 289,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 290,
+    "patch_panel_id": 1,
+    "numero_porta": 290,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 291,
+    "patch_panel_id": 1,
+    "numero_porta": 291,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 292,
+    "patch_panel_id": 1,
+    "numero_porta": 292,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 293,
+    "patch_panel_id": 1,
+    "numero_porta": 293,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 294,
+    "patch_panel_id": 1,
+    "numero_porta": 294,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 295,
+    "patch_panel_id": 1,
+    "numero_porta": 295,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 296,
+    "patch_panel_id": 1,
+    "numero_porta": 296,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 297,
+    "patch_panel_id": 1,
+    "numero_porta": 297,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 298,
+    "patch_panel_id": 1,
+    "numero_porta": 298,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 299,
+    "patch_panel_id": 1,
+    "numero_porta": 299,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 300,
+    "patch_panel_id": 1,
+    "numero_porta": 300,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 301,
+    "patch_panel_id": 1,
+    "numero_porta": 301,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 302,
+    "patch_panel_id": 1,
+    "numero_porta": 302,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 303,
+    "patch_panel_id": 1,
+    "numero_porta": 303,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 304,
+    "patch_panel_id": 1,
+    "numero_porta": 304,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 305,
+    "patch_panel_id": 1,
+    "numero_porta": 305,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 306,
+    "patch_panel_id": 1,
+    "numero_porta": 306,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 307,
+    "patch_panel_id": 1,
+    "numero_porta": 307,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 308,
+    "patch_panel_id": 1,
+    "numero_porta": 308,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 309,
+    "patch_panel_id": 1,
+    "numero_porta": 309,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 310,
+    "patch_panel_id": 1,
+    "numero_porta": 310,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 311,
+    "patch_panel_id": 1,
+    "numero_porta": 311,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 312,
+    "patch_panel_id": 1,
+    "numero_porta": 312,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 313,
+    "patch_panel_id": 1,
+    "numero_porta": 313,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 314,
+    "patch_panel_id": 1,
+    "numero_porta": 314,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 315,
+    "patch_panel_id": 1,
+    "numero_porta": 315,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 316,
+    "patch_panel_id": 1,
+    "numero_porta": 316,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 317,
+    "patch_panel_id": 1,
+    "numero_porta": 317,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 318,
+    "patch_panel_id": 1,
+    "numero_porta": 318,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 319,
+    "patch_panel_id": 1,
+    "numero_porta": 319,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 320,
+    "patch_panel_id": 1,
+    "numero_porta": 320,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 321,
+    "patch_panel_id": 1,
+    "numero_porta": 321,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 322,
+    "patch_panel_id": 1,
+    "numero_porta": 322,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 323,
+    "patch_panel_id": 1,
+    "numero_porta": 323,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 324,
+    "patch_panel_id": 1,
+    "numero_porta": 324,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 325,
+    "patch_panel_id": 1,
+    "numero_porta": 325,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 326,
+    "patch_panel_id": 1,
+    "numero_porta": 326,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 327,
+    "patch_panel_id": 1,
+    "numero_porta": 327,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 328,
+    "patch_panel_id": 1,
+    "numero_porta": 328,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 329,
+    "patch_panel_id": 1,
+    "numero_porta": 329,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 330,
+    "patch_panel_id": 1,
+    "numero_porta": 330,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 331,
+    "patch_panel_id": 1,
+    "numero_porta": 331,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 332,
+    "patch_panel_id": 1,
+    "numero_porta": 332,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 333,
+    "patch_panel_id": 1,
+    "numero_porta": 333,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 334,
+    "patch_panel_id": 1,
+    "numero_porta": 334,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 335,
+    "patch_panel_id": 1,
+    "numero_porta": 335,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 336,
+    "patch_panel_id": 1,
+    "numero_porta": 336,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 337,
+    "patch_panel_id": 1,
+    "numero_porta": 337,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 338,
+    "patch_panel_id": 1,
+    "numero_porta": 338,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 339,
+    "patch_panel_id": 1,
+    "numero_porta": 339,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 340,
+    "patch_panel_id": 1,
+    "numero_porta": 340,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 341,
+    "patch_panel_id": 1,
+    "numero_porta": 341,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 342,
+    "patch_panel_id": 1,
+    "numero_porta": 342,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 343,
+    "patch_panel_id": 1,
+    "numero_porta": 343,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 344,
+    "patch_panel_id": 1,
+    "numero_porta": 344,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 345,
+    "patch_panel_id": 1,
+    "numero_porta": 345,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 346,
+    "patch_panel_id": 1,
+    "numero_porta": 346,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 347,
+    "patch_panel_id": 1,
+    "numero_porta": 347,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 348,
+    "patch_panel_id": 1,
+    "numero_porta": 348,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 349,
+    "patch_panel_id": 1,
+    "numero_porta": 349,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 350,
+    "patch_panel_id": 1,
+    "numero_porta": 350,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 351,
+    "patch_panel_id": 1,
+    "numero_porta": 351,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 352,
+    "patch_panel_id": 1,
+    "numero_porta": 352,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 353,
+    "patch_panel_id": 1,
+    "numero_porta": 353,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 354,
+    "patch_panel_id": 1,
+    "numero_porta": 354,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 355,
+    "patch_panel_id": 1,
+    "numero_porta": 355,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 356,
+    "patch_panel_id": 1,
+    "numero_porta": 356,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 357,
+    "patch_panel_id": 1,
+    "numero_porta": 357,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 358,
+    "patch_panel_id": 1,
+    "numero_porta": 358,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 359,
+    "patch_panel_id": 1,
+    "numero_porta": 359,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 360,
+    "patch_panel_id": 1,
+    "numero_porta": 360,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 361,
+    "patch_panel_id": 1,
+    "numero_porta": 361,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 362,
+    "patch_panel_id": 1,
+    "numero_porta": 362,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 363,
+    "patch_panel_id": 1,
+    "numero_porta": 363,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 364,
+    "patch_panel_id": 1,
+    "numero_porta": 364,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 365,
+    "patch_panel_id": 1,
+    "numero_porta": 365,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 366,
+    "patch_panel_id": 1,
+    "numero_porta": 366,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 367,
+    "patch_panel_id": 1,
+    "numero_porta": 367,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 368,
+    "patch_panel_id": 1,
+    "numero_porta": 368,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 369,
+    "patch_panel_id": 1,
+    "numero_porta": 369,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 370,
+    "patch_panel_id": 1,
+    "numero_porta": 370,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 371,
+    "patch_panel_id": 1,
+    "numero_porta": 371,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 372,
+    "patch_panel_id": 1,
+    "numero_porta": 372,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 373,
+    "patch_panel_id": 1,
+    "numero_porta": 373,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 374,
+    "patch_panel_id": 1,
+    "numero_porta": 374,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 375,
+    "patch_panel_id": 1,
+    "numero_porta": 375,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 376,
+    "patch_panel_id": 1,
+    "numero_porta": 376,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 377,
+    "patch_panel_id": 1,
+    "numero_porta": 377,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 378,
+    "patch_panel_id": 1,
+    "numero_porta": 378,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 379,
+    "patch_panel_id": 1,
+    "numero_porta": 379,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 380,
+    "patch_panel_id": 1,
+    "numero_porta": 380,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 381,
+    "patch_panel_id": 1,
+    "numero_porta": 381,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 382,
+    "patch_panel_id": 1,
+    "numero_porta": 382,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 383,
+    "patch_panel_id": 1,
+    "numero_porta": 383,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 384,
+    "patch_panel_id": 1,
+    "numero_porta": 384,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 385,
+    "patch_panel_id": 1,
+    "numero_porta": 385,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 386,
+    "patch_panel_id": 1,
+    "numero_porta": 386,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 387,
+    "patch_panel_id": 1,
+    "numero_porta": 387,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 388,
+    "patch_panel_id": 1,
+    "numero_porta": 388,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 389,
+    "patch_panel_id": 1,
+    "numero_porta": 389,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 390,
+    "patch_panel_id": 1,
+    "numero_porta": 390,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 391,
+    "patch_panel_id": 1,
+    "numero_porta": 391,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 392,
+    "patch_panel_id": 1,
+    "numero_porta": 392,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 393,
+    "patch_panel_id": 1,
+    "numero_porta": 393,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 394,
+    "patch_panel_id": 1,
+    "numero_porta": 394,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 395,
+    "patch_panel_id": 1,
+    "numero_porta": 395,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 396,
+    "patch_panel_id": 1,
+    "numero_porta": 396,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 397,
+    "patch_panel_id": 1,
+    "numero_porta": 397,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 398,
+    "patch_panel_id": 1,
+    "numero_porta": 398,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 399,
+    "patch_panel_id": 1,
+    "numero_porta": 399,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 400,
+    "patch_panel_id": 1,
+    "numero_porta": 400,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 401,
+    "patch_panel_id": 1,
+    "numero_porta": 401,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 402,
+    "patch_panel_id": 1,
+    "numero_porta": 402,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 403,
+    "patch_panel_id": 1,
+    "numero_porta": 403,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 404,
+    "patch_panel_id": 1,
+    "numero_porta": 404,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 405,
+    "patch_panel_id": 1,
+    "numero_porta": 405,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 406,
+    "patch_panel_id": 1,
+    "numero_porta": 406,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 407,
+    "patch_panel_id": 1,
+    "numero_porta": 407,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 408,
+    "patch_panel_id": 1,
+    "numero_porta": 408,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 409,
+    "patch_panel_id": 1,
+    "numero_porta": 409,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 410,
+    "patch_panel_id": 1,
+    "numero_porta": 410,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 411,
+    "patch_panel_id": 1,
+    "numero_porta": 411,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 412,
+    "patch_panel_id": 1,
+    "numero_porta": 412,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 413,
+    "patch_panel_id": 1,
+    "numero_porta": 413,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 414,
+    "patch_panel_id": 1,
+    "numero_porta": 414,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 415,
+    "patch_panel_id": 1,
+    "numero_porta": 415,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 416,
+    "patch_panel_id": 1,
+    "numero_porta": 416,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 417,
+    "patch_panel_id": 1,
+    "numero_porta": 417,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 418,
+    "patch_panel_id": 1,
+    "numero_porta": 418,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 419,
+    "patch_panel_id": 1,
+    "numero_porta": 419,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 420,
+    "patch_panel_id": 1,
+    "numero_porta": 420,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 421,
+    "patch_panel_id": 1,
+    "numero_porta": 421,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 422,
+    "patch_panel_id": 1,
+    "numero_porta": 422,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 423,
+    "patch_panel_id": 1,
+    "numero_porta": 423,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 424,
+    "patch_panel_id": 1,
+    "numero_porta": 424,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 425,
+    "patch_panel_id": 1,
+    "numero_porta": 425,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 426,
+    "patch_panel_id": 1,
+    "numero_porta": 426,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 427,
+    "patch_panel_id": 1,
+    "numero_porta": 427,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 428,
+    "patch_panel_id": 1,
+    "numero_porta": 428,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 429,
+    "patch_panel_id": 1,
+    "numero_porta": 429,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 430,
+    "patch_panel_id": 1,
+    "numero_porta": 430,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 431,
+    "patch_panel_id": 1,
+    "numero_porta": 431,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 432,
+    "patch_panel_id": 1,
+    "numero_porta": 432,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 433,
+    "patch_panel_id": 1,
+    "numero_porta": 433,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 434,
+    "patch_panel_id": 1,
+    "numero_porta": 434,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 435,
+    "patch_panel_id": 1,
+    "numero_porta": 435,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 436,
+    "patch_panel_id": 1,
+    "numero_porta": 436,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 437,
+    "patch_panel_id": 1,
+    "numero_porta": 437,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 438,
+    "patch_panel_id": 1,
+    "numero_porta": 438,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 439,
+    "patch_panel_id": 1,
+    "numero_porta": 439,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 440,
+    "patch_panel_id": 1,
+    "numero_porta": 440,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 441,
+    "patch_panel_id": 1,
+    "numero_porta": 441,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 442,
+    "patch_panel_id": 1,
+    "numero_porta": 442,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 443,
+    "patch_panel_id": 1,
+    "numero_porta": 443,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 444,
+    "patch_panel_id": 1,
+    "numero_porta": 444,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 445,
+    "patch_panel_id": 1,
+    "numero_porta": 445,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 446,
+    "patch_panel_id": 1,
+    "numero_porta": 446,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 447,
+    "patch_panel_id": 1,
+    "numero_porta": 447,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 448,
+    "patch_panel_id": 1,
+    "numero_porta": 448,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 449,
+    "patch_panel_id": 1,
+    "numero_porta": 449,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 450,
+    "patch_panel_id": 1,
+    "numero_porta": 450,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 451,
+    "patch_panel_id": 1,
+    "numero_porta": 451,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 452,
+    "patch_panel_id": 1,
+    "numero_porta": 452,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 453,
+    "patch_panel_id": 1,
+    "numero_porta": 453,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 454,
+    "patch_panel_id": 1,
+    "numero_porta": 454,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 455,
+    "patch_panel_id": 1,
+    "numero_porta": 455,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 456,
+    "patch_panel_id": 1,
+    "numero_porta": 456,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 457,
+    "patch_panel_id": 1,
+    "numero_porta": 457,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 458,
+    "patch_panel_id": 1,
+    "numero_porta": 458,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 459,
+    "patch_panel_id": 1,
+    "numero_porta": 459,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 460,
+    "patch_panel_id": 1,
+    "numero_porta": 460,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 461,
+    "patch_panel_id": 1,
+    "numero_porta": 461,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 462,
+    "patch_panel_id": 1,
+    "numero_porta": 462,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 463,
+    "patch_panel_id": 1,
+    "numero_porta": 463,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 464,
+    "patch_panel_id": 1,
+    "numero_porta": 464,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 465,
+    "patch_panel_id": 1,
+    "numero_porta": 465,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 466,
+    "patch_panel_id": 1,
+    "numero_porta": 466,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 467,
+    "patch_panel_id": 1,
+    "numero_porta": 467,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 468,
+    "patch_panel_id": 1,
+    "numero_porta": 468,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 469,
+    "patch_panel_id": 1,
+    "numero_porta": 469,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 470,
+    "patch_panel_id": 1,
+    "numero_porta": 470,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 471,
+    "patch_panel_id": 1,
+    "numero_porta": 471,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 472,
+    "patch_panel_id": 1,
+    "numero_porta": 472,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 473,
+    "patch_panel_id": 1,
+    "numero_porta": 473,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 474,
+    "patch_panel_id": 1,
+    "numero_porta": 474,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 475,
+    "patch_panel_id": 1,
+    "numero_porta": 475,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 476,
+    "patch_panel_id": 1,
+    "numero_porta": 476,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 477,
+    "patch_panel_id": 1,
+    "numero_porta": 477,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 478,
+    "patch_panel_id": 1,
+    "numero_porta": 478,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 479,
+    "patch_panel_id": 1,
+    "numero_porta": 479,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 480,
+    "patch_panel_id": 1,
+    "numero_porta": 480,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 481,
+    "patch_panel_id": 1,
+    "numero_porta": 481,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 482,
+    "patch_panel_id": 1,
+    "numero_porta": 482,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 483,
+    "patch_panel_id": 1,
+    "numero_porta": 483,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 484,
+    "patch_panel_id": 1,
+    "numero_porta": 484,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 485,
+    "patch_panel_id": 1,
+    "numero_porta": 485,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 486,
+    "patch_panel_id": 1,
+    "numero_porta": 486,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 487,
+    "patch_panel_id": 1,
+    "numero_porta": 487,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 488,
+    "patch_panel_id": 1,
+    "numero_porta": 488,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 489,
+    "patch_panel_id": 1,
+    "numero_porta": 489,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 490,
+    "patch_panel_id": 1,
+    "numero_porta": 490,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 491,
+    "patch_panel_id": 1,
+    "numero_porta": 491,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 492,
+    "patch_panel_id": 1,
+    "numero_porta": 492,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 493,
+    "patch_panel_id": 1,
+    "numero_porta": 493,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 494,
+    "patch_panel_id": 1,
+    "numero_porta": 494,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 495,
+    "patch_panel_id": 1,
+    "numero_porta": 495,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 496,
+    "patch_panel_id": 1,
+    "numero_porta": 496,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 497,
+    "patch_panel_id": 1,
+    "numero_porta": 497,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 498,
+    "patch_panel_id": 1,
+    "numero_porta": 498,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 499,
+    "patch_panel_id": 1,
+    "numero_porta": 499,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  },
+  {
+    "id": 500,
+    "patch_panel_id": 1,
+    "numero_porta": 500,
+    "switch_id": null,
+    "porta_switch": null,
+    "status": "livre",
+    "equipamento_id": null,
+    "data_conexao": null
+  }
+]

@@ -23,28 +23,6 @@
   },
   {
     "id": 2,
-    "nome": "Chromebox",
-    "tipo": "PC",
-    "marca": "CTL",
-    "modelo": "Outro",
-    "descricao": "",
-    "foto": "img/pc-ctl-outro.png",
-    "icone": null,
-    "sala_id": "1",
-    "defeito": 0,
-    "dados": {
-      "partnumber": "",
-      "tamanho": "",
-      "firmware": "",
-      "serie": "",
-      "ip1": "1.2.3.456",
-      "mac1": "",
-      "ip2": "",
-      "mac2": ""
-    }
-  },
-  {
-    "id": 3,
     "nome": "Fonte Tap",
     "tipo": "Fonte",
     "marca": "Logitech",
@@ -64,5 +42,61 @@
       "ip2": "",
       "mac2": ""
     }
+  },
+  {
+    "id": 3,
+    "nome": "Chromebox",
+    "tipo": "PC",
+    "marca": "CTL",
+    "modelo": "Outro",
+    "descricao": "",
+    "foto": "img/pc-ctl-outro.png",
+    "icone": null,
+    "sala_id": 1,
+    "defeito": 0,
+    "dados": {
+      "partnumber": "",
+      "tamanho": "",
+      "firmware": "",
+      "serie": "",
+      "ip1": "1.2.3.456",
+      "mac1": "",
+      "ip2": "",
+      "mac2": ""
+    },
+    "keystone": "kst--0002"
+  },
+  {
+    "id": 4,
+    "nome": "Fonte Chromebox",
+    "tipo": "Fonte",
+    "marca": "Universal",
+    "modelo": "Chromebox",
+    "descricao": "• Output: 19.5V DC, 4.62A 90W • Input: 100~240V AC, 50/60Hz Universal",
+    "foto": "img/fonte-universal-chromebox.png",
+    "icone": null,
+    "sala_id": 1,
+    "defeito": 0,
+    "dados": {
+      "partnumber": "",
+      "tamanho": "",
+      "firmware": "",
+      "serie": "",
+      "ip1": "",
+      "mac1": "",
+      "ip2": "",
+      "mac2": ""
+    }
+  },
+  {
+    "id": 5,
+    "nome": "Patch Panel 01 - Terreo",
+    "tipo": "patch_panel",
+    "marca": "Patch Panel",
+    "modelo": "Patch Panel",
+    "descricao": "Patch Panel Patch Panel 01 - Terreo",
+    "sala_id": null,
+    "status": "ativo",
+    "dados": {}
   }
 ]
