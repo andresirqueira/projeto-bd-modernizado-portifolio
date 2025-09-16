@@ -3697,13 +3697,18 @@ def api_conexoes_cabos_por_sala(sala_id: int):
                 'id': cc.get('id'),
                 'cabo_id': cc.get('cabo_id'),
                 'codigo_cabo': (cabo or {}).get('codigo_unico'),
-                'tipo': (cabo or {}).get('tipo'),
+                'tipo_cabo': (cabo or {}).get('tipo'),
                 'equipamento_origem': (eq_o or {}).get('nome'),
                 'equipamento_destino': (eq_d or {}).get('nome'),
                 'porta_origem': cc.get('porta_origem'),
                 'porta_destino': cc.get('porta_destino'),
                 'observacao': cc.get('observacao'),
-                'data_conexao': cc.get('data_conexao')
+                'data_conexao': cc.get('data_conexao'),
+                'data_desconexao': cc.get('data_desconexao'),
+                'ativo': True,
+                # IDs úteis para edições posteriores
+                'equipamento_origem_id': cc.get('equipamento_origem_id'),
+                'equipamento_destino_id': cc.get('equipamento_destino_id')
             })
         return jsonify(resultado)
     else:
