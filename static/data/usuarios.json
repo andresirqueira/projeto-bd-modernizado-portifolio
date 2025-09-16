@@ -1,4 +1,4 @@
 [
-  { "id": 1, "username": "admin", "senha": "admin", "nivel": "master", "nome": "Administrador" },
-  { "id": 2, "username": "usuario", "senha": "123", "nivel": "admin", "nome": "Usuário" }
+  { "id": 1, "username": "master", "senha": "master123", "nivel": "master", "nome": "Administrador" },
+  { "id": 2, "username": "admin", "senha": "admin123", "nivel": "admin", "nome": "Usuário" }
 ]

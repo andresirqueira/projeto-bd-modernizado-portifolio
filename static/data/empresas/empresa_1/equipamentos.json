@@ -60,7 +60,7 @@
       "firmware": "",
       "serie": "",
       "ip1": "1.2.3.456",
-      "mac1": "",
+      "mac1": "FF:FF:FF:FF:FF:FF",
       "ip2": "",
       "mac2": ""
     },
