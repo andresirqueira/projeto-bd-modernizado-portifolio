@@ -4105,8 +4105,78 @@ def listar_conexoes_cabos():
     
     cabo_id = request.args.get('cabo_id')
     
-    conn = sqlite3.connect(db_file)
-    cur = conn.cursor()
+    if _is_json_mode(db_file):
+        conexoes_cabos = _json_read_table(db_file, 'conexoes_cabos')
+        cabos = _json_read_table(db_file, 'cabos')
+        equipamentos = _json_read_table(db_file, 'equipamentos')
+        salas = _json_read_table(db_file, 'salas')
+        
+        # Criar dicionários para lookup
+        cabos_dict = {c.get('id'): c for c in cabos}
+        equipamentos_dict = {e.get('id'): e for e in equipamentos}
+        salas_dict = {s.get('id'): s for s in salas}
+        
+        # Filtrar conexões ativas
+        conexoes_ativas = [cc for cc in conexoes_cabos if not cc.get('data_desconexao')]
+        
+        # Filtrar por cabo_id se especificado
+        if cabo_id:
+            try:
+                cabo_id = int(cabo_id)
+                conexoes_ativas = [cc for cc in conexoes_ativas if cc.get('cabo_id') == cabo_id]
+            except ValueError:
+                return jsonify({'erro': 'ID do cabo inválido'}), 400
+        
+        resultado = []
+        for cc in conexoes_ativas:
+            cabo = cabos_dict.get(cc.get('cabo_id'))
+            equipamento_origem = equipamentos_dict.get(cc.get('equipamento_origem_id'))
+            equipamento_destino = equipamentos_dict.get(cc.get('equipamento_destino_id'))
+            sala = salas_dict.get(cc.get('sala_id'))
+            
+            if not cabo or not equipamento_origem or not equipamento_destino:
+                continue
+            
+            # Determinar se é via patch panel
+            via_patch_panel = False
+            patch_panel_nome = None
+            if equipamento_destino.get('tipo') == 'patch_panel':
+                via_patch_panel = True
+                patch_panel_nome = equipamento_destino.get('nome')
+            elif cc.get('observacao', '').find('Conexão via Patch Panel') != -1:
+                via_patch_panel = True
+            
+            conexao = {
+                'id': cc.get('id'),
+                'cabo_id': cc.get('cabo_id'),
+                'equipamento_origem_id': cc.get('equipamento_origem_id'),
+                'equipamento_destino_id': cc.get('equipamento_destino_id'),
+                'porta_origem': cc.get('porta_origem'),
+                'porta_destino': cc.get('porta_destino'),
+                'sala_id': cc.get('sala_id'),
+                'observacao': cc.get('observacao'),
+                'data_conexao': cc.get('data_conexao'),
+                'data_desconexao': cc.get('data_desconexao'),
+                'codigo_unico': cabo.get('codigo_unico'),
+                'tipo': cabo.get('tipo'),
+                'comprimento': cabo.get('comprimento'),
+                'marca': cabo.get('marca'),
+                'modelo': cabo.get('modelo'),
+                'equipamento_origem_nome': equipamento_origem.get('nome'),
+                'equipamento_destino_nome': equipamento_destino.get('nome'),
+                'sala_nome': sala.get('nome') if sala else None,
+                'via_patch_panel': via_patch_panel,
+                'patch_panel_nome': patch_panel_nome,
+                'patch_panel_porta': cc.get('porta_destino') if via_patch_panel else None
+            }
+            resultado.append(conexao)
+        
+        # Ordenar por data de conexão (mais recentes primeiro)
+        resultado.sort(key=lambda x: x.get('data_conexao', ''), reverse=True)
+        return jsonify(resultado)
+    else:
+        conn = sqlite3.connect(db_file)
+        cur = conn.cursor()
     
     if cabo_id:
         try:
@@ -4227,19 +4297,33 @@ def desconectar_cabo(id):
     if not db_file:
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     
-    conn = sqlite3.connect(db_file)
-    cur = conn.cursor()
-    
-    cur.execute('UPDATE conexoes_cabos SET data_desconexao = CURRENT_TIMESTAMP WHERE id = ?', (id,))
-    if cur.rowcount == 0:
+    if _is_json_mode(db_file):
+        conexoes_cabos = _json_read_table(db_file, 'conexoes_cabos')
+        conexao = next((cc for cc in conexoes_cabos if cc.get('id') == id), None)
+        
+        if not conexao:
+            return jsonify({'status': 'erro', 'mensagem': 'Conexão não encontrada'}), 404
+        
+        # Marcar como desconectada
+        conexao['data_desconexao'] = datetime.now().isoformat()
+        _json_write_table(db_file, 'conexoes_cabos', conexoes_cabos)
+        
+        registrar_log(session.get('username'), 'desconectar_cabo', f'Conexão de cabo {id} desconectada', 'sucesso', db_file)
+        return jsonify({'status': 'ok'})
+    else:
+        conn = sqlite3.connect(db_file)
+        cur = conn.cursor()
+        
+        cur.execute('UPDATE conexoes_cabos SET data_desconexao = CURRENT_TIMESTAMP WHERE id = ?', (id,))
+        if cur.rowcount == 0:
+            conn.close()
+            return jsonify({'status': 'erro', 'mensagem': 'Conexão não encontrada'}), 404
+        
+        conn.commit()
         conn.close()
-        return jsonify({'status': 'erro', 'mensagem': 'Conexão não encontrada'}), 404
-    
-    conn.commit()
-    conn.close()
-    
-    registrar_log(session.get('username'), 'desconectar_cabo', f'Conexão de cabo {id} desconectada', 'sucesso', db_file)
-    return jsonify({'status': 'ok'})
+        
+        registrar_log(session.get('username'), 'desconectar_cabo', f'Conexão de cabo {id} desconectada', 'sucesso', db_file)
+        return jsonify({'status': 'ok'})
 
 @app.route('/conexoes-cabos/<int:id>', methods=['PUT'])
 @tecnico_required
@@ -4255,43 +4339,67 @@ def atualizar_conexao_cabo(id):
     porta_destino = data.get('porta_destino')
     observacao = data.get('observacao')
     
-    conn = sqlite3.connect(db_file)
-    cur = conn.cursor()
-    
-    # Verificar se a conexão existe
-    cur.execute('SELECT id FROM conexoes_cabos WHERE id = ?', (id,))
-    if not cur.fetchone():
-        conn.close()
-        return jsonify({'status': 'erro', 'mensagem': 'Conexão não encontrada'}), 404
-    
-    # Atualizar a conexão
-    update_fields = []
-    params = []
-    
-    if equipamento_origem_id is not None:
-        update_fields.append('equipamento_origem_id = ?')
-        params.append(equipamento_origem_id)
-    
-    if equipamento_destino_id is not None:
-        update_fields.append('equipamento_destino_id = ?')
-        params.append(equipamento_destino_id)
-    
-    if porta_origem is not None:
-        update_fields.append('porta_origem = ?')
-        params.append(porta_origem)
-    
-    if porta_destino is not None:
-        update_fields.append('porta_destino = ?')
-        params.append(porta_destino)
-    
-    if observacao is not None:
-        update_fields.append('observacao = ?')
-        params.append(observacao)
-    
-    if update_fields:
-        params.append(id)
-        query = f'UPDATE conexoes_cabos SET {", ".join(update_fields)} WHERE id = ?'
-        cur.execute(query, params)
+    if _is_json_mode(db_file):
+        conexoes_cabos = _json_read_table(db_file, 'conexoes_cabos')
+        conexao = next((cc for cc in conexoes_cabos if cc.get('id') == id), None)
+        
+        if not conexao:
+            return jsonify({'status': 'erro', 'mensagem': 'Conexão não encontrada'}), 404
+        
+        # Atualizar campos se fornecidos
+        if equipamento_origem_id is not None:
+            conexao['equipamento_origem_id'] = equipamento_origem_id
+        if equipamento_destino_id is not None:
+            conexao['equipamento_destino_id'] = equipamento_destino_id
+        if porta_origem is not None:
+            conexao['porta_origem'] = porta_origem
+        if porta_destino is not None:
+            conexao['porta_destino'] = porta_destino
+        if observacao is not None:
+            conexao['observacao'] = observacao
+        
+        _json_write_table(db_file, 'conexoes_cabos', conexoes_cabos)
+        
+        registrar_log(session.get('username'), 'atualizar_conexao_cabo', f'Conexão de cabo {id} atualizada', 'sucesso', db_file)
+        return jsonify({'status': 'ok'})
+    else:
+        conn = sqlite3.connect(db_file)
+        cur = conn.cursor()
+        
+        # Verificar se a conexão existe
+        cur.execute('SELECT id FROM conexoes_cabos WHERE id = ?', (id,))
+        if not cur.fetchone():
+            conn.close()
+            return jsonify({'status': 'erro', 'mensagem': 'Conexão não encontrada'}), 404
+        
+        # Atualizar a conexão
+        update_fields = []
+        params = []
+        
+        if equipamento_origem_id is not None:
+            update_fields.append('equipamento_origem_id = ?')
+            params.append(equipamento_origem_id)
+        
+        if equipamento_destino_id is not None:
+            update_fields.append('equipamento_destino_id = ?')
+            params.append(equipamento_destino_id)
+        
+        if porta_origem is not None:
+            update_fields.append('porta_origem = ?')
+            params.append(porta_origem)
+        
+        if porta_destino is not None:
+            update_fields.append('porta_destino = ?')
+            params.append(porta_destino)
+        
+        if observacao is not None:
+            update_fields.append('observacao = ?')
+            params.append(observacao)
+        
+        if update_fields:
+            params.append(id)
+            query = f'UPDATE conexoes_cabos SET {", ".join(update_fields)} WHERE id = ?'
+            cur.execute(query, params)
         
         if cur.rowcount == 0:
             conn.close()
