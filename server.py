@@ -3751,7 +3751,11 @@ def switches_usados_sala(sala_id):
                                 'nome': eq.get('nome'),
                                 'tipo': eq.get('tipo'),
                                 'marca': eq.get('marca'),
-                                'sala_nome': (sala or {}).get('nome')
+                                'sala_nome': (sala or {}).get('nome'),
+                                'ip1': (eq.get('dados') or {}).get('ip1') or (eq.get('dados') or {}).get('ip') or '',
+                                'ip2': (eq.get('dados') or {}).get('ip2') or '',
+                                'mac1': (eq.get('dados') or {}).get('mac1') or (eq.get('dados') or {}).get('mac') or '',
+                                'mac2': (eq.get('dados') or {}).get('mac2') or ''
                             }
                             sala_especifica = (eq.get('sala_id') == sala_id)
                     else:
@@ -3768,7 +3772,11 @@ def switches_usados_sala(sala_id):
                                 'nome': eq.get('nome'),
                                 'tipo': eq.get('tipo'),
                                 'marca': eq.get('marca'),
-                                'sala_nome': (sala or {}).get('nome')
+                                'sala_nome': (sala or {}).get('nome'),
+                                'ip1': (eq.get('dados') or {}).get('ip1') or (eq.get('dados') or {}).get('ip') or '',
+                                'ip2': (eq.get('dados') or {}).get('ip2') or '',
+                                'mac1': (eq.get('dados') or {}).get('mac1') or (eq.get('dados') or {}).get('mac') or '',
+                                'mac2': (eq.get('dados') or {}).get('mac2') or ''
                             }
                             sala_especifica = (eq.get('sala_id') == sala_id)
 
