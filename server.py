@@ -3672,6 +3672,71 @@ def salas_com_layout():
 def visualizar_switch_sala_html():
     return send_from_directory(os.path.dirname(__file__), 'visualizar-switch-sala.html')
 
+# --- API CABOS (TELA DETALHES-CABOS-SALA) ---
+
+@app.route('/conexoes-cabos/sala/<int:sala_id>', methods=['GET'])
+@login_required
+def api_conexoes_cabos_por_sala(sala_id: int):
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    if _is_json_mode(db_file):
+        conexoes_cabos = _json_read_table(db_file, 'conexoes_cabos')
+        cabos = {c.get('id'): c for c in _json_read_table(db_file, 'cabos')}
+        equipamentos = {e.get('id'): e for e in _json_read_table(db_file, 'equipamentos')}
+        resultado = []
+        for cc in conexoes_cabos:
+            if cc.get('sala_id') != sala_id or cc.get('data_desconexao'):
+                continue
+            cabo = cabos.get(cc.get('cabo_id'))
+            if not cabo:
+                continue
+            eq_o = equipamentos.get(cc.get('equipamento_origem_id'))
+            eq_d = equipamentos.get(cc.get('equipamento_destino_id'))
+            resultado.append({
+                'id': cc.get('id'),
+                'cabo_id': cc.get('cabo_id'),
+                'codigo_cabo': (cabo or {}).get('codigo_unico'),
+                'tipo': (cabo or {}).get('tipo'),
+                'equipamento_origem': (eq_o or {}).get('nome'),
+                'equipamento_destino': (eq_d or {}).get('nome'),
+                'porta_origem': cc.get('porta_origem'),
+                'porta_destino': cc.get('porta_destino'),
+                'observacao': cc.get('observacao'),
+                'data_conexao': cc.get('data_conexao')
+            })
+        return jsonify(resultado)
+    else:
+        return jsonify([])
+
+@app.route('/tipos-cabos', methods=['GET'])
+@login_required
+def api_tipos_cabos():
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    if _is_json_mode(db_file):
+        try:
+            tipos = _json_read_table(db_file, 'tipos_cabos')
+            # Se arquivo for dicionário/objeto, transformar em lista de nomes
+            if isinstance(tipos, dict):
+                tipos = list(tipos.keys())
+            if tipos and isinstance(tipos[0], dict):
+                tipos = [t.get('nome') or t.get('tipo') for t in tipos]
+            return jsonify(sorted([t for t in tipos if t]))
+        except Exception:
+            return jsonify(['HDMI', 'VGA', 'RJ45', 'USB', 'Audio'])
+    return jsonify([])
+
+@app.route('/cabos', methods=['GET'])
+@login_required
+def api_listar_cabos():
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    if _is_json_mode(db_file):
+        return jsonify(_json_read_table(db_file, 'cabos'))
+    return jsonify([])
 @app.route('/api/salas/<int:sala_id>/switches-usados')
 @login_required
 def switches_usados_sala(sala_id):
