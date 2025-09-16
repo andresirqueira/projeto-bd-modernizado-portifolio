@@ -2808,6 +2808,203 @@ def ver_patch_panel_html():
 def gerenciar_portas_patch_panel_html():
     return send_from_directory(os.path.dirname(__file__), 'gerenciar-portas-patch-panel.html')
 
+# --- API PATCH PANELS ---
+
+@app.route('/patch-panels', methods=['GET'])
+@login_required
+def listar_patch_panels():
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+
+    if _is_json_mode(db_file):
+        patch_panels = _json_read_table(db_file, 'patch_panels')
+        andares = {a.get('id'): a for a in _json_read_table(db_file, 'andares')}
+        resultado = []
+        for pp in patch_panels:
+            porta_inicial = int(pp.get('porta_inicial') or 1)
+            num_portas = int(pp.get('num_portas') or 0)
+            andar_id = pp.get('andar')
+            andar_nome = None
+            if andar_id == 0:
+                andar_nome = 'Térreo'
+            elif andar_id is not None:
+                # fallback se não existir em andares.json
+                andar_nome = (andares.get(andar_id) or {}).get('titulo') or f"{andar_id}º Andar"
+            resultado.append({
+                'id': pp.get('id'),
+                'codigo': pp.get('codigo'),
+                'nome': pp.get('nome'),
+                'andar': andar_id,
+                'andar_nome': andar_nome,
+                'num_portas': num_portas,
+                'porta_inicial': porta_inicial,
+                'porta_final': porta_inicial + num_portas - 1 if num_portas else porta_inicial,
+                'status': pp.get('status') or 'ativo',
+                'descricao': pp.get('descricao'),
+                'data_criacao': pp.get('data_criacao'),
+            })
+        # ordenar por id
+        resultado.sort(key=lambda x: int(x.get('id') or 0))
+        return jsonify(resultado)
+    else:
+        return jsonify({'erro': 'Modo SQLite não suportado nesta rota no ambiente atual'}), 501
+
+
+@app.route('/patch-panels/validar-portas', methods=['GET'])
+@login_required
+def validar_portas_patch_panels():
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    if _is_json_mode(db_file):
+        portas = _json_read_table(db_file, 'patch_panel_portas')
+        numeros = sorted({int(p.get('numero_porta') or 0) for p in portas if p.get('numero_porta') is not None})
+        return jsonify({'status': 'ok', 'portas_existentes': numeros})
+    else:
+        return jsonify({'erro': 'Modo SQLite não suportado nesta rota no ambiente atual'}), 501
+
+
+@app.route('/patch-panels', methods=['POST'])
+@admin_required
+def criar_patch_panel():
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    dados = request.get_json() or {}
+    if _is_json_mode(db_file):
+        patch_panels = _json_read_table(db_file, 'patch_panels')
+        portas = _json_read_table(db_file, 'patch_panel_portas')
+
+        novo = {
+            'id': _json_next_id(patch_panels),
+            'codigo': dados.get('codigo') or f"PP-{datetime.now().strftime('%Y%m%d%H%M%S')}",
+            'nome': dados.get('nome'),
+            'andar': dados.get('andar'),
+            'num_portas': int(dados.get('num_portas') or 0),
+            'porta_inicial': int(dados.get('porta_inicial') or 1),
+            'status': dados.get('status') or 'ativo',
+            'descricao': dados.get('descricao'),
+            'data_criacao': datetime.now().isoformat()
+        }
+        patch_panels.append(novo)
+
+        # criar portas
+        inicio = int(novo['porta_inicial'])
+        fim = inicio + int(novo['num_portas'] or 0) - 1
+        for numero in range(inicio, fim + 1):
+            portas.append({
+                'id': _json_next_id(portas),
+                'patch_panel_id': novo['id'],
+                'numero_porta': numero,
+                'switch_id': None,
+                'porta_switch': None,
+                'status': 'livre',
+                'equipamento_id': None,
+                'data_conexao': None
+            })
+
+        _json_write_table(db_file, 'patch_panels', patch_panels)
+        _json_write_table(db_file, 'patch_panel_portas', portas)
+        registrar_log(session.get('username','desconhecido'), 'CRIAR_PATCH_PANEL', f"Patch panel {novo['nome']} criado", 'sucesso', db_file)
+        return jsonify({'status': 'ok', 'id': novo['id']})
+    else:
+        return jsonify({'erro': 'Modo SQLite não suportado nesta rota no ambiente atual'}), 501
+
+
+@app.route('/patch-panels/<int:id>', methods=['PUT'])
+@admin_required
+def atualizar_patch_panel(id: int):
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    dados = request.get_json() or {}
+    if _is_json_mode(db_file):
+        patch_panels = _json_read_table(db_file, 'patch_panels')
+        alvo = next((pp for pp in patch_panels if pp.get('id') == id), None)
+        if not alvo:
+            return jsonify({'status': 'erro', 'mensagem': 'Patch panel não encontrado'}), 404
+        for campo in ['nome','andar','num_portas','porta_inicial','status','descricao']:
+            if campo in dados and dados.get(campo) is not None:
+                alvo[campo] = int(dados[campo]) if campo in ['andar','num_portas','porta_inicial'] else dados[campo]
+        _json_write_table(db_file, 'patch_panels', patch_panels)
+        registrar_log(session.get('username','desconhecido'), 'ATUALIZAR_PATCH_PANEL', f'Patch panel {id} atualizado', 'sucesso', db_file)
+        return jsonify({'status': 'ok'})
+    else:
+        return jsonify({'erro': 'Modo SQLite não suportado nesta rota no ambiente atual'}), 501
+
+
+@app.route('/patch-panels/<int:id>', methods=['DELETE'])
+@admin_required
+def excluir_patch_panel(id: int):
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    if _is_json_mode(db_file):
+        patch_panels = _json_read_table(db_file, 'patch_panels')
+        portas = _json_read_table(db_file, 'patch_panel_portas')
+        if not any(pp.get('id') == id for pp in patch_panels):
+            return jsonify({'status': 'erro', 'mensagem': 'Patch panel não encontrado'}), 404
+        patch_panels = [pp for pp in patch_panels if pp.get('id') != id]
+        portas = [p for p in portas if p.get('patch_panel_id') != id]
+        _json_write_table(db_file, 'patch_panels', patch_panels)
+        _json_write_table(db_file, 'patch_panel_portas', portas)
+        registrar_log(session.get('username','desconhecido'), 'EXCLUIR_PATCH_PANEL', f'Patch panel {id} excluído', 'sucesso', db_file)
+        return jsonify({'status': 'ok'})
+    else:
+        return jsonify({'erro': 'Modo SQLite não suportado nesta rota no ambiente atual'}), 501
+
+
+@app.route('/patch-panels/<int:id>/portas', methods=['GET'])
+@login_required
+def listar_portas_patch_panel(id: int):
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    if _is_json_mode(db_file):
+        portas = [p for p in _json_read_table(db_file, 'patch_panel_portas') if p.get('patch_panel_id') == id]
+        equipamentos = {e.get('id'): e for e in _json_read_table(db_file, 'equipamentos')}
+        salas = {s.get('id'): s for s in _json_read_table(db_file, 'salas')}
+        resultado = []
+        for p in sorted(portas, key=lambda x: int(x.get('numero_porta') or 0)):
+            equip = equipamentos.get(p.get('equipamento_id')) if p.get('equipamento_id') else None
+            resultado.append({
+                'id': p.get('id'),
+                'keystone': f"Keystone {int(p.get('numero_porta') or 0):02d}",
+                'switch_id': p.get('switch_id'),
+                'porta_switch': p.get('porta_switch'),
+                'status': p.get('status') or 'livre',
+                'equipamento_nome': (equip or {}).get('nome'),
+                'sala_nome': (salas.get((equip or {}).get('sala_id')) or {}).get('nome') if equip else None
+            })
+        return jsonify(resultado)
+    else:
+        return jsonify({'erro': 'Modo SQLite não suportado nesta rota no ambiente atual'}), 501
+
+
+@app.route('/patch-panel-portas/<int:porta_id>', methods=['PUT'])
+@tecnico_required
+def atualizar_patch_panel_porta(porta_id: int):
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    dados = request.get_json() or {}
+    if _is_json_mode(db_file):
+        portas = _json_read_table(db_file, 'patch_panel_portas')
+        porta = next((p for p in portas if p.get('id') == porta_id), None)
+        if not porta:
+            return jsonify({'status': 'erro', 'mensagem': 'Porta não encontrada'}), 404
+        if 'switch_id' in dados:
+            porta['switch_id'] = dados.get('switch_id') if dados.get('switch_id') not in ['', None] else None
+        if 'porta_switch' in dados:
+            valor = dados.get('porta_switch')
+            porta['porta_switch'] = int(valor) if str(valor).isdigit() else None
+        _json_write_table(db_file, 'patch_panel_portas', portas)
+        registrar_log(session.get('username','desconhecido'), 'ATUALIZAR_PATCH_PANEL_PORTA', f'Porta {porta_id} atualizada', 'sucesso', db_file)
+        return jsonify({'status': 'ok'})
+    else:
+        return jsonify({'erro': 'Modo SQLite não suportado nesta rota no ambiente atual'}), 501
+
 @app.route('/ping-equipamentos', methods=['POST'])
 @login_required
 def ping_equipamentos():
