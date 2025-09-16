@@ -2067,7 +2067,6 @@ def listar_portas_switch(switch_id):
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     if _is_json_mode(db_file):
         portas = [p for p in _json_read_table(db_file, 'switch_portas') if p.get('switch_id') == switch_id]
-        portas.sort(by:=None)
         portas.sort(key=lambda x: int(x.get('numero_porta') or 0))
         conexoes = [c for c in _json_read_table(db_file, 'conexoes') if c.get('status') == 'ativa']
         equipamentos = {e.get('id'): e for e in _json_read_table(db_file, 'equipamentos')}
@@ -5961,28 +5960,29 @@ def desconectar_porta_switch(id):
     if not db_file:
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     
-    conn = sqlite3.connect(db_file)
-    cur = conn.cursor()
-    
-    try:
+    if _is_json_mode(db_file):
+        switch_portas = _json_read_table(db_file, 'switch_portas')
+        patch_panel_portas = _json_read_table(db_file, 'patch_panel_portas')
+        conexoes = _json_read_table(db_file, 'conexoes')
+        
         # Verificar se a porta existe
-        cur.execute('SELECT id, status FROM switch_portas WHERE id = ?', (id,))
-        porta = cur.fetchone()
+        porta = next((p for p in switch_portas if p.get('id') == id), None)
         if not porta:
             return jsonify({'erro': 'Porta do switch não encontrada'}), 404
         
         # Se a porta está mapeada para um patch panel, desmapear
-        if porta[1] == 'mapeada':
+        if porta.get('status') == 'mapeada':
             # Buscar qual porta do patch panel está mapeada para esta porta do switch
-            cur.execute('''
-                SELECT id, equipamento_id FROM patch_panel_portas 
-                WHERE switch_id = (SELECT switch_id FROM switch_portas WHERE id = ?)
-                AND porta_switch = (SELECT numero_porta FROM switch_portas WHERE id = ?)
-            ''', (id, id))
+            switch_id = porta.get('switch_id')
+            numero_porta = porta.get('numero_porta')
             
-            patch_panel_porta = cur.fetchone()
+            patch_panel_porta = next((ppp for ppp in patch_panel_portas 
+                                    if ppp.get('switch_id') == switch_id 
+                                    and ppp.get('porta_switch') == numero_porta), None)
+            
             if patch_panel_porta:
-                porta_patch_id, equipamento_id = patch_panel_porta
+                porta_patch_id = patch_panel_porta.get('id')
+                equipamento_id = patch_panel_porta.get('equipamento_id')
                 
                 # Determinar o status correto da porta do patch panel
                 if equipamento_id:
@@ -5993,36 +5993,89 @@ def desconectar_porta_switch(id):
                     novo_status = 'livre'
                 
                 # Desmapear a porta do patch panel (remover apenas o mapeamento com switch)
-                cur.execute('''
-                    UPDATE patch_panel_portas 
-                    SET switch_id = NULL, porta_switch = NULL, status = ?
-                    WHERE id = ?
-                ''', (novo_status, porta_patch_id))
+                patch_panel_porta['switch_id'] = None
+                patch_panel_porta['porta_switch'] = None
+                patch_panel_porta['status'] = novo_status
+                _json_write_table(db_file, 'patch_panel_portas', patch_panel_portas)
         
         # Se a porta tem equipamento conectado diretamente, desconectar
-        elif porta[1] == 'ocupada':
+        elif porta.get('status') == 'ocupada':
             # Buscar e remover conexão
-            cur.execute('DELETE FROM conexoes WHERE porta_id = ?', (id,))
+            conexoes = [c for c in conexoes if c.get('porta_id') != id]
+            _json_write_table(db_file, 'conexoes', conexoes)
         
         # Marcar porta como livre
-        cur.execute('UPDATE switch_portas SET status = ? WHERE id = ?', ('livre', id))
-        
-        conn.commit()
+        porta['status'] = 'livre'
+        _json_write_table(db_file, 'switch_portas', switch_portas)
         
         # Registrar log
         detalhes = f"Porta {id} do switch desconectada"
         registrar_log(session.get('username', 'desconhecido'), 'DESCONECTAR_PORTA_SWITCH', detalhes, 'sucesso', db_file)
         
         return jsonify({'status': 'ok', 'mensagem': 'Porta desconectada com sucesso!'})
+    else:
+        conn = sqlite3.connect(db_file)
+        cur = conn.cursor()
         
-    except Exception as e:
-        conn.rollback()
-        detalhes = f"Erro ao desconectar porta {id} do switch: {str(e)}"
-        registrar_log(session.get('username', 'desconhecido'), 'DESCONECTAR_PORTA_SWITCH', detalhes, 'erro', db_file)
-        return jsonify({'erro': f'Erro ao desconectar porta: {str(e)}'}), 500
-    
-    finally:
-        conn.close()
+        try:
+            # Verificar se a porta existe
+            cur.execute('SELECT id, status FROM switch_portas WHERE id = ?', (id,))
+            porta = cur.fetchone()
+            if not porta:
+                return jsonify({'erro': 'Porta do switch não encontrada'}), 404
+            
+            # Se a porta está mapeada para um patch panel, desmapear
+            if porta[1] == 'mapeada':
+                # Buscar qual porta do patch panel está mapeada para esta porta do switch
+                cur.execute('''
+                    SELECT id, equipamento_id FROM patch_panel_portas 
+                    WHERE switch_id = (SELECT switch_id FROM switch_portas WHERE id = ?)
+                    AND porta_switch = (SELECT numero_porta FROM switch_portas WHERE id = ?)
+                ''', (id, id))
+                
+                patch_panel_porta = cur.fetchone()
+                if patch_panel_porta:
+                    porta_patch_id, equipamento_id = patch_panel_porta
+                    
+                    # Determinar o status correto da porta do patch panel
+                    if equipamento_id:
+                        # Se tem equipamento conectado, status deve ser 'ocupada'
+                        novo_status = 'ocupada'
+                    else:
+                        # Se não tem equipamento, status deve ser 'livre'
+                        novo_status = 'livre'
+                    
+                    # Desmapear a porta do patch panel (remover apenas o mapeamento com switch)
+                    cur.execute('''
+                        UPDATE patch_panel_portas 
+                        SET switch_id = NULL, porta_switch = NULL, status = ?
+                        WHERE id = ?
+                    ''', (novo_status, porta_patch_id))
+            
+            # Se a porta tem equipamento conectado diretamente, desconectar
+            elif porta[1] == 'ocupada':
+                # Buscar e remover conexão
+                cur.execute('DELETE FROM conexoes WHERE porta_id = ?', (id,))
+            
+            # Marcar porta como livre
+            cur.execute('UPDATE switch_portas SET status = ? WHERE id = ?', ('livre', id))
+            
+            conn.commit()
+            
+            # Registrar log
+            detalhes = f"Porta {id} do switch desconectada"
+            registrar_log(session.get('username', 'desconhecido'), 'DESCONECTAR_PORTA_SWITCH', detalhes, 'sucesso', db_file)
+            
+            return jsonify({'status': 'ok', 'mensagem': 'Porta desconectada com sucesso!'})
+            
+        except Exception as e:
+            conn.rollback()
+            detalhes = f"Erro ao desconectar porta {id} do switch: {str(e)}"
+            registrar_log(session.get('username', 'desconhecido'), 'DESCONECTAR_PORTA_SWITCH', detalhes, 'erro', db_file)
+            return jsonify({'erro': f'Erro ao desconectar porta: {str(e)}'}), 500
+        
+        finally:
+            conn.close()
 
 @app.route('/salas/andar/<int:andar>', methods=['GET'])
 @login_required
