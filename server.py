@@ -2815,49 +2815,109 @@ def ping_equipamentos():
     db_file = session.get('db')
     if not db_file:
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
-    cur = conn.cursor()
-    # Busca todos os equipamentos com IP cadastrado
-    cur.execute("""
-        SELECT e.id, e.nome, d.valor as ip
-        FROM equipamentos e
-        JOIN equipamento_dados d ON e.id = d.equipamento_id
-        WHERE d.chave = 'ip1' AND d.valor IS NOT NULL AND d.valor != ''
-    """)
-    equipamentos = cur.fetchall()
-    resultados = []
-    equipamentos_online = 0
-    equipamentos_offline = 0
     
-    for eq_id, nome, ip in equipamentos:
-        try:
-            result = subprocess.run(['ping', '-n', '1', ip], capture_output=True, text=True, timeout=5)
-            saida = result.stdout
-            sucesso = int('TTL=' in saida or 'ttl=' in saida)
-            if sucesso:
-                equipamentos_online += 1
-            else:
+    if _is_json_mode(db_file):
+        equipamentos = _json_read_table(db_file, 'equipamentos')
+        # Buscar equipamentos com IP cadastrado
+        equipamentos_com_ip = []
+        for eq in equipamentos:
+            dados = eq.get('dados', {})
+            ip = dados.get('ip1') or dados.get('ip')
+            if ip and ip.strip():
+                equipamentos_com_ip.append({
+                    'id': eq.get('id'),
+                    'nome': eq.get('nome'),
+                    'ip': ip
+                })
+        
+        resultados = []
+        equipamentos_online = 0
+        equipamentos_offline = 0
+        
+        for eq in equipamentos_com_ip:
+            eq_id = eq['id']
+            nome = eq['nome']
+            ip = eq['ip']
+            
+            try:
+                result = subprocess.run(['ping', '-n', '1', ip], capture_output=True, text=True, timeout=5)
+                saida = result.stdout
+                sucesso = int('TTL=' in saida or 'ttl=' in saida)
+                if sucesso:
+                    equipamentos_online += 1
+                else:
+                    equipamentos_offline += 1
+            except Exception as e:
+                saida = str(e)
+                sucesso = 0
                 equipamentos_offline += 1
-        except Exception as e:
-            saida = str(e)
-            sucesso = 0
-            equipamentos_offline += 1
-        # Salva no log
-        cur.execute(
-            'INSERT INTO ping_logs (equipamento_id, nome_equipamento, ip, resultado, sucesso) VALUES (?, ?, ?, ?, ?)',
-            (eq_id, nome, ip, saida, sucesso)
-        )
-        resultados.append({'id': eq_id, 'nome': nome, 'ip': ip, 'sucesso': bool(sucesso), 'saida': saida})
-    
-    conn.commit()
-    conn.close()
-    
-    # Log da execução do ping
-    total_equipamentos = len(equipamentos)
-    detalhes = f'Ping executado em {total_equipamentos} equipamentos: {equipamentos_online} online, {equipamentos_offline} offline'
-    registrar_log(session.get('username', 'desconhecido'), 'EXECUTAR_PING', detalhes, 'sucesso', db_file)
-    
-    return jsonify({'status': 'ok', 'resultados': resultados})
+            
+            # Salva no log
+            ping_logs = _json_read_table(db_file, 'ping_logs')
+            novo_log = {
+                'id': _json_next_id(ping_logs),
+                'equipamento_id': eq_id,
+                'nome_equipamento': nome,
+                'ip': ip,
+                'resultado': saida,
+                'sucesso': sucesso,
+                'timestamp': datetime.now().isoformat()
+            }
+            ping_logs.append(novo_log)
+            _json_write_table(db_file, 'ping_logs', ping_logs)
+            
+            resultados.append({'id': eq_id, 'nome': nome, 'ip': ip, 'sucesso': bool(sucesso), 'saida': saida})
+        
+        # Log da execução do ping
+        total_equipamentos = len(equipamentos_com_ip)
+        detalhes = f'Ping executado em {total_equipamentos} equipamentos: {equipamentos_online} online, {equipamentos_offline} offline'
+        registrar_log(session.get('username', 'desconhecido'), 'EXECUTAR_PING', detalhes, 'sucesso', db_file)
+        
+        return jsonify({'status': 'ok', 'resultados': resultados})
+    else:
+        conn = sqlite3.connect(db_file)
+        cur = conn.cursor()
+        # Busca todos os equipamentos com IP cadastrado
+        cur.execute("""
+            SELECT e.id, e.nome, d.valor as ip
+            FROM equipamentos e
+            JOIN equipamento_dados d ON e.id = d.equipamento_id
+            WHERE d.chave = 'ip1' AND d.valor IS NOT NULL AND d.valor != ''
+        """)
+        equipamentos = cur.fetchall()
+        resultados = []
+        equipamentos_online = 0
+        equipamentos_offline = 0
+        
+        for eq_id, nome, ip in equipamentos:
+            try:
+                result = subprocess.run(['ping', '-n', '1', ip], capture_output=True, text=True, timeout=5)
+                saida = result.stdout
+                sucesso = int('TTL=' in saida or 'ttl=' in saida)
+                if sucesso:
+                    equipamentos_online += 1
+                else:
+                    equipamentos_offline += 1
+            except Exception as e:
+                saida = str(e)
+                sucesso = 0
+                equipamentos_offline += 1
+            # Salva no log
+            cur.execute(
+                'INSERT INTO ping_logs (equipamento_id, nome_equipamento, ip, resultado, sucesso) VALUES (?, ?, ?, ?, ?)',
+                (eq_id, nome, ip, saida, sucesso)
+            )
+            resultados.append({'id': eq_id, 'nome': nome, 'ip': ip, 'sucesso': bool(sucesso), 'saida': saida})
+        
+        conn.commit()
+        conn.close()
+        
+        # Log da execução do ping
+        total_equipamentos = len(equipamentos)
+        detalhes = f'Ping executado em {total_equipamentos} equipamentos: {equipamentos_online} online, {equipamentos_offline} offline'
+        registrar_log(session.get('username', 'desconhecido'), 'EXECUTAR_PING', detalhes, 'sucesso', db_file)
+        
+        return jsonify({'status': 'ok', 'resultados': resultados})
 
 @app.route('/ping-logs')
 @login_required
@@ -3206,50 +3266,95 @@ def obter_conexoes_reais_sala(sala_id):
     if not db_file:
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     
-    conn = sqlite3.connect(db_file)
-    cur = conn.cursor()
-    
-    # Buscar conexões de cabos ativas na sala
-    cur.execute('''
-        SELECT cc.id, cc.cabo_id, cc.equipamento_origem_id, cc.equipamento_destino_id,
-               cc.porta_origem, cc.porta_destino, cc.sala_id, cc.observacao,
-               c.codigo_unico as codigo_cabo, c.tipo as tipo_cabo, c.comprimento, c.marca, c.modelo,
-               eo.nome as equipamento_origem, ed.nome as equipamento_destino,
-               CASE WHEN cc.data_desconexao IS NULL THEN 1 ELSE 0 END as ativo
-        FROM conexoes_cabos cc
-        JOIN cabos c ON cc.cabo_id = c.id
-        LEFT JOIN equipamentos eo ON cc.equipamento_origem_id = eo.id
-        LEFT JOIN equipamentos ed ON cc.equipamento_destino_id = ed.id
-        WHERE cc.sala_id = ? AND cc.data_desconexao IS NULL
-        ORDER BY cc.data_conexao DESC
-    ''', (sala_id,))
-    
-    rows = cur.fetchall()
-    conn.close()
-    
-    conexoes = []
-    for row in rows:
-        conexao = {
-            'id': row[0],
-            'cabo_id': row[1],
-            'equipamento_origem_id': row[2],
-            'equipamento_destino_id': row[3],
-            'porta_origem': row[4],
-            'porta_destino': row[5],
-            'sala_id': row[6],
-            'observacao': row[7],
-            'codigo_cabo': row[8],
-            'tipo_cabo': row[9],
-            'comprimento': row[10],
-            'marca': row[11],
-            'modelo': row[12],
-            'equipamento_origem': row[13],
-            'equipamento_destino': row[14],
-            'ativo': bool(row[15])
-        }
-        conexoes.append(conexao)
-    
-    return jsonify(conexoes)
+    if _is_json_mode(db_file):
+        conexoes_cabos = _json_read_table(db_file, 'conexoes_cabos')
+        cabos = _json_read_table(db_file, 'cabos')
+        equipamentos = _json_read_table(db_file, 'equipamentos')
+        
+        # Criar dicionários para lookup
+        cabos_dict = {c.get('id'): c for c in cabos}
+        equipamentos_dict = {e.get('id'): e for e in equipamentos}
+        
+        # Buscar conexões de cabos ativas na sala
+        conexoes_ativas = [cc for cc in conexoes_cabos if cc.get('sala_id') == sala_id and not cc.get('data_desconexao')]
+        
+        conexoes = []
+        for cc in conexoes_ativas:
+            cabo = cabos_dict.get(cc.get('cabo_id'))
+            equipamento_origem = equipamentos_dict.get(cc.get('equipamento_origem_id'))
+            equipamento_destino = equipamentos_dict.get(cc.get('equipamento_destino_id'))
+            
+            if not cabo:
+                continue
+            
+            conexao = {
+                'id': cc.get('id'),
+                'cabo_id': cc.get('cabo_id'),
+                'equipamento_origem_id': cc.get('equipamento_origem_id'),
+                'equipamento_destino_id': cc.get('equipamento_destino_id'),
+                'porta_origem': cc.get('porta_origem'),
+                'porta_destino': cc.get('porta_destino'),
+                'sala_id': cc.get('sala_id'),
+                'observacao': cc.get('observacao'),
+                'codigo_cabo': cabo.get('codigo_unico'),
+                'tipo_cabo': cabo.get('tipo'),
+                'comprimento': cabo.get('comprimento'),
+                'marca': cabo.get('marca'),
+                'modelo': cabo.get('modelo'),
+                'equipamento_origem': equipamento_origem.get('nome') if equipamento_origem else None,
+                'equipamento_destino': equipamento_destino.get('nome') if equipamento_destino else None,
+                'ativo': True
+            }
+            conexoes.append(conexao)
+        
+        # Ordenar por data de conexão (mais recentes primeiro)
+        conexoes.sort(key=lambda x: x.get('data_conexao', ''), reverse=True)
+        return jsonify(conexoes)
+    else:
+        conn = sqlite3.connect(db_file)
+        cur = conn.cursor()
+        
+        # Buscar conexões de cabos ativas na sala
+        cur.execute('''
+            SELECT cc.id, cc.cabo_id, cc.equipamento_origem_id, cc.equipamento_destino_id,
+                   cc.porta_origem, cc.porta_destino, cc.sala_id, cc.observacao,
+                   c.codigo_unico as codigo_cabo, c.tipo as tipo_cabo, c.comprimento, c.marca, c.modelo,
+                   eo.nome as equipamento_origem, ed.nome as equipamento_destino,
+                   CASE WHEN cc.data_desconexao IS NULL THEN 1 ELSE 0 END as ativo
+            FROM conexoes_cabos cc
+            JOIN cabos c ON cc.cabo_id = c.id
+            LEFT JOIN equipamentos eo ON cc.equipamento_origem_id = eo.id
+            LEFT JOIN equipamentos ed ON cc.equipamento_destino_id = ed.id
+            WHERE cc.sala_id = ? AND cc.data_desconexao IS NULL
+            ORDER BY cc.data_conexao DESC
+        ''', (sala_id,))
+        
+        rows = cur.fetchall()
+        conn.close()
+        
+        conexoes = []
+        for row in rows:
+            conexao = {
+                'id': row[0],
+                'cabo_id': row[1],
+                'equipamento_origem_id': row[2],
+                'equipamento_destino_id': row[3],
+                'porta_origem': row[4],
+                'porta_destino': row[5],
+                'sala_id': row[6],
+                'observacao': row[7],
+                'codigo_cabo': row[8],
+                'tipo_cabo': row[9],
+                'comprimento': row[10],
+                'marca': row[11],
+                'modelo': row[12],
+                'equipamento_origem': row[13],
+                'equipamento_destino': row[14],
+                'ativo': bool(row[15])
+            }
+            conexoes.append(conexao)
+        
+        return jsonify(conexoes)
 
 @app.route('/api/salas/<int:sala_id>/layout-hibrido', methods=['GET'])
 @login_required
