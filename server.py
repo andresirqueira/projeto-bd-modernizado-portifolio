@@ -326,6 +326,21 @@ def dashboard_sala_html():
 def historico_sala_html():
     return send_from_directory(os.path.dirname(__file__), 'historico-sala.html')
 
+# --- API HISTÓRICO SALA ---
+
+@app.route('/logs/sala/<int:sala_id>', methods=['GET'])
+@login_required
+def logs_por_sala(sala_id: int):
+    """Retorna o histórico básico (placeholder) da sala. 
+    Em modo JSON, ainda não há armazenamento dedicado por sala, então retornamos lista vazia.
+    Mantém compatibilidade de frontend (evita 404)."""
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    # Estrutura de retorno esperada: lista de eventos
+    # Cada item pode conter: timestamp, acao, detalhes
+    return jsonify([])
+
 @app.route('/ver-equipamento.html')
 @login_required
 def ver_equipamento_html():
