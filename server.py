@@ -3309,25 +3309,64 @@ def switches_usados_sala(sala_id):
     db_file = session.get('db')
     if not db_file:
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
-    cur = conn.cursor()
     
-    # Buscar switches que têm conexão com equipamentos da sala específica
-    # Incluindo tanto conexões via patch panel quanto conexões diretas
-    cur.execute('''
-        SELECT DISTINCT s.id as switch_id, s.nome as switch_nome, s.marca as switch_marca, s.modelo as switch_modelo
-        FROM switches s
-        JOIN switch_portas sp ON s.id = sp.switch_id
-        LEFT JOIN patch_panel_portas ppp ON sp.switch_id = ppp.switch_id AND sp.numero_porta = ppp.porta_switch
-        LEFT JOIN equipamentos e1 ON ppp.equipamento_id = e1.id
-        LEFT JOIN conexoes c ON sp.id = c.porta_id AND c.status = 'ativa'
-        LEFT JOIN equipamentos e2 ON c.equipamento_id = e2.id
-        WHERE (e1.sala_id = ? OR e2.sala_id = ?)
-        ORDER BY s.id
-    ''', (sala_id, sala_id))
-    
-    switches_rows = cur.fetchall()
-    switches = {}
+    if _is_json_mode(db_file):
+        switches = _json_read_table(db_file, 'switches')
+        switch_portas = _json_read_table(db_file, 'switch_portas')
+        patch_panel_portas = _json_read_table(db_file, 'patch_panel_portas')
+        equipamentos = _json_read_table(db_file, 'equipamentos')
+        conexoes = _json_read_table(db_file, 'conexoes')
+        
+        # Criar dicionários para lookup
+        equipamentos_dict = {e.get('id'): e for e in equipamentos}
+        switch_portas_dict = {sp.get('id'): sp for sp in switch_portas}
+        
+        switches_usados = {}
+        
+        # Buscar switches via conexões diretas
+        for conexao in conexoes:
+            if conexao.get('status') == 'ativa':
+                equipamento = equipamentos_dict.get(conexao.get('equipamento_id'))
+                if equipamento and equipamento.get('sala_id') == sala_id:
+                    porta = switch_portas_dict.get(conexao.get('porta_id'))
+                    if porta:
+                        switch_id = porta.get('switch_id')
+                        switch = next((s for s in switches if s.get('id') == switch_id), None)
+                        if switch:
+                            switches_usados[switch_id] = switch
+        
+        # Buscar switches via patch panel
+        for ppp in patch_panel_portas:
+            if ppp.get('equipamento_id'):
+                equipamento = equipamentos_dict.get(ppp.get('equipamento_id'))
+                if equipamento and equipamento.get('sala_id') == sala_id:
+                    switch_id = ppp.get('switch_id')
+                    if switch_id:
+                        switch = next((s for s in switches if s.get('id') == switch_id), None)
+                        if switch:
+                            switches_usados[switch_id] = switch
+        
+        switches_list = list(switches_usados.values())
+    else:
+        conn = sqlite3.connect(db_file)
+        cur = conn.cursor()
+        
+        # Buscar switches que têm conexão com equipamentos da sala específica
+        # Incluindo tanto conexões via patch panel quanto conexões diretas
+        cur.execute('''
+            SELECT DISTINCT s.id as switch_id, s.nome as switch_nome, s.marca as switch_marca, s.modelo as switch_modelo
+            FROM switches s
+            JOIN switch_portas sp ON s.id = sp.switch_id
+            LEFT JOIN patch_panel_portas ppp ON sp.switch_id = ppp.switch_id AND sp.numero_porta = ppp.porta_switch
+            LEFT JOIN equipamentos e1 ON ppp.equipamento_id = e1.id
+            LEFT JOIN conexoes c ON sp.id = c.porta_id AND c.status = 'ativa'
+            LEFT JOIN equipamentos e2 ON c.equipamento_id = e2.id
+            WHERE (e1.sala_id = ? OR e2.sala_id = ?)
+            ORDER BY s.id
+        ''', (sala_id, sala_id))
+        
+        switches_rows = cur.fetchall()
+        switches = {}
     
     def extrair_numero_switch(nome):
         import re
