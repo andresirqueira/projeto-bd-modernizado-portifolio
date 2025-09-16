@@ -1272,15 +1272,8 @@ def criar_switch():
 
         # criar portas padrão
         modelo = (dados.get('modelo') or '').lower()
-        num_portas = 24
-        if '48' in modelo:
-            num_portas = 48
-        elif '12' in modelo or '16' in modelo:
-            num_portas = 16
-        elif '8' in modelo:
-            num_portas = 8
-        elif '4' in modelo:
-            num_portas = 4
+        # Sempre criar 48 portas para novos switches
+        num_portas = 48
         portas = _json_read_table(db_file, 'switch_portas')
         for porta_num in range(1, num_portas + 1):
             descricao = f"Porta {porta_num}"
@@ -1353,15 +1346,8 @@ def criar_switch():
         
         # Criar portas padrão
         modelo = dados['modelo'].lower()
-        num_portas = 24
-        if '48' in modelo:
-            num_portas = 48
-        elif '12' in modelo or '16' in modelo:
-            num_portas = 16
-        elif '8' in modelo:
-            num_portas = 8
-        elif '4' in modelo:
-            num_portas = 4
+        # Sempre criar 48 portas para novos switches
+        num_portas = 48
         for porta_num in range(1, num_portas + 1):
             descricao = f"Porta {porta_num}"
             if porta_num <= 4:
@@ -1750,15 +1736,8 @@ def criar_portas_padrao_switch(switch_id):
         if any(p.get('switch_id') == switch_id for p in portas):
             return jsonify({'status': 'erro', 'mensagem': 'Switch já possui portas configuradas'}), 400
         modelo = (s.get('modelo') or '').lower()
-        num_portas = 24
-        if '48' in modelo:
-            num_portas = 48
-        elif '12' in modelo or '16' in modelo:
-            num_portas = 16
-        elif '8' in modelo:
-            num_portas = 8
-        elif '4' in modelo:
-            num_portas = 4
+        # Sempre criar 48 portas para switches sem portas
+        num_portas = 48
         for porta_num in range(1, num_portas + 1):
             descricao = f"Porta {porta_num}"
             if porta_num <= 4:
@@ -1797,17 +1776,8 @@ def criar_portas_padrao_switch(switch_id):
         
         # Determinar número de portas baseado no modelo
         modelo = switch[1].lower()
-        num_portas = 24  # Padrão para maioria dos switches
-        
-        # Ajustar baseado no modelo específico
-        if '48' in modelo:
-            num_portas = 48
-        elif '12' in modelo or '16' in modelo:
-            num_portas = 16
-        elif '8' in modelo:
-            num_portas = 8
-        elif '4' in modelo:
-            num_portas = 4
+        # Sempre recriar 48 portas
+        num_portas = 48
         
         # Criar portas automaticamente
         for porta_num in range(1, num_portas + 1):
