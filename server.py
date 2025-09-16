@@ -2965,17 +2965,26 @@ def listar_portas_patch_panel(id: int):
         portas = [p for p in _json_read_table(db_file, 'patch_panel_portas') if p.get('patch_panel_id') == id]
         equipamentos = {e.get('id'): e for e in _json_read_table(db_file, 'equipamentos')}
         salas = {s.get('id'): s for s in _json_read_table(db_file, 'salas')}
+        switches = {sw.get('id'): sw for sw in _json_read_table(db_file, 'switches')}
+        patch_panel = next((pp for pp in _json_read_table(db_file, 'patch_panels') if pp.get('id') == id), {})
+        prefixo_keystone = patch_panel.get('prefixo_keystone') or 'KST'
+
         resultado = []
         for p in sorted(portas, key=lambda x: int(x.get('numero_porta') or 0)):
             equip = equipamentos.get(p.get('equipamento_id')) if p.get('equipamento_id') else None
+            sala_nome = (salas.get((equip or {}).get('sala_id')) or {}).get('nome') if equip else None
+            switch_obj = switches.get(p.get('switch_id')) if p.get('switch_id') else None
             resultado.append({
                 'id': p.get('id'),
-                'keystone': f"Keystone {int(p.get('numero_porta') or 0):02d}",
+                'numero_porta': p.get('numero_porta'),
+                'prefixo_keystone': prefixo_keystone,
                 'switch_id': p.get('switch_id'),
+                'switch_nome': (switch_obj or {}).get('nome'),
                 'porta_switch': p.get('porta_switch'),
                 'status': p.get('status') or 'livre',
                 'equipamento_nome': (equip or {}).get('nome'),
-                'sala_nome': (salas.get((equip or {}).get('sala_id')) or {}).get('nome') if equip else None
+                'equipamento_tipo': (equip or {}).get('tipo'),
+                'equipamento_sala': sala_nome,
             })
         return jsonify(resultado)
     else:
