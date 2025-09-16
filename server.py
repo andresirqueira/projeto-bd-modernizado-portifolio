@@ -4343,108 +4343,162 @@ def cabos_por_sala(sala_id):
     if not db_file:
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
     
-    conn = sqlite3.connect(db_file)
-    cur = conn.cursor()
-    
-    # Buscar conexões diretas de cabos (excluindo conexões que vão para patch panels)
-    cur.execute('''
-        SELECT cc.id, cc.cabo_id, cc.equipamento_origem_id, cc.equipamento_destino_id,
-               cc.porta_origem, cc.porta_destino, cc.sala_id, cc.observacao,
-               cc.data_conexao, cc.data_desconexao,
-               c.codigo_unico as codigo_cabo, c.tipo as tipo_cabo, c.comprimento, c.marca, c.modelo,
-               eo.nome as equipamento_origem, ed.nome as equipamento_destino,
-               s.nome as sala_nome,
-               CASE WHEN cc.data_desconexao IS NULL THEN 1 ELSE 0 END as ativo,
-               'cabo_direto' as tipo_conexao
-        FROM conexoes_cabos cc
-        LEFT JOIN cabos c ON cc.cabo_id = c.id
-        LEFT JOIN equipamentos eo ON cc.equipamento_origem_id = eo.id
-        LEFT JOIN equipamentos ed ON cc.equipamento_destino_id = ed.id
-        LEFT JOIN salas s ON cc.sala_id = s.id
-        WHERE cc.sala_id = ? 
-        AND cc.data_desconexao IS NULL 
-        AND c.id IS NOT NULL
-        AND (ed.nome IS NULL OR ed.nome NOT LIKE '%Patch Panel%')
-        AND NOT EXISTS (
-            SELECT 1 FROM patch_panel_portas ppp 
-            JOIN patch_panels pp ON ppp.patch_panel_id = pp.id 
-            WHERE ppp.equipamento_id = cc.equipamento_origem_id 
-            AND ppp.numero_porta = cc.porta_destino
-        )
-    ''', (sala_id,))
-    
-    conexoes_diretas = cur.fetchall()
-    
-    # Buscar conexões via patch panel (apenas se houver conexão real de cabo)
-    cur.execute('''
-        SELECT 
-            ppp.id as id,
-            cc.cabo_id,
-            e.id as equipamento_origem_id,
-            cc.equipamento_destino_id,
-            cc.porta_origem,
-            ppp.numero_porta as porta_destino,
-            e.sala_id,
-            cc.observacao,
-            cc.data_conexao,
-            cc.data_desconexao,
-            c.codigo_unico as codigo_cabo,
-            c.tipo as tipo_cabo,
-            c.comprimento,
-            c.marca,
-            c.modelo,
-            e.nome as equipamento_origem,
-            COALESCE(ppp_equip.nome, pp.nome) as equipamento_destino,
-            s.nome as sala_nome,
-            CASE WHEN cc.data_desconexao IS NULL THEN 1 ELSE 0 END as ativo,
-            'patch_panel' as tipo_conexao
-        FROM patch_panel_portas ppp
-        JOIN patch_panels pp ON ppp.patch_panel_id = pp.id
-        JOIN equipamentos e ON ppp.equipamento_id = e.id
-        LEFT JOIN salas s ON e.sala_id = s.id
-        LEFT JOIN equipamentos ppp_equip ON ppp.equipamento_id = ppp_equip.id
-        INNER JOIN conexoes_cabos cc ON cc.equipamento_origem_id = e.id AND cc.equipamento_destino_id = pp.id AND cc.porta_destino = ppp.numero_porta AND cc.data_desconexao IS NULL
-        INNER JOIN cabos c ON cc.cabo_id = c.id
-        WHERE e.sala_id = ? AND ppp.status = 'ocupada'
-    ''', (sala_id,))
-    
-    conexoes_patch_panel = cur.fetchall()
-    
-    conn.close()
-    
-    # Combinar os resultados
-    todas_conexoes = conexoes_diretas + conexoes_patch_panel
-    
-    cabos = []
-    for row in todas_conexoes:
-        cabo = {
-            'id': row[0],
-            'cabo_id': row[1],
-            'equipamento_origem_id': row[2],
-            'equipamento_destino_id': row[3],
-            'porta_origem': row[4],
-            'porta_destino': row[5],
-            'sala_id': row[6],
-            'observacao': row[7],
-            'data_conexao': row[8],
-            'data_desconexao': row[9],
-            'codigo_cabo': row[10],
-            'tipo_cabo': row[11],
-            'comprimento': row[12],
-            'marca': row[13],
-            'modelo': row[14],
-            'equipamento_origem': row[15],
-            'equipamento_destino': row[16],
-            'sala_nome': row[17],
-            'ativo': bool(row[18]),
-            'tipo_conexao': row[19] if len(row) > 19 else 'cabo_direto'
-        }
-        cabos.append(cabo)
-    
-    # Ordenar por data de conexão (conexões diretas primeiro, depois patch panel)
-    cabos.sort(key=lambda x: (x['tipo_conexao'] == 'patch_panel', x.get('data_conexao', '')))
-    
-    return jsonify(cabos)
+    if _is_json_mode(db_file):
+        conexoes_cabos = _json_read_table(db_file, 'conexoes_cabos')
+        cabos = _json_read_table(db_file, 'cabos')
+        equipamentos = _json_read_table(db_file, 'equipamentos')
+        salas = _json_read_table(db_file, 'salas')
+        
+        # Criar dicionários para lookup
+        cabos_dict = {c.get('id'): c for c in cabos}
+        equipamentos_dict = {e.get('id'): e for e in equipamentos}
+        salas_dict = {s.get('id'): s for s in salas}
+        
+        resultado = []
+        
+        # Buscar conexões ativas da sala
+        for cc in conexoes_cabos:
+            if cc.get('sala_id') == sala_id and not cc.get('data_desconexao'):
+                cabo = cabos_dict.get(cc.get('cabo_id'))
+                if not cabo:
+                    continue
+                
+                equipamento_origem = equipamentos_dict.get(cc.get('equipamento_origem_id'))
+                equipamento_destino = equipamentos_dict.get(cc.get('equipamento_destino_id'))
+                sala = salas_dict.get(cc.get('sala_id'))
+                
+                # Verificar se não é conexão para patch panel
+                if equipamento_destino and 'Patch Panel' in (equipamento_destino.get('nome') or ''):
+                    continue
+                
+                conexao = {
+                    'id': cc.get('id'),
+                    'cabo_id': cc.get('cabo_id'),
+                    'equipamento_origem_id': cc.get('equipamento_origem_id'),
+                    'equipamento_destino_id': cc.get('equipamento_destino_id'),
+                    'porta_origem': cc.get('porta_origem'),
+                    'porta_destino': cc.get('porta_destino'),
+                    'sala_id': cc.get('sala_id'),
+                    'observacao': cc.get('observacao'),
+                    'data_conexao': cc.get('data_conexao'),
+                    'data_desconexao': cc.get('data_desconexao'),
+                    'codigo_cabo': cabo.get('codigo_unico'),
+                    'tipo_cabo': cabo.get('tipo'),
+                    'comprimento': cabo.get('comprimento'),
+                    'marca': cabo.get('marca'),
+                    'modelo': cabo.get('modelo'),
+                    'equipamento_origem': equipamento_origem.get('nome') if equipamento_origem else None,
+                    'equipamento_destino': equipamento_destino.get('nome') if equipamento_destino else None,
+                    'sala_nome': sala.get('nome') if sala else None,
+                    'ativo': True,
+                    'tipo_conexao': 'cabo_direto'
+                }
+                resultado.append(conexao)
+        
+        return jsonify(resultado)
+    else:
+        conn = sqlite3.connect(db_file)
+        cur = conn.cursor()
+        
+        # Buscar conexões diretas de cabos (excluindo conexões que vão para patch panels)
+        cur.execute('''
+            SELECT cc.id, cc.cabo_id, cc.equipamento_origem_id, cc.equipamento_destino_id,
+                   cc.porta_origem, cc.porta_destino, cc.sala_id, cc.observacao,
+                   cc.data_conexao, cc.data_desconexao,
+                   c.codigo_unico as codigo_cabo, c.tipo as tipo_cabo, c.comprimento, c.marca, c.modelo,
+                   eo.nome as equipamento_origem, ed.nome as equipamento_destino,
+                   s.nome as sala_nome,
+                   CASE WHEN cc.data_desconexao IS NULL THEN 1 ELSE 0 END as ativo,
+                   'cabo_direto' as tipo_conexao
+            FROM conexoes_cabos cc
+            LEFT JOIN cabos c ON cc.cabo_id = c.id
+            LEFT JOIN equipamentos eo ON cc.equipamento_origem_id = eo.id
+            LEFT JOIN equipamentos ed ON cc.equipamento_destino_id = ed.id
+            LEFT JOIN salas s ON cc.sala_id = s.id
+            WHERE cc.sala_id = ? 
+            AND cc.data_desconexao IS NULL 
+            AND c.id IS NOT NULL
+            AND (ed.nome IS NULL OR ed.nome NOT LIKE '%Patch Panel%')
+            AND NOT EXISTS (
+                SELECT 1 FROM patch_panel_portas ppp 
+                JOIN patch_panels pp ON ppp.patch_panel_id = pp.id 
+                WHERE ppp.equipamento_id = cc.equipamento_origem_id 
+                AND ppp.numero_porta = cc.porta_destino
+            )
+        ''', (sala_id,))
+        
+        conexoes_diretas = cur.fetchall()
+        
+        # Buscar conexões via patch panel (apenas se houver conexão real de cabo)
+        cur.execute('''
+            SELECT 
+                ppp.id as id,
+                cc.cabo_id,
+                e.id as equipamento_origem_id,
+                cc.equipamento_destino_id,
+                cc.porta_origem,
+                ppp.numero_porta as porta_destino,
+                e.sala_id,
+                cc.observacao,
+                cc.data_conexao,
+                cc.data_desconexao,
+                c.codigo_unico as codigo_cabo,
+                c.tipo as tipo_cabo,
+                c.comprimento,
+                c.marca,
+                c.modelo,
+                e.nome as equipamento_origem,
+                COALESCE(ppp_equip.nome, pp.nome) as equipamento_destino,
+                s.nome as sala_nome,
+                CASE WHEN cc.data_desconexao IS NULL THEN 1 ELSE 0 END as ativo,
+                'patch_panel' as tipo_conexao
+            FROM patch_panel_portas ppp
+            JOIN patch_panels pp ON ppp.patch_panel_id = pp.id
+            JOIN equipamentos e ON ppp.equipamento_id = e.id
+            LEFT JOIN salas s ON e.sala_id = s.id
+            LEFT JOIN equipamentos ppp_equip ON ppp.equipamento_id = ppp_equip.id
+            INNER JOIN conexoes_cabos cc ON cc.equipamento_origem_id = e.id AND cc.equipamento_destino_id = pp.id AND cc.porta_destino = ppp.numero_porta AND cc.data_desconexao IS NULL
+            INNER JOIN cabos c ON cc.cabo_id = c.id
+            WHERE e.sala_id = ? AND ppp.status = 'ocupada'
+        ''', (sala_id,))
+        
+        conexoes_patch_panel = cur.fetchall()
+        
+        conn.close()
+        
+        # Combinar os resultados
+        todas_conexoes = conexoes_diretas + conexoes_patch_panel
+        
+        cabos = []
+        for row in todas_conexoes:
+            cabo = {
+                'id': row[0],
+                'cabo_id': row[1],
+                'equipamento_origem_id': row[2],
+                'equipamento_destino_id': row[3],
+                'porta_origem': row[4],
+                'porta_destino': row[5],
+                'sala_id': row[6],
+                'observacao': row[7],
+                'data_conexao': row[8],
+                'data_desconexao': row[9],
+                'codigo_cabo': row[10],
+                'tipo_cabo': row[11],
+                'comprimento': row[12],
+                'marca': row[13],
+                'modelo': row[14],
+                'equipamento_origem': row[15],
+                'equipamento_destino': row[16],
+                'sala_nome': row[17],
+                'ativo': bool(row[18]),
+                'tipo_conexao': row[19] if len(row) > 19 else 'cabo_direto'
+            }
+            cabos.append(cabo)
+        
+        # Ordenar por data de conexão (conexões diretas primeiro, depois patch panel)
+        cabos.sort(key=lambda x: (x['tipo_conexao'] == 'patch_panel', x.get('data_conexao', '')))
+        
+        return jsonify(cabos)
 
 @app.route('/logs/sala/<int:sala_id>', methods=['GET'])
 @login_required
