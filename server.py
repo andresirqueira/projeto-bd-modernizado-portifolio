@@ -2865,39 +2865,94 @@ def ping_logs():
     db_file = session.get('db')
     if not db_file:
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
-    cur = conn.cursor()
-    cur.execute('''
-        SELECT p.nome_equipamento, p.ip, p.sucesso, p.timestamp, s.nome as sala_nome, e.id as equipamento_id
-        FROM ping_logs p
-        LEFT JOIN equipamentos e ON p.equipamento_id = e.id
-        LEFT JOIN salas s ON e.sala_id = s.id
-        ORDER BY p.timestamp DESC
-        LIMIT 100
-    ''')
-    logs = []
-    for row in cur.fetchall():
-        eq_id = row[5]
-        # Busca MAC
-        cur.execute("SELECT valor FROM equipamento_dados WHERE equipamento_id=? AND chave IN ('mac', 'mac1') LIMIT 1", (eq_id,))
-        mac_row = cur.fetchone()
-        mac = mac_row[0] if mac_row else ''
-        # Busca switch e porta (se houver conexão ativa)
+    if _is_json_mode(db_file):
+        ping_logs = _json_read_table(db_file, 'ping_logs')
+        equipamentos = _json_read_table(db_file, 'equipamentos')
+        salas = _json_read_table(db_file, 'salas')
+        conexoes = _json_read_table(db_file, 'conexoes')
+        switch_portas = _json_read_table(db_file, 'switch_portas')
+        switches = _json_read_table(db_file, 'switches')
+        
+        # Criar dicionários para lookup
+        equipamentos_dict = {e.get('id'): e for e in equipamentos}
+        salas_dict = {s.get('id'): s for s in salas}
+        switch_portas_dict = {sp.get('id'): sp for sp in switch_portas}
+        switches_dict = {s.get('id'): s for s in switches}
+        
+        logs = []
+        # Ordenar por timestamp (mais recentes primeiro) e limitar a 100
+        ping_logs_ordenados = sorted(ping_logs, key=lambda x: x.get('timestamp', ''), reverse=True)[:100]
+        
+        for p in ping_logs_ordenados:
+            eq_id = p.get('equipamento_id')
+            equipamento = equipamentos_dict.get(eq_id) if eq_id else None
+            sala = salas_dict.get(equipamento.get('sala_id')) if equipamento else None
+            
+            # Buscar MAC do equipamento
+            mac = ''
+            if equipamento and equipamento.get('dados'):
+                dados = equipamento.get('dados', {})
+                mac = dados.get('mac') or dados.get('mac1') or ''
+            
+            # Buscar switch e porta (se houver conexão ativa)
+            switch = ''
+            porta = ''
+            if eq_id:
+                conexao_ativa = next((c for c in conexoes if c.get('equipamento_id') == eq_id and c.get('status') == 'ativa'), None)
+                if conexao_ativa:
+                    porta_switch = switch_portas_dict.get(conexao_ativa.get('porta_id'))
+                    if porta_switch:
+                        switch_obj = switches_dict.get(porta_switch.get('switch_id'))
+                        if switch_obj:
+                            switch = switch_obj.get('nome', '')
+                            porta = porta_switch.get('numero_porta', '')
+            
+            logs.append(dict(
+                nome=p.get('nome_equipamento'), 
+                ip=p.get('ip'), 
+                sucesso=p.get('sucesso'), 
+                timestamp=p.get('timestamp'), 
+                sala=sala.get('nome') if sala else 'Sem sala', 
+                mac=mac, 
+                switch=switch, 
+                porta=porta
+            ))
+        
+        return jsonify(logs)
+    else:
+        conn = sqlite3.connect(db_file)
+        cur = conn.cursor()
         cur.execute('''
-            SELECT s.nome, sp.numero_porta
-            FROM conexoes c
-            JOIN switch_portas sp ON c.porta_id = sp.id
-            JOIN switches s ON sp.switch_id = s.id
-            WHERE c.equipamento_id=? AND c.status='ativa' LIMIT 1
-        ''', (eq_id,))
-        sw_row = cur.fetchone()
-        switch = sw_row[0] if sw_row else ''
-        porta = sw_row[1] if sw_row else ''
-        logs.append(dict(
-            nome=row[0], ip=row[1], sucesso=row[2], timestamp=row[3], sala=row[4] or 'Sem sala', mac=mac, switch=switch, porta=porta
-        ))
-    conn.close()
-    return jsonify(logs)
+            SELECT p.nome_equipamento, p.ip, p.sucesso, p.timestamp, s.nome as sala_nome, e.id as equipamento_id
+            FROM ping_logs p
+            LEFT JOIN equipamentos e ON p.equipamento_id = e.id
+            LEFT JOIN salas s ON e.sala_id = s.id
+            ORDER BY p.timestamp DESC
+            LIMIT 100
+        ''')
+        logs = []
+        for row in cur.fetchall():
+            eq_id = row[5]
+            # Busca MAC
+            cur.execute("SELECT valor FROM equipamento_dados WHERE equipamento_id=? AND chave IN ('mac', 'mac1') LIMIT 1", (eq_id,))
+            mac_row = cur.fetchone()
+            mac = mac_row[0] if mac_row else ''
+            # Busca switch e porta (se houver conexão ativa)
+            cur.execute('''
+                SELECT s.nome, sp.numero_porta
+                FROM conexoes c
+                JOIN switch_portas sp ON c.porta_id = sp.id
+                JOIN switches s ON sp.switch_id = s.id
+                WHERE c.equipamento_id=? AND c.status='ativa' LIMIT 1
+            ''', (eq_id,))
+            sw_row = cur.fetchone()
+            switch = sw_row[0] if sw_row else ''
+            porta = sw_row[1] if sw_row else ''
+            logs.append(dict(
+                nome=row[0], ip=row[1], sucesso=row[2], timestamp=row[3], sala=row[4] or 'Sem sala', mac=mac, switch=switch, porta=porta
+            ))
+        conn.close()
+        return jsonify(logs)
 
 @app.route('/ping-equipamentos.html')
 @login_required
@@ -2910,16 +2965,26 @@ def limpar_ping_logs():
     db_file = session.get('db')
     if not db_file:
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
-    cur = conn.cursor()
-    cur.execute('DELETE FROM ping_logs')
-    conn.commit()
-    conn.close()
     
-    # Log da limpeza dos logs de ping
-    registrar_log(session.get('username', 'desconhecido'), 'LIMPAR_PING_LOGS', 'Todos os logs de ping foram limpos', 'sucesso', db_file)
-    
-    return jsonify({'status': 'ok'})
+    if _is_json_mode(db_file):
+        # Limpar todos os logs de ping
+        _json_write_table(db_file, 'ping_logs', [])
+        
+        # Log da limpeza dos logs de ping
+        registrar_log(session.get('username', 'desconhecido'), 'LIMPAR_PING_LOGS', 'Todos os logs de ping foram limpos', 'sucesso', db_file)
+        
+        return jsonify({'status': 'ok'})
+    else:
+        conn = sqlite3.connect(db_file)
+        cur = conn.cursor()
+        cur.execute('DELETE FROM ping_logs')
+        conn.commit()
+        conn.close()
+        
+        # Log da limpeza dos logs de ping
+        registrar_log(session.get('username', 'desconhecido'), 'LIMPAR_PING_LOGS', 'Todos os logs de ping foram limpos', 'sucesso', db_file)
+        
+        return jsonify({'status': 'ok'})
 
 @app.route('/empresa_atual')
 @login_required
