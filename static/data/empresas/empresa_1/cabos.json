@@ -11,5 +11,82 @@
     "status": "funcionando",
     "data_criacao": "2025-09-16T13:50:49.948478",
     "data_modificacao": "2025-09-16T13:50:49.948478"
+  },
+  {
+    "id": 2,
+    "codigo_unico": "ETH-001",
+    "tipo": "Ethernet Cat6",
+    "comprimento": null,
+    "marca": "",
+    "modelo": "",
+    "descricao": "",
+    "status": "funcionando",
+    "data_criacao": "2025-09-17T15:05:05.368882"
+  },
+  {
+    "id": 3,
+    "codigo_unico": "ETH-002",
+    "tipo": "Ethernet Cat5e",
+    "comprimento": null,
+    "marca": "",
+    "modelo": "",
+    "descricao": "",
+    "status": "funcionando",
+    "data_criacao": "2025-09-17T15:14:30.944251"
+  },
+  {
+    "id": 4,
+    "codigo_unico": "ETH-003",
+    "tipo": "Ethernet Cat6",
+    "comprimento": null,
+    "marca": "",
+    "modelo": "",
+    "descricao": "",
+    "status": "funcionando",
+    "data_criacao": "2025-09-17T15:20:20.377318"
+  },
+  {
+    "id": 5,
+    "codigo_unico": "ETH-004",
+    "tipo": "Ethernet Cat6",
+    "comprimento": null,
+    "marca": "",
+    "modelo": "",
+    "descricao": "",
+    "status": "funcionando",
+    "data_criacao": "2025-09-17T15:23:53.959798"
+  },
+  {
+    "id": 6,
+    "codigo_unico": "ETH-005",
+    "tipo": "Ethernet Cat6",
+    "comprimento": null,
+    "marca": "",
+    "modelo": "",
+    "descricao": "",
+    "status": "funcionando",
+    "data_criacao": "2025-09-17T15:28:31.009579"
+  },
+  {
+    "id": 7,
+    "codigo_unico": "ETH-006",
+    "tipo": "Ethernet Cat6",
+    "comprimento": null,
+    "marca": "",
+    "modelo": "",
+    "descricao": "",
+    "status": "funcionando",
+    "data_criacao": "2025-09-17T15:30:42.032259"
+  },
+  {
+    "id": 8,
+    "codigo_unico": "ETH-007",
+    "tipo": "Ethernet Cat6",
+    "comprimento": null,
+    "marca": "",
+    "modelo": "",
+    "descricao": "",
+    "status": "funcionando",
+    "data_criacao": "2025-09-17T15:34:44.839484"
   }
 ]
