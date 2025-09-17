@@ -2986,6 +2986,95 @@ def listar_portas_patch_panel(id: int):
         return jsonify({'erro': 'Modo SQLite não suportado nesta rota no ambiente atual'}), 501
 
 
+@app.route('/patch-panel-portas/<int:porta_id>/conectar-equipamento', methods=['PUT'])
+@admin_required
+def conectar_equipamento_patch_panel(porta_id):
+    dados = request.json
+    if not dados:
+        return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
+    
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    if _is_json_mode(db_file):
+        patch_panel_portas = _json_read_table(db_file, 'patch_panel_portas')
+        
+        porta_pp = next((p for p in patch_panel_portas if p.get('id') == porta_id), None)
+        if not porta_pp:
+            return jsonify({'status': 'erro', 'mensagem': 'Porta do patch panel não encontrada'}), 404
+        
+        if porta_pp.get('status') != 'livre' and porta_pp.get('status') != 'mapeada':
+            return jsonify({'status': 'erro', 'mensagem': 'Porta não está disponível para conexão'}), 400
+        
+        equipamento_id = dados.get('equipamento_id')
+        if not equipamento_id:
+            return jsonify({'status': 'erro', 'mensagem': 'ID do equipamento é obrigatório'}), 400
+        
+        # Verificar se o equipamento existe
+        equipamentos = _json_read_table(db_file, 'equipamentos')
+        equipamento = next((e for e in equipamentos if e.get('id') == equipamento_id), None)
+        if not equipamento:
+            return jsonify({'status': 'erro', 'mensagem': 'Equipamento não encontrado'}), 404
+        
+        # Verificar se o equipamento já está conectado a outro patch panel
+        equipamento_ja_conectado = next((p for p in patch_panel_portas 
+                                        if p.get('equipamento_id') == equipamento_id and p.get('id') != porta_id), None)
+        if equipamento_ja_conectado:
+            return jsonify({'status': 'erro', 'mensagem': 'Este equipamento já está conectado a outro patch panel'}), 400
+        
+        # Conectar equipamento
+        porta_pp['equipamento_id'] = equipamento_id
+        porta_pp['status'] = 'ocupada'
+        porta_pp['data_conexao'] = datetime.now().isoformat()
+        
+        _json_write_table(db_file, 'patch_panel_portas', patch_panel_portas)
+        
+        registrar_log(session.get('username'), 'CONECTAR_EQUIPAMENTO_PATCH_PANEL', 
+                     f'Equipamento {equipamento_id} conectado à porta {porta_id}', 'sucesso', db_file)
+        
+        return jsonify({'status': 'ok', 'mensagem': 'Equipamento conectado com sucesso!'})
+    else:
+        return jsonify({'status': 'erro', 'mensagem': 'Modo SQLite não implementado'}), 501
+
+@app.route('/patch-panel-portas/<int:porta_id>/desconectar-equipamento', methods=['PUT'])
+@admin_required
+def desconectar_equipamento_patch_panel(porta_id):
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    if _is_json_mode(db_file):
+        patch_panel_portas = _json_read_table(db_file, 'patch_panel_portas')
+        
+        porta_pp = next((p for p in patch_panel_portas if p.get('id') == porta_id), None)
+        if not porta_pp:
+            return jsonify({'status': 'erro', 'mensagem': 'Porta do patch panel não encontrada'}), 404
+        
+        if porta_pp.get('status') != 'ocupada':
+            return jsonify({'status': 'erro', 'mensagem': 'Porta não está ocupada'}), 400
+        
+        equipamento_id = porta_pp.get('equipamento_id')
+        
+        # Desconectar equipamento
+        porta_pp['equipamento_id'] = None
+        porta_pp['data_conexao'] = None
+        
+        # Se a porta estava mapeada para um switch, voltar para mapeada
+        if porta_pp.get('switch_id'):
+            porta_pp['status'] = 'mapeada'
+        else:
+            porta_pp['status'] = 'livre'
+        
+        _json_write_table(db_file, 'patch_panel_portas', patch_panel_portas)
+        
+        registrar_log(session.get('username'), 'DESCONECTAR_EQUIPAMENTO_PATCH_PANEL', 
+                     f'Equipamento {equipamento_id} desconectado da porta {porta_id}', 'sucesso', db_file)
+        
+        return jsonify({'status': 'ok', 'mensagem': 'Equipamento desconectado com sucesso!'})
+    else:
+        return jsonify({'status': 'erro', 'mensagem': 'Modo SQLite não implementado'}), 501
+
 @app.route('/patch-panel-portas/<int:porta_id>', methods=['PUT'])
 @tecnico_required
 def atualizar_patch_panel_porta(porta_id: int):
