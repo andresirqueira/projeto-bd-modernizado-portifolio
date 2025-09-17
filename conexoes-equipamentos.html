@@ -3166,7 +3166,7 @@
             const patchPanel = await patchPanelResponse.json();
             
             // Criar nome do keystone baseado no patch panel e porta
-            const prefixo = patchPanel.nome.replace(/\s+/g, '').substring(0, 3).toLowerCase();
+            const prefixo = patchPanel.prefixo_keystone || 'kst'; // Usar prefixo do patch panel ou padrão
             const numeroPorta = portaNumero.toString().padStart(2, '0');
             const nomeKeystone = `${prefixo}--${numeroPorta}`;
             
