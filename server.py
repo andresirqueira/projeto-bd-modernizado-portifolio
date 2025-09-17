@@ -4003,7 +4003,8 @@ def api_conexoes_cabos_por_sala(sala_id: int):
                 'ativo': True,
                 # IDs úteis para edições posteriores
                 'equipamento_origem_id': cc.get('equipamento_origem_id'),
-                'equipamento_destino_id': cc.get('equipamento_destino_id')
+                'equipamento_destino_id': cc.get('equipamento_destino_id'),
+                'tipo_destino': cc.get('tipo_destino', 'equipamento')  # Adicionar tipo_destino
             })
         return jsonify(resultado)
     else:

@@ -3241,7 +3241,21 @@
         const connectionPromises = conexoes.map(async (conexao) => {
           // Encontrar equipamentos de origem e destino (incluindo equipamentos em estoque)
           const fromEquip = equipamentosComConexoes.find(e => e.id === conexao.equipamento_origem_id);
-          const toEquip = equipamentosComConexoes.find(e => e.id === conexao.equipamento_destino_id);
+          
+          // Para destino, verificar se é patch panel ou equipamento
+          let toEquip = null;
+          if (conexao.tipo_destino === 'patch_panel') {
+            // Para patch panel, criar um objeto simulado
+            toEquip = {
+              id: conexao.equipamento_destino_id,
+              nome: conexao.equipamento_destino || 'Patch Panel',
+              tipo: 'Patch Panel',
+              sala_id: gridData.currentSalaId
+            };
+          } else {
+            // Para equipamento normal
+            toEquip = equipamentosComConexoes.find(e => e.id === conexao.equipamento_destino_id);
+          }
           
           if (fromEquip && toEquip) {
             // Encontrar células onde estão os equipamentos
@@ -3467,7 +3481,15 @@
         const conexoesEntreEquipamentos = conexoes.filter(conexao => {
           // Usar todosEquipamentos (inclui itens ocultos em outras listagens, ex.: Ponto Usuário)
           const equipOrigem = todosEquipamentos.find(e => e.id === conexao.equipamento_origem_id);
-          const equipDestino = todosEquipamentos.find(e => e.id === conexao.equipamento_destino_id);
+          
+          // Para destino, verificar se é patch panel ou equipamento
+          let equipDestino = null;
+          if (conexao.tipo_destino === 'patch_panel') {
+            // Para patch panel, considerar como válido se origem está na sala
+            equipDestino = { sala_id: gridData.currentSalaId };
+          } else {
+            equipDestino = todosEquipamentos.find(e => e.id === conexao.equipamento_destino_id);
+          }
           
           // Incluir apenas conexões entre equipamentos (não keystones)
           const isEquipamentoSala = equipOrigem && equipDestino && 
@@ -3488,7 +3510,20 @@
         
         for (const conexao of conexoesEntreEquipamentos) {
           const equipOrigem = equipamentos.find(e => e.id === conexao.equipamento_origem_id);
-          const equipDestino = equipamentos.find(e => e.id === conexao.equipamento_destino_id);
+          
+          // Para destino, verificar se é patch panel ou equipamento
+          let equipDestino = null;
+          if (conexao.tipo_destino === 'patch_panel') {
+            // Para patch panel, criar um objeto simulado
+            equipDestino = {
+              id: conexao.equipamento_destino_id,
+              nome: conexao.equipamento_destino || 'Patch Panel',
+              tipo: 'Patch Panel',
+              sala_id: gridData.currentSalaId
+            };
+          } else {
+            equipDestino = equipamentos.find(e => e.id === conexao.equipamento_destino_id);
+          }
           
           if (equipOrigem && equipDestino) {
             console.log(`\n--- Processando conexão: ${equipOrigem.nome} → ${equipDestino.nome} ---`);
