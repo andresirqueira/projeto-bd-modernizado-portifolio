@@ -3173,18 +3173,27 @@
               console.log('Posição na grade:', `(${row},${col})`);
               console.log('========================');
               
-              // Usar o sistema de mapeamento inteligente para encontrar a imagem
-              let imgSrc = await findEquipmentImage(equip.tipo || equip.nome, equip.nome || '', equip.marca || '', equip.modelo || '');
-              console.log('✅ Imagem selecionada para', equip.nome, ':', imgSrc);
-              
-
-              
-              cell.innerHTML = `
-                <div class="equipment-slot">
-                  <img src="${imgSrc}" alt="${equip.nome}">
-                  <div class="name">${equip.nome}</div>
-                </div>
-              `;
+              // Verificar se é patch panel para usar ícone específico
+              if (equip.tipo === 'Patch Panel') {
+                cell.innerHTML = `
+                  <div class="equipment-slot patch-panel-slot">
+                    <div class="patch-panel-icon">🔌</div>
+                    <div class="name">${equip.nome}</div>
+                  </div>
+                `;
+                cell.classList.add('patch-panel');
+              } else {
+                // Usar o sistema de mapeamento inteligente para encontrar a imagem
+                let imgSrc = await findEquipmentImage(equip.tipo || equip.nome, equip.nome || '', equip.marca || '', equip.modelo || '');
+                console.log('✅ Imagem selecionada para', equip.nome, ':', imgSrc);
+                
+                cell.innerHTML = `
+                  <div class="equipment-slot">
+                    <img src="${imgSrc}" alt="${equip.nome}">
+                    <div class="name">${equip.nome}</div>
+                  </div>
+                `;
+              }
               
               cell.classList.add('occupied');
               
