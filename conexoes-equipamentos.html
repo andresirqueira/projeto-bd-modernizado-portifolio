@@ -3151,20 +3151,38 @@
                  (equip.sala_id === null && temConexao);
         });
         
-        // Adicionar patch panels que têm conexões na sala
-        const patchPanelsComConexoes = conexoes
-          .filter(conexao => conexao.tipo_destino === 'patch_panel')
-          .map(conexao => ({
-            id: conexao.equipamento_destino_id,
-            nome: conexao.equipamento_destino || 'Patch Panel',
-            tipo: 'Patch Panel',
-            sala_id: gridData.currentSalaId
-          }))
-          .filter((patchPanel, index, array) => 
-            array.findIndex(p => p.id === patchPanel.id) === index
-          ); // Remover duplicatas
+        // Processar conexões via patch panel para criar keystones individuais
+        const conexoesViaPatchPanel = conexoes.filter(conexao => conexao.tipo_destino === 'patch_panel');
+        console.log('Conexões via patch panel encontradas:', conexoesViaPatchPanel);
         
-        equipamentosComConexoes = [...equipamentosComConexoes, ...patchPanelsComConexoes];
+        // Para cada conexão via patch panel, criar um keystone individual
+        for (const conexao of conexoesViaPatchPanel) {
+          const patchPanelId = conexao.equipamento_destino_id;
+          const portaNumero = conexao.porta_destino;
+          
+          // Buscar informações do patch panel
+          const patchPanelResponse = await fetch(`/patch-panels/${patchPanelId}`);
+          if (patchPanelResponse.ok) {
+            const patchPanel = await patchPanelResponse.json();
+            
+            // Criar nome do keystone baseado no patch panel e porta
+            const prefixo = patchPanel.nome.replace(/\s+/g, '').substring(0, 3).toLowerCase();
+            const numeroPorta = portaNumero.toString().padStart(2, '0');
+            const nomeKeystone = `${prefixo}--${numeroPorta}`;
+            
+            // Adicionar keystone à lista
+            keystonesEquipamentos.push({
+              keystone: nomeKeystone,
+              equipamento_sala_id: conexao.equipamento_origem_id,
+              patch_panel_id: patchPanelId,
+              patch_panel_nome: patchPanel.nome,
+              porta_original: {
+                numero_porta: portaNumero
+              },
+              codigo_cabo: conexao.codigo_cabo || `${prefixo}-${numeroPorta}`
+            });
+          }
+        }
         
         console.log('Equipamentos com conexões na sala:', equipamentosComConexoes);
         
@@ -3185,31 +3203,16 @@
               console.log('Posição na grade:', `(${row},${col})`);
               console.log('========================');
               
-              // Verificar se é patch panel para usar keystone específico
-              if (equip.tipo === 'Patch Panel') {
-                // Buscar informações do keystone específico para este patch panel
-                const keystoneInfo = await getKeystoneInfoForPatchPanel(equip.id, equip.nome);
-                
-                cell.innerHTML = `
-                  <div class="equipment-slot patch-panel-slot">
-                    <div class="patch-panel-icon">🔌</div>
-                    <div class="name">${keystoneInfo.nome}</div>
-                    <div class="port-info">${keystoneInfo.porta}</div>
-                  </div>
-                `;
-                cell.classList.add('patch-panel');
-              } else {
-                // Usar o sistema de mapeamento inteligente para encontrar a imagem
-                let imgSrc = await findEquipmentImage(equip.tipo || equip.nome, equip.nome || '', equip.marca || '', equip.modelo || '');
-                console.log('✅ Imagem selecionada para', equip.nome, ':', imgSrc);
-                
-                cell.innerHTML = `
-                  <div class="equipment-slot">
-                    <img src="${imgSrc}" alt="${equip.nome}">
-                    <div class="name">${equip.nome}</div>
-                  </div>
-                `;
-              }
+              // Usar o sistema de mapeamento inteligente para encontrar a imagem
+              let imgSrc = await findEquipmentImage(equip.tipo || equip.nome, equip.nome || '', equip.marca || '', equip.modelo || '');
+              console.log('✅ Imagem selecionada para', equip.nome, ':', imgSrc);
+              
+              cell.innerHTML = `
+                <div class="equipment-slot">
+                  <img src="${imgSrc}" alt="${equip.nome}">
+                  <div class="name">${equip.nome}</div>
+                </div>
+              `;
               
               cell.classList.add('occupied');
               
@@ -3282,16 +3285,23 @@
           // Encontrar equipamentos de origem e destino (incluindo equipamentos em estoque)
           const fromEquip = equipamentosComConexoes.find(e => e.id === conexao.equipamento_origem_id);
           
-          // Para destino, verificar se é patch panel ou equipamento
+          // Para destino, verificar se é patch panel (keystone) ou equipamento
           let toEquip = null;
           if (conexao.tipo_destino === 'patch_panel') {
-            // Para patch panel, criar um objeto simulado
-            toEquip = {
-              id: conexao.equipamento_destino_id,
-              nome: conexao.equipamento_destino || 'Patch Panel',
-              tipo: 'Patch Panel',
-              sala_id: gridData.currentSalaId
-            };
+            // Para patch panel, buscar o keystone correspondente
+            const keystone = keystonesEquipamentos.find(k => 
+              k.patch_panel_id === conexao.equipamento_destino_id && 
+              k.porta_original.numero_porta === conexao.porta_destino
+            );
+            
+            if (keystone) {
+              toEquip = {
+                id: keystone.keystone,
+                nome: keystone.keystone,
+                tipo: 'Keystone',
+                sala_id: gridData.currentSalaId
+              };
+            }
           } else {
             // Para equipamento normal
             toEquip = equipamentosComConexoes.find(e => e.id === conexao.equipamento_destino_id);
