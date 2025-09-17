@@ -870,6 +870,7 @@
 
         // Função para filtrar tipos de cabo para patch panel (apenas Ethernet)
         function filtrarTiposCabosParaPatchPanel() {
+            console.log('Filtrando tipos de cabo para patch panel...');
             const selectTipo = document.getElementById('tipo');
             const tipoAtual = selectTipo.value;
             
@@ -891,6 +892,9 @@
                 tipo.nome.toLowerCase().includes('cabo de rede') ||
                 tipo.nome.toLowerCase().includes('cabo de dados')
             );
+            
+            console.log('Tipos Ethernet encontrados:', tiposEthernet.length);
+            console.log('Tipos Ethernet:', tiposEthernet.map(t => t.nome));
             
             tiposEthernet.forEach(tipo => {
                 const option = document.createElement('option');
@@ -1002,6 +1006,9 @@
                  
                  // Validar se o tipo de cabo é Ethernet para conexão via patch panel
                  const tipoCabo = formData.get('tipo');
+                 console.log('Tipo de cabo selecionado:', tipoCabo);
+                 console.log('Tipo de conexão:', formData.get('tipo_conexao'));
+                 
                  const isEthernet = tipoCabo && (
                      tipoCabo.toLowerCase().includes('ethernet') || 
                      tipoCabo.toLowerCase().includes('cat') ||
@@ -1016,6 +1023,8 @@
                      tipoCabo.toLowerCase().includes('cabo de rede') ||
                      tipoCabo.toLowerCase().includes('cabo de dados')
                  );
+                 
+                 console.log('É Ethernet?', isEthernet);
                  
                  if (!isEthernet) {
                      alert('Para conexões via patch panel, apenas cabos Ethernet são permitidos. Selecione um tipo de cabo Ethernet.');
