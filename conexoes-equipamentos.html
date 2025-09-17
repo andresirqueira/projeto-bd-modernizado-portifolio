@@ -139,6 +139,12 @@
       font-size: 24px;
       margin-bottom: 5px;
     }
+    
+    .port-info {
+      font-size: 10px;
+      color: #666;
+      margin-top: 2px;
+    }
 
     .patch-info {
       font-size: 10px;
@@ -414,6 +420,12 @@
     .patch-panel-icon {
       font-size: 24px;
       margin-bottom: 5px;
+    }
+    
+    .port-info {
+      font-size: 10px;
+      color: #666;
+      margin-top: 2px;
     }
 
     .patch-info {
@@ -3173,12 +3185,16 @@
               console.log('Posição na grade:', `(${row},${col})`);
               console.log('========================');
               
-              // Verificar se é patch panel para usar ícone específico
+              // Verificar se é patch panel para usar keystone específico
               if (equip.tipo === 'Patch Panel') {
+                // Buscar informações do keystone específico para este patch panel
+                const keystoneInfo = await getKeystoneInfoForPatchPanel(equip.id, equip.nome);
+                
                 cell.innerHTML = `
                   <div class="equipment-slot patch-panel-slot">
                     <div class="patch-panel-icon">🔌</div>
-                    <div class="name">${equip.nome}</div>
+                    <div class="name">${keystoneInfo.nome}</div>
+                    <div class="port-info">${keystoneInfo.porta}</div>
                   </div>
                 `;
                 cell.classList.add('patch-panel');
@@ -3662,6 +3678,40 @@
         console.error('Erro ao carregar dados reais:', error);
         updateStatus(`Erro ao carregar dados reais: ${error.message}`);
         alert(`Erro ao carregar dados reais: ${error.message}`);
+      }
+    }
+
+    // Função para buscar informações do keystone específico para um patch panel
+    async function getKeystoneInfoForPatchPanel(patchPanelId, patchPanelNome) {
+      try {
+        // Buscar portas do patch panel que estão conectadas
+        const portasResponse = await fetch(`/patch-panels/${patchPanelId}/portas`);
+        if (!portasResponse.ok) {
+          console.warn('Não foi possível carregar portas do patch panel');
+          return { nome: patchPanelNome, porta: '' };
+        }
+        
+        const portas = await portasResponse.json();
+        
+        // Encontrar a primeira porta conectada (ou usar a primeira disponível)
+        const portaConectada = portas.find(p => p.status === 'conectada') || portas[0];
+        
+        if (portaConectada) {
+          // Criar nome do keystone baseado no patch panel e porta
+          const prefixo = patchPanelNome.replace(/\s+/g, '').substring(0, 3).toLowerCase();
+          const numeroPorta = portaConectada.numero_porta.toString().padStart(2, '0');
+          const nomeKeystone = `${prefixo}--${numeroPorta}`;
+          
+          return {
+            nome: nomeKeystone,
+            porta: `Porta ${portaConectada.numero_porta}`
+          };
+        }
+        
+        return { nome: patchPanelNome, porta: '' };
+      } catch (error) {
+        console.error('Erro ao buscar keystone info:', error);
+        return { nome: patchPanelNome, porta: '' };
       }
     }
 
