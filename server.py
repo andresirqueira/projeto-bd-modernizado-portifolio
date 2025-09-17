@@ -3956,10 +3956,10 @@ def api_conexoes_cabos_por_sala(sala_id: int):
             eq_o = equipamentos.get(cc.get('equipamento_origem_id'))
             
             # Buscar equipamento de destino (pode ser equipamento ou patch panel)
-            eq_d = equipamentos.get(cc.get('equipamento_destino_id'))
+            # Primeiro tentar patch panel, depois equipamento
+            eq_d = patch_panels.get(cc.get('equipamento_destino_id'))
             if not eq_d:
-                # Se não encontrou na tabela de equipamentos, pode ser um patch panel
-                eq_d = patch_panels.get(cc.get('equipamento_destino_id'))
+                eq_d = equipamentos.get(cc.get('equipamento_destino_id'))
             
             resultado.append({
                 'id': cc.get('id'),
@@ -4181,9 +4181,10 @@ def listar_conexoes_cabos():
                 eq_o = equipamentos.get(cc.get('equipamento_origem_id'))
                 
                 # Buscar equipamento de destino (pode ser equipamento ou patch panel)
-                eq_d = equipamentos.get(cc.get('equipamento_destino_id'))
+                # Primeiro tentar patch panel, depois equipamento
+                eq_d = patch_panels.get(cc.get('equipamento_destino_id'))
                 if not eq_d:
-                    eq_d = patch_panels.get(cc.get('equipamento_destino_id'))
+                    eq_d = equipamentos.get(cc.get('equipamento_destino_id'))
                 
                 resultado.append({
                     'id': cc.get('id'),
