@@ -3127,7 +3127,7 @@
         let keystoneCount = 0;
         
         // Filtrar equipamentos que têm conexões com a sala (incluindo equipamentos em estoque)
-        const equipamentosComConexoes = todosEquipamentos.filter(equip => {
+        let equipamentosComConexoes = todosEquipamentos.filter(equip => {
           // Verificar se o equipamento tem conexões na sala
           const temConexao = conexoes.some(conexao => 
             conexao.equipamento_origem_id === equip.id || 
@@ -3138,6 +3138,21 @@
           return equip.sala_id == gridData.currentSalaId || 
                  (equip.sala_id === null && temConexao);
         });
+        
+        // Adicionar patch panels que têm conexões na sala
+        const patchPanelsComConexoes = conexoes
+          .filter(conexao => conexao.tipo_destino === 'patch_panel')
+          .map(conexao => ({
+            id: conexao.equipamento_destino_id,
+            nome: conexao.equipamento_destino || 'Patch Panel',
+            tipo: 'Patch Panel',
+            sala_id: gridData.currentSalaId
+          }))
+          .filter((patchPanel, index, array) => 
+            array.findIndex(p => p.id === patchPanel.id) === index
+          ); // Remover duplicatas
+        
+        equipamentosComConexoes = [...equipamentosComConexoes, ...patchPanelsComConexoes];
         
         console.log('Equipamentos com conexões na sala:', equipamentosComConexoes);
         
@@ -3485,8 +3500,12 @@
           // Para destino, verificar se é patch panel ou equipamento
           let equipDestino = null;
           if (conexao.tipo_destino === 'patch_panel') {
-            // Para patch panel, considerar como válido se origem está na sala
-            equipDestino = { sala_id: gridData.currentSalaId };
+            // Para patch panel, criar objeto simulado completo
+            equipDestino = { 
+              id: conexao.equipamento_destino_id,
+              nome: conexao.equipamento_destino || 'Patch Panel',
+              sala_id: gridData.currentSalaId 
+            };
           } else {
             equipDestino = todosEquipamentos.find(e => e.id === conexao.equipamento_destino_id);
           }
