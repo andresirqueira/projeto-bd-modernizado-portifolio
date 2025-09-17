@@ -689,6 +689,26 @@
 
         
 
+        // Carregar todos os patch panels
+        async function carregarTodosPatchPanels() {
+            try {
+                const response = await fetch('/patch-panels');
+                const patchPanels = await response.json();
+                
+                const patchPanelSelect = document.getElementById('patch_panel');
+                patchPanelSelect.innerHTML = '<option value="">Selecione o patch panel...</option>';
+                
+                patchPanels.forEach(pp => {
+                    const option = document.createElement('option');
+                    option.value = pp.id;
+                    option.textContent = `${pp.nome} - ${pp.andar_nome} (${pp.num_portas} portas)`;
+                    patchPanelSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar patch panels:', error);
+            }
+        }
+
         // Carregar patch panels por andar
         async function carregarPatchPanelAndar() {
             const andar = document.getElementById('andar_patch_panel').value;
@@ -1003,6 +1023,11 @@
                  const equipRede = formData.get('equipamento_rede');
                  const patchPanel = formData.get('patch_panel');
                  const portaPatchPanel = formData.get('porta_patch_panel');
+                 
+                 console.log('Valores capturados:');
+                 console.log('- equipRede:', equipRede);
+                 console.log('- patchPanel:', patchPanel);
+                 console.log('- portaPatchPanel:', portaPatchPanel);
                  
                  // Validar se o tipo de cabo é Ethernet para conexão via patch panel
                  const tipoCabo = formData.get('tipo');
@@ -1461,6 +1486,7 @@
              carregarTiposCabos();
              carregarCabosExistentes();
              carregarEquipamentos();
+             carregarTodosPatchPanels();
              verificarSubstituicao();
             
             // Inicializar visual dos cards de radio
