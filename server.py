@@ -3596,12 +3596,27 @@ def api_salas():
     db_file = session.get('db')
     if not db_file:
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
-    cur = conn.cursor()
-    cur.execute('SELECT id, nome FROM salas')
-    salas = [{'id': row[0], 'nome': row[1]} for row in cur.fetchall()]
-    conn.close()
-    return jsonify(salas)
+    
+    if _is_json_mode(db_file):
+        try:
+            salas = _json_read_table(db_file, 'salas')
+            resultado = []
+            for sala in salas:
+                resultado.append({
+                    'id': sala.get('id'),
+                    'nome': sala.get('nome')
+                })
+            return jsonify(resultado)
+        except Exception as e:
+            print(f"Erro ao carregar salas: {e}")
+            return jsonify({'erro': 'Erro interno do servidor'}), 500
+    else:
+        conn = sqlite3.connect(db_file)
+        cur = conn.cursor()
+        cur.execute('SELECT id, nome FROM salas')
+        salas = [{'id': row[0], 'nome': row[1]} for row in cur.fetchall()]
+        conn.close()
+        return jsonify(salas)
 
 @app.route('/api/salas/<int:sala_id>/layout', methods=['POST'])
 @login_required
