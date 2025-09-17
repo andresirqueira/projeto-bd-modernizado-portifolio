@@ -1771,23 +1771,23 @@
                 
                 if (resultCabo.status === 'ok') {
                     // Se for conexão via patch panel, conectar automaticamente
-                    if (dadosCabo.tipo_conexao === 'patch_panel') {
+                    if (dadosCabo.tipo_destino === 'patch_panel') {
                         console.log('Criando conexão automática para cabo via patch panel...');
                         
                         // Buscar informações do equipamento para obter a sala
-                        const equipamentoResponse = await fetch(`/equipamentos/${dadosCabo.equipamento_rede_id}`);
+                        const equipamentoResponse = await fetch(`/equipamentos/${dadosCabo.equipamento_origem_id}`);
                         const equipamentoInfo = await equipamentoResponse.json();
                         
                         if (equipamentoInfo.sala_id) {
                             const dadosConexao = {
                                 cabo_id: resultCabo.cabo_id,
-                                equipamento_origem_id: dadosCabo.equipamento_rede_id, // Equipamento (ex: Painel Agenda)
-                                equipamento_destino_id: dadosCabo.patch_panel_id, // Patch Panel
+                                equipamento_origem_id: dadosCabo.equipamento_origem_id, // Equipamento (ex: Painel Agenda)
+                                equipamento_destino_id: dadosCabo.equipamento_destino_id, // Patch Panel
                                 tipo_destino: 'patch_panel', // Indicar que é patch panel
                                 porta_origem: null, // Porta do equipamento (se aplicável)
-                                porta_destino: dadosCabo.porta_patch_panel, // Porta do patch panel
+                                porta_destino: dadosCabo.porta_destino, // Porta do patch panel
                                 sala_id: equipamentoInfo.sala_id,
-                                observacao: `Conexão via Patch Panel - Porta ${dadosCabo.porta_patch_panel} - ${new Date().toLocaleString('pt-BR')}`
+                                observacao: `Conexão via Patch Panel - Porta ${dadosCabo.porta_destino} - ${new Date().toLocaleString('pt-BR')}`
                             };
                            
                            const responseConexao = await fetch('/conexoes-cabos', {
@@ -1807,7 +1807,7 @@
                    }
                    
                    // Se for conexão direta, conectar automaticamente
-                   if (dadosCabo.tipo_conexao === 'direta') {
+                   if (dadosCabo.tipo_destino === 'equipamento') {
                        console.log('Criando conexão automática para cabo direto...');
                        
                        // Buscar informações do equipamento origem para obter a sala
