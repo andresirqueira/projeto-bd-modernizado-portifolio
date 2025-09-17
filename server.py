@@ -3838,18 +3838,29 @@ def api_tipos_cabos():
     db_file = session.get('db')
     if not db_file:
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    if _is_json_mode(db_file):
-        try:
-            tipos = _json_read_table(db_file, 'tipos_cabos')
-            # Se arquivo for dicionário/objeto, transformar em lista de nomes
-            if isinstance(tipos, dict):
-                tipos = list(tipos.keys())
-            if tipos and isinstance(tipos[0], dict):
-                tipos = [t.get('nome') or t.get('tipo') for t in tipos]
-            return jsonify(sorted([t for t in tipos if t]))
-        except Exception:
+    
+    try:
+        # Ler arquivo global de tipos de cabos
+        tipos_path = os.path.join('static', 'data', 'tipos-cabos.json')
+        if not os.path.exists(tipos_path):
             return jsonify(['HDMI', 'VGA', 'RJ45', 'USB', 'Audio'])
-    return jsonify([])
+        
+        with open(tipos_path, 'r', encoding='utf-8') as f:
+            tipos = json.load(f)
+        
+        # Se arquivo for dicionário/objeto, transformar em lista de nomes
+        if isinstance(tipos, dict):
+            tipos = [{'nome': k, 'descricao': v} for k, v in tipos.items()]
+        elif tipos and isinstance(tipos[0], dict):
+            # Manter objetos originais com nome e descrição
+            tipos = [t for t in tipos if t.get('nome') or t.get('tipo')]
+        
+        # Ordenar por nome
+        tipos_ordenados = sorted(tipos, key=lambda x: x.get('nome', '') or x.get('tipo', ''))
+        return jsonify(tipos_ordenados)
+    except Exception as e:
+        print(f"Erro ao carregar tipos de cabos: {e}")
+        return jsonify(['HDMI', 'VGA', 'RJ45', 'USB', 'Audio'])
 
 @app.route('/cabos', methods=['GET'])
 @login_required
