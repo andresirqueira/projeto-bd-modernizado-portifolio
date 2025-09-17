@@ -3943,6 +3943,7 @@ def api_conexoes_cabos_por_sala(sala_id: int):
         conexoes_cabos = _json_read_table(db_file, 'conexoes_cabos')
         cabos = {c.get('id'): c for c in _json_read_table(db_file, 'cabos')}
         equipamentos = {e.get('id'): e for e in _json_read_table(db_file, 'equipamentos')}
+        patch_panels = {pp.get('id'): pp for pp in _json_read_table(db_file, 'patch_panels')}
         resultado = []
         for cc in conexoes_cabos:
             if cc.get('sala_id') != sala_id or cc.get('data_desconexao'):
@@ -3950,8 +3951,16 @@ def api_conexoes_cabos_por_sala(sala_id: int):
             cabo = cabos.get(cc.get('cabo_id'))
             if not cabo:
                 continue
+            
+            # Buscar equipamento de origem
             eq_o = equipamentos.get(cc.get('equipamento_origem_id'))
+            
+            # Buscar equipamento de destino (pode ser equipamento ou patch panel)
             eq_d = equipamentos.get(cc.get('equipamento_destino_id'))
+            if not eq_d:
+                # Se não encontrou na tabela de equipamentos, pode ser um patch panel
+                eq_d = patch_panels.get(cc.get('equipamento_destino_id'))
+            
             resultado.append({
                 'id': cc.get('id'),
                 'cabo_id': cc.get('cabo_id'),
