@@ -3926,6 +3926,7 @@ def criar_conexao_cabo():
                 'cabo_id': dados.get('cabo_id'),
                 'equipamento_origem_id': dados.get('equipamento_origem_id'),
                 'equipamento_destino_id': dados.get('equipamento_destino_id'),
+                'tipo_destino': dados.get('tipo_destino', 'equipamento'),  # 'equipamento' ou 'patch_panel'
                 'porta_origem': dados.get('porta_origem'),
                 'porta_destino': dados.get('porta_destino'),
                 'sala_id': dados.get('sala_id'),
@@ -3971,11 +3972,13 @@ def api_conexoes_cabos_por_sala(sala_id: int):
             eq_o = equipamentos.get(cc.get('equipamento_origem_id'))
             
             # Buscar equipamento de destino (pode ser equipamento ou patch panel)
-            # Verificar se o ID existe especificamente na tabela de patch panels
+            # Usar o campo tipo_destino para determinar a tabela correta
             eq_d = None
             destino_id = cc.get('equipamento_destino_id')
-            if destino_id in patch_panels:
-                eq_d = patch_panels[destino_id]
+            tipo_destino = cc.get('tipo_destino', 'equipamento')
+            
+            if tipo_destino == 'patch_panel':
+                eq_d = patch_panels.get(destino_id)
             else:
                 eq_d = equipamentos.get(destino_id)
             
@@ -4199,11 +4202,13 @@ def listar_conexoes_cabos():
                 eq_o = equipamentos.get(cc.get('equipamento_origem_id'))
                 
                 # Buscar equipamento de destino (pode ser equipamento ou patch panel)
-                # Verificar se o ID existe especificamente na tabela de patch panels
+                # Usar o campo tipo_destino para determinar a tabela correta
                 eq_d = None
                 destino_id = cc.get('equipamento_destino_id')
-                if destino_id in patch_panels:
-                    eq_d = patch_panels[destino_id]
+                tipo_destino = cc.get('tipo_destino', 'equipamento')
+                
+                if tipo_destino == 'patch_panel':
+                    eq_d = patch_panels.get(destino_id)
                 else:
                     eq_d = equipamentos.get(destino_id)
                 

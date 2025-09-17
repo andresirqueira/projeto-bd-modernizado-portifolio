@@ -1783,6 +1783,7 @@
                                 cabo_id: resultCabo.cabo_id,
                                 equipamento_origem_id: dadosCabo.equipamento_rede_id, // Equipamento (ex: Painel Agenda)
                                 equipamento_destino_id: dadosCabo.patch_panel_id, // Patch Panel
+                                tipo_destino: 'patch_panel', // Indicar que é patch panel
                                 porta_origem: null, // Porta do equipamento (se aplicável)
                                 porta_destino: dadosCabo.porta_patch_panel, // Porta do patch panel
                                 sala_id: equipamentoInfo.sala_id,
@@ -1818,6 +1819,7 @@
                                cabo_id: resultCabo.cabo_id,
                                equipamento_origem_id: dadosCabo.equipamento_origem_id,
                                equipamento_destino_id: dadosCabo.equipamento_destino_id,
+                               tipo_destino: 'equipamento', // Indicar que é equipamento
                                porta_origem: dadosCabo.porta_origem || null, // Porta do equipamento origem
                                porta_destino: dadosCabo.porta_destino || null, // Porta do equipamento destino
                                sala_id: equipamentoInfo.sala_id,
@@ -2010,6 +2012,7 @@
                             const dadosConexao = {
                                 equipamento_origem_id: equipamentoOrigemId !== '' ? equipamentoOrigemId : conexao.equipamento_origem_id,
                                 equipamento_destino_id: equipamentoDestinoId !== '' ? equipamentoDestinoId : conexao.equipamento_destino_id,
+                                tipo_destino: conexao.tipo_destino || 'equipamento', // Manter o tipo original ou padrão
                                 porta_origem: portaOrigem !== '' ? portaOrigem : conexao.porta_origem,
                                 porta_destino: portaDestino !== '' ? portaDestino : conexao.porta_destino
                             };
@@ -2201,14 +2204,17 @@
             if (tipoConexao === 'direta') {
                 dados.equipamento_origem_id = parseInt(formData.get('equipamento_origem'));
                 dados.equipamento_destino_id = parseInt(formData.get('equipamento_destino'));
+                dados.tipo_destino = 'equipamento';
                 dados.porta_origem = formData.get('porta_origem') || null;
                 dados.porta_destino = formData.get('porta_destino') || null;
                 console.log('Conexão direta - equipamentos:', { origem: dados.equipamento_origem_id, destino: dados.equipamento_destino_id, porta_origem: dados.porta_origem, porta_destino: dados.porta_destino });
             } else if (tipoConexao === 'patch_panel') {
-                dados.equipamento_rede_id = parseInt(formData.get('equipamento_rede'));
-                dados.patch_panel_id = parseInt(formData.get('patch_panel'));
-                dados.porta_patch_panel = parseInt(formData.get('porta_patch_panel'));
-                console.log('Conexão via patch panel:', { equipamento_rede: dados.equipamento_rede_id, patch_panel: dados.patch_panel_id, porta: dados.porta_patch_panel });
+                dados.equipamento_origem_id = parseInt(formData.get('equipamento_rede'));
+                dados.equipamento_destino_id = parseInt(formData.get('patch_panel'));
+                dados.tipo_destino = 'patch_panel';
+                dados.porta_origem = null;
+                dados.porta_destino = parseInt(formData.get('porta_patch_panel'));
+                console.log('Conexão via patch panel:', { equipamento_origem: dados.equipamento_origem_id, equipamento_destino: dados.equipamento_destino_id, porta_destino: dados.porta_destino });
             }
 
             console.log('Dados completos a serem enviados:', dados);
