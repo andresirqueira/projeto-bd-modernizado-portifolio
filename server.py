@@ -4348,6 +4348,29 @@ def atualizar_cabo(cabo_id):
     else:
         return jsonify({'status': 'erro', 'mensagem': 'Modo SQLite não implementado'}), 501
 
+@app.route('/cabos/<int:cabo_id>', methods=['GET'])
+@login_required
+def obter_cabo(cabo_id):
+    """Obter dados de um cabo específico"""
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    if _is_json_mode(db_file):
+        try:
+            cabos = _json_read_table(db_file, 'cabos')
+            cabo = next((c for c in cabos if c.get('id') == cabo_id), None)
+            
+            if not cabo:
+                return jsonify({'erro': 'Cabo não encontrado'}), 404
+            
+            return jsonify(cabo)
+        except Exception as e:
+            print(f"Erro ao obter cabo {cabo_id}: {e}")
+            return jsonify({'erro': 'Erro interno do servidor'}), 500
+    else:
+        return jsonify({'erro': 'Modo SQLite não implementado'}), 501
+
 @app.route('/cabos', methods=['GET'])
 @login_required
 def api_listar_cabos():
