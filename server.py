@@ -3982,6 +3982,170 @@ def api_conexoes_cabos_por_sala(sala_id: int):
     else:
         return jsonify([])
 
+@app.route('/conexoes-cabos/<int:conexao_id>', methods=['PUT'])
+@admin_required
+def atualizar_conexao_cabo(conexao_id):
+    """Atualizar uma conexão de cabo existente"""
+    dados = request.json
+    if not dados:
+        return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
+    
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    if _is_json_mode(db_file):
+        try:
+            conexoes_cabos = _json_read_table(db_file, 'conexoes_cabos')
+            
+            # Encontrar a conexão
+            conexao = next((c for c in conexoes_cabos if c.get('id') == conexao_id), None)
+            if not conexao:
+                return jsonify({'status': 'erro', 'mensagem': 'Conexão não encontrada'}), 404
+            
+            # Atualizar campos permitidos
+            if 'observacao' in dados:
+                conexao['observacao'] = dados['observacao']
+            if 'porta_origem' in dados:
+                conexao['porta_origem'] = dados['porta_origem']
+            if 'porta_destino' in dados:
+                conexao['porta_destino'] = dados['porta_destino']
+            
+            _json_write_table(db_file, 'conexoes_cabos', conexoes_cabos)
+            
+            registrar_log(session.get('username'), 'ATUALIZAR_CONEXAO_CABO', 
+                         f'Conexão de cabo atualizada: ID={conexao_id}', 'sucesso', db_file)
+            
+            return jsonify({'status': 'ok', 'mensagem': 'Conexão atualizada com sucesso!'})
+            
+        except Exception as e:
+            print(f"Erro ao atualizar conexão de cabo: {e}")
+            return jsonify({'status': 'erro', 'mensagem': 'Erro interno do servidor'}), 500
+    else:
+        return jsonify({'status': 'erro', 'mensagem': 'Modo SQLite não implementado'}), 501
+
+@app.route('/conexoes-cabos/<int:conexao_id>', methods=['DELETE'])
+@admin_required
+def excluir_conexao_cabo(conexao_id):
+    """Excluir uma conexão de cabo"""
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    if _is_json_mode(db_file):
+        try:
+            conexoes_cabos = _json_read_table(db_file, 'conexoes_cabos')
+            
+            # Encontrar e remover a conexão
+            conexao_original = next((c for c in conexoes_cabos if c.get('id') == conexao_id), None)
+            if not conexao_original:
+                return jsonify({'status': 'erro', 'mensagem': 'Conexão não encontrada'}), 404
+            
+            conexoes_cabos = [c for c in conexoes_cabos if c.get('id') != conexao_id]
+            _json_write_table(db_file, 'conexoes_cabos', conexoes_cabos)
+            
+            registrar_log(session.get('username'), 'EXCLUIR_CONEXAO_CABO', 
+                         f'Conexão de cabo excluída: ID={conexao_id}', 'sucesso', db_file)
+            
+            return jsonify({'status': 'ok', 'mensagem': 'Conexão excluída com sucesso!'})
+            
+        except Exception as e:
+            print(f"Erro ao excluir conexão de cabo: {e}")
+            return jsonify({'status': 'erro', 'mensagem': 'Erro interno do servidor'}), 500
+    else:
+        return jsonify({'status': 'erro', 'mensagem': 'Modo SQLite não implementado'}), 501
+
+@app.route('/conexoes-cabos/<int:conexao_id>/desconectar', methods=['PUT'])
+@admin_required
+def desconectar_cabo(conexao_id):
+    """Desconectar um cabo (marcar como desconectado)"""
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    if _is_json_mode(db_file):
+        try:
+            conexoes_cabos = _json_read_table(db_file, 'conexoes_cabos')
+            
+            # Encontrar a conexão
+            conexao = next((c for c in conexoes_cabos if c.get('id') == conexao_id), None)
+            if not conexao:
+                return jsonify({'status': 'erro', 'mensagem': 'Conexão não encontrada'}), 404
+            
+            # Marcar como desconectada
+            conexao['data_desconexao'] = datetime.now().isoformat()
+            
+            _json_write_table(db_file, 'conexoes_cabos', conexoes_cabos)
+            
+            registrar_log(session.get('username'), 'DESCONECTAR_CABO', 
+                         f'Cabo desconectado: ID={conexao_id}', 'sucesso', db_file)
+            
+            return jsonify({'status': 'ok', 'mensagem': 'Cabo desconectado com sucesso!'})
+            
+        except Exception as e:
+            print(f"Erro ao desconectar cabo: {e}")
+            return jsonify({'status': 'erro', 'mensagem': 'Erro interno do servidor'}), 500
+    else:
+        return jsonify({'status': 'erro', 'mensagem': 'Modo SQLite não implementado'}), 501
+
+@app.route('/conexoes-cabos/<int:conexao_id>/substituir', methods=['POST'])
+@admin_required
+def substituir_cabo(conexao_id):
+    """Substituir um cabo por outro"""
+    dados = request.json
+    if not dados:
+        return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
+    
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    if _is_json_mode(db_file):
+        try:
+            conexoes_cabos = _json_read_table(db_file, 'conexoes_cabos')
+            cabos = _json_read_table(db_file, 'cabos')
+            
+            # Encontrar a conexão original
+            conexao_original = next((c for c in conexoes_cabos if c.get('id') == conexao_id), None)
+            if not conexao_original:
+                return jsonify({'status': 'erro', 'mensagem': 'Conexão não encontrada'}), 404
+            
+            # Verificar se o novo cabo existe
+            novo_cabo = next((c for c in cabos if c.get('id') == dados.get('novo_cabo_id')), None)
+            if not novo_cabo:
+                return jsonify({'status': 'erro', 'mensagem': 'Novo cabo não encontrado'}), 404
+            
+            # Desconectar cabo antigo
+            conexao_original['data_desconexao'] = datetime.now().isoformat()
+            
+            # Criar nova conexão com o novo cabo
+            nova_conexao = {
+                'id': _json_next_id(conexoes_cabos),
+                'cabo_id': dados.get('novo_cabo_id'),
+                'equipamento_origem_id': conexao_original.get('equipamento_origem_id'),
+                'equipamento_destino_id': conexao_original.get('equipamento_destino_id'),
+                'porta_origem': conexao_original.get('porta_origem'),
+                'porta_destino': conexao_original.get('porta_destino'),
+                'sala_id': conexao_original.get('sala_id'),
+                'observacao': f"Substituição de cabo - {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}",
+                'data_conexao': datetime.now().isoformat(),
+                'data_desconexao': None
+            }
+            
+            conexoes_cabos.append(nova_conexao)
+            _json_write_table(db_file, 'conexoes_cabos', conexoes_cabos)
+            
+            registrar_log(session.get('username'), 'SUBSTITUIR_CABO', 
+                         f'Cabo substituído: Conexão {conexao_id} -> Cabo {dados.get("novo_cabo_id")}', 'sucesso', db_file)
+            
+            return jsonify({'status': 'ok', 'mensagem': 'Cabo substituído com sucesso!', 'nova_conexao_id': nova_conexao['id']})
+            
+        except Exception as e:
+            print(f"Erro ao substituir cabo: {e}")
+            return jsonify({'status': 'erro', 'mensagem': 'Erro interno do servidor'}), 500
+    else:
+        return jsonify({'status': 'erro', 'mensagem': 'Modo SQLite não implementado'}), 501
+
 @app.route('/tipos-cabos', methods=['GET'])
 @login_required
 def api_tipos_cabos():
