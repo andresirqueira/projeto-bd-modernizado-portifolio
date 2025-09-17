@@ -3840,6 +3840,63 @@ def visualizar_switch_sala_html():
 
 # --- API CABOS (TELA DETALHES-CABOS-SALA) ---
 
+@app.route('/conexoes-cabos', methods=['POST'])
+@admin_required
+def criar_conexao_cabo():
+    """Criar uma nova conexão de cabo"""
+    dados = request.json
+    if not dados:
+        return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
+    
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    if _is_json_mode(db_file):
+        try:
+            conexoes_cabos = _json_read_table(db_file, 'conexoes_cabos')
+            
+            # Validar dados obrigatórios
+            if not dados.get('cabo_id'):
+                return jsonify({'status': 'erro', 'mensagem': 'ID do cabo é obrigatório'}), 400
+            
+            if not dados.get('equipamento_origem_id') and not dados.get('equipamento_destino_id'):
+                return jsonify({'status': 'erro', 'mensagem': 'Pelo menos um equipamento deve ser especificado'}), 400
+            
+            # Verificar se o cabo existe
+            cabos = _json_read_table(db_file, 'cabos')
+            cabo = next((c for c in cabos if c.get('id') == dados.get('cabo_id')), None)
+            if not cabo:
+                return jsonify({'status': 'erro', 'mensagem': 'Cabo não encontrado'}), 404
+            
+            # Criar nova conexão
+            nova_conexao = {
+                'id': _json_next_id(conexoes_cabos),
+                'cabo_id': dados.get('cabo_id'),
+                'equipamento_origem_id': dados.get('equipamento_origem_id'),
+                'equipamento_destino_id': dados.get('equipamento_destino_id'),
+                'porta_origem': dados.get('porta_origem'),
+                'porta_destino': dados.get('porta_destino'),
+                'sala_id': dados.get('sala_id'),
+                'observacao': dados.get('observacao', ''),
+                'data_conexao': datetime.now().isoformat(),
+                'data_desconexao': None
+            }
+            
+            conexoes_cabos.append(nova_conexao)
+            _json_write_table(db_file, 'conexoes_cabos', conexoes_cabos)
+            
+            registrar_log(session.get('username'), 'CRIAR_CONEXAO_CABO', 
+                         f'Conexão de cabo criada: ID={nova_conexao["id"]}', 'sucesso', db_file)
+            
+            return jsonify({'status': 'ok', 'mensagem': 'Conexão de cabo criada com sucesso!', 'conexao_id': nova_conexao['id']})
+            
+        except Exception as e:
+            print(f"Erro ao criar conexão de cabo: {e}")
+            return jsonify({'status': 'erro', 'mensagem': 'Erro interno do servidor'}), 500
+    else:
+        return jsonify({'status': 'erro', 'mensagem': 'Modo SQLite não implementado'}), 501
+
 @app.route('/conexoes-cabos/sala/<int:sala_id>', methods=['GET'])
 @login_required
 def api_conexoes_cabos_por_sala(sala_id: int):
