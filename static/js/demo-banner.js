@@ -33,11 +33,11 @@
       document.head.appendChild(link);
     }
     
-    // Adicionar o banner no início do body
+    // Adicionar o banner no final do body (rodapé)
     if (document.body) {
-      document.body.insertBefore(banner, document.body.firstChild);
-      document.body.style.paddingTop = '40px';
-      console.log('🚧 Banner adicionado com sucesso!');
+      document.body.appendChild(banner);
+      document.body.style.paddingBottom = '40px';
+      console.log('🚧 Banner adicionado no rodapé com sucesso!');
     } else {
       console.log('🚧 Body não encontrado, tentando novamente em 100ms...');
       setTimeout(addBanner, 100);
