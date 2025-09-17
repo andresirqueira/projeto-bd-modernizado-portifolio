@@ -2916,6 +2916,41 @@ def listar_patch_panels():
         return jsonify({'erro': 'Modo SQLite não suportado nesta rota no ambiente atual'}), 501
 
 
+@app.route('/patch-panels/andar/<int:andar>', methods=['GET'])
+@login_required
+def listar_patch_panels_por_andar(andar):
+    """Lista patch panels de um andar específico"""
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    if _is_json_mode(db_file):
+        try:
+            patch_panels = _json_read_table(db_file, 'patch_panels')
+            andares = {a.get('id'): a for a in _json_read_table(db_file, 'andares')}
+            
+            # Filtrar patch panels do andar
+            patch_panels_andar = []
+            for pp in patch_panels:
+                if pp.get('andar') == andar:
+                    andar_info = andares.get(pp.get('andar'))
+                    patch_panels_andar.append({
+                        'id': pp.get('id'),
+                        'nome': pp.get('nome'),
+                        'andar': pp.get('andar'),
+                        'andar_nome': andar_info.get('nome') if andar_info else f'Andar {andar}',
+                        'num_portas': pp.get('num_portas', 0),
+                        'prefixo_keystone': pp.get('prefixo_keystone'),
+                        'descricao': pp.get('descricao')
+                    })
+            
+            return jsonify(patch_panels_andar)
+        except Exception as e:
+            print(f"Erro ao listar patch panels do andar {andar}: {e}")
+            return jsonify([])
+    else:
+        return jsonify({'erro': 'Modo SQLite não implementado'}), 501
+
 @app.route('/patch-panels/validar-portas', methods=['GET'])
 @login_required
 def validar_portas_patch_panels():
