@@ -4146,6 +4146,69 @@ def substituir_cabo(conexao_id):
     else:
         return jsonify({'status': 'erro', 'mensagem': 'Modo SQLite não implementado'}), 501
 
+@app.route('/conexoes-cabos', methods=['GET'])
+@login_required
+def listar_conexoes_cabos():
+    """Lista conexões de cabos com filtros opcionais"""
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    cabo_id = request.args.get('cabo_id')
+    
+    if _is_json_mode(db_file):
+        try:
+            conexoes_cabos = _json_read_table(db_file, 'conexoes_cabos')
+            cabos = {c.get('id'): c for c in _json_read_table(db_file, 'cabos')}
+            equipamentos = {e.get('id'): e for e in _json_read_table(db_file, 'equipamentos')}
+            patch_panels = {pp.get('id'): pp for pp in _json_read_table(db_file, 'patch_panels')}
+            
+            resultado = []
+            for cc in conexoes_cabos:
+                # Filtrar por cabo_id se especificado
+                if cabo_id and cc.get('cabo_id') != int(cabo_id):
+                    continue
+                
+                # Pular conexões desconectadas
+                if cc.get('data_desconexao'):
+                    continue
+                
+                cabo = cabos.get(cc.get('cabo_id'))
+                if not cabo:
+                    continue
+                
+                # Buscar equipamento de origem
+                eq_o = equipamentos.get(cc.get('equipamento_origem_id'))
+                
+                # Buscar equipamento de destino (pode ser equipamento ou patch panel)
+                eq_d = equipamentos.get(cc.get('equipamento_destino_id'))
+                if not eq_d:
+                    eq_d = patch_panels.get(cc.get('equipamento_destino_id'))
+                
+                resultado.append({
+                    'id': cc.get('id'),
+                    'cabo_id': cc.get('cabo_id'),
+                    'codigo_cabo': (cabo or {}).get('codigo_unico'),
+                    'tipo_cabo': (cabo or {}).get('tipo'),
+                    'equipamento_origem': (eq_o or {}).get('nome'),
+                    'equipamento_destino': (eq_d or {}).get('nome'),
+                    'porta_origem': cc.get('porta_origem'),
+                    'porta_destino': cc.get('porta_destino'),
+                    'observacao': cc.get('observacao'),
+                    'data_conexao': cc.get('data_conexao'),
+                    'data_desconexao': cc.get('data_desconexao'),
+                    'ativo': True,
+                    'equipamento_origem_id': cc.get('equipamento_origem_id'),
+                    'equipamento_destino_id': cc.get('equipamento_destino_id')
+                })
+            
+            return jsonify(resultado)
+        except Exception as e:
+            print(f"Erro ao listar conexões de cabos: {e}")
+            return jsonify([])
+    else:
+        return jsonify([])
+
 @app.route('/tipos-cabos', methods=['GET'])
 @login_required
 def api_tipos_cabos():
@@ -4226,6 +4289,61 @@ def criar_cabo():
             
         except Exception as e:
             print(f"Erro ao criar cabo: {e}")
+            return jsonify({'status': 'erro', 'mensagem': 'Erro interno do servidor'}), 500
+    else:
+        return jsonify({'status': 'erro', 'mensagem': 'Modo SQLite não implementado'}), 501
+
+@app.route('/cabos/<int:cabo_id>', methods=['PUT'])
+@admin_required
+def atualizar_cabo(cabo_id):
+    """Atualizar um cabo existente"""
+    dados = request.json
+    if not dados:
+        return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
+    
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    if _is_json_mode(db_file):
+        try:
+            cabos = _json_read_table(db_file, 'cabos')
+            
+            # Encontrar o cabo
+            cabo = next((c for c in cabos if c.get('id') == cabo_id), None)
+            if not cabo:
+                return jsonify({'status': 'erro', 'mensagem': 'Cabo não encontrado'}), 404
+            
+            # Verificar se código único já existe (se foi alterado)
+            if dados.get('codigo_unico') and dados.get('codigo_unico') != cabo.get('codigo_unico'):
+                if any(c.get('codigo_unico') == dados.get('codigo_unico') for c in cabos if c.get('id') != cabo_id):
+                    return jsonify({'status': 'erro', 'mensagem': 'Código único já existe'}), 400
+            
+            # Atualizar campos permitidos
+            if 'codigo_unico' in dados:
+                cabo['codigo_unico'] = dados['codigo_unico']
+            if 'tipo' in dados:
+                cabo['tipo'] = dados['tipo']
+            if 'comprimento' in dados:
+                cabo['comprimento'] = dados['comprimento']
+            if 'marca' in dados:
+                cabo['marca'] = dados['marca']
+            if 'modelo' in dados:
+                cabo['modelo'] = dados['modelo']
+            if 'descricao' in dados:
+                cabo['descricao'] = dados['descricao']
+            if 'status' in dados:
+                cabo['status'] = dados['status']
+            
+            _json_write_table(db_file, 'cabos', cabos)
+            
+            registrar_log(session.get('username'), 'ATUALIZAR_CABO', 
+                         f'Cabo atualizado: {cabo["codigo_unico"]}', 'sucesso', db_file)
+            
+            return jsonify({'status': 'ok', 'mensagem': 'Cabo atualizado com sucesso!'})
+            
+        except Exception as e:
+            print(f"Erro ao atualizar cabo: {e}")
             return jsonify({'status': 'erro', 'mensagem': 'Erro interno do servidor'}), 500
     else:
         return jsonify({'status': 'erro', 'mensagem': 'Modo SQLite não implementado'}), 501
