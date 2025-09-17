@@ -3657,6 +3657,34 @@
     }
 
     // Função para encontrar imagem do equipamento usando o sistema de mapeamento inteligente
+    // Função para mapear tipos de equipamentos para imagens específicas
+    function findEquipmentImageByType(equipmentType, equipmentName = '', equipmentMarca = '', equipmentModelo = '') {
+      const type = equipmentType ? equipmentType.toLowerCase() : '';
+      const name = equipmentName ? equipmentName.toLowerCase() : '';
+      
+      // Mapeamento específico para patch panels
+      if (type === 'patch panel' || name.includes('patch panel')) {
+        return 'static/img/patch-panel.png'; // Caminho para a imagem do patch panel
+      }
+      
+      // Mapeamento para outros tipos de equipamentos
+      if (type === 'switch' || name.includes('switch')) {
+        return 'static/img/switch.png';
+      }
+      
+      if (type === 'tv' || name.includes('tv')) {
+        return 'static/img/tv.png';
+      }
+      
+      if (type === 'chromebox' || name.includes('chromebox')) {
+        return 'static/img/chromebox.png';
+      }
+      
+      // Adicionar mais mapeamentos conforme necessário
+      
+      return null; // Retorna null se não encontrar mapeamento específico
+    }
+
     async function findEquipmentImage(equipmentType, equipmentName = '', equipmentMarca = '', equipmentModelo = '') {
       try {
         console.log('🔍 findEquipmentImage procurando por:', equipmentType, equipmentName, equipmentMarca, equipmentModelo);
