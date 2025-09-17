@@ -890,7 +890,21 @@ def listar_equipamentos():
         if conectaveis == '1':
             lista = [r for r in lista if r['sala_id'] is not None and tem_ip_ou_mac(r['dados']) and (r['defeito'] == 0)]
         elif disponiveis == '1':
-            lista = [r for r in lista if r['sala_id'] is not None and tem_ip_ou_mac(r['dados']) and (r['defeito'] == 0)]
+            # Filtrar equipamentos que não estão conectados a switches ou patch panels
+            conexoes = _json_read_table(db_file, 'conexoes')
+            patch_panel_portas = _json_read_table(db_file, 'patch_panel_portas')
+            
+            # IDs de equipamentos já conectados
+            equipamentos_conectados_switches = {c.get('equipamento_id') for c in conexoes if c.get('status') == 'ativa'}
+            equipamentos_conectados_patch_panels = {p.get('equipamento_id') for p in patch_panel_portas if p.get('equipamento_id')}
+            
+            # Filtrar equipamentos disponíveis (não conectados)
+            lista = [r for r in lista if 
+                    r['sala_id'] is not None and 
+                    tem_ip_ou_mac(r['dados']) and 
+                    (r['defeito'] == 0) and
+                    r['id'] not in equipamentos_conectados_switches and
+                    r['id'] not in equipamentos_conectados_patch_panels]
         elif sala_id == 'null':
             lista = [r for r in lista if r['sala_id'] is None and ('ponto' not in (r['tipo'] or '').lower()) and ('ponto' not in (r['nome'] or '').lower())]
         elif sala_id:
@@ -2398,6 +2412,14 @@ def criar_conexao():
         if any(c.get('equipamento_id') == dados.get('equipamento_id') and c.get('status') == 'ativa' for c in conexoes):
             registrar_log(session.get('username', 'desconhecido'), 'CRIAR_CONEXAO', f"Equipamento ID={dados.get('equipamento_id')}: Já conectado", 'erro', db_file)
             return jsonify({'status': 'erro', 'mensagem': 'Equipamento já está conectado a outra porta'}), 400
+        
+        # Verificar se o equipamento já está conectado a algum patch panel
+        patch_panel_portas = _json_read_table(db_file, 'patch_panel_portas')
+        equipamento_ja_conectado_pp = next((p for p in patch_panel_portas 
+                                           if p.get('equipamento_id') == dados.get('equipamento_id')), None)
+        if equipamento_ja_conectado_pp:
+            registrar_log(session.get('username', 'desconhecido'), 'CRIAR_CONEXAO', f"Equipamento ID={dados.get('equipamento_id')}: Já conectado a patch panel", 'erro', db_file)
+            return jsonify({'status': 'erro', 'mensagem': 'Este equipamento já está conectado a um patch panel'}), 400
         conexao = {
             'id': _json_next_id(conexoes),
             'porta_id': dados.get('porta_id'),
@@ -3017,11 +3039,18 @@ def conectar_equipamento_patch_panel(porta_id):
         if not equipamento:
             return jsonify({'status': 'erro', 'mensagem': 'Equipamento não encontrado'}), 404
         
-        # Verificar se o equipamento já está conectado a outro patch panel
-        equipamento_ja_conectado = next((p for p in patch_panel_portas 
-                                        if p.get('equipamento_id') == equipamento_id and p.get('id') != porta_id), None)
-        if equipamento_ja_conectado:
+        # Verificar se o equipamento já está conectado a qualquer patch panel
+        equipamento_ja_conectado_pp = next((p for p in patch_panel_portas 
+                                           if p.get('equipamento_id') == equipamento_id and p.get('id') != porta_id), None)
+        if equipamento_ja_conectado_pp:
             return jsonify({'status': 'erro', 'mensagem': 'Este equipamento já está conectado a outro patch panel'}), 400
+        
+        # Verificar se o equipamento já está conectado a algum switch
+        conexoes = _json_read_table(db_file, 'conexoes')
+        equipamento_ja_conectado_switch = next((c for c in conexoes 
+                                              if c.get('equipamento_id') == equipamento_id and c.get('status') == 'ativa'), None)
+        if equipamento_ja_conectado_switch:
+            return jsonify({'status': 'erro', 'mensagem': 'Este equipamento já está conectado a um switch'}), 400
         
         # Conectar equipamento
         porta_pp['equipamento_id'] = equipamento_id
