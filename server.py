@@ -3975,12 +3975,18 @@ def api_conexoes_cabos_por_sala(sala_id: int):
             # Usar o campo tipo_destino para determinar a tabela correta
             eq_d = None
             destino_id = cc.get('equipamento_destino_id')
-            tipo_destino = cc.get('tipo_destino', 'equipamento')
+            tipo_destino = cc.get('tipo_destino')
             
             if tipo_destino == 'patch_panel':
                 eq_d = patch_panels.get(destino_id)
-            else:
+            elif tipo_destino == 'equipamento':
                 eq_d = equipamentos.get(destino_id)
+            else:
+                # Conexões antigas sem tipo_destino - verificar se existe em patch panels primeiro
+                if destino_id in patch_panels:
+                    eq_d = patch_panels[destino_id]
+                else:
+                    eq_d = equipamentos.get(destino_id)
             
             resultado.append({
                 'id': cc.get('id'),
@@ -4205,12 +4211,18 @@ def listar_conexoes_cabos():
                 # Usar o campo tipo_destino para determinar a tabela correta
                 eq_d = None
                 destino_id = cc.get('equipamento_destino_id')
-                tipo_destino = cc.get('tipo_destino', 'equipamento')
+                tipo_destino = cc.get('tipo_destino')
                 
                 if tipo_destino == 'patch_panel':
                     eq_d = patch_panels.get(destino_id)
-                else:
+                elif tipo_destino == 'equipamento':
                     eq_d = equipamentos.get(destino_id)
+                else:
+                    # Conexões antigas sem tipo_destino - verificar se existe em patch panels primeiro
+                    if destino_id in patch_panels:
+                        eq_d = patch_panels[destino_id]
+                    else:
+                        eq_d = equipamentos.get(destino_id)
                 
                 resultado.append({
                     'id': cc.get('id'),
