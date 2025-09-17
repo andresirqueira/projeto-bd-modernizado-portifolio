@@ -3085,6 +3085,7 @@ def listar_portas_patch_panel(id: int):
                 'equipamento_nome': (equip or {}).get('nome'),
                 'equipamento_tipo': (equip or {}).get('tipo'),
                 'equipamento_sala': sala_nome,
+                'sala_nome': sala_nome,
             })
         return jsonify(resultado)
     else:
@@ -4001,6 +4002,60 @@ def api_tipos_cabos():
     except Exception as e:
         print(f"Erro ao carregar tipos de cabos: {e}")
         return jsonify(['HDMI', 'VGA', 'RJ45', 'USB', 'Audio'])
+
+@app.route('/cabos', methods=['POST'])
+@admin_required
+def criar_cabo():
+    """Criar um novo cabo"""
+    dados = request.json
+    if not dados:
+        return jsonify({'status': 'erro', 'mensagem': 'JSON ausente ou inválido'}), 400
+    
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    if _is_json_mode(db_file):
+        try:
+            cabos = _json_read_table(db_file, 'cabos')
+            
+            # Validar dados obrigatórios
+            if not dados.get('codigo_unico'):
+                return jsonify({'status': 'erro', 'mensagem': 'Código único é obrigatório'}), 400
+            
+            if not dados.get('tipo'):
+                return jsonify({'status': 'erro', 'mensagem': 'Tipo do cabo é obrigatório'}), 400
+            
+            # Verificar se código único já existe
+            if any(c.get('codigo_unico') == dados.get('codigo_unico') for c in cabos):
+                return jsonify({'status': 'erro', 'mensagem': 'Código único já existe'}), 400
+            
+            # Criar novo cabo
+            novo_cabo = {
+                'id': _json_next_id(cabos),
+                'codigo_unico': dados.get('codigo_unico'),
+                'tipo': dados.get('tipo'),
+                'comprimento': dados.get('comprimento'),
+                'marca': dados.get('marca', ''),
+                'modelo': dados.get('modelo', ''),
+                'descricao': dados.get('descricao', ''),
+                'status': dados.get('status', 'funcionando'),
+                'data_criacao': datetime.now().isoformat()
+            }
+            
+            cabos.append(novo_cabo)
+            _json_write_table(db_file, 'cabos', cabos)
+            
+            registrar_log(session.get('username'), 'CRIAR_CABO', 
+                         f'Cabo criado: {novo_cabo["codigo_unico"]}', 'sucesso', db_file)
+            
+            return jsonify({'status': 'ok', 'mensagem': 'Cabo criado com sucesso!', 'cabo_id': novo_cabo['id']})
+            
+        except Exception as e:
+            print(f"Erro ao criar cabo: {e}")
+            return jsonify({'status': 'erro', 'mensagem': 'Erro interno do servidor'}), 500
+    else:
+        return jsonify({'status': 'erro', 'mensagem': 'Modo SQLite não implementado'}), 501
 
 @app.route('/cabos', methods=['GET'])
 @login_required
