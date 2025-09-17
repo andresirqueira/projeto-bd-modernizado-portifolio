@@ -59,6 +59,19 @@ def _json_read_table(db_file, table_name):
     except Exception:
         return []
 
+def is_patch_panel(equipamento):
+    """Verifica se um equipamento é um patch panel baseado no tipo ou nome"""
+    tipo = (equipamento.get('tipo') or '').lower()
+    nome = (equipamento.get('nome') or '').lower()
+    
+    # Palavras-chave que indicam patch panel
+    patch_panel_keywords = [
+        'patch panel', 'patch-panel', 'patchpanel', 'patch_panel',
+        'keystone', 'rack', 'distribuidor', 'distribuição'
+    ]
+    
+    return any(keyword in tipo or keyword in nome for keyword in patch_panel_keywords)
+
 def _json_write_table(db_file, table_name, rows):
     path = _json_table_path(db_file, table_name)
     with open(path, 'w', encoding='utf-8') as f:
@@ -888,7 +901,7 @@ def listar_equipamentos():
             lista.append(registro)
 
         if conectaveis == '1':
-            lista = [r for r in lista if r['sala_id'] is not None and tem_ip_ou_mac(r['dados']) and (r['defeito'] == 0)]
+            lista = [r for r in lista if r['sala_id'] is not None and tem_ip_ou_mac(r['dados']) and (r['defeito'] == 0) and not is_patch_panel(r)]
         elif disponiveis == '1':
             # Filtrar equipamentos que não estão conectados a switches ou patch panels
             conexoes = _json_read_table(db_file, 'conexoes')
@@ -898,21 +911,24 @@ def listar_equipamentos():
             equipamentos_conectados_switches = {c.get('equipamento_id') for c in conexoes if c.get('status') == 'ativa'}
             equipamentos_conectados_patch_panels = {p.get('equipamento_id') for p in patch_panel_portas if p.get('equipamento_id')}
             
-            # Filtrar equipamentos disponíveis (não conectados)
+            # Filtrar equipamentos disponíveis (não conectados e não patch panels)
             lista = [r for r in lista if 
                     r['sala_id'] is not None and 
                     tem_ip_ou_mac(r['dados']) and 
                     (r['defeito'] == 0) and
+                    not is_patch_panel(r) and
                     r['id'] not in equipamentos_conectados_switches and
                     r['id'] not in equipamentos_conectados_patch_panels]
         elif sala_id == 'null':
-            lista = [r for r in lista if r['sala_id'] is None and ('ponto' not in (r['tipo'] or '').lower()) and ('ponto' not in (r['nome'] or '').lower())]
+            lista = [r for r in lista if r['sala_id'] is None and ('ponto' not in (r['tipo'] or '').lower()) and ('ponto' not in (r['nome'] or '').lower()) and not is_patch_panel(r)]
         elif sala_id:
             try:
                 sala_id_int = int(sala_id)
                 lista = [r for r in lista if r['sala_id'] == sala_id_int]
             except Exception:
                 lista = [r for r in lista if False]
+        # Filtrar patch panels de todas as listas
+        lista = [r for r in lista if not is_patch_panel(r)]
         return jsonify(lista)
     else:
         conn = sqlite3.connect(db_file)
@@ -930,6 +946,14 @@ def listar_equipamentos():
                   AND e.id NOT IN (SELECT equipamento_id FROM conexoes WHERE status = 'ativa')
                   AND e.id NOT IN (SELECT equipamento_id FROM patch_panel_portas WHERE equipamento_id IS NOT NULL)
                   AND (e.defeito IS NULL OR e.defeito = 0)
+                  AND LOWER(e.tipo) NOT LIKE '%patch panel%'
+                  AND LOWER(e.tipo) NOT LIKE '%patch-panel%'
+                  AND LOWER(e.tipo) NOT LIKE '%patchpanel%'
+                  AND LOWER(e.tipo) NOT LIKE '%keystone%'
+                  AND LOWER(e.nome) NOT LIKE '%patch panel%'
+                  AND LOWER(e.nome) NOT LIKE '%patch-panel%'
+                  AND LOWER(e.nome) NOT LIKE '%patchpanel%'
+                  AND LOWER(e.nome) NOT LIKE '%keystone%'
             ''')
         elif disponiveis == '1':
             cur.execute('''
@@ -943,6 +967,14 @@ def listar_equipamentos():
                   AND e.id NOT IN (SELECT equipamento_id FROM conexoes WHERE status = 'ativa')
                   AND ((d1.valor IS NOT NULL AND d1.valor != '') OR (d2.valor IS NOT NULL AND d2.valor != ''))
                   AND (e.defeito IS NULL OR e.defeito = 0)
+                  AND LOWER(e.tipo) NOT LIKE '%patch panel%'
+                  AND LOWER(e.tipo) NOT LIKE '%patch-panel%'
+                  AND LOWER(e.tipo) NOT LIKE '%patchpanel%'
+                  AND LOWER(e.tipo) NOT LIKE '%keystone%'
+                  AND LOWER(e.nome) NOT LIKE '%patch panel%'
+                  AND LOWER(e.nome) NOT LIKE '%patch-panel%'
+                  AND LOWER(e.nome) NOT LIKE '%patchpanel%'
+                  AND LOWER(e.nome) NOT LIKE '%keystone%'
             ''')
         elif sala_id == 'null':
             cur.execute('''
@@ -953,6 +985,14 @@ def listar_equipamentos():
                   AND LOWER(e.tipo) NOT LIKE '%ponto%'
                   AND LOWER(e.nome) NOT LIKE '%ponto usuário%'
                   AND LOWER(e.nome) NOT LIKE '%ponto usuario%'
+                  AND LOWER(e.tipo) NOT LIKE '%patch panel%'
+                  AND LOWER(e.tipo) NOT LIKE '%patch-panel%'
+                  AND LOWER(e.tipo) NOT LIKE '%patchpanel%'
+                  AND LOWER(e.tipo) NOT LIKE '%keystone%'
+                  AND LOWER(e.nome) NOT LIKE '%patch panel%'
+                  AND LOWER(e.nome) NOT LIKE '%patch-panel%'
+                  AND LOWER(e.nome) NOT LIKE '%patchpanel%'
+                  AND LOWER(e.nome) NOT LIKE '%keystone%'
             ''')
         elif sala_id:
             cur.execute('''
@@ -1002,7 +1042,7 @@ def listar_equipamentos_disponiveis():
         equipamentos = _json_read_table(db_file, 'equipamentos')
         resultado = []
         for e in equipamentos:
-            if e.get('sala_id') is None and ('ponto' not in (e.get('tipo') or '').lower()) and ('ponto' not in (e.get('nome') or '').lower()) and int(e.get('defeito') or 0) == 0:
+            if e.get('sala_id') is None and ('ponto' not in (e.get('tipo') or '').lower()) and ('ponto' not in (e.get('nome') or '').lower()) and int(e.get('defeito') or 0) == 0 and not is_patch_panel(e):
                 resultado.append({
                     'id': e.get('id'),
                     'nome': e.get('nome'),
@@ -1031,6 +1071,14 @@ def listar_equipamentos_disponiveis():
               AND LOWER(e.nome) NOT LIKE '%ponto usuário%'
               AND LOWER(e.nome) NOT LIKE '%ponto usuario%'
               AND (e.defeito IS NULL OR e.defeito = 0)
+              AND LOWER(e.tipo) NOT LIKE '%patch panel%'
+              AND LOWER(e.tipo) NOT LIKE '%patch-panel%'
+              AND LOWER(e.tipo) NOT LIKE '%patchpanel%'
+              AND LOWER(e.tipo) NOT LIKE '%keystone%'
+              AND LOWER(e.nome) NOT LIKE '%patch panel%'
+              AND LOWER(e.nome) NOT LIKE '%patch-panel%'
+              AND LOWER(e.nome) NOT LIKE '%patchpanel%'
+              AND LOWER(e.nome) NOT LIKE '%keystone%'
         ''')
         equipamentos = []
         for row in cur.fetchall():
