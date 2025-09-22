@@ -334,10 +334,20 @@ def excluir_equipamento_html():
 def dashboard_sala_html():
     return send_from_directory(os.path.dirname(__file__), 'dashboard-sala.html')
 
+@app.route('/dashboard.html')
+@login_required
+def dashboard_html():
+    return send_from_directory(os.path.dirname(__file__), 'dashboard.html')
+
 @app.route('/historico-sala.html')
 @login_required
 def historico_sala_html():
     return send_from_directory(os.path.dirname(__file__), 'historico-sala.html')
+
+@app.route('/exportar-dados.html')
+@login_required
+def exportar_dados_html():
+    return send_from_directory(os.path.dirname(__file__), 'exportar-dados.html')
 
 # --- API HISTÓRICO SALA ---
 
@@ -2706,6 +2716,23 @@ def limpar_logs():
 @admin_required
 def visualizar_logs_html():
     return send_from_directory(os.path.dirname(__file__), 'visualizar-logs.html')
+
+@app.route('/log-exportacao', methods=['POST'])
+@login_required
+def log_exportacao():
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    try:
+        dados = request.get_json(silent=True) or {}
+        acao = dados.get('acao') or 'EXPORTACAO'
+        detalhes = dados.get('detalhes') or ''
+        status = dados.get('status') or 'sucesso'
+        registrar_log(session.get('username', 'desconhecido'), acao, detalhes, status, db_file)
+        return jsonify({'ok': True})
+    except Exception as e:
+        registrar_log(session.get('username', 'desconhecido'), 'EXPORTACAO', f'Erro ao registrar log: {str(e)}', 'erro', db_file)
+        return jsonify({'erro': 'Falha ao registrar log'}), 500
 
 @app.route('/excluir-switch.html')
 @admin_required
