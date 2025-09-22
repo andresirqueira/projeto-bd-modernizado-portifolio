@@ -9,6 +9,31 @@
     <script>
       tailwind.config = { darkMode: 'class' };
     </script>
+    <style>
+      .horus-bg {
+        background: radial-gradient(1200px 600px at 10% 10%, rgba(99,102,241,0.25), transparent 40%),
+                    radial-gradient(1000px 500px at 90% 20%, rgba(147,51,234,0.22), transparent 45%),
+                    radial-gradient(900px 600px at 20% 90%, rgba(59,130,246,0.18), transparent 50%),
+                    linear-gradient(135deg, #0f172a 0%, #111827 40%, #0b1220 100%);
+      }
+      .horus-blob {
+        position: absolute;
+        border-radius: 9999px;
+        filter: blur(40px);
+        opacity: .35;
+        mix-blend-mode: screen;
+        animation: float 16s ease-in-out infinite;
+      }
+      .horus-blob:nth-child(2){ animation-duration: 20s; animation-delay: -4s; }
+      .horus-blob:nth-child(3){ animation-duration: 22s; animation-delay: -8s; }
+      @keyframes float {
+        0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+        50%      { transform: translateY(-18px) translateX(10px) scale(1.05); }
+      }
+      /* Hexagon mesh canvas */
+      .hex-layer { position: absolute; inset: 0; pointer-events: none; }
+      .hex-layer canvas { width: 100%; height: 100%; display: block; }
+    </style>
     <script>
       // Dark mode toggle
       function toggleDarkMode() {
@@ -27,8 +52,17 @@
         document.documentElement.classList.remove('dark');
       }
     </script>
-</head>
-<body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen flex items-center justify-center dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+ </head>
+<body class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-200 to-purple-200 dark:horus-bg">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+        <span class="horus-blob" style="top:-10%; left:-8%; width:340px; height:340px; background: rgba(99,102,241,0.45);"></span>
+        <span class="horus-blob" style="top:15%; right:-6%; width:420px; height:420px; background: rgba(147,51,234,0.40);"></span>
+        <span class="horus-blob" style="bottom:-12%; left:30%; width:480px; height:480px; background: rgba(59,130,246,0.38);"></span>
+    </div>
+    <!-- Interactive hexagon mesh -->
+    <div class="hex-layer" aria-hidden="true">
+        <canvas id="hexMesh"></canvas>
+    </div>
     <div class="w-full max-w-md bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-10 text-center relative">
         <button onclick="toggleDarkMode()" class="absolute top-4 right-4 bg-gray-200 dark:bg-gray-700 rounded-full p-2 transition-colors" title="Alternar modo escuro">
             <span class="dark:hidden">🌙</span><span class="hidden dark:inline">☀️</span>
@@ -52,6 +86,92 @@
         <div id="msg-erro" class="text-red-600 mt-4"></div>
     </div>
     <script>
+        // Hexagon interactive background (dark mode)
+        (function(){
+            const canvas = document.getElementById('hexMesh');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width, height, dpr, hexR, grid = [], mouse = {x:-9999,y:-9999};
+
+            function setSize(){
+                dpr = Math.min(window.devicePixelRatio || 1, 2);
+                width = canvas.clientWidth;
+                height = canvas.clientHeight;
+                canvas.width = Math.floor(width * dpr);
+                canvas.height = Math.floor(height * dpr);
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                buildGrid();
+            }
+
+            function buildGrid(){
+                grid = [];
+                const spacing = Math.max(24, Math.min(width, height) / 30);
+                hexR = spacing; // circumradius
+                const hexH = Math.sqrt(3) * hexR / 2; // half height
+                const cols = Math.ceil(width / (hexR * 1.5)) + 2;
+                const rows = Math.ceil(height / (hexH * 2)) + 2;
+                for(let r=0; r<rows; r++){
+                    for(let c=0; c<cols; c++){
+                        const x = c * (hexR * 1.5) + (r % 2 ? hexR * 0.75 : 0) - hexR;
+                        const y = r * (hexH * 2) - hexH;
+                        grid.push({x, y, off: Math.random()*Math.PI*2});
+                    }
+                }
+            }
+
+            function drawHex(cx, cy, r, color, alpha){
+                ctx.globalAlpha = alpha;
+                ctx.beginPath();
+                for(let i=0;i<6;i++){
+                    const a = (Math.PI/3)*i + Math.PI/6; // flat-top
+                    const x = cx + r * Math.cos(a);
+                    const y = cy + r * Math.sin(a);
+                    if(i===0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 1.2;
+                ctx.stroke();
+                ctx.globalAlpha = 1;
+            }
+
+            function dist2(a,b){ const dx=a.x-b.x, dy=a.y-b.y; return dx*dx+dy*dy; }
+
+            function animate(t){
+                const isDark = document.documentElement.classList.contains('dark');
+
+                ctx.clearRect(0,0,width,height);
+                const base = isDark ? '#475569' : '#cbd5e1'; // slate-600 vs slate-300
+                const glow = isDark ? '#818cf8' : '#6366f1';  // indigo-400 vs indigo-500
+                const hoverR = 140; const hoverR2 = hoverR*hoverR;
+
+                for(const cell of grid){
+                    const dx = Math.cos(t*0.00015 + cell.off) * 1.5;
+                    const dy = Math.sin(t*0.00012 + cell.off) * 1.5;
+                    const px = cell.x + dx;
+                    const py = cell.y + dy;
+                    const d2 = dist2({x:px,y:py}, mouse);
+                    const near = d2 < hoverR2;
+                    const k = near ? 1 - (d2/hoverR2) : 0;
+                    const r = hexR * (0.82 + k*0.25);
+                    const alpha = 0.22 + k*0.55;
+                    const color = near ? glow : base;
+                    drawHex(px, py, r, color, alpha);
+                }
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', setSize);
+            window.addEventListener('mousemove', (e)=>{
+                const rect = canvas.getBoundingClientRect();
+                mouse.x = (e.clientX - rect.left);
+                mouse.y = (e.clientY - rect.top);
+            }, {passive:true});
+            window.addEventListener('mouseleave', ()=>{ mouse.x=-9999; mouse.y=-9999; }, {passive:true});
+            setSize();
+            requestAnimationFrame(animate);
+        })();
+
         let empresasGlobais = [];
         document.getElementById('login-form').onsubmit = async function(event) {
             event.preventDefault();

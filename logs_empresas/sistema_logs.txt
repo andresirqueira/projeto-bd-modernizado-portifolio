@@ -1321,3 +1321,4 @@
 [2025-09-22 10:09:29] Usuario: admin | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
 [2025-09-22 10:28:37] Usuario: admin | Acao: LOGIN | Detalhes: Login realizado com sucesso - Nível: admin, Nome: Usuário | Status: sucesso
 [2025-09-22 10:28:37] Usuario: admin | Acao: ESCOLHER_EMPRESA | Detalhes: Empresa selecionada: json:empresa_1 | Status: sucesso
+[2025-09-22 15:36:26] Usuario: admin | Acao: LOGOUT | Detalhes: Logout realizado - Nível: admin, Nome: Usuário | Status: sucesso
