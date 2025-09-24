@@ -49,6 +49,19 @@
         .dark #mainCanvas {
             background: url('static/img/blue-print.png') center/cover, #1a202c;
         }
+        /* Mobile adjustments */
+        @media (max-width: 640px) {
+            #mainCanvas {
+                position: relative;
+                left: 0;
+                width: 100vw;
+                height: 70vh;
+            }
+            .canvas-container, .container, .wrapper, body, html {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
         .equip-instance {
             position: absolute;
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);

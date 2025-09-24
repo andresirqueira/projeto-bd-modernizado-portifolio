@@ -1,0 +1,89 @@
+[
+  {
+    "sala_id": 1,
+    "layout_json": {
+      "grid": {
+        "rows": 15,
+        "cols": 20
+      },
+      "equipment": [
+        {
+          "row": 2,
+          "col": 3,
+          "src": "http://127.0.0.1:8080/static/img/tv-lg-outro.png",
+          "name": "TV",
+          "isKeystone": false,
+          "keystone": null,
+          "type": "equipment"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "src": null,
+          "name": "kst--02",
+          "isKeystone": true,
+          "keystone": "kst--02",
+          "type": "equipment"
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "src": "http://127.0.0.1:8080/static/img/pc-ctl-outro.png",
+          "name": "Chromebox",
+          "isKeystone": false,
+          "keystone": null,
+          "type": "equipment"
+        },
+        {
+          "row": 4,
+          "col": 9,
+          "src": "http://127.0.0.1:8080/static/img/fonte-logitech-tap.png",
+          "name": "Fonte Tap",
+          "isKeystone": false,
+          "keystone": null,
+          "type": "equipment"
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "src": "http://127.0.0.1:8080/static/img/fonte-universal-chromebox.png",
+          "name": "Fonte Chromebox",
+          "isKeystone": false,
+          "keystone": null,
+          "type": "equipment"
+        }
+      ],
+      "connections": [
+        {
+          "cableInfo": "HDM-001",
+          "from": {
+            "col": 3,
+            "row": 4
+          },
+          "fromName": "Chromebox",
+          "id": 1758726946483.317,
+          "to": {
+            "col": 3,
+            "row": 2
+          },
+          "toName": "TV"
+        },
+        {
+          "cableInfo": "ETH-007",
+          "from": {
+            "col": 3,
+            "row": 4
+          },
+          "fromName": "Chromebox",
+          "id": 1758726946491.9485,
+          "to": {
+            "col": 0,
+            "row": 4
+          },
+          "toName": "kst--02"
+        }
+      ]
+    },
+    "atualizado_em": "2025-09-24T12:32:42.772772"
+  }
+]
