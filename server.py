@@ -74,8 +74,15 @@ def is_patch_panel(equipamento):
 
 def _json_write_table(db_file, table_name, rows):
     path = _json_table_path(db_file, table_name)
+    # Debug de escrita
+    try:
+        print(f"DEBUG: Escrevendo tabela JSON '{table_name}' em: {path}")
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+    except Exception as e:
+        print(f"DEBUG: Falha ao preparar diretório para '{table_name}': {e}")
     with open(path, 'w', encoding='utf-8') as f:
         json.dump(rows, f, ensure_ascii=False, indent=2)
+    print(f"DEBUG: Tabela '{table_name}' escrita com {len(rows)} registros.")
 
 def _json_next_id(rows):
     max_id = 0
@@ -828,6 +835,7 @@ def criar_equipamento():
     modelo = (dados.get('modelo') or '').strip().lower().replace(' ', '-').replace('ç','c').replace('ã','a').replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace('â','a').replace('ê','e').replace('ô','o').replace('õ','o').replace('ü','u').replace('ñ','n')
     caminho_foto = f'img/{tipo}-{marca}-{modelo}.png' if tipo and marca and modelo else None
     if _is_json_mode(db_file):
+        print('DEBUG: Criar equipamento em JSON mode para db:', db_file)
         equipamentos = _json_read_table(db_file, 'equipamentos')
         equipamento_id = _json_next_id(equipamentos)
         registro = {
@@ -845,6 +853,7 @@ def criar_equipamento():
         }
         equipamentos.append(registro)
         _json_write_table(db_file, 'equipamentos', equipamentos)
+        print('DEBUG: Equipamento criado com ID:', equipamento_id)
     else:
         conn = sqlite3.connect(db_file)
         cur = conn.cursor()
@@ -873,7 +882,7 @@ def criar_equipamento():
     # Log de criação de equipamento
     detalhes = f"Equipamento criado: ID={equipamento_id}, Nome={dados['nome']}, Tipo={dados.get('tipo')}, Marca={dados.get('marca')}, Modelo={dados.get('modelo')}"
     registrar_log(session.get('username', 'desconhecido'), 'CRIAR_EQUIPAMENTO', detalhes, 'sucesso', db_file)
-    return jsonify({'status': 'ok'})
+    return jsonify({'status': 'ok', 'equipamento_id': equipamento_id})
 
 @app.route('/equipamentos', methods=['GET'])
 @login_required
@@ -4346,6 +4355,7 @@ def criar_cabo():
     
     if _is_json_mode(db_file):
         try:
+            print('DEBUG: Criar cabo em JSON mode para db:', db_file)
             cabos = _json_read_table(db_file, 'cabos')
             
             # Validar dados obrigatórios
@@ -4378,6 +4388,7 @@ def criar_cabo():
             registrar_log(session.get('username'), 'CRIAR_CABO', 
                          f'Cabo criado: {novo_cabo["codigo_unico"]}', 'sucesso', db_file)
             
+            print('DEBUG: Cabo criado com ID:', novo_cabo['id'])
             return jsonify({'status': 'ok', 'mensagem': 'Cabo criado com sucesso!', 'cabo_id': novo_cabo['id']})
             
         except Exception as e:
