@@ -990,6 +990,9 @@
 
   <script src="/static/js/equipment-images-map.js?v=1.2"></script>
   <script>
+    // Evitar cache de imagens no mobile
+    function cacheBust(url){ if(!url) return ''; return url + (url.includes('?') ? '&' : '?') + 'v=' + Date.now(); }
+
     // Estado global
     let gridData = {
       rows: 15,
@@ -1301,7 +1304,7 @@
               // Restaurar equipamento normal
               cell.innerHTML = `
                 <div class="equipment-slot">
-                  <img src="${item.src ? (item.src.startsWith('/') ? item.src : '/' + item.src.replace(/^\/+/, '')) : ''}" alt="${item.name}">
+                  <img src="${cacheBust(item.src ? (item.src.startsWith('/') ? item.src : '/' + item.src.replace(/^\/+/, '')) : '')}" alt="${item.name}">
                   <div class="name">${item.name}</div>
                 </div>
               `;
@@ -1533,7 +1536,7 @@
       // Atualiza célula diretamente
       cell.innerHTML = `
         <div class="equipment-slot ${sizeClass}">
-          <img src="${gridData.selectedEquipment ? (gridData.selectedEquipment.startsWith('/') ? gridData.selectedEquipment : '/' + gridData.selectedEquipment.replace(/^\/+/, '')) : ''}" alt="${name}">
+          <img src="${cacheBust(gridData.selectedEquipment ? (gridData.selectedEquipment.startsWith('/') ? gridData.selectedEquipment : '/' + gridData.selectedEquipment.replace(/^\/+/, '')) : '')}" alt="${name}">
           <div class="name">${name}</div>
         </div>
       `;
@@ -2319,7 +2322,7 @@
                 const sizeClass = getEquipmentSizeClass(item.name);
                 cell.innerHTML = `
                   <div class="equipment-slot ${sizeClass}">
-                    <img src="${item.src ? (item.src.startsWith('/') ? item.src : '/' + item.src.replace(/^\/+/, '')) : ''}" alt="${item.name}">
+                    <img src="${cacheBust(item.src ? (item.src.startsWith('/') ? item.src : '/' + item.src.replace(/^\/+/, '')) : '')}" alt="${item.name}">
                     <div class="name">${item.name}</div>
                   </div>
                 `;
@@ -2670,7 +2673,7 @@
         const equipmentImg = equipmentSlot.querySelector('img');
         toCell.innerHTML = `
           <div class="equipment-slot">
-            <img src="${equipmentImg && equipmentImg.src ? (equipmentImg.src.startsWith('/') ? equipmentImg.src : '/' + equipmentImg.src.replace(/^\/+/, '')) : ''}" alt="${elementName}">
+            <img src="${cacheBust(equipmentImg && equipmentImg.src ? (equipmentImg.src.startsWith('/') ? equipmentImg.src : '/' + equipmentImg.src.replace(/^\/+/, '')) : '')}" alt="${elementName}">
             <div class="name">${elementName}</div>
           </div>
         `;
@@ -3211,7 +3214,7 @@
               
               cell.innerHTML = `
                 <div class="equipment-slot">
-                  <img src="${imgSrc && !imgSrc.startsWith('/') ? '/' + imgSrc.replace(/^\/+/, '') : imgSrc}" alt="${equip.nome}">
+                  <img src="${cacheBust(imgSrc && !imgSrc.startsWith('/') ? '/' + imgSrc.replace(/^\/+/, '') : imgSrc)}" alt="${equip.nome}">
                   <div class="name">${equip.nome}</div>
                 </div>
               `;
