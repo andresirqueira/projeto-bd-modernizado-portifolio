@@ -405,24 +405,39 @@
                     console.log(`  - Resultado final isKeystone: ${isKeystone}`);
                     
                     if (!imgSrc) {
-                        if (isKeystone) {
+                        // 1) Usar foto vinda dos dados, se houver
+                        if (equip.foto && typeof equip.foto === 'string' && equip.foto.trim() !== '') {
+                            imgSrc = equip.foto.trim();
+                        }
+                        
+                        // 2) Usar mapeamento inteligente se disponível
+                        if (!imgSrc && typeof findEquipmentImageByType === 'function') {
+                            const mapped = findEquipmentImageByType(equip.tipo || '', equip.name || '', equip.marca || '', equip.modelo || '');
+                            if (mapped) {
+                                imgSrc = mapped;
+                            }
+                        }
+                        
+                        // 3) Heurísticas apenas se ainda não achou
+                        if (!imgSrc) {
+                          if (isKeystone) {
                             imgSrc = null; // Keystones usarão ícone
-                        } else if (nome.includes('switch') || nome.includes('sw')) {
+                          } else if (nome.includes('switch') || nome.includes('sw')) {
                             imgSrc = 'static/img/equipamentos/switch-cisco.png';
-                        } else if (nome.includes('tv') || nome.includes('tela')) {
+                          } else if (nome.includes('tv') || nome.includes('tela')) {
                             imgSrc = 'static/img/equipamentos/tv-lg.png';
-                        } else if (nome.includes('camera') || nome.includes('câmera')) {
+                          } else if (nome.includes('camera') || nome.includes('câmera')) {
                             imgSrc = 'static/img/equipamentos/camera-logitech.png';
-                        } else if (nome.includes('receptor') && nome.includes('microfone')) {
+                          } else if (nome.includes('receptor') && nome.includes('microfone')) {
                             // Receptor de microfone - usar imagem específica
                             imgSrc = 'static/img/receptor-shure-ulxd4q.png';
-                        } else if (nome.includes('microfone') || nome.includes('mic')) {
+                          } else if (nome.includes('microfone') || nome.includes('mic')) {
                             imgSrc = 'static/img/microfone-logitech-rally-mic-pod.png';
-                        } else if (nome.includes('speaker') || nome.includes('alto-falante')) {
+                          } else if (nome.includes('speaker') || nome.includes('alto-falante')) {
                             imgSrc = 'static/img/equipamentos/speaker-logitech.png';
-                        } else if (nome.includes('hub')) {
+                          } else if (nome.includes('hub')) {
                             imgSrc = 'static/img/equipamentos/hub-logitech.png';
-                        } else if (nome.includes('painel') || nome.includes('panel')) {
+                          } else if (nome.includes('painel') || nome.includes('panel')) {
                             // Diferencia entre Painel Agenda e Painel de Controle
                             if (nome.toLowerCase().includes('agenda')) {
                                 imgSrc = 'static/img/painel-crestron-tsw-770-b-s.png';
@@ -432,19 +447,19 @@
                                 // Padrão para painéis genéricos
                                 imgSrc = 'static/img/painel-crestron-tsw-770-b-s.png';
                             }
-                        } else if (nome.includes('tap')) {
+                          } else if (nome.includes('tap')) {
                             imgSrc = 'static/img/equipamentos/tap-logitech.png';
-                        } else if (nome.includes('chromebox') || nome.includes('pc')) {
+                          } else if (nome.includes('chromebox')) {
                             imgSrc = 'static/img/equipamentos/pc-ctl.png';
-                        } else if (nome.includes('poe')) {
+                          } else if (nome.includes('poe')) {
                             imgSrc = 'static/img/poe-logitech-kit-cat5e.png';
-                        } else if (nome.includes('dongle')) {
+                          } else if (nome.includes('dongle')) {
                             imgSrc = 'static/img/dongle-logitech-logitech.png';
-                        } else if (nome.includes('sensor') || nome.includes('presença')) {
+                          } else if (nome.includes('sensor') || nome.includes('presença')) {
                             imgSrc = 'static/img/sensor-crestron-cen-odt-c-poe.png';
-                        } else if (nome.includes('meetup')) {
+                          } else if (nome.includes('meetup')) {
                             imgSrc = 'static/img/meetup-logitech-meetup.png';
-                        } else if (nome.includes('adaptador') || nome.includes('adapter')) {
+                          } else if (nome.includes('adaptador') || nome.includes('adapter')) {
                             // Usar imagem específica do adaptador se disponível, senão usar uma genérica
                             if (nome.includes('hdmi') && nome.includes('mesa')) {
                                 imgSrc = 'static/img/adaptador-kramer-hdmi-f-to-hdmi-f.png';
@@ -462,8 +477,10 @@
                                 // Adaptador genérico - usar o primeiro disponível
                                 imgSrc = 'static/img/adaptador-kramer-hdmi-f-to-hdmi-f.png';
                             }
-                        } else {
+                          } else {
+                            // Como último recurso, pc-ctl
                             imgSrc = 'static/img/equipamentos/pc-ctl.png';
+                          }
                         }
                     }
                     // Normalizar caminho para absoluto e garantir prefixo /static quando apropriado
@@ -871,6 +888,10 @@
                         }
                         if (resolvedSrc.startsWith('/img/')) {
                             resolvedSrc = '/static' + resolvedSrc; 
+                        }
+                        // Se vier como URL absoluta http(s), manter como está
+                        if (/^https?:\/\//i.test(resolvedSrc)) {
+                            // não altera
                         }
                         
                         console.log('🖼️ Carregando imagem:', resolvedSrc, 'para equipamento:', item.nome || item.tipo);
