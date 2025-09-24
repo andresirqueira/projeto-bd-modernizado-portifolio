@@ -815,7 +815,7 @@ def criar_sala_com_equipamentos():
 # --- API DE EQUIPAMENTOS (PROTEGIDA) ---
 
 @app.route('/equipamentos', methods=['POST'])
-@admin_required
+@tecnico_required
 def criar_equipamento():
     dados = request.json
     if not dados:
@@ -3945,7 +3945,7 @@ def visualizar_switch_sala_html():
 # --- API CABOS (TELA DETALHES-CABOS-SALA) ---
 
 @app.route('/conexoes-cabos', methods=['POST'])
-@admin_required
+@tecnico_required
 def criar_conexao_cabo():
     """Criar uma nova conexão de cabo"""
     dados = request.json
@@ -4064,7 +4064,7 @@ def api_conexoes_cabos_por_sala(sala_id: int):
         return jsonify([])
 
 @app.route('/conexoes-cabos/<int:conexao_id>', methods=['PUT'])
-@admin_required
+@tecnico_required
 def atualizar_conexao_cabo(conexao_id):
     """Atualizar uma conexão de cabo existente"""
     dados = request.json
@@ -4106,7 +4106,7 @@ def atualizar_conexao_cabo(conexao_id):
         return jsonify({'status': 'erro', 'mensagem': 'Modo SQLite não implementado'}), 501
 
 @app.route('/conexoes-cabos/<int:conexao_id>', methods=['DELETE'])
-@admin_required
+@tecnico_required
 def excluir_conexao_cabo(conexao_id):
     """Excluir uma conexão de cabo"""
     db_file = session.get('db')
@@ -4137,7 +4137,7 @@ def excluir_conexao_cabo(conexao_id):
         return jsonify({'status': 'erro', 'mensagem': 'Modo SQLite não implementado'}), 501
 
 @app.route('/conexoes-cabos/<int:conexao_id>/desconectar', methods=['PUT'])
-@admin_required
+@tecnico_required
 def desconectar_cabo(conexao_id):
     """Desconectar um cabo (marcar como desconectado)"""
     db_file = session.get('db')
@@ -4170,7 +4170,7 @@ def desconectar_cabo(conexao_id):
         return jsonify({'status': 'erro', 'mensagem': 'Modo SQLite não implementado'}), 501
 
 @app.route('/conexoes-cabos/<int:conexao_id>/substituir', methods=['POST'])
-@admin_required
+@tecnico_required
 def substituir_cabo(conexao_id):
     """Substituir um cabo por outro"""
     dados = request.json
@@ -4333,7 +4333,7 @@ def api_tipos_cabos():
         return jsonify(['HDMI', 'VGA', 'RJ45', 'USB', 'Audio'])
 
 @app.route('/cabos', methods=['POST'])
-@admin_required
+@tecnico_required
 def criar_cabo():
     """Criar um novo cabo"""
     dados = request.json
