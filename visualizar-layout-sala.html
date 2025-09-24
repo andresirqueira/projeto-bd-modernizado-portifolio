@@ -438,6 +438,10 @@
                             imgSrc = 'static/img/equipamentos/pc-ctl.png';
                         }
                     }
+                    // Normalizar caminho para absoluto
+                    if (imgSrc && !imgSrc.startsWith('/')) {
+                        imgSrc = '/' + imgSrc.replace(/^\/+/, '');
+                    }
                      
                     // Adiciona equipamento
                     items.push({
@@ -791,7 +795,11 @@
                         imgContainer.style.padding = '4px';
                         
                         const img = document.createElement('img');
-                        img.src = item.img || 'static/img/equipamentos/pc-ctl.png';
+                        let resolvedSrc = item.img || 'static/img/equipamentos/pc-ctl.png';
+                        if (resolvedSrc && !resolvedSrc.startsWith('/')) {
+                            resolvedSrc = '/' + resolvedSrc.replace(/^\/+/, '');
+                        }
+                        img.src = resolvedSrc;
                         img.style.width = '100%';
                         img.style.height = '100%';
                         img.style.objectFit = 'contain';

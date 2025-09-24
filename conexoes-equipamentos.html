@@ -3211,7 +3211,7 @@
               
               cell.innerHTML = `
                 <div class="equipment-slot">
-                  <img src="${imgSrc}" alt="${equip.nome}">
+                  <img src="${imgSrc && !imgSrc.startsWith('/') ? '/' + imgSrc.replace(/^\/+/, '') : imgSrc}" alt="${equip.nome}">
                   <div class="name">${equip.nome}</div>
                 </div>
               `;
