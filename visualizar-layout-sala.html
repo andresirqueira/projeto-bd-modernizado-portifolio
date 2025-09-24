@@ -935,17 +935,65 @@
                         img.style.borderRadius = '6px';
                         img.onerror = function() {
                             console.warn('❌ Erro ao carregar imagem:', resolvedSrc, 'para equipamento:', item.nome || item.tipo);
-                            // Mostrar placeholder, não esconder
-                            const placeholders = [
-                                '/static/img/equipamentos/pc-ctl.png',
-                                '/static/img/camera-logitech-rally.png',
-                                '/static/img/speaker-logitech-rally.png'
-                            ];
-                            for (const ph of placeholders) {
-                                this.onerror = null;
-                                this.src = cacheBust(ph);
-                                break;
+                            const nomeLower = (item.nome || '').toLowerCase();
+                            const tipoLower = (item.tipo || '').toLowerCase();
+                            
+                            // 1) Tentar mapeamento inteligente se disponível
+                            if (typeof findEquipmentImageByType === 'function') {
+                                try {
+                                    const mapped = findEquipmentImageByType(item.tipo || '', item.nome || '', item.marca || '', item.modelo || '');
+                                    if (mapped) {
+                                        console.log('✅ onerror fallback via mapeamento inteligente:', mapped);
+                                        this.onerror = null;
+                                        this.src = cacheBust(mapped.startsWith('/') ? mapped : '/' + mapped.replace(/^\/+/, ''));
+                                        return;
+                                    }
+                                } catch (e) {
+                                    console.warn('⚠️ Falha no mapeamento inteligente no onerror:', e);
+                                }
                             }
+                            
+                            // 2) Fallback por tipo/nome conhecido
+                            const byTypeFallback = () => {
+                                if (tipoLower.includes('fonte') || nomeLower.includes('fonte')) {
+                                    return '/static/img/fonte-logitech-display-hub.png';
+                                }
+                                if (tipoLower.includes('switch') || nomeLower.includes('switch') || nomeLower === 'sw') {
+                                    return '/static/img/equipamentos/switch-cisco.png';
+                                }
+                                if (tipoLower.includes('tv') || nomeLower.includes('tv') || nomeLower.includes('tela')) {
+                                    return '/static/img/tv-lg-outro.png';
+                                }
+                                if (tipoLower.includes('camera') || nomeLower.includes('camera') || nomeLower.includes('câmera')) {
+                                    return '/static/img/camera-logitech-rally.png';
+                                }
+                                if (tipoLower.includes('microfone') || nomeLower.includes('microfone') || nomeLower.includes('mic')) {
+                                    return '/static/img/microfone-shure-mxa920.png';
+                                }
+                                if (tipoLower.includes('speaker') || nomeLower.includes('speaker') || nomeLower.includes('alto-falante')) {
+                                    return '/static/img/speaker-logitech-rally.png';
+                                }
+                                if (nomeLower.includes('chromebox') || tipoLower.includes('pc')) {
+                                    return '/static/img/pc-ctl-outro.png';
+                                }
+                                if (nomeLower.includes('poe')) {
+                                    return '/static/img/poe-logitech-kit-cat5e.png';
+                                }
+                                if (nomeLower.includes('dongle')) {
+                                    return '/static/img/dongle-logitech-logitech.png';
+                                }
+                                if (nomeLower.includes('sensor') || nomeLower.includes('presença')) {
+                                    return '/static/img/sensor-crestron-cen-odt-c-poe.png';
+                                }
+                                if (nomeLower.includes('meetup')) {
+                                    return '/static/img/meetup-logitech-meetup.png';
+                                }
+                                return '/static/img/equipamentos/pc-ctl.png';
+                            };
+                            const fallback = byTypeFallback();
+                            console.log('✅ onerror fallback por tipo/nome:', fallback);
+                            this.onerror = null;
+                            this.src = cacheBust(fallback);
                         };
                         img.onload = function() {
                             console.log('✅ Imagem carregada com sucesso:', resolvedSrc);
