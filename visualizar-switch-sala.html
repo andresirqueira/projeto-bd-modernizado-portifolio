@@ -198,7 +198,7 @@
             position: relative;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
             z-index: 1;
-            overflow: hidden; /* evita cortes visuais quando a grade é escalada */
+            overflow-y: hidden; /* evita cortes verticais; horizontal será tratada por media query */
         }
         
 
@@ -702,6 +702,18 @@
    
             100% {
                 opacity: 1;
+            }
+        }
+
+        /* Em telas estreitas em modo retrato, permitir rolagem horizontal da área das portas */
+        @media (max-width: 640px) and (orientation: portrait) {
+            .ports-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .ports-grid {
+                min-width: 560px; /* garante largura mínima para 48 portas sem cortar */
+                transform-origin: top left; /* ancora no canto para não cortar o início */
             }
         }
     </style>
@@ -1513,7 +1525,13 @@
                     grid.style.transform = `scale(${scale})`;
                     // Ajustar altura do container para acompanhar o conteúdo escalado
                     const scaledHeight = grid.scrollHeight * scale;
-                    container.style.height = (scaledHeight + 24) + 'px'; // folga para bordas/padding
+                    // Se houver scroll horizontal habilitado (portrait mobile), não force altura fixa
+                    const isPortraitNarrow = window.matchMedia('(max-width: 640px) and (orientation: portrait)').matches;
+                    if (isPortraitNarrow) {
+                        container.style.height = '';
+                    } else {
+                        container.style.height = (scaledHeight + 24) + 'px'; // folga
+                    }
                 } else {
                     // fallback
                     container.style.height = '';
