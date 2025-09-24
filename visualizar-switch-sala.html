@@ -43,7 +43,7 @@
             border: 2px solid #374151;
             background: #1f2937;
             color: #f3f4f6;
-            font-size: 0.7rem;
+            font-size: 0.7rem; /* base; será escalado junto via transform do container */
             font-weight: bold;
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
             z-index: 10;
@@ -588,27 +588,7 @@
             z-index: 15;
         }
         
-        /* Responsividade para mobile: mantém proporções e evita desproporção das portas */
-        @media (max-width: 640px) {
-            /* Reduz o tamanho das portas mantendo proporção 3:2 */
-            .port-card {
-                width: 44px;
-                height: 30px;
-                font-size: 0.6rem;
-            }
-            /* Ajusta o espaçamento entre portas */
-            .ports-container .flex { gap: 6px; }
-            .ports-container { padding: 12px; }
-            /* Override dos slots invisíveis com LEDs (criados com width/height inline) */
-            .ports-grid div[style*="width: 60px"] {
-                width: 44px !important;
-                height: 30px !important;
-            }
-            .ports-grid .led-pair { transform: translate(-50%, -50%) scale(0.9); }
-            .leds-row { height: 30px; padding: 6px 4px; }
-            .switch-body { padding: 14px; }
-            .switch-header { padding: 12px 14px; }
-        }
+        /* Removido o redimensionamento específico no mobile: usamos escala uniforme do conjunto */
         
         /* Linha de separação entre as duas linhas de portas */
         .ports-container .flex:first-child::after {
@@ -1528,8 +1508,8 @@
                 const needed = grid.scrollWidth;
                 if (needed > 0) {
                     let scale = available / needed;
-                    // Limitar escala entre 0.5 e 1 para não ampliar demais
-                    scale = Math.max(0.5, Math.min(1, scale));
+                    // Permitir escala menor para telas bem estreitas, mantendo proporção
+                    scale = Math.max(0.35, Math.min(1, scale));
                     grid.style.transform = `scale(${scale})`;
                     // Ajustar altura do container para acompanhar o conteúdo escalado
                     const scaledHeight = grid.scrollHeight * scale;
