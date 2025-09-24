@@ -990,6 +990,26 @@
 
   <script src="/static/js/equipment-images-map.js?v=1.2"></script>
   <script>
+    // Normalizar caminho de imagem (absoluto + /static quando necessário) e aplicar cache busting
+    function normalizeImageSrc(url){
+      if(!url) return '';
+      try {
+        let src = url;
+        // Se veio com data URL ou blob, mantém
+        if (src.startsWith('data:') || src.startsWith('blob:')) return src;
+        // Remove cache antigo antes de normalizar
+        src = src.replace(/[?&](v|r)=[^&#]*/g, '');
+        // Garantir absoluto
+        if(!src.startsWith('/')) src = '/' + src.replace(/^\/+/, '');
+        // Corrigir prefixos /img -> /static/img
+        if (src.startsWith('/img/')) src = '/static' + src;
+        // Forçar cache busting
+        return cacheBust(src);
+      } catch(e){
+        return url;
+      }
+    }
+    
     // Evitar cache de imagens no mobile
     function cacheBust(url){ 
       if(!url) return ''; 
@@ -2676,9 +2696,11 @@
       } else {
         // É um equipamento normal - usar estrutura com imagem
         const equipmentImg = equipmentSlot.querySelector('img');
+        const rawSrc = equipmentImg ? equipmentImg.getAttribute('src') || equipmentImg.src : '';
+        const normalized = normalizeImageSrc(rawSrc);
         toCell.innerHTML = `
           <div class="equipment-slot">
-            <img src="${cacheBust(equipmentImg && equipmentImg.src ? (equipmentImg.src.startsWith('/') ? equipmentImg.src : '/' + equipmentImg.src.replace(/^\/+/, '')) : '')}" alt="${elementName}">
+            <img src="${normalized}" alt="${elementName}">
             <div class="name">${elementName}</div>
           </div>
         `;

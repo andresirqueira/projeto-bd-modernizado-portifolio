@@ -881,7 +881,17 @@
                         img.style.borderRadius = '6px';
                         img.onerror = function() {
                             console.warn('❌ Erro ao carregar imagem:', resolvedSrc, 'para equipamento:', item.nome || item.tipo);
-                            this.style.display = 'none';
+                            // Mostrar placeholder, não esconder
+                            const placeholders = [
+                                '/static/img/equipamentos/pc-ctl.png',
+                                '/static/img/camera-logitech-rally.png',
+                                '/static/img/speaker-logitech-rally.png'
+                            ];
+                            for (const ph of placeholders) {
+                                this.onerror = null;
+                                this.src = cacheBust(ph);
+                                break;
+                            }
                         };
                         img.onload = function() {
                             console.log('✅ Imagem carregada com sucesso:', resolvedSrc);
