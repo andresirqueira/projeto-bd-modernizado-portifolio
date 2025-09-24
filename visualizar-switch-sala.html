@@ -198,7 +198,7 @@
             position: relative;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
             z-index: 1;
-            overflow-y: hidden; /* evita cortes verticais; horizontal será tratada por media query */
+            overflow: hidden; /* será ajustado por media queries conforme necessário */
         }
         
 
@@ -709,6 +709,7 @@
         @media (max-width: 640px) and (orientation: portrait) {
             .ports-container {
                 overflow-x: auto;
+                overflow-y: auto; /* permite ver as duas linhas + LEDs */
                 -webkit-overflow-scrolling: touch;
             }
             .ports-grid {
@@ -1528,6 +1529,9 @@
                     // Se houver scroll horizontal habilitado (portrait mobile), não force altura fixa
                     const isPortraitNarrow = window.matchMedia('(max-width: 640px) and (orientation: portrait)').matches;
                     if (isPortraitNarrow) {
+                        // altura mínima estimada para 2 linhas de portas + linha de LEDs
+                        const minH = scaledHeight + 24;
+                        container.style.maxHeight = Math.max(minH, 220) + 'px';
                         container.style.height = '';
                     } else {
                         container.style.height = (scaledHeight + 24) + 'px'; // folga
