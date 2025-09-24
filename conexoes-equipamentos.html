@@ -1301,7 +1301,7 @@
               // Restaurar equipamento normal
               cell.innerHTML = `
                 <div class="equipment-slot">
-                  <img src="${item.src}" alt="${item.name}">
+                  <img src="${item.src ? (item.src.startsWith('/') ? item.src : '/' + item.src.replace(/^\/+/, '')) : ''}" alt="${item.name}">
                   <div class="name">${item.name}</div>
                 </div>
               `;
@@ -1533,7 +1533,7 @@
       // Atualiza célula diretamente
       cell.innerHTML = `
         <div class="equipment-slot ${sizeClass}">
-          <img src="${gridData.selectedEquipment}" alt="${name}">
+          <img src="${gridData.selectedEquipment ? (gridData.selectedEquipment.startsWith('/') ? gridData.selectedEquipment : '/' + gridData.selectedEquipment.replace(/^\/+/, '')) : ''}" alt="${name}">
           <div class="name">${name}</div>
         </div>
       `;
@@ -2319,7 +2319,7 @@
                 const sizeClass = getEquipmentSizeClass(item.name);
                 cell.innerHTML = `
                   <div class="equipment-slot ${sizeClass}">
-                    <img src="${item.src}" alt="${item.name}">
+                    <img src="${item.src ? (item.src.startsWith('/') ? item.src : '/' + item.src.replace(/^\/+/, '')) : ''}" alt="${item.name}">
                     <div class="name">${item.name}</div>
                   </div>
                 `;
@@ -2670,7 +2670,7 @@
         const equipmentImg = equipmentSlot.querySelector('img');
         toCell.innerHTML = `
           <div class="equipment-slot">
-            <img src="${equipmentImg ? equipmentImg.src : ''}" alt="${elementName}">
+            <img src="${equipmentImg && equipmentImg.src ? (equipmentImg.src.startsWith('/') ? equipmentImg.src : '/' + equipmentImg.src.replace(/^\/+/, '')) : ''}" alt="${elementName}">
             <div class="name">${elementName}</div>
           </div>
         `;

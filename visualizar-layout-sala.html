@@ -90,6 +90,15 @@
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
             }
+            /* Override para mobile: usar sidebar estreito */
+            #mainCanvas {
+                left: 120px !important;
+                width: calc(100vw - 120px) !important;
+            }
+            /* Ajustar botão voltar para mobile */
+            button[onclick="window.history.back()"] {
+                left: 140px !important;
+            }
         }
         .equip-instance {
             position: absolute;
@@ -199,6 +208,16 @@
             z-index: 10;
             box-shadow: 2px 0 8px #0002;
         }
+        /* Mobile: sidebar mais estreito */
+        @media (max-width: 640px) {
+            #sidebar {
+                width: 120px;
+            }
+            #mainCanvas {
+                left: 120px;
+                width: calc(100vw - 120px);
+            }
+        }
         #sidebar h2 {
             margin-top: 32px;
             font-size: 1.3em;
@@ -213,7 +232,7 @@
     </style>
 </head>
 <body>
-    <button onclick="window.history.back()" class="fixed top-6 left-64 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-3 transition-colors z-50" title="Voltar">
+    <button onclick="window.history.back()" class="fixed top-6 left-64 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-3 transition-colors z-50" title="Voltar" style="left: 140px;">
         <i class="fas fa-arrow-left text-gray-700 dark:text-gray-300"></i>
     </button>
     <div id="sidebar" class="fixed left-0 top-0 bottom-0 w-60 bg-white dark:bg-gray-800 text-gray-800 dark:text-white flex flex-col items-center z-10 shadow-2xl">
@@ -438,9 +457,14 @@
                             imgSrc = 'static/img/equipamentos/pc-ctl.png';
                         }
                     }
-                    // Normalizar caminho para absoluto
-                    if (imgSrc && !imgSrc.startsWith('/')) {
-                        imgSrc = '/' + imgSrc.replace(/^\/+/, '');
+                    // Normalizar caminho para absoluto e garantir prefixo /static quando apropriado
+                    if (imgSrc) {
+                        if (!imgSrc.startsWith('/')) {
+                            imgSrc = '/' + imgSrc.replace(/^\/+/, '');
+                        }
+                        if (imgSrc.startsWith('/img/')) {
+                            imgSrc = '/static' + imgSrc; // corrige caminhos salvos como /img/...
+                        }
                     }
                      
                     // Adiciona equipamento
@@ -798,6 +822,9 @@
                         let resolvedSrc = item.img || 'static/img/equipamentos/pc-ctl.png';
                         if (resolvedSrc && !resolvedSrc.startsWith('/')) {
                             resolvedSrc = '/' + resolvedSrc.replace(/^\/+/, '');
+                        }
+                        if (resolvedSrc.startsWith('/img/')) {
+                            resolvedSrc = '/static' + resolvedSrc; 
                         }
                         img.src = resolvedSrc;
                         img.style.width = '100%';
