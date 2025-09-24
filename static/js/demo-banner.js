@@ -21,6 +21,7 @@
       <span class="demo-icon">🚧</span>
       VERSÃO DE DEMONSTRAÇÃO - SISTEMA EM DESENVOLVIMENTO
       <span class="demo-icon">🚧</span>
+      <span class="dev-credit">Desenvolvido por Andre Luiz Cardoso Sirqueira</span>
     `;
     
     // Adicionar CSS se não existir

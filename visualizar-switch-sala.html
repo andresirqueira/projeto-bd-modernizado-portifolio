@@ -587,6 +587,28 @@
             z-index: 15;
         }
         
+        /* Responsividade para mobile: mantém proporções e evita desproporção das portas */
+        @media (max-width: 640px) {
+            /* Reduz o tamanho das portas mantendo proporção 3:2 */
+            .port-card {
+                width: 44px;
+                height: 30px;
+                font-size: 0.6rem;
+            }
+            /* Ajusta o espaçamento entre portas */
+            .ports-container .flex { gap: 6px; }
+            .ports-container { padding: 12px; }
+            /* Override dos slots invisíveis com LEDs (criados com width/height inline) */
+            .ports-grid div[style*="width: 60px"] {
+                width: 44px !important;
+                height: 30px !important;
+            }
+            .ports-grid .led-pair { transform: translate(-50%, -50%) scale(0.9); }
+            .leds-row { height: 30px; padding: 6px 4px; }
+            .switch-body { padding: 14px; }
+            .switch-header { padding: 12px 14px; }
+        }
+        
         /* Linha de separação entre as duas linhas de portas */
         .ports-container .flex:first-child::after {
             content: '';
