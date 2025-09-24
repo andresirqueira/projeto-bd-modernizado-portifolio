@@ -198,6 +198,7 @@
             position: relative;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
             z-index: 1;
+            overflow: hidden; /* evita cortes visuais quando a grade é escalada */
         }
         
 
@@ -1530,6 +1531,12 @@
                     // Limitar escala entre 0.5 e 1 para não ampliar demais
                     scale = Math.max(0.5, Math.min(1, scale));
                     grid.style.transform = `scale(${scale})`;
+                    // Ajustar altura do container para acompanhar o conteúdo escalado
+                    const scaledHeight = grid.scrollHeight * scale;
+                    container.style.height = (scaledHeight + 24) + 'px'; // folga para bordas/padding
+                } else {
+                    // fallback
+                    container.style.height = '';
                 }
             });
         }
