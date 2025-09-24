@@ -405,9 +405,19 @@
                     console.log(`  - Resultado final isKeystone: ${isKeystone}`);
                     
                     if (!imgSrc) {
+                        console.log('🔍 DEBUG: Mapeando imagem para equipamento:', {
+                            nome: equip.name,
+                            tipo: equip.tipo,
+                            marca: equip.marca,
+                            modelo: equip.modelo,
+                            foto: equip.foto,
+                            src: equip.src
+                        });
+                        
                         // 1) Usar foto vinda dos dados, se houver
                         if (equip.foto && typeof equip.foto === 'string' && equip.foto.trim() !== '') {
                             imgSrc = equip.foto.trim();
+                            console.log('✅ Usando equip.foto:', imgSrc);
                         }
                         
                         // 2) Usar mapeamento inteligente se disponível
@@ -415,28 +425,42 @@
                             const mapped = findEquipmentImageByType(equip.tipo || '', equip.name || '', equip.marca || '', equip.modelo || '');
                             if (mapped) {
                                 imgSrc = mapped;
+                                console.log('✅ Usando mapeamento inteligente:', imgSrc);
+                            } else {
+                                console.log('❌ Mapeamento inteligente não encontrou imagem');
                             }
+                        } else if (!imgSrc) {
+                            console.log('❌ findEquipmentImageByType não disponível');
                         }
                         
                         // 3) Heurísticas apenas se ainda não achou
                         if (!imgSrc) {
+                          console.log('🔍 Aplicando heurísticas para:', nome);
                           if (isKeystone) {
                             imgSrc = null; // Keystones usarão ícone
+                            console.log('✅ É keystone, usando ícone');
                           } else if (nome.includes('switch') || nome.includes('sw')) {
                             imgSrc = 'static/img/equipamentos/switch-cisco.png';
+                            console.log('✅ É switch, usando:', imgSrc);
                           } else if (nome.includes('tv') || nome.includes('tela')) {
                             imgSrc = 'static/img/equipamentos/tv-lg.png';
+                            console.log('✅ É TV, usando:', imgSrc);
                           } else if (nome.includes('camera') || nome.includes('câmera')) {
                             imgSrc = 'static/img/equipamentos/camera-logitech.png';
+                            console.log('✅ É câmera, usando:', imgSrc);
                           } else if (nome.includes('receptor') && nome.includes('microfone')) {
                             // Receptor de microfone - usar imagem específica
                             imgSrc = 'static/img/receptor-shure-ulxd4q.png';
+                            console.log('✅ É receptor de microfone, usando:', imgSrc);
                           } else if (nome.includes('microfone') || nome.includes('mic')) {
                             imgSrc = 'static/img/microfone-logitech-rally-mic-pod.png';
+                            console.log('✅ É microfone, usando:', imgSrc);
                           } else if (nome.includes('speaker') || nome.includes('alto-falante')) {
                             imgSrc = 'static/img/equipamentos/speaker-logitech.png';
+                            console.log('✅ É speaker, usando:', imgSrc);
                           } else if (nome.includes('hub')) {
                             imgSrc = 'static/img/equipamentos/hub-logitech.png';
+                            console.log('✅ É hub, usando:', imgSrc);
                           } else if (nome.includes('painel') || nome.includes('panel')) {
                             // Diferencia entre Painel Agenda e Painel de Controle
                             if (nome.toLowerCase().includes('agenda')) {
@@ -447,18 +471,25 @@
                                 // Padrão para painéis genéricos
                                 imgSrc = 'static/img/painel-crestron-tsw-770-b-s.png';
                             }
+                            console.log('✅ É painel, usando:', imgSrc);
                           } else if (nome.includes('tap')) {
                             imgSrc = 'static/img/equipamentos/tap-logitech.png';
+                            console.log('✅ É tap, usando:', imgSrc);
                           } else if (nome.includes('chromebox')) {
                             imgSrc = 'static/img/equipamentos/pc-ctl.png';
+                            console.log('✅ É chromebox, usando:', imgSrc);
                           } else if (nome.includes('poe')) {
                             imgSrc = 'static/img/poe-logitech-kit-cat5e.png';
+                            console.log('✅ É POE, usando:', imgSrc);
                           } else if (nome.includes('dongle')) {
                             imgSrc = 'static/img/dongle-logitech-logitech.png';
+                            console.log('✅ É dongle, usando:', imgSrc);
                           } else if (nome.includes('sensor') || nome.includes('presença')) {
                             imgSrc = 'static/img/sensor-crestron-cen-odt-c-poe.png';
+                            console.log('✅ É sensor, usando:', imgSrc);
                           } else if (nome.includes('meetup')) {
                             imgSrc = 'static/img/meetup-logitech-meetup.png';
+                            console.log('✅ É meetup, usando:', imgSrc);
                           } else if (nome.includes('adaptador') || nome.includes('adapter')) {
                             // Usar imagem específica do adaptador se disponível, senão usar uma genérica
                             if (nome.includes('hdmi') && nome.includes('mesa')) {
@@ -477,9 +508,11 @@
                                 // Adaptador genérico - usar o primeiro disponível
                                 imgSrc = 'static/img/adaptador-kramer-hdmi-f-to-hdmi-f.png';
                             }
+                            console.log('✅ É adaptador, usando:', imgSrc);
                           } else {
                             // Como último recurso, pc-ctl
                             imgSrc = 'static/img/equipamentos/pc-ctl.png';
+                            console.log('⚠️ Fallback para pc-ctl:', imgSrc);
                           }
                         }
                     }
