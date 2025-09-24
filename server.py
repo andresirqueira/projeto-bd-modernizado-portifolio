@@ -3659,27 +3659,46 @@ def salvar_layout_sala(sala_id):
         print("DEBUG: JSON ausente ou inválido")
         return jsonify({'erro': 'JSON ausente ou inválido'}), 400
     print(f"DEBUG: Layout recebido: {layout}")
-    conn = sqlite3.connect(db_file)
-    cur = conn.cursor()
-    # Cria a tabela se não existir
-    cur.execute('''
-        CREATE TABLE IF NOT EXISTS sala_layouts (
-            sala_id INTEGER PRIMARY KEY,
-            layout_json TEXT,
-            atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    ''')
-    # Salva ou atualiza o layout
-    cur.execute('''
-        INSERT INTO sala_layouts (sala_id, layout_json, atualizado_em)
-        VALUES (?, ?, CURRENT_TIMESTAMP)
-        ON CONFLICT(sala_id) DO UPDATE SET
-            layout_json=excluded.layout_json,
-            atualizado_em=CURRENT_TIMESTAMP
-    ''', (sala_id, json.dumps(layout)))
-    conn.commit()
-    conn.close()
-    print(f"DEBUG: Layout salvo no banco de dados")
+    if _is_json_mode(db_file):
+        print("DEBUG: Salvando layout em modo JSON")
+        rows = _json_read_table(db_file, 'sala_layouts')
+        updated = False
+        for r in rows:
+            if int(r.get('sala_id', -1)) == int(sala_id):
+                r['layout_json'] = layout
+                r['atualizado_em'] = datetime.now().isoformat()
+                updated = True
+                break
+        if not updated:
+            rows.append({
+                'sala_id': int(sala_id),
+                'layout_json': layout,
+                'atualizado_em': datetime.now().isoformat()
+            })
+        _json_write_table(db_file, 'sala_layouts', rows)
+        print("DEBUG: Layout salvo em arquivo JSON")
+    else:
+        conn = sqlite3.connect(db_file)
+        cur = conn.cursor()
+        # Cria a tabela se não existir
+        cur.execute('''
+            CREATE TABLE IF NOT EXISTS sala_layouts (
+                sala_id INTEGER PRIMARY KEY,
+                layout_json TEXT,
+                atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        # Salva ou atualiza o layout
+        cur.execute('''
+            INSERT INTO sala_layouts (sala_id, layout_json, atualizado_em)
+            VALUES (?, ?, CURRENT_TIMESTAMP)
+            ON CONFLICT(sala_id) DO UPDATE SET
+                layout_json=excluded.layout_json,
+                atualizado_em=CURRENT_TIMESTAMP
+        ''', (sala_id, json.dumps(layout)))
+        conn.commit()
+        conn.close()
+        print(f"DEBUG: Layout salvo no banco de dados")
     # Adiciona log da ação
     usuario = session.get('username', 'desconhecido')
     print(f"DEBUG: Usuário da sessão: {usuario}")
@@ -3694,14 +3713,21 @@ def obter_layout_sala(sala_id):
     db_file = session.get('db')
     if not db_file:
         return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
-    conn = sqlite3.connect(db_file)
-    cur = conn.cursor()
-    cur.execute('SELECT layout_json FROM sala_layouts WHERE sala_id=?', (sala_id,))
-    row = cur.fetchone()
-    conn.close()
-    if row and row[0]:
-        return jsonify(json.loads(row[0]))
-    return jsonify({'erro': 'Nenhum layout salvo para esta sala.'}), 404
+    if _is_json_mode(db_file):
+        rows = _json_read_table(db_file, 'sala_layouts')
+        for r in rows:
+            if int(r.get('sala_id', -1)) == int(sala_id):
+                return jsonify(r.get('layout_json') or {})
+        return jsonify({'erro': 'Nenhum layout salvo para esta sala.'}), 404
+    else:
+        conn = sqlite3.connect(db_file)
+        cur = conn.cursor()
+        cur.execute('SELECT layout_json FROM sala_layouts WHERE sala_id=?', (sala_id,))
+        row = cur.fetchone()
+        conn.close()
+        if row and row[0]:
+            return jsonify(json.loads(row[0]))
+        return jsonify({'erro': 'Nenhum layout salvo para esta sala.'}), 404
 
 @app.route('/api/salas/<int:sala_id>/conexoes-reais', methods=['GET'])
 @login_required
