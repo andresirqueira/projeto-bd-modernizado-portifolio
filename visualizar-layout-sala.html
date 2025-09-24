@@ -15,6 +15,35 @@
       } else if (localStorage.getItem('theme') === 'light') {
         document.documentElement.classList.remove('dark');
       }
+      // Escala proporcional do canvas para caber na tela sem cortes
+      function aplicarEscalaCanvas() {
+        try {
+          var canvas = document.getElementById('mainCanvas');
+          if (!canvas) return;
+          // Reset para medir tamanho real
+          canvas.style.transform = 'none';
+          canvas.style.transformOrigin = 'top left';
+          var available = Math.min(window.innerWidth || 0, document.documentElement.clientWidth || 0) - 8; // padding de segurança
+          var needed = canvas.scrollWidth || canvas.offsetWidth;
+          if (needed > 0 && available > 0) {
+            var scale = available / needed;
+            // Limita a escala: não aumenta além de 1 e não reduz além de 0.5
+            scale = Math.max(0.5, Math.min(1, scale));
+            canvas.style.transform = 'scale(' + scale + ')';
+          }
+        } catch (e) {
+          console.warn('Falha ao aplicar escala no canvas:', e);
+        }
+      }
+      // Debounce simples para resize
+      var _resizeTO;
+      window.addEventListener('resize', function(){
+        clearTimeout(_resizeTO);
+        _resizeTO = setTimeout(aplicarEscalaCanvas, 150);
+      });
+      document.addEventListener('DOMContentLoaded', function(){
+        setTimeout(aplicarEscalaCanvas, 150);
+      });
     </script>
     <link rel="icon" type="image/png" href="static/img/favicon-olho.png">
     <style>
@@ -55,7 +84,7 @@
                 position: relative;
                 left: 0;
                 width: 100vw;
-                height: 70vh;
+                height: 60vh;
             }
             .canvas-container, .container, .wrapper, body, html {
                 overflow-x: auto;

@@ -852,6 +852,7 @@
             // Configurar painel de informações após renderizar
             setTimeout(() => {
                 setupInfoPanel();
+                aplicarEscalaResponsiva();
             }, 100);
         }
 
@@ -1506,10 +1507,32 @@
                     LogoManager.loadEmpresaLogo(data);
                 });
 
-
-
-
+            // Recalcular escala ao redimensionar
+            window.addEventListener('resize', () => {
+                aplicarEscalaResponsiva();
+            });
         });
+
+        // Escala proporcional da grade de portas para caber no container
+        function aplicarEscalaResponsiva() {
+            const containers = document.querySelectorAll('.ports-container');
+            containers.forEach(container => {
+                const grid = container.querySelector('.ports-grid');
+                if (!grid) return;
+                // Resetar transform para medir tamanho real
+                grid.style.transform = 'none';
+                grid.style.transformOrigin = 'top center';
+                // Espaço disponível
+                const available = container.clientWidth - 16; // margem interna
+                const needed = grid.scrollWidth;
+                if (needed > 0) {
+                    let scale = available / needed;
+                    // Limitar escala entre 0.5 e 1 para não ampliar demais
+                    scale = Math.max(0.5, Math.min(1, scale));
+                    grid.style.transform = `scale(${scale})`;
+                }
+            });
+        }
     </script>
 </body>
 </html>
