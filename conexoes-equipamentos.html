@@ -991,7 +991,12 @@
   <script src="/static/js/equipment-images-map.js?v=1.2"></script>
   <script>
     // Evitar cache de imagens no mobile
-    function cacheBust(url){ if(!url) return ''; return url + (url.includes('?') ? '&' : '?') + 'v=' + Date.now(); }
+    function cacheBust(url){ 
+      if(!url) return ''; 
+      const timestamp = Date.now();
+      const random = Math.floor(Math.random() * 1000);
+      return url + (url.includes('?') ? '&' : '?') + 'v=' + timestamp + '&r=' + random; 
+    }
 
     // Estado global
     let gridData = {
@@ -3736,13 +3741,42 @@
         console.log('🔍 findEquipmentImage procurando por:', equipmentType, equipmentName, equipmentMarca, equipmentModelo);
         console.log('🔍 Tipo em lowercase:', equipmentType ? equipmentType.toLowerCase() : 'null');
         console.log('🔍 Nome em lowercase:', equipmentName ? equipmentName.toLowerCase() : 'null');
+        console.log('🔍 findEquipmentImageByType disponível?', typeof findEquipmentImageByType);
+        console.log('🔍 User Agent:', navigator.userAgent);
+        console.log('🔍 É mobile?', /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
         
         // Usar o novo sistema de mapeamento inteligente
-        const mappedImage = findEquipmentImageByType(equipmentType, equipmentName, equipmentMarca, equipmentModelo);
+        let mappedImage = null;
+        if (typeof findEquipmentImageByType === 'function') {
+          mappedImage = findEquipmentImageByType(equipmentType, equipmentName, equipmentMarca, equipmentModelo);
+        } else {
+          console.warn('⚠️ findEquipmentImageByType não está disponível, usando fallback');
+        }
         
         if (mappedImage) {
           console.log('✅ Imagem encontrada pelo mapeamento:', mappedImage);
           return mappedImage;
+        } else {
+          console.log('❌ Nenhuma imagem encontrada pelo mapeamento para:', equipmentType, equipmentName);
+        }
+        
+        // Fallback simples para equipamentos comuns
+        const fallbackImages = {
+          'tv': '/static/img/tv-lg-outro.png',
+          'chromebox': '/static/img/pc-ctl-outro.png',
+          'fonte': '/static/img/fonte-logitech-display-hub.png',
+          'microfone': '/static/img/microfone-shure-mxa920.png',
+          'camera': '/static/img/camera-logitech-rally.png',
+          'speaker': '/static/img/speaker-logitech-rally.png',
+          'switch': '/static/img/equipamentos/switch-cisco.png'
+        };
+        
+        const typeLower = equipmentType ? equipmentType.toLowerCase() : '';
+        for (const [key, img] of Object.entries(fallbackImages)) {
+          if (typeLower.includes(key)) {
+            console.log('✅ Usando fallback para', key, ':', img);
+            return img;
+          }
         }
         
         // Fallback: buscar na API de imagens se o mapeamento não encontrou

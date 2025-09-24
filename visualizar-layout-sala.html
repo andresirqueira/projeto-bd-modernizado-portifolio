@@ -18,7 +18,9 @@
       // Helper para evitar cache de imagens no mobile
       function cacheBust(url) {
         if (!url) return '';
-        const u = url + (url.includes('?') ? '&' : '?') + 'v=' + Date.now();
+        const timestamp = Date.now();
+        const random = Math.floor(Math.random() * 1000);
+        const u = url + (url.includes('?') ? '&' : '?') + 'v=' + timestamp + '&r=' + random;
         return u;
       }
       // Escala proporcional do canvas para caber na tela sem cortes
@@ -236,6 +238,7 @@
             text-align: center;
         }
     </style>
+    <script src="/static/js/equipment-images-map.js?v=1.2"></script>
 </head>
 <body>
     <button onclick="window.history.back()" class="fixed top-6 left-64 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-3 transition-colors z-50" title="Voltar" style="left: 140px;">
@@ -828,20 +831,60 @@
                         
                         const img = document.createElement('img');
                         let resolvedSrc = item.img || 'static/img/equipamentos/pc-ctl.png';
+                        
+                        // Fallback para equipamentos comuns se não há imagem definida
+                        if (!item.img) {
+                            // Tentar usar o mapeamento inteligente primeiro
+                            if (typeof findEquipmentImageByType === 'function') {
+                                const mappedImage = findEquipmentImageByType(item.tipo || '', item.nome || '', item.marca || '', item.modelo || '');
+                                if (mappedImage) {
+                                    resolvedSrc = mappedImage;
+                                    console.log('✅ Usando mapeamento inteligente:', mappedImage);
+                                }
+                            }
+                            
+                            // Se não encontrou pelo mapeamento, usar fallback simples
+                            if (!resolvedSrc || resolvedSrc === 'static/img/equipamentos/pc-ctl.png') {
+                                const fallbackImages = {
+                                    'tv': '/static/img/tv-lg-outro.png',
+                                    'chromebox': '/static/img/pc-ctl-outro.png',
+                                    'fonte': '/static/img/fonte-logitech-display-hub.png',
+                                    'microfone': '/static/img/microfone-shure-mxa920.png',
+                                    'camera': '/static/img/camera-logitech-rally.png',
+                                    'speaker': '/static/img/speaker-logitech-rally.png',
+                                    'switch': '/static/img/equipamentos/switch-cisco.png'
+                                };
+                                
+                                const typeLower = (item.tipo || '').toLowerCase();
+                                for (const [key, fallbackImg] of Object.entries(fallbackImages)) {
+                                    if (typeLower.includes(key)) {
+                                        resolvedSrc = fallbackImg;
+                                        console.log('✅ Usando fallback para', key, ':', fallbackImg);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        
                         if (resolvedSrc && !resolvedSrc.startsWith('/')) {
                             resolvedSrc = '/' + resolvedSrc.replace(/^\/+/, '');
                         }
                         if (resolvedSrc.startsWith('/img/')) {
                             resolvedSrc = '/static' + resolvedSrc; 
                         }
+                        
+                        console.log('🖼️ Carregando imagem:', resolvedSrc, 'para equipamento:', item.nome || item.tipo);
                         img.src = cacheBust(resolvedSrc);
                         img.style.width = '100%';
                         img.style.height = '100%';
                         img.style.objectFit = 'contain';
                         img.style.borderRadius = '6px';
                         img.onerror = function() {
-                            console.warn('Erro ao carregar imagem:', item.img);
+                            console.warn('❌ Erro ao carregar imagem:', resolvedSrc, 'para equipamento:', item.nome || item.tipo);
                             this.style.display = 'none';
+                        };
+                        img.onload = function() {
+                            console.log('✅ Imagem carregada com sucesso:', resolvedSrc);
                         };
                         
                         imgContainer.appendChild(img);
