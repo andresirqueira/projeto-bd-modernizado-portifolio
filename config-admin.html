@@ -13,6 +13,17 @@
     <link rel="stylesheet" href="static/css/tour.css">
     <link rel="icon" type="image/png" href="static/img/favicon-engrenagem.png">
     <script src="static/js/tour.js"></script>
+    <style>
+      /* Ajustes mobile para os tiles do painel admin */
+      .admin-grid > div { flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+      .admin-grid button { width: 6rem; height: 6rem; }
+      @media (min-width: 640px) { /* sm */
+        .admin-grid button { width: 7rem; height: 7rem; }
+      }
+      @media (min-width: 768px) { /* md */
+        .admin-grid button { width: 8rem; height: 8rem; }
+      }
+    </style>
     <script>
       // Dark mode toggle
       function toggleDarkMode() {
@@ -73,7 +84,7 @@
             <p class="text-gray-600 dark:text-gray-300">Painel de controle administrativo do sistema</p>
         </div>
         
-        <div class="space-y-4 flex flex-col items-center">
+        <div class="space-y-4 flex flex-col items-center admin-grid">
             <!-- Linha 1: Salas -->
             <div class="flex flex-row gap-1">
                 <button onclick="window.location.href='adicionar-sala.html'" class="w-32 h-32 m-0 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">

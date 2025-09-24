@@ -28,6 +28,11 @@
         document.documentElement.classList.remove('dark');
       }
     </script>
+    <style>
+      .grid-tiles button { width: 6rem; height: 6rem; }
+      @media (min-width: 640px) { .grid-tiles button { width: 7rem; height: 7rem; } }
+      @media (min-width: 768px) { .grid-tiles button { width: 8rem; height: 8rem; } }
+    </style>
 </head>
 <body class="bg-gradient-to-br from-indigo-400 to-purple-600 min-h-screen dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
     <div class="relative w-full max-w-3xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl p-8 mt-8">
@@ -45,7 +50,7 @@
             </h1>
             <p class="text-gray-600 dark:text-gray-300">Painel de controle do usuário</p>
         </div>
-        <div class="flex flex-row gap-1 justify-center">
+        <div class="flex flex-row flex-wrap gap-2 justify-center grid-tiles">
             <button onclick="window.location.href='ver-salas.html'" class="w-32 h-32 m-0 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg shadow flex flex-col items-center justify-center gap-2 transition-colors">
                 <i class="fas fa-eye text-2xl"></i>
                 <span class="text-sm text-center">Ver Salas</span>
