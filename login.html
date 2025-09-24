@@ -11,9 +11,10 @@
     </script>
     <style>
       .horus-bg {
-        background: radial-gradient(1200px 600px at 10% 10%, rgba(99,102,241,0.25), transparent 40%),
-                    radial-gradient(1000px 500px at 90% 20%, rgba(147,51,234,0.22), transparent 45%),
-                    radial-gradient(900px 600px at 20% 90%, rgba(59,130,246,0.18), transparent 50%),
+        /* Dark mode background with subtle blue accents */
+        background: radial-gradient(1200px 600px at 10% 10%, rgba(52,152,219,0.18), transparent 40%),
+                    radial-gradient(1000px 500px at 90% 20%, rgba(41,128,185,0.16), transparent 45%),
+                    radial-gradient(900px 600px at 20% 90%, rgba(74,144,226,0.14), transparent 50%),
                     linear-gradient(135deg, #0f172a 0%, #111827 40%, #0b1220 100%);
       }
       .horus-blob {
@@ -53,12 +54,14 @@
       }
     </script>
  </head>
-<body class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-200 to-purple-200 dark:horus-bg">
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0">
-        <span class="horus-blob" style="top:-10%; left:-8%; width:340px; height:340px; background: rgba(99,102,241,0.45);"></span>
-        <span class="horus-blob" style="top:15%; right:-6%; width:420px; height:420px; background: rgba(147,51,234,0.40);"></span>
-        <span class="horus-blob" style="bottom:-12%; left:30%; width:480px; height:480px; background: rgba(59,130,246,0.38);"></span>
+<body class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-400 to-purple-600 dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
+    <!-- Light-mode blobs (indigo/violet) for subtle depth -->
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 dark:hidden">
+        <span class="horus-blob" style="top:-10%; left:-8%; width:340px; height:340px; background: rgba(99,102,241,0.22);"></span>
+        <span class="horus-blob" style="top:15%; right:-6%; width:420px; height:420px; background: rgba(139,92,246,0.18);"></span>
+        <span class="horus-blob" style="bottom:-12%; left:30%; width:480px; height:480px; background: rgba(99,102,241,0.16);"></span>
     </div>
+    <!-- Hide blobs on dark to keep standard dark background clean -->
     <!-- Interactive hexagon mesh -->
     <div class="hex-layer" aria-hidden="true">
         <canvas id="hexMesh"></canvas>
@@ -146,11 +149,12 @@
                 const isDark = document.documentElement.classList.contains('dark');
 
                 ctx.clearRect(0,0,width,height);
-                const base = isDark ? '#64748b' : '#94a3b8'; // slate-500/400
-                const glow = isDark ? '#818cf8' : '#6366f1'; // indigo accent
-                const baseAlpha = isDark ? 0.28 : 0.55;      // ensure always visible in light
-                const boost = isDark ? 0.35 : 0.25;          // hover boost
-                const lineW = isDark ? 1.2 : 1.4;
+                // Align to project accent (indigo) over standard backgrounds
+                const base = isDark ? '#6366f1' : '#4f46e5';  // indigo-500/600
+                const glow = isDark ? '#8b5cf6' : '#6366f1';  // violet-500 / indigo-500
+                const baseAlpha = isDark ? 0.26 : 0.38;      // tuned intensity per theme
+                const boost = isDark ? 0.32 : 0.20;          // gentle hover
+                const lineW = isDark ? 1.0 : 1.0;
                 const hoverR = 140; const hoverR2 = hoverR*hoverR;
 
                 for(const cell of grid){

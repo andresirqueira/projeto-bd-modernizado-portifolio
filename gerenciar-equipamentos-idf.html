@@ -189,7 +189,7 @@
             if (equipamentosExclusivos.length > 0) {
                 html += '<div class="mb-4"><h4 class="font-semibold text-gray-800 dark:text-white mb-2"><i class="fas fa-server text-blue-500 mr-2"></i>Equipamentos Exclusivos do IDF</h4>';
                 html += equipamentosExclusivos.map(eq => `
-                    <div class="equipamento-option p-3 border border-gray-200 dark:border-gray-600 rounded-lg mb-2 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700" onclick="selecionarEquipamento(${eq.id}, 'exclusivo')">
+                    <div class="equipamento-option p-3 border border-gray-200 dark:border-gray-600 rounded-lg mb-2 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700" onclick="selecionarEquipamento(this, ${eq.id}, 'exclusivo')">
                         <div class="font-semibold text-gray-800 dark:text-white">${eq.nome}</div>
                         <div class="text-sm text-gray-600 dark:text-gray-300">${eq.marca} ${eq.modelo} - ${eq.tipo}</div>
                         <div class="text-xs text-blue-600 dark:text-blue-400 mt-1"><i class="fas fa-info-circle mr-1"></i>Equipamento exclusivo do IDF</div>
@@ -201,7 +201,7 @@
             if (equipamentosSalas.length > 0) {
                 html += '<div class="mb-4"><h4 class="font-semibold text-gray-800 dark:text-white mb-2"><i class="fas fa-door-open text-green-500 mr-2"></i>Equipamentos de Salas (Alocados no IDF)</h4>';
                 html += equipamentosSalas.map(eq => `
-                    <div class="equipamento-option p-3 border border-gray-200 dark:border-gray-600 rounded-lg mb-2 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700" onclick="selecionarEquipamento(${eq.id}, 'sala', ${eq.sala_id})">
+                    <div class="equipamento-option p-3 border border-gray-200 dark:border-gray-600 rounded-lg mb-2 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700" onclick="selecionarEquipamento(this, ${eq.id}, 'sala', ${eq.sala_id})">
                         <div class="font-semibold text-gray-800 dark:text-white">${eq.nome}</div>
                         <div class="text-sm text-gray-600 dark:text-gray-300">${eq.marca} ${eq.modelo} - ${eq.tipo}</div>
                         <div class="text-xs text-green-600 dark:text-green-400 mt-1"><i class="fas fa-home mr-1"></i>Pertence à sala: ${eq.sala_nome}</div>
@@ -214,14 +214,15 @@
         }
 
         // Selecionar equipamento
-        function selecionarEquipamento(equipamentoId, tipoAlocacao, salaOrigemId = null) {
+        function selecionarEquipamento(elemento, equipamentoId, tipoAlocacao, salaOrigemId = null) {
             // Remover seleção anterior
             document.querySelectorAll('.equipamento-option').forEach(el => {
                 el.classList.remove('selected', 'bg-blue-100', 'dark:bg-blue-900', 'border-blue-500');
             });
             
             // Adicionar seleção atual
-            const selectedElement = event.target.closest('.equipamento-option');
+            const selectedElement = (elemento && elemento.closest) ? elemento.closest('.equipamento-option') : null;
+            if (!selectedElement) return;
             selectedElement.classList.add('selected', 'bg-blue-100', 'dark:bg-blue-900', 'border-blue-500');
             
             equipamentoSelecionado = {
