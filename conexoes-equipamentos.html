@@ -1051,9 +1051,32 @@
       });
     }
 
-    // Função para obter URL de imagem segura com fallback
-    async function getSafeImageUrl(originalSrc, fallbackSrc = '/static/img/pc-ctl-outro.png') {
-      if (!originalSrc) return fallbackSrc;
+    // Função para obter fallback baseado no tipo de equipamento
+    function getEquipmentFallback(equipmentName) {
+      const name = equipmentName.toLowerCase();
+      
+      if (name.includes('tv')) return '/static/img/tv-lg-outro.png';
+      if (name.includes('chromebox')) return '/static/img/pc-ctl-outro.png';
+      if (name.includes('fonte') && name.includes('tap')) return '/static/img/fonte-logitech-tap.png';
+      if (name.includes('fonte') && name.includes('chromebox')) return '/static/img/fonte-universal-chromebox.png';
+      if (name.includes('microfone')) return '/static/img/microfone-logitech-rally-mic-pod.png';
+      if (name.includes('camera')) return '/static/img/camera-logitech-rally.png';
+      if (name.includes('speaker')) return '/static/img/speaker-logitech-rally.png';
+      if (name.includes('switch')) return '/static/img/equipamentos/switch-cisco.png';
+      if (name.includes('hub')) return '/static/img/hub-logitech-display.png';
+      if (name.includes('meetup')) return '/static/img/meetup-logitech-meetup.png';
+      if (name.includes('tap')) return '/static/img/tap-logitech-tap-poe.png';
+      if (name.includes('painel')) return '/static/img/painel-crestron-outro.png';
+      
+      // Fallback genérico
+      return '/static/img/pc-ctl-outro.png';
+    }
+
+    // Função para obter URL de imagem segura com fallback inteligente
+    async function getSafeImageUrl(originalSrc, equipmentName = '') {
+      if (!originalSrc) {
+        return getEquipmentFallback(equipmentName);
+      }
       
       // Normalizar caminho
       let normalizedSrc = originalSrc;
@@ -1070,7 +1093,8 @@
         return cachedSrc;
       }
       
-      console.warn(`Imagem não encontrada: ${cachedSrc}, usando fallback: ${fallbackSrc}`);
+      const fallbackSrc = getEquipmentFallback(equipmentName);
+      console.warn(`Imagem não encontrada: ${cachedSrc}, usando fallback inteligente: ${fallbackSrc} para equipamento: ${equipmentName}`);
       return fallbackSrc;
     }
 
@@ -1082,14 +1106,22 @@
       equipmentImages.forEach(img => {
         if (img.complete && img.naturalHeight === 0) {
           console.warn('Imagem com erro detectada:', img.src);
-          const originalSrc = img.src.split('?')[0];
-          img.src = originalSrc + '?v=' + Date.now();
+          
+          // Obter nome do equipamento para fallback inteligente
+          const nameElement = img.parentElement.querySelector('.name');
+          const equipmentName = nameElement ? nameElement.textContent : '';
+          
+          // Usar fallback inteligente baseado no nome do equipamento
+          const fallbackSrc = getEquipmentFallback(equipmentName);
+          img.src = fallbackSrc;
+          
+          console.log(`🔧 Imagem corrigida com fallback inteligente: ${equipmentName} → ${fallbackSrc}`);
           fixedCount++;
         }
       });
       
       if (fixedCount > 0) {
-        console.log(`🔧 ${fixedCount} imagens corrigidas`);
+        console.log(`🔧 ${fixedCount} imagens corrigidas com fallback inteligente`);
       }
       
       return fixedCount;
@@ -1404,9 +1436,10 @@
               cell.dataset.keystone = item.keystone;
             } else {
               // Restaurar equipamento normal
+              const fallbackSrc = getEquipmentFallback(item.name);
               cell.innerHTML = `
                 <div class="equipment-slot">
-                  <img src="${cacheBust(item.src ? (item.src.startsWith('/') ? item.src : '/' + item.src.replace(/^\/+/, '')) : '')}" alt="${item.name}">
+                  <img src="${cacheBust(item.src ? (item.src.startsWith('/') ? item.src : '/' + item.src.replace(/^\/+/, '')) : '')}" alt="${item.name}" onerror="console.error('Erro ao carregar imagem:', this.src); this.src='${fallbackSrc}';">
                   <div class="name">${item.name}</div>
                 </div>
               `;
@@ -1636,9 +1669,10 @@
       const sizeClass = getEquipmentSizeClass(name);
       
       // Atualiza célula diretamente
+      const fallbackSrc = getEquipmentFallback(name);
       cell.innerHTML = `
         <div class="equipment-slot ${sizeClass}">
-          <img src="${cacheBust(gridData.selectedEquipment ? (gridData.selectedEquipment.startsWith('/') ? gridData.selectedEquipment : '/' + gridData.selectedEquipment.replace(/^\/+/, '')) : '')}" alt="${name}">
+          <img src="${cacheBust(gridData.selectedEquipment ? (gridData.selectedEquipment.startsWith('/') ? gridData.selectedEquipment : '/' + gridData.selectedEquipment.replace(/^\/+/, '')) : '')}" alt="${name}" onerror="console.error('Erro ao carregar imagem:', this.src); this.src='${fallbackSrc}';">
           <div class="name">${name}</div>
         </div>
       `;
@@ -2422,9 +2456,10 @@
               } else {
                 // É um equipamento normal
                 const sizeClass = getEquipmentSizeClass(item.name);
+                const fallbackSrc = getEquipmentFallback(item.name);
                 cell.innerHTML = `
                   <div class="equipment-slot ${sizeClass}">
-                    <img src="${cacheBust(item.src ? (item.src.startsWith('/') ? item.src : '/' + item.src.replace(/^\/+/, '')) : '')}" alt="${item.name}">
+                    <img src="${cacheBust(item.src ? (item.src.startsWith('/') ? item.src : '/' + item.src.replace(/^\/+/, '')) : '')}" alt="${item.name}" onerror="console.error('Erro ao carregar imagem:', this.src); this.src='${fallbackSrc}';">
                     <div class="name">${item.name}</div>
                   </div>
                 `;
@@ -2803,9 +2838,10 @@
         }
         const finalSrc = cacheBust(normalizedSrc);
         
+        const fallbackSrc = getEquipmentFallback(elementName);
         toCell.innerHTML = `
           <div class="equipment-slot">
-            <img src="${finalSrc}" alt="${elementName}" onerror="console.error('Erro ao carregar imagem:', this.src); this.src='/static/img/pc-ctl-outro.png';">
+            <img src="${finalSrc}" alt="${elementName}" onerror="console.error('Erro ao carregar imagem:', this.src); this.src='${fallbackSrc}';">
             <div class="name">${elementName}</div>
           </div>
         `;
@@ -3352,9 +3388,10 @@
               const finalSrc = cacheBust(normalizedSrc);
               console.log('🔧 Caminho final da imagem:', finalSrc);
               
+              const fallbackSrc = getEquipmentFallback(equip.nome);
               cell.innerHTML = `
                 <div class="equipment-slot">
-                  <img src="${finalSrc}" alt="${equip.nome}" onerror="console.error('Erro ao carregar imagem:', this.src); this.src='/static/img/pc-ctl-outro.png';">
+                  <img src="${finalSrc}" alt="${equip.nome}" onerror="console.error('Erro ao carregar imagem:', this.src); this.src='${fallbackSrc}';">
                   <div class="name">${equip.nome}</div>
                 </div>
               `;
