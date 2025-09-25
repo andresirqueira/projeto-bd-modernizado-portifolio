@@ -3239,9 +3239,17 @@
               let imgSrc = await findEquipmentImage(equip.tipo || equip.nome, equip.nome || '', equip.marca || '', equip.modelo || '');
               console.log('✅ Imagem selecionada para', equip.nome, ':', imgSrc);
               
+              // Normalizar o caminho da imagem
+              let normalizedSrc = imgSrc;
+              if (imgSrc && !imgSrc.startsWith('/')) {
+                normalizedSrc = '/' + imgSrc.replace(/^\/+/, '');
+              }
+              const finalSrc = cacheBust(normalizedSrc);
+              console.log('🔧 Caminho final da imagem:', finalSrc);
+              
               cell.innerHTML = `
                 <div class="equipment-slot">
-                  <img src="${cacheBust(imgSrc && !imgSrc.startsWith('/') ? '/' + imgSrc.replace(/^\/+/, '') : imgSrc)}" alt="${equip.nome}">
+                  <img src="${finalSrc}" alt="${equip.nome}" onerror="console.error('Erro ao carregar imagem:', this.src); this.src='/static/img/equipamentos/pc-ctl.png';">
                   <div class="name">${equip.nome}</div>
                 </div>
               `;
@@ -3764,8 +3772,6 @@
         console.log('🔍 Tipo em lowercase:', equipmentType ? equipmentType.toLowerCase() : 'null');
         console.log('🔍 Nome em lowercase:', equipmentName ? equipmentName.toLowerCase() : 'null');
         console.log('🔍 findEquipmentImageByType disponível?', typeof findEquipmentImageByType);
-        console.log('🔍 User Agent:', navigator.userAgent);
-        console.log('🔍 É mobile?', /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
         
         // Usar o novo sistema de mapeamento inteligente
         let mappedImage = null;
@@ -3782,30 +3788,12 @@
           console.log('❌ Nenhuma imagem encontrada pelo mapeamento para:', equipmentType, equipmentName);
         }
         
-        // Fallback simples para equipamentos comuns
-        const fallbackImages = {
-          'tv': '/static/img/tv-lg-outro.png',
-          'chromebox': '/static/img/pc-ctl-outro.png',
-          'fonte': '/static/img/fonte-logitech-display-hub.png',
-          'microfone': '/static/img/microfone-shure-mxa920.png',
-          'camera': '/static/img/camera-logitech-rally.png',
-          'speaker': '/static/img/speaker-logitech-rally.png',
-          'switch': '/static/img/equipamentos/switch-cisco.png'
-        };
-        
-        const typeLower = equipmentType ? equipmentType.toLowerCase() : '';
-        for (const [key, img] of Object.entries(fallbackImages)) {
-          if (typeLower.includes(key)) {
-            console.log('✅ Usando fallback para', key, ':', img);
-            return img;
-          }
-        }
-        
         // Fallback: buscar na API de imagens se o mapeamento não encontrou
         const response = await fetch('/api/equipamentos-imagens');
         const images = await response.json();
+        console.log('📋 Imagens disponíveis:', images);
         
-        const type = equipmentType.toLowerCase();
+        const type = equipmentType ? equipmentType.toLowerCase() : '';
         
         // Busca genérica por tipo
         let matchingImage = images.find(img => {
@@ -3818,6 +3806,28 @@
           return matchingImage;
         }
         
+        // Fallback simples para equipamentos comuns
+        const fallbackImages = {
+          'tv': '/static/img/equipamentos/tv-lg.png',
+          'chromebox': '/static/img/equipamentos/pc-ctl.png',
+          'fonte': '/static/img/equipamentos/poe-logitech.png',
+          'microfone': '/static/img/equipamentos/microfone-logitech.png',
+          'camera': '/static/img/equipamentos/camera-logitech.png',
+          'speaker': '/static/img/equipamentos/speaker-logitech.png',
+          'switch': '/static/img/equipamentos/switch-cisco.png',
+          'hub': '/static/img/equipamentos/hub-logitech.png',
+          'meetup': '/static/img/equipamentos/meetup-logitech.png',
+          'tap': '/static/img/equipamentos/tap-logitech.png',
+          'painel': '/static/img/equipamentos/painel-crestron.png'
+        };
+        
+        for (const [key, img] of Object.entries(fallbackImages)) {
+          if (type.includes(key)) {
+            console.log('✅ Usando fallback para', key, ':', img);
+            return img;
+          }
+        }
+        
         // Se ainda não encontrou, usar a primeira imagem disponível
         matchingImage = images[0];
         console.log('⚠️ Nenhuma imagem específica encontrada, usando padrão:', matchingImage);
@@ -3825,7 +3835,7 @@
         
       } catch (error) {
         console.error('Erro ao buscar imagem do equipamento:', error);
-        return '/static/img/outro-outro-outro.png'; // Imagem padrão
+        return '/static/img/equipamentos/pc-ctl.png'; // Imagem padrão
       }
     }
     
