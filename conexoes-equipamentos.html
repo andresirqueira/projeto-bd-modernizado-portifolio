@@ -3249,7 +3249,7 @@
               
               cell.innerHTML = `
                 <div class="equipment-slot">
-                  <img src="${finalSrc}" alt="${equip.nome}" onerror="console.error('Erro ao carregar imagem:', this.src); this.src='/static/img/equipamentos/pc-ctl.png';">
+                  <img src="${finalSrc}" alt="${equip.nome}" onerror="console.error('Erro ao carregar imagem:', this.src); this.src='/static/img/pc-ctl-outro.png';">
                   <div class="name">${equip.nome}</div>
                 </div>
               `;
@@ -3808,17 +3808,17 @@
         
         // Fallback simples para equipamentos comuns
         const fallbackImages = {
-          'tv': '/static/img/equipamentos/tv-lg.png',
-          'chromebox': '/static/img/equipamentos/pc-ctl.png',
-          'fonte': '/static/img/equipamentos/poe-logitech.png',
-          'microfone': '/static/img/equipamentos/microfone-logitech.png',
-          'camera': '/static/img/equipamentos/camera-logitech.png',
-          'speaker': '/static/img/equipamentos/speaker-logitech.png',
+          'tv': '/static/img/tv-lg-outro.png',
+          'chromebox': '/static/img/pc-ctl-outro.png',
+          'fonte': '/static/img/fonte-logitech-tap.png',
+          'microfone': '/static/img/microfone-logitech-rally-mic-pod.png',
+          'camera': '/static/img/camera-logitech-rally.png',
+          'speaker': '/static/img/speaker-logitech-rally.png',
           'switch': '/static/img/equipamentos/switch-cisco.png',
-          'hub': '/static/img/equipamentos/hub-logitech.png',
-          'meetup': '/static/img/equipamentos/meetup-logitech.png',
-          'tap': '/static/img/equipamentos/tap-logitech.png',
-          'painel': '/static/img/equipamentos/painel-crestron.png'
+          'hub': '/static/img/hub-logitech-display.png',
+          'meetup': '/static/img/meetup-logitech-meetup.png',
+          'tap': '/static/img/tap-logitech-tap-poe.png',
+          'painel': '/static/img/painel-crestron-outro.png'
         };
         
         for (const [key, img] of Object.entries(fallbackImages)) {
@@ -3835,7 +3835,7 @@
         
       } catch (error) {
         console.error('Erro ao buscar imagem do equipamento:', error);
-        return '/static/img/equipamentos/pc-ctl.png'; // Imagem padrão
+        return '/static/img/pc-ctl-outro.png'; // Imagem padrão
       }
     }
     
