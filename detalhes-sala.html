@@ -174,6 +174,17 @@
     async function salvarSala(e) {
         e.preventDefault();
         const id = getIdFromUrl();
+        
+        // Buscar equipamentos atualmente vinculados à sala para preservar os vínculos
+        let equipamentosIds = [];
+        try {
+            const respEq = await fetch(`/equipamentos?sala_id=${id}`);
+            const equipamentos = await respEq.json();
+            equipamentosIds = equipamentos.map(eq => String(eq.id));
+        } catch (error) {
+            console.error('Erro ao buscar equipamentos da sala:', error);
+        }
+        
         const body = {
             nome: document.getElementById('editSala-nome').value,
             tipo: document.getElementById('editSala-tipo').value,
@@ -181,7 +192,7 @@
             foto: document.getElementById('editSala-fotoExistente').value || null,
             fotos: null,
             andar_id: document.getElementById('editSala-andar').value || null,
-            equipamentos_ids: []
+            equipamentos_ids: equipamentosIds
         };
         const resp = await fetch(`/salas/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
         if (resp.ok) {
