@@ -1026,15 +1026,15 @@
 
     // Função para limpar cache de imagens
     function clearImageCache() {
-      // Forçar reload de todas as imagens na página
-      const images = document.querySelectorAll('img');
-      images.forEach(img => {
-        if (img.src) {
+      // Forçar reload apenas de imagens de equipamentos
+      const equipmentImages = document.querySelectorAll('.equipment-slot img');
+      equipmentImages.forEach(img => {
+        if (img.src && !img.src.includes('pc-ctl-outro.png')) {
           const originalSrc = img.src.split('?')[0]; // Remove parâmetros de cache
           img.src = originalSrc + '?v=' + Date.now();
         }
       });
-      console.log('🔄 Cache de imagens limpo');
+      console.log('🔄 Cache de imagens de equipamentos limpo');
     }
 
     // Estado global
@@ -2716,10 +2716,17 @@
         // É um equipamento normal - usar estrutura com imagem
         const equipmentImg = equipmentSlot.querySelector('img');
         const rawSrc = equipmentImg ? equipmentImg.getAttribute('src') || equipmentImg.src : '';
-        const normalized = normalizeImageSrc(rawSrc);
+        
+        // Normalizar e aplicar cache busting
+        let normalizedSrc = rawSrc;
+        if (rawSrc && !rawSrc.startsWith('/')) {
+          normalizedSrc = '/' + rawSrc.replace(/^\/+/, '');
+        }
+        const finalSrc = cacheBust(normalizedSrc);
+        
         toCell.innerHTML = `
           <div class="equipment-slot">
-            <img src="${normalized}" alt="${elementName}">
+            <img src="${finalSrc}" alt="${elementName}" onerror="console.error('Erro ao carregar imagem:', this.src); this.src='/static/img/pc-ctl-outro.png';">
             <div class="name">${elementName}</div>
           </div>
         `;
@@ -2734,6 +2741,17 @@
         } else {
           makeEquipmentDraggable(newElement);
         }
+      }
+      
+      // Limpar cache da imagem após mover equipamento
+      if (!isText && !isKeystone) {
+        setTimeout(() => {
+          const movedImg = toCell.querySelector('img');
+          if (movedImg && movedImg.src) {
+            const originalSrc = movedImg.src.split('?')[0];
+            movedImg.src = originalSrc + '?v=' + Date.now();
+          }
+        }, 100);
       }
       
       // Atualiza conexões (apenas para equipamentos)
