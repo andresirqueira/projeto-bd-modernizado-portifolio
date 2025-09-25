@@ -336,6 +336,31 @@
         document.getElementById('statusAtual').innerText = mensagem;
     }
 
+    // Função para obter fallback baseado no tipo de equipamento (igual ao conexoes-equipamentos.html)
+    function getEquipmentFallback(equipmentName) {
+        const name = equipmentName.toLowerCase();
+        
+        // Verificar combinações específicas PRIMEIRO (mais específicas)
+        if (name.includes('fonte') && name.includes('chromebox')) return '/static/img/fonte-universal-chromebox.png';
+        if (name.includes('fonte') && name.includes('tap')) return '/static/img/fonte-logitech-tap.png';
+        
+        // Depois verificar tipos individuais
+        if (name.includes('tv')) return '/static/img/tv-lg-outro.png';
+        if (name.includes('chromebox')) return '/static/img/pc-ctl-outro.png';
+        if (name.includes('microfone')) return '/static/img/microfone-logitech-rally-mic-pod.png';
+        if (name.includes('camera')) return '/static/img/camera-logitech-rally.png';
+        if (name.includes('speaker')) return '/static/img/speaker-logitech-rally.png';
+        if (name.includes('switch')) return '/static/img/equipamentos/switch-cisco.png';
+        if (name.includes('hub')) return '/static/img/hub-logitech-display.png';
+        if (name.includes('meetup')) return '/static/img/meetup-logitech-meetup.png';
+        if (name.includes('tap')) return '/static/img/tap-logitech-tap-poe.png';
+        if (name.includes('painel')) return '/static/img/painel-crestron-outro.png';
+        if (name.includes('fonte')) return '/static/img/fonte-logitech-display-hub.png';
+        
+        // Fallback genérico
+        return '/static/img/pc-ctl-outro.png';
+    }
+
          
     
     
@@ -898,6 +923,8 @@
                                 const fallbackImages = {
                                     'tv': '/static/img/tv-lg-outro.png',
                                     'chromebox': '/static/img/pc-ctl-outro.png',
+                                    'fonte_chromebox': '/static/img/fonte-universal-chromebox.png',
+                                    'fonte_tap': '/static/img/fonte-logitech-tap.png',
                                     'fonte': '/static/img/fonte-logitech-display-hub.png',
                                     'microfone': '/static/img/microfone-shure-mxa920.png',
                                     'camera': '/static/img/camera-logitech-rally.png',
@@ -955,6 +982,16 @@
                             
                             // 2) Fallback por tipo/nome conhecido
                             const byTypeFallback = () => {
+                                // Verificar combinações específicas PRIMEIRO
+                                if ((tipoLower.includes('fonte') || nomeLower.includes('fonte')) && 
+                                    (tipoLower.includes('chromebox') || nomeLower.includes('chromebox'))) {
+                                    return '/static/img/fonte-universal-chromebox.png';
+                                }
+                                if ((tipoLower.includes('fonte') || nomeLower.includes('fonte')) && 
+                                    (tipoLower.includes('tap') || nomeLower.includes('tap'))) {
+                                    return '/static/img/fonte-logitech-tap.png';
+                                }
+                                // Depois verificar tipos individuais
                                 if (tipoLower.includes('fonte') || nomeLower.includes('fonte')) {
                                     return '/static/img/fonte-logitech-display-hub.png';
                                 }
