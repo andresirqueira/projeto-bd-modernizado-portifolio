@@ -4484,6 +4484,49 @@ def api_listar_cabos():
     if _is_json_mode(db_file):
         return jsonify(_json_read_table(db_file, 'cabos'))
     return jsonify([])
+
+@app.route('/cabos/<int:cabo_id>', methods=['DELETE'])
+@admin_required
+def excluir_cabo(cabo_id):
+    """Excluir um cabo do estoque"""
+    db_file = session.get('db')
+    if not db_file:
+        return jsonify({'erro': 'Nenhuma empresa selecionada!'}), 400
+    
+    if _is_json_mode(db_file):
+        try:
+            cabos = _json_read_table(db_file, 'cabos')
+            conexoes_cabos = _json_read_table(db_file, 'conexoes_cabos')
+            
+            # Verificar se o cabo existe
+            cabo = next((c for c in cabos if c.get('id') == cabo_id), None)
+            if not cabo:
+                return jsonify({'status': 'erro', 'mensagem': 'Cabo não encontrado'}), 404
+            
+            # Verificar se o cabo está sendo usado em alguma conexão ativa
+            conexao_ativa = next((cc for cc in conexoes_cabos 
+                                if cc.get('cabo_id') == cabo_id and cc.get('status') == 'ativa'), None)
+            if conexao_ativa:
+                return jsonify({'status': 'erro', 'mensagem': 'Não é possível excluir um cabo que está sendo usado em uma conexão ativa'}), 400
+            
+            # Remover o cabo
+            cabos = [c for c in cabos if c.get('id') != cabo_id]
+            _json_write_table(db_file, 'cabos', cabos)
+            
+            # Registrar log
+            dados = request.json or {}
+            motivo = dados.get('motivo', 'Não informado')
+            detalhes = f"Cabo excluído: ID={cabo_id}, Código={cabo.get('codigo_unico')}, Motivo={motivo}"
+            registrar_log(session.get('username', 'desconhecido'), 'EXCLUIR_CABO', detalhes, 'sucesso', db_file)
+            
+            return jsonify({'status': 'ok', 'mensagem': 'Cabo excluído com sucesso'})
+            
+        except Exception as e:
+            print(f"Erro ao excluir cabo {cabo_id}: {e}")
+            registrar_log(session.get('username', 'desconhecido'), 'EXCLUIR_CABO', f'Erro ao excluir cabo ID={cabo_id}: {str(e)}', 'erro', db_file)
+            return jsonify({'status': 'erro', 'mensagem': 'Erro interno do servidor'}), 500
+    else:
+        return jsonify({'status': 'erro', 'mensagem': 'Modo SQLite não implementado'}), 501
 @app.route('/api/salas/<int:sala_id>/switches-usados')
 @login_required
 def switches_usados_sala(sala_id):
