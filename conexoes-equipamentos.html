@@ -1010,7 +1010,7 @@
       }
     }
     
-    // Evitar cache de imagens de forma mais inteligente
+    // Cache busting mais conservador para evitar problemas
     function cacheBust(url){ 
       if(!url) return ''; 
       
@@ -1019,22 +1019,59 @@
         return url;
       }
       
-      // Usar timestamp mais estável para evitar problemas de cache
-      const timestamp = Math.floor(Date.now() / 10000) * 10000; // Arredondar para 10 segundos
+      // Usar timestamp mais estável (5 minutos) para evitar problemas de cache
+      const timestamp = Math.floor(Date.now() / 300000) * 300000; // Arredondar para 5 minutos
       return url + (url.includes('?') ? '&' : '?') + 'v=' + timestamp; 
     }
 
-    // Função para limpar cache de imagens
+    // Função para limpar cache de imagens (usar com moderação)
     function clearImageCache() {
-      // Forçar reload apenas de imagens de equipamentos
+      // Apenas log para debug - não forçar reload automático
       const equipmentImages = document.querySelectorAll('.equipment-slot img');
+      console.log(`🔄 ${equipmentImages.length} imagens de equipamentos encontradas`);
+      
+      // Verificar se há imagens com erro
       equipmentImages.forEach(img => {
-        if (img.src && !img.src.includes('pc-ctl-outro.png')) {
-          const originalSrc = img.src.split('?')[0]; // Remove parâmetros de cache
+        if (img.complete && img.naturalHeight === 0) {
+          console.warn('Imagem com erro detectada:', img.src);
+          // Apenas recarregar se realmente houver erro
+          const originalSrc = img.src.split('?')[0];
           img.src = originalSrc + '?v=' + Date.now();
         }
       });
-      console.log('🔄 Cache de imagens de equipamentos limpo');
+    }
+
+    // Função para verificar se uma imagem existe
+    async function imageExists(url) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = url;
+      });
+    }
+
+    // Função para obter URL de imagem segura com fallback
+    async function getSafeImageUrl(originalSrc, fallbackSrc = '/static/img/pc-ctl-outro.png') {
+      if (!originalSrc) return fallbackSrc;
+      
+      // Normalizar caminho
+      let normalizedSrc = originalSrc;
+      if (!normalizedSrc.startsWith('/')) {
+        normalizedSrc = '/' + normalizedSrc.replace(/^\/+/, '');
+      }
+      
+      // Aplicar cache busting
+      const cachedSrc = cacheBust(normalizedSrc);
+      
+      // Verificar se a imagem existe
+      const exists = await imageExists(cachedSrc);
+      if (exists) {
+        return cachedSrc;
+      }
+      
+      console.warn(`Imagem não encontrada: ${cachedSrc}, usando fallback: ${fallbackSrc}`);
+      return fallbackSrc;
     }
 
     // Estado global
@@ -2717,41 +2754,38 @@
         const equipmentImg = equipmentSlot.querySelector('img');
         const rawSrc = equipmentImg ? equipmentImg.getAttribute('src') || equipmentImg.src : '';
         
-        // Normalizar e aplicar cache busting
-        let normalizedSrc = rawSrc;
-        if (rawSrc && !rawSrc.startsWith('/')) {
-          normalizedSrc = '/' + rawSrc.replace(/^\/+/, '');
-        }
-        const finalSrc = cacheBust(normalizedSrc);
-        
-        toCell.innerHTML = `
-          <div class="equipment-slot">
-            <img src="${finalSrc}" alt="${elementName}" onerror="console.error('Erro ao carregar imagem:', this.src); this.src='/static/img/pc-ctl-outro.png';">
-            <div class="name">${elementName}</div>
-          </div>
-        `;
-        toCell.classList.add('occupied');
-      }
-      
-      // Torna o novo elemento arrastável
-      const newElement = toCell.querySelector('.equipment-slot, .text-element');
-      if (newElement) {
-        if (isText) {
-          makeTextDraggable(newElement);
-        } else {
-          makeEquipmentDraggable(newElement);
-        }
-      }
-      
-      // Limpar cache da imagem após mover equipamento
-      if (!isText && !isKeystone) {
-        setTimeout(() => {
-          const movedImg = toCell.querySelector('img');
-          if (movedImg && movedImg.src) {
-            const originalSrc = movedImg.src.split('?')[0];
-            movedImg.src = originalSrc + '?v=' + Date.now();
+        // Usar função segura para obter URL da imagem
+        getSafeImageUrl(rawSrc).then(finalSrc => {
+          toCell.innerHTML = `
+            <div class="equipment-slot">
+              <img src="${finalSrc}" alt="${elementName}" onerror="console.error('Erro ao carregar imagem:', this.src); this.src='/static/img/pc-ctl-outro.png';">
+              <div class="name">${elementName}</div>
+            </div>
+          `;
+          toCell.classList.add('occupied');
+          
+          // Torna o novo elemento arrastável
+          const newElement = toCell.querySelector('.equipment-slot');
+          if (newElement) {
+            makeEquipmentDraggable(newElement);
           }
-        }, 100);
+        });
+        
+        // Adicionar classe occupied imediatamente para evitar problemas visuais
+        toCell.classList.add('occupied');
+        return; // Sair da função aqui, o resto será feito no callback
+      }
+      
+      // Torna o novo elemento arrastável (apenas para texto e keystone)
+      if (isText || isKeystone) {
+        const newElement = toCell.querySelector('.equipment-slot, .text-element');
+        if (newElement) {
+          if (isText) {
+            makeTextDraggable(newElement);
+          } else {
+            makeEquipmentDraggable(newElement);
+          }
+        }
       }
       
       // Atualiza conexões (apenas para equipamentos)
@@ -3761,11 +3795,6 @@
         
         updateStatus(`Dados reais carregados: ${equipCount} equipamentos (${equipamentosEstoqueIncluidos} em estoque), ${keystoneCount} keystones, ${conexoes.length} conexões reais, ${keystoneConnections} conexões de keystones e ${equipamentosConnections} conexões entre equipamentos`);
         
-        // Limpar cache de imagens após carregar dados reais
-        setTimeout(() => {
-          clearImageCache();
-        }, 1000);
-        
       } catch (error) {
         console.error('Erro ao carregar dados reais:', error);
         updateStatus(`Erro ao carregar dados reais: ${error.message}`);
@@ -4316,10 +4345,7 @@
       loadEquipment();
       createGrid();
       
-      // Limpar cache de imagens ao carregar a página
-      setTimeout(() => {
-        clearImageCache();
-      }, 500);
+      // Cache de imagens será gerenciado automaticamente pelo cacheBust
       
       // Modo distribuído sempre ativo - sem necessidade de inicialização de botão
       
