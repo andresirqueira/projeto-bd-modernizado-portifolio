@@ -1074,6 +1074,27 @@
       return fallbackSrc;
     }
 
+    // Função para verificar e corrigir imagens que não carregaram
+    function checkAndFixImages() {
+      const equipmentImages = document.querySelectorAll('.equipment-slot img');
+      let fixedCount = 0;
+      
+      equipmentImages.forEach(img => {
+        if (img.complete && img.naturalHeight === 0) {
+          console.warn('Imagem com erro detectada:', img.src);
+          const originalSrc = img.src.split('?')[0];
+          img.src = originalSrc + '?v=' + Date.now();
+          fixedCount++;
+        }
+      });
+      
+      if (fixedCount > 0) {
+        console.log(`🔧 ${fixedCount} imagens corrigidas`);
+      }
+      
+      return fixedCount;
+    }
+
     // Estado global
     let gridData = {
       rows: 15,
@@ -2672,22 +2693,43 @@
 
     // Função para atualizar conexões após mover equipamento - otimizada
     function updateConnectionsAfterMove(fromRow, fromCol, toRow, toCol, equipmentName) {
+      console.log(`🔄 Atualizando conexões para equipamento "${equipmentName}" movido de (${fromRow},${fromCol}) para (${toRow},${toCol})`);
+      
+      let connectionsUpdated = 0;
+      
       // Atualiza posições das conexões
       const connections = gridData.connections;
       for (let i = 0; i < connections.length; i++) {
         const connection = connections[i];
+        let updated = false;
+        
+        // Verificar se a conexão começa na posição original
         if (connection.from.row === fromRow && connection.from.col === fromCol) {
           connection.from.row = toRow;
           connection.from.col = toCol;
+          updated = true;
+          console.log(`  - Conexão "${connection.cableInfo}" origem atualizada: (${fromRow},${fromCol}) → (${toRow},${toCol})`);
         }
+        
+        // Verificar se a conexão termina na posição original
         if (connection.to.row === fromRow && connection.to.col === fromCol) {
           connection.to.row = toRow;
           connection.to.col = toCol;
+          updated = true;
+          console.log(`  - Conexão "${connection.cableInfo}" destino atualizada: (${fromRow},${fromCol}) → (${toRow},${toCol})`);
+        }
+        
+        if (updated) {
+          connectionsUpdated++;
         }
       }
       
+      console.log(`✅ ${connectionsUpdated} conexões atualizadas`);
+      
       // Redesenha todas as conexões
-      redrawAllConnections();
+      setTimeout(() => {
+        redrawAllConnections();
+      }, 100); // Pequeno delay para garantir que o equipamento foi movido
     }
 
     // Função para mover equipamento - otimizada
@@ -2754,37 +2796,29 @@
         const equipmentImg = equipmentSlot.querySelector('img');
         const rawSrc = equipmentImg ? equipmentImg.getAttribute('src') || equipmentImg.src : '';
         
-        // Usar função segura para obter URL da imagem
-        getSafeImageUrl(rawSrc).then(finalSrc => {
-          toCell.innerHTML = `
-            <div class="equipment-slot">
-              <img src="${finalSrc}" alt="${elementName}" onerror="console.error('Erro ao carregar imagem:', this.src); this.src='/static/img/pc-ctl-outro.png';">
-              <div class="name">${elementName}</div>
-            </div>
-          `;
-          toCell.classList.add('occupied');
-          
-          // Torna o novo elemento arrastável
-          const newElement = toCell.querySelector('.equipment-slot');
-          if (newElement) {
-            makeEquipmentDraggable(newElement);
-          }
-        });
+        // Normalizar e aplicar cache busting de forma síncrona
+        let normalizedSrc = rawSrc;
+        if (rawSrc && !rawSrc.startsWith('/')) {
+          normalizedSrc = '/' + rawSrc.replace(/^\/+/, '');
+        }
+        const finalSrc = cacheBust(normalizedSrc);
         
-        // Adicionar classe occupied imediatamente para evitar problemas visuais
+        toCell.innerHTML = `
+          <div class="equipment-slot">
+            <img src="${finalSrc}" alt="${elementName}" onerror="console.error('Erro ao carregar imagem:', this.src); this.src='/static/img/pc-ctl-outro.png';">
+            <div class="name">${elementName}</div>
+          </div>
+        `;
         toCell.classList.add('occupied');
-        return; // Sair da função aqui, o resto será feito no callback
       }
       
-      // Torna o novo elemento arrastável (apenas para texto e keystone)
-      if (isText || isKeystone) {
-        const newElement = toCell.querySelector('.equipment-slot, .text-element');
-        if (newElement) {
-          if (isText) {
-            makeTextDraggable(newElement);
-          } else {
-            makeEquipmentDraggable(newElement);
-          }
+      // Torna o novo elemento arrastável
+      const newElement = toCell.querySelector('.equipment-slot, .text-element');
+      if (newElement) {
+        if (isText) {
+          makeTextDraggable(newElement);
+        } else {
+          makeEquipmentDraggable(newElement);
         }
       }
       
@@ -3791,6 +3825,11 @@
         setTimeout(() => {
           console.log('=== REDESENHANDO CONEXÕES APÓS CARREGAMENTO DE DADOS REAIS ===');
           redrawAllConnections();
+          
+          // Verificar e corrigir imagens que não carregaram
+          setTimeout(() => {
+            checkAndFixImages();
+          }, 1000);
         }, 500);
         
         updateStatus(`Dados reais carregados: ${equipCount} equipamentos (${equipamentosEstoqueIncluidos} em estoque), ${keystoneCount} keystones, ${conexoes.length} conexões reais, ${keystoneConnections} conexões de keystones e ${equipamentosConnections} conexões entre equipamentos`);
